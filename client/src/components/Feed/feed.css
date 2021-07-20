@@ -1,0 +1,102 @@
+.feed {
+    width: 40%;
+    margin-left: 30%;
+    padding: 0 0.5rem;
+    border-right: 1px solid #9CA3AF;
+}
+
+.btn-top a{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: medium;
+    padding: 0.5rem 1rem;
+    margin: 2rem 12rem;
+    color: var(--primary-color);
+    background-color: #dcd5fa;
+    border: 2px solid var(--primary-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.up-arrow {
+    font-size: 1.3rem;
+}
+
+.btn-top a:hover {
+    color: lavender;
+    background-color: var(--on-hover);
+    border: 2px solid var(--secondary-color);
+    transition: 0.3s;
+}
+
+@media only screen and (max-width: 1024px) {
+    .feed {
+        flex: auto;
+        margin-left: 3rem;
+    }
+}
+
+@media only screen and (max-width: 756px) {
+    .feed {
+        margin-left: 3rem;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .btn-top a{
+        margin: 2rem 20rem 2rem 2rem;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .btn-top a{
+        margin: 2rem 18rem 2rem 2rem;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .feed {
+        flex: auto;
+        margin-left: 3rem;
+    }
+    .btn-top a{
+        margin: 2rem 12rem 2rem 12rem;
+    }
+}
+
+@media only screen and (max-width: 624px) {
+    .btn-top a{
+        margin: 2rem 4rem 2rem 4rem;
+    }
+}
+
+@media only screen and (max-width: 384px) {
+    .btn-top span{
+        display: none;    
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    .btn-top a{
+        margin: 2rem 6rem 2rem 0rem;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .btn-top a{
+        margin: 2rem 6rem 2rem 0rem;
+    }
+}
+
+@media only screen and (min-width: 1300px) {
+    .btn-top a{
+        margin: 2rem 4rem 2rem 4rem;
+    }
+}
+
+

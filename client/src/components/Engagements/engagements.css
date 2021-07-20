@@ -1,0 +1,102 @@
+@import url(/client/src/App.css);
+
+.engagements {
+    position: fixed;
+    width: 30%;
+    top: 5rem;   
+    right: 0%;
+    color: var(--primary-color);
+    height: 100%;
+    padding: 0 6rem 0 1rem; 
+}
+
+.engagements h4 {
+    text-align: center;
+    /* border-bottom: 1px solid #9CA3AF; */
+    padding-bottom: 1rem;
+    font-weight: 700;
+    font-size: 1.7rem;
+}
+
+.trends-heading > h3 {
+    font-weight: 600;
+}
+
+.trends-card {
+    background-color: #EDE9FE;
+    margin: 0 auto;
+    max-width: 27rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+.trends-map:hover {
+    background-color: #dcd5fa;
+    padding: 1rem;
+    transition: 0.3s;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.trends-heading{
+    border-bottom: 1px solid #bfc5cf;
+    margin-bottom: 0.5rem;
+}
+
+.trends-map {
+    margin: 1rem;
+}
+
+@media only screen and (max-width: 1024px) {
+    .engagements {
+        width: 30%;
+        padding: 0 2rem 0 0rem; 
+        font-size: medium;
+    }
+    .engagements h4 { 
+        font-size: 1.3rem;
+    }
+
+    .trends-heading > h3 {
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .trends-country {
+        font-size: 0.8rem;
+    }
+
+    .trends-keyword {
+        font-size: 0.8rem;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .engagements {
+        width: 0;
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 840px) {
+    .engagements {
+        width: 35%;
+        padding: 0 2rem 0 0rem; 
+        font-size: medium;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    .engagements {
+        width: 28%;
+        padding: 0 2rem 0 0rem; 
+        font-size: medium;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .engagements {
+        width: 30%;
+        padding: 0 6rem 0 1rem; 
+    }
+}

@@ -1,0 +1,167 @@
+@import url(/client/src/App.css);
+
+.sidebar {
+    width: 30%;
+    position: fixed;
+    left: 0%;
+    height: 100%;
+    padding-top: 5rem;
+    border-right: 1px solid #9CA3AF;
+}
+
+.sidebar ui {
+    list-style-type: none;
+    background-color: white;
+}
+
+.sidebar ui li a {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    color: var(--primary-color);
+    padding: 1rem 1rem 0.5rem 0rem;
+    margin: 0 1.3rem 0 8rem;
+    font-weight: 700;
+    font-size: large;
+}
+
+.sidebar ui li a:hover {
+   background-color: #dcd5fa;
+   padding: 1rem 5rem 0.5rem 1rem;
+   border-radius: 0.5rem;
+   transition: 0.3s;
+}
+
+.sidebar-icon {
+    margin-right: 0.5rem;
+    font-size: x-large;
+}
+
+.btn-hoot {
+    margin: 1rem 1.3rem 1rem 2rem;
+    margin-left: 12rem;
+}
+
+.btn-hoot a{
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    color: lavender;
+    font-weight: 700;
+    font-size: large;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+}
+
+.btn-hoot a:hover {
+    background-color: var(--on-hover);
+    border: 1px solid var(--on-hover);
+    border-color: var(--secondary-color);
+    transition: 0.3s;
+}
+
+@media only screen and (max-width: 1024px) {
+    .sidebar {
+        width: 50px;
+        min-width: 30px;
+    }
+
+    .sidebar ui li a span {
+        display: none;
+    }
+
+    .sidebar ui li a {
+        margin: 0 0.3rem;
+        justify-content: center;
+        padding: 1rem 0rem 1rem 0rem;
+    }
+
+    .sidebar ui li a:hover {
+        padding: 1rem 0;
+        margin: 0 0.2rem;
+        background-color: #dcd5fa;
+        border-radius: 0.5rem;
+        transition: 0.3s;
+    }
+
+    .btn-hoot {
+        display: none;
+        margin: 1rem 1.3rem 1rem 2rem;
+        margin-left: 0.3rem;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    .sidebar {
+        width: 200px;
+        min-width: 30px;
+    }
+    .sidebar ui li a {
+        margin: 0 1.3rem 0 1rem;
+    }
+    .sidebar ui li a:hover {
+        background-color: #dcd5fa;
+        padding: 1rem 1rem 0.5rem 1rem;
+        border-radius: 0.5rem;
+        transition: 0.3s;
+    }
+    .btn-hoot {
+        margin: 1rem 1.3rem 1rem 1rem;
+    }
+}
+
+@media only screen and (max-width: 1224px) {
+    .sidebar ui li a span {
+        font-size: small;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .sidebar {
+        width: 23%;
+    }
+    .sidebar ui li a {
+        margin: 0 1.3rem 0 6rem;
+    }
+    .sidebar ui li a:hover {
+        padding: 1rem 1.3rem 0.5rem 1rem;
+    }
+    .btn-hoot {
+        margin: 1rem 1.3rem 1rem 6rem;
+    }    
+}
+
+@media only screen and (min-width: 1300px) {
+    .sidebar {
+        width: 30%;
+        position: fixed;
+        left: 0%;
+        height: 100%;
+        padding-top: 5rem;
+        border-right: 1px solid #9CA3AF;
+    }
+    .sidebar ui li a {
+        display: flex;
+        text-decoration: none;
+        align-items: center;
+        color: var(--primary-color);
+        padding: 1rem 1rem 0.5rem 0rem;
+        margin: 0 1.3rem 0 12rem;
+        font-weight: 700;
+        font-size: large;
+    }
+    
+    .sidebar ui li a:hover {
+       background-color: #dcd5fa;
+       padding: 1rem 5rem 0.5rem 1rem;
+       border-radius: 0.5rem;
+       transition: 0.3s;
+    }
+    .btn-hoot {
+        margin: 1rem 1.3rem 1rem 2rem;
+        margin-left: 12rem;
+    }
+}
