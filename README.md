@@ -57,3 +57,5 @@ Soapbox features have done solid till now,
 - All the Re-usable components are in [soapbox-frontend / client / src / components / ](https://github.com/hrshmistry/soapbox-frontend/tree/main/client/src/components) 
 - All the Screens/Pages are in [soapbox-frontend / client / src / pages / ](https://github.com/hrshmistry/soapbox-frontend/tree/main/client/src/pages)
 - CSS file are saperated in **components/** folder, yet **pages/** CSS files are in App.css (refactor soon to each folder)
+
+![Folder Structure Client](https://github.com/hrshmistry/soapbox-frontend/blob/main/images/folder_structure-client.png)
