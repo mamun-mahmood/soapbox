@@ -12,7 +12,9 @@ const CreatePost = () => {
     const history = useHistory();
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
+    const email = userInfo.email;
 
+    console.log("email:", email);
     const date = new Date();
     const timeStamp = format(date, 'LLL dd, yyyy • HH:mm aa');
 
@@ -20,23 +22,34 @@ const CreatePost = () => {
         event.preventDefault()
 
         const formData = new FormData();
-        formData.append("file", image[0]);
-        formData.append("upload_preset", "nfvy2rwg");
 
-        axios.post("https://api.cloudinary.com/v1_1/hrshmistry/image/upload", formData)
+        formData.append("timeStamp", timeStamp)
+        formData.append("caption", caption)
+        formData.append("authorEmail", email)
+        formData.append("file", image);
+
+        axios.post('http://localhost:3001/upload', formData)
             .then((response) => {
-                const imageName = response.data.public_id;
-
-                axios.post('http://localhost:3001/upload', {
-                    caption: caption,
-                    image: imageName,
-                    authorEmail: userInfo.email,
-                    timeStamp: timeStamp,
-                }).then((response) => {
-                    console.log(response);
-                    history.push("/home");
-                })
+                console.log(response);
+                history.push("/home");
             })
+
+        // formData.append("upload_preset", "nfvy2rwg");
+
+        // axios.post("https://api.cloudinary.com/v1_1/hrshmistry/image/upload", formData)
+        //     .then((response) => {
+        //         const imageName = response.data.public_id;
+
+        //         axios.post('http://localhost:3001/upload', {
+        //             caption: caption,
+        //             image: imageName,
+        //             authorEmail: userInfo.email,
+        //             timeStamp: timeStamp,
+        //         }).then((response) => {
+        //             console.log(response);
+        //             history.push("/home");
+        //         })
+        //     })
     }
 
     return (
@@ -47,6 +60,7 @@ const CreatePost = () => {
                 <div className="post-caption d-flex flex-wrap">
                     <img className="avatar" src="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg" alt="avatar" />
                     <div className="name avatar_name">{userInfo && userInfo.username}</div>
+
                     <div className="post-content">
                         <textarea
                             autoFocus
@@ -55,37 +69,58 @@ const CreatePost = () => {
                             placeholder="What's Happening?"
                             value={caption}
                             onChange={(event) => {
-                                setCaption(event.target.value);
+                                const value = event.target.value;
+                                setCaption(value);
                             }}
                         ></textarea>
+
                         <div className="d-flex justify-content-between m-1 btn-caption-top">
-                            <div className="d-flex justify-content-end my-2">
-                                {/* Photo */}
-                                <label htmlFor="post-image" className="btn-label">Photo</label>
-                                <input
-                                    type="file"
-                                    id="post-image"
-                                    accept="image/*"
-                                    onChange={(event) => {
-                                        setImage(event.target.files)
-                                    }}
-                                    hidden
-                                />
+                            <form action="">
+                                <div className="d-flex justify-content-end my-2">
 
-                                {/* Video */}
-                                <label htmlFor="post-video" className="btn-label">Video</label>
-                                <input type="file" name="" id="post-video" accept="video/*" hidden />
+                                    {/* Photo */}
+                                    <label htmlFor="post-image" className="btn-label">Photo</label>
+                                    <input
+                                        type="file"
+                                        id="post-image"
+                                        name="photo"
+                                        accept="image/*"
+                                        onChange={(event) => {
+                                            const file = event.target.files[0];
+                                            setImage(file);
+                                        }}
+                                        hidden
+                                    />
 
-                                {/* Audio */}
-                                <label htmlFor="post-audio" className="btn-label">Audio</label>
-                                <input type="file" name="" id="post-audio" accept="audio/*" hidden />
-                            </div>
+                                    {/* Video */}
+                                    <label htmlFor="post-video" className="btn-label">Video</label>
+                                    <input
+                                        type="file"
+                                        name=""
+                                        id="post-video"
+                                        accept="video/*"
+                                        hidden
+                                    />
+
+                                    {/* Audio */}
+                                    <label htmlFor="post-audio" className="btn-label">Audio</label>
+                                    <input
+                                        type="file"
+                                        name=""
+                                        id="post-audio"
+                                        accept="audio/*"
+                                        hidden
+                                    />
+                                </div>
+                            </form>
+
                             <div className="caption-count">
                                 <h6 className={caption.length > 220 && "text-danger"}>
                                     {" "}
                                     {caption.length}/255
                                 </h6>
                             </div>
+
                             <div className="btn-post my-2">
                                 <Button
                                     variant="primary mx-1"

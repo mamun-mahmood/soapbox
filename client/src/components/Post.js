@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react'
 import axios from 'axios'
 import format from "date-fns/format"
 import SocialShare from './SocialShare';
-import { Image } from 'cloudinary-react';
+// import { Image } from 'cloudinary-react';
 import { Link, useHistory } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded, BiComment, BiBookmark } from 'react-icons/bi'
@@ -158,9 +158,14 @@ const Post = ({ hootId, avatar, username, hootImgId, likes, caption, timeStamp, 
                                     <div className="edit-content">
                                         {/* left side image */}
                                         <div className="post-media">
-                                            <Image
+                                            {/* <Image
                                                 cloudName="hrshmistry"
                                                 publicId={hootImgId}
+                                                className="post-img"
+                                            /> */}
+                                            <img
+                                                src={hootImgId}
+                                                alt="soapbox-img"
                                                 className="post-img"
                                             />
                                         </div>
@@ -232,9 +237,14 @@ const Post = ({ hootId, avatar, username, hootImgId, likes, caption, timeStamp, 
                 </div>
                 <hr className="mx-1" />
                 <div className="post-media">
-                    <Image
+                    {/* <Image
                         cloudName="hrshmistry"
                         publicId={hootImgId}
+                        className="post-img"
+                    /> */}
+                    <img
+                        src={hootImgId}
+                        alt="soapbox-img"
                         className="post-img"
                     />
                 </div>

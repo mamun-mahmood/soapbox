@@ -31,10 +31,23 @@ const NavBar = () => {
                             class="d-inline-block align-text-top"
                         />
                     </Link>
+
                     {/* <a class="navbar-brand cursor-pointer">
-                        <img src="/images/soap-box-logo-1" alt="" width="50" height="50" class="d-inline-block align-text-top" />
+                        <img
+                            src="/images/soap-box-logo-1"
+                            alt=""
+                            width="50"
+                            height="50"
+                            class="d-inline-block align-text-top"
+                        />
                     </a>
-                    <Link className="fw-bolder fs-4 nav-brand navbar-brand" to="/home">Soap Box</Link> */}
+                    <Link
+                        to="/home"
+                        className="fw-bolder fs-4 nav-brand navbar-brand"
+                    >
+                        Soap Box
+                    </Link> */}
+
                     <button
                         className="navbar-toggler"
                         type="button"
