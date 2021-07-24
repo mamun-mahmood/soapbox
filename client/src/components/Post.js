@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react'
 import axios from 'axios'
 import format from "date-fns/format"
 import SocialShare from './SocialShare';
-// import { Image } from 'cloudinary-react';
+import MediaContent from './MediaContent';
 import { Link, useHistory } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded, BiComment, BiBookmark } from 'react-icons/bi'
@@ -161,40 +161,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                                     <div className="edit-content">
                                         {/* left side image */}
                                         <div className="post-media">
-                                            {mimeType.match(/image/gi) == "image" &&
-                                                <img
-                                                    src={filePath}
-                                                    alt="soapbox-img"
-                                                    className="hoot-img"
-                                                />
-                                            }
-
-                                            {mimeType.match(/video/gi) == "video" &&
-                                                <video
-                                                    width="400"
-                                                    className="hoot-vdo"
-                                                    controls
-                                                >
-                                                    <source
-                                                        src={filePath}
-                                                        type={mimeType}
-                                                    />
-                                                    Your browser does not support HTML video.
-                                                </video>
-                                            }
-
-                                            {mimeType.match(/audio/gi) == "audio" &&
-                                                <audio
-                                                    className="hoot-ado"
-                                                    controls
-                                                >
-                                                    <source
-                                                        src={filePath}
-                                                        type={mimeType}
-                                                    />
-                                                    Your browser does not support the audio element.
-                                                </audio>
-                                            }
+                                            <MediaContent mimeType={mimeType} filePath={filePath} />
                                         </div>
                                         {/* right side edit box */}
                                         <div className="edit-caption d-flex flex-wrap">
@@ -264,41 +231,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                 </div>
                 <hr className="mx-1" />
                 <div className="post-media">
-                    {mimeType.match(/image/gi) == "image" &&
-                        <img
-                            src={filePath}
-                            alt="soapbox-img"
-                            className="hoot-img"
-                        />
-                    }
-
-                    {mimeType.match(/video/gi) == "video" &&
-                        <video
-                            width="400"
-                            className="hoot-vdo"
-                            controls
-                        >
-                            <source
-                                src={filePath}
-                                type={mimeType}
-                            />
-                            Your browser does not support HTML video.
-                        </video>
-                    }
-
-                    {mimeType.match(/audio/gi) == "audio" &&
-                        <audio
-                            className="hoot-ado"
-                            controls
-                        >
-
-                            <source
-                                src={filePath}
-                                type={mimeType}
-                            />
-                            Your browser does not support the audio element.
-                        </audio>
-                    }
+                    <MediaContent mimeType={mimeType} filePath={filePath} />
                 </div>
                 <div className="post-icons">
                     <div className="grp-1">

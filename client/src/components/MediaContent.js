@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MediaContent = ({ mimeType, type }) => {
+const MediaContent = ({ mimeType, filePath }) => {
     return (
         <div>
             {mimeType.match(/image/gi) == "image" &&
@@ -30,20 +30,12 @@ const MediaContent = ({ mimeType, type }) => {
                     className="hoot-ado"
                     controls
                 >
-
                     <source
                         src={filePath}
                         type={mimeType}
                     />
                     Your browser does not support the audio element.
                 </audio>
-            }
-
-            switch({mimeType}.match(/{type}/gi)) {
-                case 'image': return()
-            case 'video': return()
-            case 'audio': return()
-            default:
             }
         </div>
     )
