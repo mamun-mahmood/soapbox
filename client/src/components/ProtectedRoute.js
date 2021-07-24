@@ -7,7 +7,7 @@ const ProtectedRoute = ({ page }) => {
 
     useEffect(() => {
         if (!localStorage.getItem("loggedIn")) {
-            history.push("/login");
+            history.push("/");
         }
     })
 

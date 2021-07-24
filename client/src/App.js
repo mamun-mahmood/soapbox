@@ -8,6 +8,7 @@ import PageNotFound from './pages/PageNotFound'
 import CreatePost from './pages/CreatePost'
 import ProtectedRoute from './components/ProtectedRoute'
 import IndividualHoot from './pages/IndividualHoot/IndividualHoot'
+import LandingPage from './pages/LandingPage/LandingPage'
 import "./App.css"
 import {
   BrowserRouter as Router,
@@ -20,7 +21,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/">
-          <ProtectedRoute page={Home} />
+          <ProtectedRoute page={LandingPage} />
         </Route>
         <Route path="/home">
           <ProtectedRoute page={Home} />

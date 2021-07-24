@@ -12,8 +12,12 @@ const CreatePost = () => {
     const history = useHistory();
 
     const BaseURL = process.env.REACT_APP_API_URL;
+
+    var email = "";
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
-    const email = userInfo.email;
+    if (userInfo) {
+        email = userInfo.email;
+    }
 
     console.log("email:", email);
 

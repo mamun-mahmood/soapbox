@@ -6,8 +6,11 @@ import SideBarOption from './SideBarOption'
 import './sidebar.css';
 
 const SideBar = () => {
+    var username = "";
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
-    const username = userInfo.username;
+    if (userInfo) {
+        username = userInfo.username;
+    }
 
     return (
         <div className="sidebar">

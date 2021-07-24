@@ -28,8 +28,6 @@ const Login = () => {
       console.log(response);
 
       if (response.data.loggedIn) {
-        // localStorage.setItem("loggedIn", true);
-        // localStorage.setItem("email", response.data.email);
 
         const loggedIn = {
           username: response.data.username,
@@ -37,10 +35,6 @@ const Login = () => {
         }
 
         localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
-
-        setTimeout(() => {
-          history.push('/home')
-        }, "0");
       }
       setMessage(response.data.message);
     })
