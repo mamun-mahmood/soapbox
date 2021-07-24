@@ -24,24 +24,24 @@ const NavBar = () => {
                 <div className="container">
                     <Link to="/home" class="navbar-brand cursor-pointer">
                         <img
-                            src="/images/soapbox_img"
+                            src="/images/MegaHoot_Owl3_app.png"
                             alt="Megahoot Soapbox"
-                            width="190"
-                            height="45"
+                            width="50"
+                            height="50"
                             class="d-inline-block align-text-top"
                         />
                     </Link>
 
                     {/* <a class="navbar-brand cursor-pointer">
                         <img
-                            src="/images/soap-box-logo-1"
-                            alt=""
+                            src="/images/MegaHoot_Owl3_app.png"
+                            alt="Megahoot Soapbox"
                             width="50"
                             height="50"
                             class="d-inline-block align-text-top"
                         />
-                    </a>
-                    <Link
+                    </a> */}
+                    {/* <Link
                         to="/home"
                         className="fw-bolder fs-4 nav-brand navbar-brand"
                     >

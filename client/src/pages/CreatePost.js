@@ -8,7 +8,7 @@ import NavBar from '../components/NavBar'
 
 const CreatePost = () => {
     const [caption, setCaption] = useState("");
-    const [image, setImage] = useState([]);
+    const [file, setFile] = useState([]);
     const history = useHistory();
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
@@ -22,34 +22,16 @@ const CreatePost = () => {
         event.preventDefault()
 
         const formData = new FormData();
-
         formData.append("timeStamp", timeStamp)
         formData.append("caption", caption)
         formData.append("authorEmail", email)
-        formData.append("file", image);
+        formData.append("file", file);
 
         axios.post('http://localhost:3001/upload', formData)
             .then((response) => {
                 console.log(response);
                 history.push("/home");
             })
-
-        // formData.append("upload_preset", "nfvy2rwg");
-
-        // axios.post("https://api.cloudinary.com/v1_1/hrshmistry/image/upload", formData)
-        //     .then((response) => {
-        //         const imageName = response.data.public_id;
-
-        //         axios.post('http://localhost:3001/upload', {
-        //             caption: caption,
-        //             image: imageName,
-        //             authorEmail: userInfo.email,
-        //             timeStamp: timeStamp,
-        //         }).then((response) => {
-        //             console.log(response);
-        //             history.push("/home");
-        //         })
-        //     })
     }
 
     return (
@@ -66,7 +48,7 @@ const CreatePost = () => {
                             autoFocus
                             maxLength="255"
                             className="textarea-style"
-                            placeholder="What's Happening?"
+                            placeholder="What's on your mind?"
                             value={caption}
                             onChange={(event) => {
                                 const value = event.target.value;
@@ -87,7 +69,7 @@ const CreatePost = () => {
                                         accept="image/*"
                                         onChange={(event) => {
                                             const file = event.target.files[0];
-                                            setImage(file);
+                                            setFile(file);
                                         }}
                                         hidden
                                     />
@@ -96,9 +78,13 @@ const CreatePost = () => {
                                     <label htmlFor="post-video" className="btn-label">Video</label>
                                     <input
                                         type="file"
-                                        name=""
+                                        name="video"
                                         id="post-video"
                                         accept="video/*"
+                                        onChange={(event) => {
+                                            const file = event.target.files[0];
+                                            setFile(file);
+                                        }}
                                         hidden
                                     />
 
@@ -106,9 +92,13 @@ const CreatePost = () => {
                                     <label htmlFor="post-audio" className="btn-label">Audio</label>
                                     <input
                                         type="file"
-                                        name=""
+                                        name="audio"
                                         id="post-audio"
                                         accept="audio/*"
+                                        onChange={(event) => {
+                                            const file = event.target.files[0];
+                                            setFile(file);
+                                        }}
                                         hidden
                                     />
                                 </div>

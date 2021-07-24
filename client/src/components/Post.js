@@ -13,7 +13,9 @@ import { IoCloseOutline } from 'react-icons/io5'
 import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
 
-const Post = ({ hootId, avatar, username, hootImgId, likes, caption, timeStamp, edited, editedTimeStamp }) => {
+const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, timeStamp, edited, editedTimeStamp }) => {
+    const filePath = `http://localhost:3001/images/${hootImgId}`;
+
     const shareUrl = "https://www.megahoot.com/";
     const shareCaption = `"${caption}" by @${username} from MegaHoot Soapbox,`;
     const shareLink = "https://unsplash.com/photos/bMXYQT4Ky5c";
@@ -22,7 +24,8 @@ const Post = ({ hootId, avatar, username, hootImgId, likes, caption, timeStamp, 
     const mailShare = `mailto:?subject="Hoot from MegaHoot Soapbox"&body=${shareCaption}%20Checkout more at ${shareUrl}`;
     const facebookShare = `https://www.facebook.com/sharer.php?u=${shareUrl}`;
     const redditShare = `https://reddit.com/submit?url=${shareUrl}&title=${shareCaption}`;
-    const pinterestShare = `https://pinterest.com/pin/create/bookmarklet/?media=${shareLink}&url=${shareUrl}&description=jio` // image is must to share something on pinterest.
+    // image is must to share something on pinterest.
+    const pinterestShare = `https://pinterest.com/pin/create/bookmarklet/?media=${shareLink}&url=${shareUrl}&description=jio`
     const linkedInShare = `https://www.linkedin.com/shareArticle?url=${shareUrl}&title=${shareCaption}`
     const tumblrShare = `https://www.tumblr.com/share/link?url=${shareUrl}&tags=megahoot,soapbox,tumblr&description=${shareCaption}`
 
@@ -158,16 +161,40 @@ const Post = ({ hootId, avatar, username, hootImgId, likes, caption, timeStamp, 
                                     <div className="edit-content">
                                         {/* left side image */}
                                         <div className="post-media">
-                                            {/* <Image
-                                                cloudName="hrshmistry"
-                                                publicId={hootImgId}
-                                                className="post-img"
-                                            /> */}
-                                            <img
-                                                src={hootImgId}
-                                                alt="soapbox-img"
-                                                className="post-img"
-                                            />
+                                            {mimeType.match(/image/gi) == "image" &&
+                                                <img
+                                                    src={filePath}
+                                                    alt="soapbox-img"
+                                                    className="hoot-img"
+                                                />
+                                            }
+
+                                            {mimeType.match(/video/gi) == "video" &&
+                                                <video
+                                                    width="400"
+                                                    className="hoot-vdo"
+                                                    controls
+                                                >
+                                                    <source
+                                                        src={filePath}
+                                                        type={mimeType}
+                                                    />
+                                                    Your browser does not support HTML video.
+                                                </video>
+                                            }
+
+                                            {mimeType.match(/audio/gi) == "audio" &&
+                                                <audio
+                                                    className="hoot-ado"
+                                                    controls
+                                                >
+                                                    <source
+                                                        src={filePath}
+                                                        type={mimeType}
+                                                    />
+                                                    Your browser does not support the audio element.
+                                                </audio>
+                                            }
                                         </div>
                                         {/* right side edit box */}
                                         <div className="edit-caption d-flex flex-wrap">
@@ -237,29 +264,57 @@ const Post = ({ hootId, avatar, username, hootImgId, likes, caption, timeStamp, 
                 </div>
                 <hr className="mx-1" />
                 <div className="post-media">
-                    {/* <Image
-                        cloudName="hrshmistry"
-                        publicId={hootImgId}
-                        className="post-img"
-                    /> */}
-                    <img
-                        src={hootImgId}
-                        alt="soapbox-img"
-                        className="post-img"
-                    />
+                    {mimeType.match(/image/gi) == "image" &&
+                        <img
+                            src={filePath}
+                            alt="soapbox-img"
+                            className="hoot-img"
+                        />
+                    }
+
+                    {mimeType.match(/video/gi) == "video" &&
+                        <video
+                            width="400"
+                            className="hoot-vdo"
+                            controls
+                        >
+                            <source
+                                src={filePath}
+                                type={mimeType}
+                            />
+                            Your browser does not support HTML video.
+                        </video>
+                    }
+
+                    {mimeType.match(/audio/gi) == "audio" &&
+                        <audio
+                            className="hoot-ado"
+                            controls
+                        >
+
+                            <source
+                                src={filePath}
+                                type={mimeType}
+                            />
+                            Your browser does not support the audio element.
+                        </audio>
+                    }
                 </div>
                 <div className="post-icons">
                     <div className="grp-1">
-                        <div className="like">
-                            {liked ? <FaHeart
-                                className="hoot-likes-fill"
-                                onClick={e => { setLiked(false), setlikesCount(likesCount - 1) }
-                                }
-                            /> : <FaRegHeart
-                                className="hoot-likes-border"
-                                onClick={e => { setLiked(true), setlikesCount(likesCount + 1) }
-                                }
-                            />}
+                        <div className="like-count">
+                            <div className="like">
+                                {liked ? <FaHeart
+                                    className="hoot-likes-fill"
+                                    onClick={e => { setLiked(false), setlikesCount(likesCount - 1) }
+                                    }
+                                /> : <FaRegHeart
+                                    className="hoot-likes-border"
+                                    onClick={e => { setLiked(true), setlikesCount(likesCount + 1) }
+                                    }
+                                />}
+                            </div>
+                            <div className="like-count">{likesCount}</div>
                         </div>
                         <div className="comment">
                             <BiComment className="cursor-pointer" />
@@ -267,8 +322,8 @@ const Post = ({ hootId, avatar, username, hootImgId, likes, caption, timeStamp, 
                         <div className="rehoot">
                             <FiRepeat className="cursor-pointer" />
                         </div>
-                    </div>
-                    <div className="grp-2">
+                        {/* </div>
+                    <div className="grp-2"> */}
                         <div className="share">
                             <FiShare2
                                 onClick={() => setIsShareModalOpen(!isShareModalOpen)}
@@ -373,22 +428,15 @@ const Post = ({ hootId, avatar, username, hootImgId, likes, caption, timeStamp, 
                         </div>
                     </div>
                 </div>
-                <div className="like-count">{likesCount} likes</div>
+                {/* <div className="like-count">{likesCount} likes</div> */}
                 <div className="post-comment">
-                    <Link
-                        className="name-comment"
-                    // to={{
-                    //     pathname: path,
-                    //     search: username,
-                    //     state: { fromPostUsername: username },
-                    // }}
-                    >
+                    <Link className="name-comment">
                         <span onClick={() => { history.push(`${path}/${username}`) }}
                         >
                             {username}
                         </span>
                     </Link>
-                    {" "}{caption}
+                    {" "}<span className="hoot-comment">{caption}</span>
                 </div>
                 <div className="view-post-comment">
                     <div

@@ -46,6 +46,7 @@ const IndividualHoot = () => {
                                 hootId={hoot.id}
                                 avatar="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg"
                                 username={hoot.authorUsername}
+                                mimeType={hoot.mimeType}
                                 hootImgId={hoot.image}
                                 likes={hoot.likes}
                                 caption={hoot.caption}
