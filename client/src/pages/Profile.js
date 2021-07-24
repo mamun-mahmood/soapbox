@@ -7,15 +7,13 @@ import NavBar from '../components/NavBar'
 const Profile = () => {
     const { username } = useParams();
     const [myUploads, setMyUploads] = useState([]);
-    // const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
-    // const username = userInfo.username;
+    const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/user/profile/${username}`).then((response) => {
+        axios.get(`${BaseURL}/user/profile/${username}`).then((response) => {
             setMyUploads(response.data);
             console.log(response);
         });
-        // console.log("myUploads:", myUploads);
     }, [])
 
     return (
@@ -64,6 +62,7 @@ const Profile = () => {
                                 hootId={upload.id}
                                 avatar="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg"
                                 username={upload.authorUsername}
+                                mimeType={upload.mimeType}
                                 hootImgId={upload.image}
                                 likes={upload.likes}
                                 caption={upload.caption}

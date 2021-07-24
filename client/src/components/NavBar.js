@@ -32,22 +32,6 @@ const NavBar = () => {
                         />
                     </Link>
 
-                    {/* <a class="navbar-brand cursor-pointer">
-                        <img
-                            src="/images/MegaHoot_Owl3_app.png"
-                            alt="Megahoot Soapbox"
-                            width="50"
-                            height="50"
-                            class="d-inline-block align-text-top"
-                        />
-                    </a> */}
-                    {/* <Link
-                        to="/home"
-                        className="fw-bolder fs-4 nav-brand navbar-brand"
-                    >
-                        Soap Box
-                    </Link> */}
-
                     <button
                         className="navbar-toggler"
                         type="button"
@@ -59,6 +43,7 @@ const NavBar = () => {
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
+
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                         {localStorage.getItem("loggedIn") ?
