@@ -6,11 +6,12 @@ import NavBar from '../components/NavBar'
 
 const Login = () => {
   const history = useHistory();
+
   useEffect(() => {
     if (localStorage.getItem("loggedIn")) {
       history.push("/home");
     }
-  }, [])
+  })
 
   const BaseURL = process.env.REACT_APP_API_URL;
 

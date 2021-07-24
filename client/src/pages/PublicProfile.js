@@ -73,6 +73,7 @@ const PublicProfile = () => {
                                 hootId={user.id}
                                 avatar="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg"
                                 username={user.authorUsername}
+                                mimeType={user.mimeType}
                                 hootImgId={user.image}
                                 likes={user.likes}
                                 caption={user.caption}

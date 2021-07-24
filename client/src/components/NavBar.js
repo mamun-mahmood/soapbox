@@ -52,12 +52,12 @@ const NavBar = () => {
                                 <Link className="nav-link" to="/home">Home</Link>
                                 <Link className="nav-link" to="/create">Create Hoot</Link>
                                 <Link className="nav-link" to={`/profile/${username}`}>{userInfo && userInfo.username}</Link>
-                                <Link className="nav-link" to="/login" onClick={logout}><HiOutlineLogout /></Link>
+                                <Link className="nav-link" to="/" onClick={logout}><HiOutlineLogout /></Link>
                             </Fragment>
                             :
                             <Fragment>
-                                <Link className="nav-link" to="/signup">Sign Up</Link>
                                 <Link className="nav-link" to="/login">Login</Link>
+                                <Link className="nav-link" to="/signup">Sign Up</Link>
                             </Fragment>
                         }
                     </div>
