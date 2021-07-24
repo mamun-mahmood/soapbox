@@ -7,8 +7,10 @@ import './feed.css'
 const Feed = () => {
     const [uploads, setUploads] = useState([])
 
+    const BaseURL = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
-        axios.get("http://localhost:3001/upload").then((response) => {
+        axios.get(`${BaseURL}/upload`).then((response) => {
             setUploads(response.data);
         });
     }, [])

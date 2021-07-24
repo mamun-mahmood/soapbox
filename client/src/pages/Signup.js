@@ -6,6 +6,9 @@ import NavBar from '../components/NavBar'
 
 const Signup = () => {
     const history = useHistory();
+
+    const BaseURL = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
         if (localStorage.getItem("loggedIn")) {
             history.push("/home");
@@ -19,16 +22,11 @@ const Signup = () => {
     const signup = (event) => {
         event.preventDefault();
 
-        // let userInfo = { username, email, password }
-        // console.log(userInfo);
-
-        axios.post('http://localhost:3001/user/signup', {
+        axios.post(`${BaseURL}/user/signup`, {
             username,
             email,
             password,
         }).then((response) => {
-            // console.log("response", response);
-            // localStorage.setItem("user-info", JSON.stringify(userInfo));
             history.push("/login");
         })
     }

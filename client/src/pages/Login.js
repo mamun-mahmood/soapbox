@@ -12,6 +12,8 @@ const Login = () => {
     }
   }, [])
 
+  const BaseURL = process.env.REACT_APP_API_URL;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -19,7 +21,7 @@ const Login = () => {
   const login = (event) => {
     event.preventDefault()
 
-    axios.post('http://localhost:3001/user/login', {
+    axios.post(`${BaseURL}/user/login`, {
       email,
       password,
     }).then((response) => {

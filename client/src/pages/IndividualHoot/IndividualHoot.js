@@ -12,13 +12,15 @@ const IndividualHoot = () => {
     const [hoot, setHoot] = useState([]);
     const [comments, setComments] = useState([]);
 
+    const BaseURL = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
-        axios.get(`http://localhost:3001/hoot/${id}`)
+        axios.get(`${BaseURL}/hoot/${id}`)
             .then((response) => {
                 setHoot(response.data);
             });
 
-        axios.get(`http://localhost:3001/comment/${id}`)
+        axios.get(`${BaseURL}/comment/${id}`)
             .then((response) => {
                 setComments(response.data);
             });

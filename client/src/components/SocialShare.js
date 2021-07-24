@@ -1,5 +1,6 @@
 import React from 'react'
 import '../App.css'
+
 const SocialShare = (share, Icon, name) => {
     return (
         <div className="share-icons">

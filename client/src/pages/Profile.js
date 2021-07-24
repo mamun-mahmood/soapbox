@@ -7,6 +7,7 @@ import NavBar from '../components/NavBar'
 const Profile = () => {
     const { username } = useParams();
     const [myUploads, setMyUploads] = useState([]);
+
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {

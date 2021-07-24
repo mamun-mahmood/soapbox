@@ -14,7 +14,6 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-import HootPage from './pages/HootPage'
 
 function App() {
   return (
@@ -25,23 +24,18 @@ function App() {
         </Route>
         <Route path="/home">
           <ProtectedRoute page={Home} />
-          {/* <Home /> */}
         </Route>
         <Route path="/create">
           <ProtectedRoute page={CreatePost} />
-          {/* <CreatePost /> */}
         </Route>
         <Route path="/user/:username">
           <ProtectedRoute page={PublicProfile} />
-          {/* <PublicProfile /> */}
         </Route>
         <Route path="/hoot/:id">
           <ProtectedRoute page={IndividualHoot} />
-          {/* <IndividualHoot /> */}
         </Route>
         <Route path="/profile/:username">
           <ProtectedRoute page={Profile} />
-          {/* <Profile /> */}
         </Route>
         <Route path="/signup">
           <Signup />

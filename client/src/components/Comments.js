@@ -19,7 +19,8 @@ const Comments = ({ comments, hoot }) => {
                                 {comment.commentBody}
                             </h6>)
                         }).reverse()}
-                    </div>}
+                    </div>
+                }
             </div>
         </div>
     )

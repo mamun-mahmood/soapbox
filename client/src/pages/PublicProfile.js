@@ -7,8 +7,7 @@ import { useLocation, useParams } from 'react-router-dom'
 const PublicProfile = () => {
     const [users, setUsers] = useState([]);
 
-    // const location = useLocation();
-    // const username = new URLSearchParams(location.state).get('fromPostUsername');
+    const BaseURL = process.env.REACT_APP_API_URL;
 
     const { username } = useParams();
 
@@ -18,7 +17,7 @@ const PublicProfile = () => {
             behavior: 'smooth'
         });
 
-        axios.get(`http://localhost:3001/user/profile/${username}`).then((response) => {
+        axios.get(`${BaseURL}/user/profile/${username}`).then((response) => {
             setUsers(response.data);
         });
 

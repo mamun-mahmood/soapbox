@@ -14,7 +14,8 @@ import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
 
 const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, timeStamp, edited, editedTimeStamp }) => {
-    const filePath = `http://localhost:3001/images/${hootImgId}`;
+    const BaseURL = process.env.REACT_APP_API_URL;
+    const filePath = `${BaseURL}/images/${hootImgId}`;
 
     const shareUrl = "https://www.megahoot.com/";
     const shareCaption = `"${caption}" by @${username} from MegaHoot Soapbox,`;
@@ -42,8 +43,9 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
 
     const history = useHistory();
 
+    // timeStamp can be implemented at server-side...
     const date = new Date();
-    const eTimeStamp = format(date, 'LLL dd, yyyy • HH:mm aa');
+    const eTimeStamp = format(date, 'LLL dd, yyyy • HH:mm');
 
     const setLikesCount = (e) => {
         setlikesCount(likesCount + 1);
@@ -51,7 +53,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
 
     // like functionality added to hoots.
     useEffect(() => {
-        axios.put("http://localhost:3001/upload/likes", {
+        axios.put(`${BaseURL}/upload/likes`, {
             likes: likesCount,
             image: hootImgId
         }).then((response) => {
@@ -74,7 +76,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
 
     const deleteHoot = () => {
         setIsMoreModalOpen(false);
-        axios.delete(`http://localhost:3001/upload/delete/${hootImgId}`, {
+        axios.delete(`${BaseURL}/upload/delete/${hootImgId}`, {
             username: userInfo.username,
         });
         window.location.reload();
@@ -82,7 +84,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
     }
 
     const editHoot = () => {
-        axios.put("http://localhost:3001/upload/edit", {
+        axios.put(`${BaseURL}/upload/edit`, {
             editCaption: editCaption,
             hootImgId: hootImgId,
             edited: 1,
@@ -94,7 +96,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
     }
 
     const addComment = () => {
-        axios.post("http://localhost:3001/comment/", {
+        axios.post(`${BaseURL}/comment/`, {
             commentBody: newComment,
             hootId: hootId
         }).then((response) => {

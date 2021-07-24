@@ -11,12 +11,15 @@ const CreatePost = () => {
     const [file, setFile] = useState([]);
     const history = useHistory();
 
+    const BaseURL = process.env.REACT_APP_API_URL;
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
     const email = userInfo.email;
 
     console.log("email:", email);
+
+    // timeStamp can be implemented at server-side...
     const date = new Date();
-    const timeStamp = format(date, 'LLL dd, yyyy • HH:mm aa');
+    const timeStamp = format(date, 'LLL dd, yyyy • HH:mm');
 
     const upload = (event) => {
         event.preventDefault()
@@ -27,7 +30,7 @@ const CreatePost = () => {
         formData.append("authorEmail", email)
         formData.append("file", file);
 
-        axios.post('http://localhost:3001/upload', formData)
+        axios.post(`${BaseURL}/upload`, formData)
             .then((response) => {
                 console.log(response);
                 history.push("/home");
