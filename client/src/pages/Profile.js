@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Post from '../components/Post'
 import NavBar from '../components/NavBar'
+// import Default from '../../public/images/default_user_profile.svg'
 
 const Profile = () => {
     const { username } = useParams();
@@ -23,7 +24,7 @@ const Profile = () => {
             <div>
                 <div className="profile-container">
                     <div>
-                        <img className="profile-picture" src="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg" alt="profile-pic" />
+                        <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" />
                     </div>
                     <div className="user-info">
                         <div className="display-name">

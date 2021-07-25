@@ -30,7 +30,7 @@ const PublicProfile = () => {
             <div>
                 <div className="profile-container">
                     <div>
-                        <img className="profile-picture" src="https://pbs.twimg.com/profile_images/1167221863103074305/Ziap6jxO_200x200.png" alt="profile-pic" />
+                        <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile-pic" />
                     </div>
                     <div className="user-info">
                         <div className="follow-user">
@@ -71,7 +71,7 @@ const PublicProfile = () => {
                         return (<div key={user.id}>
                             <Post
                                 hootId={user.id}
-                                avatar="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg"
+                                avatar="/images/default_user_profile.svg"
                                 username={user.authorUsername}
                                 mimeType={user.mimeType}
                                 hootImgId={user.image}

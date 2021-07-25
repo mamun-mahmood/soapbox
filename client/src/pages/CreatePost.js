@@ -47,7 +47,7 @@ const CreatePost = () => {
 
             <div className="upload-post">
                 <div className="post-caption d-flex flex-wrap">
-                    <img className="avatar" src="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg" alt="avatar" />
+                    <img className="avatar" src="/images/default_user_profile.svg" alt="avatar" />
                     <div className="name avatar_name">{userInfo && userInfo.username}</div>
 
                     <div className="post-content">

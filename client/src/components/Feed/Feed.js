@@ -21,7 +21,7 @@ const Feed = () => {
                 return (<div key={upload.id}>
                     <Post
                         hootId={upload.id}
-                        avatar="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg"
+                        avatar="/images/default_user_profile.svg"
                         username={upload.authorUsername}
                         mimeType={upload.mimeType}
                         hootImgId={upload.image}
