@@ -24,15 +24,17 @@ const LandingPage = () => {
                 </div>
 
                 <ul className="list-inline">
-                    <div className="btn-login">
-                        <Link to="/login">
-                            Login
-                        </Link>
+                    <div className="title">
+                        How Soapbox Works
                     </div>
-                    <div className="btn-signup">
-                        <Link to="/signup">
-                            Sign up
-                        </Link>
+                    <div className="title">
+                        Soapbox FAQ
+                    </div>
+                    <div className="title">
+                        Subscriptions
+                    </div>
+                    <div className="title">
+                        MegaHoot Tech
                     </div>
                 </ul>
             </nav>

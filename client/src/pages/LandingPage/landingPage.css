@@ -71,6 +71,15 @@ dl, ol, ul {
     margin: 1rem;
 }
 
+.title {
+    margin: 1rem;
+    padding: 0.5rem;
+
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 .btn-login a{
     text-decoration: none;
     display: block;
@@ -187,6 +196,23 @@ dl, ol, ul {
     }
 }
 
+@media only screen and (max-width: 970px) {
+    .brand-name {
+       display: none;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .brand-name {
+        display: block;
+    }
+}
+@media only screen and (max-width: 660px) {
+    .list-inline {
+        display: none;
+    }
+   
+}
 @media only screen and (max-width: 600px) {
     .landing-page {
         justify-content: center;
@@ -201,10 +227,6 @@ dl, ol, ul {
         font-size: 1.5rem;
         font-weight: 700;
     }
-
-    .brand-name {
-        display: none;
-    }
 }
 
 @media only screen and (max-width: 470px) {
@@ -215,6 +237,10 @@ dl, ol, ul {
         font-size: 1.5rem;
         font-weight: 700;
         text-align: center;
+    }
+
+    .brand-name {
+        display: visible;
     }
 
     .btn-login {

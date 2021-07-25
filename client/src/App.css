@@ -83,13 +83,13 @@ code {
 }
 
 .login-head {
-  color: #1F2937;
+  color: var(--primary-color);
   font-family: 'Royal Crescent';
   font-weight: 800;
 }
 
 .signup-head {
-  color: #1F2937;
+  color: var(--primary-color);
   font-family: 'Royal Crescent';
   font-weight: 800;
 }
