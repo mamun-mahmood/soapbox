@@ -12,15 +12,15 @@ const LandingPage = () => {
             <nav className="nav">
                 <div className="brand">
                     <Link to="/" class="navbar-brand cursor-pointer">
-                        <img
-                            src="/images/soapbox_favicon_.ico"
-                            alt="Megahoot Soapbox"
-                            width="50"
-                            height="50"
-                            class="d-inline-block align-text-top"
-                        />
+                        <div className="outer-img">
+                            <img
+                                src="/images/MegaHoot_Owl3_app.png"
+                                alt="Megahoot Soapbox"
+                                class="d-inline-block align-text-top"
+                            />
+                        </div>
                     </Link>
-                    <Link className="brand-name" to="/">Soapbox</Link>
+                    {/* <Link className="brand-name" to="/">Soapbox</Link> */}
                 </div>
 
                 <ul className="list-inline">
@@ -44,6 +44,9 @@ const LandingPage = () => {
             <main className="landing-page">
                 <div className="landing-ls">
                     <img src="./images/soapbox_landing_image" alt="soapbox_landing_page" />
+                    <span>
+                        MegaHoot Soapbox where members monetize their social media time
+                    </span>
                 </div>
                 <div className="landing-rs">
                     {toggle ? <LoginComp /> : <SignupComp />}
@@ -51,18 +54,24 @@ const LandingPage = () => {
                     {toggle ?
                         <div className="text-center text-decoration-none mt-2">
                             <small>New to Soapbox? </small>
-                            <Link onClick={() => { setToggle(false) }} className="text-decoration-none primary-color"> Sign up</Link><br />
+                            <Link onClick={() => { setToggle(false) }} className="text-decoration-none primary-color fw-bold"> Sign up</Link><br />
                         </div>
                         :
                         <div className="text-center text-decoration-none mt-2">
                             <small>Already have an account? </small>
-                            <Link onClick={() => { setToggle(true) }} className="text-decoration-none primary-color">Login</Link>
+                            <Link onClick={() => { setToggle(true) }} className="text-decoration-none primary-color fw-bold">Login</Link>
                         </div>}
                 </div>
             </main>
 
             <footer>
-                &copy; <strong>Copyright MegaHoot Technologies, Inc</strong> All Rights Reserved
+                <strong>&copy; Copyright MegaHoot Technologies, Inc</strong> All Rights Reserved
+                <span>
+                    Privacy Policy
+                </span>
+                <span>
+                    Terms & Conditions
+                </span>
             </footer>
         </div>
     )

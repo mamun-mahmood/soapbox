@@ -103,13 +103,13 @@ code {
 .btn-primary:hover {
   background-color: var(--on-hover);
   border: 1px solid var(--on-hover);
-  border-color: var(--secondary-color);
+  border-color: var(--primary-color);
 }
 
 .btn-primary:disabled {
   background-color: var(--primary-color);
   border: 1px solid var(--on-hover);
-  border-color: var(--secondary-color);
+  border-color: var(--primary-color);
 }
 
 .btn-primary:active {
@@ -1033,7 +1033,7 @@ hr {
   background-color: #fff;
   border-color: var(--primary-color);
   outline: 0;
-  box-shadow: 0 0 0 0.25rem var(--secondary-color);
+  box-shadow: 0 0 0 0.25rem rgb(213, 213, 248);
 }
 
 
@@ -1045,6 +1045,10 @@ hr {
 
 .form-control {
   height: auto;
+}
+
+.text-muted {
+  color: #374151 !important;
 }
 
 .textarea-style {

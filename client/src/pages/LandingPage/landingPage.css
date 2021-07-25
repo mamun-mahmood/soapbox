@@ -26,7 +26,24 @@
 .brand {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    text-align: center;
+    margin-left: 1rem;
+}
+.outer-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+.brand img {
+    padding: 0.2rem 0.5rem 0.5rem 0.5rem;
+    width: 65px;
+    height: 65px;
+  
 }
 
 .brand-name {
@@ -156,22 +173,32 @@ dl, ol, ul {
 }
 
 .landing-ls {
-    padding: 0.5rem;
-
+    flex: 50%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.landing-ls span {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2rem;
+    font-weight: 700;
 }
 
 .landing-ls img {
-    width: 400px;
+    width: 300px;
     min-width: 300px;
-    max-height: 500px;
+    max-height: 400px;
     object-fit: scale-down;
     padding: 0.5rem;
     border-radius: 0.8rem;
 }
 
 .landing-rs {
+    flex: 50%;
     padding: 0.5rem;
 }
 
@@ -182,14 +209,21 @@ dl, ol, ul {
 }
 
 footer {
-    /* font-weight: 550; */
     position: fixed;
+    bottom: 0;
     color: #fff;
     background-color: var(--primary-color);
-    bottom: 0;
     width: 100%;
+    padding: 0 1rem;
     text-align: center;
     z-index: 100;
+}
+
+footer span {
+    margin-left: 1rem;
+    cursor: pointer;
+    color: #F9FAFB;
+    font-weight: 600;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -202,12 +236,25 @@ footer {
         width: 300px;
         min-width: 200px;
     }
+
+    .landing-ls span {
+        font-size: 1.5rem;
+    }
 }
 
-@media only screen and (max-width: 786px) {
+@media only screen and (max-width: 800px) {
     .landing-ls img {
         width: 100%;
         min-width: 200px;
+    }
+
+    .list-inline {
+        font-size: small;
+        display: none;
+    }
+    
+    .landing-ls span {
+        font-size: 1rem;
     }
 
     .landing-rs span {
@@ -216,24 +263,7 @@ footer {
     }
 }
 
-@media only screen and (max-width: 970px) {
-    .brand-name {
-       display: none;
-    }
-}
-
-@media only screen and (max-width: 750px) {
-    .brand-name {
-        display: block;
-    }
-}
 @media only screen and (max-width: 660px) {
-    .list-inline {
-        display: none;
-    }
-   
-}
-@media only screen and (max-width: 600px) {
     .landing-page {
         justify-content: center;
         align-items: normal;
@@ -257,24 +287,5 @@ footer {
         font-size: 1.5rem;
         font-weight: 700;
         text-align: center;
-    }
-
-    .brand-name {
-        display: visible;
-    }
-
-    .btn-login {
-        margin: 1rem 0.5rem;
-    }
-    .btn-signup {
-        margin: 1rem 0.5rem;
-    }
-    .btn-login a{
-        font-weight: 600;
-        font-size: medium;
-    }
-    .btn-signup a{
-        font-weight: 600;
-        font-size: medium;
     }
 }
