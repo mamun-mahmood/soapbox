@@ -1,11 +1,18 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import LoginComp from '../../components/LoginComp'
 import SignupComp from '../../components/SignupComp'
 import './landingPage.css'
 
 const LandingPage = () => {
     const [toggle, setToggle] = useState(true);
+    const locattion = useLocation();
+
+    const disableRightClick = () => {
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+    }
 
     return (
         <div className="page">
@@ -13,11 +20,14 @@ const LandingPage = () => {
                 <div className="brand">
                     <Link to="/" class="navbar-brand cursor-pointer">
                         <div className="outer-img">
-                            <img
-                                src="/images/MegaHoot_Owl3_app.png"
-                                alt="Megahoot Soapbox"
-                                class="d-inline-block align-text-top"
-                            />
+                            <a href={locattion.pathname}>
+                                <img
+                                    onContextMenu={(e) => e.preventDefault()}
+                                    src="/images/MegaHoot_Owl3_app.png"
+                                    alt="Megahoot Soapbox"
+                                    class="d-inline-block align-text-top"
+                                />
+                            </a>
                         </div>
                     </Link>
                     {/* <Link className="brand-name" to="/">Soapbox</Link> */}
@@ -43,7 +53,13 @@ const LandingPage = () => {
 
             <main className="landing-page">
                 <div className="landing-ls">
-                    <img src="./images/soapbox_landing_image" alt="soapbox_landing_page" />
+                    <a href={locattion.pathname}>
+                        <img
+                            onContextMenu={(e) => e.preventDefault()}
+                            src="./images/soapbox_landing_image"
+                            alt="soapbox_landing_page"
+                        />
+                    </a>
                     <span>
                         MegaHoot Soapbox where members monetize their social media time
                     </span>
