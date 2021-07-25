@@ -31,6 +31,9 @@
     color: #fff;
     font-size: 2rem;
     margin: 0 1rem;
+
+    font-family: 'Royal Crescent';
+    font-weight: 800;
 }
 
 .brand-name:hover {
@@ -183,10 +186,15 @@ dl, ol, ul {
         font-weight: 700;
     }
 }
+
 @media only screen and (max-width: 600px) {
-    .landing-ls img {
-        width: 100%;
-        min-width: 200px;
+    .landing-page {
+        justify-content: center;
+        align-items: normal;
+    }
+
+    .landing-ls {
+        display: none;
     }
 
     .landing-rs span {
@@ -198,19 +206,8 @@ dl, ol, ul {
         display: none;
     }
 }
+
 @media only screen and (max-width: 470px) {
-    .landing-page {
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: normal;
-    }
-
-    .landing-ls img {
-        width: 70%;
-        height: auto;
-        min-width: 100px;
-    }
-
     .landing-rs span {
         display: flex;
         justify-content: center;

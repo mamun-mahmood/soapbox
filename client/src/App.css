@@ -82,6 +82,18 @@ code {
     max-width: 400px;
 }
 
+.login-head {
+  color: #1F2937;
+  font-family: 'Royal Crescent';
+  font-weight: 800;
+}
+
+.signup-head {
+  color: #1F2937;
+  font-family: 'Royal Crescent';
+  font-weight: 800;
+}
+
 .btn-primary {
   background-color: var(--primary-color);
   border: 1px solid var(--primary-color);
