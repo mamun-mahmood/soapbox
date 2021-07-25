@@ -34,7 +34,9 @@ const LandingPage = () => {
                         Subscriptions
                     </div>
                     <div className="title">
-                        MegaHoot Tech
+                        <Link to="https://www.megahoot.com/">
+                            MegaHoot Tech
+                        </Link>
                     </div>
                 </ul>
             </nav>
@@ -48,7 +50,7 @@ const LandingPage = () => {
 
                     {toggle ?
                         <div className="text-center text-decoration-none mt-2">
-                            <small>New to Soap Box? </small>
+                            <small>New to Soapbox? </small>
                             <Link onClick={() => { setToggle(false) }} className="text-decoration-none primary-color"> Sign up</Link><br />
                         </div>
                         :
@@ -58,6 +60,10 @@ const LandingPage = () => {
                         </div>}
                 </div>
             </main>
+
+            <footer>
+                &copy; <strong>Copyright MegaHoot Technologies, Inc</strong> All Rights Reserved
+            </footer>
         </div>
     )
 }
