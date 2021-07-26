@@ -66,7 +66,7 @@ const PublicProfile = () => {
                     </div>
                 </div>
                 <hr />
-                <div className="user-posts">
+                <div className="">
                     {users.map((user) => {
                         return (<div key={user.id}>
                             <Post

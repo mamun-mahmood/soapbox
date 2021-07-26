@@ -163,7 +163,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                                     <div className="edit-content">
                                         {/* left side image */}
                                         <div className="post-media">
-                                            <MediaContent mimeType={mimeType} filePath={filePath} />
+                                            <MediaContent mimeType={mimeType} filePath={filePath} editOpen={isEditModalOpen} />
                                         </div>
                                         {/* right side edit box */}
                                         <div className="edit-caption d-flex flex-wrap">

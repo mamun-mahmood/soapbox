@@ -89,10 +89,6 @@ dl, ol, ul {
     color: var(--social-handler);
 }
 
-.btn-login {
-    margin: 1rem;
-}
-
 .title {
     margin: 1rem;
     padding: 0.5rem;
@@ -105,61 +101,6 @@ dl, ol, ul {
 .title a {
     color: #fff;
     text-decoration: none;
-}
-
-.btn-login a{
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    color: #fff;
-    font-weight: 700;
-    font-size: large;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    background-color: var(--on-hover);
-    border: 1px solid var(--primary-color);
-    cursor: pointer;
-}
-
-.btn-login a:hover {
-    background-color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    border-color: transparent;
-    transition: 0.3s;
-}
-
-.btn-login a:active {
-    background-color: var(--on-hover);
-}
-
-.btn-signup {
-    margin: 1rem;
-}
-
-.btn-signup a{
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    color: var(--primary-color);
-    font-weight: 700;
-    font-size: large;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    background-color: lavender;
-    border: 1px solid var(--primary-color);
-    cursor: pointer;
-}
-
-.btn-signup a:hover {
-    color: #fff;
-    background-color: var(--primary-color);
-    border: 1px solid var(--on-hover);
-    border-color: var(--secondary-color);
-    transition: 0.3s;
-}
-
-.btn-signup a:active {
-    background-color: var(--on-hover);
 }
 
 .landing-page {

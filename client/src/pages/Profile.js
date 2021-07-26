@@ -46,7 +46,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <hr />
-                <div className="user-posts">
+                <div className="">
                     {myUploads.length === 0 &&
                         <div className="no-hoots">
                             <p>No hoots yet!</p>
@@ -59,20 +59,22 @@ const Profile = () => {
                     }
 
                     {myUploads.map((upload) => {
-                        return (<div key={upload.id}>
-                            <Post
-                                hootId={upload.id}
-                                avatar="/images/default_user_profile.svg"
-                                username={upload.authorUsername}
-                                mimeType={upload.mimeType}
-                                hootImgId={upload.image}
-                                likes={upload.likes}
-                                caption={upload.caption}
-                                timeStamp={upload.timeStamp}
-                                edited={upload.edited}
-                                editedTimeStamp={upload.editedTimeStamp}
-                            />
-                        </div>)
+                        return (
+                            <div key={upload.id}>
+                                <Post
+                                    hootId={upload.id}
+                                    avatar="/images/default_user_profile.svg"
+                                    username={upload.authorUsername}
+                                    mimeType={upload.mimeType}
+                                    hootImgId={upload.image}
+                                    likes={upload.likes}
+                                    caption={upload.caption}
+                                    timeStamp={upload.timeStamp}
+                                    edited={upload.edited}
+                                    editedTimeStamp={upload.editedTimeStamp}
+                                />
+                            </div>
+                        )
                     }).reverse()}
                 </div>
             </div>

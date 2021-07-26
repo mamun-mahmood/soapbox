@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MediaContent = ({ mimeType, filePath }) => {
+const MediaContent = ({ mimeType, filePath, editOpen }) => {
     return (
         <div>
             {mimeType.match(/image/gi) == "image" &&
@@ -27,7 +27,7 @@ const MediaContent = ({ mimeType, filePath }) => {
 
             {mimeType.match(/audio/gi) == "audio" &&
                 <audio
-                    className="hoot-ado"
+                    className={editOpen ? "hoot-ado-fix" : "hoot-ado"}
                     controls
                 >
                     <source
