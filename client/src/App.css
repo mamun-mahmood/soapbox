@@ -171,7 +171,7 @@ code {
 }
 
 .user-info .display-name {
-  width: 500px;
+  width: auto;
 }
 
 .user-info .user-counts {
@@ -824,7 +824,13 @@ hr {
   transition: 0.3s;
 }
 
+.profile-hoot {
+  display: flex;
+  justify-content: center;
+}
+
 .profile-hoot a{
+  max-width: 10rem;
   text-decoration: none;
   display: block;
   text-align: center;

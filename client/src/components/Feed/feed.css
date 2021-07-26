@@ -13,6 +13,27 @@
     font-weight: 200;
 }
 
+.feed-hoot a {
+    text-decoration: none;
+  display: block;
+  text-align: center;
+  color: lavender;
+  font-weight: 600;
+  font-size: large;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  cursor: pointer;
+}
+
+.feed-hoot a:hover {
+    background-color: var(--on-hover);
+    border: 1px solid var(--on-hover);
+    border-color: var(--secondary-color);
+    transition: 0.3s;
+  }
 @media only screen and (min-width: 1025px) {
     .no-hoots-feed {
         margin: 1rem -2rem 0rem -10rem;

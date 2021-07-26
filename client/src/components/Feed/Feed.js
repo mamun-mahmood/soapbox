@@ -22,7 +22,7 @@ const Feed = () => {
             {uploads.length === 0 &&
                 <div className="no-hoots-feed">
                     <p>Your timeline is empty</p>
-                    <div className="profile-hoot">
+                    <div className="feed-hoot">
                         <Link to="/create">
                             Create Hoot
                         </Link>
