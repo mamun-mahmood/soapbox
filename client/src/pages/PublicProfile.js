@@ -43,25 +43,25 @@ const PublicProfile = () => {
                         </div>
 
                         <div className="user-counts">
-                            <div><span className="counts-bold">4177</span> posts</div>
-                            <div><span className="counts-bold">14.1M</span> followers</div>
-                            <div><span className="counts-bold">114</span> following</div>
+                            <div><span className="counts-bold">{users.length}</span> hoots</div>
+                            <div><span className="counts-bold">0</span> followers</div>
+                            <div><span className="counts-bold">0</span> following</div>
                         </div>
                         <div className="user-name">@{username}</div>
                         <div className="user-desc">
-                            The official home of Star Wars on Soapbox.
+                            {/* The official home of Star Wars on Soapbox. */}
                         </div>
                         <div>
-                            <a className="user-website" href="https://www.starwars.com/">www.starwars.com</a>
+                            {/* <a className="user-website" href="https://www.starwars.com/">www.starwars.com</a> */}
                         </div>
                         <div className="followed-by">
-                            <small >
+                            {/* <small >
                                 Followed by
                                 <span className="followed-by-user"> louis</span>,
                                 <span className="followed-by-user"> hrshmistry</span>,
                                 and
                                 <span className="followed-by-user"> aakash</span>
-                            </small>
+                            </small> */}
                         </div>
                     </div>
                 </div>

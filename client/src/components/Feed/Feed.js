@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import Post from '../Post'
 import ScrollToTop from './ScrollToTop'
 import './feed.css'
@@ -17,6 +18,18 @@ const Feed = () => {
 
     return (
         <div className="feed start">
+
+            {uploads.length === 0 &&
+                <div className="no-hoots-feed">
+                    <p>Your timeline is empty</p>
+                    <div className="profile-hoot">
+                        <Link to="/create">
+                            Create Hoot
+                        </Link>
+                    </div>
+                </div>
+            }
+
             {uploads.map((upload) => {
                 return (<div key={upload.id}>
                     <Post
@@ -34,7 +47,7 @@ const Feed = () => {
                 </div>)
             }).reverse()}
 
-            <ScrollToTop />
+            {uploads.length > 3 && <ScrollToTop />}
 
         </div>
     )

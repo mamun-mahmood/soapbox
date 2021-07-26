@@ -48,7 +48,7 @@ const NavBar = () => {
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                         {localStorage.getItem("loggedIn") ?
                             <Fragment>
-                                <Link className="nav-link" to="/public-profile"><BiSearch /></Link>
+                                {/* <Link className="nav-link" to="/public-profile"><BiSearch /></Link> */}
                                 <Link className="nav-link" to="/home">Home</Link>
                                 <Link className="nav-link" to="/create">Create Hoot</Link>
                                 <Link className="nav-link" to={`/profile/${username}`}>{userInfo && userInfo.username}</Link>

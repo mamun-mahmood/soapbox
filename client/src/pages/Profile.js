@@ -31,16 +31,16 @@ const Profile = () => {
                             <h1>{username}</h1>
                         </div>
                         <div className="user-counts">
-                            <div><span className="counts-bold">42</span> posts</div>
-                            <div><span className="counts-bold">10M</span> followers</div>
-                            <div><span className="counts-bold">400</span> following</div>
+                            <div><span className="counts-bold">{myUploads.length}</span> hoots</div>
+                            <div><span className="counts-bold">0</span> followers</div>
+                            <div><span className="counts-bold">0</span> following</div>
                         </div>
                         <div className="user-name">@{username}</div>
                         <div className="user-desc">
-                            Actor. Producer. Running in movies since 1981.
+                            {/* Actor. Producer. Running in movies since 1981. */}
                         </div>
                         <div>
-                            <a className="user-website" href="http://tomcruise.com/">tomcruise.com</a>
+                            {/* <a className="user-website" href="http://tomcruise.com/">tomcruise.com</a> */}
                         </div>
                         <button className="btn-edit-profile">Edit Profile</button>
                     </div>
@@ -62,7 +62,7 @@ const Profile = () => {
                         return (<div key={upload.id}>
                             <Post
                                 hootId={upload.id}
-                                avatar="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg"
+                                avatar="/images/default_user_profile.svg"
                                 username={upload.authorUsername}
                                 mimeType={upload.mimeType}
                                 hootImgId={upload.image}

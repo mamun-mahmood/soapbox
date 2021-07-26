@@ -252,13 +252,13 @@ hr {
 }
 
 .btn-follow {
-  height: 30px;
   display: flex;
-  background-color: var(--primary-color);
+  height: 30px;
   color: white;
+  background-color: var(--primary-color);
   border: 1px solid var(--primary-color);
   border-radius: 0.2rem;
-  margin-left: -3;
+  padding: 0 0.5rem;  
   margin: 0.5rem;
 }
 
@@ -346,39 +346,46 @@ hr {
   padding: 0.5rem 1rem;
 }
 
-@media only screen and (max-width: 1024px) {
-  .home {
-    margin: 1rem 18rem 0rem -1rem;
-    padding-left: 3rem;
-  }
-}
-
-@media only screen and (max-width: 900px) {
-  .home {
-    margin: 1rem 18rem 0rem 1.5rem;
-    padding: 0 0.5rem;
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  .home {
-    margin: 1rem 0;
-  }
-}
-
 @media only screen and (min-width: 1025px) {
   .home {
-    margin: 1rem 1.5rem 0rem -7rem;
+    margin: 1rem -2rem 0rem -10rem;
+    padding: 0.5rem 2rem;
   }
 }
 
 @media only screen and (min-width: 1200px) {
   .home {
-    margin: 1rem -0.5rem 0rem -6rem;
+    margin: 1rem 0rem 0rem -5.5rem;
   }
 }
 
 @media only screen and (min-width: 1300px) {
+  .home {
+    margin: 1rem 0;
+  }
+}
+
+@media only screen and (max-width: 1156px) {
+  .home {
+    margin: 1rem 0rem 0rem -6rem;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .home {
+    margin: 1rem 18rem 0rem -3rem;
+    padding-left: 3rem;
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .home {
+    margin: 1rem 20rem 0rem 1.5rem;
+    padding: 0.5rem 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 800px) {
   .home {
     margin: 1rem 0;
   }
@@ -785,7 +792,6 @@ hr {
   text-align: center;
   font-size: 2rem;
   font-weight: 200;
-  
 }
 
 .individual-hoot {

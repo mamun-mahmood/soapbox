@@ -1,19 +1,71 @@
 .feed {
     width: 40%;
+    /* height: 100vh; */
     margin-left: 30%;
     padding: 0 0.5rem;
-    border-right: 1px solid #9CA3AF;
+    /* border-right: 1px solid #9CA3AF; */
+}
+.no-hoots-feed {
+    padding: 1rem;
+    margin: 1rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 200;
 }
 
+@media only screen and (min-width: 1025px) {
+    .no-hoots-feed {
+        margin: 1rem -2rem 0rem -10rem;
+        padding: 0.5rem 2rem;
+    }
+}
+  
+@media only screen and (min-width: 1200px) {
+    .no-hoots-feed {
+        margin: 1rem 0rem 0rem -5.5rem;
+    }
+}
+  
+@media only screen and (min-width: 1300px) {
+    .no-hoots-feed {
+        margin: 1rem 0;
+    }
+}
+  
+@media only screen and (max-width: 1156px) {
+    .no-hoots-feed {
+        margin: 1rem -2rem 0rem -8rem;
+    }
+}
+  
+@media only screen and (max-width: 1024px) {
+    .no-hoots-feed {
+        margin: 1rem 18rem 0rem -3rem;
+        padding-left: 3rem;
+    }
+}
+  
+@media only screen and (max-width: 960px) {
+    .no-hoots-feed {
+        margin: 1rem 20rem 0rem 1.5rem;
+        padding: 0.5rem 0.5rem;
+    }
+}
+  
+@media only screen and (max-width: 800px) {
+    .no-hoots-feed {
+        margin: 1rem 0;
+    }
+}
 .btn-top a{
-    text-decoration: none;
     display: flex;
+    gap: 0.5rem;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
     text-align: center;
-    font-weight: 600;
+    text-decoration: none;
     font-size: medium;
+    font-weight: 600;
     padding: 0.5rem 1rem;
     margin: 2rem 12rem;
     color: var(--primary-color);
