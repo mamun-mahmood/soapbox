@@ -41,24 +41,24 @@ const IndividualHoot = () => {
             }
 
             <div className="individualHoot">
-                <div className="hootArea">
-                    {hoot.map((hoot) => {
-                        return (<div className="top-margin" key={hoot.id}>
-                            <Post
-                                hootId={hoot.id}
-                                avatar="/images/default_user_profile.svg"
-                                username={hoot.authorUsername}
-                                mimeType={hoot.mimeType}
-                                hootImgId={hoot.image}
-                                likes={hoot.likes}
-                                caption={hoot.caption}
-                                timeStamp={hoot.timeStamp}
-                                edited={hoot.edited}
-                                editedTimeStamp={hoot.editedTimeStamp}
-                            />
-                        </div>)
-                    }).reverse()}
-                </div>
+                {/* <div className="hootArea"> */}
+                {hoot.map((hoot) => {
+                    return (<div className="top-margin" key={hoot.id}>
+                        <Post
+                            hootId={hoot.id}
+                            avatar="/images/default_user_profile.svg"
+                            username={hoot.authorUsername}
+                            mimeType={hoot.mimeType}
+                            hootImgId={hoot.image}
+                            likes={hoot.likes}
+                            caption={hoot.caption}
+                            timeStamp={hoot.timeStamp}
+                            edited={hoot.edited}
+                            editedTimeStamp={hoot.editedTimeStamp}
+                        />
+                    </div>)
+                }).reverse()}
+                {/* </div> */}
 
                 <Comments comments={comments} hoot={hoot} />
             </div>

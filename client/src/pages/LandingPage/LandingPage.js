@@ -44,7 +44,7 @@ const LandingPage = () => {
                         Subscriptions
                     </div>
                     <div className="title">
-                        <a href="https://www.megahoot.com/">
+                        <a href="https://www.megahoot.com/" target="_blank" rel="nofollow">
                             MegaHoot Tech
                         </a>
                     </div>

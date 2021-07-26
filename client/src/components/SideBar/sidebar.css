@@ -42,6 +42,28 @@
     margin-left: 12rem;
 }
 
+.btn-XMG a{
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: large;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: #DCD5FA;
+    border: 1px solid #DCD5FA;
+    cursor: pointer;
+}
+
+.btn-XMG a:hover {
+    color: #DCD5FA;
+    background-color: var(--on-hover);
+    border: 1px solid var(--on-hover);
+    border-color: var(--secondary-color);
+    transition: 0.3s;
+}
+
 .btn-hoot a{
     text-decoration: none;
     display: block;
@@ -92,6 +114,11 @@
         margin: 1rem 1.3rem 1rem 2rem;
         margin-left: 0.3rem;
     }
+    .btn-XMG {
+        display: none;
+        margin: 1rem 1.3rem 1rem 2rem;
+        margin-left: 0.3rem;
+    }
 }
 
 @media only screen and (min-width: 1025px) {
@@ -109,6 +136,9 @@
         transition: 0.3s;
     }
     .btn-hoot {
+        margin: 1rem 1.3rem 1rem 1rem;
+    }
+    .btn-XMG {
         margin: 1rem 1.3rem 1rem 1rem;
     }
 }
@@ -130,6 +160,9 @@
         padding: 1rem 1.3rem 0.5rem 1rem;
     }
     .btn-hoot {
+        margin: 1rem 1.3rem 1rem 6rem;
+    }    
+    .btn-XMG {
         margin: 1rem 1.3rem 1rem 6rem;
     }    
 }
@@ -161,6 +194,10 @@
        transition: 0.3s;
     }
     .btn-hoot {
+        margin: 1rem 1.3rem 1rem 2rem;
+        margin-left: 12rem;
+    }
+    .btn-XMG {
         margin: 1rem 1.3rem 1rem 2rem;
         margin-left: 12rem;
     }

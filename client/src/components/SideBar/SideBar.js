@@ -30,6 +30,13 @@ const SideBar = () => {
                         Hoot
                     </Link>
                 </div>
+
+                <div className="btn-XMG">
+                    <Link to="/create">
+                        Connect XMG Wallet
+                    </Link>
+                </div>
+
             </ui>
         </div>
     )

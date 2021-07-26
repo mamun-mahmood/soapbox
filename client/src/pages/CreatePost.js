@@ -1,15 +1,21 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useRef } from 'react'
 import axios from 'axios'
 import { format } from 'date-fns'
 import { useState } from "react";
 import { Button } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
+import { IoCloseOutline } from 'react-icons/io5'
 import NavBar from '../components/NavBar'
+import MediaContent from '../components/MediaContent';
 
 const CreatePost = () => {
     const [caption, setCaption] = useState("");
     const [file, setFile] = useState([]);
+    const [src, setSrc] = useState(null);
+    const [mimeType, setMimeType] = useState("");
     const history = useHistory();
+
+    // const target = useRef(null);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -39,6 +45,13 @@ const CreatePost = () => {
                 console.log(response);
                 history.push("/home");
             })
+    }
+
+    const handleFile = (event) => {
+        const file = event.target.files[0];
+        setFile(file);
+        (file && setMimeType(file.type));
+        setSrc(URL.createObjectURL(file));
     }
 
     return (
@@ -74,10 +87,7 @@ const CreatePost = () => {
                                         id="post-image"
                                         name="photo"
                                         accept="image/*"
-                                        onChange={(event) => {
-                                            const file = event.target.files[0];
-                                            setFile(file);
-                                        }}
+                                        onChange={handleFile}
                                         hidden
                                     />
 
@@ -88,10 +98,7 @@ const CreatePost = () => {
                                         name="video"
                                         id="post-video"
                                         accept="video/*"
-                                        onChange={(event) => {
-                                            const file = event.target.files[0];
-                                            setFile(file);
-                                        }}
+                                        onChange={handleFile}
                                         hidden
                                     />
 
@@ -102,10 +109,7 @@ const CreatePost = () => {
                                         name="audio"
                                         id="post-audio"
                                         accept="audio/*"
-                                        onChange={(event) => {
-                                            const file = event.target.files[0];
-                                            setFile(file);
-                                        }}
+                                        onChange={handleFile}
                                         hidden
                                     />
                                 </div>
@@ -130,6 +134,54 @@ const CreatePost = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div className="media-preview">
+                    {mimeType === "" && <p>upload preview</p>}
+                    {mimeType !== "" &&
+                        <IoCloseOutline
+                            className="close-preview"
+                            onClick={() => {
+                                setMimeType("");
+                                setSrc(null);
+                            }}
+                        />
+                    }
+
+                    {mimeType.match(/image/gi) == "image" &&
+                        <img
+                            src={src}
+                            alt="soapbox-img"
+                            className="hoot-img"
+                        />
+                    }
+
+                    {mimeType.match(/video/gi) == "video" &&
+                        <video
+                            width="400"
+                            className="hoot-img"
+                            controls
+                        >
+                            <source
+                                src={src}
+                                type={mimeType}
+                            />
+                            Your browser does not support HTML video.
+                        </video>
+                    }
+
+                    {mimeType.match(/audio/gi) == "audio" &&
+                        <audio
+                            className="hoot-ado"
+                            controls
+                        >
+                            <source
+                                src={src}
+                                type={mimeType}
+                            />
+                            Your browser does not support the audio element.
+                        </audio>
+                    }
                 </div>
             </div>
         </Fragment>

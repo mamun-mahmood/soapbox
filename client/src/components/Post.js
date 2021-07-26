@@ -17,7 +17,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
     const BaseURL = process.env.REACT_APP_API_URL;
     const filePath = `${BaseURL}/images/${hootImgId}`;
 
-    const shareUrl = "https://www.megahoot.com/";
+    const shareUrl = "https://www.megahoot.net/";
     const shareCaption = `"${caption}" by @${username} from MegaHoot Soapbox,`;
     const shareLink = "https://unsplash.com/photos/bMXYQT4Ky5c";
 
