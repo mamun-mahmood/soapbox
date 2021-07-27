@@ -5,8 +5,8 @@
     position: fixed;
     left: 0%;
     height: 100%;
-    padding-top: 5rem;
-    border-right: 1px solid #9CA3AF;
+    padding-top: 5.4rem;
+    border-right: 1px solid var(--border-color);
 }
 
 .sidebar ui {
@@ -19,15 +19,15 @@
     text-decoration: none;
     align-items: center;
     color: var(--primary-color);
-    padding: 1rem 1rem 0.5rem 0rem;
+    padding: 0.7rem 1rem 0.7rem 0rem;
     margin: 0 1.3rem 0 8rem;
-    font-weight: 700;
+    font-weight: 600;
     font-size: large;
 }
 
 .sidebar ui li a:hover {
    background-color: #dcd5fa;
-   padding: 1rem 5rem 0.5rem 1rem;
+   padding: 0.7rem 5rem 0.7rem 1rem;
    border-radius: 0.5rem;
    transition: 0.3s;
 }
@@ -58,9 +58,14 @@
 
 .btn-XMG a:hover {
     color: #DCD5FA;
+    background-color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    transition: 0.3s;
+}
+.btn-XMG a:active {
+    color: #DCD5FA;
     background-color: var(--on-hover);
-    border: 1px solid var(--on-hover);
-    border-color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
     transition: 0.3s;
 }
 
@@ -87,6 +92,7 @@
 
 @media only screen and (max-width: 1024px) {
     .sidebar {
+        padding-top: 5.4rem;
         width: 50px;
         min-width: 30px;
     }
@@ -109,6 +115,10 @@
         transition: 0.3s;
     }
 
+    .sidebar-icon {
+        margin-right: 0.2rem;
+        font-size: x-large;
+    }
     .btn-hoot {
         display: none;
         margin: 1rem 1.3rem 1rem 2rem;
@@ -123,6 +133,7 @@
 
 @media only screen and (min-width: 1025px) {
     .sidebar {
+        padding-top: 5.4rem;
         width: 200px;
         min-width: 30px;
     }
@@ -131,7 +142,7 @@
     }
     .sidebar ui li a:hover {
         background-color: #dcd5fa;
-        padding: 1rem 1rem 0.5rem 1rem;
+        padding: 0.7rem 1rem 0.7rem 1rem;
         border-radius: 0.5rem;
         transition: 0.3s;
     }
@@ -140,6 +151,12 @@
     }
     .btn-XMG {
         margin: 1rem 1.3rem 1rem 1rem;
+    }
+    .btn-hoot a{
+        font-size: medium;
+    }
+    .btn-XMG a{
+        font-size: medium;
     }
 }
 
@@ -152,12 +169,13 @@
 @media only screen and (min-width: 1200px) {
     .sidebar {
         width: 23%;
+        padding-top: 5.4rem;
     }
     .sidebar ui li a {
         margin: 0 1.3rem 0 6rem;
     }
     .sidebar ui li a:hover {
-        padding: 1rem 1.3rem 0.5rem 1rem;
+        padding: 0.7rem 1.3rem 0.7rem 1rem;
     }
     .btn-hoot {
         margin: 1rem 1.3rem 1rem 6rem;
@@ -173,23 +191,24 @@
         position: fixed;
         left: 0%;
         height: 100%;
-        padding-top: 5rem;
-        border-right: 1px solid #9CA3AF;
+        padding-top: 5.4rem;
+        border-right: 1px solid var(--border-color);
     }
+
     .sidebar ui li a {
         display: flex;
         text-decoration: none;
         align-items: center;
         color: var(--primary-color);
-        padding: 1rem 1rem 0.5rem 0rem;
+        padding: 0.7rem 1rem 0.7rem 0rem;
         margin: 0 1.3rem 0 12rem;
-        font-weight: 700;
+        font-weight: 600;
         font-size: large;
     }
     
     .sidebar ui li a:hover {
        background-color: #dcd5fa;
-       padding: 1rem 5rem 0.5rem 1rem;
+       padding: 0.7rem 5rem 0.7rem 1rem;
        border-radius: 0.5rem;
        transition: 0.3s;
     }

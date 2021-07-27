@@ -125,7 +125,7 @@ const CreatePost = () => {
                             <div className="btn-post my-2">
                                 <Button
                                     variant="primary mx-1"
-                                    className="btn-login"
+                                    className="btn-create-hoot"
                                     onClick={upload}
                                     disabled={!caption}
                                 >
@@ -137,7 +137,7 @@ const CreatePost = () => {
                 </div>
 
                 <div className="media-preview">
-                    {mimeType === "" && <p>upload preview</p>}
+                    {mimeType === "" && <p>Upload Preview</p>}
                     {mimeType !== "" &&
                         <IoCloseOutline
                             className="close-preview"

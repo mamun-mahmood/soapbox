@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Post from '../components/Post'
 import NavBar from '../components/NavBar'
-// import Default from '../../public/images/default_user_profile.svg'
+import ScrollToTop from '../components/Feed/ScrollToTop'
 
 const Profile = () => {
     const { username } = useParams();
@@ -76,6 +76,9 @@ const Profile = () => {
                             </div>
                         )
                     }).reverse()}
+
+                    {myUploads.length > 3 && <ScrollToTop />}
+
                 </div>
             </div>
         </Fragment>

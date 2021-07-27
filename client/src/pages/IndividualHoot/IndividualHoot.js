@@ -15,11 +15,13 @@ const IndividualHoot = () => {
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
+        // here id is hootId 
         axios.get(`${BaseURL}/hoot/${id}`)
             .then((response) => {
                 setHoot(response.data);
             });
 
+        // here id is hootId 
         axios.get(`${BaseURL}/comment/${id}`)
             .then((response) => {
                 setComments(response.data);
@@ -60,7 +62,8 @@ const IndividualHoot = () => {
                 }).reverse()}
                 {/* </div> */}
 
-                <Comments comments={comments} hoot={hoot} />
+                {/* <Comments comments={comments} hoot={hoot} /> */}
+
             </div>
         </div>
     )

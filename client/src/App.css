@@ -26,6 +26,8 @@
   --primary-color: #8249A0;
   --secondary-color: #e5d6ec;
   --on-hover: #7a33a0;
+  /* --border-color: #DBDBDB; */
+  --border-color: #c7cdd6;
 }
 
 body {
@@ -42,6 +44,7 @@ body {
   --primary-color: #8249A0;
   --secondary-color: #e5d6ec;
   --on-hover: #7a33a0;
+  --border-color: #c7cdd6;
 }
 
 code {
@@ -125,6 +128,13 @@ code {
   box-shadow: 0 0 0 0.25rem var(--secondary-color);
 }
 
+.btn-create-hoot {
+  border-radius: 0.5rem !important;
+}
+.btn-edit-hoot {
+  border-radius: 0.5rem !important;
+}
+
 .home-link {
   text-decoration: none;
 }
@@ -147,8 +157,8 @@ code {
   border-radius: 50%;
   padding: 1rem;
   cursor: pointer;
-  filter: drop-shadow(0px 2px 2px #9CA3AF);
-
+  /* filter: drop-shadow(0px 2px 2px #9CA3AF); */
+  filter: drop-shadow(0px 0px 0.5px #9CA3AF);
 }
 
 .user-info {
@@ -160,12 +170,14 @@ code {
 }
 
 .display-name {
+  color: #374151;
   padding: 1rem 1rem 0 1rem;
 }
 
 .user-counts {
   display: flex;
   flex-wrap: wrap;
+  color: #374151;
   justify-content: space-between;
   padding: 0 1rem 1rem 1rem;
 }
@@ -185,6 +197,7 @@ code {
 
 .user-name {
   padding: 0 1rem;
+  color: #374151;
   font-weight: 700;
   cursor: pointer;
   display: inline;
@@ -215,20 +228,22 @@ hr {
 }
 
 .btn-edit-profile {
-  border: 1.5px solid rgb(175, 172, 172);
+  border: 1.5px solid var(--border-color);
   border-radius: 0.2rem;
   margin: 1rem 1rem 1rem;
   font-weight: 600;
   background-color: #F3F4F6;
   color: #374151;
   width: auto;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; */
+  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; */
 }
 
 .btn-edit-profile:hover {
   border-color: var(--on-hover);
   background-color: var(--primary-color);
   border-color: var(--secondary-color);
+  font-weight: 600;
   color: #F3F4F6;
   transition: 0.3s;
 }
@@ -381,12 +396,16 @@ hr {
   }
 }
 
+.hr-color {
+  color: transparent;
+}
+
 .home-container {
   max-width: 570px;
   height: auto;
   margin: 0 auto;
-  border: 1px solid #9CA3AF;
-  border-radius: 0.3rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
   background-color: rgb(237, 237, 255);
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 2px 1px;
 }
@@ -395,10 +414,8 @@ hr {
   display: flex;
 }
 
-
 /* .slide-bottom{animation:slide-bottom .5s cubic-bezier(.25,.46,.45,.94) both}
  @keyframes slide-bottom{0%{transform:translateY(0)}100%{transform:translateY(100px)}} */
-
 
 .avatar {
   border-radius: 50%;
@@ -406,7 +423,8 @@ hr {
   height: 50px;
   margin: 0.5rem;
   cursor: pointer;
-  filter: drop-shadow(0px 1px 1px #9CA3AF);
+  /* filter: drop-shadow(0px 1px 1px #9CA3AF); */
+  filter: drop-shadow(0px 0px 0.5px #9CA3AF);
 }
 
 .post-heading {
@@ -422,12 +440,13 @@ hr {
   padding: 0 0.4rem;
   font-weight: 600;
   cursor: pointer;
-
+  color: #374151;
 }
 
 .avatar_name {
   display: flex;
   align-items: center;
+  color: #374151;
 }
 
 .more {
@@ -436,6 +455,7 @@ hr {
   padding: 0 0.5rem;
   font-size: x-large;
   cursor: pointer;
+  color: #374151;
 }
 .more-icon {
   /* padding: 0.1rem; */
@@ -464,6 +484,13 @@ hr {
   font-size: 2rem;
   font-weight: 200;
   aspect-ratio: 16/9;
+  font-weight: 400;
+}
+
+@media only screen and (max-width: 550px) {
+  .media-preview p {
+    font-size: large;
+  }
 }
 
 .close-preview {
@@ -487,14 +514,14 @@ hr {
   max-height: 400px;
   object-fit: scale-down;
   padding: 0.5rem;
-  border-radius: 0.8rem;
+  border-radius: 0.95rem;
 }
 .hoot-vdo {
   width: 100%;
   max-height: 400px;
   object-fit: scale-down;
   padding: 0.5rem;
-  border-radius: 0.8rem;
+  border-radius: 0.95rem;
 }
 
 .hoot-ado {
@@ -503,7 +530,7 @@ hr {
   object-fit: scale-down;
   padding: 0.5rem;
   margin: 3rem 0;
-  border-radius: 0.8rem;
+  border-radius: 0.95rem;
 }
 
 .hoot-ado-fix {
@@ -512,7 +539,7 @@ hr {
   object-fit: scale-down;
   padding: 0.5rem;
   margin: 3rem 0;
-  border-radius: 0.8rem;
+  border-radius: 0.95rem;
 }
 .post-icons {
   position: relative;
@@ -580,8 +607,8 @@ hr {
   width: 300px;
   height: auto;
   background-color: #dcd5fa;
-  border: 0.1rem solid var(--primary-color);
-  border-radius: 0.3rem;
+  /* border: 0.1rem solid var(--primary-color); */
+  border-radius: 0.5rem;
   padding: 2rem;
   z-index: 1000;
   box-shadow: var(--secondary-color) 0px 0px 5px;
@@ -624,14 +651,14 @@ hr {
 }
 .share-icons:hover {
   background-color: #c6bafc;
-  border-radius: 0.3rem;
+  border-radius: 0.5rem;
   /* transform: scale(1.1); */
-  transition: 0.3s;
+  /* transition: 0.1s; */
 }
 .share-icons:active {
   background-color: #b1a1fa;
   border-radius: 0.3rem;
-  transition: 0.3s;
+  /* transition: 0.3s; */
 }
 
 .more-modal {
@@ -639,8 +666,8 @@ hr {
   top: 3.5rem;
   right: 0.8rem;
   background-color: #dcd5fa;
-  border: 0.1rem solid var(--primary-color);
-  border-radius: 0.3rem;
+  /* border: 0.1rem solid var(--primary-color); */
+  border-radius: 0.5rem;
   z-index: 1000;
   box-shadow: var(--secondary-color) 0px 0px 5px;
   transition: 0.3s;
@@ -654,11 +681,30 @@ hr {
   width: 900px;
   height: auto;
   background-color: #dcd5fa;
-  border: 0.1rem solid var(--primary-color);
-  border-radius: 0.3rem;
+  /* border: 0.1rem solid var(--primary-color); */
+  border-radius: 0.5rem;
   padding: 2rem;
   z-index: 1000;
   box-shadow: var(--secondary-color) 0px 0px 5px;
+}
+.edit-comment-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: auto;
+  background-color: #dcd5fa;
+  /* border: 0.1rem solid var(--primary-color); */
+  border-radius: 0.5rem;
+  padding: 2rem;
+  z-index: 1000;
+  box-shadow: var(--secondary-color) 0px 0px 5px;
+}
+@media only screen and (max-width: 580px) {
+  .edit-comment-modal {
+    width: 300px;
+  }
 }
 
 .edit-content {
@@ -734,8 +780,8 @@ hr {
   transform: translate(-50%, -50%);
   width: 600px;
   background-color: #dcd5fa;
-  border: 0.1rem solid var(--primary-color);
-  border-radius: 0.3rem;
+  /* border: 0.1rem solid var(--primary-color); */
+  border-radius: 0.5rem;
   padding: 2rem 2rem 1rem 2rem;
   z-index: 1000;
   box-shadow: var(--secondary-color) 0px 0px 5px;
@@ -783,8 +829,8 @@ hr {
 .more-options > span:hover {
   padding: 0.5rem;
   background-color: #c6bafc;
-  border-radius: 0.3rem;
-  transition: 0.3s;
+  border-radius: 0.5rem;
+  /* transition: 0.1s; */
 }
 .more-options > span:active {
   padding: 0.5rem;
@@ -799,8 +845,8 @@ hr {
 .more-options > span:last-child:hover {
   padding: 0.5rem;
   background-color: #c6bafc;
-  border-radius: 0.3rem;
-  transition: 0.3s;
+  border-radius: 0.5rem;
+  /* transition: 0.3s; */
 }
 .more-options > span:last-child:active {
   padding: 0.5rem;
@@ -968,10 +1014,11 @@ hr {
 }
 
 .comment-box button:hover {
-  border-color: var(--on-hover);
+  border-color: #aca2d3;
   background-color: #dcd5fa;
   transition: 0.3s;
 }
+
 .comment-box button:active {
   border-color: var(--secondary-color);
   background-color: var(--primary-color);
@@ -983,9 +1030,10 @@ hr {
   padding: 0 0.5rem;
   width: 90%;
   border: 1px solid #c7cdd6;
-  border-radius: 0.2rem;
+  border-radius: 0.5rem;
   background-color: #F9FAFB;
   outline: none;
+  font-size: small;
 }
 
 .post-time {
@@ -1007,8 +1055,8 @@ hr {
 .add-comment {
   padding: 0 0.5rem;
   margin: 0 0 0 0.4rem;
-  border: 1px solid #9CA3AF;
-  border-radius: 0.2rem;
+  border: 1px solid #c7cdd6;
+  border-radius: 0.5rem;
   color: #8249A0;
   background-color: #FAFAFA;
   font-weight: 600;
@@ -1096,7 +1144,7 @@ hr {
   width: 97%;
   height: 120px;
   border: 2px solid #565E69;
-  border-radius: 0.3rem;
+  border-radius: 0.5rem;
   margin: 0.5rem;
   /* padding: 0.5rem 0 0 0.5rem ; */
   padding: 0.5rem;
@@ -1110,7 +1158,17 @@ hr {
   width: 300px;
   height: 165px;
   border: 2px solid #565E69;
-  border-radius: 0.3rem;
+border-radius: 0.5rem;
+  margin: 0.5rem;
+  /* padding: 0.5rem 0 0 0.5rem ; */
+  padding: 0.5rem;
+  outline: none;
+}
+.editarea-comment-style {
+  width: 100%;
+  height: 165px;
+  border: 2px solid #565E69;
+border-radius: 0.5rem;
   margin: 0.5rem;
   /* padding: 0.5rem 0 0 0.5rem ; */
   padding: 0.5rem;
@@ -1151,6 +1209,7 @@ hr {
   user-select: none;
   background-color: transparent;
   border: 1px solid var(--primary-color);
+  border-radius: 0.5rem !important;
   padding: .375rem .75rem;
   margin-right: 0.5rem;
   margin-left: 0.25rem;
@@ -1161,12 +1220,14 @@ hr {
 
 .btn-label:hover {
   color: var(--secondary-color);
-  background-color: var(--on-hover);
-  border-color: var(--on-hover);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
-.btn-label:focus {
-  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 50%);
+.btn-label:active {
+  color: var(--secondary-color);
+  background-color: var(--on-hover);
+  border-color: var(--on-hover);
 }
 
 @media screen and (max-width: 768px) {

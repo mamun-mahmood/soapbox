@@ -6,11 +6,11 @@ const Engagements = () => {
     return (
         <div className="engagements">
             <div className="engagements-title">
-                <h4>Engagements</h4>
+                <h5>Engagements</h5>
             </div>
             <div className="trends-card">
                 <div className="trends-heading">
-                    <h3>Trending</h3>
+                    <h4>Trending</h4>
                 </div>
                 <Trends />
                 <Trends />

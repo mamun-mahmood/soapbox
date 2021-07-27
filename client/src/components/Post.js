@@ -3,7 +3,8 @@ import axios from 'axios'
 import format from "date-fns/format"
 import SocialShare from './SocialShare';
 import MediaContent from './MediaContent';
-import { Link, useHistory } from 'react-router-dom'
+import Comments from './Comments';
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded, BiComment, BiBookmark } from 'react-icons/bi'
 import { FiTwitter, FiShare2, FiRepeat, FiMail } from 'react-icons/fi'
@@ -12,6 +13,7 @@ import { RiFacebookCircleLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
+import HootComments from './HootComments';
 
 const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, timeStamp, edited, editedTimeStamp }) => {
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -42,6 +44,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
     const [newComment, setNewComment] = useState("");
 
     const history = useHistory();
+    const location = useLocation();
 
     // timeStamp can be implemented at server-side...
     const date = new Date();
@@ -60,6 +63,14 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
             // console.log(response.data.likes);
         })
     }, [likesCount])
+
+    //getting all comments
+    useEffect(() => {
+        axios.get(`${BaseURL}/comment/${hootId}`)
+            .then((response) => {
+                setComments(response.data);
+            });
+    }, [])
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
     const path = (userInfo.username === username ? "/profile" : "/user");
@@ -97,15 +108,27 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
 
     const addComment = () => {
         axios.post(`${BaseURL}/comment/`, {
+            username: userInfo.username,
             commentBody: newComment,
             hootId: hootId
         }).then((response) => {
             setNewComment("");
+
+            const addNewComment = {
+                username: userInfo.username,
+                commentBody: newComment
+            }
+            setComments([...comments, addNewComment])
             console.log("comment added");
         })
+    }
 
-        window.location.reload();
-        console.log(newComment);
+    const copyToClipboard = () => {
+        const hootURL = "megahoot.net";
+        navigator.clipboard.writeText(`${hootURL}/hoot/${hootId}`);
+        setTimeout(() => {
+            setIsMoreModalOpen(false)
+        }, 100);
     }
 
     return (
@@ -131,14 +154,14 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                                     <div className="more-options">
                                         <span onClick={openDeleteModal}> Delete</span>
                                         <span onClick={openEditModal}>Edit</span>
-                                        <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Copy Link</span>
+                                        <span onClick={copyToClipboard}>Copy Link</span>
                                         <span onClick={() => { history.push(`/hoot/${hootId}`) }}>Go to Hoot</span>
                                         <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span>
                                     </div>
                                 }
                                 {username === userInfo.username ||
                                     <div className="more-options">
-                                        <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Copy Link</span>
+                                        <span onClick={copyToClipboard}>Copy Link</span>
                                         <span onClick={() => { history.push(`/hoot/${hootId}`) }}>Go to Hoot</span>
                                         <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span>
                                     </div>
@@ -192,7 +215,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                                                     <div className="btn-post my-2">
                                                         <Button
                                                             variant="primary mx-1"
-                                                            className="btn-login"
+                                                            className="btn-edit-hoot"
                                                             onClick={editHoot}
                                                             disabled={!editCaption}
                                                         >
@@ -214,7 +237,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                         <Fragment>
                             <div className="modal-overlay"></div>
                             <div className="delete-modal">
-                                <h4>Delete Hoot?</h4>
+                                <h4>Delete Hoot</h4>
                                 <div className="delete-info">Are you sure you want to delete this hoot? This can’t be undone and it will be removed from your profile and from Soapbox search results.</div>
                                 <div className="btn-post mt-3 delete-info">
                                     <Button
@@ -231,7 +254,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                     }
 
                 </div>
-                <hr className="mx-1" />
+                {/* <hr className="mx-1" /> */}
                 <div className="post-media">
                     <MediaContent mimeType={mimeType} filePath={filePath} />
                 </div>
@@ -373,20 +396,26 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                     </Link>
                     {" "}<span className="hoot-comment">{caption}</span>
                 </div>
+
                 <div className="view-post-comment">
+                    {/* {comments.length > 0 && */}
                     <div
                         className="post-view-comment"
                         onClick={() => { history.push(`/hoot/${hootId}`) }}
                     >
-                        View all comments
+                        View all {comments.length} comments
                     </div>
+                    {/* } */}
+
                     {(isEdited === 1) && <small class="badge outline-badge">EDITED</small>}
                 </div>
+
                 <div className="view-post-comment">
                     <div className="post-time">{timeStamp}</div>
                     {(isEdited === 1) && <div className="post-time">last edited at {editedTimeStamp}</div>}
                 </div>
-                <hr className="mx-1 my-2" />
+
+                <hr className="mx-1 my-1 hr-color" />
 
                 {/* Comment Box */}
                 <div className="comment-box">
@@ -405,6 +434,13 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                         hoot
                     </button>
                 </div>
+
+                {(location.pathname).match(/hoot/gi) == "hoot" ?
+                    comments.length > 0 && <HootComments comments={comments} sliceValue={0} />
+                    :
+                    comments.length > 0 && <HootComments comments={comments} sliceValue={-2} />
+                }
+
             </div>
         </div>
     )

@@ -6,7 +6,7 @@ const Trends = () => {
         {
             id: 1,
             trendsHeading: "Trending in USA",
-            trendsKeyword: "Vero SoapBox",
+            trendsKeyword: "MegaHoot Soapbox",
             trendsHoots: "710k"
         },
         {
