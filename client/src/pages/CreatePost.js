@@ -66,7 +66,7 @@ const CreatePost = () => {
                     <div className="post-content">
                         <textarea
                             autoFocus
-                            maxLength="255"
+                            maxLength="300"
                             className="textarea-style"
                             placeholder="What's on your mind?"
                             value={caption}
@@ -116,9 +116,9 @@ const CreatePost = () => {
                             </form>
 
                             <div className="caption-count">
-                                <h6 className={caption.length > 220 && "text-danger"}>
+                                <h6 className={caption.length > 280 && "text-danger"}>
                                     {" "}
-                                    {caption.length}/255
+                                    {caption.length}/300
                                 </h6>
                             </div>
 

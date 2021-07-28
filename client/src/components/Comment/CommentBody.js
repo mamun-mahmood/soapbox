@@ -6,26 +6,26 @@ import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { IoCloseOutline } from 'react-icons/io5'
 
 const CommentBody = ({ id, username, commentBody }) => {
-    const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isCMoreModalOpen, setIsCMoreModalOpen] = useState(false);
+    const [isCDeleteModalOpen, setIsCDeleteModalOpen] = useState(false);
+    const [isCEditModalOpen, setIsCEditModalOpen] = useState(false);
     const [editComment, setEditComment] = useState("")
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
     const BaseURL = process.env.REACT_APP_API_URL;
 
     const openDeleteModal = () => {
-        setIsDeleteModalOpen(true);
-        setIsMoreModalOpen(false);
+        setIsCDeleteModalOpen(true);
+        setIsCMoreModalOpen(false);
     }
 
     const openEditModal = () => {
-        setIsEditModalOpen(true);
-        setIsMoreModalOpen(false);
+        setIsCEditModalOpen(true);
+        setIsCMoreModalOpen(false);
     }
 
     const deleteComment = () => {
-        setIsMoreModalOpen(false);
+        setIsCMoreModalOpen(false);
         axios.delete(`${BaseURL}/comment/delete/${commentBody}`, {
             username: userInfo.username,
         });
@@ -44,12 +44,12 @@ const CommentBody = ({ id, username, commentBody }) => {
     }
 
     return (
-        <div>
+        <Fragment>
             {/* Delete Modal */}
-            {isDeleteModalOpen &&
+            {isCDeleteModalOpen &&
                 <Fragment>
-                    <div className="modal-overlay"></div>
-                    <div className="delete-modal">
+                    {/* <div className="modal-overlay"></div> */}
+                    <div className="comment-delete-modal">
                         <h4>Delete Comment</h4>
                         <div className="delete-info">Are you sure you want to delete this comment?</div>
                         <div className="btn-post mt-3 delete-info">
@@ -61,15 +61,15 @@ const CommentBody = ({ id, username, commentBody }) => {
                                 Delete
                             </Button>{' '}
                         </div>
-                        <IoCloseOutline className="close-modal" onClick={() => setIsDeleteModalOpen(false)} />
+                        <IoCloseOutline className="close-modal" onClick={() => setIsCDeleteModalOpen(false)} />
                     </div>
                 </Fragment>
             }
 
             {/* Edit Modal */}
-            {isEditModalOpen &&
+            {isCEditModalOpen &&
                 <Fragment>
-                    <div className="modal-overlay"></div>
+                    {/* <div className="modal-overlay"></div> */}
                     <div className="outer-div">
                         <div className="edit-comment-modal">
                             {/* edit username  */}
@@ -81,13 +81,17 @@ const CommentBody = ({ id, username, commentBody }) => {
                             {/* <div className="edit-content"> */}
                             <div className="edit-caption d-flex flex-wrap">
                                 <div className="edit-profile-username">
-                                    <img className="avatar" src="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg" alt="avatar" />
+                                    <img
+                                        className="avatar"
+                                        src="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg"
+                                        alt="avatar"
+                                    />
                                     <div className="name avatar_name">{userInfo && userInfo.username}</div>
                                 </div>
                                 <div className="post-content">
                                     <textarea
                                         autoFocus
-                                        maxLength="255"
+                                        maxLength="300"
                                         className="editarea-comment-style"
                                         placeholder="What to edit?"
                                         value={editComment}
@@ -110,14 +114,14 @@ const CommentBody = ({ id, username, commentBody }) => {
                                 </div>
                             </div>
                             {/* </div> */}
-                            <IoCloseOutline className="close-modal" onClick={() => setIsEditModalOpen(false)} />
+                            <IoCloseOutline className="close-modal" onClick={() => setIsCEditModalOpen(false)} />
                         </div>
                     </div>
                 </Fragment>
             }
 
             {/* More Option Modal */}
-            {isMoreModalOpen &&
+            {isCMoreModalOpen &&
                 <Fragment>
                     <div className="comment-modal">
                         {username === userInfo.username &&
@@ -137,7 +141,8 @@ const CommentBody = ({ id, username, commentBody }) => {
 
             <div className="main">
                 <div className="">
-                    <span className="owner">{username}</span>
+                    <span className="owner">{username}{" "}@{username}</span>
+                    <br />
                     <span className="content">
                         {commentBody}
                     </span>
@@ -146,11 +151,11 @@ const CommentBody = ({ id, username, commentBody }) => {
                 <div className="c-more">
                     <BiDotsHorizontalRounded
                         className="more-icon"
-                        onClick={() => setIsMoreModalOpen(!isMoreModalOpen)}
+                        onClick={() => setIsCMoreModalOpen(!isCMoreModalOpen)}
                     />
                 </div>
             </div>
-        </div>
+        </Fragment>
     )
 }
 

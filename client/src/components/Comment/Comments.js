@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import CommentBody from './CommentBody';
 
 const Comments = ({ comments, username }) => {
@@ -22,19 +22,17 @@ const Comments = ({ comments, username }) => {
                 } */}
 
                 {comments.length > 0 &&
-                    <div className="">
+                    <Fragment className="">
                         {comments.map((comment) => {
                             return (
-                                <div className="comment-info">
-                                    <CommentBody
-                                        id={comment.id}
-                                        username={username}
-                                        commentBody={comment.commentBody}
-                                    />
-                                </div>
+                                <CommentBody
+                                    id={comment.id}
+                                    username={username}
+                                    commentBody={comment.commentBody}
+                                />
                             )
                         }).reverse()}
-                    </div>
+                    </Fragment>
                 }
             </div>
         </div>

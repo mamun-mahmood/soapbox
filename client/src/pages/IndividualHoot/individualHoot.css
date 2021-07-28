@@ -100,22 +100,30 @@
     position: relative;
     padding: 0.5rem; 
     margin: 0.5rem;
-    background-color: rgb(237, 237, 255);
+    background-color: #e2def8;
     border-radius: 0.5rem;
-    border: 1px solid lightgray;
+    /* border: 1px solid lightgray; */
+    line-height: 0.9rem;
+    color: var(--text-color);
+}
+
+@media only screen and (max-width: 700px) {
+  .comment-info .content {
+    font-size: 0.7rem !important;
+  }
 }
 
 .comment-info .owner {
     font-weight: 500;
     margin: 0;
-    /* font-size: large; */
+    font-size: small;
 }
 
 .comment-info .content {
     width: auto;
     height: auto;
-    padding-left: 0.5rem; 
-    font-size: 1rem;
+    /* padding: 0 0.5rem;  */
+    font-size: small;
 }
 
 .comment-info .main {
@@ -125,20 +133,57 @@
 }
 
 .comment-info .c-more {
-    /* position: relative; */
+    position: relative;
     cursor: pointer;
     color: #374151;
 }
 
+.comment-delete-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  background-color: #dcd5fa;
+  /* border: 0.1rem solid var(--primary-color); */
+  border-radius: 0.5rem;
+  padding: 2rem 2rem 1rem 2rem;
+  z-index: 1000;
+  box-shadow: rgb(0, 0, 0,0.3) 0px 0px 5px;
+}
+.comment-delete-modal h4 {
+  text-align: center;
+}
+
+.edit-comment-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: auto;
+  background-color: #dcd5fa;
+  /* border: 0.1rem solid var(--primary-color); */
+  border-radius: 0.5rem;
+  padding: 2rem;
+  z-index: 1000;
+  box-shadow: rgb(0, 0, 0,0.3) 0px 0px 5px;
+}
+@media only screen and (max-width: 580px) {
+  .edit-comment-modal {
+    width: 300px;
+  }
+}
+
 .comment-modal {
     position: absolute;
-    top: -0.9rem;
+    top: 0.3rem;
     right: 2rem;
     background-color: #dcd5fa;
     /* border: 0.1rem solid var(--primary-color); */
     border-radius: 0.5rem;
-    z-index: 1000;
-    box-shadow: var(--secondary-color) 0px 0px 5px;
+    z-index: 1111;
+    box-shadow: rgb(0, 0, 0,0.3) 0px 0px 5px;
     transition: 0.3s;
 }
 
@@ -149,7 +194,7 @@
 }
 
 .comment-options > span {
-    padding: 0.3rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     cursor: pointer;
     font-weight: 600;
     font-size: small;
@@ -157,13 +202,13 @@
     color: #374151;
   }
   .comment-options > span:hover {
-    padding: 0.3rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     background-color: #c6bafc;
     border-radius: 0.5rem;
     /* transition: 0.1s; */
   }
   .comment-options > span:active {
-    padding: 0.3rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     background-color: #b1a1fa;
     border-radius: 0.3rem;
     transition: 0.3s;

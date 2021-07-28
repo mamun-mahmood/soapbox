@@ -1,19 +1,17 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import axios from 'axios'
 import format from "date-fns/format"
-import SocialShare from './SocialShare';
 import MediaContent from './MediaContent';
-import Comments from './Comments';
+import HootComments from './Comment/HootComments';
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded, BiComment, BiBookmark } from 'react-icons/bi'
-import { FiTwitter, FiShare2, FiRepeat, FiMail } from 'react-icons/fi'
+import { FiTwitter, FiShare2, FiRepeat, FiMail, FiMessageSquare, FiEye } from 'react-icons/fi'
 import { FaHeart, FaRegHeart, FaTumblr } from 'react-icons/fa'
 import { RiFacebookCircleLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
-import HootComments from './HootComments';
 
 const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, timeStamp, edited, editedTimeStamp }) => {
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -36,6 +34,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [editCaption, setEditCaption] = useState("");
     const [isEdited, setIsEdited] = useState(edited);
     const [liked, setLiked] = useState(false);
@@ -124,11 +123,15 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
     }
 
     const copyToClipboard = () => {
-        const hootURL = "megahoot.net";
-        navigator.clipboard.writeText(`${hootURL}/hoot/${hootId}`);
+        const hostURL = "megahoot.net";
+        navigator.clipboard.writeText(`${hostURL}/hoot/${hootId}`);
         setTimeout(() => {
             setIsMoreModalOpen(false)
         }, 100);
+    }
+
+    const openComments = () => {
+        setIsCommentModalOpen(true)
     }
 
     return (
@@ -139,13 +142,15 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                         <img class="avatar" src={avatar} alt="avatar" />
                         <div className="name">{username}</div>
                     </div>
-                    <div className="more">
-                        <BiDotsHorizontalRounded
-                            className="more-icon"
-                            onClick={() => setIsMoreModalOpen(!isMoreModalOpen)}
-                        />
+                    <div className="user-actions">
+                        <button className="btn-hoot-follow">Follow</button>
+                        <div className="more">
+                            <BiDotsHorizontalRounded
+                                className="more-icon"
+                                onClick={() => setIsMoreModalOpen(!isMoreModalOpen)}
+                            />
+                        </div>
                     </div>
-
                     {/* More Option Modal */}
                     {isMoreModalOpen &&
                         <Fragment>
@@ -253,13 +258,66 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                         </Fragment>
                     }
 
+                    {/* Comment Modal */}
+                    {isCommentModalOpen &&
+                        <Fragment>
+                            <div className="modal-overlay"></div>
+                            <div className="hoot-comment-modal">
+                                <h4>{comments.length > 0 && comments.length} Comments,</h4>
+                                {/* Comment Box */}
+                                <div className="comment-box">
+                                    <input
+                                        className="comment-input"
+                                        type="text"
+                                        maxLength="300"
+                                        value={newComment}
+                                        placeholder="Add a comment..."
+                                        onChange={(event) => {
+                                            setNewComment(event.target.value);
+                                        }} />
+                                    <button
+                                        className="add-comment"
+                                        onClick={addComment}
+                                    >
+                                        hoot
+                                    </button>
+                                </div>
+
+                                {/* comments list */}
+                                {/* comments based on location */}
+                                {/* {(location.pathname).match(/hoot/gi) == "hoot" ?
+                                    comments.length > 0 && <HootComments comments={comments} sliceValue={0} />
+                                    :
+                                    comments.length > 0 && <HootComments comments={comments} sliceValue={-2} />
+                                } */}
+
+                                {/* all comments */}
+                                <div className="commets-scroll">
+                                    {comments.length > 0 && <HootComments comments={comments} sliceValue={0} />}
+                                </div>
+
+                                <IoCloseOutline className="close-modal" onClick={() => setIsCommentModalOpen(false)} />
+                            </div>
+                        </Fragment>
+                    }
+
+                </div>
+                <div className="post-comment">
+                    {/* <Link className="name-comment">
+                        <span onClick={() => { history.push(`${path}/${username}`) }}
+                        >
+                            {username}
+                        </span>
+                    </Link> */}
+                    {" "}<span className="hoot-comment">{caption}</span>
                 </div>
                 {/* <hr className="mx-1" /> */}
-                <div className="post-media">
-                    <MediaContent mimeType={mimeType} filePath={filePath} />
-                </div>
-                <div className="post-icons">
-                    <div className="grp-1">
+                <div className="right-icons">
+                    <div className="post-media">
+                        <MediaContent mimeType={mimeType} filePath={filePath} />
+                    </div>
+                    <div className="post-icons">
+                        {/* <div className="grp-1"> */}
                         <div className="like-count">
                             <div className="like">
                                 {liked ? <FaHeart
@@ -274,14 +332,22 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                             </div>
                             <div className="like-count">{likesCount}</div>
                         </div>
-                        <div className="comment">
-                            <BiComment className="cursor-pointer" />
+                        <div className="comment-count">
+                            <div className="comment">
+                                <FiMessageSquare
+                                    className="cursor-pointer"
+                                    onClick={openComments}
+                                />
+                                <div className="comment-count">{comments.length}</div>
+                            </div>
                         </div>
-                        <div className="rehoot">
-                            <FiRepeat className="cursor-pointer" />
+                        <div className="view-count">
+                            <div className="view">
+                                <FiEye className="cursor-pointer" />
+                            </div>
+                            <div className="view-count">971</div>
                         </div>
-                        {/* </div>
-                    <div className="grp-2"> */}
+
                         <div className="share">
                             <FiShare2
                                 onClick={() => setIsShareModalOpen(!isShareModalOpen)}
@@ -305,6 +371,16 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                                         <SocialShare share={pinterestShare} Icon={ImPinterest2} name="Pinterest" />
                                         <SocialShare share={linkedInShare} Icon={AiOutlineLinkedin} name="LinkedIn" />
                                         <SocialShare share={tumblrShare} Icon={FiTwitter} name="Tumblr" /> */}
+                                        <div className="share-icons">
+                                            <a target="_blank" rel="nofollow" class="block button-transparent">
+                                                <div className="share-icons-text">
+                                                    <FiRepeat className="twitter-share" />
+                                                    <span className="share-hoot-to">
+                                                        Re-hoot
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </div>
                                         <div className="share-icons">
                                             <a href={twitterShare} target="_blank" rel="nofollow" class="block button-transparent">
                                                 <div className="share-icons-text">
@@ -384,10 +460,12 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                         <div className="save">
                             <BiBookmark className="cursor-pointer" />
                         </div>
+                        {/* </div> */}
                     </div>
                 </div>
+
                 {/* <div className="like-count">{likesCount} likes</div> */}
-                <div className="post-comment">
+                {/* <div className="post-comment">
                     <Link className="name-comment">
                         <span onClick={() => { history.push(`${path}/${username}`) }}
                         >
@@ -395,33 +473,37 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                         </span>
                     </Link>
                     {" "}<span className="hoot-comment">{caption}</span>
-                </div>
+                </div> */}
 
                 <div className="view-post-comment">
                     {/* {comments.length > 0 && */}
-                    <div
+
+                    {/* <div
                         className="post-view-comment"
                         onClick={() => { history.push(`/hoot/${hootId}`) }}
                     >
-                        View all {comments.length} comments
-                    </div>
+                        View all {comments.length > 0 && comments.length} comments
+                    </div> */}
+
                     {/* } */}
 
-                    {(isEdited === 1) && <small class="badge outline-badge">EDITED</small>}
+                    {(isEdited === 1) && <small class="badge outline-badge d-flex flex-end">EDITED</small>}
                 </div>
 
-                <div className="view-post-comment">
+                {/*created time and  edited time */}
+                {/* <div className="view-post-comment">
                     <div className="post-time">{timeStamp}</div>
                     {(isEdited === 1) && <div className="post-time">last edited at {editedTimeStamp}</div>}
-                </div>
+                </div> */}
 
                 <hr className="mx-1 my-1 hr-color" />
 
                 {/* Comment Box */}
-                <div className="comment-box">
+                {/* <div className="comment-box">
                     <input
                         className="comment-input"
                         type="text"
+                        maxLength="300"
                         value={newComment}
                         placeholder="Add a comment..."
                         onChange={(event) => {
@@ -433,13 +515,14 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                     >
                         hoot
                     </button>
-                </div>
+                </div> */}
 
-                {(location.pathname).match(/hoot/gi) == "hoot" ?
+                {/* comments list */}
+                {/* {(location.pathname).match(/hoot/gi) == "hoot" ?
                     comments.length > 0 && <HootComments comments={comments} sliceValue={0} />
                     :
                     comments.length > 0 && <HootComments comments={comments} sliceValue={-2} />
-                }
+                } */}
 
             </div>
         </div>

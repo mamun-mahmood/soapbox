@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 const MediaContent = ({ mimeType, filePath, editOpen }) => {
     return (
-        <div>
+        <Fragment>
             {mimeType.match(/image/gi) == "image" &&
                 <img
                     src={filePath}
@@ -37,7 +37,7 @@ const MediaContent = ({ mimeType, filePath, editOpen }) => {
                     Your browser does not support the audio element.
                 </audio>
             }
-        </div>
+        </Fragment>
     )
 }
 
