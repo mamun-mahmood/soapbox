@@ -8,6 +8,7 @@ const MediaContent = ({ mimeType, filePath, editOpen }) => {
                     src={filePath}
                     alt="soapbox-img"
                     className="hoot-img"
+                    onContextMenu={(e) => e.preventDefault()}
                 />
             }
 
@@ -16,6 +17,8 @@ const MediaContent = ({ mimeType, filePath, editOpen }) => {
                     width="400"
                     className="hoot-img"
                     controls
+                    controlsList="nodownload"
+                    onContextMenu={(e) => e.preventDefault()}
                 >
                     <source
                         src={filePath}
@@ -29,6 +32,8 @@ const MediaContent = ({ mimeType, filePath, editOpen }) => {
                 <audio
                     className={editOpen ? "hoot-ado-fix" : "hoot-ado"}
                     controls
+                    controlsList="nodownload"
+                    onContextMenu={(e) => e.preventDefault()}
                 >
                     <source
                         src={filePath}

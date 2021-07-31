@@ -83,7 +83,7 @@ const CommentBody = ({ id, username, commentBody }) => {
                                 <div className="edit-profile-username">
                                     <img
                                         className="avatar"
-                                        src="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg"
+                                        src="/images/default_user_profile.svg"
                                         alt="avatar"
                                     />
                                     <div className="name avatar_name">{userInfo && userInfo.username}</div>
@@ -99,7 +99,7 @@ const CommentBody = ({ id, username, commentBody }) => {
                                             setEditComment(event.target.value);
                                         }}
                                     ></textarea>
-                                    <div className="d-flex justify-content-between m-1 btn-caption-top">
+                                    <div className="d-flex justify-content-end pl-2 btn-caption-top">
                                         <div className="btn-post my-2">
                                             <Button
                                                 variant="primary mx-1"
@@ -141,7 +141,7 @@ const CommentBody = ({ id, username, commentBody }) => {
 
             <div className="main">
                 <div className="">
-                    <span className="owner">{username}{" "}@{username}</span>
+                    <span className="owner">{username}</span>
                     <br />
                     <span className="content">
                         {commentBody}

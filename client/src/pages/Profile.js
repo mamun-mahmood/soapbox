@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import axios from 'axios'
 import Post from '../components/Post'
 import NavBar from '../components/NavBar'
@@ -81,6 +82,28 @@ const Profile = () => {
 
                 </div>
             </div>
+
+            <Helmet>
+                {/* General tags */}
+                <title>{username} on MegaHoot Soapbox</title>
+                <meta name="description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                {/* <meta name="image" content={ } /> */}
+
+                {/* OpenGraph tags */}
+                {/* <meta property="og:url" content={ } />
+                {isBlogPost ? <meta property="og:type" content="article" /> : null}
+                <meta property="og:title" content={ } />
+                <meta property="og:description" content={ } />
+                <meta property="og:image" content={ } />
+                <meta property="fb:app_id" content={ } /> */}
+
+                {/* Twitter Card tags */}
+                {/* <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:creator" content={ } />
+                <meta name="twitter:title" content={ } />
+                <meta name="twitter:description" content={ } />
+                <meta name="twitter:image" content={ } /> */}
+            </Helmet>
         </Fragment>
     )
 }

@@ -1,93 +1,49 @@
 .individualHoot {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 
 .hootArea {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
+
 .comment-center {
-    /* display: grid;
-    place-items: center;
-    padding: 1rem; */
+  /* display: grid;
+  place-items: center;
+  padding: 1rem; */
 
-    /* margin: 1rem 0; */
-    padding: 0.5rem 1rem;
+  /* margin: 1rem 0; */
+  padding: 0.5rem 1rem;
 }
-
-@media only screen and (min-width: 1025px) {
-    .comment-center {
-      margin: 1rem -2rem 0rem -10rem;
-      padding: 0.5rem 2rem;
-    }
-  }
-  
-  @media only screen and (min-width: 1200px) {
-    .comment-center {
-      margin: 1rem 0rem 0rem -5.5rem;
-    }
-  }
-  
-  @media only screen and (min-width: 1300px) {
-    .comment-center {
-      margin: 1rem 0;
-    }
-  }
-  
-  @media only screen and (max-width: 1156px) {
-    .comment-center {
-      margin: 1rem 0rem 0rem -6rem;
-    }
-  }
-  
-  @media only screen and (max-width: 1024px) {
-    .comment-center {
-      margin: 1rem 18rem 0rem -3rem;
-      padding-left: 3rem;
-    }
-  }
-  
-  @media only screen and (max-width: 960px) {
-    .comment-center {
-      margin: 1rem 20rem 0rem 1.5rem;
-      padding: 0.5rem 0.5rem;
-    }
-  }
-  
-  @media only screen and (max-width: 800px) {
-    .comment-center {
-      margin: 0rem 0;
-      padding: 0;
-    }
-  }
 
 .commentArea {
-    /* display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: auto;
-    align-items: center;
-    border: 2px solid var(--primary-color);
-    border-radius: 0.3rem; */
+  /* display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: auto;
+  align-items: center;
+  border: 2px solid var(--primary-color);
+  border-radius: 0.3rem; */
 
-    max-width: 570px;
-    height: auto;
-    margin: 0 auto;
-    /* border: 1px solid var(--border-color); */
-    border-radius: 0.5rem;
-    /* background-color: rgb(237, 237, 255); */
-    /* box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 2px 1px; */
+  max-width: 570px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+
+  /* border: 1px solid var(--border-color); */
+  /* background-color: rgb(237, 237, 255); */
+  /* box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 2px 1px; */
 }
 
 .commentArea h3 {
-    width: 100%;
-    text-align: center;
-    padding: 1rem;
-    font-weight: 300;
-    border-bottom: 3px dashed var(--primary-color);
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  font-weight: 300;
+  border-bottom: 3px dashed var(--primary-color);
 }
 
 /* .commentArea .comment {
@@ -97,45 +53,37 @@
 } */
 
 .comment-info {
-    position: relative;
-    padding: 0.5rem; 
-    margin: 0.5rem;
-    background-color: #e2def8;
-    border-radius: 0.5rem;
-    /* border: 1px solid lightgray; */
-    line-height: 0.9rem;
-    color: var(--text-color);
-}
-
-@media only screen and (max-width: 700px) {
-  .comment-info .content {
-    font-size: 0.7rem !important;
-  }
+  position: relative;
+  padding: 0.5rem; 
+  margin: 0.5rem;
+  background-color: #e2def8;
+  border-radius: 0.5rem;
+  line-height: 0.9rem;
+  color: var(--text-color);
 }
 
 .comment-info .owner {
-    font-weight: 500;
-    margin: 0;
-    font-size: small;
+  font-weight: 500;
+  margin: 0;
+  font-size: small;
 }
 
 .comment-info .content {
-    width: auto;
-    height: auto;
-    /* padding: 0 0.5rem;  */
-    font-size: small;
+  width: auto;
+  height: auto;
+  font-size: small;
 }
 
 .comment-info .main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .comment-info .c-more {
-    position: relative;
-    cursor: pointer;
-    color: #374151;
+  position: relative;
+  cursor: pointer;
+  color: #374151;
 }
 
 .comment-delete-modal {
@@ -145,12 +93,12 @@
   transform: translate(-50%, -50%);
   width: 500px;
   background-color: #dcd5fa;
-  /* border: 0.1rem solid var(--primary-color); */
   border-radius: 0.5rem;
   padding: 2rem 2rem 1rem 2rem;
   z-index: 1000;
   box-shadow: rgb(0, 0, 0,0.3) 0px 0px 5px;
 }
+
 .comment-delete-modal h4 {
   text-align: center;
 }
@@ -160,134 +108,216 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
+  width: 380px;
   height: auto;
   background-color: #dcd5fa;
-  /* border: 0.1rem solid var(--primary-color); */
   border-radius: 0.5rem;
   padding: 2rem;
   z-index: 1000;
   box-shadow: rgb(0, 0, 0,0.3) 0px 0px 5px;
 }
-@media only screen and (max-width: 580px) {
-  .edit-comment-modal {
-    width: 300px;
-  }
+
+.editarea-comment-style {
+  width: 303px;
+  height: 165px;
+  border: 2px solid #565E69;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  outline: none;
+}
+
+.editarea-style:focus {
+  border: 2px solid var(--primary-color);
 }
 
 .comment-modal {
-    position: absolute;
-    top: 0.3rem;
-    right: 2rem;
-    background-color: #dcd5fa;
-    /* border: 0.1rem solid var(--primary-color); */
-    border-radius: 0.5rem;
-    z-index: 1111;
-    box-shadow: rgb(0, 0, 0,0.3) 0px 0px 5px;
-    transition: 0.3s;
+  position: absolute;
+  top: 0.3rem;
+  right: 2rem;
+  background-color: #dcd5fa;
+  border-radius: 0.5rem;
+  z-index: 1111;
+  box-shadow: rgb(0, 0, 0,0.3) 0px 0px 5px;
+  transition: 0.3s;
 }
 
 .comment-options {
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .comment-options > span {
-    padding: 0.5rem 0.5rem;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: small;
-    width: 80px;
-    color: #374151;
-  }
-  .comment-options > span:hover {
-    padding: 0.5rem 0.5rem;
-    background-color: #c6bafc;
-    border-radius: 0.5rem;
-    /* transition: 0.1s; */
-  }
-  .comment-options > span:active {
-    padding: 0.5rem 0.5rem;
-    background-color: #b1a1fa;
-    border-radius: 0.3rem;
-    transition: 0.3s;
-  }
-  /* .comment-options > span:last-child {
-    padding: 0.5rem;
-    color: #EF4444;
-  }
-  .comment-options > span:last-child:hover {
-    padding: 0.5rem;
-    background-color: #c6bafc;
-    border-radius: 0.5rem;
-  }
-  .comment-options > span:last-child:active {
-    padding: 0.5rem;
-    background-color: #b1a1fa;
-    border-radius: 0.3rem;
-    transition: 0.3s;
-  } */
+  padding: 0.5rem 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: small;
+  width: 80px;
+  color: #374151;
+}
+
+.comment-options > span:hover {
+  padding: 0.5rem 0.5rem;
+  background-color: #c6bafc;
+  border-radius: 0.5rem;
+}
+
+.comment-options > span:active {
+  padding: 0.5rem 0.5rem;
+  background-color: #b1a1fa;
+  border-radius: 0.3rem;
+  transition: 0.3s;
+}
 
 .top-margin {
-    margin-top: 5rem;
-    margin-bottom: 0.5rem;
-}
-
-@media only screen and (max-width: 1024px) {
-    /* .comment-center {
-        margin: 1rem 18rem 0rem -1rem;
-        padding-left: 3rem;
-    } */
-    /* .commentArea {
-        width: 85%;
-    } */
-}
-
-@media only screen and (max-width: 900px) {
-    /* .comment-center {
-        margin: 1rem 18rem 0rem 1.5rem;
-        padding: 0 0.5rem;
-    } */
-    /* .commentArea {
-        width: 100%;
-    } */
-}
-  
-@media only screen and (max-width: 800px) {
-    /* .comment-center {
-      margin: 1rem 0;
-      padding: 0 0.5rem;
-    } */
-    /* .commentArea {
-        width: 80%;
-    } */
-}
-
-@media only screen and (max-width: 700px) {
-    /* .comment-center {
-      margin: 1rem 0;
-      padding: 0 0.5rem;
-    } */
-    /* .commentArea {
-        width: 100%;
-    } */
+  margin-top: 5rem;
+  margin-bottom: 0.5rem;
 }
 
 @media only screen and (min-width: 1025px) {
-    /* .comment-center {
-      margin: 1rem 1.5rem 0rem -7rem;
-    } */
+  .comment-center {
+    margin: 1rem -2rem 0rem -10rem;
+    padding: 0.5rem 2rem;
+  }
 }
   
 @media only screen and (min-width: 1200px) {
-    /* .comment-center {
+  .comment-center {
+    margin: 1rem 0rem 0rem -5.5rem;
+  }
+}
+  
+@media only screen and (min-width: 1300px) {
+  .comment-center {
+    margin: 1rem 0;
+  }
+}
+  
+@media only screen and (max-width: 1156px) {
+  .comment-center {
+    margin: 1rem 0rem 0rem -6rem;
+  }
+}
+  
+@media only screen and (max-width: 1024px) {
+  .comment-center {
+    margin: 1rem 18rem 0rem -3rem;
+    padding-left: 3rem;
+  }
+}
+  
+@media only screen and (max-width: 960px) {
+  .comment-center {
+    margin: 1rem 20rem 0rem 1.5rem;
+    padding: 0.5rem 0.5rem;
+  }
+}
+  
+@media only screen and (max-width: 800px) {
+  .comment-center {
+    margin: 0rem 0;
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .comment-info .content {
+    font-size: 0.7rem !important;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .comment-delete-modal {
+    width: 280px;
+  }
+  .edit-comment-modal {
+    width: 300px;
+  }
+  .editarea-comment-style {
+    width: 205px;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .edit-comment-modal {
+    width: 280px;
+  }
+}
+
+/* .comment-options > span:last-child {
+  padding: 0.5rem;
+  color: #EF4444;
+}
+
+.comment-options > span:last-child:hover {
+  padding: 0.5rem;
+  background-color: #c6bafc;
+  border-radius: 0.5rem;
+}
+
+.comment-options > span:last-child:active {
+  padding: 0.5rem;
+  background-color: #b1a1fa;
+  border-radius: 0.3rem;
+  transition: 0.3s;
+} */
+
+/* 
+@media only screen and (max-width: 1024px) {
+    .comment-center {
+        margin: 1rem 18rem 0rem -1rem;
+        padding-left: 3rem;
+    }
+    .commentArea {
+        width: 85%;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .comment-center {
+        margin: 1rem 18rem 0rem 1.5rem;
+        padding: 0 0.5rem;
+    }
+    .commentArea {
+        width: 100%;
+    }
+}
+  
+@media only screen and (max-width: 800px) {
+    .comment-center {
+      margin: 1rem 0;
+      padding: 0 0.5rem;
+    }
+    .commentArea {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .comment-center {
+      margin: 1rem 0;
+      padding: 0 0.5rem;
+    }
+    .commentArea {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    .comment-center {
+      margin: 1rem 1.5rem 0rem -7rem;
+    }
+}
+  
+@media only screen and (min-width: 1200px) {
+    .comment-center {
       margin: 1rem -0.5rem 0rem -6rem;
-    } */
+    }
 }
 
 @media only screen and (min-width: 1300px) {
-    /* .comment-center {
+    .comment-center {
       margin: 1rem 0;
-    } */
-}
+    }
+} */

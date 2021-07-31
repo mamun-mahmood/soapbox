@@ -20,7 +20,9 @@ const NavBar = () => {
 
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top"
+                onContextMenu={(e) => e.preventDefault()}
+            >
                 <div className="container">
                     <Link to="/home" class="navbar-brand cursor-pointer">
                         <img
@@ -29,6 +31,7 @@ const NavBar = () => {
                             width="50"
                             height="50"
                             class="d-inline-block align-text-top"
+                            onContextMenu={(e) => e.preventDefault()}
                         />
                     </Link>
 

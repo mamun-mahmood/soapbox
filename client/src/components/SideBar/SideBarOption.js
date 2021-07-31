@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Children } from 'react'
 import { Link } from 'react-router-dom'
 
-const SideBarOption = ({ option, link, Icon }) => {
+const SideBarOption = ({ option, link, Icon, looks }) => {
     return (
-        <li>
-            <Link to={link}>
-                <Icon className="sidebar-icon" />
+        <li >
+            <Link className={looks} to={link}>
+                <Icon className={"sidebar-icon"} />
                 <span>
                     {option}
                 </span>

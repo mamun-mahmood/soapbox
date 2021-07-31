@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { Helmet } from "react-helmet";
 import LoginComp from '../../components/LoginComp'
 import SignupComp from '../../components/SignupComp'
 import './landingPage.css'
@@ -16,6 +17,29 @@ const LandingPage = () => {
 
     return (
         <div className="page">
+            <Helmet>
+                {/* General tags */}
+                <title>
+                    MegaHoot Soapbox Where Members Monetize Their Social Media Time
+                </title>
+                {/* <meta name="description" content={ } />
+                <meta name="image" content={ } /> */}
+
+                {/* OpenGraph tags */}
+                {/* <meta property="og:url" content={ } />
+                {isBlogPost ? <meta property="og:type" content="article" /> : null}
+                <meta property="og:title" content={ } />
+                <meta property="og:description" content={ } />
+                <meta property="og:image" content={ } />
+                <meta property="fb:app_id" content={ } /> */}
+
+                {/* Twitter Card tags */}
+                {/* <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:creator" content={ } />
+                <meta name="twitter:title" content={ } />
+                <meta name="twitter:description" content={ } />
+                <meta name="twitter:image" content={ } /> */}
+            </Helmet>
             <nav className="nav">
                 <div className="brand">
                     <Link to="/" class="navbar-brand cursor-pointer">
@@ -30,12 +54,13 @@ const LandingPage = () => {
                             </a>
                         </div>
                     </Link>
-                    {/* <Link className="brand-name" to="/">Soapbox</Link> */}
                 </div>
 
                 <ul className="list-inline">
                     <div className="title">
-                        How Soapbox Works
+                        <a href="https://www.megahoot.com/megahoot-soapbox/" target="_blank" rel="nofollow">
+                            How Soapbox Works
+                        </a>
                     </div>
                     <div className="title">
                         Soapbox FAQ
@@ -61,22 +86,33 @@ const LandingPage = () => {
                         />
                     </a>
                     <span>
-                        MegaHoot Soapbox where members monetize their social media time
+                        MegaHoot Soapbox Where Members Monetize Their Social Media Time
                     </span>
                 </div>
                 <div className="landing-rs">
-                    {toggle ? <LoginComp /> : <SignupComp />}
+                    <div>
+                        {toggle ? <LoginComp /> : <SignupComp />}
 
-                    {toggle ?
-                        <div className="text-center text-decoration-none mt-2">
-                            <small>New to Soapbox? </small>
-                            <Link onClick={() => { setToggle(false) }} className="text-decoration-none primary-color fw-bold"> Sign up</Link><br />
+                        {toggle ?
+                            <div className="text-center text-decoration-none mt-2">
+                                <small>New to Soapbox? </small>
+                                <Link onClick={() => { setToggle(false) }} className="text-decoration-none primary-color fw-bold"> Sign up</Link><br />
+                            </div>
+                            :
+                            <div className="text-center text-decoration-none mt-2">
+                                <small>Already have an account? </small>
+                                <Link onClick={() => { setToggle(true) }} className="text-decoration-none primary-color fw-bold">Login</Link>
+                            </div>
+                        }
+                    </div>
+                    <div className="invitation-only">
+                        <div>
+                            MegaHoot Soapbox <small className="badge solid-badge">BETA</small>
                         </div>
-                        :
-                        <div className="text-center text-decoration-none mt-2">
-                            <small>Already have an account? </small>
-                            <Link onClick={() => { setToggle(true) }} className="text-decoration-none primary-color fw-bold">Login</Link>
-                        </div>}
+                        <div>
+                            Temporary Invitation Only
+                        </div>
+                    </div>
                 </div>
             </main>
 

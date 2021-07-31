@@ -44,6 +44,7 @@ const Signup = () => {
                             placeholder="username"
                             value={username}
                             onChange={(event) => { setUsername(event.target.value) }}
+                            disabled
                         />
                     </Form.Group>
 
@@ -54,6 +55,7 @@ const Signup = () => {
                             placeholder="Enter email"
                             value={email}
                             onChange={(event) => { setEmail(event.target.value) }}
+                            disabled
                         />
                         <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
@@ -67,6 +69,7 @@ const Signup = () => {
                             placeholder="Password"
                             value={password}
                             onChange={(event) => { setPassword(event.target.value) }}
+                            disabled
                         />
                     </Form.Group>
 
@@ -75,7 +78,7 @@ const Signup = () => {
                         variant="primary"
                         type="submit"
                         onClick={signup}
-                        disabled={!username || !email || !password}
+                        disabled
                     >
                         Sign Up
                     </Button>

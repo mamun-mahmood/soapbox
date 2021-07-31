@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import axios from 'axios'
 import format from "date-fns/format"
+import { Helmet } from "react-helmet";
 import MediaContent from './MediaContent';
 import HootComments from './Comment/HootComments';
 import { Link, useHistory, useLocation } from 'react-router-dom'
@@ -15,20 +16,33 @@ import { AiOutlineLinkedin } from 'react-icons/ai'
 
 const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, timeStamp, edited, editedTimeStamp }) => {
     const BaseURL = process.env.REACT_APP_API_URL;
+
+    // main website name
+    const hostURL = "https://www.megahoot.net";
+
+    // images from server
     const filePath = `${BaseURL}/images/${hootImgId}`;
 
-    const shareUrl = "https://www.megahoot.net/";
-    const shareCaption = `"${caption}" by @${username} from MegaHoot Soapbox,`;
-    const shareLink = "https://unsplash.com/photos/bMXYQT4Ky5c";
+    // main server url
+    const serverURL = "https://soapboxapi.megahoot.net"
 
-    const twitterShare = `http://twitter.com/share?text=${shareCaption}&url=${shareUrl}&hashtags=megahoot,soapbox,twitter`;
+    // url for individual hoot 
+    const shareBaseUrl = `${hostURL}/hoot/${hootId}`;
+
+    // encoded share url for individual hoot to be shared on other social media
+    const shareUrl = encodeURIComponent(shareBaseUrl);
+    const shareCaption = encodeURIComponent(`${caption.length > 10 && caption.substring(0, 70)}... by ${username} from MegaHoot Soapbox`);
+    const shareHashtags = encodeURIComponent("megahoot,soapbox");
+
+    const twitterShare = `http://twitter.com/share?text=${shareCaption}&url=${shareUrl}&hashtags=${shareHashtags}`;
     const mailShare = `mailto:?subject="Hoot from MegaHoot Soapbox"&body=${shareCaption}%20Checkout more at ${shareUrl}`;
     const facebookShare = `https://www.facebook.com/sharer.php?u=${shareUrl}`;
     const redditShare = `https://reddit.com/submit?url=${shareUrl}&title=${shareCaption}`;
     // image is must to share something on pinterest.
-    const pinterestShare = `https://pinterest.com/pin/create/bookmarklet/?media=${shareLink}&url=${shareUrl}&description=jio`
+    const pinterestShare = `https://pinterest.com/pin/create/bookmarklet/?media=${filePath}&url=${shareUrl}&description=jio`
     const linkedInShare = `https://www.linkedin.com/shareArticle?url=${shareUrl}&title=${shareCaption}`
-    const tumblrShare = `https://www.tumblr.com/share/link?url=${shareUrl}&tags=megahoot,soapbox,tumblr&description=${shareCaption}`
+    const tumblrShare = `https://www.tumblr.com/share/link?url=${shareUrl}&tags=megahoot,soapbox&description=${shareCaption}`
+    // const tumblrShare = `https://www.tumblr.com/share/tool?posttype=photo&title=soapbox&content=${filePath}&caption=${shareCaption}`
 
     const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -73,6 +87,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
     const path = (userInfo.username === username ? "/profile" : "/user");
+    const profilePath = `/profile/${username}`
 
     const openDeleteModal = () => {
         setIsDeleteModalOpen(true);
@@ -123,8 +138,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
     }
 
     const copyToClipboard = () => {
-        const hostURL = "megahoot.net";
-        navigator.clipboard.writeText(`${hostURL}/hoot/${hootId}`);
+        navigator.clipboard.writeText(shareBaseUrl);
         setTimeout(() => {
             setIsMoreModalOpen(false)
         }, 100);
@@ -161,14 +175,15 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                                         <span onClick={openEditModal}>Edit</span>
                                         <span onClick={copyToClipboard}>Copy Link</span>
                                         <span onClick={() => { history.push(`/hoot/${hootId}`) }}>Go to Hoot</span>
-                                        <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span>
+                                        {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                     </div>
                                 }
+
                                 {username === userInfo.username ||
                                     <div className="more-options">
                                         <span onClick={copyToClipboard}>Copy Link</span>
                                         <span onClick={() => { history.push(`/hoot/${hootId}`) }}>Go to Hoot</span>
-                                        <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span>
+                                        {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                     </div>
                                 }
                                 {/* <IoCloseOutline className="close-modal" onClick={() => setIsMoreModalOpen(false)} /> */}
@@ -185,7 +200,12 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                                     {/* edit username  */}
                                     <h5>You are editing hoot as
                                         <span className="user-edit">
-                                            {" "}@<Link to="/profile" className="name-comment">{username}</Link>
+                                            {" "}@
+                                            <Link
+                                                to={profilePath}
+                                                className="name-comment">
+                                                {username}
+                                            </Link>
                                         </span>,
                                     </h5>
                                     <div className="edit-content">
@@ -196,7 +216,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                                         {/* right side edit box */}
                                         <div className="edit-caption d-flex flex-wrap">
                                             <div className="edit-profile-username">
-                                                <img className="avatar" src="https://pbs.twimg.com/profile_images/603269306026106880/42CwEF4n_200x200.jpg" alt="avatar" />
+                                                <img className="avatar" src={avatar} alt="avatar" />
                                                 <div className="name avatar_name">{userInfo && userInfo.username}</div>
                                             </div>
                                             <div className="post-content">
@@ -278,6 +298,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                                     <button
                                         className="add-comment"
                                         onClick={addComment}
+                                        disabled={!newComment}
                                     >
                                         hoot
                                     </button>
@@ -304,7 +325,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                 </div>
                 <div className="post-comment">
                     {/* <Link className="name-comment">
-                        <span onClick={() => { history.push(`${path}/${username}`) }}
+                        <span onClick={() => { history.push(`${ path } / ${ username }`) }}
                         >
                             {username}
                         </span>
@@ -467,7 +488,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                 {/* <div className="like-count">{likesCount} likes</div> */}
                 {/* <div className="post-comment">
                     <Link className="name-comment">
-                        <span onClick={() => { history.push(`${path}/${username}`) }}
+                        <span onClick={() => { history.push(`${ path } / ${ username }`) }}
                         >
                             {username}
                         </span>
@@ -475,26 +496,31 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                     {" "}<span className="hoot-comment">{caption}</span>
                 </div> */}
 
-                <div className="view-post-comment">
-                    {/* {comments.length > 0 && */}
+                {/* <div className="view-post-comment">
+                    {comments.length > 0 &&
 
-                    {/* <div
+                    <div
                         className="post-view-comment"
-                        onClick={() => { history.push(`/hoot/${hootId}`) }}
+                        onClick={() => { history.push(`/ hoot / ${ hootId }`) }}
                     >
                         View all {comments.length > 0 && comments.length} comments
-                    </div> */}
+                    </div>
 
-                    {/* } */}
+                    }
 
                     {(isEdited === 1) && <small class="badge outline-badge d-flex flex-end">EDITED</small>}
-                </div>
+                </div> */}
 
                 {/*created time and  edited time */}
-                {/* <div className="view-post-comment">
+                <div className="view-post-comment">
                     <div className="post-time">{timeStamp}</div>
-                    {(isEdited === 1) && <div className="post-time">last edited at {editedTimeStamp}</div>}
-                </div> */}
+                    {/* {(isEdited === 1) && <small class="badge outline-badge d-flex flex-end">EDITED</small>} */}
+                    {(isEdited === 1) &&
+                        <div className="post-time">
+                            last edited at {editedTimeStamp}
+                            {/* <small class="badge outline-badge d-flex flex-end">EDITED</small> */}
+                        </div>}
+                </div>
 
                 <hr className="mx-1 my-1 hr-color" />
 

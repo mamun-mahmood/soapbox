@@ -141,6 +141,11 @@ dl, ol, ul {
 
 .landing-rs {
     flex: 50%;
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 0.5rem;
 }
 
@@ -148,6 +153,25 @@ dl, ol, ul {
     color: var(--primary-color);
     font-size: 3rem;
     font-weight: 700;
+}
+
+.invitation-only div {
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.badge {
+    border-radius: 0.2rem !important;
+    background-color: #EDF2F7;
+    padding: 0.1rem 0.3rem;
+    font-weight: bold;
+}
+
+.solid-badge {
+    background-color: var(--on-hover);
+    border: solid 1px var(--on-hover);
+    color: white;
 }
 
 footer {
@@ -229,5 +253,9 @@ footer span {
         font-size: 1.5rem;
         font-weight: 700;
         text-align: center;
+    }
+
+    footer {
+        font-size: small;
     }
 }
