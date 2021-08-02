@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import axios from 'axios'
+import { Helmet } from 'react-helmet'
 import Post from '../components/Post'
 import NavBar from '../components/NavBar'
 import { useLocation, useParams } from 'react-router-dom'
@@ -85,6 +86,28 @@ const PublicProfile = () => {
                     }).reverse()}
                 </div>
             </div>
+
+            <Helmet>
+                {/* General tags */}
+                <title>{username} on MegaHoot Soapbox</title>
+                <meta name="description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                {/* <meta name="image" content={ } /> */}
+
+                {/* OpenGraph tags */}
+                {/* <meta property="og:url" content={ } />
+                {isBlogPost ? <meta property="og:type" content="article" /> : null}
+                <meta property="og:title" content={ } />
+                <meta property="og:description" content={ } />
+                <meta property="og:image" content={ } />
+                <meta property="fb:app_id" content={ } /> */}
+
+                {/* Twitter Card tags */}
+                {/* <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:creator" content={ } />
+                <meta name="twitter:title" content={ } />
+                <meta name="twitter:description" content={ } />
+                <meta name="twitter:image" content={ } /> */}
+            </Helmet>
         </Fragment>
     )
 }

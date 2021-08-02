@@ -77,10 +77,10 @@ const SideBar = () => {
                             <small class="badge-hashtag outline-badge-hashtags d-flex flex-end"># chilling</small>
                             <small class="badge-hashtag outline-badge-hashtags d-flex flex-end"># Soapbox</small>
                             <small class="badge-hashtag outline-badge-hashtags d-flex flex-end"># Vero</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end"># hoots</small>
+                            {/* <small class="badge-hashtag outline-badge-hashtags d-flex flex-end"># hoots</small>
                             <small class="badge-hashtag outline-badge-hashtags d-flex flex-end"># moon</small>
                             <small class="badge-hashtag outline-badge-hashtags d-flex flex-end"># trends</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end"># XMG</small>
+                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end"># XMG</small> */}
                         </div>
                     </li>
 
@@ -96,9 +96,9 @@ const SideBar = () => {
                         <div className="hashtags">
                             <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$ TWTR</small>
                             <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$ AAPL</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$ TSLA</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$ AMZN</small>
                             <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$ SPBX</small>
+                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$ TSLA</small>
+                            {/*<small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$ AMZN</small> */}
                         </div>
                     </li>
                     <SideBarOption

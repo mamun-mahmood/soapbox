@@ -32,7 +32,7 @@
     padding: 0.57rem 1rem;
     margin: 0.2rem 0;
     font-weight: 600;
-    font-size: large;
+    font-size: medium;
 }
 .toggle {
     display: flex;
@@ -56,6 +56,7 @@
 
 .toggle span {
     padding: 0.5rem 1rem;
+    font-size: medium;
 } 
 
 .toggle span:hover {
@@ -91,7 +92,7 @@
 
 .sidebar-icon {
     margin-right: 0.5rem;
-    font-size: x-large;
+    font-size: medium;
 }
 
 .looks {
@@ -166,7 +167,7 @@
     border-radius: 1rem;
     padding: 0.1rem 0.25rem;
     margin: 0.2rem 0;
-    font-size: x-small;
+    font-size: medium;
     /* font-weight: bold; */
     cursor: pointer;
   }

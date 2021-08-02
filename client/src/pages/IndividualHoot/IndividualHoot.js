@@ -33,7 +33,7 @@ const IndividualHoot = () => {
         <div>
             <NavBar />
             {hoot.length === 0 &&
-                <div className="no-hoots start">
+                <div className="no-hoots">
                     <p>Something went wrong! please try again...</p>
                     <div className="individual-hoot">
                         <Link to="/create">
@@ -46,55 +46,54 @@ const IndividualHoot = () => {
             <div className="individualHoot">
                 {/* <div className="hootArea"> */}
                 {hoot.map((hoot) => {
-                    return (<div className="top-margin" key={hoot.id}>
-                        <Post
-                            hootId={hoot.id}
-                            avatar="/images/default_user_profile.svg"
-                            username={hoot.authorUsername}
-                            mimeType={hoot.mimeType}
-                            hootImgId={hoot.image}
-                            likes={hoot.likes}
-                            caption={hoot.caption}
-                            timeStamp={hoot.timeStamp}
-                            edited={hoot.edited}
-                            editedTimeStamp={hoot.editedTimeStamp}
-                        />
-
-                    </div>)
-                }).reverse()}
-
-                {hoot.map((hoot) => {
                     const hostURL = "https://www.megahoot.net";
                     const shareBaseUrl = `${hostURL}/hoot/${hoot.id}`;
                     const hootUsername = hoot.authorUsername;
                     const hootCaption = hoot.caption;
                     const title = `@${hootUsername} on MegaHoot Soapbox: ${hootCaption}`
-                    const shareMediaPath = "https://soapboxapi.megahoot.net/images/1627200388187.jpg";
 
-                    return (<div className="top-margin" key={hoot.id}>
-                        <Helmet>
-                            {/* General tags */}
-                            <title>{title}</title>
-                            <meta name="description" content={hootCaption} />
-                            {/* <meta name="image" content={ } /> */}
+                    // url for individual hoot for main soapbox website
+                    const shareMediaPath = `${BaseURL}/images/${hoot.image}`;
 
-                            {/* OpenGraph tags */}
-                            <meta property="og:url" content={shareBaseUrl} />
-                            <meta property="og:title" content={title} />
-                            <meta property="og:description" content={hootCaption} />
-                            <meta property="og:image" content={shareMediaPath} />
-                            {/* <meta property="fb:app_id" content={ } /> */}
+                    return (
+                        <div className="top-margin" key={hoot.id}>
+                            <Post
+                                hootId={hoot.id}
+                                avatar="/images/default_user_profile.svg"
+                                username={hoot.authorUsername}
+                                mimeType={hoot.mimeType}
+                                hootImgId={hoot.image}
+                                likes={hoot.likes}
+                                caption={hoot.caption}
+                                timeStamp={hoot.timeStamp}
+                                edited={hoot.edited}
+                                editedTimeStamp={hoot.editedTimeStamp}
+                            />
 
-                            {/* Twitter Card tags */}
-                            <meta name="twitter:card" content="summary_large_image" />
-                            <meta name="twitter:creator" content={hootUsername} />
-                            <meta name="twitter:title" content={title} />
-                            <meta name="twitter:description" content={hootCaption} />
-                            <meta name="twitter:image" content={shareMediaPath} />
-                        </Helmet>
+                            <Helmet>
+                                {/* General tags */}
+                                <title>{title}</title>
+                                <meta name="description" content={hootCaption} />
+                                {/* <meta name="image" content={ } /> */}
 
-                    </div>)
+                                {/* OpenGraph tags */}
+                                <meta property="og:url" content={shareBaseUrl} />
+                                <meta property="og:title" content={title} />
+                                <meta property="og:description" content={hootCaption} />
+                                <meta property="og:image" content={shareMediaPath} />
+                                {/* <meta property="fb:app_id" content={ } /> */}
+
+                                {/* Twitter Card tags */}
+                                <meta name="twitter:card" content="summary_large_image" />
+                                <meta name="twitter:creator" content={hootUsername} />
+                                <meta name="twitter:title" content={title} />
+                                <meta name="twitter:description" content={hootCaption} />
+                                <meta name="twitter:image" content={shareMediaPath} />
+                            </Helmet>
+                        </div>
+                    )
                 }).reverse()}
+
                 {/* </div> */}
 
                 {/* <Comments comments={comments} hoot={hoot} /> */}

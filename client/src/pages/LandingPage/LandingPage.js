@@ -9,37 +9,8 @@ const LandingPage = () => {
     const [toggle, setToggle] = useState(true);
     const locattion = useLocation();
 
-    const disableRightClick = () => {
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
-    }
-
     return (
         <div className="page">
-            <Helmet>
-                {/* General tags */}
-                <title>
-                    MegaHoot Soapbox Where Members Monetize Their Social Media Time
-                </title>
-                {/* <meta name="description" content={ } />
-                <meta name="image" content={ } /> */}
-
-                {/* OpenGraph tags */}
-                {/* <meta property="og:url" content={ } />
-                {isBlogPost ? <meta property="og:type" content="article" /> : null}
-                <meta property="og:title" content={ } />
-                <meta property="og:description" content={ } />
-                <meta property="og:image" content={ } />
-                <meta property="fb:app_id" content={ } /> */}
-
-                {/* Twitter Card tags */}
-                {/* <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:creator" content={ } />
-                <meta name="twitter:title" content={ } />
-                <meta name="twitter:description" content={ } />
-                <meta name="twitter:image" content={ } /> */}
-            </Helmet>
             <nav className="nav">
                 <div className="brand">
                     <Link to="/" class="navbar-brand cursor-pointer">
@@ -125,6 +96,27 @@ const LandingPage = () => {
                     Terms & Conditions
                 </span>
             </footer>
+
+            <Helmet>
+                {/* General tags */}
+                <title>
+                    MegaHoot Soapbox
+                </title>
+                <meta name="description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                {/* <meta name="image" content={ } /> */}
+
+                {/* OpenGraph tags */}
+                <meta property="og:url" content="https://www.megahoot.net/" />
+                <meta property="og:title" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                <meta property="og:description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                <meta property="og:image" content="https://drive.google.com/file/d/1kGbf20hrxL-lkDiDkJlVCdBvd4ylrsJg/view?usp=sharing" />
+
+                {/* Twitter Card tags */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                <meta name="twitter:description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                <meta name="twitter:image" content="https://drive.google.com/file/d/1kGbf20hrxL-lkDiDkJlVCdBvd4ylrsJg/view?usp=sharing" />
+            </Helmet>
         </div>
     )
 }

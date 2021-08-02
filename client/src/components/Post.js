@@ -1,7 +1,8 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import axios from 'axios'
-import format from "date-fns/format"
 import { Helmet } from "react-helmet";
+import format from "date-fns/format"
+import ClickAwayListener from 'react-click-away-listener';
 import MediaContent from './MediaContent';
 import HootComments from './Comment/HootComments';
 import { Link, useHistory, useLocation } from 'react-router-dom'
@@ -14,7 +15,18 @@ import { IoCloseOutline } from 'react-icons/io5'
 import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
 
-const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, timeStamp, edited, editedTimeStamp }) => {
+const Post = ({
+    hootId,
+    avatar,
+    username,
+    mimeType,
+    hootImgId,
+    likes,
+    caption,
+    timeStamp,
+    edited,
+    editedTimeStamp
+}) => {
     const BaseURL = process.env.REACT_APP_API_URL;
 
     // main website name
@@ -26,7 +38,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
     // main server url
     const serverURL = "https://soapboxapi.megahoot.net"
 
-    // url for individual hoot 
+    // url for individual hoot for main soapbox website
     const shareBaseUrl = `${hostURL}/hoot/${hootId}`;
 
     // encoded share url for individual hoot to be shared on other social media
@@ -38,11 +50,11 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
     const mailShare = `mailto:?subject="Hoot from MegaHoot Soapbox"&body=${shareCaption}%20Checkout more at ${shareUrl}`;
     const facebookShare = `https://www.facebook.com/sharer.php?u=${shareUrl}`;
     const redditShare = `https://reddit.com/submit?url=${shareUrl}&title=${shareCaption}`;
+
     // image is must to share something on pinterest.
     const pinterestShare = `https://pinterest.com/pin/create/bookmarklet/?media=${filePath}&url=${shareUrl}&description=jio`
     const linkedInShare = `https://www.linkedin.com/shareArticle?url=${shareUrl}&title=${shareCaption}`
-    const tumblrShare = `https://www.tumblr.com/share/link?url=${shareUrl}&tags=megahoot,soapbox&description=${shareCaption}`
-    // const tumblrShare = `https://www.tumblr.com/share/tool?posttype=photo&title=soapbox&content=${filePath}&caption=${shareCaption}`
+    const tumblrShare = `https://www.tumblr.com/share/link?url=${shareUrl}&tags=${shareHashtags}&description=${shareCaption}`
 
     const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -86,7 +98,7 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
     }, [])
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
-    const path = (userInfo.username === username ? "/profile" : "/user");
+    const path = (userInfo.username === username ? `/profile/${username}` : `/user/${username}`);
     const profilePath = `/profile/${username}`
 
     const openDeleteModal = () => {
@@ -153,8 +165,14 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
             <div className="home-container">
                 <div className="post-heading">
                     <div className="avatar_name">
-                        <img class="avatar" src={avatar} alt="avatar" />
-                        <div className="name">{username}</div>
+                        <Link to={path}>
+                            <img class="avatar" src={avatar} alt="avatar" />
+                        </Link>
+                        <Link to={path}>
+                            <div className="name">
+                                {username}
+                            </div>
+                        </Link>
                     </div>
                     <div className="user-actions">
                         <button className="btn-hoot-follow">Follow</button>
@@ -165,29 +183,32 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                             />
                         </div>
                     </div>
+
                     {/* More Option Modal */}
                     {isMoreModalOpen &&
                         <Fragment>
-                            <div className="more-modal">
-                                {username === userInfo.username &&
-                                    <div className="more-options">
-                                        <span onClick={openDeleteModal}> Delete</span>
-                                        <span onClick={openEditModal}>Edit</span>
-                                        <span onClick={copyToClipboard}>Copy Link</span>
-                                        <span onClick={() => { history.push(`/hoot/${hootId}`) }}>Go to Hoot</span>
-                                        {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
-                                    </div>
-                                }
+                            <ClickAwayListener onClickAway={() => { setIsMoreModalOpen(false) }}>
+                                <div className="more-modal">
+                                    {username === userInfo.username &&
+                                        <div className="more-options">
+                                            <span onClick={openDeleteModal}> Delete</span>
+                                            <span onClick={openEditModal}>Edit</span>
+                                            <span onClick={copyToClipboard}>Copy Link</span>
+                                            <span onClick={() => { history.push(`/hoot/${hootId}`) }}>Go to Hoot</span>
+                                            {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
+                                        </div>
+                                    }
 
-                                {username === userInfo.username ||
-                                    <div className="more-options">
-                                        <span onClick={copyToClipboard}>Copy Link</span>
-                                        <span onClick={() => { history.push(`/hoot/${hootId}`) }}>Go to Hoot</span>
-                                        {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
-                                    </div>
-                                }
-                                {/* <IoCloseOutline className="close-modal" onClick={() => setIsMoreModalOpen(false)} /> */}
-                            </div>
+                                    {username === userInfo.username ||
+                                        <div className="more-options">
+                                            <span onClick={copyToClipboard}>Copy Link</span>
+                                            <span onClick={() => { history.push(`/hoot/${hootId}`) }}>Go to Hoot</span>
+                                            {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
+                                        </div>
+                                    }
+                                    {/* <IoCloseOutline className="close-modal" onClick={() => setIsMoreModalOpen(false)} /> */}
+                                </div>
+                            </ClickAwayListener>
                         </Fragment>
                     }
 
@@ -195,65 +216,67 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                     {isEditModalOpen &&
                         <Fragment>
                             <div className="modal-overlay"></div>
-                            <div className="outer-div">
-                                <div className="edit-modal">
-                                    {/* edit username  */}
-                                    <h5>You are editing hoot as
-                                        <span className="user-edit">
-                                            {" "}@
-                                            <Link
-                                                to={profilePath}
-                                                className="name-comment">
-                                                {username}
-                                            </Link>
-                                        </span>,
-                                    </h5>
-                                    <div className="edit-content">
-                                        {/* left side image */}
-                                        <div className="post-media">
-                                            <MediaContent mimeType={mimeType} filePath={filePath} editOpen={isEditModalOpen} />
-                                        </div>
-                                        {/* right side edit box */}
-                                        <div className="edit-caption d-flex flex-wrap">
-                                            <div className="edit-profile-username">
-                                                <img className="avatar" src={avatar} alt="avatar" />
-                                                <div className="name avatar_name">{userInfo && userInfo.username}</div>
+                            <ClickAwayListener onClickAway={() => { setIsEditModalOpen(false) }}>
+                                <div className="outer-div">
+                                    <div className="edit-modal">
+                                        {/* edit username  */}
+                                        <h5>You are editing hoot as
+                                            <span className="user-edit">
+                                                {" "}@
+                                                <Link
+                                                    to={profilePath}
+                                                    className="name-comment">
+                                                    {username}
+                                                </Link>
+                                            </span>,
+                                        </h5>
+                                        <div className="edit-content">
+                                            {/* left side image */}
+                                            <div className="post-media">
+                                                <MediaContent mimeType={mimeType} filePath={filePath} editOpen={isEditModalOpen} />
                                             </div>
-                                            <div className="post-content">
-                                                <textarea
-                                                    autoFocus
-                                                    maxLength="255"
-                                                    className="editarea-style"
-                                                    placeholder="What to edit?"
-                                                    value={editCaption}
-                                                    onChange={(event) => {
-                                                        setEditCaption(event.target.value);
-                                                    }}
-                                                ></textarea>
-                                                <div className="d-flex justify-content-between m-1 btn-caption-top">
-                                                    <div className="caption-count">
-                                                        <h6 className={editCaption.length > 220 && "text-danger"}>
-                                                            {" "}
-                                                            {editCaption.length}/255
-                                                        </h6>
-                                                    </div>
-                                                    <div className="btn-post my-2">
-                                                        <Button
-                                                            variant="primary mx-1"
-                                                            className="btn-edit-hoot"
-                                                            onClick={editHoot}
-                                                            disabled={!editCaption}
-                                                        >
-                                                            Edit
-                                                        </Button>{' '}
+                                            {/* right side edit box */}
+                                            <div className="edit-caption d-flex flex-wrap">
+                                                <div className="edit-profile-username">
+                                                    <img className="avatar" src={avatar} alt="avatar" />
+                                                    <div className="name avatar_name">{userInfo && userInfo.username}</div>
+                                                </div>
+                                                <div className="post-content">
+                                                    <textarea
+                                                        autoFocus
+                                                        maxLength="255"
+                                                        className="editarea-style"
+                                                        placeholder="What to edit?"
+                                                        value={editCaption}
+                                                        onChange={(event) => {
+                                                            setEditCaption(event.target.value);
+                                                        }}
+                                                    ></textarea>
+                                                    <div className="d-flex justify-content-between m-1 btn-caption-top">
+                                                        <div className="caption-count">
+                                                            <h6 className={editCaption.length > 220 && "text-danger"}>
+                                                                {" "}
+                                                                {editCaption.length}/255
+                                                            </h6>
+                                                        </div>
+                                                        <div className="btn-post my-2">
+                                                            <Button
+                                                                variant="primary mx-1"
+                                                                className="btn-edit-hoot"
+                                                                onClick={editHoot}
+                                                                disabled={!editCaption}
+                                                            >
+                                                                Edit
+                                                            </Button>{' '}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <IoCloseOutline className="close-modal" onClick={() => setIsEditModalOpen(false)} />
                                     </div>
-                                    <IoCloseOutline className="close-modal" onClick={() => setIsEditModalOpen(false)} />
                                 </div>
-                            </div>
+                            </ClickAwayListener>
                         </Fragment>
                     }
 
@@ -261,20 +284,22 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                     {isDeleteModalOpen &&
                         <Fragment>
                             <div className="modal-overlay"></div>
-                            <div className="delete-modal">
-                                <h4>Delete Hoot</h4>
-                                <div className="delete-info">Are you sure you want to delete this hoot? This can’t be undone and it will be removed from your profile and from Soapbox search results.</div>
-                                <div className="btn-post mt-3 delete-info">
-                                    <Button
-                                        variant="primary mx-1"
-                                        className="btn-login"
-                                        onClick={deleteHoot}
-                                    >
-                                        Delete
-                                    </Button>{' '}
+                            <ClickAwayListener onClickAway={() => { setIsDeleteModalOpen(false) }}>
+                                <div className="delete-modal">
+                                    <h4>Delete Hoot</h4>
+                                    <div className="delete-info">Are you sure you want to delete this hoot? This can’t be undone and it will be removed from your profile and from Soapbox search results.</div>
+                                    <div className="btn-post mt-3 delete-info">
+                                        <Button
+                                            variant="primary mx-1"
+                                            className="btn-login"
+                                            onClick={deleteHoot}
+                                        >
+                                            Delete
+                                        </Button>{' '}
+                                    </div>
+                                    <IoCloseOutline className="close-modal" onClick={() => setIsDeleteModalOpen(false)} />
                                 </div>
-                                <IoCloseOutline className="close-modal" onClick={() => setIsDeleteModalOpen(false)} />
-                            </div>
+                            </ClickAwayListener>
                         </Fragment>
                     }
 
@@ -282,47 +307,49 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                     {isCommentModalOpen &&
                         <Fragment>
                             <div className="modal-overlay"></div>
-                            <div className="hoot-comment-modal">
-                                <h4>{comments.length > 0 && comments.length} Comments,</h4>
-                                {/* Comment Box */}
-                                <div className="comment-box">
-                                    <input
-                                        className="comment-input"
-                                        type="text"
-                                        maxLength="300"
-                                        value={newComment}
-                                        placeholder="Add a comment..."
-                                        onChange={(event) => {
-                                            setNewComment(event.target.value);
-                                        }} />
-                                    <button
-                                        className="add-comment"
-                                        onClick={addComment}
-                                        disabled={!newComment}
-                                    >
-                                        hoot
-                                    </button>
-                                </div>
+                            <ClickAwayListener onClickAway={() => { setIsCommentModalOpen(false) }}>
+                                <div className="hoot-comment-modal">
+                                    <h4>{comments.length > 0 && comments.length} Comments,</h4>
+                                    {/* Comment Box */}
+                                    <div className="comment-box">
+                                        <input
+                                            className="comment-input"
+                                            type="text"
+                                            maxLength="300"
+                                            value={newComment}
+                                            placeholder="Add a comment..."
+                                            onChange={(event) => {
+                                                setNewComment(event.target.value);
+                                            }} />
+                                        <button
+                                            className="add-comment"
+                                            onClick={addComment}
+                                            disabled={!newComment}
+                                        >
+                                            hoot
+                                        </button>
+                                    </div>
 
-                                {/* comments list */}
-                                {/* comments based on location */}
-                                {/* {(location.pathname).match(/hoot/gi) == "hoot" ?
+                                    {/* comments list */}
+                                    {/* comments based on location */}
+                                    {/* {(location.pathname).match(/hoot/gi) == "hoot" ?
                                     comments.length > 0 && <HootComments comments={comments} sliceValue={0} />
                                     :
                                     comments.length > 0 && <HootComments comments={comments} sliceValue={-2} />
                                 } */}
 
-                                {/* all comments */}
-                                <div className="commets-scroll">
-                                    {comments.length > 0 && <HootComments comments={comments} sliceValue={0} />}
-                                </div>
+                                    {/* all comments */}
+                                    <div className="commets-scroll">
+                                        {comments.length > 0 && <HootComments comments={comments} sliceValue={0} />}
+                                    </div>
 
-                                <IoCloseOutline className="close-modal" onClick={() => setIsCommentModalOpen(false)} />
-                            </div>
+                                    <IoCloseOutline className="close-modal" onClick={() => setIsCommentModalOpen(false)} />
+                                </div>
+                            </ClickAwayListener>
                         </Fragment>
                     }
-
                 </div>
+
                 <div className="post-comment">
                     {/* <Link className="name-comment">
                         <span onClick={() => { history.push(`${ path } / ${ username }`) }}
@@ -380,101 +407,103 @@ const Post = ({ hootId, avatar, username, mimeType, hootImgId, likes, caption, t
                         {isShareModalOpen &&
                             <Fragment>
                                 <div className="modal-overlay"></div>
-                                <div className="share-modal">
-                                    <div className="text-center">
-                                        <span className="share-hoot-to share-head">Share Hoot to...</span>
-                                    </div>
-                                    <div className="share-flex-icons">
-                                        {/* <SocialShare share={twitterShare} Icon={FiTwitter} name="Twitter" />
+                                <ClickAwayListener onClickAway={() => { setIsShareModalOpen(false) }}>
+                                    <div className="share-modal">
+                                        <div className="text-center">
+                                            <span className="share-hoot-to share-head">Share Hoot to...</span>
+                                        </div>
+                                        <div className="share-flex-icons">
+                                            {/* <SocialShare share={twitterShare} Icon={FiTwitter} name="Twitter" />
                                         <SocialShare share={mailShare} Icon={FiMail} name="Email" />
                                         <SocialShare share={facebookShare} Icon={FiTwitter} name="Facebook" />
                                         <SocialShare share={redditShare} Icon={ImReddit} name="Reddit" />
                                         <SocialShare share={pinterestShare} Icon={ImPinterest2} name="Pinterest" />
                                         <SocialShare share={linkedInShare} Icon={AiOutlineLinkedin} name="LinkedIn" />
                                         <SocialShare share={tumblrShare} Icon={FiTwitter} name="Tumblr" /> */}
-                                        <div className="share-icons">
-                                            <a target="_blank" rel="nofollow" class="block button-transparent">
-                                                <div className="share-icons-text">
-                                                    <FiRepeat className="twitter-share" />
-                                                    <span className="share-hoot-to">
-                                                        Re-hoot
-                                                    </span>
-                                                </div>
-                                            </a>
+                                            <div className="share-icons">
+                                                <a target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <FiRepeat className="twitter-share" />
+                                                        <span className="share-hoot-to">
+                                                            Re-hoot
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div className="share-icons">
+                                                <a href={twitterShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <FiTwitter className="twitter-share" />
+                                                        <span className="share-hoot-to">
+                                                            Twitter
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div className="share-icons">
+                                                <a href={mailShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <FiMail className="twitter-share" />
+                                                        <span className="share-hoot-to">
+                                                            Email
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div className="share-icons">
+                                                <a href={facebookShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <RiFacebookCircleLine className="facebook-share" />
+                                                        <span className="share-hoot-to">
+                                                            Facebook
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div className="share-icons">
+                                                <a href={redditShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <ImReddit className="reddit-share" />
+                                                        <span className="share-hoot-to">
+                                                            Reddit
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div className="share-icons">
+                                                <a href={pinterestShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <ImPinterest2 className="pinterest-share" />
+                                                        <span className="share-hoot-to">
+                                                            Pinterest
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div className="share-icons">
+                                                <a href={linkedInShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <AiOutlineLinkedin className="linkedin-share" />
+                                                        <span className="share-hoot-to">
+                                                            LinkedIn
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div className="share-icons">
+                                                <a href={tumblrShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <FaTumblr className="tumblr-share" />
+                                                        <span className="share-hoot-to">
+                                                            Tumblr
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <IoCloseOutline className="close-modal" onClick={() => setIsShareModalOpen(false)} />
                                         </div>
-                                        <div className="share-icons">
-                                            <a href={twitterShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                <div className="share-icons-text">
-                                                    <FiTwitter className="twitter-share" />
-                                                    <span className="share-hoot-to">
-                                                        Twitter
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div className="share-icons">
-                                            <a href={mailShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                <div className="share-icons-text">
-                                                    <FiMail className="twitter-share" />
-                                                    <span className="share-hoot-to">
-                                                        Email
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div className="share-icons">
-                                            <a href={facebookShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                <div className="share-icons-text">
-                                                    <RiFacebookCircleLine className="facebook-share" />
-                                                    <span className="share-hoot-to">
-                                                        Facebook
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div className="share-icons">
-                                            <a href={redditShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                <div className="share-icons-text">
-                                                    <ImReddit className="reddit-share" />
-                                                    <span className="share-hoot-to">
-                                                        Reddit
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div className="share-icons">
-                                            <a href={pinterestShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                <div className="share-icons-text">
-                                                    <ImPinterest2 className="pinterest-share" />
-                                                    <span className="share-hoot-to">
-                                                        Pinterest
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div className="share-icons">
-                                            <a href={linkedInShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                <div className="share-icons-text">
-                                                    <AiOutlineLinkedin className="linkedin-share" />
-                                                    <span className="share-hoot-to">
-                                                        LinkedIn
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div className="share-icons">
-                                            <a href={tumblrShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                <div className="share-icons-text">
-                                                    <FaTumblr className="tumblr-share" />
-                                                    <span className="share-hoot-to">
-                                                        Tumblr
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <IoCloseOutline className="close-modal" onClick={() => setIsShareModalOpen(false)} />
                                     </div>
-                                </div>
+                                </ClickAwayListener>
                             </Fragment>
                         }
 

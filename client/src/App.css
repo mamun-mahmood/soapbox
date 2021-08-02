@@ -260,6 +260,7 @@ hr {
 .follow-user {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .btn-follow {
@@ -387,8 +388,12 @@ hr {
   height: 50px;
   margin: 0.5rem;
   cursor: pointer;
-  /* filter: drop-shadow(0px 1px 1px #9CA3AF); */
   filter: drop-shadow(0px 0px 0.5px #9CA3AF);
+}
+
+.avatar:hover {
+  opacity: 80%;
+  /* filter: grayscale(20%); */
 }
 
 .post-heading {
@@ -412,6 +417,13 @@ hr {
   display: flex;
   align-items: center;
   color: #374151;
+}
+.avatar_name a {
+  text-decoration: none;
+}
+.avatar_name a:hover {
+  color: #374151;
+  text-decoration: underline;
 }
 
 .more {
@@ -669,8 +681,6 @@ hr {
 }
 .share-icons:active {
   background-color: #b1a1fa;
-  border-radius: 0.3rem;
-  /* transition: 0.3s; */
 }
 
 .more-modal {
