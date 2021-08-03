@@ -43,8 +43,9 @@ const Post = ({
 
     // encoded share url for individual hoot to be shared on other social media
     const shareUrl = encodeURIComponent(shareBaseUrl);
-    const shareCaption = encodeURIComponent(`${caption.length > 10 && caption.substring(0, 70)}... by ${username} from MegaHoot Soapbox`);
-    const shareHashtags = encodeURIComponent("megahoot,soapbox");
+    const shareCaption = encodeURIComponent(`${caption.length > 10 && caption.substring(0, 70)} @${username}`);
+    const shareHashtags = encodeURIComponent("");
+    // const shareHashtags = encodeURIComponent("megahoot,soapbox");
 
     const twitterShare = `http://twitter.com/share?text=${shareCaption}&url=${shareUrl}&hashtags=${shareHashtags}`;
     const mailShare = `mailto:?subject="Hoot from MegaHoot Soapbox"&body=${shareCaption}%20Checkout more at ${shareUrl}`;
