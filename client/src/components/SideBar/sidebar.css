@@ -2,7 +2,6 @@
     display: flex;
     justify-content: flex-start;
     width: 340px;
-    /* padding: 0.5rem 0; */
     flex: 0 0 356px;
 }
 
@@ -76,18 +75,18 @@
     padding: 0 1rem;
 }
 .sidebar ui li a:hover {
-   background-color: #ede9ff;
-   padding: 0.57rem 1rem;
-   margin: 0.2rem 0;
-   border-radius: 0.5rem;
-   transition: 0.1s;
+    background-color: #ede9ff;
+    padding: 0.57rem 1rem;
+    margin: 0.2rem 0;
+    border-radius: 0.5rem;
+    transition: 0.1s;
 }
 .sidebar ui li a:active {
-   background-color: #dfd9fa;
-   padding: 0.57rem 1rem;
-   margin: 0.2rem 0;
-   border-radius: 0.5rem;
-   transition: 0.1s;
+    background-color: #dfd9fa;
+    padding: 0.57rem 1rem;
+    margin: 0.2rem 0;
+    border-radius: 0.5rem;
+    transition: 0.1s;
 }
 
 .sidebar-icon {
@@ -164,25 +163,30 @@
     display: inline;
     width: auto;
     border-radius: 1rem;
-    padding: 0.1rem 0.25rem;
+    padding: 0rem 0.5rem;
     margin: 0 0 0.2rem 0;
     font-size: medium;
-    /* font-weight: bold; */
     cursor: pointer;
-  }
+}
 
-  .outline-badge-hashtags {
+.outline-badge-hashtags {
     border: solid 1px #dfd9fa;
     color: #9f93d5;
-  }
-  .outline-badge-hashtags:hover {
+}
+
+.outline-badge-hashtags:hover {
     border: solid 1px var(--primary-color);
     background-color: #EDEDFF;
     transition: 0.5s;
-  }
+}
+
+.outline-badge-hashtags:active {
+    border: solid 1px var(--primary-color);
+    background-color: #d4d4ff;
+    transition: 0.5s;
+}
 
 .info {
-    /* padding: 0.5rem 0 0.5rem 0.5rem; */
     color: #9CA3AF;
     font-weight: bold;
     font-size: small;
@@ -272,7 +276,6 @@
     .sidebar ui li a:hover {
         margin: 1rem 0;
         padding: 1rem 0.5rem;
-        /* border-radius: 50%; */
         transition: 0.04s;
     }
 }
