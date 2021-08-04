@@ -161,26 +161,53 @@ const Post = ({
         setIsCommentModalOpen(true)
     }
 
+    const [hoverInfo, setHoverInfo] = useState(false);
+
     return (
         <div className="home">
             <div className="home-container">
                 <div className="post-heading">
-                    <div className="avatar_name">
+                    <div
+                        onMouseEnter={() => setHoverInfo(true)}
+                        onMouseLeave={() => setHoverInfo(false)}
+                        className="avatar_name"
+                    >
                         <Link to={path}>
                             <img class="avatar" src={avatar} alt="avatar" />
                         </Link>
                         <Link to={path}>
-                            <div className="name">
-                                {username}
-                            </div>
+                            <div className="name">{username}</div>
                         </Link>
+                        <div className="at-name">@{username}</div>
                     </div>
+
+                    {hoverInfo &&
+                        <div
+                            onMouseEnter={() => setHoverInfo(true)}
+                            onMouseLeave={() => setHoverInfo(false)}
+                            className="hover-info"
+                        >
+                            <div className="hover-user-follow">
+                                <Link to={path}>
+                                    <img class="hover-avatar" src={avatar} alt="avatar" />
+                                </Link>
+                                <button className="hover-btn-hoot-follow">Follow</button>
+                            </div>
+
+                            <Link to={path}>
+                                <div className="name">{username}</div>
+                            </Link>
+                            <div className="hover-at-name">@{username}</div>
+                        </div>
+                    }
+
                     <div className="user-actions">
                         <button className="btn-hoot-follow">Follow</button>
                         <div className="more">
                             <BiDotsHorizontalRounded
                                 className="more-icon"
                                 onClick={() => setIsMoreModalOpen(!isMoreModalOpen)}
+                                onMouseEnter={() => setIsMoreModalOpen(true)}
                             />
                         </div>
                     </div>
@@ -399,6 +426,8 @@ const Post = ({
 
                         <div className="share">
                             <FiShare2
+                                onMouseEnter={() => setIsShareModalOpen(true)}
+                                // onMouseLeave={() => setIsShareModalOpen(false)}
                                 onClick={() => setIsShareModalOpen(!isShareModalOpen)}
                                 className="cursor-pointer"
                             />

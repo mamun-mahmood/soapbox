@@ -117,7 +117,7 @@ dl, ol, ul {
 }
 
 .landing-ls {
-    flex: 50%;
+    flex: 65%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -126,6 +126,7 @@ dl, ol, ul {
 }
 
 .landing-ls span {
+    max-width: 600px;
     text-align: center;
     color: var(--primary-color);
     font-size: 2rem;
@@ -142,7 +143,7 @@ dl, ol, ul {
 }
 
 .landing-rs {
-    flex: 50%;
+    flex: 35%;
     display: flex;
     gap: 2rem;
     flex-direction: column;
@@ -162,6 +163,16 @@ dl, ol, ul {
     color: var(--primary-color);
     font-weight: bold;
 }
+
+.img-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+
 
 .badge {
     border-radius: 0.2rem !important;
@@ -208,6 +219,18 @@ footer span {
     .landing-ls span {
         font-size: 1.5rem;
     }
+
+    .landing-text {
+        display: none;
+    }
+
+    .landing-ls {
+        flex: 50%;
+    }
+
+    .landing-rs {
+        flex: 50%;
+    }
 }
 
 @media only screen and (max-width: 800px) {
@@ -240,7 +263,7 @@ footer span {
     .landing-ls {
         display: none;
     }
-
+    
     .landing-rs span {
         font-size: 1.5rem;
         font-weight: 700;

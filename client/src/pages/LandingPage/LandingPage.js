@@ -49,15 +49,23 @@ const LandingPage = () => {
 
             <main className="landing-page">
                 <div className="landing-ls">
-                    <a href={locattion.pathname}>
-                        <img
-                            onContextMenu={(e) => e.preventDefault()}
-                            src="./images/soapbox_landing_image"
-                            alt="soapbox_landing_page"
-                        />
-                    </a>
+                    <div className="img-text">
+                        <a href={locattion.pathname}>
+                            <img
+                                onContextMenu={(e) => e.preventDefault()}
+                                src="./images/soapbox_landing_image"
+                                alt="soapbox_landing_page"
+                            />
+                        </a>
+                        <div className="landing-text">
+                            MegaHoot Soapbox Where Content Creators Monetize Their Private Channels and Build Their Brand, Build Their Business With No Startup Cost.
+                            <br />
+                            <br />
+                            Content Creators can offer monthly subscriptions or have one time events with ticket sales or both. They will be able to offer their subscribers , their fans , the ability to join their live broadcast on MegaHoot Soapbox and interact in real time, this can be one on one or for large audiences.
+                        </div>
+                    </div>
                     <span>
-                        MegaHoot Soapbox Where Members Monetize Their Social Media Time
+                        MegaHoot Brings Value to Content Creators Globally
                     </span>
                 </div>
                 <div className="landing-rs">
@@ -81,7 +89,7 @@ const LandingPage = () => {
                             MegaHoot Soapbox <small className="badge solid-badge">BETA</small>
                         </div>
                         <div>
-                            Temporary Invitation Only
+                            Temporarily Invitation Only
                         </div>
                     </div>
                 </div>
@@ -100,22 +108,22 @@ const LandingPage = () => {
             <Helmet>
                 {/* General tags */}
                 <title>
-                    MegaHoot Soapbox
+                    MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels
                 </title>
-                <meta name="description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 {/* <meta name="image" content={ } /> */}
 
                 {/* OpenGraph tags */}
                 <meta property="og:url" content="https://www.megahoot.net/" />
-                <meta property="og:title" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
-                <meta property="og:description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
-                <meta property="og:image" content="https://drive.google.com/file/d/1kGbf20hrxL-lkDiDkJlVCdBvd4ylrsJg/view?usp=sharing" />
+                <meta property="og:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta property="og:image" content="/images/MegaHoot_Owl3_app.png" />
 
                 {/* Twitter Card tags */}
                 <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
-                <meta name="twitter:description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
-                <meta name="twitter:image" content="https://drive.google.com/file/d/1kGbf20hrxL-lkDiDkJlVCdBvd4ylrsJg/view?usp=sharing" />
+                <meta name="twitter:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="twitter:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="twitter:image" content="/images/MegaHoot_Owl3_app.png" />
             </Helmet>
         </div>
     )
