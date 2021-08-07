@@ -64,6 +64,7 @@ const IndividualHoot = () => {
                                 mimeType={hoot.mimeType}
                                 hootImgId={hoot.image}
                                 likes={hoot.likes}
+                                views={hoot.views}
                                 caption={hoot.caption}
                                 timeStamp={hoot.timeStamp}
                                 edited={hoot.edited}
@@ -76,19 +77,19 @@ const IndividualHoot = () => {
                                 <meta name="description" content={hootCaption} />
                                 {/* <meta name="image" content={ } /> */}
 
+                                {/* Twitter Card tags */}
+                                <meta name="twitter:card" content="summary" />
+                                <meta name="twitter:creator" content={hootUsername} />
+                                <meta name="twitter:title" content={title} />
+                                <meta name="twitter:description" content={hootCaption} />
+                                <meta name="twitter:image" content={shareMediaPath} />
+
                                 {/* OpenGraph tags */}
                                 <meta property="og:url" content={shareBaseUrl} />
                                 <meta property="og:title" content={title} />
                                 <meta property="og:description" content={hootCaption} />
                                 <meta property="og:image" content={shareMediaPath} />
                                 {/* <meta property="fb:app_id" content={ } /> */}
-
-                                {/* Twitter Card tags */}
-                                <meta name="twitter:card" content="summary_large_image" />
-                                <meta name="twitter:creator" content={hootUsername} />
-                                <meta name="twitter:title" content={title} />
-                                <meta name="twitter:description" content={hootCaption} />
-                                <meta name="twitter:image" content={shareMediaPath} />
                             </Helmet>
                         </div>
                     )

@@ -39,6 +39,7 @@ const Feed = () => {
                         mimeType={upload.mimeType}
                         hootImgId={upload.image}
                         likes={upload.likes}
+                        views={upload.views}
                         caption={upload.caption}
                         timeStamp={upload.timeStamp}
                         edited={upload.edited}

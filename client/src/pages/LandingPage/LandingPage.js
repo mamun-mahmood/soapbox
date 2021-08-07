@@ -49,6 +49,9 @@ const LandingPage = () => {
 
             <main className="landing-page">
                 <div className="landing-ls">
+                    <span>
+                        MegaHoot Brings Value to Content Creators Globally
+                    </span>
                     <div className="img-text">
                         <a href={locattion.pathname}>
                             <img
@@ -64,9 +67,6 @@ const LandingPage = () => {
                             Content Creators can offer monthly subscriptions or have one time events with ticket sales or both. They will be able to offer their subscribers , their fans , the ability to join their live broadcast on MegaHoot Soapbox and interact in real time, this can be one on one or for large audiences.
                         </div>
                     </div>
-                    <span>
-                        MegaHoot Brings Value to Content Creators Globally
-                    </span>
                 </div>
                 <div className="landing-rs">
                     <div>
@@ -113,17 +113,17 @@ const LandingPage = () => {
                 <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 {/* <meta name="image" content={ } /> */}
 
+                {/* Twitter Card tags */}
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="twitter:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="twitter:image" content="/images/MegaHoot_Owl3_app.png" />
+
                 {/* OpenGraph tags */}
                 <meta property="og:url" content="https://www.megahoot.net/" />
                 <meta property="og:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:image" content="/images/MegaHoot_Owl3_app.png" />
-
-                {/* Twitter Card tags */}
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta name="twitter:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta name="twitter:image" content="/images/MegaHoot_Owl3_app.png" />
             </Helmet>
         </div>
     )

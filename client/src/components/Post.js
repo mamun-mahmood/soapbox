@@ -22,6 +22,7 @@ const Post = ({
     mimeType,
     hootImgId,
     likes,
+    views,
     caption,
     timeStamp,
     edited,
@@ -39,7 +40,7 @@ const Post = ({
     const serverURL = "https://soapboxapi.megahoot.net"
 
     // url for individual hoot for main soapbox website
-    const shareBaseUrl = `${hostURL}/hoot/${hootId}`;
+    const shareBaseUrl = `${hostURL}/${username}/hoot/${hootId}`;
 
     // encoded share url for individual hoot to be shared on other social media
     const shareUrl = encodeURIComponent(shareBaseUrl);
@@ -162,6 +163,13 @@ const Post = ({
     }
 
     const [hoverInfo, setHoverInfo] = useState(false);
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        axios.get(`${BaseURL}/user/profile/${username}`).then((response) => {
+            setUsers(response.data);
+        });
+    }, [])
 
     return (
         <div className="home">
@@ -194,20 +202,31 @@ const Post = ({
                                 <button className="hover-btn-hoot-follow">Follow</button>
                             </div>
 
-                            <Link to={path}>
-                                <div className="name">{username}</div>
-                            </Link>
-                            <div className="hover-at-name">@{username}</div>
+                            <div className="hoot-user-info">
+                                <div className="hoot-username">
+                                    <Link to={path}>
+                                        <div className="name">{username}</div>
+                                    </Link>
+                                    <div className="hover-at-name">@{username}</div>
+                                </div>
+                                <div className="user-hoot-count">
+                                    <span className="hoot-counts">{users.length}</span>
+                                    hoots
+                                </div>
+                            </div>
                         </div>
                     }
 
                     <div className="user-actions">
                         <button className="btn-hoot-follow">Follow</button>
-                        <div className="more">
+                        <div
+                            className="more"
+                            onMouseEnter={() => setIsMoreModalOpen(true)}
+                            onMouseLeave={() => setIsMoreModalOpen(false)}
+                        >
                             <BiDotsHorizontalRounded
                                 className="more-icon"
                                 onClick={() => setIsMoreModalOpen(!isMoreModalOpen)}
-                                onMouseEnter={() => setIsMoreModalOpen(true)}
                             />
                         </div>
                     </div>
@@ -216,13 +235,17 @@ const Post = ({
                     {isMoreModalOpen &&
                         <Fragment>
                             <ClickAwayListener onClickAway={() => { setIsMoreModalOpen(false) }}>
-                                <div className="more-modal">
+                                <div
+                                    className="more-modal"
+                                    onMouseEnter={() => setIsMoreModalOpen(true)}
+                                    onMouseLeave={() => setIsMoreModalOpen(false)}
+                                >
                                     {username === userInfo.username &&
                                         <div className="more-options">
                                             <span onClick={openDeleteModal}> Delete</span>
                                             <span onClick={openEditModal}>Edit</span>
                                             <span onClick={copyToClipboard}>Copy Link</span>
-                                            <span onClick={() => { history.push(`/hoot/${hootId}`) }}>Go to Hoot</span>
+                                            <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
                                             {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                         </div>
                                     }
@@ -389,9 +412,9 @@ const Post = ({
                 </div>
                 {/* <hr className="mx-1" /> */}
                 <div className="right-icons">
-                    <div className="post-media">
-                        <MediaContent mimeType={mimeType} filePath={filePath} />
-                    </div>
+                    {/* <div className="post-media"> */}
+                    <MediaContent mimeType={mimeType} filePath={filePath} views={views} image={hootImgId} />
+                    {/* </div> */}
                     <div className="post-icons">
                         {/* <div className="grp-1"> */}
                         <div className="like-count">
@@ -421,13 +444,12 @@ const Post = ({
                             <div className="view">
                                 <FiEye className="cursor-pointer" />
                             </div>
-                            <div className="view-count">971</div>
+                            <div className="view-count">{views}</div>
                         </div>
 
                         <div className="share">
                             <FiShare2
                                 onMouseEnter={() => setIsShareModalOpen(true)}
-                                // onMouseLeave={() => setIsShareModalOpen(false)}
                                 onClick={() => setIsShareModalOpen(!isShareModalOpen)}
                                 className="cursor-pointer"
                             />
@@ -438,7 +460,10 @@ const Post = ({
                             <Fragment>
                                 <div className="modal-overlay"></div>
                                 <ClickAwayListener onClickAway={() => { setIsShareModalOpen(false) }}>
-                                    <div className="share-modal">
+                                    <div
+                                        className="share-modal"
+                                        onMouseLeave={() => setIsShareModalOpen(false)}
+                                    >
                                         <div className="text-center">
                                             <span className="share-hoot-to share-head">Share Hoot to...</span>
                                         </div>
@@ -537,9 +562,12 @@ const Post = ({
                             </Fragment>
                         }
 
-                        <div className="save">
+                        {/* save/bookmark icon  */}
+
+                        {/* <div className="save">
                             <BiBookmark className="cursor-pointer" />
-                        </div>
+                        </div> */}
+
                         {/* </div> */}
                     </div>
                 </div>

@@ -189,23 +189,20 @@ const CreatePost = () => {
             <Helmet>
                 {/* General tags */}
                 <title>Create Hoot on MegaHoot Soapbox</title>
-                <meta name="description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 {/* <meta name="image" content={ } /> */}
 
-                {/* OpenGraph tags */}
-                {/* <meta property="og:url" content={ } />
-                {isBlogPost ? <meta property="og:type" content="article" /> : null}
-                <meta property="og:title" content={ } />
-                <meta property="og:description" content={ } />
-                <meta property="og:image" content={ } />
-                <meta property="fb:app_id" content={ } /> */}
-
                 {/* Twitter Card tags */}
-                {/* <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:creator" content={ } />
-                <meta name="twitter:title" content={ } />
-                <meta name="twitter:description" content={ } />
-                <meta name="twitter:image" content={ } /> */}
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:title" content="Create Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="twitter:description" content="Create Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="twitter:image" content="/images/MegaHoot_Owl3_app.png" />
+
+                {/* OpenGraph tags */}
+                <meta property="og:url" content="https://www.megahoot.net/create" />
+                <meta property="og:title" content="Create Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta property="og:description" content="Create Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta property="og:image" content="/images/MegaHoot_Owl3_app.png" />
             </Helmet>
         </Fragment>
     )

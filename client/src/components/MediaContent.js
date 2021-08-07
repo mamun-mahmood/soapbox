@@ -1,30 +1,67 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect, useRef } from 'react'
+import axios from 'axios'
 import LazyLoad from 'react-lazyload';
 
-const MediaContent = ({ mimeType, filePath, editOpen }) => {
+const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
+    const BaseURL = process.env.REACT_APP_API_URL;
+
+    const [viewCount, setViewCount] = useState(views);
+    const [isVertical, setIsVertical] = useState("hoot-img-vertical");
+    const ref = useRef(null);
+
+    // view functionality added to hoots.
+    useEffect(() => {
+        axios.put(`${BaseURL}/upload/views`, {
+            views: viewCount,
+            image: image
+        }).then((response) => {
+            // console.log(response.data.views);
+        })
+    }, [viewCount])
+
+    const imgRef = () => {
+        const width = ref.current.clientWidth;
+        const height = ref.current.clientHeight;
+
+        // console.log("width: ", width);
+        // console.log("height: ", height);
+
+        if (height > width) {
+            setIsVertical("hoot-img-vertical");
+        } else {
+            setIsVertical("hoot-img-horizontal");
+        }
+    }
+
     return (
         <Fragment>
             {mimeType.match(/image/gi) == "image" &&
-                <LazyLoad>
+                <LazyLoad offset={500}>
                     <img
-                        onLoad={() => { console.log("loaded...") }}
+                        ref={ref}
                         src={filePath}
                         alt="soapbox-img"
-                        className="hoot-img"
+                        className={isVertical}
                         onContextMenu={(e) => e.preventDefault()}
+                        onLoad={(e) => {
+                            setViewCount(viewCount + 1)
+                            imgRef();
+                        }}
                     />
                 </LazyLoad>
             }
 
             {mimeType.match(/video/gi) == "video" &&
-                <LazyLoad>
+                <LazyLoad offset={500}>
                     <video
-                        onLoad={() => { console.log("loaded...") }}
-                        width="400"
-                        className="hoot-img"
+                        className="hoot-vdo"
                         controls
                         controlsList="nodownload"
+                        disablepictureinpicture
                         onContextMenu={(e) => e.preventDefault()}
+                        onLoadStart={(e) => setViewCount(viewCount + 1)}
+                        onMouseOver={event => event.target.play()}
+                    // onMouseOut={event => event.target.pause()}
                     >
                         <source
                             src={filePath}
@@ -36,13 +73,13 @@ const MediaContent = ({ mimeType, filePath, editOpen }) => {
             }
 
             {mimeType.match(/audio/gi) == "audio" &&
-                <LazyLoad>
+                <LazyLoad offset={500}>
                     <audio
-                        onLoad={() => { console.log("loaded...") }}
                         className={editOpen ? "hoot-ado-fix" : "hoot-ado"}
                         controls
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
+                        onLoadStart={(e) => setViewCount(viewCount + 1)}
                     >
                         <source
                             src={filePath}

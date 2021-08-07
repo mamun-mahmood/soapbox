@@ -32,7 +32,7 @@ function App() {
         <Route path="/user/:username">
           <ProtectedRoute page={PublicProfile} />
         </Route>
-        <Route path="/hoot/:id">
+        <Route path="/:username/hoot/:id">
           <ProtectedRoute page={IndividualHoot} />
         </Route>
         <Route path="/profile/:username">

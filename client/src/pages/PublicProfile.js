@@ -77,6 +77,7 @@ const PublicProfile = () => {
                                 mimeType={user.mimeType}
                                 hootImgId={user.image}
                                 likes={user.likes}
+                                views={user.views}
                                 caption={user.caption}
                                 timeStamp={user.timeStamp}
                                 edited={user.edited}
@@ -90,7 +91,7 @@ const PublicProfile = () => {
             <Helmet>
                 {/* General tags */}
                 <title>{username} on MegaHoot Soapbox</title>
-                <meta name="description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 {/* <meta name="image" content={ } /> */}
 
                 {/* OpenGraph tags */}

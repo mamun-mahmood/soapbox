@@ -204,6 +204,24 @@ code {
 .counts-bold {
   font-weight: 700;
 }
+.hoot-counts {
+  padding: 0 0.2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.user-hoot-count {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-right: 0.15rem;
+}
+
+.hoot-user-info {
+  display: flex;
+  justify-content: space-between;
+}
 
 .user-name {
   padding: 0 1rem;
@@ -533,19 +551,6 @@ hr {
   font-weight: 400;
 }
 
-
-
-
-
-.right-icons {
-  display: flex;
-  justify-content: space-between;
-}
-.post-media {
-  width: 100%;
-  /* display: flex;
-  justify-content: center; */
-}
 .close-preview {
   position: absolute;
   top: 1rem;
@@ -562,14 +567,27 @@ hr {
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
-.hoot-img {
+/* .post-media {
+  width: auto;
+} */
+
+.right-icons {
+  display: flex;
+  align-items: center;
+  max-width: 650px;
+}
+
+.hoot-img-vertical {
   width: 100%;
-  max-height: 400px;
-  object-fit: scale-down;
+  max-width: 300px;
+  max-height: 750px;
+  /* object-fit: scale-down; */
+  object-fit: cover;
   padding: 0.5rem;
   border-radius: 0.95rem;
 }
-.hoot-vdo {
+
+.hoot-img-horizontal {
   width: 100%;
   max-height: 400px;
   object-fit: scale-down;
@@ -577,13 +595,46 @@ hr {
   border-radius: 0.95rem;
 }
 
-.hoot-ado {
-  width: 90%;
-  height: 120px;
+/* this class is for hoot media preview so that they can view media in original size that's why object-fit: scale-down */
+.hoot-img {
+  width: 100%;
+  max-height: 400px;
   object-fit: scale-down;
+  padding: 0.5rem;
+  border-radius: 0.95rem;
+}
+
+.media-preview img {
+  border-radius: 0.95rem;
+}
+
+.hoot-vdo {
+  width: 100%;
+  max-height: 500px;
+  object-fit: scale-down;
+  padding: 0.5rem;
+  border-radius: 0.95rem;
+}
+
+.hoot-ado {
+  width: 350px;
+  height: 120px;
+  object-fit: cover;
   padding: 0.5rem;
   margin: 3rem 1rem 6rem 1rem;
   border-radius: 0.95rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .hoot-ado {
+    width: 280px;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .hoot-ado {
+    width: 200px;
+  }
 }
 
 .hoot-ado-fix {
@@ -594,13 +645,15 @@ hr {
   margin: 3rem 0;
   border-radius: 0.95rem;
 }
+
 .post-icons {
   position: relative;
-  color: #374151;
+  color: #4B5563;
   padding: 0.5rem 0 1rem 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .share-social {
@@ -618,13 +671,13 @@ hr {
 .like {
   padding: 0rem 0.5rem 0rem 0.5rem;
   display: inline;
-  font-size: large;
+  font-size: larger;
 }
 
 .comment {
   padding: 0 0.5rem;
   display: inline;
-  font-size: large;
+  font-size: larger;
 }
 
 /* share social inline icons */
@@ -758,7 +811,7 @@ hr {
 
 .more-modal {
   position: absolute;
-  top: 3.5rem;
+  top: 3.4rem;
   right: 0.5rem;
   background-color: #dcd5fa;
   /* border: 0.1rem solid var(--primary-color); */
@@ -785,7 +838,8 @@ hr {
 
 .edit-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  overflow: auto;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -1042,7 +1096,7 @@ hr {
 .share {
   padding: 0 0.5rem;
   display: inline;
-  font-size: large;
+  font-size: larger;
 }
 
 .share-icon:hover {
@@ -1077,7 +1131,7 @@ hr {
 .view {
   padding: 0rem 0.5rem 0rem 0.5rem;
   display: inline;
-  font-size: large;
+  font-size: larger;
 }
 
 .name-comment {
@@ -1114,6 +1168,8 @@ hr {
 }
 
 .hoot-comment {
+  font-size: medium;
+  font-weight: 400;
   color: #374151;
 }
 
@@ -1356,34 +1412,30 @@ hr {
     padding-bottom: 0.2rem;
   }
   .post-icons {
-    font-size: small;
+    font-size: medium;
   }
   .like {
-
-    font-size: small;
+    font-size: medium;
   }
   .like-count {
     font-size: x-small;
   }
   .comment {
-
-    font-size: small;
+    font-size: medium;
   }
   .view {
-    font-size: small;
-
+    font-size: medium;
   }
   .view-count{
     font-size: x-small;
 
   }
   .save {
-    font-size: small;
+    font-size: medium;
 
   }
   .share {
-    font-size: small;
-
+    font-size: medium;
   }
 }
 

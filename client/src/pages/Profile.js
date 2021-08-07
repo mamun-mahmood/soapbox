@@ -69,6 +69,7 @@ const Profile = () => {
                                     mimeType={upload.mimeType}
                                     hootImgId={upload.image}
                                     likes={upload.likes}
+                                    views={upload.views}
                                     caption={upload.caption}
                                     timeStamp={upload.timeStamp}
                                     edited={upload.edited}
@@ -86,7 +87,7 @@ const Profile = () => {
             <Helmet>
                 {/* General tags */}
                 <title>{username} on MegaHoot Soapbox</title>
-                <meta name="description" content="MegaHoot Soapbox Where Members Monetize Their Social Media Time" />
+                <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 {/* <meta name="image" content={ } /> */}
 
                 {/* OpenGraph tags */}

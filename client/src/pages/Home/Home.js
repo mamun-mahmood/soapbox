@@ -15,9 +15,16 @@ const Home = () => {
             </div>
             <Helmet>
                 {/* General tags */}
-                <title>Home / MegaHoot Soapbox</title>
+                <title>Home / MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
                 {/* <meta name="description" content={ } />
                 <meta name="image" content={ } /> */}
+
+                {/* Twitter Card tags */}
+                {/* <meta name="twitter:card" content="summary" />
+                <meta name="twitter:creator" content={ } />
+                <meta name="twitter:title" content={ } />
+                <meta name="twitter:description" content={ } />
+                <meta name="twitter:image" content={ } /> */}
 
                 {/* OpenGraph tags */}
                 {/* <meta property="og:url" content={ } />
@@ -26,13 +33,6 @@ const Home = () => {
                 <meta property="og:description" content={ } />
                 <meta property="og:image" content={ } />
                 <meta property="fb:app_id" content={ } /> */}
-
-                {/* Twitter Card tags */}
-                {/* <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:creator" content={ } />
-                <meta name="twitter:title" content={ } />
-                <meta name="twitter:description" content={ } />
-                <meta name="twitter:image" content={ } /> */}
             </Helmet>
         </Fragment>
     )
