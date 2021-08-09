@@ -60,7 +60,9 @@ const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
                         disablepictureinpicture
                         onContextMenu={(e) => e.preventDefault()}
                         onLoadStart={(e) => setViewCount(viewCount + 1)}
-                        onMouseOver={event => event.target.play()}
+                        // onMouseOver={event => event.target.play()}
+                        autoPlay
+                        muted
                     // onMouseOut={event => event.target.pause()}
                     >
                         <source

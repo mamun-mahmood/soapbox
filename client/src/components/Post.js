@@ -253,7 +253,7 @@ const Post = ({
                                     {username === userInfo.username ||
                                         <div className="more-options">
                                             <span onClick={copyToClipboard}>Copy Link</span>
-                                            <span onClick={() => { history.push(`/hoot/${hootId}`) }}>Go to Hoot</span>
+                                            <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
                                             {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                         </div>
                                     }
