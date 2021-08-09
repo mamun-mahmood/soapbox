@@ -13,6 +13,7 @@ const Home = () => {
                 <SideBar />
                 <Feed />
             </div>
+
             <Helmet>
                 {/* General tags */}
                 <title>Home / MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
@@ -20,19 +21,16 @@ const Home = () => {
                 <meta name="image" content={ } /> */}
 
                 {/* Twitter Card tags */}
-                {/* <meta name="twitter:card" content="summary" />
-                <meta name="twitter:creator" content={ } />
-                <meta name="twitter:title" content={ } />
-                <meta name="twitter:description" content={ } />
-                <meta name="twitter:image" content={ } /> */}
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="twitter:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="twitter:image" content="/images/MegaHoot_Owl3_app.png" />
 
                 {/* OpenGraph tags */}
-                {/* <meta property="og:url" content={ } />
-                {isBlogPost ? <meta property="og:type" content="article" /> : null}
-                <meta property="og:title" content={ } />
-                <meta property="og:description" content={ } />
-                <meta property="og:image" content={ } />
-                <meta property="fb:app_id" content={ } /> */}
+                <meta property="og:url" content="https://www.megahoot.net/home" />
+                <meta property="og:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta property="og:image" content="/images/MegaHoot_Owl3_app.png" />
             </Helmet>
         </Fragment>
     )

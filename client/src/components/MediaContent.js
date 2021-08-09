@@ -23,9 +23,6 @@ const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
         const width = ref.current.clientWidth;
         const height = ref.current.clientHeight;
 
-        // console.log("width: ", width);
-        // console.log("height: ", height);
-
         if (height > width) {
             setIsVertical("hoot-img-vertical");
         } else {
@@ -60,9 +57,10 @@ const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
                         disablepictureinpicture
                         onContextMenu={(e) => e.preventDefault()}
                         onLoadStart={(e) => setViewCount(viewCount + 1)}
-                        // onMouseOver={event => event.target.play()}
                         autoPlay
                         muted
+                        loop
+                    // onMouseOver={event => event.target.play()}
                     // onMouseOut={event => event.target.pause()}
                     >
                         <source

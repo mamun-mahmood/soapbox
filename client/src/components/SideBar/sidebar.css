@@ -95,7 +95,7 @@
 }
 
 .looks {
-    padding-left: 2.85rem !important;
+    padding-left: 2.3rem !important;
     margin-right: 0.5rem;
 }
 
@@ -238,6 +238,7 @@
     }
     .sidebar-icon {
         margin: 0;
+        font-size: 1.3rem;
     }
     .sidebar ui li a span {
         display: none;

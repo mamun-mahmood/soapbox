@@ -15,6 +15,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import HootPage from './pages/HootPage'
 
 function App() {
   return (
@@ -33,7 +34,7 @@ function App() {
           <ProtectedRoute page={PublicProfile} />
         </Route>
         <Route path="/:username/hoot/:id">
-          <ProtectedRoute page={IndividualHoot} />
+          <ProtectedRoute page={HootPage} />
         </Route>
         <Route path="/profile/:username">
           <ProtectedRoute page={Profile} />

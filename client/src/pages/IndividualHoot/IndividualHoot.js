@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import { Helmet } from "react-helmet";
+import { FiArrowLeft } from "react-icons/fi";
 import Post from '../../components/Post'
 import NavBar from '../../components/NavBar'
 import Comments from '../../components/Comment/Comments'
@@ -30,10 +31,9 @@ const IndividualHoot = () => {
     }, [])
 
     return (
-        <div>
-            <NavBar />
+        <Fragment>
             {hoot.length === 0 &&
-                <div className="no-hoots">
+                <div className="no-hoots start">
                     <p>Something went wrong! please try again...</p>
                     <div className="individual-hoot">
                         <Link to="/create">
@@ -45,6 +45,15 @@ const IndividualHoot = () => {
 
             <div className="individualHoot">
                 {/* <div className="hootArea"> */}
+                {/* <div className="back-to-feed">
+                    <Link to="/home">
+                        <FiArrowLeft className="left-arrow" />
+                    </Link>
+                    <span>
+                        Back
+                    </span>
+                </div> */}
+
                 {hoot.map((hoot) => {
                     const hostURL = "https://www.megahoot.net";
                     const shareBaseUrl = `${hostURL}/hoot/${hoot.id}`;
@@ -100,7 +109,7 @@ const IndividualHoot = () => {
                 {/* <Comments comments={comments} hoot={hoot} /> */}
 
             </div>
-        </div>
+        </Fragment>
     )
 }
 

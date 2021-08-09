@@ -6,8 +6,11 @@ import { useState } from "react";
 import { Button } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { IoCloseOutline } from 'react-icons/io5'
+import { Link } from 'react-router-dom'
+import { FiArrowLeft } from "react-icons/fi";
 import NavBar from '../components/NavBar'
 import MediaContent from '../components/MediaContent';
+import BackToFeed from '../components/BackToFeed/BackToFeed';
 
 const CreatePost = () => {
     const [caption, setCaption] = useState("");
@@ -58,8 +61,15 @@ const CreatePost = () => {
     return (
         <Fragment>
             <NavBar />
-
             <div className="upload-post">
+                <div className="back-to-home">
+                    <Link to="/home">
+                        <FiArrowLeft className="left-arrow" />
+                    </Link>
+                    <span>
+                        Back
+                    </span>
+                </div>
                 <div className="post-caption d-flex flex-wrap">
                     <img className="avatar" src="/images/default_user_profile.svg" alt="avatar" />
                     <div className="name avatar_name">{userInfo && userInfo.username}</div>
@@ -188,7 +198,7 @@ const CreatePost = () => {
 
             <Helmet>
                 {/* General tags */}
-                <title>Create Hoot on MegaHoot Soapbox</title>
+                <title>Create Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
                 <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 {/* <meta name="image" content={ } /> */}
 
