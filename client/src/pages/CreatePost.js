@@ -9,8 +9,6 @@ import { IoCloseOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
 import NavBar from '../components/NavBar'
-import MediaContent from '../components/MediaContent';
-import BackToFeed from '../components/BackToFeed/BackToFeed';
 
 const CreatePost = () => {
     const [caption, setCaption] = useState("");
@@ -18,7 +16,6 @@ const CreatePost = () => {
     const [src, setSrc] = useState(null);
     const [mimeType, setMimeType] = useState("");
     const history = useHistory();
-
     // const target = useRef(null);
 
     const BaseURL = process.env.REACT_APP_API_URL;

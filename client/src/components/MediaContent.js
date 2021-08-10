@@ -9,6 +9,20 @@ const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
     const [isVertical, setIsVertical] = useState("hoot-img-vertical");
     const ref = useRef(null);
 
+    const random = (min = 10, max = 50) => {
+        let num = Math.random() * (max - min) + min;
+
+        return Math.round(num);
+    };
+
+    // on every page load view will increase reandomly - just remove this useEffect to get back to normal view counts
+    useEffect(() => {
+        setViewCount(viewCount + random(1, 200));
+
+        // to make view count 0 
+        // setViewCount(0)
+    }, [])
+
     // view functionality added to hoots.
     useEffect(() => {
         axios.put(`${BaseURL}/upload/views`, {
@@ -51,17 +65,12 @@ const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
             {mimeType.match(/video/gi) == "video" &&
                 <LazyLoad offset={500}>
                     <video
-                        className="hoot-vdo"
-                        controls
-                        controlsList="nodownload"
+                        loop muted controls autoPlay
                         disablepictureinpicture
+                        className="hoot-vdo"
+                        controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
                         onLoadStart={(e) => setViewCount(viewCount + 1)}
-                        autoPlay
-                        muted
-                        loop
-                    // onMouseOver={event => event.target.play()}
-                    // onMouseOut={event => event.target.pause()}
                     >
                         <source
                             src={filePath}

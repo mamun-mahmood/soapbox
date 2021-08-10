@@ -81,6 +81,20 @@ const Post = ({
         setlikesCount(likesCount + 1);
     }
 
+    const random = (min = 10, max = 50) => {
+        let num = Math.random() * (max - min) + min;
+
+        return Math.round(num);
+    };
+
+    // on every page load likes will increase reandomly - just remove this useEffect to get back to normal view counts
+    useEffect(() => {
+        setlikesCount(likesCount + random(1, 50));
+
+        // to make likes count 0 
+        // setlikesCount(0)
+    }, [])
+
     // like functionality added to hoots.
     useEffect(() => {
         axios.put(`${BaseURL}/upload/likes`, {
@@ -90,6 +104,9 @@ const Post = ({
             // console.log(response.data.likes);
         })
     }, [likesCount])
+
+    // add username as loggedIn username...
+    // const commentPlaceHolder = `Comment as ${username}`;
 
     //getting all comments
     useEffect(() => {
@@ -366,9 +383,9 @@ const Post = ({
                                         <input
                                             className="comment-input"
                                             type="text"
-                                            maxLength="300"
+                                            maxLength="290"
                                             value={newComment}
-                                            placeholder="Add a comment..."
+                                            placeholder="Add a comment"
                                             onChange={(event) => {
                                                 setNewComment(event.target.value);
                                             }} />
@@ -413,7 +430,12 @@ const Post = ({
                 {/* <hr className="mx-1" /> */}
                 <div className="right-icons">
                     {/* <div className="post-media"> */}
-                    <MediaContent mimeType={mimeType} filePath={filePath} views={views} image={hootImgId} />
+                    <MediaContent
+                        mimeType={mimeType}
+                        filePath={filePath}
+                        views={views}
+                        image={hootImgId}
+                    />
                     {/* </div> */}
                     <div className="post-icons">
                         {/* <div className="grp-1"> */}

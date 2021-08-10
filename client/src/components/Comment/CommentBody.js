@@ -150,8 +150,11 @@ const CommentBody = ({ id, username, commentBody }) => {
 
             <div className="main">
                 <div className="">
-                    <span className="owner">{username}</span>
-                    <br />
+                    <div className="comment-owner">
+                        <span className="owner">{username}&nbsp;</span>
+                        <div className="at-name">@{username}</div>
+                    </div>
+                    {/* <br /> */}
                     <span className="content">
                         {commentBody}
                     </span>

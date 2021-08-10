@@ -142,6 +142,10 @@
   transition: 0.3s;
 }
 
+.comment-owner {
+  display: flex;
+}
+
 .comment-options {
   padding: 0.5rem;
   display: flex;
