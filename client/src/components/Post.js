@@ -1,13 +1,12 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import axios from 'axios'
-import { Helmet } from "react-helmet";
 import format from "date-fns/format"
 import ClickAwayListener from 'react-click-away-listener';
 import MediaContent from './MediaContent';
 import HootComments from './Comment/HootComments';
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
-import { BiDotsHorizontalRounded, BiComment, BiBookmark } from 'react-icons/bi'
+import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { FiTwitter, FiShare2, FiRepeat, FiMail, FiMessageSquare, FiEye } from 'react-icons/fi'
 import { FaHeart, FaRegHeart, FaTumblr } from 'react-icons/fa'
 import { RiFacebookCircleLine } from 'react-icons/ri'
@@ -37,7 +36,7 @@ const Post = ({
     const filePath = `${BaseURL}/images/${hootImgId}`;
 
     // main server url
-    const serverURL = "https://soapboxapi.megahoot.net"
+    // const serverURL = "https://soapboxapi.megahoot.net"
 
     // url for individual hoot for main soapbox website
     const shareBaseUrl = `${hostURL}/${username}/hoot/${hootId}`;
@@ -71,7 +70,6 @@ const Post = ({
     const [newComment, setNewComment] = useState("");
 
     const history = useHistory();
-    const location = useLocation();
 
     // timeStamp can be implemented at server-side...
     const date = new Date();
@@ -80,20 +78,6 @@ const Post = ({
     const setLikesCount = (e) => {
         setlikesCount(likesCount + 1);
     }
-
-    const random = (min = 10, max = 50) => {
-        let num = Math.random() * (max - min) + min;
-
-        return Math.round(num);
-    };
-
-    // on every page load likes will increase reandomly - just remove this useEffect to get back to normal view counts
-    useEffect(() => {
-        setlikesCount(likesCount + random(1, 50));
-
-        // to make likes count 0 
-        // setlikesCount(0)
-    }, [])
 
     // like functionality added to hoots.
     useEffect(() => {
@@ -187,6 +171,43 @@ const Post = ({
             setUsers(response.data);
         });
     }, [])
+
+    const random = (min = 10, max = 50) => {
+        let num = Math.random() * (max - min) + min;
+
+        return Math.round(num);
+    };
+
+    // on every page load likes will increase reandomly - just remove this useEffect to get back to normal view counts
+    useEffect(() => {
+        if (likes !== 0) {
+            setlikesCount(likesCount + random(1, 20));
+        }
+
+        // to make likes count 0 
+        // setlikesCount(0)
+    }, [])
+
+    // we want to show likes 0 for newly created hoots 
+    // if (likes === 0) return setLikesCount(0)
+
+    // count will be formatted 
+    const formatCount = count => {
+        if (count < 1e3) return count;
+        if (count >= 1e3 && count < 1e6) return +(count / 1e3).toFixed(1);
+        if (count >= 1e6 && count < 1e9) return +(count / 1e6).toFixed(1);
+        if (count >= 1e9 && count < 1e12) return +(count / 1e9).toFixed(1);
+        if (count >= 1e12) return +(count / 1e12).toFixed(1);
+    };
+
+    // si stands for International System of Units
+    const formatSi = count => {
+        if (count < 1e3) return "";
+        if (count >= 1e3 && count < 1e6) return "K";
+        if (count >= 1e6 && count < 1e9) return "M";
+        if (count >= 1e9 && count < 1e12) return "B";
+        if (count >= 1e12) return "T";
+    };
 
     return (
         <div className="home">
@@ -441,17 +462,27 @@ const Post = ({
                         {/* <div className="grp-1"> */}
                         <div className="like-count">
                             <div className="like">
-                                {liked ? <FaHeart
-                                    className="hoot-likes-fill"
-                                    onClick={e => { setLiked(false), setlikesCount(likesCount - 1) }
-                                    }
-                                /> : <FaRegHeart
-                                    className="hoot-likes-border"
-                                    onClick={e => { setLiked(true), setlikesCount(likesCount + 1) }
-                                    }
-                                />}
+                                {liked
+                                    ? <FaHeart
+                                        className="hoot-likes-fill"
+                                        onClick={
+                                            e => { setLiked(false), setlikesCount(likesCount - 1) }
+                                        }
+                                    />
+                                    : <FaRegHeart
+                                        className="hoot-likes-border"
+                                        onClick={
+                                            e => { setLiked(true), setlikesCount(likesCount + 1) }
+                                        }
+                                    />
+                                }
                             </div>
-                            <div className="like-count">{likesCount}</div>
+
+                            {/* normal like counts - to get back to normal uncomment below line */}
+                            {/* <div className="like-count">{likesCount}</div> */}
+
+                            {/* artificially increased like counts */}
+                            <div className="like-count">{likes === 0 ? likesCount : formatCount(likesCount) + formatSi(likesCount)}</div>
                         </div>
                         <div className="comment-count">
                             <div className="comment">
@@ -466,7 +497,7 @@ const Post = ({
                             <div className="view">
                                 <FiEye className="cursor-pointer" />
                             </div>
-                            <div className="view-count">{views}</div>
+                            <div className="view-count">{formatCount(views) + formatSi(views)}</div>
                         </div>
 
                         <div className="share">

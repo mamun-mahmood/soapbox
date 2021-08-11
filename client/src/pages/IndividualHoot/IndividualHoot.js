@@ -1,10 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import { Helmet } from "react-helmet";
-import { FiArrowLeft } from "react-icons/fi";
 import Post from '../../components/Post'
-import NavBar from '../../components/NavBar'
-import Comments from '../../components/Comment/Comments'
 import { useParams, Link } from 'react-router-dom'
 import './individualHoot.css'
 import '../../components/Feed/feed.css'

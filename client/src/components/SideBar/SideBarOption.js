@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 const SideBarOption = ({ option, link, Icon, looks }) => {

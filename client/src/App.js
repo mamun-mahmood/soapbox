@@ -7,7 +7,7 @@ import PublicProfile from './pages/PublicProfile'
 import PageNotFound from './pages/PageNotFound'
 import CreatePost from './pages/CreatePost'
 import ProtectedRoute from './components/ProtectedRoute'
-import IndividualHoot from './pages/IndividualHoot/IndividualHoot'
+import HootPage from './pages/HootPage'
 import LandingPage from './pages/LandingPage/LandingPage'
 import "./App.css"
 import {
@@ -15,7 +15,6 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-import HootPage from './pages/HootPage'
 
 function App() {
   return (

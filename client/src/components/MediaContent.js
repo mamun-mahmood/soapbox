@@ -66,7 +66,7 @@ const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
                 <LazyLoad offset={500}>
                     <video
                         loop muted controls autoPlay
-                        disablepictureinpicture
+                        disablePictureInPicture
                         className="hoot-vdo"
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}

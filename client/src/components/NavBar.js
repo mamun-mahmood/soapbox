@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { BiSearch } from 'react-icons/bi';
 import { HiOutlineLogout } from 'react-icons/hi';
 
 const NavBar = () => {

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Helmet } from 'react-helmet'
 import Post from '../components/Post'
 import NavBar from '../components/NavBar'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 const PublicProfile = () => {
     const [users, setUsers] = useState([]);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Helmet } from "react-helmet";
 import LoginComp from '../../components/LoginComp'
@@ -29,7 +29,7 @@ const LandingPage = () => {
 
                 <ul className="list-inline">
                     <div className="title">
-                        <a href="https://www.megahoot.com/megahoot-soapbox/" target="_blank" rel="nofollow">
+                        <a href="https://www.megahoot.com/megahoot-soapbox/" target="_blank" rel="noopener noreferrer">
                             How Soapbox Works
                         </a>
                     </div>
@@ -40,7 +40,7 @@ const LandingPage = () => {
                         Subscriptions
                     </div>
                     <div className="title">
-                        <a href="https://www.megahoot.com/" target="_blank" rel="nofollow">
+                        <a href="https://www.megahoot.com/" target="_blank" rel="noopener noreferrer">
                             MegaHoot Tech
                         </a>
                     </div>

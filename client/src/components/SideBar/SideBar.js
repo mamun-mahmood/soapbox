@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { RiCompassDiscoverLine } from 'react-icons/ri'
-import { FiHome, FiHash, FiBookmark, FiMoreHorizontal, FiAward } from 'react-icons/fi'
-import { BiMessageDetail, BiBell, BiUser, BiListUl, BiDollar, BiWallet } from 'react-icons/bi'
+import { FiHome, FiHash } from 'react-icons/fi'
+import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import { BsLightning } from 'react-icons/bs'
 import SideBarOption from './SideBarOption'
 import './sidebar.css';
@@ -155,7 +153,7 @@ const SideBar = () => {
                     </li>
                     <div className="megahoot-com">
                         <small className="info cursor-pointer">
-                            <a href="https://www.megahoot.com/" target="_blank" rel="nofollow">
+                            <a href="https://www.megahoot.com/" target="_blank" rel="noopener noreferrer">
                                 MegaHoot Technologies, Inc
                             </a>
                         </small>
