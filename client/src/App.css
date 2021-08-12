@@ -669,13 +669,18 @@ hr {
 .like {
   padding: 0rem 0.5rem 0rem 0.5rem;
   display: inline;
-  font-size: larger;
+  font-size: 1.3rem;
+
+  color: #6B7280;
 }
 
 .comment {
   padding: 0 0.5rem;
   display: inline;
-  font-size: larger;
+  font-size: 1.3rem;
+
+  color: #6B7280;
+
 }
 
 /* share social inline icons */
@@ -726,6 +731,19 @@ hr {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+}
+
+.comment-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .view-count {
@@ -733,12 +751,9 @@ hr {
   flex-direction: column;
   align-items: center;
 
+  font-size: 0.9rem;
+  font-weight: 500;
   padding: 0 0.1rem;
-}
-.comment-count {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .share-modal {
@@ -1096,7 +1111,9 @@ hr {
 .share {
   padding: 0 0.5rem;
   display: inline;
-  font-size: larger;
+  font-size: 1.3rem;
+
+  color: #6B7280;
 }
 
 .share-icon:hover {
@@ -1120,7 +1137,7 @@ hr {
 .save {
   padding: 0 0.5rem;
   display: inline;
-  font-size: large;
+  font-size: 1.3rem;
 }
 
 .rehoot {
@@ -1131,7 +1148,9 @@ hr {
 .view {
   padding: 0rem 0.5rem 0rem 0.5rem;
   display: inline;
-  font-size: larger;
+  font-size: 1.3rem;
+
+  color: #6B7280;
 }
 
 .name-comment {
@@ -1416,38 +1435,40 @@ hr {
     font-size: medium;
   }
   .like {
-    font-size: medium;
-  }
-  .like-count {
-    font-size: x-small;
+    font-size: large;
   }
   .comment {
-    font-size: medium;
+    font-size: large;
   }
   .view {
-    font-size: medium;
-  }
-  .view-count{
-    font-size: x-small;
-
+    font-size: large;
   }
   .save {
-    font-size: medium;
-
+    font-size: large;
   }
   .share {
-    font-size: medium;
+    font-size: large;
+  }
+
+  .like-count {
+    font-size: small;
+  }
+  .comment-count {
+    font-size: small;
+  }
+  .view-count{
+    font-size: small;
   }
 }
 
 .home {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 @media only screen and (max-width: 536px) {
   .home {
     width: auto;
-    padding: 1rem;
+    padding: 0.5rem;
   }
 }
 

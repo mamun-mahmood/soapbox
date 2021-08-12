@@ -47,7 +47,8 @@ const Post = ({
     const shareHashtags = encodeURIComponent("");
     // const shareHashtags = encodeURIComponent("megahoot,soapbox");
 
-    const twitterShare = `http://twitter.com/share?text=${shareCaption}&url=${shareUrl}&hashtags=${shareHashtags}`;
+    // const twitterShare = `http://twitter.com/share?text=${shareCaption}&url=${shareUrl}&hashtags=${shareHashtags}`;
+    const twitterShare = `http://twitter.com/share?text=${shareCaption}&url=${shareUrl}`;
     const mailShare = `mailto:?subject="Hoot from MegaHoot Soapbox"&body=${shareCaption}%20Checkout more at ${shareUrl}`;
     const facebookShare = `https://www.facebook.com/sharer.php?u=${shareUrl}`;
     const redditShare = `https://reddit.com/submit?url=${shareUrl}&title=${shareCaption}`;
@@ -180,7 +181,11 @@ const Post = ({
 
     // on every page load likes will increase reandomly - just remove this useEffect to get back to normal view counts
     useEffect(() => {
-        if (likes !== 0) {
+        if (likes === 0) {
+            setTimeout(() => {
+                setlikesCount(likesCount + random(1, 20));
+            }, 30000);
+        } else {
             setlikesCount(likesCount + random(1, 20));
         }
 
@@ -490,8 +495,8 @@ const Post = ({
                                     className="cursor-pointer"
                                     onClick={openComments}
                                 />
-                                <div className="comment-count">{comments.length}</div>
                             </div>
+                            <div className="comment-count">{comments.length}</div>
                         </div>
                         <div className="view-count">
                             <div className="view">

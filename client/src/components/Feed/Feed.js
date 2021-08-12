@@ -19,7 +19,7 @@ const Feed = () => {
     return (
         <div className="feed start">
 
-            {uploads.length === 0 &&
+            {/* {uploads.length === 0 &&
                 <div className="no-hoots-feed">
                     <p>Your timeline is empty</p>
                     <div className="feed-hoot">
@@ -28,7 +28,7 @@ const Feed = () => {
                         </Link>
                     </div>
                 </div>
-            }
+            } */}
 
             {uploads.map((upload) => {
                 return (<div key={upload.id}>

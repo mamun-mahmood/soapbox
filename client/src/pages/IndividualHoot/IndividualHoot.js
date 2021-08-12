@@ -29,7 +29,7 @@ const IndividualHoot = () => {
 
     return (
         <Fragment>
-            {hoot.length === 0 &&
+            {/* {hoot.length === 0 &&
                 <div className="no-hoots start">
                     <p>Something went wrong! please try again...</p>
                     <div className="individual-hoot">
@@ -38,7 +38,7 @@ const IndividualHoot = () => {
                         </Link>
                     </div>
                 </div>
-            }
+            } */}
 
             <div className="individualHoot">
                 {/* <div className="hootArea"> */}
