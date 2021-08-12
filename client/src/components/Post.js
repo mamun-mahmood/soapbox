@@ -4,6 +4,7 @@ import format from "date-fns/format"
 import ClickAwayListener from 'react-click-away-listener';
 import MediaContent from './MediaContent';
 import HootComments from './Comment/HootComments';
+import Avatar from 'react-avatar';
 import { Link, useHistory } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
@@ -224,7 +225,16 @@ const Post = ({
                         className="avatar_name"
                     >
                         <Link to={path}>
-                            <img class="avatar" src={avatar} alt="avatar" />
+                            <div className="avatar-wraper">
+                                <Avatar
+                                    size={50}
+                                    round={true}
+                                    name={username}
+                                // color={"#cfa3e7"}
+                                />
+                            </div>
+
+                            {/* <img class="avatar" src={avatar} alt="avatar" /> */}
                         </Link>
                         <Link to={path}>
                             <div className="name">{username}</div>
@@ -240,7 +250,15 @@ const Post = ({
                         >
                             <div className="hover-user-follow">
                                 <Link to={path}>
-                                    <img class="hover-avatar" src={avatar} alt="avatar" />
+                                    <div className="avatar-wraper">
+                                        <Avatar
+                                            size={50}
+                                            round={true}
+                                            name={username}
+                                        // color={"#cfa3e7"}
+                                        />
+                                    </div>
+                                    {/* <img class="hover-avatar" src={avatar} alt="avatar" /> */}
                                 </Link>
                                 <button className="hover-btn-hoot-follow">Follow</button>
                             </div>
@@ -332,7 +350,15 @@ const Post = ({
                                             {/* right side edit box */}
                                             <div className="edit-caption d-flex flex-wrap">
                                                 <div className="edit-profile-username">
-                                                    <img className="avatar" src={avatar} alt="avatar" />
+                                                    <div className="avatar-wraper">
+                                                        <Avatar
+                                                            size={50}
+                                                            round={true}
+                                                            name={username}
+                                                        // color={"#cfa3e7"}
+                                                        />
+                                                    </div>
+                                                    {/* <img className="avatar" src={avatar} alt="avatar" /> */}
                                                     <div className="name avatar_name">{userInfo && userInfo.username}</div>
                                                 </div>
                                                 <div className="post-content">

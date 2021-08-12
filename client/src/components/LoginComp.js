@@ -73,7 +73,7 @@ const LoginComp = () => {
 
                 <strong className="text-center d-flex justify-content-center m-2">{message}</strong>
 
-                <Button
+                {/* <Button
                     className="d-grid col-12"
                     variant="primary"
                     type="submit"
@@ -81,7 +81,18 @@ const LoginComp = () => {
                     disabled={!email || !password}
                 >
                     Login
-                </Button>
+                </Button> */}
+
+                <button
+                    className="d-grid col-12 btn-main"
+                    variant="primary"
+                    type="submit"
+                    onClick={login}
+                    disabled={!email || !password}
+                >
+                    Login
+                </button>
+
             </Form>
         </div>
     )

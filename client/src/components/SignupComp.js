@@ -70,7 +70,7 @@ const SignupComp = () => {
                     />
                 </Form.Group>
 
-                <Button
+                {/* <Button
                     className="d-grid col-12"
                     variant="primary"
                     type="submit"
@@ -78,7 +78,18 @@ const SignupComp = () => {
                     disabled={!username || !email || !password}
                 >
                     Sign Up
-                </Button>
+                </Button> */}
+
+                <button
+                    className="d-grid col-12 btn-main"
+                    variant="primary"
+                    type="submit"
+                    onClick={signup}
+                    disabled={!email || !password}
+                >
+                    Sign Up
+                </button>
+
             </Form>
         </div>
     )

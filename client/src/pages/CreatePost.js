@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { Helmet } from 'react-helmet';
 import axios from 'axios'
+import Avatar from 'react-avatar';
 import { format } from 'date-fns'
 import { useState } from "react";
 import { Button } from 'react-bootstrap'
@@ -21,9 +22,11 @@ const CreatePost = () => {
     const BaseURL = process.env.REACT_APP_API_URL;
 
     var email = "";
+    var username = "";
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
     if (userInfo) {
         email = userInfo.email;
+        username = userInfo.username
     }
 
     console.log("email:", email);
@@ -68,7 +71,15 @@ const CreatePost = () => {
                     </span>
                 </div>
                 <div className="post-caption d-flex flex-wrap">
-                    <img className="avatar" src="/images/default_user_profile.svg" alt="avatar" />
+                    <div className="avatar-wraper">
+                        <Avatar
+                            size={50}
+                            round={true}
+                            name={username}
+                        // color={"#cfa3e7"}
+                        />
+                    </div>
+                    {/* <img className="avatar" src="/images/default_user_profile.svg" alt="avatar" /> */}
                     <div className="name avatar_name">{userInfo && userInfo.username}</div>
 
                     <div className="post-content">

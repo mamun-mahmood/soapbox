@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import axios from 'axios'
 import ClickAwayListener from 'react-click-away-listener';
-import { Link } from 'react-router-dom'
+import Avatar from 'react-avatar';
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { IoCloseOutline } from 'react-icons/io5'
@@ -81,17 +81,26 @@ const CommentBody = ({ id, username, commentBody }) => {
                                 {/* edit username  */}
                                 <h5>You are editing comment as
                                     <span className="user-edit">
-                                        {" "}@<Link to="/profile" className="name-comment">{username}</Link>
+                                        {/* {" "}@<Link to="" className="name-comment">{username}</Link> */}
+                                        {" "}{username}
                                     </span>,
                                 </h5>
                                 {/* <div className="edit-content"> */}
                                 <div className="edit-caption d-flex flex-wrap">
                                     <div className="edit-profile-username">
-                                        <img
+                                        <div className="avatar-wraper">
+                                            <Avatar
+                                                size={50}
+                                                round={true}
+                                                name={username}
+                                            // color={"#cfa3e7"}
+                                            />
+                                        </div>
+                                        {/* <img
                                             className="avatar"
                                             src="/images/default_user_profile.svg"
                                             alt="avatar"
-                                        />
+                                        /> */}
                                         <div className="name avatar_name">{userInfo && userInfo.username}</div>
                                     </div>
                                     <div className="post-content">

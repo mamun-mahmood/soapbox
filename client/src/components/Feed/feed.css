@@ -71,6 +71,7 @@
         margin: 1rem 0;
     }
 } */
+
 .btn-top a{
     display: flex;
     gap: 0.5rem;
@@ -88,6 +89,7 @@
     border: 2px solid transparent;
     border-radius: 0.5rem;
     cursor: pointer;
+
 }
 
 .up-arrow {

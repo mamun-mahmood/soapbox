@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import axios from 'axios'
+import Avatar from 'react-avatar';
 import Post from '../components/Post'
 import NavBar from '../components/NavBar'
 import ScrollToTop from '../components/Feed/ScrollToTop'
@@ -19,22 +20,58 @@ const Profile = () => {
         });
     }, [])
 
+    var totalViews = 0;
+    var totalLikes = 0;
+
+    myUploads.map((upload) => {
+        totalViews += upload.views
+        totalLikes += upload.likes
+    })
+
+    console.log(totalViews);
+    console.log(totalLikes);
+
+    // count will be formatted 
+    const formatCount = count => {
+        if (count < 1e3) return count;
+        if (count >= 1e3 && count < 1e6) return +(count / 1e3).toFixed(1);
+        if (count >= 1e6 && count < 1e9) return +(count / 1e6).toFixed(1);
+        if (count >= 1e9 && count < 1e12) return +(count / 1e9).toFixed(1);
+        if (count >= 1e12) return +(count / 1e12).toFixed(1);
+    };
+
+    // si stands for International System of Units
+    const formatSi = count => {
+        if (count < 1e3) return "";
+        if (count >= 1e3 && count < 1e6) return "K";
+        if (count >= 1e6 && count < 1e9) return "M";
+        if (count >= 1e9 && count < 1e12) return "B";
+        if (count >= 1e12) return "T";
+    };
+
     return (
         <Fragment>
             <NavBar />
-            <div>
+            <div className="profile-page">
                 <div className="profile-container">
-                    <div>
-                        <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" />
-                    </div>
+                    <Avatar
+                        size={160}
+                        round={true}
+                        name={username}
+                        // color={"#cfa3e7"}
+                        className="profile-picture"
+                    />
+                    {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
                     <div className="user-info">
                         <div className="display-name">
                             <h1>{username}</h1>
                         </div>
                         <div className="user-counts">
-                            <div><span className="counts-bold">{myUploads.length}</span> hoots</div>
-                            <div><span className="counts-bold">0</span> followers</div>
-                            <div><span className="counts-bold">0</span> following</div>
+                            {/* <div><span className="counts-bold">{myUploads.length}</span> hoots</div> */}
+                            <div><span className="counts-bold">0</span> Followers</div>
+                            <div><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
+                            <div><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
+                            {/* <div><span className="counts-bold">0</span> following</div> */}
                         </div>
                         <div className="user-name">@{username}</div>
                         <div className="user-desc">
@@ -47,7 +84,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <hr />
-                <div className="">
+                <div className="pt-2">
                     {myUploads.length === 0 &&
                         <div className="no-hoots">
                             <p>No hoots yet!</p>
