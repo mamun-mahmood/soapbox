@@ -1,31 +1,37 @@
-import React, { useState, useEffect, Fragment } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
+import React, { Fragment, useState, useEffect } from 'react'
 import axios from 'axios'
 import Avatar from 'react-avatar';
-import Post from '../components/Post'
-import NavBar from '../components/NavBar'
-import ScrollToTop from '../components/Feed/ScrollToTop'
+import { Helmet } from 'react-helmet'
+import Post from './Post'
+import NavBar from './NavBar'
+import { useParams } from 'react-router-dom'
 
-const Profile = () => {
-    const { username } = useParams();
-    const [myUploads, setMyUploads] = useState([]);
+const PublicProfile = () => {
+    const [users, setUsers] = useState([]);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
+    const { username } = useParams();
+
     useEffect(() => {
-        axios.get(`${BaseURL}/user/profile/${username}`).then((response) => {
-            setMyUploads(response.data);
-            console.log(response);
+        window.scroll({
+            top: 0,
+            behavior: 'smooth'
         });
+
+        axios.get(`${BaseURL}/user/profile/${username}`).then((response) => {
+            setUsers(response.data);
+        });
+
+        console.log(users);
     }, [])
 
     var totalViews = 0;
     var totalLikes = 0;
 
-    myUploads.map((upload) => {
-        totalViews += upload.views
-        totalLikes += upload.likes
+    users.map((user) => {
+        totalViews += user.views
+        totalLikes += user.likes
     })
 
     console.log(totalViews);
@@ -52,20 +58,26 @@ const Profile = () => {
     return (
         <Fragment>
             <NavBar />
-            <div className="profile-page">
+            <div>
                 <div className="profile-container">
-                    <Avatar
-                        size={160}
-                        round={true}
-                        name={username}
+                    <div className="profile-picture">
+                        <Avatar
+                            size={160}
+                            round={true}
+                            name={username}
                         // color={"#cfa3e7"}
-                        className="profile-picture"
-                    />
-                    {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
+                        />
+                    </div>
+                    {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile-pic" /> */}
                     <div className="user-info">
+                        {/* <div className="follow-user"> */}
                         <div className="display-name">
                             <h1>{username}</h1>
                         </div>
+                        <div className="user-name-page">@{username}</div>
+
+                        {/* </div> */}
+
                         <div className="user-counts">
                             {/* <div><span className="counts-bold">{myUploads.length}</span> hoots</div> */}
                             <div><span className="counts-bold">0</span> Followers</div>
@@ -73,51 +85,45 @@ const Profile = () => {
                             <div><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
                             {/* <div><span className="counts-bold">0</span> following</div> */}
                         </div>
-                        <div className="user-name">@{username}</div>
                         <div className="user-desc">
-                            {/* Actor. Producer. Running in movies since 1981. */}
+                            {/* The official home of Star Wars on Soapbox. */}
                         </div>
                         <div>
-                            {/* <a className="user-website" href="http://tomcruise.com/">tomcruise.com</a> */}
+                            {/* <a className="user-website" href="https://www.starwars.com/">www.starwars.com</a> */}
                         </div>
-                        <button className="btn-edit-profile">Edit Profile</button>
+                        <div className="user-follow">
+                            <button className="btn-follow">Follow</button>
+                        </div>
+                        {/* <div className="followed-by">
+                            <small >
+                                Followed by
+                                <span className="followed-by-user"> louis</span>,
+                                <span className="followed-by-user"> hrshmistry</span>,
+                                and
+                                <span className="followed-by-user"> aakash</span>
+                            </small>
+                        </div> */}
                     </div>
                 </div>
                 <hr />
                 <div className="pt-2">
-                    {myUploads.length === 0 &&
-                        <div className="no-hoots">
-                            <p>No hoots yet!</p>
-                            <div className="profile-hoot">
-                                <Link to="/create">
-                                    Create Hoot
-                                </Link>
-                            </div>
-                        </div>
-                    }
-
-                    {myUploads.map((upload) => {
-                        return (
-                            <div key={upload.id}>
-                                <Post
-                                    hootId={upload.id}
-                                    avatar="/images/default_user_profile.svg"
-                                    username={upload.authorUsername}
-                                    mimeType={upload.mimeType}
-                                    hootImgId={upload.image}
-                                    likes={upload.likes}
-                                    views={upload.views}
-                                    caption={upload.caption}
-                                    timeStamp={upload.timeStamp}
-                                    edited={upload.edited}
-                                    editedTimeStamp={upload.editedTimeStamp}
-                                />
-                            </div>
-                        )
+                    {users.map((user) => {
+                        return (<div key={user.id}>
+                            <Post
+                                hootId={user.id}
+                                avatar="/images/default_user_profile.svg"
+                                username={user.authorUsername}
+                                mimeType={user.mimeType}
+                                hootImgId={user.image}
+                                likes={user.likes}
+                                views={user.views}
+                                caption={user.caption}
+                                timeStamp={user.timeStamp}
+                                edited={user.edited}
+                                editedTimeStamp={user.editedTimeStamp}
+                            />
+                        </div>)
                     }).reverse()}
-
-                    {myUploads.length > 3 && <ScrollToTop />}
-
                 </div>
             </div>
 
@@ -146,4 +152,4 @@ const Profile = () => {
     )
 }
 
-export default Profile
+export default PublicProfile

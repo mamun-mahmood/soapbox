@@ -236,10 +236,12 @@ const Post = ({
 
                             {/* <img class="avatar" src={avatar} alt="avatar" /> */}
                         </Link>
-                        <Link to={path}>
-                            <div className="name">{username}</div>
-                        </Link>
-                        <div className="at-name">@{username}</div>
+                        <div className="div-username-name">
+                            <Link to={path}>
+                                <div className="name">{username}</div>
+                            </Link>
+                            <div className="at-name">@{username}</div>
+                        </div>
                     </div>
 
                     {hoverInfo &&

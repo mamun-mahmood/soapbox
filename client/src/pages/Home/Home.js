@@ -6,35 +6,6 @@ import Feed from '../../components/Feed/Feed'
 import './home.css'
 
 const Home = () => {
-
-    // const formatCount = count => {
-    //     if (count < 1e3) return count;
-    //     if (count >= 1e3 && count < 1e6) return +(count / 1e3).toFixed(1) + "K";
-    //     if (count >= 1e6 && count < 1e9) return +(count / 1e6).toFixed(1) + "M";
-    //     if (count >= 1e9 && count < 1e12) return +(count / 1e9).toFixed(1) + "B";
-    //     if (count >= 1e12) return +(count / 1e12).toFixed(1) + "T";
-    // };
-
-    // count will be formatted 
-    const formatCount = count => {
-        if (count < 1e3) return count;
-        if (count >= 1e3 && count < 1e6) return +(count / 1e3).toFixed(1);
-        if (count >= 1e6 && count < 1e9) return +(count / 1e6).toFixed(1);
-        if (count >= 1e9 && count < 1e12) return +(count / 1e9).toFixed(1);
-        if (count >= 1e12) return +(count / 1e12).toFixed(1);
-    };
-
-    // si stands for International System of Units
-    const formatSi = count => {
-        if (count < 1e3) return "";
-        if (count >= 1e3 && count < 1e6) return "K";
-        if (count >= 1e6 && count < 1e9) return "M";
-        if (count >= 1e9 && count < 1e12) return "B";
-        if (count >= 1e12) return "T";
-    };
-
-    console.log(formatCount(230) + formatSi(230));
-
     return (
         <Fragment>
             <NavBar />
