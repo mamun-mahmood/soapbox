@@ -9,6 +9,9 @@ import { useHistory } from 'react-router-dom'
 import { IoCloseOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
+// import { MdPhotoLibrary } from "react-icons/md";
+// import { FaVideo } from "react-icons/fa";
+// import { AiFillAudio } from "react-icons/ai";
 import NavBar from '../components/NavBar'
 
 const CreatePost = () => {
@@ -100,7 +103,10 @@ const CreatePost = () => {
                                 <div className="d-flex justify-content-end my-2">
 
                                     {/* Photo */}
-                                    <label htmlFor="post-image" className="btn-label">Photo</label>
+                                    <label htmlFor="post-image" className="btn-label">
+                                        Photo
+                                        {/* <MdPhotoLibrary /> */}
+                                    </label>
                                     <input
                                         type="file"
                                         id="post-image"
@@ -111,7 +117,10 @@ const CreatePost = () => {
                                     />
 
                                     {/* Video */}
-                                    <label htmlFor="post-video" className="btn-label">Video</label>
+                                    <label htmlFor="post-video" className="btn-label">
+                                        Video
+                                        {/* <FaVideo /> */}
+                                    </label>
                                     <input
                                         type="file"
                                         name="video"
@@ -122,7 +131,10 @@ const CreatePost = () => {
                                     />
 
                                     {/* Audio */}
-                                    <label htmlFor="post-audio" className="btn-label">Audio</label>
+                                    <label htmlFor="post-audio" className="btn-label">
+                                        Audio
+                                        {/* <AiFillAudio /> */}
+                                    </label>
                                     <input
                                         type="file"
                                         name="audio"

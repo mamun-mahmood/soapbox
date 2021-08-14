@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import SideBar from '../../components/SideBar/SideBar'
 import NavBar from '../../components/NavBar'
 import Feed from '../../components/Feed/Feed'
+import FloatingButton from '../../components/FloatingButton/FloatingButton';
 import './home.css'
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
             <div className="main-body">
                 <SideBar />
                 <Feed />
+                <FloatingButton />
             </div>
 
             <Helmet>

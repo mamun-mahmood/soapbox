@@ -172,7 +172,9 @@ code {
 .user-info {
   display: flex;
   flex-direction: column;
-  /* margin-left: 1rem; */
+  /* justify-content: center; */
+  align-items: center;
+
   width: 400px;
   padding: 0 1rem;
 }
@@ -273,7 +275,7 @@ hr {
 }
 
 .btn-edit-profile {
-  width: auto;
+  width: 82%;
   height: 35px;
 
   color: #374151;
@@ -1300,17 +1302,21 @@ hr {
   width: 240px;
   filter: drop-shadow(0 10px 15px #9CA3AF);
 }
-
+/* .div-create-hoot {
+  padding-top: 5rem;
+} */
 .upload-post {
   max-width: 650px;
-  height: auto;
-  margin: 5rem auto 0;
+  height: 100%;
+  margin: 0 auto;
   padding: 0 1rem;
+  padding-top: 5.2rem;
+  overflow-x: hidden;
 }
 
 .post-caption {
   display: flex;
-  padding-top: 4rem;
+  /* padding-top: 4rem; */
 }
 
 .edit-caption {
@@ -1436,14 +1442,35 @@ hr {
 }
 
 .btn-label:hover {
-  color: var(--secondary-color);
+  color: #fff;
   background-color: var(--primary-color);
   border-color: var(--primary-color);
 }
 
 .btn-label:active {
-  color: var(--secondary-color);
   background-color: var(--on-hover);
+  border-color: var(--on-hover);
+}
+
+.label {
+  color: var(--primary-color);
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  font-size: large;
+}
+
+.label:hover {
+  color: #fff;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  border-color: var(--primary-color);
+}
+
+.label:active {
+  background-color: var(--on-hover);
+  border-radius: 50%;
   border-color: var(--on-hover);
 }
 
@@ -1617,25 +1644,24 @@ hr {
 
 .back-to-home {
   display: flex;
-    gap: 0.5rem;
-    align-items: center;
+  gap: 0.5rem;
+  align-items: center;
     
-    position: fixed;
-    z-index: 1111;
-    overflow: hidden;
-    background-color: #F5F3FF;
+  z-index: 1;
+  overflow: hidden;
+  background-color: #F5F3FF;
   
-    width: 612px;
-    height: 50px;
-    position: fixed;
+  width: auto;
+  height: 50px;
+  /* position: fixed; */
   
-    padding: 0.5rem;
+  padding: 0.5rem;
   
-    font-weight: 600;
-    font-size: medium;
+  font-weight: 600;
+  font-size: medium;
   
-    color: var(--primary-color);
-    border-bottom: 1px solid #D1D5DB;
+  color: var(--primary-color);
+  border-bottom: 1px solid #D1D5DB;
 }
 
 .back-to-home a {
@@ -1678,7 +1704,7 @@ hr {
 
   .name {
     padding-left: 0rem;
-  }
+}
 
   .hover-info {
     display: none;
