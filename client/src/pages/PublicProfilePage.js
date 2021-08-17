@@ -28,6 +28,7 @@ const PublicProfilePage = () => {
                     return (<div key={user.id}>
                         <PublicProfile
                             userId={user.id}
+                            verified={user.verified}
                             name={user.name}
                             userName={user.username}
                             profilePic={user.profilePic}

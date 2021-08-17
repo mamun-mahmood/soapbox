@@ -4,8 +4,10 @@ import Avatar from 'react-avatar';
 import { Helmet } from 'react-helmet'
 import Post from './Post'
 import { useParams } from 'react-router-dom'
+import { HiBadgeCheck } from 'react-icons/hi'
 
 const PublicProfile = ({
+    verified,
     name,
     profilePic,
     website,
@@ -76,7 +78,16 @@ const PublicProfile = ({
                     <div className="user-info">
                         {/* <div className="follow-user"> */}
                         <div className="display-name">
-                            <h1>{name}</h1>
+                            <div className="profile-name-verification">
+                                <h1>{name}</h1>
+                                {verified === 1
+                                    ?
+                                    <div className="profile-verification-badge">
+                                        <HiBadgeCheck />
+                                    </div>
+                                    : null
+                                }
+                            </div>
                         </div>
                         <div className="user-name-page">@{username}</div>
 

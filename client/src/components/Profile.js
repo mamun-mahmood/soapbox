@@ -5,8 +5,10 @@ import axios from 'axios'
 import Avatar from 'react-avatar';
 import Post from '../components/Post'
 import ScrollToTop from '../components/Feed/ScrollToTop'
+import { HiBadgeCheck } from 'react-icons/hi'
 
 const Profile = ({
+    verified,
     name,
     profilePic,
     website,
@@ -71,7 +73,16 @@ const Profile = ({
                     {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
                     <div className="user-info">
                         <div className="display-name">
-                            <h1>{name}</h1>
+                            <div className="profile-name-verification">
+                                <h1>{name}</h1>
+                                {verified === 1
+                                    ?
+                                    <div className="profile-verification-badge">
+                                        <HiBadgeCheck />
+                                    </div>
+                                    : null
+                                }
+                            </div>
                         </div>
                         <div className="user-name-page">@{username}</div>
                         <div className="user-counts">

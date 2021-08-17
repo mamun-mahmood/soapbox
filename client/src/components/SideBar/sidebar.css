@@ -1,3 +1,26 @@
+/* Custom Scrollbar
+/* width */
+.scrollable::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Track */
+  .scrollable::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 5px;
+  }
+  
+  /* Handle */
+  .scrollable::-webkit-scrollbar-thumb {
+    background: #edeafd;
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  .scrollable::-webkit-scrollbar-thumb:hover {
+    background: #dfdcfa;
+  }
+
 .sidebar {
     display: flex;
     justify-content: flex-start;

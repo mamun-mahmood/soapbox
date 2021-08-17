@@ -12,13 +12,13 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #cfa3e7;
+  background: #e4c3f7;
   border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #a56dc4;
+  background: #e1b8f8;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
@@ -182,6 +182,34 @@ code {
 }
 .div-username-name {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.verification-badge {
+  padding-bottom: 0.2rem;
+  padding-right: 0.1rem;
+  font-size: larger;
+  color: #542C5D;
+}
+
+.profile-verification-badge {
+  padding-bottom: 0.6rem;
+  padding-left: 0.3rem;
+  font-size: xx-large;
+  color: #542C5D;
+}
+
+.name-verification {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 15px;
+}
+
+.profile-name-verification {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -468,7 +496,7 @@ hr {
 }
 
 .name {
-  padding: 0 0.3rem;
+  padding: 0 0.2rem;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
