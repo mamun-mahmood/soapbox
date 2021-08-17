@@ -65,7 +65,6 @@ const IndividualHoot = () => {
                         <div className="top-margin" key={hoot.id}>
                             <Post
                                 hootId={hoot.id}
-                                avatar="/images/default_user_profile.svg"
                                 username={hoot.authorUsername}
                                 mimeType={hoot.mimeType}
                                 hootImgId={hoot.image}

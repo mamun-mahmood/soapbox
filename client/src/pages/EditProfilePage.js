@@ -1,12 +1,13 @@
-import React, { Fragment, useState, useEffect } from 'react'
-import SideBar from '../components/SideBar/SideBar'
+import React, { useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import NavBar from '../components/NavBar'
-import Profile from '../components/Profile'
-import FloatingButton from '../components/FloatingButton/FloatingButton'
-import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import SideBar from '../components/SideBar/SideBar';
+import EditProfile from '../components/EditProfile/EditProfile'
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+// import FloatingButton from '../components/FloatingButton/FloatingButton';
 
-const ProfilePage = () => {
+const EditProfilePage = () => {
     const { username } = useParams();
     const [userInfo, setUserInfo] = useState([]);
 
@@ -26,7 +27,7 @@ const ProfilePage = () => {
                 <SideBar />
                 {userInfo.map((user) => {
                     return (<div key={user.id}>
-                        <Profile
+                        <EditProfile
                             userId={user.id}
                             name={user.name}
                             userName={user.username}
@@ -36,10 +37,9 @@ const ProfilePage = () => {
                         />
                     </div>)
                 })}
-                <FloatingButton />
             </div>
         </Fragment>
     )
 }
 
-export default ProfilePage
+export default EditProfilePage

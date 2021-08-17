@@ -1,23 +1,29 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import axios from 'axios'
 import Avatar from 'react-avatar';
 import Post from '../components/Post'
-import NavBar from '../components/NavBar'
 import ScrollToTop from '../components/Feed/ScrollToTop'
 
-const Profile = () => {
+const Profile = ({
+    name,
+    profilePic,
+    website,
+    bio,
+}) => {
     const { username } = useParams();
     const [myUploads, setMyUploads] = useState([]);
 
     const BaseURL = process.env.REACT_APP_API_URL;
+    const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
 
     useEffect(() => {
-        axios.get(`${BaseURL}/user/profile/${username}`).then((response) => {
-            setMyUploads(response.data);
-            console.log(response);
-        });
+        axios.get(`${BaseURL}/upload/user/${username}`)
+            .then((response) => {
+                setMyUploads(response.data);
+                console.log(response);
+            });
     }, [])
 
     var totalViews = 0;
@@ -49,24 +55,23 @@ const Profile = () => {
         if (count >= 1e12) return "T";
     };
 
+    console.log("name: ", name);
     return (
         <Fragment>
-            <NavBar />
             <div className="profile-page">
                 <div className="profile-container">
                     <div className="profile-picture">
                         <Avatar
                             size={160}
                             round={true}
-                            name={username}
-                        // color={"#cfa3e7"}
-                        // className="profile-picture"
+                            name={name}
+                            src={profilePicPath}
                         />
                     </div>
                     {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
                     <div className="user-info">
                         <div className="display-name">
-                            <h1>{username}</h1>
+                            <h1>{name}</h1>
                         </div>
                         <div className="user-name-page">@{username}</div>
                         <div className="user-counts">
@@ -77,12 +82,21 @@ const Profile = () => {
                             {/* <div><span className="counts-bold">0</span> following</div> */}
                         </div>
                         <div className="user-desc">
-                            {/* Actor. Producer. Running in movies since 1981. */}
+                            {bio}
                         </div>
-                        <div>
-                            {/* <a className="user-website" href="http://tomcruise.com/">tomcruise.com</a> */}
-                        </div>
-                        <button className="btn-edit-profile">Edit Profile</button>
+                        <a
+                            href={website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="profile-website"
+                        >
+                            {website.slice(8)}
+                        </a>
+                        <button className="btn-edit-profile">
+                            <Link to={`/edit/profile/${username}`}>
+                                Edit Profile
+                            </Link>
+                        </button>
                     </div>
                 </div>
                 <hr />
@@ -103,7 +117,6 @@ const Profile = () => {
                             <div key={upload.id}>
                                 <Post
                                     hootId={upload.id}
-                                    avatar="/images/default_user_profile.svg"
                                     username={upload.authorUsername}
                                     mimeType={upload.mimeType}
                                     hootImgId={upload.image}

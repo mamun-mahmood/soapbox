@@ -1,0 +1,166 @@
+.edit-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+
+    padding-top: 5rem;
+    text-align: center;
+
+    overflow-x: hidden;
+}
+
+.edit-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+}
+
+.edit-profile-picture {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-top: -0.5rem;
+    cursor: pointer;
+}
+
+.edit-display-name {
+    color: #374151;
+
+    padding: 0.2rem 1rem;
+    text-align: center;
+}
+
+.edit-hr {
+    width: 100%;
+}
+
+.edit-contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    color: var(--text-color);
+    padding: 1rem;
+}
+
+.edit-item {
+    display: flex;
+    flex-direction: column;
+
+    width: 500px;
+    padding: 0.5rem 1rem;
+}
+
+.edit-parameter {
+    padding: 0.2rem 0;
+    font-size: large;
+    text-align: left;
+}
+
+.edit-item-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
+    width: 100%;
+}
+
+.edit-item-info input {
+    padding: 0.2rem 0.5rem;
+
+    border: 1px solid #9fa3a9;
+    border-radius: 0.3rem;
+    outline: none;
+}
+.edit-item-info input:focus {
+    padding: 0.2rem 0.5rem;
+
+    border: 2px solid var(--primary-color);
+    border-radius: 0.3rem;
+    outline: none;
+}
+.edit-item-info textarea {
+    padding: 0.2rem 0.5rem;
+
+    border: 1px solid #9fa3a9;
+    border-radius: 0.3rem;
+    outline: none;
+}
+.edit-item-info textarea:focus {
+    padding: 0.2rem 0.5rem;
+
+    border: 2px solid var(--primary-color);
+    border-radius: 0.3rem;
+    outline: none;
+}
+
+.edit-item-info small {
+    color: #9CA3AF;
+    text-align: left;
+
+    padding: 0.5rem 0;
+}
+
+.edit-contents button {
+    color: #fff;
+    background-color: var(--primary-color);
+
+    border: 1px solid var(--primary-color);
+    border-radius: 0.3rem;
+    padding: 0.2rem 1rem;
+}
+.edit-contents button:hover {
+    color: #fff;
+    background-color: var(--on-hover);
+    border: 1px solid var(--secondary-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 580px) {
+    .edit-item {
+        width: 440px;
+    }
+}
+@media only screen and (max-width: 500px) {
+    .edit-item {
+        width: 340px;
+    }
+}
+@media only screen and (max-width: 350px) {
+    .edit-item {
+        width: 300px;
+    }
+}
+@media only screen and (max-width: 300px) {
+    .edit-item {
+        width: 230px;
+    }
+}

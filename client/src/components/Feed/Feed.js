@@ -34,7 +34,6 @@ const Feed = () => {
                 return (<div key={upload.id}>
                     <Post
                         hootId={upload.id}
-                        avatar="/images/default_user_profile.svg"
                         username={upload.authorUsername}
                         mimeType={upload.mimeType}
                         hootImgId={upload.image}

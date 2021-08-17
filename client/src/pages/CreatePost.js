@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import axios from 'axios'
 import Avatar from 'react-avatar';
@@ -32,8 +32,6 @@ const CreatePost = () => {
         username = userInfo.username
     }
 
-    console.log("email:", email);
-
     // timeStamp can be implemented at server-side...
     const date = new Date();
     const timeStamp = format(date, 'LLL dd, yyyy • HH:mm');
@@ -61,6 +59,26 @@ const CreatePost = () => {
         setSrc(URL.createObjectURL(file));
     }
 
+    const [userInformation, setUserInformation] = useState([]);
+
+    //getting user data
+    useEffect(() => {
+        axios.get(`${BaseURL}/user/${username}`)
+            .then((response) => {
+                setUserInformation(response.data);
+            });
+    }, [])
+
+    var userName = "";
+    var userProfilePic = "";
+
+    userInformation.map((user) => {
+        userName = user.name
+        userProfilePic = user.profilePic
+    })
+
+    const profilePicPath = `${BaseURL}/profile-pictures/${userProfilePic}`;
+
     return (
         <Fragment>
             <NavBar />
@@ -78,12 +96,12 @@ const CreatePost = () => {
                         <Avatar
                             size={50}
                             round={true}
-                            name={username}
-                        // color={"#cfa3e7"}
+                            name={userName}
+                            src={profilePicPath}
                         />
                     </div>
                     {/* <img className="avatar" src="/images/default_user_profile.svg" alt="avatar" /> */}
-                    <div className="name avatar_name">{userInfo && userInfo.username}</div>
+                    <div className="name avatar_name">{userName}</div>
 
                     <div className="post-content">
                         <textarea

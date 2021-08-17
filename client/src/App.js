@@ -1,20 +1,21 @@
 import React from 'react'
-import Home from './pages/Home/Home'
-import Signup from './pages/Signup'
 import Login from './pages/Login'
-import Profile from './pages/ProfilePage'
-import PublicProfile from './pages/PublicProfilePage'
-import PageNotFound from './pages/PageNotFound'
-import CreatePost from './pages/CreatePost'
-import ProtectedRoute from './components/ProtectedRoute'
+import Signup from './pages/Signup'
+import Home from './pages/Home/Home'
 import HootPage from './pages/HootPage'
+import Profile from './pages/ProfilePage'
+import CreatePost from './pages/CreatePost'
+import PageNotFound from './pages/PageNotFound'
+import PublicProfile from './pages/PublicProfilePage'
+import EditProfilePage from './pages/EditProfilePage'
+import ProtectedRoute from './components/ProtectedRoute'
 import LandingPage from './pages/LandingPage/LandingPage'
-import "./App.css"
 import {
   BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom';
+import "./App.css"
 
 function App() {
   return (
@@ -34,6 +35,9 @@ function App() {
         </Route>
         <Route path="/:username/hoot/:id">
           <ProtectedRoute page={HootPage} />
+        </Route>
+        <Route path="/edit/profile/:username">
+          <ProtectedRoute page={EditProfilePage} />
         </Route>
         <Route path="/profile/:username">
           <ProtectedRoute page={Profile} />

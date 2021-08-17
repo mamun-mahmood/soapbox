@@ -14,10 +14,10 @@ import { RiFacebookCircleLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
+import { HiBadgeCheck } from 'react-icons/hi'
 
 const Post = ({
     hootId,
-    avatar,
     username,
     mimeType,
     hootImgId,
@@ -169,7 +169,7 @@ const Post = ({
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        axios.get(`${BaseURL}/user/profile/${username}`).then((response) => {
+        axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
             setUsers(response.data);
         });
     }, [])
@@ -215,6 +215,27 @@ const Post = ({
         if (count >= 1e12) return "T";
     };
 
+    const [userInformation, setUserInformation] = useState([]);
+
+    //getting user data
+    useEffect(() => {
+        axios.get(`${BaseURL}/user/${username}`)
+            .then((response) => {
+                setUserInformation(response.data);
+            });
+    }, [])
+
+    var userId = "";
+    var userName = "";
+    var userProfilePic = "";
+
+    userInformation.map((user) => {
+        userId = user.id
+        userName = user.name
+        userProfilePic = user.profilePic
+    })
+    const profilePicPath = `${BaseURL}/profile-pictures/${userProfilePic}`;
+
     return (
         <div className="home">
             <div className="home-container">
@@ -229,8 +250,8 @@ const Post = ({
                                 <Avatar
                                     size={50}
                                     round={true}
-                                    name={username}
-                                // color={"#cfa3e7"}
+                                    name={userName ? userName : username}
+                                    src={profilePicPath ? profilePicPath : null}
                                 />
                             </div>
 
@@ -238,8 +259,11 @@ const Post = ({
                         </Link>
                         <div className="div-username-name">
                             <Link to={path}>
-                                <div className="name">{username}</div>
+                                <div className="name">{userName}</div>
                             </Link>
+                            {/* <div className="verification-badge">
+                                <HiBadgeCheck />
+                            </div> */}
                             <div className="at-name">@{username}</div>
                         </div>
                     </div>
@@ -256,8 +280,8 @@ const Post = ({
                                         <Avatar
                                             size={50}
                                             round={true}
-                                            name={username}
-                                        // color={"#cfa3e7"}
+                                            name={userName ? userName : username}
+                                            src={profilePicPath ? profilePicPath : null}
                                         />
                                     </div>
                                     {/* <img class="hover-avatar" src={avatar} alt="avatar" /> */}
@@ -268,7 +292,7 @@ const Post = ({
                             <div className="hoot-user-info">
                                 <div className="hoot-username">
                                     <Link to={path}>
-                                        <div className="name">{username}</div>
+                                        <div className="name">{userName}</div>
                                     </Link>
                                     <div className="hover-at-name">@{username}</div>
                                 </div>

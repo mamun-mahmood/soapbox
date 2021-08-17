@@ -3,13 +3,18 @@ import axios from 'axios'
 import Avatar from 'react-avatar';
 import { Helmet } from 'react-helmet'
 import Post from './Post'
-import NavBar from './NavBar'
 import { useParams } from 'react-router-dom'
 
-const PublicProfile = () => {
+const PublicProfile = ({
+    name,
+    profilePic,
+    website,
+    bio,
+}) => {
     const [users, setUsers] = useState([]);
 
     const BaseURL = process.env.REACT_APP_API_URL;
+    const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
 
     const { username } = useParams();
 
@@ -19,7 +24,7 @@ const PublicProfile = () => {
             behavior: 'smooth'
         });
 
-        axios.get(`${BaseURL}/user/profile/${username}`).then((response) => {
+        axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
             setUsers(response.data);
         });
 
@@ -57,22 +62,21 @@ const PublicProfile = () => {
 
     return (
         <Fragment>
-            <NavBar />
-            <div>
+            <div className="public-profile-page">
                 <div className="profile-container">
                     <div className="profile-picture">
                         <Avatar
                             size={160}
                             round={true}
-                            name={username}
-                        // color={"#cfa3e7"}
+                            name={name}
+                            src={profilePicPath}
                         />
                     </div>
                     {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile-pic" /> */}
                     <div className="user-info">
                         {/* <div className="follow-user"> */}
                         <div className="display-name">
-                            <h1>{username}</h1>
+                            <h1>{name}</h1>
                         </div>
                         <div className="user-name-page">@{username}</div>
 
@@ -86,11 +90,16 @@ const PublicProfile = () => {
                             {/* <div><span className="counts-bold">0</span> following</div> */}
                         </div>
                         <div className="user-desc">
-                            {/* The official home of Star Wars on Soapbox. */}
+                            {bio}
                         </div>
-                        <div>
-                            {/* <a className="user-website" href="https://www.starwars.com/">www.starwars.com</a> */}
-                        </div>
+                        <a
+                            href={website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="profile-website"
+                        >
+                            {website.slice(8)}
+                        </a>
                         <div className="user-follow">
                             <button className="btn-follow">Follow</button>
                         </div>
@@ -111,7 +120,6 @@ const PublicProfile = () => {
                         return (<div key={user.id}>
                             <Post
                                 hootId={user.id}
-                                avatar="/images/default_user_profile.svg"
                                 username={user.authorUsername}
                                 mimeType={user.mimeType}
                                 hootImgId={user.image}
