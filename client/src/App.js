@@ -3,10 +3,10 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Home from './pages/Home/Home'
 import HootPage from './pages/HootPage'
-import Profile from './pages/ProfilePage'
-import CreatePost from './pages/CreatePost'
+import ProfilePage from './pages/ProfilePage'
+import CreateHoot from './pages/CreateHoot'
 import PageNotFound from './pages/PageNotFound'
-import PublicProfile from './pages/PublicProfilePage'
+import PublicProfilePage from './pages/PublicProfilePage'
 import EditProfilePage from './pages/EditProfilePage'
 import ProtectedRoute from './components/ProtectedRoute'
 import LandingPage from './pages/LandingPage/LandingPage'
@@ -28,10 +28,10 @@ function App() {
           <ProtectedRoute page={Home} />
         </Route>
         <Route path="/create">
-          <ProtectedRoute page={CreatePost} />
+          <ProtectedRoute page={CreateHoot} />
         </Route>
         <Route path="/user/:username">
-          <ProtectedRoute page={PublicProfile} />
+          <ProtectedRoute page={PublicProfilePage} />
         </Route>
         <Route path="/:username/hoot/:id">
           <ProtectedRoute page={HootPage} />
@@ -40,7 +40,7 @@ function App() {
           <ProtectedRoute page={EditProfilePage} />
         </Route>
         <Route path="/profile/:username">
-          <ProtectedRoute page={Profile} />
+          <ProtectedRoute page={ProfilePage} />
         </Route>
         {/* <Route path="/signup">
           <Signup />

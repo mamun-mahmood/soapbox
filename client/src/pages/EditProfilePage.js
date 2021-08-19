@@ -5,6 +5,7 @@ import SideBar from '../components/SideBar/SideBar';
 import EditProfile from '../components/EditProfile/EditProfile'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 // import FloatingButton from '../components/FloatingButton/FloatingButton';
 
 const EditProfilePage = () => {
@@ -50,6 +51,10 @@ const EditProfilePage = () => {
                             medium={user.medium}
                             tumblr={user.tumblr}
                         />
+                        <Helmet>
+                            <title>Edit Profile for {username} ({user.name}) on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
+                            <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                        </Helmet>
                     </div>)
                 })}
             </div>

@@ -5,6 +5,7 @@ import Profile from '../components/Profile'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 const ProfilePage = () => {
     const { username } = useParams();
@@ -50,6 +51,10 @@ const ProfilePage = () => {
                                 medium={user.medium}
                                 tumblr={user.tumblr}
                             />
+                            <Helmet>
+                                <title>{username} ({user.name}) on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
+                                <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                            </Helmet>
                         </div>)
                     })
                     :

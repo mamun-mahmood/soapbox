@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProfilePost = ({ img }) => {
+const ProfileHoot = ({ img }) => {
     return (
         <div>
             <img className="post-item" src={img} alt="post" />
@@ -8,4 +8,4 @@ const ProfilePost = ({ img }) => {
     )
 }
 
-export default ProfilePost
+export default ProfileHoot

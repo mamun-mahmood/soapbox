@@ -3,8 +3,9 @@ import SideBar from '../components/SideBar/SideBar'
 import NavBar from '../components/NavBar'
 import PublicProfile from '../components/PublicProfile'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { Helmet } from 'react-helmet'
 
 const PublicProfilePage = () => {
     const { username } = useParams();
@@ -50,6 +51,10 @@ const PublicProfilePage = () => {
                                 medium={user.medium}
                                 tumblr={user.tumblr}
                             />
+                            <Helmet>
+                                <title>{username} ({user.name}) on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
+                                <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                            </Helmet>
                         </div>)
                     })
                     :

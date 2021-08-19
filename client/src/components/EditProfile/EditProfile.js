@@ -405,11 +405,7 @@ const EditProfile = ({
                         </button>
                     </div>
                 </div>
-
             </div>
-            <Helmet>
-                <title>Edit Profile / MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
-            </Helmet>
         </Fragment>
     )
 }
