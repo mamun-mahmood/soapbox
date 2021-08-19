@@ -1065,8 +1065,14 @@ hr {
 
 .comment-box-end{
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   gap: 0.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .comment-box-end{
+    flex-direction: column-reverse;
+  }  
 }
 
 .user-edit {
