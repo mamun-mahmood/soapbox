@@ -223,7 +223,7 @@ const PublicProfile = ({
 
             <Helmet>
                 {/* General tags */}
-                <title>{username} on MegaHoot Soapbox</title>
+                <title>{username} ({name}) on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
                 <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 {/* <meta name="image" content={ } /> */}
 

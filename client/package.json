@@ -24,11 +24,12 @@
     "react-lazyload": "^3.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^1.1.5",
+    "react-snap": "^0.7.3",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && react-snap",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
