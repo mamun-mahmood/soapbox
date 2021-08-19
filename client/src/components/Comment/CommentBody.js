@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import axios from 'axios'
 import ClickAwayListener from 'react-click-away-listener';
 import Avatar from 'react-avatar';
@@ -6,7 +6,7 @@ import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { IoCloseOutline } from 'react-icons/io5'
 
-const CommentBody = ({ id, username, commentBody }) => {
+const CommentBody = ({ username, commentBody, name, commentProfilePic }) => {
     const [isCMoreModalOpen, setIsCMoreModalOpen] = useState(false);
     const [isCDeleteModalOpen, setIsCDeleteModalOpen] = useState(false);
     const [isCEditModalOpen, setIsCEditModalOpen] = useState(false);
@@ -43,6 +43,31 @@ const CommentBody = ({ id, username, commentBody }) => {
         window.location.reload();
         console.log("comment Edited:", editComment);
     }
+
+    // -----------------------------------------------------------
+
+    // make axios call to get user of username from props 
+
+    const [userInformation, setUserInformation] = useState([]);
+    useEffect(() => {
+        axios.get(`${BaseURL}/user/${username}`)
+            .then((response) => {
+                setUserInformation(response.data);
+            });
+    }, [])
+
+    // var commentName = null;
+    // var commentProfilePic = null;
+
+    // userInfo.map((user) => {
+    //     commentName = user.name;
+    //     commentProfilePic = user.profilePic;
+    // })
+
+
+    // -----------------------------------------------------------
+
+    const commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
 
     return (
         <Fragment>
@@ -92,8 +117,8 @@ const CommentBody = ({ id, username, commentBody }) => {
                                             <Avatar
                                                 size={50}
                                                 round={true}
-                                                name={username}
-                                            // color={"#cfa3e7"}
+                                                name={name}
+                                                src={commentProfilePicPath}
                                             />
                                         </div>
                                         {/* <img
@@ -101,7 +126,7 @@ const CommentBody = ({ id, username, commentBody }) => {
                                             src="/images/default_user_profile.svg"
                                             alt="avatar"
                                         /> */}
-                                        <div className="name avatar_name">{userInfo && userInfo.username}</div>
+                                        <div className="name avatar_name">{name}</div>
                                     </div>
                                     <div className="post-content">
                                         <textarea
@@ -159,10 +184,22 @@ const CommentBody = ({ id, username, commentBody }) => {
 
             <div className="main">
                 <div className="">
+                    {/* {userInformation.map((user) => {
+                        return ( */}
                     <div className="comment-owner">
-                        <span className="owner">{username}&nbsp;</span>
+                        <div className="avatar-comment-wraper">
+                            <Avatar
+                                size={20}
+                                round={true}
+                                name={name}
+                                src={commentProfilePicPath}
+                            />
+                        </div>
+                        <span className="owner">{name}&nbsp;</span>
                         <div className="at-name">@{username}</div>
                     </div>
+                    {/* )
+                    })} */}
                     {/* <br /> */}
                     <span className="content">
                         {commentBody}

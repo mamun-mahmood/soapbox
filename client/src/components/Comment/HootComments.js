@@ -1,7 +1,8 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import CommentBody from './CommentBody';
 
-const HootComments = ({ comments, sliceValue }) => {
+const HootComments = ({ comments, sliceValue, name }) => {
     // const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
     // var username = "";
 
@@ -27,8 +28,10 @@ const HootComments = ({ comments, sliceValue }) => {
                         return (
                             <div className="comment-info">
                                 <CommentBody
+                                    name={comment.name}
                                     username={comment.username}
                                     commentBody={comment.commentBody}
+                                    commentProfilePic={comment.profilePic}
                                 />
                             </div>
                         )

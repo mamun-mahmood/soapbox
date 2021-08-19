@@ -7,7 +7,7 @@ const PageNotFound = () => {
         <Fragment>
             <NavBar />
             <div className="text-center page-404-not-found">
-                <h3>Sorry, this page isn't available.</h3>
+                <h3>Sorry, this page doesn’t exist.</h3>
                 <h6 style={{ color: "#8E8E8E" }}>The link you followed may be broken, or the page may have been removed. Go back to
                     <Link to="/home" className="primary-color home-link"> Home Page</Link>
                 </h6>

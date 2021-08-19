@@ -149,11 +149,12 @@ code {
 }
 
 .profile-container {
-  max-width: 900px;
+  width: 100%;
+  /* max-width: 900px; */
 
   margin: 0 auto;
   margin-top: 4rem;
-  padding: 1rem 3rem 3rem 3rem;
+  padding: 1rem 3rem 1rem 3rem;
 
   display: flex;
   flex-direction: column;
@@ -261,6 +262,7 @@ hr {
 .hoot-user-info {
   display: flex;
   justify-content: space-between;
+  padding-top: 1rem;
 }
 
 .user-name {
@@ -468,6 +470,12 @@ hr {
 .avatar-wraper {
   margin: 0.5rem;
 }
+.avatar-hover-wraper {
+  margin: 0 0.5rem 0.5rem 0;
+}
+.avatar-comment-wraper {
+  padding-right: 0.2rem;
+}
 
 .avatar {
   border-radius: 50%;
@@ -553,7 +561,7 @@ hr {
   border-radius: 0.4rem;
   padding: 0.1rem 0.6rem;  
   font-weight: 500;
-  margin-top: -2rem;
+  margin-top: -1.5rem;
 }
 .hover-btn-hoot-follow:hover {
   background-color: #dcdcfb;
@@ -1051,8 +1059,14 @@ hr {
   }
   .commets-scroll {
     overflow-y: auto;
-    height: 400px;
+    height: 380px;
   }
+}
+
+.comment-box-end{
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.5rem;
 }
 
 .user-edit {
@@ -1119,6 +1133,15 @@ hr {
 }
 
 .no-hoots > p {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 200;
+}
+.no-profile {
+  width: 100%;
+  padding-top: 5rem;
+}
+.no-profile > p {
   text-align: center;
   font-size: 2rem;
   font-weight: 200;
@@ -1297,7 +1320,7 @@ hr {
 }
 
 .comment-input {
-  padding: 0.2rem 0.5rem;
+  padding: 0.1rem 0.5rem;
   width: 90%;
   border: 1px solid #c7cdd6;
   border-radius: 0.3rem;
@@ -1326,11 +1349,13 @@ hr {
 }
 .profile-website {
   color: var(--primary-color);
-
   padding: 0.2rem;
-
+  
   font-weight: 600;
   text-decoration: none;
+}
+.profile-website:hover {
+  color: var(--on-hover);
 }
 .post-time {
   /* padding: 0 0.5rem; */
@@ -1355,7 +1380,7 @@ hr {
 .page-404 {
   height: 240px;
   width: 240px;
-  filter: drop-shadow(0 10px 15px #9CA3AF);
+  /* filter: drop-shadow(0 10px 15px #9CA3AF); */
 }
 /* .div-create-hoot {
   padding-top: 5rem;

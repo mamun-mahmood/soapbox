@@ -42,12 +42,12 @@ function App() {
         <Route path="/profile/:username">
           <ProtectedRoute page={Profile} />
         </Route>
-        <Route path="/signup">
+        {/* <Route path="/signup">
           <Signup />
         </Route>
         <Route path="/login">
           <Login />
-        </Route>
+        </Route> */}
         <Route path="*">
           <PageNotFound />
         </Route>

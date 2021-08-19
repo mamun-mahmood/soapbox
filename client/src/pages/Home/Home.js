@@ -7,19 +7,6 @@ import FloatingButton from '../../components/FloatingButton/FloatingButton';
 import './home.css'
 
 const Home = () => {
-
-    // var email = "";
-    // var username = "";
-    // const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
-    // if (userInfo) {
-    //     email = userInfo.email;
-    //     username = userInfo.username
-    // }
-
-    // useEffect(() => {
-    //     window.location.reload();
-    // }, [])
-
     return (
         <Fragment>
             <NavBar />

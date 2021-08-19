@@ -63,10 +63,14 @@ const CreatePost = () => {
 
     //getting user data
     useEffect(() => {
-        axios.get(`${BaseURL}/user/${username}`)
-            .then((response) => {
-                setUserInformation(response.data);
-            });
+        const getUserData = async () => {
+            await axios.get(`${BaseURL}/user/${username}`)
+                .then((response) => {
+                    setUserInformation(response.data);
+                });
+        }
+
+        getUserData();
     }, [])
 
     var userName = "";

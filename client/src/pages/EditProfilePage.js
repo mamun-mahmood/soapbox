@@ -14,10 +14,14 @@ const EditProfilePage = () => {
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        axios.get(`${BaseURL}/user/${username}`)
-            .then((response) => {
-                setUserInfo(response.data);
-            });
+        const getUserData = async () => {
+            axios.get(`${BaseURL}/user/${username}`)
+                .then((response) => {
+                    setUserInfo(response.data);
+                });
+        }
+
+        getUserData();
     }, [])
 
     return (
@@ -30,10 +34,21 @@ const EditProfilePage = () => {
                         <EditProfile
                             userId={user.id}
                             name={user.name}
+                            verified={user.verified}
                             userName={user.username}
                             profilePic={user.profilePic}
                             website={user.website}
                             bio={user.bio}
+                            twitter={user.twitter}
+                            instagram={user.instagram}
+                            linkedIn={user.linkedIn}
+                            facebook={user.facebook}
+                            tiktok={user.tiktok}
+                            snapchat={user.snapchat}
+                            reddit={user.reddit}
+                            pinterest={user.pinterest}
+                            medium={user.medium}
+                            tumblr={user.tumblr}
                         />
                     </div>)
                 })}

@@ -35,16 +35,14 @@ const HootInside = ({
     edited,
     editedTimeStamp
 }) => {
+    // API url 
     const BaseURL = process.env.REACT_APP_API_URL;
 
-    // main website name
+    // main website
     const hostURL = "https://www.megahoot.net";
 
-    // images from server
+    // media url from server
     const filePath = `${BaseURL}/images/${hootImgId}`;
-
-    // main server url
-    // const serverURL = "https://soapboxapi.megahoot.net"
 
     // url for individual hoot for main soapbox website
     const shareBaseUrl = `${hostURL}/${username}/hoot/${hootId}`;
@@ -144,18 +142,45 @@ const HootInside = ({
         console.log("Caption Edited:", isEdited);
     }
 
+    var commentName = null;
+    var commentProfilePic = null;
+
+    const [userInfoC, setUserInfoC] = useState([]);
+    useEffect(() => {
+        const getUserData = async () => {
+            await axios.get(`${BaseURL}/user/${userInfo.username}`)
+                .then((response) => {
+                    setUserInfoC(response.data);
+                });
+        }
+        getUserData()
+    }, [])
+
+
+    userInfoC.map((user) => {
+        commentName = user.name;
+        commentProfilePic = user.profilePic;
+    })
+
     const addComment = () => {
         axios.post(`${BaseURL}/comment/`, {
+            name: commentName,
             username: userInfo.username,
             commentBody: newComment,
+            profilePic: commentProfilePic,
             hootId: hootId
         }).then((response) => {
             setNewComment("");
 
+            const commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
+
             const addNewComment = {
+                name: commentName,
                 username: userInfo.username,
-                commentBody: newComment
+                commentBody: newComment,
+                commentProfilePicPath: commentProfilePicPath
             }
+
             setComments([...comments, addNewComment])
             console.log("comment added");
         })
@@ -222,32 +247,8 @@ const HootInside = ({
         if (count >= 1e12) return "T";
     };
 
-    const [userInformation, setUserInformation] = useState([]);
-    // const [isVerified, setIsVerified] = useState(verified);
-
-    //getting user data
-    useEffect(() => {
-        axios.get(`${BaseURL}/user/${username}`)
-            .then((response) => {
-                setUserInformation(response.data);
-            });
-    }, [])
-
-    // var userId = "";
-    // var userName = "";
-    // var userProfilePic = "";
-    // var userVerified = 0;
-
-    // userInformation.map(async (user) => {
-    //     userId = user.id;
-    //     userName = user.name;
-    //     userProfilePic = user.profilePic;
-    //     userVerified = user.verified;
-
-    //     console.log("verified: ", userVerified);
-    // })
-
     const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
+
     return (
         <div className="home">
             <div className="home-container">
@@ -294,7 +295,7 @@ const HootInside = ({
                         >
                             <div className="hover-user-follow">
                                 <Link to={path}>
-                                    <div className="avatar-wraper">
+                                    <div className="avatar-hover-wraper">
                                         <Avatar
                                             size={50}
                                             round={true}
@@ -407,12 +408,12 @@ const HootInside = ({
                                                         <Avatar
                                                             size={50}
                                                             round={true}
-                                                            name={username}
-                                                        // color={"#cfa3e7"}
+                                                            name={name ? name : username}
+                                                            src={profilePicPath}
                                                         />
                                                     </div>
                                                     {/* <img className="avatar" src={avatar} alt="avatar" /> */}
-                                                    <div className="name avatar_name">{userInfo && userInfo.username}</div>
+                                                    <div className="name avatar_name">{name ? name : username}</div>
                                                 </div>
                                                 <div className="post-content">
                                                     <textarea
@@ -484,36 +485,44 @@ const HootInside = ({
                                 <div className="hoot-comment-modal">
                                     <h4>{comments.length > 0 && comments.length} Comments,</h4>
                                     {/* Comment Box */}
-                                    <div className="comment-box">
-                                        <input
-                                            className="comment-input"
-                                            type="text"
-                                            maxLength="290"
-                                            value={newComment}
-                                            placeholder="Add a comment"
-                                            onChange={(event) => {
-                                                setNewComment(event.target.value);
-                                            }} />
-                                        <button
-                                            className="add-comment"
-                                            onClick={addComment}
-                                            disabled={!newComment}
-                                        >
-                                            hoot
-                                        </button>
-                                    </div>
 
-                                    {/* comments list */}
-                                    {/* comments based on location */}
-                                    {/* {(location.pathname).match(/hoot/gi) == "hoot" ?
+                                    <div className="comment-box-end">
+                                        <div className="comment-box">
+                                            <input
+                                                className="comment-input"
+                                                type="text"
+                                                maxLength="290"
+                                                value={newComment}
+                                                placeholder="Add a comment"
+                                                onChange={(event) => {
+                                                    setNewComment(event.target.value);
+                                                }} />
+                                            <button
+                                                className="add-comment"
+                                                onClick={addComment}
+                                                disabled={!newComment}
+                                            >
+                                                hoot
+                                            </button>
+                                        </div>
+
+                                        {/* comments list */}
+                                        {/* comments based on location */}
+                                        {/* {(location.pathname).match(/hoot/gi) == "hoot" ?
                                     comments.length > 0 && <HootComments comments={comments} sliceValue={0} />
                                     :
                                     comments.length > 0 && <HootComments comments={comments} sliceValue={-2} />
                                 } */}
 
-                                    {/* all comments */}
-                                    <div className="commets-scroll">
-                                        {comments.length > 0 && <HootComments comments={comments} sliceValue={0} />}
+                                        {/* all comments */}
+                                        <div className="commets-scroll">
+                                            {comments.length > 0 &&
+                                                <HootComments
+                                                    comments={comments}
+                                                    sliceValue={0}
+                                                />
+                                            }
+                                        </div>
                                     </div>
 
                                     <IoCloseOutline className="close-modal" onClick={() => setIsCommentModalOpen(false)} />

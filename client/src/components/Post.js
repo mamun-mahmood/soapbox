@@ -19,24 +19,23 @@ const Post = ({
 
     // getting user data
     useEffect(() => {
-        axios.get(`${BaseURL}/user/${username}`)
-            .then((response) => {
-                setUserInformation(response.data);
-            });
+        const getUserData = async () => {
+            await axios.get(`${BaseURL}/user/${username}`)
+                .then((response) => {
+                    setUserInformation(response.data);
+                });
+        }
+        getUserData();
     }, [])
 
-    var userName = "";
-    var userProfilePic = "";
+    var userName = null;
+    var userProfilePic = null;
     var userVerified = 0;
 
     userInformation.map((user) => {
         userName = user.name;
         userProfilePic = user.profilePic;
         userVerified = user.verified;
-
-        console.log("verified: ", userVerified);
-        console.log("userName: ", userName);
-        console.log("userProfilePic: ", userProfilePic);
     })
 
     return (

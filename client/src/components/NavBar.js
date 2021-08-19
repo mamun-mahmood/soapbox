@@ -58,8 +58,8 @@ const NavBar = () => {
                             </Fragment>
                             :
                             <Fragment>
-                                <Link className="nav-link" to="/login">Login</Link>
-                                <Link className="nav-link" to="/signup">Sign Up</Link>
+                                <Link className="nav-link" to="/">Login</Link>
+                                <Link className="nav-link" to="/">Sign Up</Link>
                             </Fragment>
                         }
                     </div>

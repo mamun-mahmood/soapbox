@@ -113,6 +113,7 @@
     border: 1px solid var(--primary-color);
     border-radius: 0.3rem;
     padding: 0.2rem 1rem;
+    margin: 1rem 0 0.5rem;
 }
 .edit-contents button:hover {
     color: #fff;
@@ -120,29 +121,80 @@
     border: 1px solid var(--secondary-color);
 }
 
+.social-line {
+    font-size: x-large;
+    font-weight: 500;
+}
 
+.social-hr {
+    width: 100%;
+    margin: 0;
+}
+.social-profile-icon-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
 
+    width: 100%;
+}
 
+.social-profile-icon-links a {
+    color: #374151;
+}
 
+.social-profile-icon-links a:hover {
+    color: #374151;
+}
 
+.s-grp-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+.s-grp-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+.social-profile-icon {
+    margin: 0 0.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
 
+.s-instagram {
+    font-size: 1.75rem;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.s-linkedin {
+    font-size: 1.7rem;
+}
+.s-facebook {
+    font-size: 1.7rem;
+}
+.s-tiktok {
+    font-size: 1.4rem;
+    padding-bottom: 0.2rem;
+}
+.s-snapchat {
+    font-size: 1.7rem;
+}
+.s-reddit {
+    font-size: 1.75rem;
+}
+.s-pinterest {
+    font-size: 1.55rem;
+}
+.s-medium {
+    font-size: 1.75rem;
+}
+.s-tumblr {
+    font-size: 1.4rem;
+    padding-bottom: 0.2rem;
+}
 
 @media only screen and (max-width: 580px) {
     .edit-item {
@@ -152,6 +204,10 @@
 @media only screen and (max-width: 500px) {
     .edit-item {
         width: 340px;
+    }
+
+    .social-profile-icon-links {
+        flex-direction: column;
     }
 }
 @media only screen and (max-width: 350px) {

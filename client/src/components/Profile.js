@@ -6,6 +6,11 @@ import Avatar from 'react-avatar';
 import Post from '../components/Post'
 import ScrollToTop from '../components/Feed/ScrollToTop'
 import { HiBadgeCheck } from 'react-icons/hi'
+import { FiTwitter } from 'react-icons/fi'
+import { RiFacebookCircleLine, RiSnapchatLine, RiPinterestLine } from 'react-icons/ri'
+import { SiTiktok } from 'react-icons/si'
+import { FaTumblr } from 'react-icons/fa'
+import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineReddit, AiOutlineMedium } from 'react-icons/ai'
 
 const Profile = ({
     verified,
@@ -13,6 +18,16 @@ const Profile = ({
     profilePic,
     website,
     bio,
+    twitter,
+    instagram,
+    linkedIn,
+    facebook,
+    tiktok,
+    snapchat,
+    reddit,
+    pinterest,
+    medium,
+    tumblr,
 }) => {
     const { username } = useParams();
     const [myUploads, setMyUploads] = useState([]);
@@ -21,11 +36,15 @@ const Profile = ({
     const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
 
     useEffect(() => {
-        axios.get(`${BaseURL}/upload/user/${username}`)
-            .then((response) => {
-                setMyUploads(response.data);
-                console.log(response);
-            });
+        const getUserUploadData = async () => {
+            await axios.get(`${BaseURL}/upload/user/${username}`)
+                .then((response) => {
+                    setMyUploads(response.data);
+                    console.log(response);
+                });
+        }
+
+        getUserUploadData();
     }, [])
 
     var totalViews = 0;
@@ -103,6 +122,64 @@ const Profile = ({
                         >
                             {website.slice(8)}
                         </a>
+
+                        <div className="social-profile-icon-links">
+                            <div className="s-grp-1">
+                                {twitter &&
+                                    <a href={twitter} target="_blank" rel="noopener noreferrer" >
+                                        <FiTwitter className="social-profile-icon s-twitter" />
+                                    </a>
+                                }
+                                {instagram &&
+                                    <a href={instagram} target="_blank" rel="noopener noreferrer" >
+                                        <AiOutlineInstagram className="social-profile-icon s-instagram" />
+                                    </a>
+                                }
+                                {linkedIn &&
+                                    <a href={linkedIn} target="_blank" rel="noopener noreferrer" >
+                                        <AiOutlineLinkedin className="social-profile-icon s-linkedin" />
+                                    </a>
+                                }
+                                {facebook &&
+                                    <a href={facebook} target="_blank" rel="noopener noreferrer" >
+                                        <RiFacebookCircleLine className="social-profile-icon s-facebook" />
+                                    </a>
+                                }
+                                {tiktok &&
+                                    <a href={tiktok} target="_blank" rel="noopener noreferrer" >
+                                        <SiTiktok className="social-profile-icon s-tiktok" />
+                                    </a>
+                                }
+                            </div>
+                            <div className="s-grp-2">
+                                {snapchat &&
+                                    <a href={snapchat} target="_blank" rel="noopener noreferrer" >
+                                        <RiSnapchatLine className="social-profile-icon s-snapchat" />
+                                    </a>
+                                }
+                                {reddit &&
+                                    <a href={reddit} target="_blank" rel="noopener noreferrer" >
+                                        <AiOutlineReddit className="social-profile-icon s-reddit" />
+                                    </a>
+                                }
+                                {pinterest &&
+                                    <a href={pinterest} target="_blank" rel="noopener noreferrer" >
+                                        <RiPinterestLine className="social-profile-icon s-pinterest" />
+                                    </a>
+                                }
+                                {medium &&
+                                    <a href={medium} target="_blank" rel="noopener noreferrer" >
+                                        <AiOutlineMedium className="social-profile-icon s-medium" />
+                                    </a>
+                                }
+                                {tumblr &&
+                                    <a href={tumblr} target="_blank" rel="noopener noreferrer" >
+                                        <FaTumblr className="social-profile-icon s-tumblr" />
+                                    </a>
+                                }
+                            </div>
+                        </div>
+
                         <button className="btn-edit-profile">
                             <Link to={`/edit/profile/${username}`}>
                                 Edit Profile

@@ -11,9 +11,13 @@ const Feed = () => {
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        axios.get(`${BaseURL}/upload`).then((response) => {
-            setUploads(response.data);
-        });
+        const getAllUploadData = async () => {
+            await axios.get(`${BaseURL}/upload`).then((response) => {
+                setUploads(response.data);
+            });
+        }
+
+        getAllUploadData();
     }, [])
 
     return (
