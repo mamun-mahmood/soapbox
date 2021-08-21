@@ -35,10 +35,10 @@ const SignupComp = () => {
             <Form className="login-form mx-auto p-4 pb-0">
                 <h1 className="text-center mb-4 signup-head">Sign Up</h1>
                 <Form.Group className="mb-3" controlId="formBasicText">
-                    <Form.Label>Username</Form.Label>
+                    <Form.Label className="text-color-auth">Username</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="username"
+                        placeholder="Username"
                         value={username}
                         onChange={(event) => { setUsername(event.target.value) }}
                         disabled
@@ -46,10 +46,10 @@ const SignupComp = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label className="text-color-auth">Email</Form.Label>
                     <Form.Control
                         type="email"
-                        placeholder="Enter email"
+                        placeholder="Email"
                         value={email}
                         onChange={(event) => { setEmail(event.target.value) }}
                         disabled
@@ -60,7 +60,7 @@ const SignupComp = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label className="text-color-auth">Password</Form.Label>
                     <Form.Control
                         type="password"
                         placeholder="Password"

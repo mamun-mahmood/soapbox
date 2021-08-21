@@ -4,16 +4,22 @@ import NavBar from '../components/NavBar'
 import Profile from '../components/Profile'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 const ProfilePage = () => {
+    const history = useHistory();
     const { username } = useParams();
     const [userInfo, setUserInfo] = useState([]);
+    const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
+        if (username !== userInformation.username) {
+            const profilePath = `/user/${username}`;
+            history.push(profilePath);
+        }
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`)
                 .then((response) => {

@@ -74,12 +74,12 @@ const LandingPage = () => {
 
                         {toggle ?
                             <div className="text-center text-decoration-none mt-2">
-                                <small>New to Soapbox? </small>
+                                <small className="text-color-auth">New to Soapbox? </small>
                                 <Link onClick={() => { setToggle(false) }} className="text-decoration-none primary-color fw-bold"> Sign up</Link><br />
                             </div>
                             :
                             <div className="text-center text-decoration-none mt-2">
-                                <small>Already have an account? </small>
+                                <small className="text-color-auth">Already have an account? </small>
                                 <Link onClick={() => { setToggle(true) }} className="text-decoration-none primary-color fw-bold">Login</Link>
                             </div>
                         }

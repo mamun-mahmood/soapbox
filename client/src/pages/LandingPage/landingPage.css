@@ -162,6 +162,7 @@ dl, ol, ul {
     text-align: center;
     color: var(--primary-color);
     font-weight: bold;
+    font-size: larger;
 }
 
 .img-text {
@@ -179,6 +180,7 @@ dl, ol, ul {
     background-color: #EDF2F7;
     padding: 0.1rem 0.3rem;
     font-weight: bold;
+    font-size: large;
 }
 
 .solid-badge {

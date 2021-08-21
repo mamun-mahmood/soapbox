@@ -134,9 +134,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
     padding: 0.5rem;
 
-    width: 100%;
+    /* width: 100%; */
 }
 
 .social-profile-icon-links a {
@@ -151,16 +152,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
     padding: 0.5rem 0;
 }
 .s-grp-2 {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
     padding: 0.5rem 0;
 }
 .social-profile-icon {
-    margin: 0 0.5rem;
+    /* margin: 0 0.5rem; */
     font-size: 1.5rem;
     cursor: pointer;
 }
@@ -207,7 +210,8 @@
     }
 
     .social-profile-icon-links {
-        flex-direction: column;
+        /* flex-direction: column; */
+        flex-wrap: wrap;
     }
 }
 @media only screen and (max-width: 350px) {

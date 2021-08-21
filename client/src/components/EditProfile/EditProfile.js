@@ -103,11 +103,6 @@ const EditProfile = ({
                 const profilePath = `/profile/${username}`;
                 history.push(profilePath);
             })
-
-        console.log("Name: ", newName);
-        console.log("Username: ", newUsername);
-        console.log("Website: ", newWebsite);
-        console.log("Bio: ", newBio);
     }
 
     return (
