@@ -10,6 +10,8 @@ import { RiFacebookCircleLine, RiSnapchatLine, RiPinterestLine } from 'react-ico
 import { SiTiktok } from 'react-icons/si'
 import { FaTumblr } from 'react-icons/fa'
 import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineReddit, AiOutlineMedium } from 'react-icons/ai'
+import BeatLoader from "react-spinners/BeatLoader";
+
 
 const Profile = ({
     verified,
@@ -30,6 +32,7 @@ const Profile = ({
 }) => {
     const { username } = useParams();
     const [myUploads, setMyUploads] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const BaseURL = process.env.REACT_APP_API_URL;
     const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
@@ -40,9 +43,11 @@ const Profile = ({
                 .then((response) => {
                     setMyUploads(response.data);
                 });
+            setLoading(false);
         }
-
-        getUserUploadData();
+        setTimeout(() => {
+            getUserUploadData();
+        }, 500);
     }, [])
 
     var totalViews = 0;
@@ -71,153 +76,166 @@ const Profile = ({
         if (count >= 1e12) return "T";
     };
 
-    console.log("name: ", name);
     return (
         <Fragment>
-            <div className="profile-page">
-                <div className="profile-container">
-                    <div className="profile-picture">
-                        <Avatar
-                            size={160}
-                            round={true}
-                            name={name}
-                            src={profilePicPath}
-                        />
-                    </div>
-                    {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
-                    <div className="user-info">
-                        <div className="display-name">
-                            <div className="profile-name-verification">
-                                <h1>{name}</h1>
-                                {verified === 1
-                                    ?
-                                    <div className="profile-verification-badge">
-                                        <HiBadgeCheck />
-                                    </div>
-                                    : null
+
+            {loading &&
+                <div className="loading-iv">
+                    <BeatLoader color={"#8249A0"} size={20} />
+                </div>
+            }
+
+            {!loading &&
+                <div className="profile-page">
+                    <div className="profile-container">
+                        <div className="profile-picture">
+                            <Avatar
+                                size={160}
+                                round={true}
+                                name={name}
+                                src={profilePicPath}
+                            />
+                        </div>
+                        {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
+                        <div className="user-info">
+                            <div className="display-name">
+                                <div className="profile-name-verification">
+                                    <h1>{name}</h1>
+                                    {verified === 1
+                                        ?
+                                        <div className="profile-verification-badge">
+                                            <HiBadgeCheck />
+                                        </div>
+                                        : null
+                                    }
+                                </div>
+                            </div>
+                            <div className="user-name-page">@{username}</div>
+                            <div className="user-counts">
+                                {/* <div><span className="counts-bold">{myUploads.length}</span> hoots</div> */}
+                                <div><span className="counts-bold">0</span> Followers</div>
+                                <div><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
+                                <div><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
+                                {/* <div><span className="counts-bold">0</span> following</div> */}
+                            </div>
+                            {bio &&
+                                <div className="user-desc">
+                                    {bio}
+                                </div>
+                            }
+                            {website &&
+                                <a
+                                    href={website}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="profile-website"
+                                >
+                                    {website.includes("https://") ? website.slice(8) : website}
+                                </a>
+                            }
+
+                            <div className="social-profile-icon-links">
+                                {/* <div className="s-grp-1"> */}
+                                {twitter &&
+                                    <a href={twitter} target="_blank" rel="noopener noreferrer" >
+                                        <FiTwitter className="social-profile-icon s-twitter" />
+                                    </a>
                                 }
-                            </div>
-                        </div>
-                        <div className="user-name-page">@{username}</div>
-                        <div className="user-counts">
-                            {/* <div><span className="counts-bold">{myUploads.length}</span> hoots</div> */}
-                            <div><span className="counts-bold">0</span> Followers</div>
-                            <div><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
-                            <div><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
-                            {/* <div><span className="counts-bold">0</span> following</div> */}
-                        </div>
-                        <div className="user-desc">
-                            {bio}
-                        </div>
-                        <a
-                            href={website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="profile-website"
-                        >
-                            {website.includes("https://") ? website.slice(8) : website}
-                        </a>
-
-                        <div className="social-profile-icon-links">
-                            {/* <div className="s-grp-1"> */}
-                            {twitter &&
-                                <a href={twitter} target="_blank" rel="noopener noreferrer" >
-                                    <FiTwitter className="social-profile-icon s-twitter" />
-                                </a>
-                            }
-                            {instagram &&
-                                <a href={instagram} target="_blank" rel="noopener noreferrer" >
-                                    <AiOutlineInstagram className="social-profile-icon s-instagram" />
-                                </a>
-                            }
-                            {linkedIn &&
-                                <a href={linkedIn} target="_blank" rel="noopener noreferrer" >
-                                    <AiOutlineLinkedin className="social-profile-icon s-linkedin" />
-                                </a>
-                            }
-                            {facebook &&
-                                <a href={facebook} target="_blank" rel="noopener noreferrer" >
-                                    <RiFacebookCircleLine className="social-profile-icon s-facebook" />
-                                </a>
-                            }
-                            {tiktok &&
-                                <a href={tiktok} target="_blank" rel="noopener noreferrer" >
-                                    <SiTiktok className="social-profile-icon s-tiktok" />
-                                </a>
-                            }
-                            {/* </div>
+                                {instagram &&
+                                    <a href={instagram} target="_blank" rel="noopener noreferrer" >
+                                        <AiOutlineInstagram className="social-profile-icon s-instagram" />
+                                    </a>
+                                }
+                                {linkedIn &&
+                                    <a href={linkedIn} target="_blank" rel="noopener noreferrer" >
+                                        <AiOutlineLinkedin className="social-profile-icon s-linkedin" />
+                                    </a>
+                                }
+                                {facebook &&
+                                    <a href={facebook} target="_blank" rel="noopener noreferrer" >
+                                        <RiFacebookCircleLine className="social-profile-icon s-facebook" />
+                                    </a>
+                                }
+                                {tiktok &&
+                                    <a href={tiktok} target="_blank" rel="noopener noreferrer" >
+                                        <SiTiktok className="social-profile-icon s-tiktok" />
+                                    </a>
+                                }
+                                {/* </div>
                             <div className="s-grp-2"> */}
-                            {snapchat &&
-                                <a href={snapchat} target="_blank" rel="noopener noreferrer" >
-                                    <RiSnapchatLine className="social-profile-icon s-snapchat" />
-                                </a>
-                            }
-                            {reddit &&
-                                <a href={reddit} target="_blank" rel="noopener noreferrer" >
-                                    <AiOutlineReddit className="social-profile-icon s-reddit" />
-                                </a>
-                            }
-                            {pinterest &&
-                                <a href={pinterest} target="_blank" rel="noopener noreferrer" >
-                                    <RiPinterestLine className="social-profile-icon s-pinterest" />
-                                </a>
-                            }
-                            {medium &&
-                                <a href={medium} target="_blank" rel="noopener noreferrer" >
-                                    <AiOutlineMedium className="social-profile-icon s-medium" />
-                                </a>
-                            }
-                            {tumblr &&
-                                <a href={tumblr} target="_blank" rel="noopener noreferrer" >
-                                    <FaTumblr className="social-profile-icon s-tumblr" />
-                                </a>
-                            }
-                            {/* </div> */}
-                        </div>
+                                {snapchat &&
+                                    <a href={snapchat} target="_blank" rel="noopener noreferrer" >
+                                        <RiSnapchatLine className="social-profile-icon s-snapchat" />
+                                    </a>
+                                }
+                                {reddit &&
+                                    <a href={reddit} target="_blank" rel="noopener noreferrer" >
+                                        <AiOutlineReddit className="social-profile-icon s-reddit" />
+                                    </a>
+                                }
+                                {pinterest &&
+                                    <a href={pinterest} target="_blank" rel="noopener noreferrer" >
+                                        <RiPinterestLine className="social-profile-icon s-pinterest" />
+                                    </a>
+                                }
+                                {medium &&
+                                    <a href={medium} target="_blank" rel="noopener noreferrer" >
+                                        <AiOutlineMedium className="social-profile-icon s-medium" />
+                                    </a>
+                                }
+                                {tumblr &&
+                                    <a href={tumblr} target="_blank" rel="noopener noreferrer" >
+                                        <FaTumblr className="social-profile-icon s-tumblr" />
+                                    </a>
+                                }
+                                {/* </div> */}
+                            </div>
 
-                        <button className="btn-edit-profile">
-                            <Link to={`/edit/profile/${username}`}>
-                                Edit Profile
-                            </Link>
-                        </button>
+                            <button className="btn-edit-profile">
+                                <Link to={`/edit/profile/${username}`}>
+                                    Edit Profile
+                                </Link>
+                            </button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div className="pt-2">
+                        {myUploads.length === 0 &&
+                            <div className="no-hoots">
+                                <p>No hoots yet!</p>
+                                <div className="profile-hoot">
+                                    <Link to="/create">
+                                        Create Hoot
+                                    </Link>
+                                </div>
+                            </div>
+                        }
+
+                        {myUploads.map((upload) => {
+                            return (
+                                <div key={upload.id}>
+                                    <Post
+                                        hootId={upload.id}
+                                        username={upload.authorUsername}
+                                        mimeType={upload.mimeType}
+                                        hootImgId={upload.image}
+                                        likes={upload.likes}
+                                        views={upload.views}
+                                        caption={upload.caption}
+                                        timeStamp={upload.timeStamp}
+                                        edited={upload.edited}
+                                        editedTimeStamp={upload.editedTimeStamp}
+                                    />
+                                </div>
+                            )
+                        }).reverse()}
+
+                        {myUploads.length > 3 && <ScrollToTop />}
+
                     </div>
                 </div>
-                <hr />
-                <div className="pt-2">
-                    {myUploads.length === 0 &&
-                        <div className="no-hoots">
-                            <p>No hoots yet!</p>
-                            <div className="profile-hoot">
-                                <Link to="/create">
-                                    Create Hoot
-                                </Link>
-                            </div>
-                        </div>
-                    }
+            }
 
-                    {myUploads.map((upload) => {
-                        return (
-                            <div key={upload.id}>
-                                <Post
-                                    hootId={upload.id}
-                                    username={upload.authorUsername}
-                                    mimeType={upload.mimeType}
-                                    hootImgId={upload.image}
-                                    likes={upload.likes}
-                                    views={upload.views}
-                                    caption={upload.caption}
-                                    timeStamp={upload.timeStamp}
-                                    edited={upload.edited}
-                                    editedTimeStamp={upload.editedTimeStamp}
-                                />
-                            </div>
-                        )
-                    }).reverse()}
-
-                    {myUploads.length > 3 && <ScrollToTop />}
-
-                </div>
-            </div>
         </Fragment>
     )
 }

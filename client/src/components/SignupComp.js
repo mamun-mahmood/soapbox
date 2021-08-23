@@ -14,6 +14,7 @@ const SignupComp = () => {
         }
     }, [])
 
+    const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -22,6 +23,7 @@ const SignupComp = () => {
         event.preventDefault();
 
         axios.post(`${BaseURL}/user/signup`, {
+            name,
             username,
             email,
             password,
@@ -34,6 +36,17 @@ const SignupComp = () => {
         <div>
             <Form className="login-form mx-auto p-4 pb-0">
                 <h1 className="text-center mb-4 signup-head">Sign Up</h1>
+                <Form.Group className="mb-3" controlId="formBasicText">
+                    <Form.Label className="text-color-auth">Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Name"
+                        value={name}
+                        onChange={(event) => { setName(event.target.value) }}
+                        disabled
+                    />
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formBasicText">
                     <Form.Label className="text-color-auth">Username</Form.Label>
                     <Form.Control

@@ -8,7 +8,7 @@ import Avatar from 'react-avatar';
 import { Link, useHistory } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
-import { FiTwitter, FiShare2, FiRepeat, FiMail, FiMessageSquare, FiEye } from 'react-icons/fi'
+import { FiTwitter, FiShare2, FiRepeat, FiMail, FiMessageSquare, FiEye, FiLink, FiShare } from 'react-icons/fi'
 import { FaHeart, FaRegHeart, FaTumblr } from 'react-icons/fa'
 import { RiFacebookCircleLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
@@ -190,7 +190,29 @@ const HootInside = ({
         navigator.clipboard.writeText(shareBaseUrl);
         setTimeout(() => {
             setIsMoreModalOpen(false)
+            setIsShareModalOpen(false);
         }, 100);
+    }
+
+    const shareVia = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: `${username} (${name}) on MegaHoot Soapbox`,
+                    text: `${caption}`,
+                    url: `${shareBaseUrl}`,
+                }).then(() =>
+                    console.log("Hooray! Your content was shared to the world")
+                );
+            } catch (error) {
+                console.log(`Oops! I couldn't share to the world because: ${error}`);
+            }
+        } else {
+            // fallback code
+            console.log(
+                "Web share is currently not supported on this browser."
+            );
+        }
     }
 
     const openComments = () => {
@@ -341,7 +363,7 @@ const HootInside = ({
                         >
                             <BiDotsHorizontalRounded
                                 className="more-icon"
-                                onClick={() => setIsMoreModalOpen(!isMoreModalOpen)}
+                            // onClick={() => setIsMoreModalOpen(!isMoreModalOpen)}
                             />
                         </div>
                     </div>
@@ -519,6 +541,7 @@ const HootInside = ({
                                             {comments.length > 0 &&
                                                 <HootComments
                                                     comments={comments}
+                                                    verified={verified}
                                                     sliceValue={0}
                                                 />
                                             }
@@ -610,17 +633,10 @@ const HootInside = ({
                                         className="share-modal"
                                         onMouseLeave={() => setIsShareModalOpen(false)}
                                     >
-                                        <div className="text-center">
+                                        {/* <div className="text-center">
                                             <span className="share-hoot-to share-head">Share Hoot to...</span>
-                                        </div>
+                                        </div> */}
                                         <div className="share-flex-icons">
-                                            {/* <SocialShare share={twitterShare} Icon={FiTwitter} name="Twitter" />
-                                        <SocialShare share={mailShare} Icon={FiMail} name="Email" />
-                                        <SocialShare share={facebookShare} Icon={FiTwitter} name="Facebook" />
-                                        <SocialShare share={redditShare} Icon={ImReddit} name="Reddit" />
-                                        <SocialShare share={pinterestShare} Icon={ImPinterest2} name="Pinterest" />
-                                        <SocialShare share={linkedInShare} Icon={AiOutlineLinkedin} name="LinkedIn" />
-                                        <SocialShare share={tumblrShare} Icon={FiTwitter} name="Tumblr" /> */}
                                             <div className="share-icons">
                                                 <a target="_blank" rel="nofollow" class="block button-transparent">
                                                     <div className="share-icons-text">
@@ -631,72 +647,102 @@ const HootInside = ({
                                                     </div>
                                                 </a>
                                             </div>
+
                                             <div className="share-icons">
                                                 <a href={twitterShare} target="_blank" rel="nofollow" class="block button-transparent">
                                                     <div className="share-icons-text">
                                                         <FiTwitter className="twitter-share" />
                                                         <span className="share-hoot-to">
-                                                            Twitter
+                                                            Share to Twitter
                                                         </span>
                                                     </div>
                                                 </a>
                                             </div>
-                                            <div className="share-icons">
-                                                <a href={mailShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                    <div className="share-icons-text">
-                                                        <FiMail className="twitter-share" />
-                                                        <span className="share-hoot-to">
-                                                            Email
-                                                        </span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div className="share-icons">
-                                                <a href={facebookShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                    <div className="share-icons-text">
-                                                        <RiFacebookCircleLine className="facebook-share" />
-                                                        <span className="share-hoot-to">
-                                                            Facebook
-                                                        </span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div className="share-icons">
-                                                <a href={redditShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                    <div className="share-icons-text">
-                                                        <ImReddit className="reddit-share" />
-                                                        <span className="share-hoot-to">
-                                                            Reddit
-                                                        </span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div className="share-icons">
-                                                <a href={pinterestShare} target="_blank" rel="nofollow" class="block button-transparent">
-                                                    <div className="share-icons-text">
-                                                        <ImPinterest2 className="pinterest-share" />
-                                                        <span className="share-hoot-to">
-                                                            Pinterest
-                                                        </span>
-                                                    </div>
-                                                </a>
-                                            </div>
+
                                             <div className="share-icons">
                                                 <a href={linkedInShare} target="_blank" rel="nofollow" class="block button-transparent">
                                                     <div className="share-icons-text">
                                                         <AiOutlineLinkedin className="linkedin-share" />
                                                         <span className="share-hoot-to">
-                                                            LinkedIn
+                                                            Share to LinkedIn
                                                         </span>
                                                     </div>
                                                 </a>
                                             </div>
+
+                                            <div className="share-icons">
+                                                <a href={facebookShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <RiFacebookCircleLine className="facebook-share" />
+                                                        <span className="share-hoot-to">
+                                                            Share to Facebook
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            <div className="share-icons">
+                                                <a href={redditShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <ImReddit className="reddit-share" />
+                                                        <span className="share-hoot-to">
+                                                            Share to Reddit
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            <div className="share-icons">
+                                                <a href={pinterestShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <ImPinterest2 className="pinterest-share" />
+                                                        <span className="share-hoot-to">
+                                                            Share to Pinterest
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+
                                             <div className="share-icons">
                                                 <a href={tumblrShare} target="_blank" rel="nofollow" class="block button-transparent">
                                                     <div className="share-icons-text">
                                                         <FaTumblr className="tumblr-share" />
                                                         <span className="share-hoot-to">
-                                                            Tumblr
+                                                            Share to Tumblr
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            <div className="share-icons">
+                                                <a href={mailShare} target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text">
+                                                        <FiMail className="twitter-share" />
+                                                        <span className="share-hoot-to">
+                                                            Share to Email
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            <div className="share-icons">
+                                                <a target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text" onClick={copyToClipboard}>
+                                                        <FiLink className="copy-hoot-link-share" />
+                                                        <span className="share-hoot-to">
+                                                            Copy Hoot Link
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div className="share-icons">
+                                                <a target="_blank" rel="nofollow" class="block button-transparent">
+                                                    <div className="share-icons-text" onClick={
+                                                        shareVia
+                                                    }>
+                                                        <FiShare className="Share-hoot-via-share" />
+                                                        <span className="share-hoot-to">
+                                                            Share Hoot Via
                                                         </span>
                                                     </div>
                                                 </a>
@@ -784,7 +830,7 @@ const HootInside = ({
                 } */}
 
             </div>
-        </div>
+        </div >
     )
 }
 

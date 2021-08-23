@@ -235,6 +235,15 @@
 }
 
 
+.loading-iv {
+  width: 650px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -5rem;
+}
+
 @media only screen and (min-width: 1025px) {
   .comment-center {
     margin: 1rem -2rem 0rem -10rem;
@@ -285,6 +294,9 @@
   .comment-info .content {
     font-size: 0.7rem !important;
   }
+  .loading-iv {
+    width: auto;
+  }
 }
 
 @media only screen and (max-width: 580px) {
@@ -302,6 +314,9 @@
 @media only screen and (max-width: 580px) {
   .edit-comment-modal {
     width: 280px;
+  }
+  .loading-iv {
+    width: auto;
   }
 }
 

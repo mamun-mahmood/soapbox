@@ -3,10 +3,12 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Post from '../Post'
 import ScrollToTop from './ScrollToTop'
+import BeatLoader from "react-spinners/BeatLoader";
 import './feed.css'
 
 const Feed = () => {
-    const [uploads, setUploads] = useState([])
+    const [uploads, setUploads] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -15,44 +17,41 @@ const Feed = () => {
             await axios.get(`${BaseURL}/upload`).then((response) => {
                 setUploads(response.data);
             });
+            setLoading(false);
         }
-
+        // setTimeout(() => {
         getAllUploadData();
+        // }, 3000);
     }, [])
 
     return (
         <div className="feed start">
-
-            {/* {uploads.length === 0 &&
-                <div className="no-hoots-feed">
-                    <p>Your timeline is empty</p>
-                    <div className="feed-hoot">
-                        <Link to="/create">
-                            Create Hoot
-                        </Link>
-                    </div>
+            {loading &&
+                <div className="loading">
+                    <BeatLoader color={"#8249A0"} loading={loading} size={20} />
                 </div>
-            } */}
+            }
 
-            {uploads.map((upload) => {
-                return (<div key={upload.id}>
-                    <Post
-                        hootId={upload.id}
-                        username={upload.authorUsername}
-                        mimeType={upload.mimeType}
-                        hootImgId={upload.image}
-                        likes={upload.likes}
-                        views={upload.views}
-                        caption={upload.caption}
-                        timeStamp={upload.timeStamp}
-                        edited={upload.edited}
-                        editedTimeStamp={upload.editedTimeStamp}
-                    />
-                </div>)
-            }).reverse()}
+            {uploads &&
+                uploads.map((upload) => {
+                    return (<div key={upload.id}>
+                        <Post
+                            hootId={upload.id}
+                            username={upload.authorUsername}
+                            mimeType={upload.mimeType}
+                            hootImgId={upload.image}
+                            likes={upload.likes}
+                            views={upload.views}
+                            caption={upload.caption}
+                            timeStamp={upload.timeStamp}
+                            edited={upload.edited}
+                            editedTimeStamp={upload.editedTimeStamp}
+                        />
+                    </div>)
+                }).reverse()
+            }
 
-            {uploads.length > 3 && <ScrollToTop />}
-
+            {uploads && uploads.length > 3 && <ScrollToTop />}
         </div>
     )
 }

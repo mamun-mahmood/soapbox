@@ -5,8 +5,10 @@ import Avatar from 'react-avatar';
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { IoCloseOutline } from 'react-icons/io5'
+import { HiBadgeCheck } from 'react-icons/hi'
 
-const CommentBody = ({ username, commentBody, name, commentProfilePic }) => {
+
+const CommentBody = ({ username, commentBody, name, commentProfilePic, verified }) => {
     const [isCMoreModalOpen, setIsCMoreModalOpen] = useState(false);
     const [isCDeleteModalOpen, setIsCDeleteModalOpen] = useState(false);
     const [isCEditModalOpen, setIsCEditModalOpen] = useState(false);
@@ -184,8 +186,6 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic }) => {
 
             <div className="main">
                 <div className="">
-                    {/* {userInformation.map((user) => {
-                        return ( */}
                     <div className="comment-owner">
                         <div className="avatar-comment-wraper">
                             <Avatar
@@ -196,11 +196,15 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic }) => {
                             />
                         </div>
                         <span className="owner">{name}&nbsp;</span>
+                        {/* {verified === 1
+                            ?
+                            <div className="verification-badge">
+                                <HiBadgeCheck />
+                            </div>
+                            : null
+                        } */}
                         <div className="at-name">@{username}</div>
                     </div>
-                    {/* )
-                    })} */}
-                    {/* <br /> */}
                     <span className="content">
                         {commentBody}
                     </span>
