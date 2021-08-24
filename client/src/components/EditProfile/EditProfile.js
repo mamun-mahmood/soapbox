@@ -51,7 +51,7 @@ const EditProfile = ({
     const BaseURL = process.env.REACT_APP_API_URL;
     const profilePath = `/profile/${username}`;
     const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const [saveLoading, setSaveLoading] = useState(false);
 
     const handleFile = (event) => {
@@ -105,7 +105,6 @@ const EditProfile = ({
         axios.put(`${BaseURL}/profile/edit`, formData)
             .then((response) => {
                 console.log(response);
-
             })
         setTimeout(() => {
             setSaveLoading(false);
@@ -113,340 +112,339 @@ const EditProfile = ({
         }, 1000);
     }
 
-    setTimeout(() => {
-        setLoading(false);
-    }, 1000);
+    // setTimeout(() => {
+    //     setLoading(false);
+    // }, 0);
 
     return (
         <Fragment>
-            {loading &&
-                <div className="loading-iv">
+            {/* {loading &&
+                <div className="loading-ep">
                     <BeatLoader color={"#8249A0"} size={20} />
                 </div>
-            }
-            {
-                !loading &&
-                <div className="edit-body">
-                    <div className="edit-container">
-                        <div className="profile-picture">
-                            <Avatar
-                                size={160}
-                                round={true}
-                                name={name}
-                                src={src ? src : profilePicPath}
-                            />
-                        </div>
-                        {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
-
-                        <form action="">
-                            <label htmlFor="edit-image" className="edit-profile-picture">change photo</label>
-                            <input
-                                type="file"
-                                id="edit-image"
-                                name="photo"
-                                accept="image/*"
-                                onChange={handleFile}
-                                hidden
-                            />
-                        </form>
-                        <div className="user-info">
-                            <div className="edit-display-name">
-                                <div className="profile-name-verification">
-                                    <h1>{name}</h1>
-                                    {verified === 1
-                                        ?
-                                        <div className="profile-verification-badge">
-                                            <HiBadgeCheck />
-                                        </div>
-                                        : null
-                                    }
-                                </div>
-                            </div>
-                        </div>
+            } */}
+            {/* {
+                !loading && */}
+            <div className="edit-body">
+                <div className="edit-container">
+                    <div className="profile-picture">
+                        <Avatar
+                            size={160}
+                            round={true}
+                            name={name}
+                            src={src ? src : profilePicPath}
+                        />
                     </div>
+                    {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
 
-                    <hr className="edit-hr" />
-
-                    <div className="edit-contents">
-                        <div className="edit-item">
-                            <div className="edit-parameter">Name</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="50"
-                                    type="text"
-                                    placeholder="Name"
-                                    value={newName}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewName(value);
-                                    }}
-                                />
-                                <small>
-                                    This could be your first name, full name, nickname or a business name,
-                                    it's how you'll appear on Soapbox.
-                                </small>
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Username</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="50"
-                                    type="text"
-                                    placeholder="Username"
-                                    value={newUsername}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewUsername(value);
-                                    }}
-                                    disabled
-                                />
-                                <small>
-                                    This is what identifies you as a Creator on Soapbox.
-                                </small>
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Website</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Website"
-                                    value={newWebsite}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewWebsite(value);
-                                    }}
-                                />
-                                <small>
-                                    Link to a place on the internet where people can know more about you.
-                                </small>
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Bio</div>
-                            <div className="edit-item-info bio-area">
-                                <textarea
-                                    maxLength="300"
-                                    type="text"
-                                    placeholder="Write a short bio to show on your profile"
-                                    value={newBio}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewBio(value);
-                                    }}
-                                />
-                                <div className="bio-count">
-                                    <span className={newBio.length > 250 && "text-danger"}>
-                                        {" "}
-                                        {newBio.length}/300
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter social-line">Link your social media accounts</div>
-                            <div className="edit-item-info">
-                                <small>
-                                    Add links to your social media accounts for people to get to know you better. This will be a part of your public profile on Soapbox.
-                                </small>
-                            </div>
-                        </div>
-
-                        {/* <hr className="social-hr" /> */}
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Twitter</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Enter link to your Twitter account"
-                                    value={newTwitter}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewTwitter(value);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Instagram</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Enter link to your Instagram account"
-                                    value={newInstagram}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewInstagram(value);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">LinkedIn</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Enter link to your LinkedIn account"
-                                    value={newLinkedIn}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewLinkedIn(value);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Facebook</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Enter link to your Facebook account"
-                                    value={newFacebook}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewFacebook(value);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">TikTok</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Enter link to your TikTok account"
-                                    value={newTikTok}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewTikTok(value);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Snapchat</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Enter link to your Snapchat account"
-                                    value={newSnapchat}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewSnapchat(value);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Reddit</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Enter link to your Reddit account"
-                                    value={newReddit}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewReddit(value);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Pinterest</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Enter link to your Pinterest account"
-                                    value={newPinterest}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewPinterest(value);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Medium</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Enter link to your Medium account"
-                                    value={newMedium}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewMedium(value);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="edit-parameter">Tumblr</div>
-                            <div className="edit-item-info">
-                                <input
-                                    maxLength="100"
-                                    type="text"
-                                    placeholder="Enter link to your Tumblr account"
-                                    value={newTumblr}
-                                    onChange={(event) => {
-                                        const value = event.target.value;
-                                        setNewTumblr(value);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-item">
-                            <div className="btn-edit">
-                                <button
-                                    className="btn-edit-save"
-                                    onClick={saveProfile}
-                                    disabled={!newName || !newUsername}
-                                >
-                                    {saveLoading
-                                        ?
-                                        <BeatLoader color={"#fff"} size={5} />
-                                        :
-                                        "Save"
-                                    }
-                                </button>
-                                <button
-                                    className="btn-edit-cancel"
-                                    onClick={() => history.push(profilePath)}
-                                    disabled={!newName || !newUsername}
-                                >
-                                    Cancel
-                                </button>
+                    <form action="">
+                        <label htmlFor="edit-image" className="edit-profile-picture">change photo</label>
+                        <input
+                            type="file"
+                            id="edit-image"
+                            name="photo"
+                            accept="image/*"
+                            onChange={handleFile}
+                            hidden
+                        />
+                    </form>
+                    <div className="user-info">
+                        <div className="edit-display-name">
+                            <div className="profile-name-verification">
+                                <h1>{name}</h1>
+                                {verified === 1
+                                    ?
+                                    <div className="profile-verification-badge">
+                                        <HiBadgeCheck />
+                                    </div>
+                                    : null
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-            }
 
+                <hr className="edit-hr" />
+
+                <div className="edit-contents">
+                    <div className="edit-item">
+                        <div className="edit-parameter">Name</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="50"
+                                type="text"
+                                placeholder="Name"
+                                value={newName}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewName(value);
+                                }}
+                            />
+                            <small>
+                                This could be your first name, full name, nickname or a business name,
+                                it's how you'll appear on Soapbox.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Username</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="50"
+                                type="text"
+                                placeholder="Username"
+                                value={newUsername}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewUsername(value);
+                                }}
+                                disabled
+                            />
+                            <small>
+                                This is what identifies you as a Creator on Soapbox.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Website</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Website"
+                                value={newWebsite}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewWebsite(value);
+                                }}
+                            />
+                            <small>
+                                Link to a place on the internet where people can know more about you.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Bio</div>
+                        <div className="edit-item-info bio-area">
+                            <textarea
+                                maxLength="300"
+                                type="text"
+                                placeholder="Write a short bio to show on your profile"
+                                value={newBio}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewBio(value);
+                                }}
+                            />
+                            <div className="bio-count">
+                                <span className={newBio.length > 250 && "text-danger"}>
+                                    {" "}
+                                    {newBio.length}/300
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter social-line">Link your social media accounts</div>
+                        <div className="edit-item-info">
+                            <small>
+                                Add links to your social media accounts for people to get to know you better. This will be a part of your public profile on Soapbox.
+                            </small>
+                        </div>
+                    </div>
+
+                    {/* <hr className="social-hr" /> */}
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Twitter</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Enter link to your Twitter account"
+                                value={newTwitter}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewTwitter(value);
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Instagram</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Enter link to your Instagram account"
+                                value={newInstagram}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewInstagram(value);
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">LinkedIn</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Enter link to your LinkedIn account"
+                                value={newLinkedIn}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewLinkedIn(value);
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Facebook</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Enter link to your Facebook account"
+                                value={newFacebook}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewFacebook(value);
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">TikTok</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Enter link to your TikTok account"
+                                value={newTikTok}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewTikTok(value);
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Snapchat</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Enter link to your Snapchat account"
+                                value={newSnapchat}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewSnapchat(value);
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Reddit</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Enter link to your Reddit account"
+                                value={newReddit}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewReddit(value);
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Pinterest</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Enter link to your Pinterest account"
+                                value={newPinterest}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewPinterest(value);
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Medium</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Enter link to your Medium account"
+                                value={newMedium}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewMedium(value);
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="edit-parameter">Tumblr</div>
+                        <div className="edit-item-info">
+                            <input
+                                maxLength="100"
+                                type="text"
+                                placeholder="Enter link to your Tumblr account"
+                                value={newTumblr}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setNewTumblr(value);
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="edit-item">
+                        <div className="btn-edit">
+                            <button
+                                className="btn-edit-save"
+                                onClick={saveProfile}
+                                disabled={!newName || !newUsername}
+                            >
+                                {saveLoading
+                                    ?
+                                    <BeatLoader color={"#fff"} size={5} />
+                                    :
+                                    "Save"
+                                }
+                            </button>
+                            <button
+                                className="btn-edit-cancel"
+                                onClick={() => history.push(profilePath)}
+                                disabled={!newName || !newUsername}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* } */}
         </Fragment>
     )
 }

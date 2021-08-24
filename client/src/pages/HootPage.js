@@ -5,10 +5,12 @@ import IndividualHoot from '../components/IndividualHoot/IndividualHoot'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
+import BeatLoader from "react-spinners/BeatLoader";
 
 const HootPage = () => {
     const { username } = useParams();
     const [userInfo, setUserInfo] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -17,6 +19,9 @@ const HootPage = () => {
             .then((response) => {
                 setUserInfo(response.data);
             });
+        setTimeout(() => {
+            setLoading(false);
+        }, 0);
     }, [])
 
     return (
@@ -24,18 +29,24 @@ const HootPage = () => {
             <NavBar />
             <div className="main-body">
                 <SideBar />
-                {userInfo.map((user) => {
-                    return (<div key={user.id}>
-                        <IndividualHoot
-                            userId={user.id}
-                            name={user.name}
-                            userName={user.username}
-                            profilePic={user.profilePic}
-                            website={user.website}
-                            bio={user.bio}
-                        />
-                    </div>)
-                })}
+                {loading &&
+                    <div className="loading">
+                        <BeatLoader color={"#8249A0"} loading={loading} size={20} />
+                    </div>
+                }
+                {!loading &&
+                    userInfo.map((user) => {
+                        return (<div key={user.id}>
+                            <IndividualHoot
+                                userId={user.id}
+                                name={user.name}
+                                userName={user.username}
+                                profilePic={user.profilePic}
+                                website={user.website}
+                                bio={user.bio}
+                            />
+                        </div>)
+                    })}
                 <FloatingButton />
             </div>
         </Fragment>

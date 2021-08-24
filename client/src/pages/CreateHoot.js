@@ -75,7 +75,7 @@ const CreatePost = () => {
         }
         setTimeout(() => {
             getUserData();
-        }, 500);
+        }, 100);
     }, [])
 
     var userName = "";

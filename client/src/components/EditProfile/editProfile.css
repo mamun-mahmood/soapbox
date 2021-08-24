@@ -165,6 +165,17 @@
     transition: 0.3s;
 }
 
+.loading-ep {
+    width: 650px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -5rem;
+}
+
+
+
 .social-line {
     font-size: x-large;
     font-weight: 500;
@@ -257,6 +268,10 @@
         /* flex-direction: column; */
         flex-wrap: wrap;
     }
+    .loading-ep {
+        width: auto;
+    }
+    
 }
 @media only screen and (max-width: 350px) {
     .edit-item {

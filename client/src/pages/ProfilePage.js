@@ -6,11 +6,15 @@ import FloatingButton from '../components/FloatingButton/FloatingButton'
 import axios from 'axios'
 import { useParams, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import BeatLoader from "react-spinners/BeatLoader";
+
 
 const ProfilePage = () => {
     const history = useHistory();
     const { username } = useParams();
     const [userInfo, setUserInfo] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
 
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -25,9 +29,11 @@ const ProfilePage = () => {
                 .then((response) => {
                     setUserInfo(response.data);
                 });
+            setLoading(false);
         }
-
-        getUserData();
+        setTimeout(() => {
+            getUserData();
+        }, 0);
     }, [])
 
     return (
@@ -35,8 +41,13 @@ const ProfilePage = () => {
             <NavBar />
             <div className="main-body">
                 <SideBar />
-                {userInfo.length
-                    ? userInfo.map((user) => {
+                {loading &&
+                    <div className="loading">
+                        <BeatLoader color={"#8249A0"} loading={loading} size={20} />
+                    </div>
+                }
+                {!loading &&
+                    userInfo.map((user) => {
                         return (<div key={user.id}>
                             <Profile
                                 userId={user.id}
@@ -63,15 +74,6 @@ const ProfilePage = () => {
                             </Helmet>
                         </div>)
                     })
-                    :
-                    <div className="no-profile">
-                        {/* <p>No Profile Found!</p>
-                        <div className="profile-hoot">
-                            <Link to="/create">
-                                Create Hoot
-                            </Link>
-                        </div> */}
-                    </div>
                 }
                 <FloatingButton />
             </div>

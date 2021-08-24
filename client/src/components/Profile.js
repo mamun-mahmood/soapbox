@@ -47,7 +47,7 @@ const Profile = ({
         }
         setTimeout(() => {
             getUserUploadData();
-        }, 500);
+        }, 0);
     }, [])
 
     var totalViews = 0;
@@ -118,14 +118,16 @@ const Profile = ({
                                 <div><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
                                 {/* <div><span className="counts-bold">0</span> following</div> */}
                             </div>
+
                             {bio &&
                                 <div className="user-desc">
                                     {bio}
                                 </div>
                             }
+
                             {website &&
                                 <a
-                                    href={website}
+                                    href={!website.includes("https://") ? ("https://" + website) : website}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="profile-website"
@@ -135,60 +137,56 @@ const Profile = ({
                             }
 
                             <div className="social-profile-icon-links">
-                                {/* <div className="s-grp-1"> */}
                                 {twitter &&
-                                    <a href={twitter} target="_blank" rel="noopener noreferrer" >
+                                    <a href={!twitter.includes("https://") ? ("https://" + twitter) : twitter} target="_blank" rel="noopener noreferrer" >
                                         <FiTwitter className="social-profile-icon s-twitter" />
                                     </a>
                                 }
                                 {instagram &&
-                                    <a href={instagram} target="_blank" rel="noopener noreferrer" >
+                                    <a href={!instagram.includes("https://") ? ("https://" + instagram) : instagram} target="_blank" rel="noopener noreferrer" >
                                         <AiOutlineInstagram className="social-profile-icon s-instagram" />
                                     </a>
                                 }
                                 {linkedIn &&
-                                    <a href={linkedIn} target="_blank" rel="noopener noreferrer" >
+                                    <a href={!linkedIn.includes("https://") ? ("https://" + linkedIn) : linkedIn} target="_blank" rel="noopener noreferrer" >
                                         <AiOutlineLinkedin className="social-profile-icon s-linkedin" />
                                     </a>
                                 }
                                 {facebook &&
-                                    <a href={facebook} target="_blank" rel="noopener noreferrer" >
+                                    <a href={!facebook.includes("https://") ? ("https://" + facebook) : facebook} target="_blank" rel="noopener noreferrer">
                                         <RiFacebookCircleLine className="social-profile-icon s-facebook" />
                                     </a>
                                 }
                                 {tiktok &&
-                                    <a href={tiktok} target="_blank" rel="noopener noreferrer" >
+                                    <a href={!tiktok.includes("https://") ? ("https://" + tiktok) : tiktok} target="_blank" rel="noopener noreferrer" >
                                         <SiTiktok className="social-profile-icon s-tiktok" />
                                     </a>
                                 }
-                                {/* </div>
-                            <div className="s-grp-2"> */}
                                 {snapchat &&
-                                    <a href={snapchat} target="_blank" rel="noopener noreferrer" >
+                                    <a href={!snapchat.includes("https://") ? ("https://" + snapchat) : snapchat} target="_blank" rel="noopener noreferrer" >
                                         <RiSnapchatLine className="social-profile-icon s-snapchat" />
                                     </a>
                                 }
                                 {reddit &&
-                                    <a href={reddit} target="_blank" rel="noopener noreferrer" >
+                                    <a href={!reddit.includes("https://") ? ("https://" + reddit) : reddit} target="_blank" rel="noopener noreferrer" >
                                         <AiOutlineReddit className="social-profile-icon s-reddit" />
                                     </a>
                                 }
                                 {pinterest &&
-                                    <a href={pinterest} target="_blank" rel="noopener noreferrer" >
+                                    <a href={!pinterest.includes("https://") ? ("https://" + pinterest) : pinterest} target="_blank" rel="noopener noreferrer" >
                                         <RiPinterestLine className="social-profile-icon s-pinterest" />
                                     </a>
                                 }
                                 {medium &&
-                                    <a href={medium} target="_blank" rel="noopener noreferrer" >
+                                    <a href={!medium.includes("https://") ? ("https://" + medium) : medium} target="_blank" rel="noopener noreferrer" >
                                         <AiOutlineMedium className="social-profile-icon s-medium" />
                                     </a>
                                 }
                                 {tumblr &&
-                                    <a href={tumblr} target="_blank" rel="noopener noreferrer" >
+                                    <a href={!tumblr.includes("https://") ? ("https://" + tumblr) : tumblr} target="_blank" rel="noopener noreferrer" >
                                         <FaTumblr className="social-profile-icon s-tumblr" />
                                     </a>
                                 }
-                                {/* </div> */}
                             </div>
 
                             <button className="btn-edit-profile">
@@ -211,24 +209,30 @@ const Profile = ({
                             </div>
                         }
 
-                        {myUploads.map((upload) => {
-                            return (
-                                <div key={upload.id}>
-                                    <Post
-                                        hootId={upload.id}
-                                        username={upload.authorUsername}
-                                        mimeType={upload.mimeType}
-                                        hootImgId={upload.image}
-                                        likes={upload.likes}
-                                        views={upload.views}
-                                        caption={upload.caption}
-                                        timeStamp={upload.timeStamp}
-                                        edited={upload.edited}
-                                        editedTimeStamp={upload.editedTimeStamp}
-                                    />
-                                </div>
-                            )
-                        }).reverse()}
+                        {loading &&
+                            <div className="loading">
+                                <BeatLoader color={"#8249A0"} size={20} />
+                            </div>
+                        }
+                        {!loading &&
+                            myUploads.map((upload) => {
+                                return (
+                                    <div key={upload.id}>
+                                        <Post
+                                            hootId={upload.id}
+                                            username={upload.authorUsername}
+                                            mimeType={upload.mimeType}
+                                            hootImgId={upload.image}
+                                            likes={upload.likes}
+                                            views={upload.views}
+                                            caption={upload.caption}
+                                            timeStamp={upload.timeStamp}
+                                            edited={upload.edited}
+                                            editedTimeStamp={upload.editedTimeStamp}
+                                        />
+                                    </div>
+                                )
+                            }).reverse()}
 
                         {myUploads.length > 3 && <ScrollToTop />}
 
