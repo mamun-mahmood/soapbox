@@ -21,7 +21,7 @@ const HootPage = () => {
             });
         setTimeout(() => {
             setLoading(false);
-        }, 0);
+        }, 100);
     }, [])
 
     return (
@@ -30,8 +30,8 @@ const HootPage = () => {
             <div className="main-body">
                 <SideBar />
                 {loading &&
-                    <div className="loading">
-                        <BeatLoader color={"#8249A0"} loading={loading} size={20} />
+                    <div className="loading-ep">
+                        <BeatLoader color={"#8249A0"} size={20} />
                     </div>
                 }
                 {!loading &&
@@ -46,7 +46,8 @@ const HootPage = () => {
                                 bio={user.bio}
                             />
                         </div>)
-                    })}
+                    })
+                }
                 <FloatingButton />
             </div>
         </Fragment>

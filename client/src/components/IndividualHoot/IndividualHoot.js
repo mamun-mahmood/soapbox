@@ -26,9 +26,9 @@ const IndividualHoot = () => {
             setLoading(false);
         }
 
-        // setTimeout(() => {
-        getHootById();
-        // }, 3000);
+        setTimeout(() => {
+            getHootById();
+        }, 0);
 
         // here id is hootId 
         axios.get(`${BaseURL}/comment/${id}`)
@@ -40,13 +40,13 @@ const IndividualHoot = () => {
     return (
         <Fragment>
             {loading &&
-                <div className="loading-iv">
+                <div className="loading-ep">
                     <BeatLoader color={"#8249A0"} size={20} />
                 </div>
             }
-            <div className="individualHoot">
-                {hoot &&
-                    hoot.map((hoot) => {
+            {!loading &&
+                <div className="individualHoot">
+                    {hoot.map((hoot) => {
                         const hostURL = "https://www.megahoot.net";
                         const shareBaseUrl = `${hostURL}/hoot/${hoot.id}`;
                         const hootUsername = hoot.authorUsername;
@@ -72,29 +72,25 @@ const IndividualHoot = () => {
                                 />
 
                                 <Helmet>
-                                    {/* General tags */}
                                     <title>{title}</title>
                                     <meta name="description" content={hootCaption} />
-                                    {/* <meta name="image" content={ } /> */}
 
-                                    {/* Twitter Card tags */}
                                     <meta name="twitter:card" content="summary" />
                                     <meta name="twitter:creator" content={hootUsername} />
                                     <meta name="twitter:title" content={title} />
                                     <meta name="twitter:description" content={hootCaption} />
                                     <meta name="twitter:image" content={shareMediaPath} />
 
-                                    {/* OpenGraph tags */}
                                     <meta property="og:url" content={shareBaseUrl} />
                                     <meta property="og:title" content={title} />
                                     <meta property="og:description" content={hootCaption} />
                                     <meta property="og:image" content={shareMediaPath} />
-                                    {/* <meta property="fb:app_id" content={ } /> */}
                                 </Helmet>
                             </div>
                         )
                     }).reverse()}
-            </div>
+                </div>
+            }
         </Fragment>
     )
 }

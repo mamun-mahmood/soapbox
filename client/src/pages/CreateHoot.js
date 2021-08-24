@@ -64,6 +64,9 @@ const CreatePost = () => {
 
     const [userInformation, setUserInformation] = useState([]);
 
+    var userName = "";
+    var userProfilePic = "";
+
     //getting user data
     useEffect(() => {
         const getUserData = async () => {
@@ -77,9 +80,6 @@ const CreatePost = () => {
             getUserData();
         }, 100);
     }, [])
-
-    var userName = "";
-    var userProfilePic = "";
 
     userInformation.map((user) => {
         userName = user.name

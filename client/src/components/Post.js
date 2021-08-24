@@ -28,33 +28,27 @@ const Post = ({
         getUserData();
     }, [])
 
-    var userName = null;
-    var userProfilePic = null;
-    var userVerified = 0;
-
-    userInformation.map((user) => {
-        userName = user.name;
-        userProfilePic = user.profilePic;
-        userVerified = user.verified;
-    })
-
     return (
         <div>
-            <HootInside
-                name={userName}
-                profilePic={userProfilePic}
-                verified={userVerified}
-                hootId={hootId}
-                username={username}
-                mimeType={mimeType}
-                hootImgId={hootImgId}
-                likes={likes}
-                views={views}
-                caption={caption}
-                timeStamp={timeStamp}
-                edited={edited}
-                editedTimeStamp={editedTimeStamp}
-            />
+            {userInformation.map((user) => {
+                return (<div key={user.id}>
+                    <HootInside
+                        name={user.name}
+                        profilePic={user.profilePic}
+                        verified={user.verified}
+                        hootId={hootId}
+                        username={username}
+                        mimeType={mimeType}
+                        hootImgId={hootImgId}
+                        likes={likes}
+                        views={views}
+                        caption={caption}
+                        timeStamp={timeStamp}
+                        edited={edited}
+                        editedTimeStamp={editedTimeStamp}
+                    />
+                </div>);
+            })}
         </div>
     )
 }

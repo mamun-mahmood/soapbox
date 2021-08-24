@@ -1,0 +1,50 @@
+.hoot-profile-layout {
+    display: flex;
+    flex-direction: row;
+}
+
+.hoot-img-vertical-profile {
+    width: 100%;
+    /* min-width: 300px; */
+    max-width: 350px;
+    max-height: 400px;
+    /* object-fit: scale-down; */
+    object-fit: cover;
+    padding: 0.5rem;
+    border-radius: 0.95rem;
+    cursor: pointer;
+}
+
+.hoot-img-horizontal-profile {
+    width: 100%;
+    /* min-width: 300px; */
+    max-width: 350px;
+    max-height: 400px;
+    object-fit: scale-down;
+    padding: 0.5rem;
+    border-radius: 0.95rem;
+    cursor: pointer;
+}
+
+.hoot-vdo-profile {
+    width: 100%;
+    /* min-width: 300px; */
+    max-width: 350px;
+    max-height: 400px;
+    object-fit: scale-down;
+    padding: 0.5rem;
+    border-radius: 0.95rem;
+    cursor: pointer;
+}
+
+.hoot-ado-profile {
+    width: 350px;
+    /* min-width: 300px; */
+    height: 120px;
+    object-fit: cover;
+    padding: 0.5rem;
+    margin: 3rem 1rem 6rem 1rem;
+    border-radius: 0.95rem;
+    cursor: pointer;
+}
+  

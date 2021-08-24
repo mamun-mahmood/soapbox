@@ -416,7 +416,7 @@ const HootInside = ({
                                                     className="name-comment">
                                                     {username}
                                                 </Link>
-                                            </span>,
+                                            </span>
                                         </h5>
                                         <div className="edit-content">
                                             {/* left side image */}

@@ -11,6 +11,7 @@ import { SiTiktok } from 'react-icons/si'
 import { FaTumblr } from 'react-icons/fa'
 import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineReddit, AiOutlineMedium } from 'react-icons/ai'
 import BeatLoader from "react-spinners/BeatLoader";
+import HootOutside from './HootOutside/HootOutside';
 
 
 const Profile = ({
@@ -214,25 +215,33 @@ const Profile = ({
                                 <BeatLoader color={"#8249A0"} size={20} />
                             </div>
                         }
-                        {!loading &&
-                            myUploads.map((upload) => {
-                                return (
-                                    <div key={upload.id}>
-                                        <Post
-                                            hootId={upload.id}
-                                            username={upload.authorUsername}
-                                            mimeType={upload.mimeType}
-                                            hootImgId={upload.image}
-                                            likes={upload.likes}
-                                            views={upload.views}
-                                            caption={upload.caption}
-                                            timeStamp={upload.timeStamp}
-                                            edited={upload.edited}
-                                            editedTimeStamp={upload.editedTimeStamp}
-                                        />
-                                    </div>
-                                )
-                            }).reverse()}
+                        <div className="hoot-profile-layout">
+                            {!loading &&
+                                myUploads.map((upload) => {
+                                    return (
+                                        <div key={upload.id}>
+                                            <Post
+                                                hootId={upload.id}
+                                                username={upload.authorUsername}
+                                                mimeType={upload.mimeType}
+                                                views={upload.views}
+                                                hootImgId={upload.image}
+                                                likes={upload.likes}
+                                                views={upload.views}
+                                                caption={upload.caption}
+                                                timeStamp={upload.timeStamp}
+                                                edited={upload.edited}
+                                                editedTimeStamp={upload.editedTimeStamp}
+                                            />
+                                            {/* <HootOutside
+                                                views={upload.views}
+                                                mimeType={upload.mimeType}
+                                                hootImgId={upload.image}
+                                            /> */}
+                                        </div>
+                                    )
+                                }).reverse()}
+                        </div>
 
                         {myUploads.length > 3 && <ScrollToTop />}
 
