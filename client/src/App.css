@@ -558,12 +558,27 @@ hr {
   text-decoration: none;
 }
 
+.hover-info {
+  width: 250px;
+  position: absolute;
+  top: 4rem;
+  left: 1.5rem;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  background-color: #dcd5fa;
+  border-radius: 0.5rem;
+  box-shadow: var(--secondary-color) 0px 0px 5px;
+  z-index: 1000;
+}
+
 .avatar_name {
   position: relative;
   display: flex;
   align-items: center;
   color: #374151;
+
+  transition: 1s;
 }
+
 .avatar_name a {
   text-decoration: none;
 }
@@ -598,18 +613,6 @@ hr {
   color: #EDEDFF;
   background-color: var(--on-hover);
   transition: 0.3s;
-}
-
-.hover-info {
-  width: 250px;
-  position: absolute;
-  top: 4rem;
-  left: 1.5rem;
-  padding: 0.5rem 1rem 0.5rem 0.5rem;
-  background-color: #dcd5fa;
-  border-radius: 0.5rem;
-  box-shadow: var(--secondary-color) 0px 0px 5px;
-  z-index: 1000;
 }
 
 .hover-user-follow {
@@ -951,7 +954,7 @@ hr {
   border-radius: 0.5rem;
   z-index: 1000;
   box-shadow: var(--secondary-color) 0px 0px 5px;
-  transition: 0.3s;
+  transition: all 3s;
 }
 
 .edit-modal {
@@ -1484,6 +1487,11 @@ hr {
   color: #6B7280;
 }
 
+.nav-link-active {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
 .nav-link:active {
   color: var(--primary-color);
 }
@@ -1873,13 +1881,4 @@ hr {
   justify-content: center;
   align-items: center;
   margin-top: -5rem;
-}
-
-.hoot-profile-layout {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
 }

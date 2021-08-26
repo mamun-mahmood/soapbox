@@ -13,9 +13,9 @@ import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineReddit, AiOutlineMedium
 import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from './HootOutside/HootOutside';
 
-
 const Profile = ({
     verified,
+    userName,
     name,
     profilePic,
     website,
@@ -215,29 +215,39 @@ const Profile = ({
                                 <BeatLoader color={"#8249A0"} size={20} />
                             </div>
                         }
+                        {/* {!loading &&
+                            myUploads.map((upload) => {
+                                return (
+                                    <div key={upload.id}>
+                                        <Post
+                                            hootId={upload.id}
+                                            username={upload.authorUsername}
+                                            mimeType={upload.mimeType}
+                                            views={upload.views}
+                                            hootImgId={upload.image}
+                                            likes={upload.likes}
+                                            views={upload.views}
+                                            caption={upload.caption}
+                                            timeStamp={upload.timeStamp}
+                                            edited={upload.edited}
+                                            editedTimeStamp={upload.editedTimeStamp}
+                                        />
+                                    </div>
+                                )
+                            }).reverse()
+                        } */}
+
                         <div className="hoot-profile-layout">
                             {!loading &&
                                 myUploads.map((upload) => {
                                     return (
                                         <div key={upload.id}>
-                                            <Post
+                                            <HootOutside
                                                 hootId={upload.id}
                                                 username={upload.authorUsername}
                                                 mimeType={upload.mimeType}
-                                                views={upload.views}
                                                 hootImgId={upload.image}
-                                                likes={upload.likes}
-                                                views={upload.views}
-                                                caption={upload.caption}
-                                                timeStamp={upload.timeStamp}
-                                                edited={upload.edited}
-                                                editedTimeStamp={upload.editedTimeStamp}
                                             />
-                                            {/* <HootOutside
-                                                views={upload.views}
-                                                mimeType={upload.mimeType}
-                                                hootImgId={upload.image}
-                                            /> */}
                                         </div>
                                     )
                                 }).reverse()}

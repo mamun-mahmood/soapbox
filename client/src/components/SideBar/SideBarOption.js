@@ -1,15 +1,19 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const SideBarOption = ({ option, link, Icon, looks }) => {
     return (
         <li >
-            <Link className={looks} to={link}>
+            <NavLink
+                activeClassName="sidebar-option-active"
+                className={looks}
+                to={link}
+            >
                 <Icon className={"sidebar-icon"} />
                 <span>
                     {option}
                 </span>
-            </Link>
+            </NavLink>
         </li>
     )
 }

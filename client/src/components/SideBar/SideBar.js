@@ -51,17 +51,16 @@ const SideBar = () => {
                         option="Profile"
                         link={`/profile/${username}`}
                         Icon={BiUser}
-
                     />
                     <SideBarOption
                         option="Explore"
-                        link="/home"
+                        link="/explore"
                         Icon={BsLightning}
                     />
-
                     <SideBarOption
                         option="Hashtags"
                         Icon={FiHash}
+                        link="/hashtags"
                         looks={"looks"}
                     />
                     <li>
@@ -85,6 +84,7 @@ const SideBar = () => {
                     <SideBarOption
                         option="Stocks"
                         Icon={BiDollar}
+                        link="/stocks"
                         looks={"looks"}
                     />
                     <li>
@@ -102,10 +102,12 @@ const SideBar = () => {
                     <SideBarOption
                         option="Private Messages"
                         Icon={BiMessageDetail}
+                        link="/private-message"
                     />
                     <SideBarOption
                         option="XMG Wallet"
                         Icon={BiWallet}
+                        link="/xmg-wallet"
                     />
                     <li>
                         <hr className="my-2" />

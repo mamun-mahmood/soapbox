@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import { HiOutlineLogout } from 'react-icons/hi';
+import { Link, NavLink, useHistory } from 'react-router-dom'
 
 const NavBar = () => {
     const history = useHistory();
@@ -50,16 +49,55 @@ const NavBar = () => {
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                         {localStorage.getItem("loggedIn") ?
                             <Fragment>
-                                {/* <Link className="nav-link" to="/public-profile"><BiSearch /></Link> */}
-                                <Link className="nav-link" to="/home">Home</Link>
-                                <Link className="nav-link" to="/create">Create Hoot</Link>
-                                <Link className="nav-link" to={`/profile/${username}`}>{userInfo && userInfo.username}</Link>
-                                <Link className="nav-link" to="/" onClick={logout}>Logout</Link>
+                                <NavLink
+                                    activeClassName="nav-link-active"
+                                    className="nav-link"
+                                    to="/home"
+                                >
+                                    Home
+                                </NavLink>
+                                <NavLink
+                                    activeClassName="nav-link-active"
+                                    className="nav-link"
+                                    to="/create"
+                                >
+                                    Create Hoot
+                                </NavLink>
+                                <NavLink
+                                    activeClassName="nav-link-active"
+                                    className="nav-link"
+                                    to={`/profile/${username}`}
+                                >
+                                    {userInfo && userInfo.username}
+                                </NavLink>
+                                <NavLink
+                                    exact
+                                    activeClassName="nav-link-active"
+                                    className="nav-link"
+                                    to="/"
+                                    onClick={logout}
+                                >
+                                    Logout
+                                </NavLink>
                             </Fragment>
                             :
                             <Fragment>
-                                <Link className="nav-link" to="/">Login</Link>
-                                <Link className="nav-link" to="/">Sign Up</Link>
+                                <NavLink
+                                    exact
+                                    activeClassName="nav-link-active"
+                                    className="nav-link"
+                                    to="/"
+                                >
+                                    Login
+                                </NavLink>
+                                <NavLink
+                                    exact
+                                    activeClassName="nav-link-active"
+                                    className="nav-link"
+                                    to="/"
+                                >
+                                    Sign Up
+                                </NavLink>
                             </Fragment>
                         }
                     </div>

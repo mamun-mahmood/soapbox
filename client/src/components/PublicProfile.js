@@ -10,6 +10,7 @@ import { SiTiktok } from 'react-icons/si'
 import { FaTumblr } from 'react-icons/fa'
 import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineReddit, AiOutlineMedium } from 'react-icons/ai'
 import BeatLoader from "react-spinners/BeatLoader";
+import HootOutside from './HootOutside/HootOutside';
 
 const PublicProfile = ({
     verified,
@@ -218,7 +219,7 @@ const PublicProfile = ({
                     </div>
                     <hr />
                     <div className="pt-2">
-                        {users.map((user) => {
+                        {/* {users.map((user) => {
                             return (<div key={user.id}>
                                 <Post
                                     hootId={user.id}
@@ -233,7 +234,23 @@ const PublicProfile = ({
                                     editedTimeStamp={user.editedTimeStamp}
                                 />
                             </div>)
-                        }).reverse()}
+                        }).reverse()} */}
+
+                        <div className="hoot-profile-layout">
+                            {!loading &&
+                                users.map((user) => {
+                                    return (
+                                        <div key={user.id}>
+                                            <HootOutside
+                                                hootId={user.id}
+                                                username={user.authorUsername}
+                                                mimeType={user.mimeType}
+                                                hootImgId={user.image}
+                                            />
+                                        </div>
+                                    )
+                                }).reverse()}
+                        </div>
                     </div>
                 </div>
             }

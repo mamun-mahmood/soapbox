@@ -3,9 +3,10 @@ import MediaProfile from './MediaProfile';
 import './hootOutside.css'
 
 const HootOutside = ({
+    hootId,
+    username,
     mimeType,
-    views,
-    hootImgId
+    hootImgId,
 }) => {
     const BaseURL = process.env.REACT_APP_API_URL;
     const filePath = `${BaseURL}/images/${hootImgId}`;
@@ -13,10 +14,10 @@ const HootOutside = ({
     return (
         <Fragment>
             <MediaProfile
+                hootId={hootId}
+                username={username}
                 mimeType={mimeType}
                 filePath={filePath}
-                views={views}
-                image={hootImgId}
             />
         </Fragment>
     )

@@ -8,7 +8,6 @@ import { useParams, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import BeatLoader from "react-spinners/BeatLoader";
 
-
 const ProfilePage = () => {
     const history = useHistory();
     const { username } = useParams();

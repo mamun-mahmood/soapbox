@@ -51,7 +51,9 @@ const CreatePost = () => {
         axios.post(`${BaseURL}/upload/create`, formData)
             .then((response) => {
                 console.log(response);
-                history.push("/home");
+                setTimeout(() => {
+                    history.push("/home");
+                }, 500);
             })
     }
 
