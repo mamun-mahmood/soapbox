@@ -14,7 +14,6 @@ const PublicProfilePage = () => {
     const [userInfo, setUserInfo] = useState([]);
     const [loading, setLoading] = useState(true);
 
-
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -39,8 +38,7 @@ const PublicProfilePage = () => {
                     </div>
                 }
                 {!loading &&
-                    userInfo.length
-                    ? userInfo.map((user) => {
+                    userInfo.map((user) => {
                         return (<div key={user.id}>
                             <PublicProfile
                                 userId={user.id}
@@ -67,15 +65,6 @@ const PublicProfilePage = () => {
                             </Helmet>
                         </div>)
                     })
-                    : null}
-                {/* <div className="no-profile">
-                        <p>No Profile Found!</p>
-                        <div className="profile-hoot">
-                            <Link to="/create">
-                                Create Hoot
-                            </Link>
-                        </div>
-                    </div> */}
                 }
                 <FloatingButton />
             </div>

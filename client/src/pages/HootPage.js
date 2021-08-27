@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import NavBar from '../components/NavBar'
 import SideBar from '../components/SideBar/SideBar'
 import IndividualHoot from '../components/IndividualHoot/IndividualHoot'
@@ -14,7 +14,7 @@ const HootPage = () => {
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         axios.get(`${BaseURL}/user/${username}`)
             .then((response) => {
                 setUserInfo(response.data);
@@ -29,12 +29,13 @@ const HootPage = () => {
             <NavBar />
             <div className="main-body">
                 <SideBar />
-                {loading &&
+                {/* {loading &&
                     <div className="loading-ep">
                         <BeatLoader color={"#8249A0"} size={20} />
                     </div>
-                }
-                {!loading &&
+                } */}
+                {/* {!loading && */}
+                {
                     userInfo.map((user) => {
                         return (<div key={user.id}>
                             <IndividualHoot
@@ -48,6 +49,13 @@ const HootPage = () => {
                         </div>)
                     })
                 }
+                {
+                    !userInfo &&
+                    <div className="no-individual-hoot">
+
+                    </div>
+                }
+                {/* } */}
                 <FloatingButton />
             </div>
         </Fragment>

@@ -152,11 +152,11 @@ dl, ol, ul {
     padding: 0.5rem;
 }
 
-.landing-rs span {
+/* .landing-rs span {
     color: var(--primary-color);
     font-size: 3rem;
     font-weight: 700;
-}
+} */
 
 .invitation-only div {
     text-align: center;

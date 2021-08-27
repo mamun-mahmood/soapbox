@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import Post from '../Post'
-import ScrollToTop from './ScrollToTop'
 import BeatLoader from "react-spinners/BeatLoader";
 import './feed.css'
 
@@ -28,7 +26,7 @@ const Feed = () => {
         <div className="feed start">
             {loading &&
                 <div className="loading">
-                    <BeatLoader color={"#8249A0"} loading={loading} size={20} />
+                    <BeatLoader color={"#8249A0"} size={20} />
                 </div>
             }
 
@@ -51,7 +49,7 @@ const Feed = () => {
                 }).reverse()
             }
 
-            {uploads && uploads.length > 3 && <ScrollToTop />}
+            {/* {uploads && uploads.length > 3 && <ScrollToTop />} */}
         </div>
     )
 }

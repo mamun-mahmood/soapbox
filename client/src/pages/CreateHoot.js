@@ -116,6 +116,7 @@ const CreatePost = () => {
                                 round={true}
                                 name={userName}
                                 src={profilePicPath}
+                                className="skeleton-img"
                             />
                         </div>
                         {/* <img className="avatar" src="/images/default_user_profile.svg" alt="avatar" /> */}

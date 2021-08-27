@@ -35,30 +35,71 @@ const HootInside = ({
     edited,
     editedTimeStamp
 }) => {
+    const [users, setUsers] = useState([]);
+
+    // getting all uploads(hoots) 
+    useEffect(() => {
+        axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
+            setUsers(response.data);
+        });
+    }, [])
+
+    var commentName = null;
+    var commentProfilePic = null;
+
+    // getting user data 
+    const [userInfoC, setUserInfoC] = useState([]);
+    useEffect(() => {
+        const getUserData = async () => {
+            await axios.get(`${BaseURL}/user/${userInfo.username}`)
+                .then((response) => {
+                    setUserInfoC(response.data);
+                });
+        }
+        getUserData()
+    }, [])
+
+
+    userInfoC.map((user) => {
+        commentName = user.name;
+        commentProfilePic = user.profilePic;
+    })
+
+    // like functionality added to hoots.
+    useEffect(() => {
+        axios.put(`${BaseURL}/upload/likes`, {
+            likes: likesCount,
+            image: hootImgId
+        }).then((response) => {
+        })
+    }, [likesCount])
+
+    //getting all comments
+    useEffect(() => {
+        axios.get(`${BaseURL}/comment/${hootId}`)
+            .then((response) => {
+                setComments(response.data);
+            });
+    }, [])
+
     // API url 
     const BaseURL = process.env.REACT_APP_API_URL;
-
     // main website
     const hostURL = "https://www.megahoot.net";
-
     // media url from server
     const filePath = `${BaseURL}/images/${hootImgId}`;
-
     // url for individual hoot for main soapbox website
     const shareBaseUrl = `${hostURL}/${username}/hoot/${hootId}`;
-
     // encoded share url for individual hoot to be shared on other social media
     const shareUrl = encodeURIComponent(shareBaseUrl);
     const shareCaption = encodeURIComponent(`${caption.length > 10 ? caption.substring(0, 70) : caption} @${username}`);
     const shareHashtags = encodeURIComponent("");
     // const shareHashtags = encodeURIComponent("megahoot,soapbox");
-
     // const twitterShare = `http://twitter.com/share?text=${shareCaption}&url=${shareUrl}&hashtags=${shareHashtags}`;
     const twitterShare = `http://twitter.com/share?text=${shareCaption}&url=${shareUrl}`;
     const mailShare = `mailto:?subject="Hoot from MegaHoot Soapbox"&body=${shareCaption}%20Checkout more at ${shareUrl}`;
     const facebookShare = `https://www.facebook.com/sharer.php?u=${shareUrl}`;
     const redditShare = `https://reddit.com/submit?url=${shareUrl}&title=${shareCaption}`;
-
     // image is must to share something on pinterest.
     const pinterestShare = `https://pinterest.com/pin/create/bookmarklet/?media=${filePath}&url=${shareUrl}&description=jio`
     const linkedInShare = `https://www.linkedin.com/shareArticle?url=${shareUrl}&title=${shareCaption}`
@@ -78,6 +119,10 @@ const HootInside = ({
 
     const history = useHistory();
 
+    const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
+    const path = (userInfo.username === username ? `/profile/${username}` : `/user/${username}`);
+    const profilePath = `/profile/${username}`
+
     // timeStamp can be implemented at server-side...
     const date = new Date();
     const eTimeStamp = format(date, 'LLL dd, yyyy • HH:mm');
@@ -85,31 +130,6 @@ const HootInside = ({
     const setLikesCount = (e) => {
         setlikesCount(likesCount + 1);
     }
-
-    // like functionality added to hoots.
-    useEffect(() => {
-        axios.put(`${BaseURL}/upload/likes`, {
-            likes: likesCount,
-            image: hootImgId
-        }).then((response) => {
-            // console.log(response.data.likes);
-        })
-    }, [likesCount])
-
-    // add username as loggedIn username...
-    // const commentPlaceHolder = `Comment as ${username}`;
-
-    //getting all comments
-    useEffect(() => {
-        axios.get(`${BaseURL}/comment/${hootId}`)
-            .then((response) => {
-                setComments(response.data);
-            });
-    }, [])
-
-    const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
-    const path = (userInfo.username === username ? `/profile/${username}` : `/user/${username}`);
-    const profilePath = `/profile/${username}`
 
     const openDeleteModal = () => {
         setIsDeleteModalOpen(true);
@@ -127,7 +147,6 @@ const HootInside = ({
             username: userInfo.username,
         });
         window.location.reload();
-        console.log("Hoot Deleted...");
     }
 
     const editHoot = () => {
@@ -139,28 +158,7 @@ const HootInside = ({
         });
 
         window.location.reload();
-        console.log("Caption Edited:", isEdited);
     }
-
-    var commentName = null;
-    var commentProfilePic = null;
-
-    const [userInfoC, setUserInfoC] = useState([]);
-    useEffect(() => {
-        const getUserData = async () => {
-            await axios.get(`${BaseURL}/user/${userInfo.username}`)
-                .then((response) => {
-                    setUserInfoC(response.data);
-                });
-        }
-        getUserData()
-    }, [])
-
-
-    userInfoC.map((user) => {
-        commentName = user.name;
-        commentProfilePic = user.profilePic;
-    })
 
     const addComment = () => {
         axios.post(`${BaseURL}/comment/`, {
@@ -182,7 +180,6 @@ const HootInside = ({
             }
 
             setComments([...comments, addNewComment])
-            console.log("comment added");
         })
     }
 
@@ -220,13 +217,6 @@ const HootInside = ({
     }
 
     const [hoverInfo, setHoverInfo] = useState(false);
-    const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
-            setUsers(response.data);
-        });
-    }, [])
 
     const random = (min = 10, max = 50) => {
         let num = Math.random() * (max - min) + min;
@@ -287,6 +277,7 @@ const HootInside = ({
                                     round={true}
                                     name={name ? name : username}
                                     src={profilePicPath}
+                                    className="skeleton-img"
                                 />
                             </div>
 
@@ -323,6 +314,7 @@ const HootInside = ({
                                             round={true}
                                             name={name ? name : username}
                                             src={profilePicPath}
+                                        // className="skeleton-img"
                                         />
                                     </div>
                                     {/* <img class="hover-avatar" src={avatar} alt="avatar" /> */}

@@ -89,6 +89,12 @@ const IndividualHoot = () => {
                             </div>
                         )
                     }).reverse()}
+                    {
+                        !hoot &&
+                        <div className="no-individual-hoot">
+
+                        </div>
+                    }
                 </div>
             }
         </Fragment>

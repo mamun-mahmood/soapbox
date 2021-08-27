@@ -253,7 +253,7 @@ const Profile = ({
                                 }).reverse()}
                         </div>
 
-                        {myUploads.length > 3 && <ScrollToTop />}
+                        {/* {myUploads.length > 3 && <ScrollToTop />} */}
 
                     </div>
                 </div>

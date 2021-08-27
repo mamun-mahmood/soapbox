@@ -587,6 +587,22 @@ hr {
   text-decoration: underline;
 }
 
+.skeleton-img {
+  animation: skeleton-avatar-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-avatar-loading {
+  0% {
+    /* background-color: hsl(200, 20%, 80%); */
+    background-color: #DCD5FA;
+  }
+  
+  100% {
+    /* background-color: hsl(200, 20%, 88%); */
+    background-color: #e7e4ff;
+  }
+}
+
 .hover-info a {
   text-decoration: none;
 }
@@ -700,6 +716,8 @@ hr {
   object-fit: cover;
   padding: 0.5rem;
   border-radius: 0.95rem;
+
+  /* animation: skeleton-home-loading 1s linear infinite alternate; */
 }
 
 .hoot-img-horizontal {
@@ -708,6 +726,8 @@ hr {
   object-fit: scale-down;
   padding: 0.5rem;
   border-radius: 0.95rem;
+
+  /* animation: skeleton-home-loading 1s linear infinite alternate; */
 }
 
 /* this class is for hoot media preview so that they can view media in original size that's why object-fit: scale-down */
@@ -729,6 +749,8 @@ hr {
   object-fit: scale-down;
   padding: 0.5rem;
   border-radius: 0.95rem;
+
+  /* animation: skeleton-home-loading 1s linear infinite alternate; */
 }
 
 .hoot-ado {
@@ -738,6 +760,20 @@ hr {
   padding: 0.5rem;
   margin: 3rem 1rem 6rem 1rem;
   border-radius: 0.95rem;
+
+  /* animation: skeleton-home-loading 1s linear infinite alternate; */
+}
+
+@keyframes skeleton-home-loading {
+  0% {
+      /* background-color: hsl(200, 20%, 80%); */
+      background-color: #e3defa;
+  }
+    
+  100% {
+      /* background-color: hsl(200, 20%, 88%); */
+      background-color: #f3f1ff;
+  }
 }
 
 @media only screen and (max-width: 500px) {

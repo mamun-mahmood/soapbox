@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import HootInside from './HootInside';
 
 const Post = ({
@@ -18,7 +18,7 @@ const Post = ({
     const BaseURL = process.env.REACT_APP_API_URL;
 
     // getting user data
-    useEffect(() => {
+    useLayoutEffect(() => {
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`)
                 .then((response) => {

@@ -28,7 +28,7 @@ const SignupComp = () => {
             email,
             password,
         }).then((response) => {
-            history.push("/login");
+            // history.push("/login");
         })
     }
 

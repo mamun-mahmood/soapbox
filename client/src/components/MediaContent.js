@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import LazyLoad from 'react-lazyload';
 
-
 const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -50,6 +49,7 @@ const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
             {mimeType.match(/image/gi) == "image" &&
                 <LazyLoad
                     offset={800}
+                    height={200}
                 >
                     <img
                         ref={ref}
@@ -68,6 +68,7 @@ const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
             {mimeType.match(/video/gi) == "video" &&
                 <LazyLoad
                     offset={800}
+                    height={200}
                 >
                     <video
                         loop muted controls autoPlay
@@ -89,6 +90,7 @@ const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
             {mimeType.match(/audio/gi) == "audio" &&
                 <LazyLoad
                     offset={800}
+                    height={200}
                 >
                     <audio
                         className={editOpen ? "hoot-ado-fix" : "hoot-ado"}

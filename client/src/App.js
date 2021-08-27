@@ -1,14 +1,12 @@
-import React from 'react'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
+import React, { lazy, Suspense } from 'react'
 import Home from './pages/Home/Home'
 import HootPage from './pages/HootPage'
-import ProfilePage from './pages/ProfilePage'
 import CreateHoot from './pages/CreateHoot'
+import ProfilePage from './pages/ProfilePage'
 import PageNotFound from './pages/PageNotFound'
-import PublicProfilePage from './pages/PublicProfilePage'
 import EditProfilePage from './pages/EditProfilePage'
 import ProtectedRoute from './components/ProtectedRoute'
+import PublicProfilePage from './pages/PublicProfilePage'
 import LandingPage from './pages/LandingPage/LandingPage'
 import {
   BrowserRouter as Router,
@@ -16,6 +14,17 @@ import {
   Switch
 } from 'react-router-dom';
 import "./App.css"
+import Loading from './components/Loading'
+
+// const Home = lazy(() => import('./pages/Home/Home'));
+// const HootPage = lazy(() => import('./pages/HootPage'));
+// const CreateHoot = lazy(() => import('./pages/CreateHoot'));
+// const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+// const PageNotFound = lazy(() => import('./pages/PageNotFound'));
+// const EditProfilePage = lazy(() => import('./pages/EditProfilePage'));
+// const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
+// const PublicProfilePage = lazy(() => import('./pages/PublicProfilePage'));
+// const LandingPage = lazy(() => import('./pages/LandingPage/LandingPage'));
 
 function App() {
   return (
@@ -42,12 +51,6 @@ function App() {
         <Route path="/profile/:username">
           <ProtectedRoute page={ProfilePage} />
         </Route>
-        {/* <Route path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route> */}
         <Route path="*">
           <PageNotFound />
         </Route>

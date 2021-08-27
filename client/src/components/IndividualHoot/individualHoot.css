@@ -244,6 +244,9 @@
   margin-top: -5rem;
 }
 
+.no-individual-hoot {
+  width: 100%;
+}
 @media only screen and (min-width: 1025px) {
   .comment-center {
     margin: 1rem -2rem 0rem -10rem;

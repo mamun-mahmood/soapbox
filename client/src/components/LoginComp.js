@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Button, Form } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
+import BeatLoader from "react-spinners/BeatLoader";
 
 const LoginComp = () => {
     const history = useHistory();
+    const [saveLoading, setSaveLoading] = useState(false);
 
     useEffect(() => {
         if (localStorage.getItem("loggedIn")) {
-            history.push("/home");
+            setTimeout(() => {
+                setSaveLoading(false);
+                history.push("/home");
+            }, 1000);
         }
     })
 
@@ -19,21 +24,18 @@ const LoginComp = () => {
     const [message, setMessage] = useState("");
 
     const login = (event) => {
+        setSaveLoading(true);
         event.preventDefault()
 
         axios.post(`${BaseURL}/user/login`, {
             email,
             password,
         }).then((response) => {
-            console.log(response);
-
             if (response.data.loggedIn) {
-
                 const loggedIn = {
                     username: response.data.username,
                     email: response.data.email
                 }
-
                 localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
             }
             setMessage(response.data.message);
@@ -90,7 +92,13 @@ const LoginComp = () => {
                     onClick={login}
                     disabled={!email || !password}
                 >
-                    Login
+                    {saveLoading
+                        ?
+                        <BeatLoader color={"#fff"} size={10} />
+                        :
+                        "Login"
+                    }
+
                 </button>
 
             </Form>
