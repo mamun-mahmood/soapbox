@@ -1,19 +1,14 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import axios from 'axios'
 import Avatar from 'react-avatar';
 import { format } from 'date-fns'
-import { useState } from "react";
 import { Button } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { IoCloseOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
-// import { MdPhotoLibrary } from "react-icons/md";
-// import { FaVideo } from "react-icons/fa";
-// import { AiFillAudio } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
-
 import NavBar from '../components/NavBar'
 
 const CreatePost = () => {

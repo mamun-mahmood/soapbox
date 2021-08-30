@@ -2,8 +2,6 @@ import React, { useState, useEffect, Fragment } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Avatar from 'react-avatar';
-import Post from '../components/Post'
-import ScrollToTop from '../components/Feed/ScrollToTop'
 import { HiBadgeCheck } from 'react-icons/hi'
 import { FiTwitter } from 'react-icons/fi'
 import { RiFacebookCircleLine, RiSnapchatLine, RiPinterestLine } from 'react-icons/ri'
@@ -12,6 +10,17 @@ import { FaTumblr } from 'react-icons/fa'
 import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineReddit, AiOutlineMedium } from 'react-icons/ai'
 import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from './HootOutside/HootOutside';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
+
+// import Loadable from 'react-loadable';
+// import Loading from '../components/Loading/Loading';
+// const HootOutside = Loadable({
+//     loader: () => import('./HootOutside/HootOutside' /* webpackChunkName: "HootOutside" */),
+//     loading() {
+//         return <Loading />
+//     }
+// })
 
 const Profile = ({
     verified,
@@ -34,22 +43,39 @@ const Profile = ({
     const { username } = useParams();
     const [myUploads, setMyUploads] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [hasMore, setHasMore] = useState(true);
+    const [page, setpage] = useState(2);
+
+    const LIMIT = 9;
 
     const BaseURL = process.env.REACT_APP_API_URL;
     const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
 
     useEffect(() => {
         const getUserUploadData = async () => {
-            await axios.get(`${BaseURL}/upload/user/${username}`)
+            await axios.get(`${BaseURL}/upload/user/p/${username}?page=1&limit=${LIMIT}`)
                 .then((response) => {
-                    setMyUploads(response.data);
+                    setMyUploads(response.data.results);
                 });
             setLoading(false);
         }
-        setTimeout(() => {
-            getUserUploadData();
-        }, 0);
+        getUserUploadData();
     }, [])
+
+    const fetchProfileHoots = async () => {
+        await axios.get(`${BaseURL}/upload/user/p/${username}?page=${page}&limit=${LIMIT}`)
+            .then((response) => {
+                const hootsFromServer = response.data.results;
+
+                setMyUploads([...myUploads, ...hootsFromServer]);
+
+                if (hootsFromServer === 0 || hootsFromServer < LIMIT) {
+                    setHasMore(false);
+                }
+            });
+
+        setpage(page + 1);
+    }
 
     var totalViews = 0;
     var totalLikes = 0;
@@ -215,46 +241,30 @@ const Profile = ({
                                 <BeatLoader color={"#8249A0"} size={20} />
                             </div>
                         }
-                        {/* {!loading &&
-                            myUploads.map((upload) => {
-                                return (
-                                    <div key={upload.id}>
-                                        <Post
-                                            hootId={upload.id}
-                                            username={upload.authorUsername}
-                                            mimeType={upload.mimeType}
-                                            views={upload.views}
-                                            hootImgId={upload.image}
-                                            likes={upload.likes}
-                                            views={upload.views}
-                                            caption={upload.caption}
-                                            timeStamp={upload.timeStamp}
-                                            edited={upload.edited}
-                                            editedTimeStamp={upload.editedTimeStamp}
-                                        />
-                                    </div>
-                                )
-                            }).reverse()
-                        } */}
-
-                        <div className="hoot-profile-layout">
-                            {!loading &&
-                                myUploads.map((upload) => {
-                                    return (
-                                        <div key={upload.id}>
-                                            <HootOutside
-                                                hootId={upload.id}
-                                                username={upload.authorUsername}
-                                                mimeType={upload.mimeType}
-                                                hootImgId={upload.image}
-                                            />
-                                        </div>
-                                    )
-                                }).reverse()}
-                        </div>
-
-                        {/* {myUploads.length > 3 && <ScrollToTop />} */}
-
+                        {/* no need to reverse the list as it is getting reversed from the server itself  */}
+                        {!loading &&
+                            <InfiniteScroll
+                                dataLength={myUploads.length}
+                                next={fetchProfileHoots}
+                                hasMore={hasMore}
+                                loader={<InfiniteScrollLoader />}
+                            >
+                                <div className="hoot-profile-layout">
+                                    {myUploads.map((upload) => {
+                                        return (
+                                            <div key={upload.id}>
+                                                <HootOutside
+                                                    hootId={upload.id}
+                                                    username={upload.authorUsername}
+                                                    mimeType={upload.mimeType}
+                                                    hootImgId={upload.image}
+                                                />
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </InfiniteScroll>
+                        }
                     </div>
                 </div>
             }

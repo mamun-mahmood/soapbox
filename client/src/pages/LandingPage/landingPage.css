@@ -208,10 +208,10 @@ footer span {
 }
 
 @media only screen and (max-width: 1024px) {
-    .landing-rs span {
+    /* .landing-rs span {
         font-size: 2.5rem;
         font-weight: 700;
-    }
+    } */
     
     .landing-ls img {
         width: 300px;
@@ -250,10 +250,10 @@ footer span {
         font-size: 1rem;
     }
 
-    .landing-rs span {
+    /* .landing-rs span {
         font-size: 2rem;
         font-weight: 700;
-    }
+    } */
 }
 
 @media only screen and (max-width: 660px) {
@@ -266,21 +266,21 @@ footer span {
         display: none;
     }
     
-    .landing-rs span {
+    /* .landing-rs span {
         font-size: 1.5rem;
         font-weight: 700;
-    }
+    } */
 }
 
 @media only screen and (max-width: 470px) {
-    .landing-rs span {
+    /* .landing-rs span {
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 1.5rem;
         font-weight: 700;
         text-align: center;
-    }
+    } */
 
     footer {
         font-size: small;

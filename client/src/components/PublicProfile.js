@@ -11,6 +11,8 @@ import { FaTumblr } from 'react-icons/fa'
 import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineReddit, AiOutlineMedium } from 'react-icons/ai'
 import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from './HootOutside/HootOutside';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 
 const PublicProfile = ({
     verified,
@@ -31,6 +33,10 @@ const PublicProfile = ({
 }) => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [hasMore, setHasMore] = useState(true);
+    const [page, setpage] = useState(2);
+
+    const LIMIT = 9;
 
     const BaseURL = process.env.REACT_APP_API_URL;
     const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
@@ -49,17 +55,30 @@ const PublicProfile = ({
         });
 
         const getUserUploadData = async () => {
-            await axios.get(`${BaseURL}/upload/user/${username}`)
+            await axios.get(`${BaseURL}/upload/user/p/${username}?page=1&limit=5`)
                 .then((response) => {
-                    setUsers(response.data);
+                    setUsers(response.data.results);
                 });
             setLoading(false);
         }
 
-        setTimeout(() => {
-            getUserUploadData();
-        }, 0);
+        getUserUploadData();
     }, [])
+
+    const fetchProfileHoots = async () => {
+        await axios.get(`${BaseURL}/upload/user/p/${username}?page=${page}&limit=${LIMIT}`)
+            .then((response) => {
+                const hootsFromServer = response.data.results;
+
+                setUsers([...users, ...hootsFromServer]);
+
+                if (hootsFromServer === 0 || hootsFromServer < LIMIT) {
+                    setHasMore(false);
+                }
+            });
+
+        setpage(page + 1);
+    }
 
     var totalViews = 0;
     var totalLikes = 0;
@@ -219,42 +238,35 @@ const PublicProfile = ({
                     </div>
                     <hr />
                     <div className="pt-2">
-                        {/* {users.map((user) => {
-                            return (<div key={user.id}>
-                                <Post
-                                    hootId={user.id}
-                                    username={user.authorUsername}
-                                    mimeType={user.mimeType}
-                                    hootImgId={user.image}
-                                    likes={user.likes}
-                                    views={user.views}
-                                    caption={user.caption}
-                                    timeStamp={user.timeStamp}
-                                    edited={user.edited}
-                                    editedTimeStamp={user.editedTimeStamp}
-                                />
-                            </div>)
-                        }).reverse()} */}
-
+                        {/* no need to reverse the list as it is getting reversed from the server itself  */}
                         <div className="hoot-profile-layout">
                             {!loading &&
-                                users.map((user) => {
-                                    return (
-                                        <div key={user.id}>
-                                            <HootOutside
-                                                hootId={user.id}
-                                                username={user.authorUsername}
-                                                mimeType={user.mimeType}
-                                                hootImgId={user.image}
-                                            />
-                                        </div>
-                                    )
-                                }).reverse()}
+                                <InfiniteScroll
+                                    dataLength={users.length}
+                                    next={fetchProfileHoots}
+                                    hasMore={hasMore}
+                                    loader={<InfiniteScrollLoader />}
+                                >
+                                    <div className="hoot-profile-layout">
+                                        {users.map((user) => {
+                                            return (
+                                                <div key={user.id}>
+                                                    <HootOutside
+                                                        hootId={user.id}
+                                                        username={user.authorUsername}
+                                                        mimeType={user.mimeType}
+                                                        hootImgId={user.image}
+                                                    />
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </InfiniteScroll>
+                            }
                         </div>
                     </div>
                 </div>
             }
-
         </Fragment>
     )
 }

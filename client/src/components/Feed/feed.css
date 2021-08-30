@@ -30,7 +30,19 @@
     border: 1px solid var(--on-hover);
     border-color: var(--secondary-color);
     transition: 0.3s;
-  }
+}
+
+.pull-msg {
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.end-msg {
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 500;
+}
 /* @media only screen and (min-width: 1025px) {
     .no-hoots-feed {
         margin: 1rem -2rem 0rem -10rem;

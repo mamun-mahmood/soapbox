@@ -1,16 +1,23 @@
 import React, { Fragment, useEffect, useLayoutEffect, useState } from 'react'
-import NavBar from '../components/NavBar'
-import SideBar from '../components/SideBar/SideBar'
-import IndividualHoot from '../components/IndividualHoot/IndividualHoot'
-import FloatingButton from '../components/FloatingButton/FloatingButton'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import BeatLoader from "react-spinners/BeatLoader";
+import NavBar from '../components/NavBar'
+import SideBar from '../components/SideBar/SideBar'
+import FloatingButton from '../components/FloatingButton/FloatingButton'
+
+import Loadable from 'react-loadable';
+import Loading from '../components/Loading/Loading';
+
+const IndividualHoot = Loadable({
+    loader: () => import('../components/IndividualHoot/IndividualHoot' /* webpackChunkName: "IndividualHoot" */),
+    loading() {
+        return <Loading />
+    }
+})
 
 const HootPage = () => {
     const { username } = useParams();
     const [userInfo, setUserInfo] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -19,9 +26,6 @@ const HootPage = () => {
             .then((response) => {
                 setUserInfo(response.data);
             });
-        setTimeout(() => {
-            setLoading(false);
-        }, 100);
     }, [])
 
     return (
@@ -29,33 +33,23 @@ const HootPage = () => {
             <NavBar />
             <div className="main-body">
                 <SideBar />
-                {/* {loading &&
-                    <div className="loading-ep">
-                        <BeatLoader color={"#8249A0"} size={20} />
-                    </div>
-                } */}
-                {/* {!loading && */}
-                {
-                    userInfo.map((user) => {
-                        return (<div key={user.id}>
-                            <IndividualHoot
-                                userId={user.id}
-                                name={user.name}
-                                userName={user.username}
-                                profilePic={user.profilePic}
-                                website={user.website}
-                                bio={user.bio}
-                            />
-                        </div>)
-                    })
-                }
-                {
-                    !userInfo &&
-                    <div className="no-individual-hoot">
+                {userInfo.map((user) => {
+                    return (<div key={user.id} style={{ width: "100%" }}>
+                        <IndividualHoot
+                            userId={user.id}
+                            name={user.name}
+                            userName={user.username}
+                            profilePic={user.profilePic}
+                            website={user.website}
+                            bio={user.bio}
+                        />
+                    </div>)
+                })}
+                {!userInfo &&
+                    <div style={{ width: "100%" }}>
 
                     </div>
                 }
-                {/* } */}
                 <FloatingButton />
             </div>
         </Fragment>

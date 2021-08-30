@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { Fragment } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
+import axios from 'axios';
+import { Helmet } from 'react-helmet';
+import BeatLoader from "react-spinners/BeatLoader";
+import { useParams, useHistory } from 'react-router-dom';
+
 import NavBar from '../components/NavBar'
 import SideBar from '../components/SideBar/SideBar';
 import EditProfile from '../components/EditProfile/EditProfile'
-import axios from 'axios';
-import { useParams, useHistory } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import BeatLoader from "react-spinners/BeatLoader";
 
-// import FloatingButton from '../components/FloatingButton/FloatingButton';
+// import Loadable from 'react-loadable';
+// import Loading from '../components/Loading/Loading';
+// const EditProfile = Loadable({
+//     loader: () => import('../components/EditProfile/EditProfile' /* webpackChunkName: "EditProfile" */),
+//     loading() {
+//         return <Loading />
+//     }
+// })
 
 const EditProfilePage = () => {
     const history = useHistory();
@@ -33,9 +40,10 @@ const EditProfilePage = () => {
                 });
             setLoading(false);
         }
+
         setTimeout(() => {
             getUserData();
-        }, 3000);
+        }, 0);
     }, [])
 
     return (

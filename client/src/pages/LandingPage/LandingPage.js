@@ -1,10 +1,24 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Helmet } from "react-helmet";
-import LoginComp from '../../components/LoginComp'
-import SignupComp from '../../components/SignupComp'
+import Loadable from 'react-loadable';
+// import LoginComp from '../../components/LoginComp'
+// import SignupComp from '../../components/SignupComp'
 import './landingPage.css'
+import FormLoading from '../../components/Loading/FormLoading';
 
+const LoginComp = Loadable({
+    loader: () => import('../../components/LoginComp' /* webpackChunkName: "LoginComp" */),
+    loading() {
+        return <FormLoading />
+    }
+})
+const SignupComp = Loadable({
+    loader: () => import('../../components/SignupComp' /* webpackChunkName: "SignupComp" */),
+    loading() {
+        return <FormLoading />
+    }
+})
 const LandingPage = () => {
     const [toggle, setToggle] = useState(true);
     const locattion = useLocation();

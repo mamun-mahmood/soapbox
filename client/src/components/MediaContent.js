@@ -2,7 +2,13 @@ import React, { Fragment, useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import LazyLoad from 'react-lazyload';
 
-const MediaContent = ({ mimeType, filePath, views, image, editOpen }) => {
+const MediaContent = ({
+    mimeType,
+    filePath,
+    views,
+    image,
+    editOpen
+}) => {
     const BaseURL = process.env.REACT_APP_API_URL;
 
     const [viewCount, setViewCount] = useState(views);

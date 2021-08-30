@@ -15,6 +15,7 @@ import { IoCloseOutline } from 'react-icons/io5'
 import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
 import { HiBadgeCheck } from 'react-icons/hi'
+import Highlighter from "react-highlight-words"
 
 const HootInside = ({
     userId,
@@ -81,6 +82,9 @@ const HootInside = ({
                 setComments(response.data);
             });
     }, [])
+
+    // finding out hashtags from caption and storing it in array 
+    const hashtagsFound = caption.split(' ').filter(v => v.startsWith('#'));
 
     // API url 
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -554,7 +558,20 @@ const HootInside = ({
                             {username}
                         </span>
                     </Link> */}
-                    {" "}<span className="hoot-comment">{caption}</span>
+                    {" "}<span className="hoot-comment">
+                        {/* {caption} */}
+                        {/* <Highlighter
+                            text={caption}
+                            highlight={"cool"}
+                        /> */}
+
+                        <Highlighter
+                            highlightClassName="highlighterClass"
+                            searchWords={hashtagsFound}
+                            autoEscape={true}
+                            textToHighlight={caption}
+                        />
+                    </span>
                 </div>
                 {/* <hr className="mx-1" /> */}
                 <div className="right-icons">
@@ -788,9 +805,10 @@ const HootInside = ({
                     {/* {(isEdited === 1) && <small class="badge outline-badge d-flex flex-end">EDITED</small>} */}
                     {(isEdited === 1) &&
                         <div className="post-time">
-                            last edited at {editedTimeStamp}
-                            {/* <small class="badge outline-badge d-flex flex-end">EDITED</small> */}
-                        </div>}
+                            {/* last edited at {editedTimeStamp} */}
+                            <small class="badge outline-badge d-flex flex-end">EDITED</small>
+                        </div>
+                    }
                 </div>
 
                 <hr className="mx-1 my-1 hr-color" />

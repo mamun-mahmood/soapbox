@@ -11,9 +11,6 @@ const IndividualHoot = () => {
     const { id } = useParams();
     const [hoot, setHoot] = useState([]);
     const [comments, setComments] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -23,12 +20,8 @@ const IndividualHoot = () => {
                 .then((response) => {
                     setHoot(response.data);
                 });
-            setLoading(false);
         }
-
-        setTimeout(() => {
-            getHootById();
-        }, 0);
+        getHootById();
 
         // here id is hootId 
         axios.get(`${BaseURL}/comment/${id}`)
@@ -39,12 +32,7 @@ const IndividualHoot = () => {
 
     return (
         <Fragment>
-            {loading &&
-                <div className="loading-ep">
-                    <BeatLoader color={"#8249A0"} size={20} />
-                </div>
-            }
-            {!loading &&
+            {hoot &&
                 <div className="individualHoot">
                     {hoot.map((hoot) => {
                         const hostURL = "https://www.megahoot.net";
@@ -88,13 +76,7 @@ const IndividualHoot = () => {
                                 </Helmet>
                             </div>
                         )
-                    }).reverse()}
-                    {
-                        !hoot &&
-                        <div className="no-individual-hoot">
-
-                        </div>
-                    }
+                    })}
                 </div>
             }
         </Fragment>

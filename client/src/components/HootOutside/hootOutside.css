@@ -38,16 +38,14 @@
     align-items: center;
     flex-wrap: wrap;
 
-    /* padding-left: 1.5rem;
-    padding-right: 0.2rem; */
-    margin-bottom: 5rem;
+    margin-bottom: 1rem;
 }
 
 .default-skeleton {
     width: 230px !important;
     height: 300px !important;
 
-    animation: skeleton-loading 1s linear infinite alternate;
+    animation: skeleton-loading 0.7s linear infinite alternate;
 }
 
 .hoot-img-vertical-profile {
@@ -64,7 +62,7 @@
     border-radius: 0.5rem;
     cursor: pointer;
 
-    animation: skeleton-loading 1s linear infinite alternate;
+    animation: skeleton-loading 0.7s linear infinite alternate;
 }
 .hoot-img-vertical-profile:hover {
     filter: drop-shadow(1px 7px 5px rgba(0, 0, 0, 0.35));
@@ -85,7 +83,7 @@
     border-radius: 0.5rem;
     cursor: pointer;
 
-    animation: skeleton-loading 1s linear infinite alternate;
+    animation: skeleton-loading 0.7s linear infinite alternate;
 }
 .hoot-img-horizontal-profile:hover {
     filter: drop-shadow(1px 7px 5px rgba(0, 0, 0, 0.35));
@@ -106,7 +104,7 @@
     border-radius: 0.5rem;
     cursor: pointer;
 
-    animation: skeleton-loading 1s linear infinite alternate;
+    animation: skeleton-loading 0.7s linear infinite alternate;
 }
 
 /* shine effect  */
@@ -179,7 +177,7 @@
     border-radius: 0.5rem;
     cursor: pointer;
 
-    animation: skeleton-loading 1s linear infinite alternate;
+    animation: skeleton-loading 0.7s linear infinite alternate;
 }
 .hoot-ado-profile:hover {
     transition: 1s;
@@ -199,7 +197,7 @@
       
     100% {
         /* background-color: hsl(200, 20%, 88%); */
-        background-color: #f3f1ff;
+        background-color: #ede9ff;
     }
 }
 

@@ -1,12 +1,7 @@
 import React, { lazy, Suspense } from 'react'
-import Home from './pages/Home/Home'
-import HootPage from './pages/HootPage'
-import CreateHoot from './pages/CreateHoot'
-import ProfilePage from './pages/ProfilePage'
+import Loadable from 'react-loadable';
 import PageNotFound from './pages/PageNotFound'
-import EditProfilePage from './pages/EditProfilePage'
 import ProtectedRoute from './components/ProtectedRoute'
-import PublicProfilePage from './pages/PublicProfilePage'
 import LandingPage from './pages/LandingPage/LandingPage'
 import {
   BrowserRouter as Router,
@@ -14,21 +9,63 @@ import {
   Switch
 } from 'react-router-dom';
 import "./App.css"
-import Loading from './components/Loading'
+import Loading from './components/Loading/Loading'
 
-// const Home = lazy(() => import('./pages/Home/Home'));
-// const HootPage = lazy(() => import('./pages/HootPage'));
-// const CreateHoot = lazy(() => import('./pages/CreateHoot'));
-// const ProfilePage = lazy(() => import('./pages/ProfilePage'));
-// const PageNotFound = lazy(() => import('./pages/PageNotFound'));
-// const EditProfilePage = lazy(() => import('./pages/EditProfilePage'));
-// const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
-// const PublicProfilePage = lazy(() => import('./pages/PublicProfilePage'));
-// const LandingPage = lazy(() => import('./pages/LandingPage/LandingPage'));
+import Home from './pages/Home/Home'
+import HootPage from './pages/HootPage'
+import CreateHoot from './pages/CreateHoot'
+import ProfilePage from './pages/ProfilePage'
+import EditProfilePage from './pages/EditProfilePage'
+import PublicProfilePage from './pages/PublicProfilePage'
+
+// const Home = Loadable({
+//   loader: () => import('./pages/Home/Home' /* webpackChunkName: "Home" */),
+//   loading() {
+//     return <Loading />
+//   }
+// })
+// const HootPage = Loadable({
+//   loader: () => import('./pages/HootPage' /* webpackChunkName: "Hoot_Page" */),
+//   loading() {
+//     return <Loading />
+//   }
+// })
+// const CreateHoot = Loadable({
+//   loader: () => import('./pages/CreateHoot' /* webpackChunkName: "Create_Page" */),
+//   loading() {
+//     return <Loading />
+//   }
+// })
+// const ProfilePage = Loadable({
+//   loader: () => import('./pages/ProfilePage' /* webpackChunkName: "Profile_Page" */),
+//   loading() {
+//     return <Loading />
+//   }
+// })
+// const EditProfilePage = Loadable({
+//   loader: () => import('./pages/EditProfilePage' /* webpackChunkName: "Edit_Profile_Page" */),
+//   loading() {
+//     return <Loading />
+//   }
+// })
+// const PublicProfilePage = Loadable({
+//   loader: () => import('./pages/PublicProfilePage' /* webpackChunkName: "Public_Profile_page" */),
+//   loading() {
+//     return <Loading />
+//   }
+// })
+
+// const Home = lazy(() => import('./pages/Home/Home' /* webpackChunkName: "Home" */));
+// const HootPage = lazy(() => import('./pages/HootPage' /* webpackChunkName: "Hoot_Page" */));
+// const CreateHoot = lazy(() => import('./pages/CreateHoot' /* webpackChunkName: "Create_Page" */));
+// const ProfilePage = lazy(() => import('./pages/ProfilePage' /* webpackChunkName: "Profile_Page" */));
+// const EditProfilePage = lazy(() => import('./pages/EditProfilePage' /* webpackChunkName: "Edit_Profile_Page" */));
+// const PublicProfilePage = lazy(() => import('./pages/PublicProfilePage' /* webpackChunkName: "Public_Profile_page" */));
 
 function App() {
   return (
     <Router>
+      {/* <Suspense fallback={Loading}> */}
       <Switch>
         <Route exact path="/">
           <ProtectedRoute page={LandingPage} />
@@ -55,6 +92,7 @@ function App() {
           <PageNotFound />
         </Route>
       </Switch>
+      {/* </Suspense> */}
     </Router>
   );
 }

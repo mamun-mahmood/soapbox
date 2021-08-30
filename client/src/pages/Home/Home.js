@@ -1,10 +1,19 @@
 import React, { Fragment, useEffect } from 'react'
 import { Helmet } from "react-helmet";
 import NavBar from '../../components/NavBar'
-import Feed from '../../components/Feed/Feed'
 import SideBar from '../../components/SideBar/SideBar'
 import FloatingButton from '../../components/FloatingButton/FloatingButton';
 import './home.css'
+
+import Loadable from 'react-loadable';
+import Loading from '../../components/Loading/Loading';
+
+const Feed = Loadable({
+    loader: () => import('../../components/Feed/Feed' /* webpackChunkName: "Feed" */),
+    loading() {
+        return <Loading />
+    }
+})
 
 const Home = () => {
     return (
