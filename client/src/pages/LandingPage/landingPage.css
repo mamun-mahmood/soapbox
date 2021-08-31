@@ -12,6 +12,7 @@
 .nav {
     /* max-width: 1200px; */
     width: 100%;
+    height: 5rem;
     margin: auto;
     padding: 0 1rem;
 
@@ -22,7 +23,7 @@
     color: #fff;
     background-color: var(--primary-color);
 
-    z-index: 1111;
+    z-index: 11111;
 }
 
 .brand {
@@ -67,6 +68,7 @@
 .list-inline {
     display: flex;
     justify-content: space-between;
+    transition: 0.3s;
 }
 
 dl, ol, ul {
@@ -98,6 +100,7 @@ dl, ol, ul {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .title a {
@@ -235,17 +238,23 @@ footer span {
     }
 }
 
+@media only screen and (max-width: 900px) {
+    .title {
+        font-size: 0.9rem;
+        transition: 0.3s;
+    }
+}
 @media only screen and (max-width: 800px) {
     .landing-ls img {
         width: 100%;
         min-width: 200px;
     }
 
-    .list-inline {
+    .title {
         font-size: small;
-        display: none;
+        transition: 0.3s;
     }
-    
+
     .landing-ls span {
         font-size: 1rem;
     }
@@ -254,6 +263,60 @@ footer span {
         font-size: 2rem;
         font-weight: 700;
     } */
+}
+
+#hidden {
+    display: flex;
+    transition: 0.3s;
+}
+
+.nav-menu {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 720px) {
+    .list-inline {
+        display: none;
+        transition: 0.3s;
+    }
+
+    .nav-menu {
+        display: flex;
+    }
+
+    #hidden {
+        position: absolute;
+        top: 5rem;
+        left: 0;
+        width: 100%;
+        height: auto;
+        background-color: var(--primary-color);
+
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        transition: 0.3s;
+
+        animation: up-down alternate infinite;
+    }
+
+    @keyframes up-down {
+        0% {
+            opacity: 0%;
+        }
+
+        100% {
+            opacity: 100%;
+        }
+        
+    }
+
+    .title {
+        font-size: 1rem;
+    }
 }
 
 @media only screen and (max-width: 660px) {
@@ -286,3 +349,4 @@ footer span {
         font-size: small;
     }
 }
+

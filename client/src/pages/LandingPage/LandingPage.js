@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
 import { Helmet } from "react-helmet";
+import { Link, useLocation } from 'react-router-dom'
 import Loadable from 'react-loadable';
-// import LoginComp from '../../components/LoginComp'
-// import SignupComp from '../../components/SignupComp'
-import './landingPage.css'
+import LandingNav from './LandingNav';
 import FormLoading from '../../components/Loading/FormLoading';
+import './landingPage.css'
 
 const LoginComp = Loadable({
     loader: () => import('../../components/LoginComp' /* webpackChunkName: "LoginComp" */),
@@ -25,41 +24,7 @@ const LandingPage = () => {
 
     return (
         <div className="page">
-            <nav className="nav">
-                <div className="brand">
-                    <Link to="/" class="navbar-brand cursor-pointer">
-                        <div className="outer-img">
-                            <a href={locattion.pathname}>
-                                <img
-                                    onContextMenu={(e) => e.preventDefault()}
-                                    src="/images/MegaHoot_Owl3_app.png"
-                                    alt="Megahoot Soapbox"
-                                    class="d-inline-block align-text-top"
-                                />
-                            </a>
-                        </div>
-                    </Link>
-                </div>
-
-                <ul className="list-inline">
-                    <div className="title">
-                        <a href="https://www.megahoot.com/megahoot-soapbox/" target="_blank" rel="noopener noreferrer">
-                            How Soapbox Works
-                        </a>
-                    </div>
-                    <div className="title">
-                        Soapbox FAQ
-                    </div>
-                    <div className="title">
-                        Subscriptions
-                    </div>
-                    <div className="title">
-                        <a href="https://www.megahoot.com/" target="_blank" rel="noopener noreferrer">
-                            MegaHoot Tech
-                        </a>
-                    </div>
-                </ul>
-            </nav>
+            <LandingNav />
 
             <main className="landing-page">
                 <div className="landing-ls">
