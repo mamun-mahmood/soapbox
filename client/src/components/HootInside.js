@@ -36,56 +36,6 @@ const HootInside = ({
     edited,
     editedTimeStamp
 }) => {
-    const [users, setUsers] = useState([]);
-
-    // getting all uploads(hoots) 
-    useEffect(() => {
-        axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
-            setUsers(response.data);
-        });
-    }, [])
-
-    var commentName = null;
-    var commentProfilePic = null;
-
-    // getting user data 
-    const [userInfoC, setUserInfoC] = useState([]);
-    useEffect(() => {
-        const getUserData = async () => {
-            await axios.get(`${BaseURL}/user/${userInfo.username}`)
-                .then((response) => {
-                    setUserInfoC(response.data);
-                });
-        }
-        getUserData()
-    }, [])
-
-
-    userInfoC.map((user) => {
-        commentName = user.name;
-        commentProfilePic = user.profilePic;
-    })
-
-    // like functionality added to hoots.
-    useEffect(() => {
-        axios.put(`${BaseURL}/upload/likes`, {
-            likes: likesCount,
-            image: hootImgId
-        }).then((response) => {
-        })
-    }, [likesCount])
-
-    //getting all comments
-    useEffect(() => {
-        axios.get(`${BaseURL}/comment/${hootId}`)
-            .then((response) => {
-                setComments(response.data);
-            });
-    }, [])
-
-    // finding out hashtags from caption and storing it in array 
-    const hashtagsFound = caption.split(' ').filter(v => v.startsWith('#'));
-
     // API url 
     const BaseURL = process.env.REACT_APP_API_URL;
     // main website
@@ -120,6 +70,7 @@ const HootInside = ({
     const [likesCount, setlikesCount] = useState(likes)
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
+    const [users, setUsers] = useState([]);
 
     const history = useHistory();
 
@@ -131,9 +82,53 @@ const HootInside = ({
     const date = new Date();
     const eTimeStamp = format(date, 'LLL dd, yyyy • HH:mm');
 
-    const setLikesCount = (e) => {
-        setlikesCount(likesCount + 1);
-    }
+    // finding out hashtags and stocks from caption and storing it in array 
+    const hashtagsFound = caption.split(' ').filter(v => v.startsWith('#'));
+    const stocksFound = caption.split(' ').filter(v => v.startsWith('$'));
+
+    // getting all uploads(hoots) 
+    useEffect(() => {
+        axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
+            setUsers(response.data);
+        });
+    }, [])
+
+    var commentName = null;
+    var commentProfilePic = null;
+
+    // getting user data 
+    const [userInfoC, setUserInfoC] = useState([]);
+    useEffect(() => {
+        const getUserData = async () => {
+            await axios.get(`${BaseURL}/user/${userInfo.username}`)
+                .then((response) => {
+                    setUserInfoC(response.data);
+                });
+        }
+        getUserData()
+    }, [])
+
+
+    userInfoC.map((user) => {
+        commentName = user.name;
+        commentProfilePic = user.profilePic;
+    })
+
+    // like functionality added to hoots.
+    useEffect(() => {
+        axios.put(`${BaseURL}/upload/likes`, {
+            likes: likesCount,
+            image: hootImgId
+        })
+    }, [likesCount])
+
+    //getting all comments
+    useEffect(() => {
+        axios.get(`${BaseURL}/comment/${hootId}`)
+            .then((response) => {
+                setComments(response.data);
+            });
+    }, [])
 
     const openDeleteModal = () => {
         setIsDeleteModalOpen(true);
@@ -187,8 +182,15 @@ const HootInside = ({
         })
     }
 
-    const copyToClipboard = () => {
+    const copyLinkToClipboard = () => {
         navigator.clipboard.writeText(shareBaseUrl);
+        setTimeout(() => {
+            setIsMoreModalOpen(false)
+            setIsShareModalOpen(false);
+        }, 100);
+    }
+    const copyTextToClipboard = () => {
+        navigator.clipboard.writeText(caption);
         setTimeout(() => {
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
@@ -228,7 +230,7 @@ const HootInside = ({
         return Math.round(num);
     };
 
-    // on every page load likes will increase reandomly - just remove this useEffect to get back to normal view counts
+    // on every page load likes will increase reandomly - just remove this useEffect to get back to normal like counts
     useEffect(() => {
         if (likes === 0) {
             setTimeout(() => {
@@ -375,18 +377,22 @@ const HootInside = ({
                                 >
                                     {username === userInfo.username &&
                                         <div className="more-options">
-                                            <span onClick={openDeleteModal}> Delete</span>
-                                            <span onClick={openEditModal}>Edit</span>
-                                            <span onClick={copyToClipboard}>Copy Link</span>
                                             <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                            <span onClick={shareVia}>Share to</span>
+                                            <span onClick={copyLinkToClipboard}>Copy Link</span>
+                                            <span onClick={copyTextToClipboard}>Copy Text</span>
+                                            <span onClick={openEditModal}>Edit</span>
+                                            <span onClick={openDeleteModal}> Delete</span>
                                             {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                         </div>
                                     }
 
                                     {username === userInfo.username ||
                                         <div className="more-options">
-                                            <span onClick={copyToClipboard}>Copy Link</span>
                                             <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                            <span onClick={shareVia}>Share to</span>
+                                            <span onClick={copyLinkToClipboard}>Copy Link</span>
+                                            <span onClick={copyTextToClipboard}>Copy Text</span>
                                             {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                         </div>
                                     }
@@ -439,7 +445,7 @@ const HootInside = ({
                                                         maxLength="255"
                                                         className="editarea-style"
                                                         placeholder="What to edit?"
-                                                        value={editCaption}
+                                                        value={caption}
                                                         onChange={(event) => {
                                                             setEditCaption(event.target.value);
                                                         }}
@@ -506,12 +512,20 @@ const HootInside = ({
 
                                     <div className="comment-box-end">
                                         <div className="comment-box">
+                                            {/* <div className="avatar-comment-user-wraper">
+                                                <Avatar
+                                                    size={25}
+                                                    round={true}
+                                                    name={name}
+                                                    src={profilePicPath}
+                                                />
+                                            </div> */}
                                             <input
                                                 className="comment-input"
                                                 type="text"
                                                 maxLength="290"
                                                 value={newComment}
-                                                placeholder="Add a comment"
+                                                placeholder={`Comment as ${userInfo.username}`}
                                                 onChange={(event) => {
                                                     setNewComment(event.target.value);
                                                 }} />
@@ -567,7 +581,7 @@ const HootInside = ({
 
                         <Highlighter
                             highlightClassName="highlighterClass"
-                            searchWords={hashtagsFound}
+                            searchWords={[...hashtagsFound, ...stocksFound]}
                             autoEscape={true}
                             textToHighlight={caption}
                         />
@@ -736,7 +750,7 @@ const HootInside = ({
 
                                             <div className="share-icons">
                                                 <a target="_blank" rel="nofollow" class="block button-transparent">
-                                                    <div className="share-icons-text" onClick={copyToClipboard}>
+                                                    <div className="share-icons-text" onClick={copyLinkToClipboard}>
                                                         <FiLink className="copy-hoot-link-share" />
                                                         <span className="share-hoot-to">
                                                             Copy Hoot Link

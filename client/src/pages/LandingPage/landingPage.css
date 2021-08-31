@@ -10,7 +10,6 @@
 }
 
 .nav {
-    /* max-width: 1200px; */
     width: 100%;
     height: 5rem;
     margin: auto;
@@ -43,6 +42,7 @@
     background-color: #fff;
     border-radius: 50%;
 }
+
 .brand img {
     padding: 0.2rem 0.5rem 0.5rem 0.5rem;
     width: 65px;
@@ -76,9 +76,9 @@ dl, ol, ul {
     margin-bottom: 0rem;
 }
 
-.comp-list-link>a {
+.comp-list-link > a {
     text-decoration: none;
-    color: var(--primary-color);    ;
+    color: var(--primary-color);
 }
 
 .comp-list-link:hover {
@@ -155,12 +155,6 @@ dl, ol, ul {
     padding: 0.5rem;
 }
 
-/* .landing-rs span {
-    color: var(--primary-color);
-    font-size: 3rem;
-    font-weight: 700;
-} */
-
 .invitation-only div {
     text-align: center;
     color: var(--primary-color);
@@ -176,20 +170,18 @@ dl, ol, ul {
     font-weight: 500;
 }
 
-
-
-.badge {
-    border-radius: 0.2rem !important;
-    background-color: #EDF2F7;
-    padding: 0.1rem 0.3rem;
-    font-weight: bold;
-    font-size: large;
-}
-
-.solid-badge {
-    background-color: var(--on-hover);
-    border: solid 1px var(--on-hover);
+.landing-badge {
     color: white;
+    background-color: var(--on-hover);
+
+    display: inline;
+
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.2rem !important;
+    
+    padding: 0rem 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 footer {
@@ -210,12 +202,19 @@ footer span {
     font-weight: 600;
 }
 
+#hidden {
+    display: flex;
+    transition: 0.3s;
+}
+
+.nav-menu {
+    display: none;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
 @media only screen and (max-width: 1024px) {
-    /* .landing-rs span {
-        font-size: 2.5rem;
-        font-weight: 700;
-    } */
-    
     .landing-ls img {
         width: 300px;
         min-width: 200px;
@@ -244,6 +243,7 @@ footer span {
         transition: 0.3s;
     }
 }
+
 @media only screen and (max-width: 800px) {
     .landing-ls img {
         width: 100%;
@@ -258,22 +258,6 @@ footer span {
     .landing-ls span {
         font-size: 1rem;
     }
-
-    /* .landing-rs span {
-        font-size: 2rem;
-        font-weight: 700;
-    } */
-}
-
-#hidden {
-    display: flex;
-    transition: 0.3s;
-}
-
-.nav-menu {
-    display: none;
-    font-size: 2rem;
-    cursor: pointer;
 }
 
 @media only screen and (max-width: 720px) {
@@ -288,7 +272,7 @@ footer span {
 
     #hidden {
         position: absolute;
-        top: 5rem;
+        top: 4.8rem;
         left: 0;
         width: 100%;
         height: auto;
@@ -298,24 +282,51 @@ footer span {
         justify-content: center;
         align-items: center;
 
-        transition: 0.3s;
-
-        animation: up-down alternate infinite;
+        /* border-bottom-right-radius: 1rem;
+        border-bottom-left-radius: 1rem; */
+        /* transition: 0.3s; */
+        -webkit-animation: fadein 0.3s; /* Safari, Chrome and Opera > 12.1 */
+        -moz-animation: fadein 0.3s; /* Firefox < 16 */
+            -ms-animation: fadein 0.3s; /* Internet Explorer */
+            -o-animation: fadein 0.3s; /* Opera < 12.1 */
+                animation: fadein 0.3s;
     }
 
-    @keyframes up-down {
-        0% {
-            opacity: 0%;
-        }
-
-        100% {
-            opacity: 100%;
-        }
-        
+    @keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+    
+    /* Firefox < 16 */
+    @-moz-keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+    
+    /* Safari, Chrome and Opera > 12.1 */
+    @-webkit-keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+    
+    /* Internet Explorer */
+    @-ms-keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+    
+    /* Opera < 12.1 */
+    @-o-keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
     }
 
     .title {
-        font-size: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .brand {
+        margin-left: 0;
     }
 }
 
@@ -328,23 +339,9 @@ footer span {
     .landing-ls {
         display: none;
     }
-    
-    /* .landing-rs span {
-        font-size: 1.5rem;
-        font-weight: 700;
-    } */
 }
 
 @media only screen and (max-width: 470px) {
-    /* .landing-rs span {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.5rem;
-        font-weight: 700;
-        text-align: center;
-    } */
-
     footer {
         font-size: small;
     }

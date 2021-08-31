@@ -503,6 +503,10 @@ hr {
 .avatar-comment-wraper {
   padding-right: 0.2rem;
 }
+.avatar-comment-user-wraper {
+  padding-right: 0.2rem;
+  margin-bottom: 0.2rem;
+}
 
 .avatar {
   border-radius: 50%;
@@ -1163,7 +1167,7 @@ hr {
 }
 
 .more-options {
-  padding: 1rem;
+  padding: 0.5rem 0.8rem;
   display: flex;
   flex-direction: column;
 }
@@ -1177,8 +1181,12 @@ hr {
   padding: 0.5rem;
   background-color: #c6bafc;
   border-radius: 0.5rem;
-  /* transition: 0.1s; */
 }
+/* .more-options > span:last-child:hover {
+  padding: 0.5rem;
+  background-color: #EF4444;
+  border-radius: 0.5rem;
+} */
 .more-options > span:active {
   padding: 0.5rem;
   background-color: #b1a1fa;
@@ -1378,13 +1386,15 @@ hr {
 .post-comment {
   padding: 0 0.5rem;
   font-size: 0.9rem;
-  line-height: 1.2rem;
+  line-height: 1.3rem;
   word-wrap: break-word;
 }
 
 .comment-box {
   padding: 0 0.5rem 0.5rem 0.5rem;
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
   flex-wrap: nowrap;
 }
 
@@ -1938,6 +1948,7 @@ hr {
 }
 
 .highlighterClass {
+  padding: 0;
   font-weight: 500;
   color: var(--primary-color);
   background-color: #EDEDFF;

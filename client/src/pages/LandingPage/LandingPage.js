@@ -65,7 +65,7 @@ const LandingPage = () => {
                     </div>
                     <div className="invitation-only">
                         <div>
-                            MegaHoot Soapbox <small className="badge solid-badge">BETA</small>
+                            MegaHoot Soapbox <small className="landing-badge landing-solid-badge">BETA</small>
                         </div>
                         <div>
                             Temporarily Invitation Only
