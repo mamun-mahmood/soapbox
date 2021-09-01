@@ -16,6 +16,7 @@ import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
 import { HiBadgeCheck } from 'react-icons/hi'
 import Highlighter from "react-highlight-words"
+import './IndividualHoot/individualHoot.css'
 
 const HootInside = ({
     userId,
@@ -108,7 +109,6 @@ const HootInside = ({
         getUserData()
     }, [])
 
-
     userInfoC.map((user) => {
         commentName = user.name;
         commentProfilePic = user.profilePic;
@@ -189,6 +189,7 @@ const HootInside = ({
             setIsShareModalOpen(false);
         }, 100);
     }
+
     const copyTextToClipboard = () => {
         navigator.clipboard.writeText(caption);
         setTimeout(() => {
@@ -512,14 +513,6 @@ const HootInside = ({
 
                                     <div className="comment-box-end">
                                         <div className="comment-box">
-                                            {/* <div className="avatar-comment-user-wraper">
-                                                <Avatar
-                                                    size={25}
-                                                    round={true}
-                                                    name={name}
-                                                    src={profilePicPath}
-                                                />
-                                            </div> */}
                                             <input
                                                 className="comment-input"
                                                 type="text"

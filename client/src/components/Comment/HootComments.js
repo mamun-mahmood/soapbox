@@ -1,27 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import CommentBody from './CommentBody';
 
 const HootComments = ({ comments, sliceValue, name, verified }) => {
-    // const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
-    // var username = "";
-
-    // if (userInfo) {
-    //     username = userInfo.username;
-    // }
-
     return (
-        // <div className="comment-center">
         <div className="commentArea">
-            {/* <h3>Comment Section</h3> */}
-
-            {/* 
-                {comments.length === 0 &&
-                    <div className="no-hoots">
-                        <p>No comments yet!</p>
-                    </div>
-                } */}
-
             {comments.length > 0 &&
                 <div className="">
                     {comments.slice(sliceValue).map((comment) => {
@@ -40,7 +22,6 @@ const HootComments = ({ comments, sliceValue, name, verified }) => {
                 </div>
             }
         </div>
-        // </div>
     )
 }
 

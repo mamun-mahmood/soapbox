@@ -5,8 +5,6 @@ import Avatar from 'react-avatar';
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { IoCloseOutline } from 'react-icons/io5'
-import { HiBadgeCheck } from 'react-icons/hi'
-
 
 const CommentBody = ({ username, commentBody, name, commentProfilePic, verified }) => {
     const [isCMoreModalOpen, setIsCMoreModalOpen] = useState(false);
@@ -46,10 +44,6 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
         console.log("comment Edited:", editComment);
     }
 
-    // -----------------------------------------------------------
-
-    // make axios call to get user of username from props 
-
     const [userInformation, setUserInformation] = useState([]);
     useEffect(() => {
         axios.get(`${BaseURL}/user/${username}`)
@@ -57,17 +51,6 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
                 setUserInformation(response.data);
             });
     }, [])
-
-    // var commentName = null;
-    // var commentProfilePic = null;
-
-    // userInfo.map((user) => {
-    //     commentName = user.name;
-    //     commentProfilePic = user.profilePic;
-    // })
-
-
-    // -----------------------------------------------------------
 
     const commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
 
@@ -108,7 +91,6 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
                                 {/* edit username  */}
                                 <h5>You are editing comment as
                                     <span className="user-edit">
-                                        {/* {" "}@<Link to="" className="name-comment">{username}</Link> */}
                                         {" "}{username}
                                     </span>,
                                 </h5>
@@ -123,11 +105,6 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
                                                 src={commentProfilePicPath}
                                             />
                                         </div>
-                                        {/* <img
-                                            className="avatar"
-                                            src="/images/default_user_profile.svg"
-                                            alt="avatar"
-                                        /> */}
                                         <div className="name avatar_name">{name}</div>
                                     </div>
                                     <div className="post-content">
@@ -196,13 +173,6 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
                             />
                         </div>
                         <span className="owner">{name}&nbsp;</span>
-                        {/* {verified === 1
-                            ?
-                            <div className="verification-badge">
-                                <HiBadgeCheck />
-                            </div>
-                            : null
-                        } */}
                         <div className="at-name">@{username}</div>
                     </div>
                     <span className="content">
