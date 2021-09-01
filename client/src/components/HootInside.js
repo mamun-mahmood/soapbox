@@ -446,7 +446,7 @@ const HootInside = ({
                                                         maxLength="255"
                                                         className="editarea-style"
                                                         placeholder="What to edit?"
-                                                        value={caption}
+                                                        value={editCaption}
                                                         onChange={(event) => {
                                                             setEditCaption(event.target.value);
                                                         }}

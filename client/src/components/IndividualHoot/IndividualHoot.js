@@ -5,11 +5,12 @@ import Post from '../../components/Post'
 import { useParams, Link } from 'react-router-dom'
 import './individualHoot.css'
 import '../../components/Feed/feed.css'
+import BrowseMoreHoots from './BrowseMoreHoots';
 
 const IndividualHoot = () => {
     const { id } = useParams();
     const [hoot, setHoot] = useState([]);
-    const [comments, setComments] = useState([]);
+    const [uploads, setUploads] = useState([]);
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -21,13 +22,11 @@ const IndividualHoot = () => {
                 });
         }
         getHootById();
+        window.scrollTo(0, 0);
+    }, [id])
 
-        // here id is hootId 
-        axios.get(`${BaseURL}/comment/${id}`)
-            .then((response) => {
-                setComments(response.data);
-            });
-    }, [])
+    var hashtagsFound = [];
+    var iHootId = "";
 
     return (
         <Fragment>
@@ -39,6 +38,12 @@ const IndividualHoot = () => {
                         const hootUsername = hoot.authorUsername;
                         const hootCaption = hoot.caption;
                         const title = `@${hootUsername} on MegaHoot Soapbox: ${hootCaption}`
+
+                        // finding out hashtags and stocks from caption and storing it in array 
+                        hashtagsFound = hoot.caption.split(' ').filter(v => v.startsWith('#'));
+                        {/* var stocksFound = hoot.caption.split(' ').filter(v => v.startsWith('$')); */ }
+
+                        iHootId = hoot.id;
 
                         // url for individual hoot for main soapbox website
                         const shareMediaPath = `${BaseURL}/images/${hoot.image}`;
@@ -76,6 +81,19 @@ const IndividualHoot = () => {
                             </div>
                         )
                     })}
+
+                    <div style={{ padding: "1rem 0.5rem 0 0.5rem" }}>
+                        <h2 className="browse-more">Browse more Hoots
+                            <hr style={{ marginBottom: "0.2rem" }} />
+                        </h2>
+                    </div>
+
+                    {hashtagsFound
+                        ? <BrowseMoreHoots hashtagsFound={hashtagsFound} iHootId={iHootId} />
+                        : <div style={{ padding: "1rem 0.5rem 0 0.5rem" }}>
+                            <h6 className="browse-more">Related hoots will be shown here</h6>
+                        </div>
+                    }
                 </div>
             }
         </Fragment>

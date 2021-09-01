@@ -218,6 +218,23 @@
   width: 100%;
 }
 
+.browse-more {
+  width: 650px;
+  height: auto;
+  margin: 0 auto;
+  color: var(--text-color);
+}
+
+.browse-more > hr {
+  margin: 0.5rem 0 ;
+}
+
+@media only screen and (max-width: 1050px) {
+  .browse-more {
+    width: auto;
+    max-width: 650px;
+  }
+}
 @media only screen and (min-width: 1025px) {
   .comment-center {
     margin: 1rem -2rem 0rem -10rem;

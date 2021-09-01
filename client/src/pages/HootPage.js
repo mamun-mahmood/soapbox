@@ -1,6 +1,4 @@
 import React, { Fragment, useEffect, useLayoutEffect, useState } from 'react'
-import axios from 'axios'
-import { useParams } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import SideBar from '../components/SideBar/SideBar'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
@@ -16,18 +14,6 @@ const IndividualHoot = Loadable({
 })
 
 const HootPage = () => {
-    const { username } = useParams();
-    const [userInfo, setUserInfo] = useState([]);
-
-    const BaseURL = process.env.REACT_APP_API_URL;
-
-    useLayoutEffect(() => {
-        axios.get(`${BaseURL}/user/${username}`)
-            .then((response) => {
-                setUserInfo(response.data);
-            });
-    }, [])
-
     return (
         <Fragment>
             <NavBar />
