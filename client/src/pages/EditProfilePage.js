@@ -24,7 +24,6 @@ const EditProfilePage = () => {
     const [loading, setLoading] = useState(true);
 
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
-
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -37,13 +36,10 @@ const EditProfilePage = () => {
             axios.get(`${BaseURL}/user/${username}`)
                 .then((response) => {
                     setUserInfo(response.data);
+                    setLoading(false);
                 });
-            setLoading(false);
         }
-
-        setTimeout(() => {
-            getUserData();
-        }, 0);
+        getUserData();
     }, [])
 
     return (

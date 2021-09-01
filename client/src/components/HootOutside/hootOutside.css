@@ -192,13 +192,13 @@
 @keyframes skeleton-loading {
     0% {
         /* background-color: hsl(200, 20%, 80%); */
-        background-color: #e3defa;
-    }
+        background-color: #d9d1f8;
+      }
       
-    100% {
+      100% {
         /* background-color: hsl(200, 20%, 88%); */
-        background-color: #ede9ff;
-    }
+        background-color: #f0eefd;
+      }
 }
 
 /* @media only screen and (max-width: 460px) {

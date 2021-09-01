@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Helmet } from "react-helmet";
 import Post from '../../components/Post'
 import { useParams, Link } from 'react-router-dom'
-import BeatLoader from "react-spinners/BeatLoader";
 import './individualHoot.css'
 import '../../components/Feed/feed.css'
 

@@ -33,23 +33,7 @@ const HootPage = () => {
             <NavBar />
             <div className="main-body">
                 <SideBar />
-                {userInfo.map((user) => {
-                    return (<div key={user.id} style={{ width: "100%" }}>
-                        <IndividualHoot
-                            userId={user.id}
-                            name={user.name}
-                            userName={user.username}
-                            profilePic={user.profilePic}
-                            website={user.website}
-                            bio={user.bio}
-                        />
-                    </div>)
-                })}
-                {!userInfo &&
-                    <div style={{ width: "100%" }}>
-
-                    </div>
-                }
+                <IndividualHoot />
                 <FloatingButton />
             </div>
         </Fragment>

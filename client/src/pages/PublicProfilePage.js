@@ -8,6 +8,14 @@ import axios from 'axios'
 import { Helmet } from 'react-helmet'
 import BeatLoader from "react-spinners/BeatLoader";
 
+// import Loading from '../components/Loading/Loading';
+// import Loadable from 'react-loadable';
+// const PublicProfile = Loadable({
+//     loader: () => import('../components/PublicProfile' /* webpackChunkName: "Public_Profile" */),
+//     loading() {
+//         return <Loading />
+//     }
+// })
 
 const PublicProfilePage = () => {
     const { username } = useParams();
