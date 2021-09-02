@@ -39,6 +39,9 @@ const LoginComp = () => {
                 localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
             }
             setMessage(response.data.message);
+            setTimeout(() => {
+                setSaveLoading(false);
+            }, 3000);
         })
     }
 
@@ -98,7 +101,6 @@ const LoginComp = () => {
                         :
                         "Login"
                     }
-
                 </button>
 
             </Form>

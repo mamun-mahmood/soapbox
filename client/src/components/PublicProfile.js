@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import axios from 'axios'
 import Avatar from 'react-avatar';
-import Post from './Post'
 import { useParams } from 'react-router-dom'
 import { HiBadgeCheck } from 'react-icons/hi'
 import { FiTwitter } from 'react-icons/fi'

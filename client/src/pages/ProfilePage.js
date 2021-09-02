@@ -39,9 +39,7 @@ const ProfilePage = () => {
                 });
             setLoading(false);
         }
-        setTimeout(() => {
-            getUserData();
-        }, 0);
+        getUserData();
     }, [])
 
     return (

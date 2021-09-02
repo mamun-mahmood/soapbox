@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react'
+import React, { useState, Fragment } from 'react'
 import axios from 'axios'
 import ClickAwayListener from 'react-click-away-listener';
 import Avatar from 'react-avatar';
@@ -43,14 +43,6 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
         window.location.reload();
         console.log("comment Edited:", editComment);
     }
-
-    const [userInformation, setUserInformation] = useState([]);
-    useEffect(() => {
-        axios.get(`${BaseURL}/user/${username}`)
-            .then((response) => {
-                setUserInformation(response.data);
-            });
-    }, [])
 
     const commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
 

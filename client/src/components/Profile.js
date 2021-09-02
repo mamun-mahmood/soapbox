@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { Link, useHistory, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Avatar from 'react-avatar';
 import { HiBadgeCheck } from 'react-icons/hi'
@@ -12,15 +12,6 @@ import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from './HootOutside/HootOutside';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
-
-// import Loadable from 'react-loadable';
-// import Loading from '../components/Loading/Loading';
-// const HootOutside = Loadable({
-//     loader: () => import('./HootOutside/HootOutside' /* webpackChunkName: "HootOutside" */),
-//     loading() {
-//         return <Loading />
-//     }
-// })
 
 const Profile = ({
     verified,

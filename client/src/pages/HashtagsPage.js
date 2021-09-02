@@ -1,29 +1,29 @@
 import React, { Fragment } from 'react'
+import FloatingButton from '../components/FloatingButton/FloatingButton'
 import NavBar from '../components/NavBar'
 import SideBar from '../components/SideBar/SideBar'
-import FloatingButton from '../components/FloatingButton/FloatingButton'
-
 import Loadable from 'react-loadable';
 import Loading from '../components/Loading/Loading';
+import '../components/Hashtags/hashtags.css'
 
-const IndividualHoot = Loadable({
-    loader: () => import('../components/IndividualHoot/IndividualHoot' /* webpackChunkName: "IndividualHoot" */),
+const Hashtags = Loadable({
+    loader: () => import('../components/Hashtags/Hashtags' /* webpackChunkName: "Hashtags" */),
     loading() {
         return <Loading />
     }
 })
 
-const HootPage = () => {
+const HashtagsPage = () => {
     return (
         <Fragment>
             <NavBar />
             <div className="main-body">
                 <SideBar />
-                <IndividualHoot />
+                <Hashtags />
                 <FloatingButton />
             </div>
         </Fragment>
     )
 }
 
-export default HootPage
+export default HashtagsPage

@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom'
 import { IoCloseOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
+import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 import NavBar from '../components/NavBar'
 
@@ -18,7 +19,7 @@ const CreatePost = () => {
     const [mimeType, setMimeType] = useState("");
     const history = useHistory();
     const [loading, setLoading] = useState(true);
-    // const target = useRef(null);
+    const [saveLoading, setSaveLoading] = useState(false);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -34,8 +35,11 @@ const CreatePost = () => {
     const date = new Date();
     const timeStamp = format(date, 'LLL dd, yyyy • HH:mm');
 
+    const hashtagsFound = caption.split(' ').filter(v => v.startsWith('#'));
+
     const upload = (event) => {
         event.preventDefault()
+        setSaveLoading(true);
 
         const formData = new FormData();
         formData.append("timeStamp", timeStamp)
@@ -43,13 +47,29 @@ const CreatePost = () => {
         formData.append("authorEmail", email)
         formData.append("file", file);
 
-        axios.post(`${BaseURL}/upload/create`, formData)
-            .then((response) => {
-                console.log(response);
-                setTimeout(() => {
-                    history.push("/home");
-                }, 500);
-            })
+        // axios.post(`${BaseURL}/upload/create`, formData)
+        //     .then((response) => {
+        //         setTimeout(() => {
+        //             history.push("/home");
+        //         }, 500);
+        //     })
+
+        const uploadData = async () => {
+            await axios.all([
+                axios.post(`${BaseURL}/upload/create`, formData),
+                hashtagsFound.map((hashtag) => {
+                    axios.post(`${BaseURL}/hashtags`, {
+                        hashtag: hashtag.replace(/[,.]/g, '')
+                    })
+                })
+            ])
+            // .then(axios.spread(() => {
+            // }))
+        }
+        uploadData();
+        setTimeout(() => {
+            history.push("/home");
+        }, 500);
     }
 
     const handleFile = (event) => {
@@ -73,9 +93,7 @@ const CreatePost = () => {
                 });
             setLoading(false);
         }
-        setTimeout(() => {
-            getUserData();
-        }, 100);
+        getUserData();
     }, [])
 
     userInformation.map((user) => {
@@ -190,8 +208,17 @@ const CreatePost = () => {
                                         variant="primary mx-1"
                                         className="btn-create-hoot"
                                         onClick={upload}
-                                        disabled={!caption}
+                                        disabled={!caption || !src}
                                     >
+                                        {/* {saveLoading
+                                            ?
+                                            <Fragment>
+                                                Hoot<ClipLoader color={"#fff"} size={10} />
+                                            </Fragment>
+                                            :
+                                            "Hoot"
+                                        } */}
+
                                         Hoot
                                     </Button>{' '}
                                 </div>

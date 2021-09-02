@@ -2,15 +2,24 @@ import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import { Helmet } from "react-helmet";
 import Post from '../../components/Post'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import './individualHoot.css'
 import '../../components/Feed/feed.css'
-import BrowseMoreHoots from './BrowseMoreHoots';
+
+import Loadable from 'react-loadable';
+import Loading from '../Loading/Loading';
+import EndHootMsg from './EndHootMsg';
+
+const BrowseMoreHoots = Loadable({
+    loader: () => import('./BrowseMoreHoots' /* webpackChunkName: "BrowseMoreHoots" */),
+    loading() {
+        return <Loading />
+    }
+})
 
 const IndividualHoot = () => {
     const { id } = useParams();
     const [hoot, setHoot] = useState([]);
-    const [uploads, setUploads] = useState([]);
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -39,10 +48,7 @@ const IndividualHoot = () => {
                         const hootCaption = hoot.caption;
                         const title = `@${hootUsername} on MegaHoot Soapbox: ${hootCaption}`
 
-                        // finding out hashtags and stocks from caption and storing it in array 
                         hashtagsFound = hoot.caption.split(' ').filter(v => v.startsWith('#'));
-                        {/* var stocksFound = hoot.caption.split(' ').filter(v => v.startsWith('$')); */ }
-
                         iHootId = hoot.id;
 
                         // url for individual hoot for main soapbox website
@@ -94,6 +100,8 @@ const IndividualHoot = () => {
                             <h6 className="browse-more">Related hoots will be shown here</h6>
                         </div>
                     }
+
+                    <EndHootMsg />
                 </div>
             }
         </Fragment>

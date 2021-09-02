@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Button, Form } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 
 const SignupComp = () => {

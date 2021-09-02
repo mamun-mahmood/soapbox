@@ -1,0 +1,50 @@
+.hashtag-hoots-main::-webkit-scrollbar {
+    display: none;
+}
+
+.hashtag-hoots-main {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.hashtag-hoot-wrapper {
+    padding-top: 5rem;
+    width: 650px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.hashtag-hoots-name {
+    width: 100%;
+    min-height: 100px;
+
+    display: flex;
+    gap: 0.3rem;
+    justify-content: flex-start;
+    align-items: center;
+
+    word-break: break-all;
+
+    padding: 0.5rem 1rem;
+
+    font-size: 2rem;
+    font-weight: 500;
+
+    /* color: var(--text-color); */
+    color: var(--primary-color);
+    background-color: rgb(237, 237, 255);
+
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-top: 10px solid var(--secondary-color);
+
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 1050px) {
+    .hashtag-hoot-wrapper {
+      width: auto;
+      max-width: 650px;
+    }
+}

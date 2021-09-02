@@ -4,7 +4,7 @@ import './feed.css'
 const EndMsg = () => {
     return (
         <p className="end-msg" >
-            <b>Yay! You have seen it all</b>
+            Yay! Congrats🎉 You have seen it all
         </p>
     )
 }

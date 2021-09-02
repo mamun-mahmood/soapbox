@@ -17,6 +17,8 @@ import CreateHoot from './pages/CreateHoot'
 import ProfilePage from './pages/ProfilePage'
 import EditProfilePage from './pages/EditProfilePage'
 import PublicProfilePage from './pages/PublicProfilePage'
+import HashtagsPage from './pages/HashtagsPage';
+import HashtagHootsPage from './pages/HashtagHootsPage';
 
 // const Home = Loadable({
 //   loader: () => import('./pages/Home/Home' /* webpackChunkName: "Home" */),
@@ -87,6 +89,12 @@ function App() {
         </Route>
         <Route path="/profile/:username">
           <ProtectedRoute page={ProfilePage} />
+        </Route>
+        <Route path="/hashtags/:hashtag">
+          <ProtectedRoute page={HashtagHootsPage} />
+        </Route>
+        <Route path="/hashtags">
+          <ProtectedRoute page={HashtagsPage} />
         </Route>
         <Route path="*">
           <PageNotFound />

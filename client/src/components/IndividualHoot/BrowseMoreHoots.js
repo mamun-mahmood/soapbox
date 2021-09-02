@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Post from '../Post'
-import EndMsg from '../Feed/EndMsg';
-import Release from '../Feed/Release';
-import PullDown from '../Feed/PullDown';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Post from '../Post'
 import InfiniteScrollLoader from '../Feed/InfiniteScrollLoader';
 import '../Feed/feed.css'
-import EndHootMsg from './EndHootMsg';
 
 const BrowseMoreHoots = ({ hashtagsFound, iHootId }) => {
     const [uploads, setUploads] = useState([]);
@@ -50,7 +46,6 @@ const BrowseMoreHoots = ({ hashtagsFound, iHootId }) => {
                     next={fetchMoreHoots}
                     hasMore={hasMore}
                     loader={<InfiniteScrollLoader />}
-                    endMessage={<EndHootMsg />}
                 >
                     {uploads.filter(upload => upload.id !== iHootId).map((upload) => {
                         return (<div key={upload.id}>

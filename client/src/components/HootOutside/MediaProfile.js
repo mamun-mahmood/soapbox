@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import LazyLoad from 'react-lazyload';
 import { useHistory } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa'
@@ -57,8 +57,10 @@ const MediaProfile = ({
                         disablePictureInPicture
                         className="hoot-vdo-profile"
                         controlsList="nodownload"
-                        onContextMenu={(e) => e.preventDefault()}
+                        onContextMenu={(event) => event.preventDefault()}
                         onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
+                        onMouseOver={event => event.target.play()}
+                        onMouseOut={event => event.target.pause()}
                     >
                         <source
                             src={filePath}

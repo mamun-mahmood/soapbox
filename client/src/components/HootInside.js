@@ -87,11 +87,11 @@ const HootInside = ({
     const hashtagsFound = caption.split(' ').filter(v => v.startsWith('#'));
     const stocksFound = caption.split(' ').filter(v => v.startsWith('$'));
 
-    // getting all uploads(hoots) 
     useEffect(() => {
+        // getting all uploads(hoots) 
         axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
             setUsers(response.data);
-        });
+        })
     }, [])
 
     var commentName = null;

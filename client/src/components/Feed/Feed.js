@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Post from '../Post'
 import EndMsg from './EndMsg';
-import Release from './Release';
-import PullDown from './PullDown';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './InfiniteScrollLoader';
 import './feed.css'

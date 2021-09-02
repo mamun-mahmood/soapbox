@@ -16,13 +16,17 @@ const NavBar = () => {
         localStorage.clear();
     }
 
+    const scrollToTop = () => {
+        window.scrollTo(0, 0);
+    }
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top"
                 onContextMenu={(e) => e.preventDefault()}
             >
                 <div className="container">
-                    <Link to="/home" class="navbar-brand cursor-pointer">
+                    <Link to={window.location.pathname} class="navbar-brand cursor-pointer">
                         <img
                             src="/images/MegaHoot_Owl3_app.png"
                             alt="Megahoot Soapbox"
@@ -30,6 +34,7 @@ const NavBar = () => {
                             height="50"
                             class="d-inline-block align-text-top"
                             onContextMenu={(e) => e.preventDefault()}
+                            onClick={scrollToTop}
                         />
                     </Link>
 

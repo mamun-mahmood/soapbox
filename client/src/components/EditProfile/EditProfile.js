@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import Avatar from 'react-avatar'
-import { Helmet } from 'react-helmet'
 import { useParams, useHistory } from 'react-router-dom'
 import { HiBadgeCheck } from 'react-icons/hi'
 import './editProfile.css'
