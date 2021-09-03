@@ -232,6 +232,7 @@
 .end-hoot-msg {
   text-align: center;
   padding: 3rem 0.5rem;
+  padding-top: 0.5rem;
   font-size: larger;
   color: var(--text-color);
   font-weight: 400;

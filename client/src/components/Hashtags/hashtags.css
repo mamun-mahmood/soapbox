@@ -17,11 +17,20 @@
 .hashtags-page {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
-    padding: 1rem 0.5rem;
-    margin-top: 4.5rem;
+    padding: 0.5rem;
+}
+
+.hashtag-head {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.5rem;
+    margin-top: 5rem;
+    margin-left: 0.5rem;
+    color: var(--text-color);
 }
 
 .hashtag-name {
@@ -36,7 +45,6 @@
     font-size: 1.5rem;
     font-weight: 500;
 
-    /* color: var(--text-color); */
     color: var(--primary-color);
     background-color: rgb(237, 237, 255);
 
@@ -45,13 +53,29 @@
     border-top: 10px solid var(--secondary-color);
 
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.hashtag-hover {
+    transition: 0.3s;
+}
+
+.hashtag-hover:hover {
+    transform: scale(1.05);
+}
+
+.hashtag-name:hover {
+    border-top: 10px solid var(--primary-color);
 }
 
 @media only screen and (max-width: 500px) {
+    .hashtags-page {
+        justify-content: center;
+    }
+    
     .hashtag-name {
         width: 150px;
         min-height: 80px;
-
         font-size: 1rem;
     }
 }
@@ -60,7 +84,6 @@
     .hashtag-name {
         width: 250px;
         min-height: 80px;
-
         flex-wrap: wrap;
 
         font-size: 1rem;

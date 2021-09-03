@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Helmet } from "react-helmet";
 import React, { useEffect, useState } from 'react'
 import { Fragment } from 'react';
 import { FaHashtag } from 'react-icons/fa';
@@ -85,7 +86,10 @@ const HashtagHoots = () => {
                     </InfiniteScroll>
                 }
                 <EndHootMsg />
-            </div >
+            </div>
+            <Helmet>
+                <title>#{hashtag} Hoots on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
+            </Helmet>
         </Fragment>
     )
 }

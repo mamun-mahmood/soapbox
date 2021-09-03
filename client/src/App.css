@@ -925,7 +925,11 @@ hr {
 
   width: 300px;
   height: auto;
+
   padding: 2rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+
   border-radius: 0.5rem;
   background-color: #dcd5fa;
 

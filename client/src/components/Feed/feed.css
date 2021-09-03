@@ -39,9 +39,15 @@
 }
 
 .end-msg {
-    text-align: center;
+    /* text-align: center;
     color: var(--text-color);
-    font-weight: 450;
+    font-weight: 450; */
+    text-align: center;
+    padding: 3rem 0.5rem;
+    padding-top: 0.5rem;
+    font-size: larger;
+    color: var(--text-color);
+    font-weight: 500;
 }
 /* @media only screen and (min-width: 1025px) {
     .no-hoots-feed {
