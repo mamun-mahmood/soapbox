@@ -11,14 +11,14 @@ const LandingNav = () => {
     return (
         <nav className="nav">
             <div className="brand">
-                <Link to="/" class="navbar-brand cursor-pointer">
+                <Link to="/" className="navbar-brand cursor-pointer">
                     <div className="outer-img">
                         <a href={locattion.pathname}>
                             <img
                                 onContextMenu={(e) => e.preventDefault()}
                                 src="/images/MegaHoot_Owl3_app.png"
                                 alt="Megahoot Soapbox"
-                                class="d-inline-block align-text-top"
+                                className="d-inline-block align-text-top"
                             />
                         </a>
                     </div>

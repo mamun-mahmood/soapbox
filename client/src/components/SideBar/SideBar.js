@@ -4,6 +4,7 @@ import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import { BsLightning } from 'react-icons/bs'
 import SideBarOption from './SideBarOption'
 import './sidebar.css';
+import { Link } from 'react-router-dom'
 
 const SideBar = () => {
     const [mainActive, setMainActive] = useState("active");
@@ -68,13 +69,35 @@ const SideBar = () => {
                     </li>
                     <li>
                         <div className="hashtags">
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#dogs</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#funny</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#Vero</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#vibing</small><br />
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#chilling</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#beauty</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#Soapbox</small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#dogs</small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#life</small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#Vero</small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#vibing</small><br />
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#beauty</small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#Soapbox</small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#race</small>
+
+                            {/* <Link to={`/hashtags/${("#dogs").replace('#', '')}`} className="hashtag-links">
+                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#dogs</small>
+                            </Link>
+                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
+                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#dogs</small>
+                            </Link>
+                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
+                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#Vero</small>
+                            </Link>
+                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
+                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#vibing</small><br />
+                            </Link>
+                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
+                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#vibing</small><br />
+                            </Link>
+                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
+                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#beauty</small>
+                            </Link>
+                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
+                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#Soapbox</small>
+                            </Link> */}
                         </div>
                     </li>
 
@@ -89,11 +112,10 @@ const SideBar = () => {
                     </li>
                     <li>
                         <div className="hashtags">
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$TWTR</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$AAPL</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$SPBX</small>
-                            <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$TSLA</small>
-                            {/*<small class="badge-hashtag outline-badge-hashtags d-flex flex-end">$ AMZN</small> */}
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">$TWTR</small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">$AAPL</small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">$SPBX</small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">$TSLA</small>
                         </div>
                     </li>
                     <SideBarOption

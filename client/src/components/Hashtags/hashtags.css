@@ -74,13 +74,25 @@
     }
     
     .hashtag-name {
-        width: 150px;
+        width: 165px;
+        min-height: 80px;
+        font-size: 1.2rem;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .hashtags-page {
+        justify-content: center;
+    }
+    
+    .hashtag-name {
+        width: 140px;
         min-height: 80px;
         font-size: 1rem;
     }
 }
-@media only screen and (max-width: 360px) {
 
+@media only screen and (max-width: 340px) {
     .hashtag-name {
         width: 250px;
         min-height: 80px;

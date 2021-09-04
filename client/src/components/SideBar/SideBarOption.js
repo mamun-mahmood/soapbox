@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const SideBarOption = ({ option, link, Icon, looks }) => {
     return (
-        <li >
+        <li>
             <NavLink
                 activeClassName="sidebar-option-active"
                 className={looks}
