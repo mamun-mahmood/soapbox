@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import toast from 'react-hot-toast';
 import { Form } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import BeatLoader from "react-spinners/BeatLoader";
@@ -10,10 +11,8 @@ const LoginComp = () => {
 
     useEffect(() => {
         if (localStorage.getItem("loggedIn")) {
-            setTimeout(() => {
-                setSaveLoading(false);
-                history.push("/home");
-            }, 1000);
+            setSaveLoading(false);
+            history.push("/home");
         }
     })
 
@@ -27,22 +26,31 @@ const LoginComp = () => {
         setSaveLoading(true);
         event.preventDefault()
 
-        axios.post(`${BaseURL}/user/login`, {
-            email,
-            password,
-        }).then((response) => {
-            if (response.data.loggedIn) {
-                const loggedIn = {
-                    username: response.data.username,
-                    email: response.data.email
+        const userLogin = async () => {
+            await axios.post(`${BaseURL}/user/login`, {
+                email,
+                password,
+            }).then((response) => {
+                if (response.data.loggedIn) {
+                    const loggedIn = {
+                        username: response.data.username,
+                        email: response.data.email
+                    }
+                    localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
                 }
-                localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
-            }
-            setMessage(response.data.message);
-            setTimeout(() => {
-                setSaveLoading(false);
-            }, 3000);
-        })
+            })
+        }
+
+        const userLoginToast = userLogin();
+        toast.promise(userLoginToast, {
+            loading: 'logging in...',
+            success: 'Login Successful',
+            error: 'Login Unsuccessful',
+        });
+
+        setTimeout(() => {
+            setSaveLoading(false);
+        }, 1000);
     }
 
     return (

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { Link, NavLink, useHistory } from 'react-router-dom'
+import toast from 'react-hot-toast';
 
 const NavBar = () => {
     const history = useHistory();
@@ -12,6 +13,8 @@ const NavBar = () => {
     }
 
     const logout = () => {
+        toast.success('logout Successful');
+
         history.push("/login");
         localStorage.clear();
     }
@@ -26,7 +29,8 @@ const NavBar = () => {
                 onContextMenu={(e) => e.preventDefault()}
             >
                 <div className="container">
-                    <Link to={window.location.pathname} class="navbar-brand cursor-pointer">
+                    <Link to="/home" class="navbar-brand cursor-pointer">
+                        {/* {window.location.pathname} */}
                         <img
                             src="/images/MegaHoot_Owl3_app.png"
                             alt="Megahoot Soapbox"

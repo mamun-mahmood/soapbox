@@ -19,6 +19,7 @@
     "react-highlight-textinput": "^1.0.3",
     "react-highlight-words": "^0.17.0",
     "react-highlighter": "^0.4.3",
+    "react-hot-toast": "^2.1.1",
     "react-icons": "^4.2.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-lazyload": "^3.2.0",

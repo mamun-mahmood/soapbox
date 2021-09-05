@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import Avatar from 'react-avatar'
+import toast from 'react-hot-toast';
 import { useParams, useHistory } from 'react-router-dom'
 import { HiBadgeCheck } from 'react-icons/hi'
 import './editProfile.css'
@@ -101,19 +102,27 @@ const EditProfile = ({
         formData.append("newTumblr", newTumblr);
         (newProfilePic && formData.append("file", newProfilePic));
 
-        axios.put(`${BaseURL}/profile/edit`, formData)
-            .then((response) => {
-                console.log(response);
-            })
+        const saveProfileData = async () => {
+            await axios.put(`${BaseURL}/profile/edit`, formData)
+                .then((response) => {
+                    console.log(response);
+                })
+        }
+
+        const saveProfileToast = saveProfileData();
+        toast.promise(saveProfileToast, {
+            loading: 'Saving...',
+            success: 'Profile saved',
+            error: 'Could not save',
+        });
+
         setTimeout(() => {
             setSaveLoading(false);
             history.push(profilePath);
         }, 1000);
-    }
 
-    // setTimeout(() => {
-    //     setLoading(false);
-    // }, 0);
+
+    }
 
     return (
         <Fragment>

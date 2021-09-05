@@ -2,13 +2,13 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import axios from 'axios'
 import Avatar from 'react-avatar';
+import toast from 'react-hot-toast';
 import { format } from 'date-fns'
 import { Button } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { IoCloseOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
-import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 import NavBar from '../components/NavBar'
 
@@ -47,13 +47,6 @@ const CreatePost = () => {
         formData.append("authorEmail", email)
         formData.append("file", file);
 
-        // axios.post(`${BaseURL}/upload/create`, formData)
-        //     .then((response) => {
-        //         setTimeout(() => {
-        //             history.push("/home");
-        //         }, 500);
-        //     })
-
         const uploadData = async () => {
             await axios.all([
                 axios.post(`${BaseURL}/upload/create`, formData),
@@ -66,7 +59,14 @@ const CreatePost = () => {
             // .then(axios.spread(() => {
             // }))
         }
-        uploadData();
+
+        const uploadDataToast = uploadData();
+        toast.promise(uploadDataToast, {
+            loading: 'Sending Hoot...',
+            success: 'Hoot Successful',
+            error: 'Try again',
+        });
+
         setTimeout(() => {
             history.push("/home");
         }, 500);

@@ -4,6 +4,7 @@ import format from "date-fns/format"
 import ClickAwayListener from 'react-click-away-listener';
 import MediaContent from './MediaContent';
 import HootComments from './Comment/HootComments';
+import toast from 'react-hot-toast';
 import Avatar from 'react-avatar';
 import { Link, useHistory } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
@@ -189,6 +190,7 @@ const HootInside = ({
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
         }, 100);
+        toast.success('Link Copied to Clipboard');
     }
 
     const copyTextToClipboard = () => {
@@ -197,6 +199,7 @@ const HootInside = ({
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
         }, 100);
+        toast.success('Text Copied to Clipboard');
     }
 
     const shareVia = async () => {
@@ -752,6 +755,7 @@ const HootInside = ({
                                                     </div>
                                                 </a>
                                             </div>
+
                                             <div className="share-icons">
                                                 <a target="_blank" rel="nofollow" class="block button-transparent">
                                                     <div className="share-icons-text" onClick={
