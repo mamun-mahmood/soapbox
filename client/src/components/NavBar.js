@@ -29,14 +29,14 @@ const NavBar = () => {
                 onContextMenu={(e) => e.preventDefault()}
             >
                 <div className="container">
-                    <Link to="/home" class="navbar-brand cursor-pointer">
+                    <Link to="/home" className="navbar-brand cursor-pointer">
                         {/* {window.location.pathname} */}
                         <img
                             src="/images/MegaHoot_Owl3_app.png"
                             alt="Megahoot Soapbox"
                             width="50"
                             height="50"
-                            class="d-inline-block align-text-top"
+                            className="d-inline-block align-text-top"
                             onContextMenu={(e) => e.preventDefault()}
                             onClick={scrollToTop}
                         />

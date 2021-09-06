@@ -64,7 +64,7 @@ const CreatePost = () => {
         toast.promise(uploadDataToast, {
             loading: 'Sending Hoot...',
             success: 'Hoot Successful',
-            error: 'Try again',
+            error: 'Please try again',
         });
 
         setTimeout(() => {

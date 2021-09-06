@@ -4,11 +4,12 @@ import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import { BsLightning } from 'react-icons/bs'
 import SideBarOption from './SideBarOption'
 import './sidebar.css';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const SideBar = () => {
     const [mainActive, setMainActive] = useState("active");
     const [myListActive, setMyListActive] = useState("");
+    const history = useHistory()
 
     var username = "";
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
@@ -69,35 +70,28 @@ const SideBar = () => {
                     </li>
                     <li>
                         <div className="hashtags">
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#dogs</small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#life</small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#Vero</small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#vibing</small><br />
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#beauty</small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#Soapbox</small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">#race</small>
-
-                            {/* <Link to={`/hashtags/${("#dogs").replace('#', '')}`} className="hashtag-links">
-                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#dogs</small>
-                            </Link>
-                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
-                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#dogs</small>
-                            </Link>
-                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
-                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#Vero</small>
-                            </Link>
-                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
-                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#vibing</small><br />
-                            </Link>
-                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
-                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#vibing</small><br />
-                            </Link>
-                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
-                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#beauty</small>
-                            </Link>
-                            <Link to={`/hashtags/${(hashtag.hashtag).replace('#', '')}`} style={{ textDecoration: "none" }}>
-                                <small class="badge-hashtag outline-badge-hashtags d-flex flex-end">#Soapbox</small>
-                            </Link> */}
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/hashtags/${("#funny").replace('#', '')}`)}>#funny
+                            </small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/hashtags/${("#earth").replace('#', '')}`)}>#earth
+                            </small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/hashtags/${("#race").replace('#', '')}`)}>#race
+                            </small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/hashtags/${("#life").replace('#', '')}`)}>#life
+                            </small>
+                            <br />
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/hashtags/${("#workout").replace('#', '')}`)}>#workout
+                            </small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/hashtags/${("#beauty").replace('#', '')}`)}>#beauty
+                            </small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/hashtags/${("#sports").replace('#', '')}`)}>#sports
+                            </small>
                         </div>
                     </li>
 

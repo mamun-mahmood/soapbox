@@ -208,6 +208,10 @@
     padding-left: 0.5rem;
 }
 
+.hashtags a {
+    text-decoration: none;
+}
+
 .badge-hashtag {
     display: inline;
     width: auto;

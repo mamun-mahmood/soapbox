@@ -15,7 +15,9 @@ import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 
 const PublicProfile = ({
     verified,
+    followers,
     name,
+    userName,
     profilePic,
     website,
     bio,
@@ -34,19 +36,72 @@ const PublicProfile = ({
     const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
+    const [followed, setFollowed] = useState(false);
+    const [userFollowers, setUserFollowers] = useState([]);
+    const [followersCount, setFollowersCount] = useState(followers)
 
     const LIMIT = 9;
 
+    const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const BaseURL = process.env.REACT_APP_API_URL;
     const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
 
     const { username } = useParams();
 
-    console.log(
-        facebook,
-        tiktok,
-        snapchat
-    );
+    // follow functionality added to hoots.
+    useEffect(() => {
+        axios.put(`${BaseURL}/user/followers`, {
+            followers: followersCount,
+            username: userName
+        })
+    }, [followersCount])
+
+    useEffect(() => {
+        const getUserFollowData = async () => {
+            axios.get(`${BaseURL}/user/followers/${userName}`).then((response) => {
+                setUserFollowers(response.data);
+            })
+        }
+        getUserFollowData();
+    }, [followed])
+
+    const addFollower = () => {
+        setFollowed(true)
+        setFollowersCount(followersCount + 1)
+
+        axios.post(`${BaseURL}/user/followedBy`, {
+            username: userName,
+            loggedInUsername: userInformation.username
+        })
+    }
+
+    const removeFollower = () => {
+        setFollowed(false)
+        setFollowersCount(followersCount - 1)
+
+        axios.delete(`${BaseURL}/user/followedBy/${userInformation.username}`)
+    }
+
+    const random = (min = 10, max = 50) => {
+        let num = Math.random() * (max - min) + min;
+
+        return Math.round(num);
+    };
+
+    // on every page load followers will increase reandomly - just remove this useEffect to get back to normal followers counts
+    useEffect(() => {
+        if (followers === 0) {
+            setTimeout(() => {
+                setFollowersCount(followersCount + random(1, 20));
+            }, 30000);
+        } else {
+            setFollowersCount(followersCount + random(1, 20));
+        }
+
+        // to make followers count 0 
+        // followersCount(0)
+    }, [])
+
     useEffect(() => {
         window.scroll({
             top: 0,
@@ -141,14 +196,10 @@ const PublicProfile = ({
                             </div>
                             <div className="user-name-page">@{username}</div>
 
-                            {/* </div> */}
-
                             <div className="user-counts">
-                                {/* <div><span className="counts-bold">{myUploads.length}</span> hoots</div> */}
-                                <div><span className="counts-bold">0</span> Followers</div>
+                                <div><span className="counts-bold">{formatCount(followersCount) + formatSi(followersCount)}</span> Followers</div>
                                 <div><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
                                 <div><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
-                                {/* <div><span className="counts-bold">0</span> following</div> */}
                             </div>
 
                             {bio &&
@@ -222,17 +273,29 @@ const PublicProfile = ({
                             </div>
 
                             <div className="user-follow">
-                                <button className="btn-follow">Follow</button>
+                                {userFollowers.length === 0
+                                    ? <button
+                                        className="btn-follow"
+                                        onClick={addFollower}
+                                    >
+                                        {followed
+                                            ? "Following"
+                                            : "Follow"
+                                        }
+                                    </button>
+                                    : userFollowers.map((user) => {
+                                        return (<Fragment key={user.id}>
+                                            {(user.followedBy).includes(userInformation.username) &&
+                                                <button
+                                                    className="btn-follow"
+                                                    onClick={removeFollower}
+                                                >
+                                                    Following
+                                                </button>
+                                            }
+                                        </Fragment>)
+                                    })}
                             </div>
-                            {/* <div className="followed-by">
-                            <small >
-                                Followed by
-                                <span className="followed-by-user"> louis</span>,
-                                <span className="followed-by-user"> hrshmistry</span>,
-                                and
-                                <span className="followed-by-user"> aakash</span>
-                            </small>
-                        </div> */}
                         </div>
                     </div>
                     <hr />

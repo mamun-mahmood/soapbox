@@ -3,28 +3,26 @@ import SideBar from '../components/SideBar/SideBar'
 import NavBar from '../components/NavBar'
 import PublicProfile from '../components/PublicProfile'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { Helmet } from 'react-helmet'
 import BeatLoader from "react-spinners/BeatLoader";
 
-// import Loading from '../components/Loading/Loading';
-// import Loadable from 'react-loadable';
-// const PublicProfile = Loadable({
-//     loader: () => import('../components/PublicProfile' /* webpackChunkName: "Public_Profile" */),
-//     loading() {
-//         return <Loading />
-//     }
-// })
-
 const PublicProfilePage = () => {
     const { username } = useParams();
+    const history = useHistory();
     const [userInfo, setUserInfo] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
+        if (username == userInformation.username) {
+            const profilePath = `/profile/${username}`;
+            history.push(profilePath);
+        }
+
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`)
                 .then((response) => {
@@ -51,6 +49,7 @@ const PublicProfilePage = () => {
                             <PublicProfile
                                 userId={user.id}
                                 verified={user.verified}
+                                followers={user.followers}
                                 name={user.name}
                                 userName={user.username}
                                 profilePic={user.profilePic}

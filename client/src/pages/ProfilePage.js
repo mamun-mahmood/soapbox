@@ -8,15 +8,6 @@ import { useParams, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import BeatLoader from "react-spinners/BeatLoader";
 
-// import Loading from '../components/Loading/Loading';
-// import Loadable from 'react-loadable';
-// const Profile = Loadable({
-//     loader: () => import('../components/Profile' /* webpackChunkName: "Profile" */),
-//     loading() {
-//         return <Loading />
-//     }
-// })
-
 const ProfilePage = () => {
     const history = useHistory();
     const { username } = useParams();
@@ -24,7 +15,6 @@ const ProfilePage = () => {
     const [loading, setLoading] = useState(true);
 
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
-
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -58,6 +48,7 @@ const ProfilePage = () => {
                             <Profile
                                 userId={user.id}
                                 verified={user.verified}
+                                followers={user.followers}
                                 name={user.name}
                                 userName={user.username}
                                 profilePic={user.profilePic}

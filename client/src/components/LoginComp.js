@@ -37,6 +37,7 @@ const LoginComp = () => {
                         email: response.data.email
                     }
                     localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
+                    history.push("/home");
                 }
             })
         }

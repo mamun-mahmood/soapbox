@@ -50,7 +50,7 @@ const HashtagHoots = () => {
                 <div className="home">
                     <div className="hashtag-hoot-wrapper">
                         <div className="hashtag-hoots-name" >
-                            <FaHashtag style={{ marginTop: "0.3rem" }} />{hashtag}
+                            <FaHashtag />{hashtag}
                         </div>
                     </div>
                 </div>

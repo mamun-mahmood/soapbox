@@ -15,6 +15,7 @@ import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 
 const Profile = ({
     verified,
+    followers,
     userName,
     name,
     profilePic,
@@ -35,6 +36,7 @@ const Profile = ({
     const [myUploads, setMyUploads] = useState([]);
     const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
+    const [followersCount, setFollowersCount] = useState(followers)
     const [page, setpage] = useState(2);
 
     const LIMIT = 9;
@@ -130,11 +132,9 @@ const Profile = ({
                             </div>
                             <div className="user-name-page">@{username}</div>
                             <div className="user-counts">
-                                {/* <div><span className="counts-bold">{myUploads.length}</span> hoots</div> */}
-                                <div><span className="counts-bold">0</span> Followers</div>
+                                <div><span className="counts-bold">{formatCount(followers) + formatSi(followers)}</span> Followers</div>
                                 <div><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
                                 <div><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
-                                {/* <div><span className="counts-bold">0</span> following</div> */}
                             </div>
 
                             {bio &&
