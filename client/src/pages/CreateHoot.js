@@ -36,6 +36,7 @@ const CreatePost = () => {
     const timeStamp = format(date, 'LLL dd, yyyy • HH:mm');
 
     const hashtagsFound = caption.split(' ').filter(v => v.startsWith('#'));
+    const stocksFound = caption.split(' ').filter(v => v.startsWith('$'));
 
     const upload = (event) => {
         event.preventDefault()
@@ -53,6 +54,11 @@ const CreatePost = () => {
                 hashtagsFound.map((hashtag) => {
                     axios.post(`${BaseURL}/hashtags`, {
                         hashtag: hashtag.replace(/[,.]/g, '')
+                    })
+                }),
+                stocksFound.map((stock) => {
+                    axios.post(`${BaseURL}/stocks`, {
+                        stock: stock.replace(/[,.]/g, '')
                     })
                 })
             ])
@@ -84,8 +90,8 @@ const CreatePost = () => {
     var userName = "";
     var userProfilePic = "";
 
-    //getting user data
     useEffect(() => {
+        //getting user data
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`)
                 .then((response) => {
@@ -155,7 +161,6 @@ const CreatePost = () => {
                                         {/* Photo */}
                                         <label htmlFor="post-image" className="btn-label">
                                             Photo
-                                            {/* <MdPhotoLibrary /> */}
                                         </label>
                                         <input
                                             type="file"
@@ -169,7 +174,6 @@ const CreatePost = () => {
                                         {/* Video */}
                                         <label htmlFor="post-video" className="btn-label">
                                             Video
-                                            {/* <FaVideo /> */}
                                         </label>
                                         <input
                                             type="file"
@@ -183,7 +187,6 @@ const CreatePost = () => {
                                         {/* Audio */}
                                         <label htmlFor="post-audio" className="btn-label">
                                             Audio
-                                            {/* <AiFillAudio /> */}
                                         </label>
                                         <input
                                             type="file"
@@ -210,15 +213,6 @@ const CreatePost = () => {
                                         onClick={upload}
                                         disabled={!caption || !src}
                                     >
-                                        {/* {saveLoading
-                                            ?
-                                            <Fragment>
-                                                Hoot<ClipLoader color={"#fff"} size={10} />
-                                            </Fragment>
-                                            :
-                                            "Hoot"
-                                        } */}
-
                                         Hoot
                                     </Button>{' '}
                                 </div>
@@ -281,7 +275,6 @@ const CreatePost = () => {
                 {/* General tags */}
                 <title>Create Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
                 <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                {/* <meta name="image" content={ } /> */}
 
                 {/* Twitter Card tags */}
                 <meta name="twitter:card" content="summary" />

@@ -1,0 +1,103 @@
+.stock-main::-webkit-scrollbar {
+    display: none;
+}
+
+.stock-main {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.stock-main h2 {
+    margin-top: 5rem;
+    color: var(--text-color);
+    text-align: center;
+    font-weight: 400;
+}
+
+.stocks-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 0.5rem;
+}
+
+.stock-head {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.5rem;
+    margin-top: 5rem;
+    margin-left: 0.5rem;
+    color: var(--text-color);
+}
+
+.stock-name {
+    width: 200px;
+    min-height: 100px;
+
+    word-break: break-all;
+
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+
+    font-size: 1.5rem;
+    font-weight: 500;
+
+    color: var(--primary-color);
+    background-color: rgb(237, 237, 255);
+
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-top: 10px solid var(--secondary-color);
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.stock-hover {
+    transition: 0.3s;
+}
+
+.stock-hover:hover {
+    transform: scale(1.05);
+}
+
+.stock-name:hover {
+    border-top: 10px solid var(--primary-color);
+}
+
+@media only screen and (max-width: 500px) {
+    .stocks-page {
+        justify-content: center;
+    }
+    
+    .stock-name {
+        width: 165px;
+        min-height: 80px;
+        font-size: 1.2rem;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .stocks-page {
+        justify-content: center;
+    }
+    
+    .stock-name {
+        width: 140px;
+        min-height: 80px;
+        font-size: 1rem;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .stock-name {
+        width: 250px;
+        min-height: 80px;
+        flex-wrap: wrap;
+
+        font-size: 1rem;
+    }
+}

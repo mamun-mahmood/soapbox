@@ -15,7 +15,6 @@ const Hashtags = () => {
             await axios.get(`${BaseURL}/hashtags`)
                 .then((response) => {
                     setHashtags(response.data);
-                    console.log(hashtags);
                 });
         }
         getHashtagsData();

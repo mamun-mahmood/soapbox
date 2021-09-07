@@ -20,6 +20,8 @@ import EditProfilePage from './pages/EditProfilePage'
 import PublicProfilePage from './pages/PublicProfilePage'
 import HashtagsPage from './pages/HashtagsPage';
 import HashtagHootsPage from './pages/HashtagHootsPage';
+import StocksPage from './pages/StocksPage';
+import StockHootsPage from './pages/StockHootsPage';
 
 // const Home = Loadable({
 //   loader: () => import('./pages/Home/Home' /* webpackChunkName: "Home" */),
@@ -77,30 +79,44 @@ function App() {
         <Route exact path="/">
           <ProtectedRoute page={LandingPage} />
         </Route>
+
         <Route path="/home">
           <ProtectedRoute page={Home} />
         </Route>
+
         <Route path="/create">
           <ProtectedRoute page={CreateHoot} />
         </Route>
+
         <Route path="/user/:username">
           <ProtectedRoute page={PublicProfilePage} />
         </Route>
+
         <Route path="/:username/hoot/:id">
           <ProtectedRoute page={HootPage} />
         </Route>
+
         <Route path="/edit/profile/:username">
           <ProtectedRoute page={EditProfilePage} />
         </Route>
         <Route path="/profile/:username">
           <ProtectedRoute page={ProfilePage} />
         </Route>
+
         <Route path="/hashtags/:hashtag">
           <ProtectedRoute page={HashtagHootsPage} />
         </Route>
         <Route path="/hashtags">
           <ProtectedRoute page={HashtagsPage} />
         </Route>
+
+        <Route path="/stocks/:stock">
+          <ProtectedRoute page={StockHootsPage} />
+        </Route>
+        <Route path="/stocks">
+          <ProtectedRoute page={StocksPage} />
+        </Route>
+
         <Route path="*">
           <PageNotFound />
         </Route>

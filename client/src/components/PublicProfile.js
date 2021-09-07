@@ -12,6 +12,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from './HootOutside/HootOutside';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
+import toast from 'react-hot-toast';
 
 const PublicProfile = ({
     verified,
@@ -56,16 +57,19 @@ const PublicProfile = ({
         })
     }, [followersCount])
 
+    const getUserFollowData = async () => {
+        axios.get(`${BaseURL}/user/followers/${userName}`).then((response) => {
+            setUserFollowers(response.data);
+        })
+    }
+
     useEffect(() => {
-        const getUserFollowData = async () => {
-            axios.get(`${BaseURL}/user/followers/${userName}`).then((response) => {
-                setUserFollowers(response.data);
-            })
-        }
         getUserFollowData();
     }, [followed])
 
     const addFollower = () => {
+        getUserFollowData();
+        getUserFollowData();
         setFollowed(true)
         setFollowersCount(followersCount + 1)
 
@@ -73,13 +77,19 @@ const PublicProfile = ({
             username: userName,
             loggedInUsername: userInformation.username
         })
+
+        toast.success(`Followed ${userName}`);
     }
 
     const removeFollower = () => {
+        getUserFollowData();
+        getUserFollowData();
         setFollowed(false)
         setFollowersCount(followersCount - 1)
 
         axios.delete(`${BaseURL}/user/followedBy/${userInformation.username}`)
+
+        toast(`Unfollowed ${userName}`);
     }
 
     const random = (min = 10, max = 50) => {

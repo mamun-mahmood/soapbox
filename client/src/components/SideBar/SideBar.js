@@ -106,10 +106,18 @@ const SideBar = () => {
                     </li>
                     <li>
                         <div className="hashtags">
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">$TWTR</small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">$AAPL</small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">$SPBX</small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end">$TSLA</small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/stocks/${("$TWTR").replace('$', '')}`)}>$TWTR
+                            </small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/stocks/${("$COIN").replace('$', '')}`)}>$COIN
+                            </small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/stocks/${("$TSLA").replace('$', '')}`)}>$TSLA
+                            </small>
+                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                onClick={() => history.push(`/stocks/${("$611M").replace('$', '')}`)}>$611M
+                            </small>
                         </div>
                     </li>
                     <SideBarOption

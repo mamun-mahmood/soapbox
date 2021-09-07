@@ -6,24 +6,24 @@ import SideBar from '../components/SideBar/SideBar'
 
 import Loadable from 'react-loadable';
 import Loading from '../components/Loading/Loading';
-const HashtagHoots = Loadable({
-    loader: () => import('../components/HashtagHoots/HashtagHoots' /* webpackChunkName: "HashtagHootsPage" */),
+const StockHoots = Loadable({
+    loader: () => import('../components/StockHoots/StockHoots' /* webpackChunkName: "StockHootsPage" */),
     loading() {
         return <Loading />
     }
 })
 
-const HashtagHootsPage = () => {
+const StockHootsPage = () => {
     return (
         <Fragment>
             <NavBar />
             <div className="main-body">
                 <SideBar />
-                <HashtagHoots />
+                <StockHoots />
                 <FloatingButton />
             </div>
         </Fragment>
     )
 }
 
-export default HashtagHootsPage
+export default StockHootsPage

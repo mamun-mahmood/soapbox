@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react'
 import axios from 'axios'
 import format from "date-fns/format"
 import ClickAwayListener from 'react-click-away-listener';
+import Linkify from 'react-linkify';
 import MediaContent from './MediaContent';
 import HootComments from './Comment/HootComments';
 import toast from 'react-hot-toast';
@@ -570,12 +571,6 @@ const HootInside = ({
                         </span>
                     </Link> */}
                     {" "}<span className="hoot-comment">
-                        {/* {caption} */}
-                        {/* <Highlighter
-                            text={caption}
-                            highlight={"cool"}
-                        /> */}
-
                         <Highlighter
                             highlightClassName="highlighterClass"
                             searchWords={[...hashtagsFound, ...stocksFound]}

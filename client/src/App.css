@@ -696,6 +696,7 @@ hr {
   cursor: pointer;
   font-size: 2rem;
   z-index: 111;
+  transition: 0.15s;
 }
 
 .close-preview:hover {
