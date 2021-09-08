@@ -34,6 +34,7 @@ const Profile = ({
 }) => {
     const { username } = useParams();
     const [myUploads, setMyUploads] = useState([]);
+    const [allUploads, setAllUploads] = useState([]);
     const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [followersCount, setFollowersCount] = useState(followers)
@@ -46,10 +47,16 @@ const Profile = ({
 
     useEffect(() => {
         const getUserUploadData = async () => {
-            await axios.get(`${BaseURL}/upload/user/p/${username}?page=1&limit=${LIMIT}`)
-                .then((response) => {
-                    setMyUploads(response.data.results);
-                });
+            await axios.all[(
+                axios.get(`${BaseURL}/upload/user/p/${username}?page=1&limit=${LIMIT}`)
+                    .then((response) => {
+                        setMyUploads(response.data.results);
+                    }),
+                axios.get(`${BaseURL}/upload/user/${username}`)
+                    .then((response) => {
+                        setAllUploads(response.data);
+                    })
+            )]
             setLoading(false);
         }
         getUserUploadData();
@@ -73,7 +80,7 @@ const Profile = ({
     var totalViews = 0;
     var totalLikes = 0;
 
-    myUploads.map((upload) => {
+    allUploads.map((upload) => {
         totalViews += upload.views
         totalLikes += upload.likes
     })

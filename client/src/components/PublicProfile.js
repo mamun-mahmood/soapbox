@@ -34,6 +34,7 @@ const PublicProfile = ({
     tumblr,
 }) => {
     const [users, setUsers] = useState([]);
+    const [allUserUploads, setAllUserUploads] = useState([]);
     const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
@@ -63,13 +64,12 @@ const PublicProfile = ({
         })
     }
 
-    useEffect(() => {
-        getUserFollowData();
+    useEffect(async () => {
+        await getUserFollowData();
     }, [followed])
 
-    const addFollower = () => {
-        getUserFollowData();
-        getUserFollowData();
+    const addFollower = async () => {
+        await getUserFollowData();
         setFollowed(true)
         setFollowersCount(followersCount + 1)
 
@@ -81,9 +81,8 @@ const PublicProfile = ({
         toast.success(`Followed ${userName}`);
     }
 
-    const removeFollower = () => {
-        getUserFollowData();
-        getUserFollowData();
+    const removeFollower = async () => {
+        await getUserFollowData();
         setFollowed(false)
         setFollowersCount(followersCount - 1)
 
@@ -113,19 +112,19 @@ const PublicProfile = ({
     }, [])
 
     useEffect(() => {
-        window.scroll({
-            top: 0,
-            behavior: 'smooth'
-        });
-
         const getUserUploadData = async () => {
-            await axios.get(`${BaseURL}/upload/user/p/${username}?page=1&limit=5`)
-                .then((response) => {
-                    setUsers(response.data.results);
-                });
+            await axios.all[(
+                axios.get(`${BaseURL}/upload/user/p/${username}?page=1&limit=5`)
+                    .then((response) => {
+                        setUsers(response.data.results);
+                    }),
+                axios.get(`${BaseURL}/upload/user/${username}`)
+                    .then((response) => {
+                        setAllUserUploads(response.data);
+                    })
+            )]
             setLoading(false);
         }
-
         getUserUploadData();
     }, [])
 
@@ -147,7 +146,7 @@ const PublicProfile = ({
     var totalViews = 0;
     var totalLikes = 0;
 
-    users.map((user) => {
+    allUserUploads.map((user) => {
         totalViews += user.views
         totalLikes += user.likes
     })
