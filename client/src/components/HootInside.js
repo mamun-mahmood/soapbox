@@ -2,7 +2,6 @@ import React, { useEffect, useState, Fragment } from 'react'
 import axios from 'axios'
 import format from "date-fns/format"
 import ClickAwayListener from 'react-click-away-listener';
-import Linkify from 'react-linkify';
 import MediaContent from './MediaContent';
 import HootComments from './Comment/HootComments';
 import toast from 'react-hot-toast';
@@ -564,12 +563,6 @@ const HootInside = ({
                 </div>
 
                 <div className="post-comment">
-                    {/* <Link className="name-comment">
-                        <span onClick={() => { history.push(`${ path } / ${ username }`) }}
-                        >
-                            {username}
-                        </span>
-                    </Link> */}
                     {" "}<span className="hoot-comment">
                         <Highlighter
                             highlightClassName="highlighterClass"
