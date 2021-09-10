@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import BeatLoader from "react-spinners/BeatLoader";
 import { useParams, useHistory } from 'react-router-dom';
 
-import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar/NavBar'
 import SideBar from '../components/SideBar/SideBar';
 import EditProfile from '../components/EditProfile/EditProfile'
 

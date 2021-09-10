@@ -13,6 +13,7 @@ import './hashtagHoots.css'
 const HashtagHoots = () => {
     const { hashtag } = useParams();
     const [uploads, setUploads] = useState([]);
+    const [allUploads, setAllUploads] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -21,9 +22,14 @@ const HashtagHoots = () => {
 
     useEffect(() => {
         const getAllUploadData = async () => {
-            await axios.get(`${BaseURL}/upload/p?page=1&limit=${LIMIT}`).then((response) => {
-                setUploads(response.data.results);
-            });
+            await axios.all[(
+                axios.get(`${BaseURL}/upload/p?page=1&limit=${LIMIT}`).then((response) => {
+                    setUploads(response.data.results);
+                }),
+                axios.get(`${BaseURL}/upload`).then((response) => {
+                    setAllUploads(response.data);
+                })
+            )]
         }
         getAllUploadData();
     }, [])
@@ -44,47 +50,87 @@ const HashtagHoots = () => {
     }
 
     const finalHashtag = '#' + hashtag;
+    console.log("finalHashtag: ", finalHashtag);
+
+    var totalViews = 0;
+
+    allUploads.map((upload) => {
+        return (<div key={upload.id}>
+            {(upload.caption).includes(finalHashtag)
+                ?
+                totalViews += upload.views
+                : null
+            }
+        </div>)
+    })
+
+    // count will be formatted 
+    const formatCount = count => {
+        if (count < 1e3) return count;
+        if (count >= 1e3 && count < 1e6) return +(count / 1e3).toFixed(1);
+        if (count >= 1e6 && count < 1e9) return +(count / 1e6).toFixed(1);
+        if (count >= 1e9 && count < 1e12) return +(count / 1e9).toFixed(1);
+        if (count >= 1e12) return +(count / 1e12).toFixed(1);
+    };
+
+    // si stands for International System of Units
+    const formatSi = count => {
+        if (count < 1e3) return "";
+        if (count >= 1e3 && count < 1e6) return "K";
+        if (count >= 1e6 && count < 1e9) return "M";
+        if (count >= 1e9 && count < 1e12) return "B";
+        if (count >= 1e12) return "T";
+    };
+
     return (
         <Fragment>
             <div className="hashtag-hoots-main">
                 <div className="home">
                     <div className="hashtag-hoot-wrapper">
                         <div className="hashtag-hoots-name" >
-                            <FaHashtag />{hashtag}
+                            <div className="hashtag-header">
+                                <FaHashtag />{hashtag}
+                            </div>
+                            <span>
+                                {formatCount(totalViews) + formatSi(totalViews)} Views
+                                {/* {allUploads.length !== 0 &&
+                                    `${formatCount(totalViews)}${formatSi(totalViews)} Views`
+                                } */}
+                            </span>
                         </div>
                     </div>
                 </div>
 
-                {uploads &&
+                {/* {uploads &&
                     <InfiniteScroll
                         dataLength={uploads.length}
                         next={fetchMoreHoots}
                         hasMore={hasMore}
                         loader={<InfiniteScrollLoader />}
 
-                    >
-                        {uploads.map((upload) => {
-                            return (<div key={upload.id}>
-                                {(upload.caption).includes(finalHashtag)
-                                    ?
-                                    <Post
-                                        hootId={upload.id}
-                                        username={upload.authorUsername}
-                                        mimeType={upload.mimeType}
-                                        hootImgId={upload.image}
-                                        likes={upload.likes}
-                                        views={upload.views}
-                                        caption={upload.caption}
-                                        timeStamp={upload.timeStamp}
-                                        edited={upload.edited}
-                                        editedTimeStamp={upload.editedTimeStamp}
-                                    />
-                                    : null
-                                }
-                            </div>)
-                        })}
-                    </InfiniteScroll>
-                }
+                    > */}
+                {allUploads.map((upload) => {
+                    return (<div key={upload.id}>
+                        {(upload.caption).includes(finalHashtag)
+                            ?
+                            <Post
+                                hootId={upload.id}
+                                username={upload.authorUsername}
+                                mimeType={upload.mimeType}
+                                hootImgId={upload.image}
+                                likes={upload.likes}
+                                views={upload.views}
+                                caption={upload.caption}
+                                timeStamp={upload.timeStamp}
+                                edited={upload.edited}
+                                editedTimeStamp={upload.editedTimeStamp}
+                            />
+                            : null
+                        }
+                    </div>)
+                })}
+                {/* </InfiniteScroll> */}
+                {/* } */}
                 <EndHootMsg />
             </div>
             <Helmet>

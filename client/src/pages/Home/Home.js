@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Helmet } from "react-helmet";
-import NavBar from '../../components/NavBar'
+import NavBar from '../../components/NavBar/NavBar'
 import SideBar from '../../components/SideBar/SideBar'
 import FloatingButton from '../../components/FloatingButton/FloatingButton';
 import './home.css'

@@ -54,8 +54,8 @@ const MediaContent = ({
         <Fragment>
             {mimeType.match(/image/gi) == "image" &&
                 <LazyLoad
-                    offset={800}
-                    height={200}
+                    offset={1200}
+                // height={200}
                 >
                     <img
                         ref={ref}
@@ -73,8 +73,8 @@ const MediaContent = ({
 
             {mimeType.match(/video/gi) == "video" &&
                 <LazyLoad
-                    offset={800}
-                    height={200}
+                    offset={1200}
+                // height={200}
                 >
                     <video
                         loop muted controls autoPlay
@@ -95,8 +95,8 @@ const MediaContent = ({
 
             {mimeType.match(/audio/gi) == "audio" &&
                 <LazyLoad
-                    offset={800}
-                    height={200}
+                    offset={1200}
+                // height={200}
                 >
                     <audio
                         className={editOpen ? "hoot-ado-fix" : "hoot-ado"}

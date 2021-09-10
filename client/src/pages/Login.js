@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import { Button, Form } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar/NavBar'
 
 const Login = () => {
   const history = useHistory();

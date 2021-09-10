@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar/NavBar'
 
 const PageNotFound = () => {
     return (

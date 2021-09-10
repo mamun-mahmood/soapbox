@@ -1,29 +1,29 @@
-import React from 'react'
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
 import NavBar from '../components/NavBar/NavBar'
 import SideBar from '../components/SideBar/SideBar'
 
 import Loadable from 'react-loadable';
 import Loading from '../components/Loading/Loading';
-const StockHoots = Loadable({
-    loader: () => import('../components/StockHoots/StockHoots' /* webpackChunkName: "StockHootsPage" */),
+
+const Explore = Loadable({
+    loader: () => import('../components/Explore/Explore' /* webpackChunkName: "Explore" */),
     loading() {
         return <Loading />
     }
 })
 
-const StockHootsPage = () => {
+const ExplorePage = () => {
     return (
         <Fragment>
             <NavBar />
             <div className="main-body">
                 <SideBar />
-                <StockHoots />
+                <Explore />
                 <FloatingButton />
             </div>
         </Fragment>
     )
 }
 
-export default StockHootsPage
+export default ExplorePage

@@ -88,6 +88,7 @@ const HootInside = ({
     // finding out hashtags and stocks from caption and storing it in array 
     const hashtagsFound = caption.split(' ').filter(v => v.startsWith('#'));
     const stocksFound = caption.split(' ').filter(v => v.startsWith('$'));
+    const usernamesFound = caption.split(' ').filter(v => v.startsWith('@'));
 
     useEffect(() => {
         // getting all uploads(hoots) 
@@ -447,7 +448,7 @@ const HootInside = ({
                                                 <div className="post-content">
                                                     <textarea
                                                         autoFocus
-                                                        maxLength="255"
+                                                        maxLength="300"
                                                         className="editarea-style"
                                                         placeholder="What to edit?"
                                                         value={editCaption}
@@ -459,7 +460,7 @@ const HootInside = ({
                                                         <div className="caption-count">
                                                             <h6 className={editCaption.length > 220 && "text-danger"}>
                                                                 {" "}
-                                                                {editCaption.length}/255
+                                                                {editCaption.length}/300
                                                             </h6>
                                                         </div>
                                                         <div className="btn-post my-2">
@@ -566,7 +567,7 @@ const HootInside = ({
                     {" "}<span className="hoot-comment">
                         <Highlighter
                             highlightClassName="highlighterClass"
-                            searchWords={[...hashtagsFound, ...stocksFound]}
+                            searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
                             autoEscape={true}
                             textToHighlight={caption}
                         />

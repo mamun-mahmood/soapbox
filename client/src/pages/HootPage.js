@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar/NavBar'
 import SideBar from '../components/SideBar/SideBar'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
 

@@ -1,5 +1,14 @@
 /* Custom Scrollbar
 /* width */
+.scrollable{
+    overflow-y:hidden;
+    padding-right: 7px;
+}
+.scrollable:hover{
+    overflow-y:scroll;
+    padding-right: 1px;
+}
+
 .scrollable::-webkit-scrollbar {
     width: 7px;
 }
@@ -36,7 +45,7 @@
 
 .scrollable {
     height: 90vh;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 
 .sidebar ui li {
@@ -201,7 +210,8 @@
 
 .hashtags {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 0 0.2rem;    
     align-items: center;
     flex-wrap: wrap;
     padding: 0 1rem 0 1rem;

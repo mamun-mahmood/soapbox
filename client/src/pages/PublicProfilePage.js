@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import SideBar from '../components/SideBar/SideBar'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar/NavBar'
 import PublicProfile from '../components/PublicProfile'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
 import { useParams, useHistory } from 'react-router-dom'

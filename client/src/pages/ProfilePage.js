@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import SideBar from '../components/SideBar/SideBar'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar/NavBar'
 import Profile from '../components/Profile'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
 import axios from 'axios'

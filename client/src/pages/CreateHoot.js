@@ -10,7 +10,7 @@ import { IoCloseOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
 import BeatLoader from "react-spinners/BeatLoader";
-import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar/NavBar'
 
 const CreatePost = () => {
     const [caption, setCaption] = useState("");

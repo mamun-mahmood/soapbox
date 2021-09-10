@@ -22,6 +22,7 @@ import HashtagsPage from './pages/HashtagsPage';
 import HashtagHootsPage from './pages/HashtagHootsPage';
 import StocksPage from './pages/StocksPage';
 import StockHootsPage from './pages/StockHootsPage';
+import ExplorePage from './pages/ExplorePage';
 
 // const Home = Loadable({
 //   loader: () => import('./pages/Home/Home' /* webpackChunkName: "Home" */),
@@ -106,15 +107,19 @@ function App() {
         <Route path="/hashtags/:hashtag">
           <ProtectedRoute page={HashtagHootsPage} />
         </Route>
-        <Route path="/hashtags">
+        {/* <Route path="/hashtags">
           <ProtectedRoute page={HashtagsPage} />
-        </Route>
+        </Route> */}
 
         <Route path="/stocks/:stock">
           <ProtectedRoute page={StockHootsPage} />
         </Route>
-        <Route path="/stocks">
+        {/* <Route path="/stocks">
           <ProtectedRoute page={StocksPage} />
+        </Route> */}
+
+        <Route path="/explore">
+          <ProtectedRoute page={ExplorePage} />
         </Route>
 
         <Route path="*">

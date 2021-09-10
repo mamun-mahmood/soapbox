@@ -1960,3 +1960,7 @@ hr {
   color: var(--primary-color);
   background-color: #EDEDFF;
 }
+
+.profile-page-main {
+  width: 100%;
+}

@@ -104,8 +104,7 @@ const Profile = ({
     };
 
     return (
-        <Fragment>
-
+        <div className="profile-page-main">
             {loading &&
                 <div className="loading-iv">
                     <BeatLoader color={"#8249A0"} size={20} />
@@ -267,7 +266,7 @@ const Profile = ({
                 </div>
             }
 
-        </Fragment>
+        </div>
     )
 }
 

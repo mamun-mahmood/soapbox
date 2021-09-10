@@ -5,7 +5,10 @@ const EndHootMsg = () => {
     return (
         <p className="end-hoot-msg" >
             <Link to="/create"> Create Hoot </Link> with
-            {" "}<Link to="/hashtags"> #hashtags </Link>
+            {" "}
+            <a href="soapbox:;">
+                #hashtags
+            </a>
             {" "}to get listed
         </p>
     )

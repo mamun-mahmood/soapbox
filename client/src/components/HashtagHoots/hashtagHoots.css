@@ -13,15 +13,21 @@
     height: auto;
     margin: 0 auto;
 }
-
+.hashtag-header {
+    display: flex;
+    gap: 0.3rem;
+    justify-content: flex-start;
+    align-items: center;
+}
 .hashtag-hoots-name {
     width: 100%;
     min-height: 100px;
 
     display: flex;
-    gap: 0.3rem;
+    /* gap: 0.3rem; */
+    flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    /* align-items: center; */
 
     word-break: break-all;
 
@@ -39,6 +45,13 @@
     border-top: 10px solid var(--secondary-color);
 
     cursor: pointer;
+}
+
+.hashtag-hoots-name span {
+    font-size: medium;
+    font-weight: 600;
+    color: var(--text-color);
+    padding-left: 0.2rem;
 }
 
 

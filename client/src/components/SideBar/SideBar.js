@@ -1,15 +1,43 @@
-import React, { useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
+import axios from 'axios'
+import SideBarOption from './SideBarOption'
+import { BsLightning } from 'react-icons/bs'
+import { useHistory } from 'react-router-dom'
 import { FiHome, FiHash } from 'react-icons/fi'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
-import { BsLightning } from 'react-icons/bs'
-import SideBarOption from './SideBarOption'
 import './sidebar.css';
-import { Link, useHistory } from 'react-router-dom'
 
 const SideBar = () => {
     const [mainActive, setMainActive] = useState("active");
+    const [hashtags, setHashtags] = useState([]);
+    const [stocks, setStocks] = useState([]);
     const [myListActive, setMyListActive] = useState("");
     const history = useHistory()
+
+    const BaseURL = process.env.REACT_APP_API_URL;
+    useEffect(() => {
+        // getting hashtag data
+        const getHashtagsData = async () => {
+            await axios.get(`${BaseURL}/hashtags`)
+                .then((response) => {
+                    setHashtags(response.data);
+                    console.log(response.data);
+                });
+        }
+        getHashtagsData();
+    }, [])
+
+    useEffect(() => {
+        // getting stock data
+        const getStocksData = async () => {
+            await axios.get(`${BaseURL}/stocks`)
+                .then((response) => {
+                    setStocks(response.data);
+                    console.log(response.data);
+                });
+        }
+        getStocksData();
+    }, [])
 
     var username = "";
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
@@ -62,7 +90,7 @@ const SideBar = () => {
                     <SideBarOption
                         option="Hashtags"
                         Icon={FiHash}
-                        link="/hashtags"
+                        link=""
                         looks={"looks"}
                     />
                     <li>
@@ -70,35 +98,20 @@ const SideBar = () => {
                     </li>
                     <li>
                         <div className="hashtags">
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/hashtags/${("#funny").replace('#', '')}`)}>#funny
-                            </small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/hashtags/${("#earth").replace('#', '')}`)}>#earth
-                            </small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/hashtags/${("#race").replace('#', '')}`)}>#race
-                            </small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/hashtags/${("#life").replace('#', '')}`)}>#life
-                            </small>
-                            <br />
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/hashtags/${("#workout").replace('#', '')}`)}>#workout
-                            </small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/hashtags/${("#beauty").replace('#', '')}`)}>#beauty
-                            </small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/hashtags/${("#sports").replace('#', '')}`)}>#sports
-                            </small>
+                            {hashtags.slice(0, 8).map((hashtag) => {
+                                return (<div key={hashtag.id}>
+                                    <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                        onClick={() => history.push(`/hashtags/${(hashtag.hashtag).replace('#', '')}`)}>{hashtag.hashtag}
+                                    </small>
+                                </div>)
+                            })}
                         </div>
                     </li>
 
                     <SideBarOption
                         option="Stocks"
                         Icon={BiDollar}
-                        link="/stocks"
+                        link=""
                         looks={"looks"}
                     />
                     <li>
@@ -106,18 +119,13 @@ const SideBar = () => {
                     </li>
                     <li>
                         <div className="hashtags">
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/stocks/${("$TWTR").replace('$', '')}`)}>$TWTR
-                            </small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/stocks/${("$COIN").replace('$', '')}`)}>$COIN
-                            </small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/stocks/${("$TSLA").replace('$', '')}`)}>$TSLA
-                            </small>
-                            <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                onClick={() => history.push(`/stocks/${("$611M").replace('$', '')}`)}>$611M
-                            </small>
+                            {stocks.slice(0, 8).map((stock) => {
+                                return (<div key={stock.id}>
+                                    <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                        onClick={() => history.push(`/stocks/${(stock.stock).replace('$', '')}`)}>{stock.stock}
+                                    </small>
+                                </div>)
+                            })}
                         </div>
                     </li>
                     <SideBarOption
@@ -133,36 +141,7 @@ const SideBar = () => {
                     <li>
                         <hr className="my-2" />
                     </li>
-                    {/* <SideBarOption
-                    option="XMG Wallet"
-                    Icon={BiMessageDetail}
-                /> */}
-                    {/* <SideBarOption
-                    option="Notifications"
-                    Icon={BiBell}
-                />
-                <SideBarOption
-                    option="Favorites"
-                    Icon={FiAward}
-                /> */}
-                    {/* <SideBarOption option="Bookmarks" Icon={FiBookmark} /> */}
-                    {/* <SideBarOption option="Lists" Icon={BiListUl} /> */}
-                    {/* <SideBarOption option="More" Icon={FiMoreHorizontal} /> */}
 
-                    {/* <div className="btn-XMG">
-                    <Link to="">
-                        Connect XMG Wallet
-                    </Link>
-                </div> */}
-                    {/* <div className="btn-hoot">
-                    <Link to="/create">
-                        Hoot
-                    </Link>
-                </div> */}
-
-                    {/* <li>
-                    <hr className="my-2" />
-                </li> */}
                     <li>
                         <small className="info cursor-pointer">About</small>{" "}
                         <small className="info cursor-pointer">Fortis</small>{" "}
