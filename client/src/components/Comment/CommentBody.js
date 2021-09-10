@@ -31,7 +31,7 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
             username: userInfo.username,
         });
         window.location.reload();
-        console.log("Comment Deleted...");
+        // Comment Deleted...
     }
 
     const editCommentHoot = () => {

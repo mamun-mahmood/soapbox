@@ -50,7 +50,6 @@ const HashtagHoots = () => {
     }
 
     const finalHashtag = '#' + hashtag;
-    console.log("finalHashtag: ", finalHashtag);
 
     var totalViews = 0;
 

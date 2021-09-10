@@ -105,7 +105,7 @@ const EditProfile = ({
         const saveProfileData = async () => {
             await axios.put(`${BaseURL}/profile/edit`, formData)
                 .then((response) => {
-                    console.log(response);
+                    // console.log(response);
                 })
         }
 

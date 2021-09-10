@@ -21,7 +21,7 @@ const SideBar = () => {
             await axios.get(`${BaseURL}/hashtags`)
                 .then((response) => {
                     setHashtags(response.data);
-                    console.log(response.data);
+                    // console.log(response.data);
                 });
         }
         getHashtagsData();
@@ -33,7 +33,7 @@ const SideBar = () => {
             await axios.get(`${BaseURL}/stocks`)
                 .then((response) => {
                     setStocks(response.data);
-                    console.log(response.data);
+                    // console.log(response.data);
                 });
         }
         getStocksData();

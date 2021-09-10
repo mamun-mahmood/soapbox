@@ -59,9 +59,10 @@ const PublicProfile = ({
     }, [followersCount])
 
     const getUserFollowData = async () => {
-        axios.get(`${BaseURL}/user/followers/${userName}`).then((response) => {
-            setUserFollowers(response.data);
-        })
+        axios.get(`${BaseURL}/user/followers/${userName}`)
+            .then((response) => {
+                setUserFollowers(response.data);
+            })
     }
 
     useEffect(async () => {
