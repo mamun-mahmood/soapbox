@@ -53,11 +53,28 @@ const HashtagHoots = () => {
 
     var totalViews = 0;
 
+    // const updateTotalHashtagViews = useCallback((finalHashtag, totalViews) => {
+    //     axios.put(`${BaseURL}/hashtags`, {
+    //         hashtag: finalHashtag,
+    //         totalViews: totalViews
+    //     })
+    // }, [totalViews])
+
+    // const delHashtag = async (finalHashtag) => {
+    //     await axios.put(`${BaseURL}/hashtags`, {
+    //         hashtag: finalHashtag,
+    //         totalViews: 0
+    //     })
+
+    //     console.log(`${finalHashtag} deleted`);
+    // }
+
+    // (totalViews += upload.views, updateTotalHashtagViews(finalHashtag, totalViews))
     allUploads.map((upload) => {
         return (<div key={upload.id}>
             {(upload.caption).includes(finalHashtag)
                 ?
-                totalViews += upload.views
+                (totalViews += upload.views)
                 : null
             }
         </div>)

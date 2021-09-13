@@ -95,6 +95,8 @@ const HootInside = ({
         axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
             setUsers(response.data);
         })
+
+        setEditCaption(caption);
     }, [])
 
     var commentName = null;
@@ -143,11 +145,16 @@ const HootInside = ({
         setIsMoreModalOpen(false);
     }
 
-    const deleteHoot = () => {
+    const deleteHoot = async () => {
         setIsMoreModalOpen(false);
-        axios.delete(`${BaseURL}/upload/delete/${hootImgId}`, {
-            username: userInfo.username,
-        });
+
+        axios.all([
+            axios.delete(`${BaseURL}/upload/delete/${hootImgId}`, {
+                username: userInfo.username,
+            })
+        ])
+
+        history.push('/home');
         window.location.reload();
     }
 

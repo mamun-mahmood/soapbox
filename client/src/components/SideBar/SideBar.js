@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
 import SideBarOption from './SideBarOption'
 import { BsLightning } from 'react-icons/bs'
@@ -11,33 +11,88 @@ const SideBar = () => {
     const [mainActive, setMainActive] = useState("active");
     const [hashtags, setHashtags] = useState([]);
     const [stocks, setStocks] = useState([]);
+    const [allUploads, setAllUploads] = useState([]);
     const [myListActive, setMyListActive] = useState("");
     const history = useHistory()
 
     const BaseURL = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
-        // getting hashtag data
+        const getAllUploadData = async () => {
+            await axios.get(`${BaseURL}/upload`).then((response) => {
+                setAllUploads(response.data);
+            })
+        }
+        getAllUploadData();
+    }, [])
+
+    // Hashtags
+    useEffect(() => {
         const getHashtagsData = async () => {
             await axios.get(`${BaseURL}/hashtags`)
                 .then((response) => {
                     setHashtags(response.data);
-                    // console.log(response.data);
                 });
         }
         getHashtagsData();
     }, [])
 
+    const updateTotalHashtagViews = useCallback((hashtag, totalViews) => {
+        axios.put(`${BaseURL}/hashtags`, {
+            hashtag: hashtag,
+            totalViews: totalViews
+        })
+    }, [])
+
+    hashtags.map((hashtag) => {
+        var totalViews = 0;
+        allUploads.map((upload) => {
+            (upload.caption).includes(hashtag.hashtag)
+                ?
+                (totalViews += upload.views, updateTotalHashtagViews(hashtag.hashtag, totalViews))
+                : null
+        })
+    })
+
+    // sorted array by views - trending first
+    const byHashtagViews = hashtags.slice(0);
+    byHashtagViews.sort(function (a, b) {
+        return a.totalViews - b.totalViews;
+    });
+
+    // Stocks
     useEffect(() => {
-        // getting stock data
         const getStocksData = async () => {
             await axios.get(`${BaseURL}/stocks`)
                 .then((response) => {
                     setStocks(response.data);
-                    // console.log(response.data);
                 });
         }
         getStocksData();
     }, [])
+
+    const updateTotalStockViews = useCallback((stock, totalViews) => {
+        axios.put(`${BaseURL}/stocks`, {
+            stock: stock,
+            totalViews: totalViews
+        })
+    }, [])
+
+    stocks.map((stock) => {
+        var totalViews = 0;
+        allUploads.map((upload) => {
+            (upload.caption).includes(stock.stock)
+                ?
+                (totalViews += upload.views, updateTotalStockViews(stock.stock, totalViews))
+                : null
+        })
+    })
+
+    // sorted array by views - trending first
+    const byStockViews = stocks.slice(0);
+    byStockViews.sort(function (a, b) {
+        return a.totalViews - b.totalViews;
+    });
 
     var username = "";
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
@@ -98,13 +153,17 @@ const SideBar = () => {
                     </li>
                     <li>
                         <div className="hashtags">
-                            {hashtags.slice(0, 8).map((hashtag) => {
+                            {byHashtagViews.filter((hashtag) => {
+                                if (hashtag.totalViews !== 0) {
+                                    return hashtag
+                                }
+                            }).slice(0, 8).map((hashtag) => {
                                 return (<div key={hashtag.id}>
                                     <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
                                         onClick={() => history.push(`/hashtags/${(hashtag.hashtag).replace('#', '')}`)}>{hashtag.hashtag}
                                     </small>
                                 </div>)
-                            })}
+                            }).reverse()}
                         </div>
                     </li>
 
@@ -119,13 +178,17 @@ const SideBar = () => {
                     </li>
                     <li>
                         <div className="hashtags">
-                            {stocks.slice(0, 8).map((stock) => {
+                            {byStockViews.filter((stock) => {
+                                if (stock.totalViews !== 0) {
+                                    return stock
+                                }
+                            }).slice(0, 8).map((stock) => {
                                 return (<div key={stock.id}>
                                     <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
                                         onClick={() => history.push(`/stocks/${(stock.stock).replace('$', '')}`)}>{stock.stock}
                                     </small>
                                 </div>)
-                            })}
+                            }).reverse()}
                         </div>
                     </li>
                     <SideBarOption

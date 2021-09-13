@@ -9,6 +9,7 @@ import InfiniteScrollLoader from '../Feed/InfiniteScrollLoader';
 import Post from '../Post';
 import './stockHoots.css'
 import EndStockHootMsg from './EndStockHootMsg';
+import { useCallback } from 'react';
 
 const stockHoots = () => {
     const { stock } = useParams();
@@ -53,11 +54,19 @@ const stockHoots = () => {
 
     var totalViews = 0;
 
+    // const updateTotalStockViews = useCallback((finalStock, totalViews) => {
+    //     axios.put(`${BaseURL}/stocks`, {
+    //         stock: finalStock,
+    //         totalViews: totalViews
+    //     })
+    // }, [totalViews])
+
+    // (totalViews += upload.views, updateTotalStockViews(finalStock, totalViews))
     allUploads.map((upload) => {
         return (<div key={upload.id}>
             {(upload.caption).includes(finalStock)
                 ?
-                totalViews += upload.views
+                (totalViews += upload.views)
                 : null
             }
         </div>)
