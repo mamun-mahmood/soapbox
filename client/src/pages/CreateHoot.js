@@ -46,6 +46,7 @@ const CreatePost = () => {
         const formData = new FormData();
         formData.append("timeStamp", timeStamp)
         formData.append("caption", caption)
+        formData.append("ephemeral", ephemeralCheck ? 1 : 0)
         formData.append("authorEmail", email)
         formData.append("file", file);
 
@@ -109,6 +110,13 @@ const CreatePost = () => {
     })
 
     const profilePicPath = `${BaseURL}/profile-pictures/${userProfilePic}`;
+
+    const makeEphemeral = () => {
+        setEphemeralCheck(!ephemeralCheck)
+    }
+
+    // ephemeralCheck ? console.log("ephemeralCheck: 1", ephemeralCheck) : console.log("ephemeralCheck: 0", ephemeralCheck)
+    ephemeralCheck ? console.log(1) : console.log(0);
 
     return (
         <Fragment>
@@ -219,19 +227,17 @@ const CreatePost = () => {
                                 </div>
                             </div>
 
-                            {/* <div className="ephemeral">
+                            <div className="ephemeral">
                                 <input
                                     type="checkbox"
-                                    className="cm-toggle"
+                                    className="ephemeral-toggle"
                                     checked={ephemeralCheck}
-                                    onChange={
-                                        (e) => {
-                                            setEphemeralCheck(e.target.checked);
-                                        }} />
+                                    onChange={makeEphemeral} />
                                 <span>
-                                    Ephemeral {ephemeralCheck}
+                                    Ephemeral{" "}
                                 </span>
-                            </div> */}
+                                <small>(Hoot's lifetime will be 7 days)</small>
+                            </div>
                         </div>
                     </div>
 

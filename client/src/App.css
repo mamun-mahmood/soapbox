@@ -1439,9 +1439,17 @@ hr {
   font-size: medium;
   padding: 0 0.5rem;
   padding-bottom: 0.3rem;
+  padding-right: 0.2rem;
 }
+
+.ephemeral small {
+  font-weight: 500;
+  color: #6B7280;
+  padding-bottom: 0.3rem;
+}
+
 /* Toggle Button */
-.cm-toggle {
+.ephemeral-toggle {
 	-webkit-appearance: none;
 	-webkit-tap-highlight-color: transparent;
 	position: relative;
@@ -1453,7 +1461,7 @@ hr {
 
 
 /* To create surface of toggle button */
-.cm-toggle:after {
+.ephemeral-toggle:after {
 	content: '';
 	width: 40px;
 	height: 15px;
@@ -1465,7 +1473,7 @@ hr {
 
 
 /* Contents before checkbox to create toggle handle */
-.cm-toggle:before {
+.ephemeral-toggle:before {
 	content: '';
 	width: 20px;
 	height: 20px;
@@ -1480,21 +1488,21 @@ hr {
 
 
 /* Shift the handle to left on check event */
-.cm-toggle:checked:before {
+.ephemeral-toggle:checked:before {
 	left: 22px;
 	box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 /* Background color when toggle button will be active */
-.cm-toggle:checked:after {
+.ephemeral-toggle:checked:after {
 	background: var(--primary-color);
 }
 
 /* Transition for smoothness */
-.cm-toggle,
-.cm-toggle:before,
-.cm-toggle:after,
-.cm-toggle:checked:before,
-.cm-toggle:checked:after {
+.ephemeral-toggle,
+.ephemeral-toggle:before,
+.ephemeral-toggle:after,
+.ephemeral-toggle:checked:before,
+.ephemeral-toggle:checked:after {
 	transition: ease .3s;
 	-webkit-transition: ease .3s;
 	-moz-transition: ease .3s;

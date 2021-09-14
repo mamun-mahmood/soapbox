@@ -10,6 +10,7 @@ const Post = ({
     likes,
     views,
     caption,
+    ephemeral,
     timeStamp,
     edited,
     editedTimeStamp
@@ -43,6 +44,7 @@ const Post = ({
                         likes={likes}
                         views={views}
                         caption={caption}
+                        ephemeral={ephemeral}
                         timeStamp={timeStamp}
                         edited={edited}
                         editedTimeStamp={editedTimeStamp}
