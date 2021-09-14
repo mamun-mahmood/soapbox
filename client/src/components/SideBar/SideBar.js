@@ -17,82 +17,82 @@ const SideBar = () => {
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
-    useEffect(() => {
-        const getAllUploadData = async () => {
-            await axios.get(`${BaseURL}/upload`).then((response) => {
-                setAllUploads(response.data);
-            })
-        }
-        getAllUploadData();
-    }, [])
+    // useEffect(() => {
+    //     const getAllUploadData = async () => {
+    //         await axios.get(`${BaseURL}/upload`).then((response) => {
+    //             setAllUploads(response.data);
+    //         })
+    //     }
+    //     getAllUploadData();
+    // }, [])
 
     // Hashtags
     useEffect(() => {
         const getHashtagsData = async () => {
             await axios.get(`${BaseURL}/hashtags`)
                 .then((response) => {
-                    setHashtags(response.data);
+                    setHashtags((response.data).reverse());
                 });
         }
         getHashtagsData();
     }, [])
 
-    const updateTotalHashtagViews = useCallback((hashtag, totalViews) => {
-        axios.put(`${BaseURL}/hashtags`, {
-            hashtag: hashtag,
-            totalViews: totalViews
-        })
-    }, [])
+    // const updateTotalHashtagViews = useCallback((hashtag, totalViews) => {
+    //     axios.put(`${BaseURL}/hashtags`, {
+    //         hashtag: hashtag,
+    //         totalViews: totalViews
+    //     })
+    // }, [])
 
-    hashtags.map((hashtag) => {
-        var totalViews = 0;
-        allUploads.map((upload) => {
-            (upload.caption).includes(hashtag.hashtag)
-                ?
-                (totalViews += upload.views, updateTotalHashtagViews(hashtag.hashtag, totalViews))
-                : null
-        })
-    })
+    // hashtags.map((hashtag) => {
+    //     var totalViews = 0;
+    //     allUploads.map((upload) => {
+    //         (upload.caption).includes(hashtag.hashtag)
+    //             ?
+    //             (totalViews += upload.views, updateTotalHashtagViews(hashtag.hashtag, totalViews))
+    //             : null
+    //     })
+    // })
 
-    // sorted array by views - trending first
-    const byHashtagViews = hashtags.slice(0);
-    byHashtagViews.sort(function (a, b) {
-        return a.totalViews - b.totalViews;
-    });
+    // // sorted array by views - trending first
+    // const byHashtagViews = hashtags.slice(0);
+    // byHashtagViews.sort(function (a, b) {
+    //     return a.totalViews - b.totalViews;
+    // });
 
     // Stocks
     useEffect(() => {
         const getStocksData = async () => {
             await axios.get(`${BaseURL}/stocks`)
                 .then((response) => {
-                    setStocks(response.data);
+                    setStocks((response.data).reverse());
                 });
         }
         getStocksData();
     }, [])
 
-    const updateTotalStockViews = useCallback((stock, totalViews) => {
-        axios.put(`${BaseURL}/stocks`, {
-            stock: stock,
-            totalViews: totalViews
-        })
-    }, [])
+    // const updateTotalStockViews = useCallback((stock, totalViews) => {
+    //     axios.put(`${BaseURL}/stocks`, {
+    //         stock: stock,
+    //         totalViews: totalViews
+    //     })
+    // }, [])
 
-    stocks.map((stock) => {
-        var totalViews = 0;
-        allUploads.map((upload) => {
-            (upload.caption).includes(stock.stock)
-                ?
-                (totalViews += upload.views, updateTotalStockViews(stock.stock, totalViews))
-                : null
-        })
-    })
+    // stocks.map((stock) => {
+    //     var totalViews = 0;
+    //     allUploads.map((upload) => {
+    //         (upload.caption).includes(stock.stock)
+    //             ?
+    //             (totalViews += upload.views, updateTotalStockViews(stock.stock, totalViews))
+    //             : null
+    //     })
+    // })
 
-    // sorted array by views - trending first
-    const byStockViews = stocks.slice(0);
-    byStockViews.sort(function (a, b) {
-        return a.totalViews - b.totalViews;
-    });
+    // // sorted array by views - trending first
+    // const byStockViews = stocks.slice(0);
+    // byStockViews.sort(function (a, b) {
+    //     return a.totalViews - b.totalViews;
+    // });
 
     var username = "";
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
@@ -153,17 +153,18 @@ const SideBar = () => {
                     </li>
                     <li>
                         <div className="hashtags">
-                            {byHashtagViews.filter((hashtag) => {
+                            {/* .filter((hashtag) => {
                                 if (hashtag.totalViews !== 0) {
                                     return hashtag
                                 }
-                            }).slice(0, 8).map((hashtag) => {
+                            }) */}
+                            {hashtags.slice(0, 8).map((hashtag) => {
                                 return (<div key={hashtag.id}>
                                     <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
                                         onClick={() => history.push(`/hashtags/${(hashtag.hashtag).replace('#', '')}`)}>{hashtag.hashtag}
                                     </small>
                                 </div>)
-                            }).reverse()}
+                            })}
                         </div>
                     </li>
 
@@ -178,17 +179,18 @@ const SideBar = () => {
                     </li>
                     <li>
                         <div className="hashtags">
-                            {byStockViews.filter((stock) => {
+                            {/* .filter((stock) => {
                                 if (stock.totalViews !== 0) {
                                     return stock
                                 }
-                            }).slice(0, 8).map((stock) => {
+                            }) */}
+                            {stocks.slice(0, 8).map((stock) => {
                                 return (<div key={stock.id}>
                                     <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
                                         onClick={() => history.push(`/stocks/${(stock.stock).replace('$', '')}`)}>{stock.stock}
                                     </small>
                                 </div>)
-                            }).reverse()}
+                            })}
                         </div>
                     </li>
                     <SideBarOption

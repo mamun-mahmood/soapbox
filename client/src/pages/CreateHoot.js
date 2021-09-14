@@ -20,6 +20,7 @@ const CreatePost = () => {
     const history = useHistory();
     const [loading, setLoading] = useState(true);
     const [saveLoading, setSaveLoading] = useState(false);
+    const [ephemeralCheck, setEphemeralCheck] = useState(false);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -217,6 +218,20 @@ const CreatePost = () => {
                                     </Button>{' '}
                                 </div>
                             </div>
+
+                            {/* <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="cm-toggle"
+                                    checked={ephemeralCheck}
+                                    onChange={
+                                        (e) => {
+                                            setEphemeralCheck(e.target.checked);
+                                        }} />
+                                <span>
+                                    Ephemeral {ephemeralCheck}
+                                </span>
+                            </div> */}
                         </div>
                     </div>
 
