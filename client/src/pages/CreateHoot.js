@@ -26,6 +26,7 @@ const CreatePost = () => {
     const [loading, setLoading] = useState(true);
     const [saveLoading, setSaveLoading] = useState(false);
     const [ephemeralCheck, setEphemeralCheck] = useState(false);
+    const [privateCheck, setPrivateCheck] = useState(false);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -124,6 +125,10 @@ const CreatePost = () => {
 
     const makeEphemeral = () => {
         setEphemeralCheck(!ephemeralCheck)
+    }
+
+    const makePrivate = () => {
+        setPrivateCheck(!privateCheck)
     }
 
     // ephemeralCheck ? console.log("ephemeralCheck: 1", ephemeralCheck) : console.log("ephemeralCheck: 0", ephemeralCheck)
@@ -248,6 +253,18 @@ const CreatePost = () => {
                                     Ephemeral{" "}
                                 </span>
                                 <small>(Hoot's lifetime will be 7 days)</small>
+                            </div>
+
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={privateCheck}
+                                    onChange={makePrivate}
+                                />
+                                <span>
+                                    Private Hoot{" "}
+                                </span>
                             </div>
                         </div>
                     </div>
