@@ -11,6 +11,7 @@ const Post = ({
     views,
     caption,
     ephemeral,
+    expiryDate,
     timeStamp,
     edited,
     editedTimeStamp
@@ -45,6 +46,7 @@ const Post = ({
                         views={views}
                         caption={caption}
                         ephemeral={ephemeral}
+                        expiryDate={expiryDate}
                         timeStamp={timeStamp}
                         edited={edited}
                         editedTimeStamp={editedTimeStamp}

@@ -65,6 +65,7 @@ const IndividualHoot = () => {
                                     views={hoot.views}
                                     caption={hoot.caption}
                                     ephemeral={hoot.ephemeral}
+                                    expiryDate={hoot.expiryDate}
                                     timeStamp={hoot.timeStamp}
                                     edited={hoot.edited}
                                     editedTimeStamp={hoot.editedTimeStamp}

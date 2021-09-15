@@ -262,6 +262,83 @@
     text-decoration: none;
 }
 
+/* toggle switch  */
+.toggle-container {
+    display: none;
+}
+.toggle-container, .toggle-container:after, .toggle-container:before, .toggle-container *, .toggle-container *:after, .toggle-container *:before, .toggle-container + .toggle-button {
+    box-sizing: border-box;
+}
+.toggle-container::selection, .toggle-container:after::selection, .toggle-container:before::selection, .toggle-container *::selection, .toggle-container *:after::selection, .toggle-container *:before::selection, .toggle-container + .toggle-button::selection {
+    background: none;
+}
+.toggle-container + .toggle-button {
+    outline: 0;
+    display: block;
+    width: auto;
+    height: 2.8em;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    /* border: 1px solid #f0f0f0; */
+}
+.toggle-container + .toggle-button:after, .toggle-container + .toggle-button:before {
+    position: relative;
+    display: block;
+    width: 50%;
+    height: 100%;
+    content: '';
+}
+.toggle-container + .toggle-button:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.toggle-container + .toggle-button span {
+    margin: 10px;
+    z-index: 1;
+    font-size: 14px;
+    font-weight: 700;
+}
+.toggle-container + .toggle-button #main {
+    position: absolute;
+    top: 0;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: medium;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.toggle-container + .toggle-button #myList {
+    position: absolute;
+    top: 0;
+    right: 0.2rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: medium;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.toggle-container:checked + .toggle-button:after {
+    left: 50%;
+}
+
+.toggle-container-light + .toggle-button {
+    background: #EDE9FF;
+    border-radius: 0.5rem;
+    padding: 2px;
+    transition: all 0.4s ease;
+}
+.toggle-container-light + .toggle-button:after {
+    border: 0px solid #EDE9FF;
+    border-radius: 0.5rem;
+    opacity: 4.5;
+    transition: all 0.2s ease;
+    background: #dfd9fa;
+}
+
 @media only screen and (max-width: 1000px) {
     .toggle {
         display: none;
@@ -279,6 +356,17 @@
 }
 
 @media only screen and (max-width: 900px) {
+    .toggle-container-light {
+        display: none !important;
+    }
+
+    .toggle-container {
+        display: none !important;
+    }
+    
+    .toggle-button {
+        display: none !important;
+    }
     .sidebar {
         justify-content: center;
         flex: 0 0 100px;

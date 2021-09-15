@@ -4,6 +4,11 @@ import axios from 'axios'
 import Avatar from 'react-avatar';
 import toast from 'react-hot-toast';
 import { format } from 'date-fns'
+import addDays from 'date-fns/addDays'
+import getTime from 'date-fns/getTime'
+import addSeconds from 'date-fns/addSeconds'
+import addMinutes from 'date-fns/addMinutes'
+import differenceInMilliseconds from 'date-fns/differenceInMilliseconds'
 import { Button } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { IoCloseOutline } from 'react-icons/io5'
@@ -33,8 +38,13 @@ const CreatePost = () => {
     }
 
     // timeStamp can be implemented at server-side...
-    const date = new Date();
-    const timeStamp = format(date, 'LLL dd, yyyy • HH:mm');
+    const currentDate = new Date();
+    const timeStamp = format(currentDate, 'LLL dd, yyyy • HH:mm');
+
+    // by default expiry date is after 7 days of creating hoot... 
+    // expiry date in Milliseconds 
+
+    const expiryDate = addDays(currentDate, 7).getTime();
 
     const hashtagsFound = caption.split(' ').filter(v => v.startsWith('#'));
     const stocksFound = caption.split(' ').filter(v => v.startsWith('$'));
@@ -47,6 +57,7 @@ const CreatePost = () => {
         formData.append("timeStamp", timeStamp)
         formData.append("caption", caption)
         formData.append("ephemeral", ephemeralCheck ? 1 : 0)
+        formData.append("expiryDate", ephemeralCheck ? expiryDate : 0)
         formData.append("authorEmail", email)
         formData.append("file", file);
 
@@ -116,7 +127,7 @@ const CreatePost = () => {
     }
 
     // ephemeralCheck ? console.log("ephemeralCheck: 1", ephemeralCheck) : console.log("ephemeralCheck: 0", ephemeralCheck)
-    ephemeralCheck ? console.log(1) : console.log(0);
+    // ephemeralCheck ? console.log(1) : console.log(0);
 
     return (
         <Fragment>

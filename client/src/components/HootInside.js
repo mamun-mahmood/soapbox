@@ -36,6 +36,7 @@ const HootInside = ({
     views,
     caption,
     ephemeral,
+    expiryDate,
     timeStamp,
     edited,
     editedTimeStamp
@@ -196,7 +197,7 @@ const HootInside = ({
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
         }, 100);
-        toast.success('Link Copied to Clipboard');
+        toast.success('Link to hoot copied to clipboard');
     }
 
     const copyTextToClipboard = () => {
@@ -205,7 +206,7 @@ const HootInside = ({
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
         }, 100);
-        toast.success('Text Copied to Clipboard');
+        toast.success('Text copied to clipboard');
     }
 
     const shareVia = async () => {
@@ -278,11 +279,15 @@ const HootInside = ({
 
     const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
 
+    // setInterval(() => {
+    //     console.log(new Date())
+    // }, 1);
+
     return (
         <Fragment>
             {ephemeral === 1
                 ?
-                <Expire delay={604800000} hootImgId={hootImgId}>
+                <Expire expiryDate={expiryDate} hootImgId={hootImgId}>
                     <div className="home">
                         <div className="home-container">
                             <div className="post-heading">

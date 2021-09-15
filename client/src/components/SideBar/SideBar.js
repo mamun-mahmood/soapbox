@@ -13,6 +13,7 @@ const SideBar = () => {
     const [stocks, setStocks] = useState([]);
     const [allUploads, setAllUploads] = useState([]);
     const [myListActive, setMyListActive] = useState("");
+    const [gender, setGender] = useState(false)
     const history = useHistory()
 
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -104,7 +105,7 @@ const SideBar = () => {
         <div className="sidebar start">
             <ui style={{ position: "fixed" }}>
                 <div className="scrollable">
-                    <div className="toggle">
+                    {/* <div className="toggle">
                         <span
                             className={mainActive}
                             onClick={() => {
@@ -126,7 +127,32 @@ const SideBar = () => {
                         >
                             My List
                         </span>
-                    </div>
+                    </div> */}
+
+                    <li>
+                        <input
+                            type="checkbox"
+                            name="gender-toggle"
+                            id="gender-toggle"
+                            className="toggle-container toggle-container-light"
+                            onChange={() => setGender(!gender)}
+                        />
+                        <label htmlFor="gender-toggle" className="toggle-button">
+                            <span
+                                id="main"
+                                className="d-flex align-items-center justify-content-center"
+                            >
+                                Main
+                            </span>
+                            <span
+                                id="myList"
+                                className="d-flex align-items-center justify-content-end"
+                            >
+                                My List
+                            </span>
+                        </label>
+                    </li>
+
                     <SideBarOption
                         option="Home"
                         link="/home"
