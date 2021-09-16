@@ -6,7 +6,8 @@ import './backToFeed.css'
 const BackToFeed = () => {
     return (
         <div className="back-to-feed">
-            <Link to="/home">
+            {/* <Link to="/home"> */}
+            <Link to="/">
                 <FiArrowLeft className="left-arrow" />
             </Link>
             <span>

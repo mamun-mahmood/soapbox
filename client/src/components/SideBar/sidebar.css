@@ -27,7 +27,8 @@
   
 /* Handle on hover */
 .scrollable::-webkit-scrollbar-thumb:hover {
-    background: #dfdcfa;
+    /* background: #dfdcfa; */
+    background: #edeafd;
 }
 
 .sidebar {
@@ -336,7 +337,7 @@
     border-radius: 0.5rem;
     opacity: 4.5;
     transition: all 0.2s ease;
-    background: #dfd9fa;
+    background: #d9d2fa;
 }
 
 @media only screen and (max-width: 1000px) {

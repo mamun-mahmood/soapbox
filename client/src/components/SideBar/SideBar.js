@@ -155,14 +155,19 @@ const SideBar = () => {
 
                     <SideBarOption
                         option="Home"
-                        link="/home"
+                        // link="/home"
+                        link="/"
                         Icon={FiHome}
                     />
-                    <SideBarOption
-                        option="Profile"
-                        link={`/profile/${username}`}
-                        Icon={BiUser}
-                    />
+
+                    {userInfo
+                        ? <SideBarOption
+                            option="Profile"
+                            link={`/profile/${username}`}
+                            Icon={BiUser}
+                        />
+                        : null
+                    }
                     <SideBarOption
                         option="Explore"
                         link="/explore"

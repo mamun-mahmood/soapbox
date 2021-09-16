@@ -47,6 +47,7 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </div>
+
                 <div className="landing-rs">
                     <div>
                         {toggle ? <LoginComp /> : <SignupComp />}
@@ -68,8 +69,16 @@ const LandingPage = () => {
                             MegaHoot Soapbox <small className="landing-badge landing-solid-badge">BETA</small>
                         </div>
                         <div>
-                            Temporarily Invitation Only
+                            Free to join
                         </div>
+                    </div>
+                    <div className="go-to-feed">
+                        {/* <Link to="/home"> */}
+                        <Link to="/">
+                            <button>
+                                Go to Feed
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </main>

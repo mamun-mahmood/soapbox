@@ -196,14 +196,33 @@ code {
   padding-bottom: 0.2rem;
   padding-right: 0.1rem;
   font-size: larger;
-  color: #542C5D;
+  /* color: #542C5D; */
+  color: #7933ae;
+}
+.login-signup button{
+    /* width: 200px; */
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.3rem;
+    color: #fff;
+    font-weight: 600;
+    background-color: var(--on-hover);
+}
+.placeholder {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15rem;
 }
 
 .profile-verification-badge {
   padding-bottom: 0.6rem;
   padding-left: 0.3rem;
   font-size: xx-large;
-  color: #542C5D;
+  /* color: #542C5D; */
+  color: #7933ae;
 }
 
 .name-verification {

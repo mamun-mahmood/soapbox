@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Helmet } from "react-helmet";
 import NavBar from '../../components/NavBar/NavBar'
 import SideBar from '../../components/SideBar/SideBar'
@@ -16,6 +16,9 @@ const Feed = Loadable({
 })
 
 const Home = () => {
+    useEffect(() => {
+        // window.location.reload();
+    }, [])
     return (
         <Fragment>
             <NavBar />

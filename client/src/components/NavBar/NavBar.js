@@ -122,7 +122,8 @@ const NavBar = () => {
         <nav className="main-nav shadow-sm">
             <div className="max-width-nav">
                 <div className="main-brand">
-                    <Link to="/home" className="navbar-brand cursor-pointer">
+                    {/* <Link to="/home" className="navbar-brand cursor-pointer"> */}
+                    <Link to="/" className="navbar-brand cursor-pointer">
                         <img
                             src="/images/MegaHoot_Owl3_app.png"
                             alt="Megahoot Soapbox"
@@ -139,7 +140,8 @@ const NavBar = () => {
                             <NavLink
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
-                                to="/home"
+                                // to="/home"
+                                to="/"
                             >
                                 Home
                             </NavLink>
@@ -173,7 +175,7 @@ const NavBar = () => {
                                 exact
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
-                                to="/"
+                                to="/login"
                                 onClick={logout}
                             >
                                 Logout
@@ -185,7 +187,7 @@ const NavBar = () => {
                                 exact
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
-                                to="/"
+                                to="/login"
                             >
                                 Login
                             </NavLink>
@@ -193,7 +195,7 @@ const NavBar = () => {
                                 exact
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
-                                to="/"
+                                to="/login"
                             >
                                 Sign Up
                             </NavLink>

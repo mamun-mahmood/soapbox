@@ -18,10 +18,11 @@ const PublicProfilePage = () => {
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        if (username == userInformation.username) {
-            const profilePath = `/profile/${username}`;
-            history.push(profilePath);
-        }
+        // to chech if username === to logged in username then we redirect them to profile page 
+        // if (username == userInformation.username) {
+        //     const profilePath = `/profile/${username}`;
+        //     history.push(profilePath);
+        // }
 
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`)

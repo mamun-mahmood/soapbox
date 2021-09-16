@@ -74,12 +74,18 @@ const PublicProfile = ({
         setFollowed(true)
         setFollowersCount(followersCount + 1)
 
-        axios.post(`${BaseURL}/user/followedBy`, {
-            username: userName,
-            loggedInUsername: userInformation.username
-        })
+        if (userInformation) {
+            axios.post(`${BaseURL}/user/followedBy`, {
+                username: userName,
+                loggedInUsername: userInformation.username
+            })
+        }
 
-        toast.success(`Followed ${userName}`);
+        if (userInformation) {
+            toast.success(`Followed ${userName}`);
+        } else {
+            toast.error('please login');
+        }
     }
 
     const removeFollower = async () => {
@@ -87,7 +93,9 @@ const PublicProfile = ({
         setFollowed(false)
         setFollowersCount(followersCount - 1)
 
-        axios.delete(`${BaseURL}/user/followedBy/${userInformation.username}`)
+        if (userInformation) {
+            axios.delete(`${BaseURL}/user/followedBy/${userInformation.username}`)
+        }
 
         toast(`Unfollowed ${userName}`);
     }
@@ -283,28 +291,39 @@ const PublicProfile = ({
                             </div>
 
                             <div className="user-follow">
-                                {userFollowers.length === 0
-                                    ? <button
+                                {userInformation ?
+                                    userFollowers.length === 0
+                                        ? <button
+                                            className="btn-follow"
+                                            onClick={addFollower}
+                                        >
+                                            {followed
+                                                ? "Following"
+                                                : "Follow"
+                                            }
+                                        </button>
+                                        : userFollowers.map((user) => {
+                                            return (<Fragment key={user.id}>
+                                                {(user.followedBy).includes(userInformation && userInformation.username) &&
+                                                    <button
+                                                        className="btn-follow"
+                                                        onClick={removeFollower}
+                                                    >
+                                                        Following
+                                                    </button>
+                                                }
+                                            </Fragment>)
+                                        })
+                                    :
+                                    <button
                                         className="btn-follow"
                                         onClick={addFollower}
                                     >
-                                        {followed
-                                            ? "Following"
-                                            : "Follow"
-                                        }
+                                        Follow
                                     </button>
-                                    : userFollowers.map((user) => {
-                                        return (<Fragment key={user.id}>
-                                            {(user.followedBy).includes(userInformation.username) &&
-                                                <button
-                                                    className="btn-follow"
-                                                    onClick={removeFollower}
-                                                >
-                                                    Following
-                                                </button>
-                                            }
-                                        </Fragment>)
-                                    })}
+                                }
+
+
                             </div>
                         </div>
                     </div>

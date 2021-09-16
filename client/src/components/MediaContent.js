@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import LazyLoad from 'react-lazyload';
+import BeatLoader from "react-spinners/BeatLoader";
 
 const MediaContent = ({
     mimeType,
@@ -50,11 +51,19 @@ const MediaContent = ({
         }
     }
 
+    const PlaceholderComponent = () => {
+        return (
+            <div className="placeholder">
+                <BeatLoader color={"#8249A0"} size={20} />
+            </div>
+        )
+    }
     return (
         <Fragment>
             {mimeType.match(/image/gi) == "image" &&
                 <LazyLoad
-                    offset={1200}
+                    offset={2000}
+                    placeholder={<PlaceholderComponent />}
                 // height={200}
                 >
                     <img
@@ -73,7 +82,9 @@ const MediaContent = ({
 
             {mimeType.match(/video/gi) == "video" &&
                 <LazyLoad
-                    offset={1200}
+                    offset={2000}
+                    placeholder={<PlaceholderComponent />}
+
                 // height={200}
                 >
                     <video
@@ -95,7 +106,9 @@ const MediaContent = ({
 
             {mimeType.match(/audio/gi) == "audio" &&
                 <LazyLoad
-                    offset={1200}
+                    offset={2000}
+                    placeholder={<PlaceholderComponent />}
+
                 // height={200}
                 >
                     <audio

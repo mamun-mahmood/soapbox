@@ -12,7 +12,7 @@ const LoginComp = () => {
     useEffect(() => {
         if (localStorage.getItem("loggedIn")) {
             setSaveLoading(false);
-            history.push("/home");
+            // history.push("/home");
         }
     })
 
@@ -37,17 +37,23 @@ const LoginComp = () => {
                         email: response.data.email
                     }
                     localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
-                    history.push("/home");
+                    setMessage(response.data.message);
+                    setTimeout(() => {
+                        // history.push("/home");
+                        history.push("/");
+                    }, 200);
                 }
+                setMessage(response.data.message);
             })
         }
+        userLogin();
 
-        const userLoginToast = userLogin();
-        toast.promise(userLoginToast, {
-            loading: 'logging in...',
-            success: 'Login Successful',
-            error: 'Login Unsuccessful',
-        });
+        // const userLoginToast = userLogin();
+        // toast.promise(userLoginToast, {
+        //     loading: 'logging in...',
+        //     success: 'Login Successful',
+        //     error: 'Login Unsuccessful',
+        // });
 
         setTimeout(() => {
             setSaveLoading(false);

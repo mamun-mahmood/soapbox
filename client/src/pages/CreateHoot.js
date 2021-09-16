@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
 import BeatLoader from "react-spinners/BeatLoader";
 import NavBar from '../components/NavBar/NavBar'
+import { BiWindows } from 'react-icons/bi';
 
 const CreatePost = () => {
     const [caption, setCaption] = useState("");
@@ -88,7 +89,8 @@ const CreatePost = () => {
         });
 
         setTimeout(() => {
-            history.push("/home");
+            // history.push("/home");
+            history.push("/");
         }, 500);
     }
 
@@ -146,7 +148,8 @@ const CreatePost = () => {
             {!loading &&
                 <div className="upload-post">
                     <div className="back-to-home">
-                        <Link to="/home">
+                        {/* <Link to="/home"> */}
+                        <Link to="/">
                             <FiArrowLeft className="left-arrow" />
                         </Link>
                         <span>

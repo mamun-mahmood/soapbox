@@ -76,13 +76,17 @@ function App() {
         position="bottom-center"
         reverseOrder={false}
       />
+
       <Switch>
-        <Route exact path="/">
+        {/* <Route exact path="/"> */}
+        <Route path="/login">
           <ProtectedRoute page={LandingPage} />
         </Route>
 
-        <Route path="/home">
-          <ProtectedRoute page={Home} />
+        {/* <Route path="/home"> */}
+        <Route exact path="/">
+          {/* <ProtectedRoute page={Home} /> */}
+          <Home />
         </Route>
 
         <Route path="/create">
@@ -90,11 +94,13 @@ function App() {
         </Route>
 
         <Route path="/user/:username">
-          <ProtectedRoute page={PublicProfilePage} />
+          {/* <ProtectedRoute page={PublicProfilePage} /> */}
+          <PublicProfilePage />
         </Route>
 
         <Route path="/:username/hoot/:id">
-          <ProtectedRoute page={HootPage} />
+          {/* <ProtectedRoute page={HootPage} /> */}
+          <HootPage />
         </Route>
 
         <Route path="/edit/profile/:username">
@@ -105,21 +111,24 @@ function App() {
         </Route>
 
         <Route path="/hashtags/:hashtag">
-          <ProtectedRoute page={HashtagHootsPage} />
+          {/* <ProtectedRoute page={HashtagHootsPage} /> */}
+          <HashtagHootsPage />
         </Route>
         {/* <Route path="/hashtags">
           <ProtectedRoute page={HashtagsPage} />
         </Route> */}
 
         <Route path="/stocks/:stock">
-          <ProtectedRoute page={StockHootsPage} />
+          {/* <ProtectedRoute page={StockHootsPage} /> */}
+          <StockHootsPage />
         </Route>
         {/* <Route path="/stocks">
           <ProtectedRoute page={StocksPage} />
         </Route> */}
 
         <Route path="/explore">
-          <ProtectedRoute page={ExplorePage} />
+          {/* <ProtectedRoute page={ExplorePage} /> */}
+          <ExplorePage />
         </Route>
 
         <Route path="*">

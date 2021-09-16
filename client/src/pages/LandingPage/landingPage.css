@@ -215,6 +215,16 @@ footer span {
     transition: 0.3s;
 }
 
+.go-to-feed button {
+    /* width: 200px; */
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.3rem;
+    color: #fff;
+    font-weight: 600;
+    background-color: var(--on-hover);
+}
+
 @media only screen and (max-width: 1024px) {
     .landing-ls img {
         width: 300px;

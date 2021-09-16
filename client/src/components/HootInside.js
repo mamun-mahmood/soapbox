@@ -81,7 +81,7 @@ const HootInside = ({
     const history = useHistory();
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
-    const path = (userInfo.username === username ? `/profile/${username}` : `/user/${username}`);
+    const path = userInfo ? ((userInfo.username === username ? `/profile/${username}` : `/user/${username}`)) : `/user/${username}`
     const profilePath = `/profile/${username}`
 
     // timeStamp can be implemented at server-side...
@@ -105,22 +105,22 @@ const HootInside = ({
     var commentName = null;
     var commentProfilePic = null;
 
-    // getting user data 
-    const [userInfoC, setUserInfoC] = useState([]);
-    useEffect(() => {
-        const getUserData = async () => {
-            await axios.get(`${BaseURL}/user/${userInfo.username}`)
-                .then((response) => {
-                    setUserInfoC(response.data);
-                });
-        }
-        getUserData()
-    }, [])
+    // getting user data for comment info
+    // const [userInfoC, setUserInfoC] = useState([]);
+    // useEffect(() => {
+    //     const getUserData = async () => {
+    //         await axios.get(`${BaseURL}/user/${userInfo.username}`)
+    //             .then((response) => {
+    //                 setUserInfoC(response.data);
+    //             });
+    //     }
+    //     getUserData()
+    // }, [])
 
-    userInfoC.map((user) => {
-        commentName = user.name;
-        commentProfilePic = user.profilePic;
-    })
+    // userInfoC.map((user) => {
+    //     commentName = user.name;
+    //     commentProfilePic = user.profilePic;
+    // })
 
     // like functionality added to hoots.
     useEffect(() => {
@@ -169,26 +169,30 @@ const HootInside = ({
     }
 
     const addComment = () => {
-        axios.post(`${BaseURL}/comment/`, {
-            name: commentName,
-            username: userInfo.username,
-            commentBody: newComment,
-            profilePic: commentProfilePic,
-            hootId: hootId
-        }).then((response) => {
-            setNewComment("");
-
-            const commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
-
-            const addNewComment = {
+        if (!userInfo) {
+            toast.error('please login')
+        } else {
+            axios.post(`${BaseURL}/comment/`, {
                 name: commentName,
-                username: userInfo.username,
+                username: userInfo && userInfo.username,
                 commentBody: newComment,
-                commentProfilePicPath: commentProfilePicPath
-            }
+                profilePic: commentProfilePic,
+                hootId: hootId
+            }).then((response) => {
+                setNewComment("");
 
-            setComments([...comments, addNewComment])
-        })
+                const commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
+
+                const addNewComment = {
+                    name: commentName,
+                    username: userInfo && userInfo.username,
+                    commentBody: newComment,
+                    commentProfilePicPath: commentProfilePicPath
+                }
+
+                setComments([...comments, addNewComment])
+            })
+        }
     }
 
     const copyLinkToClipboard = () => {
@@ -395,27 +399,45 @@ const HootInside = ({
                                                 onMouseEnter={() => setIsMoreModalOpen(true)}
                                                 onMouseLeave={() => setIsMoreModalOpen(false)}
                                             >
-                                                {username === userInfo.username &&
+                                                {userInfo ?
+                                                    username === userInfo.username ?
+                                                        <div className="more-options">
+                                                            <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                            <span onClick={shareVia}>Share to</span>
+                                                            <span onClick={copyLinkToClipboard}>Copy Link</span>
+                                                            <span onClick={copyTextToClipboard}>Copy Text</span>
+                                                            <span onClick={openEditModal}>Edit</span>
+                                                            <span onClick={openDeleteModal}> Delete</span>
+                                                            {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
+                                                        </div>
+                                                        :
+                                                        <div className="more-options">
+                                                            <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                            <span onClick={shareVia}>Share to</span>
+                                                            <span onClick={copyLinkToClipboard}>Copy Link</span>
+                                                            <span onClick={copyTextToClipboard}>Copy Text</span>
+                                                            {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
+                                                        </div>
+                                                    :
                                                     <div className="more-options">
                                                         <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
-                                                        <span onClick={openEditModal}>Edit</span>
-                                                        <span onClick={openDeleteModal}> Delete</span>
                                                         {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                                     </div>
                                                 }
 
-                                                {username === userInfo.username ||
+                                                {/* {userInfo || */}
+                                                {/* {userInfo || username === userInfo.username ||
                                                     <div className="more-options">
                                                         <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
-                                                        {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                                     </div>
-                                                }
+                                                } */}
+                                                {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                                 {/* <IoCloseOutline className="close-modal" onClick={() => setIsMoreModalOpen(false)} /> */}
                                             </div>
                                         </ClickAwayListener>
@@ -537,7 +559,8 @@ const HootInside = ({
                                                             type="text"
                                                             maxLength="290"
                                                             value={newComment}
-                                                            placeholder={`Comment as ${userInfo.username}`}
+                                                            // placeholder={`Comment as ${userInfo.username}`}
+                                                            placeholder="Add a Comment"
                                                             onChange={(event) => {
                                                                 setNewComment(event.target.value);
                                                             }} />
@@ -969,27 +992,44 @@ const HootInside = ({
                                             onMouseEnter={() => setIsMoreModalOpen(true)}
                                             onMouseLeave={() => setIsMoreModalOpen(false)}
                                         >
-                                            {username === userInfo.username &&
+                                            {userInfo ?
+                                                username === userInfo.username ?
+                                                    <div className="more-options">
+                                                        <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                        <span onClick={shareVia}>Share to</span>
+                                                        <span onClick={copyLinkToClipboard}>Copy Link</span>
+                                                        <span onClick={copyTextToClipboard}>Copy Text</span>
+                                                        <span onClick={openEditModal}>Edit</span>
+                                                        <span onClick={openDeleteModal}> Delete</span>
+                                                        {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
+                                                    </div>
+                                                    :
+                                                    <div className="more-options">
+                                                        <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                        <span onClick={shareVia}>Share to</span>
+                                                        <span onClick={copyLinkToClipboard}>Copy Link</span>
+                                                        <span onClick={copyTextToClipboard}>Copy Text</span>
+                                                        {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
+                                                    </div>
+                                                :
                                                 <div className="more-options">
                                                     <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
                                                     <span onClick={shareVia}>Share to</span>
                                                     <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                     <span onClick={copyTextToClipboard}>Copy Text</span>
-                                                    <span onClick={openEditModal}>Edit</span>
-                                                    <span onClick={openDeleteModal}> Delete</span>
                                                     {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                                 </div>
                                             }
 
-                                            {username === userInfo.username ||
-                                                <div className="more-options">
-                                                    <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
-                                                    <span onClick={shareVia}>Share to</span>
-                                                    <span onClick={copyLinkToClipboard}>Copy Link</span>
-                                                    <span onClick={copyTextToClipboard}>Copy Text</span>
-                                                    {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
-                                                </div>
-                                            }
+                                            {/* {userInfo || */}
+                                            {/* {userInfo || username === userInfo.username ||
+                                                    <div className="more-options">
+                                                        <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                        <span onClick={shareVia}>Share to</span>
+                                                        <span onClick={copyLinkToClipboard}>Copy Link</span>
+                                                        <span onClick={copyTextToClipboard}>Copy Text</span>
+                                                    </div>
+                                                } */}
                                             {/* <IoCloseOutline className="close-modal" onClick={() => setIsMoreModalOpen(false)} /> */}
                                         </div>
                                     </ClickAwayListener>
@@ -1111,7 +1151,8 @@ const HootInside = ({
                                                         type="text"
                                                         maxLength="290"
                                                         value={newComment}
-                                                        placeholder={`Comment as ${userInfo.username}`}
+                                                        // placeholder={`Comment as ${userInfo.username}`}
+                                                        placeholder="Add a Comment"
                                                         onChange={(event) => {
                                                             setNewComment(event.target.value);
                                                         }} />
@@ -1435,7 +1476,7 @@ const HootInside = ({
                     </div>
                 </div>
             }
-        </Fragment>
+        </Fragment >
     )
 }
 

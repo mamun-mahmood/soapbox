@@ -10,7 +10,8 @@ const SignupComp = () => {
 
     useEffect(() => {
         if (localStorage.getItem("loggedIn")) {
-            history.push("/home");
+            // history.push("/home");
+            history.push("/");
         }
     }, [])
 
@@ -43,7 +44,7 @@ const SignupComp = () => {
                         placeholder="Name"
                         value={name}
                         onChange={(event) => { setName(event.target.value) }}
-                        disabled
+                    // disabled
                     />
                 </Form.Group>
 
@@ -54,7 +55,7 @@ const SignupComp = () => {
                         placeholder="Username"
                         value={username}
                         onChange={(event) => { setUsername(event.target.value) }}
-                        disabled
+                    // disabled
                     />
                 </Form.Group>
 
@@ -65,7 +66,7 @@ const SignupComp = () => {
                         placeholder="Email"
                         value={email}
                         onChange={(event) => { setEmail(event.target.value) }}
-                        disabled
+                    // disabled
                     />
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -79,7 +80,7 @@ const SignupComp = () => {
                         placeholder="Password"
                         value={password}
                         onChange={(event) => { setPassword(event.target.value) }}
-                        disabled
+                    // disabled
                     />
                 </Form.Group>
 
@@ -98,7 +99,7 @@ const SignupComp = () => {
                     variant="primary"
                     type="submit"
                     onClick={signup}
-                    disabled={!email || !password}
+                    disabled={!email || !password || !username || !name}
                 >
                     Sign Up
                 </button>
