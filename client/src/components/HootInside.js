@@ -287,6 +287,14 @@ const HootInside = ({
     //     console.log(new Date())
     // }, 1);
 
+    const followAction = () => {
+        if (userInfo) {
+            null
+        } else {
+            toast.error('please login');
+        }
+    }
+
     return (
         <Fragment>
             {ephemeral === 1
@@ -349,7 +357,7 @@ const HootInside = ({
                                                 </div>
                                                 {/* <img class="hover-avatar" src={avatar} alt="avatar" /> */}
                                             </Link>
-                                            <button className="hover-btn-hoot-follow">Follow</button>
+                                            <button className="hover-btn-hoot-follow" onClick={followAction}>Follow</button>
                                         </div>
 
                                         <div className="hoot-user-info">
@@ -367,6 +375,11 @@ const HootInside = ({
                                                     }
                                                 </div>
                                                 <div className="hover-at-name">@{username}</div>
+                                                {verified === 1
+                                                    ?
+                                                    <small className="verified-account">Verified account</small>
+                                                    : null
+                                                }
                                             </div>
                                             <div className="user-hoot-count">
                                                 <span className="hoot-counts">{users.length}</span>
@@ -377,7 +390,7 @@ const HootInside = ({
                                 }
 
                                 <div className="user-actions">
-                                    <button className="btn-hoot-follow">Follow</button>
+                                    <button className="btn-hoot-follow" onClick={followAction}>Follow</button>
                                     <div
                                         className="more"
                                         onMouseEnter={() => setIsMoreModalOpen(true)}
@@ -942,7 +955,7 @@ const HootInside = ({
                                             </div>
                                             {/* <img class="hover-avatar" src={avatar} alt="avatar" /> */}
                                         </Link>
-                                        <button className="hover-btn-hoot-follow">Follow</button>
+                                        <button className="hover-btn-hoot-follow" onClick={followAction}>Follow</button>
                                     </div>
 
                                     <div className="hoot-user-info">
@@ -960,6 +973,11 @@ const HootInside = ({
                                                 }
                                             </div>
                                             <div className="hover-at-name">@{username}</div>
+                                            {verified === 1
+                                                ?
+                                                <small className="verified-account">Verified account</small>
+                                                : null
+                                            }
                                         </div>
                                         <div className="user-hoot-count">
                                             <span className="hoot-counts">{users.length}</span>
@@ -970,7 +988,7 @@ const HootInside = ({
                             }
 
                             <div className="user-actions">
-                                <button className="btn-hoot-follow">Follow</button>
+                                <button className="btn-hoot-follow" onClick={followAction}>Follow</button>
                                 <div
                                     className="more"
                                     onMouseEnter={() => setIsMoreModalOpen(true)}

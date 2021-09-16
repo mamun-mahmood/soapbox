@@ -188,36 +188,80 @@ const PublicProfile = ({
 
             {!loading &&
                 <div className="public-profile-page">
-                    <div className="profile-container">
-                        <div className="profile-picture">
-                            <Avatar
-                                size={160}
-                                round={true}
-                                name={name}
-                                src={profilePicPath}
-                            />
-                        </div>
-                        {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile-pic" /> */}
-                        <div className="user-info">
-                            {/* <div className="follow-user"> */}
-                            <div className="display-name">
-                                <div className="profile-name-verification">
-                                    <h1>{name}</h1>
-                                    {verified === 1
-                                        ?
-                                        <div className="profile-verification-badge">
-                                            <HiBadgeCheck />
-                                        </div>
-                                        : null
+                    <div className="new-profile">
+                        <div className="profile-container">
+                            <div className="profile-picture">
+                                <Avatar
+                                    size={160}
+                                    round={true}
+                                    name={name}
+                                    src={profilePicPath}
+                                />
+                            </div>
+                            {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
+                            <div className="user-info">
+                                {/* <div className="follow-user"> */}
+                                <div className="display-name">
+                                    <div className="profile-name-verification">
+                                        <h1>{name}</h1>
+                                        {verified === 1
+                                            ?
+                                            <div className="profile-verification-badge">
+                                                <HiBadgeCheck />
+                                            </div>
+                                            : null
+                                        }
+                                    </div>
+                                </div>
+                                <div className="user-name-page">@{username}</div>
+                                <div className="user-follow">
+                                    {userInformation ?
+                                        userFollowers.length === 0
+                                            ? <button
+                                                className="btn-follow"
+                                                onClick={addFollower}
+                                            >
+                                                {followed
+                                                    ? "Following"
+                                                    : "Follow"
+                                                }
+                                            </button>
+                                            : userFollowers.map((user) => {
+                                                return (<Fragment key={user.id}>
+                                                    {(user.followedBy).includes(userInformation && userInformation.username) &&
+                                                        <button
+                                                            className="btn-follow"
+                                                            onClick={removeFollower}
+                                                        >
+                                                            Following
+                                                        </button>
+                                                    }
+                                                </Fragment>)
+                                            })
+                                        :
+                                        <button
+                                            className="btn-follow"
+                                            onClick={addFollower}
+                                        >
+                                            Follow
+                                        </button>
                                     }
                                 </div>
+
+
+                                {/* <button className="btn-edit-profile">
+        <Link to={`/edit/profile/${username}`}>
+            Edit Profile
+        </Link>
+    </button> */}
                             </div>
-                            <div className="user-name-page">@{username}</div>
+                        </div>
+                        <div className="profile-links">
 
                             <div className="user-counts">
-                                <div><span className="counts-bold">{formatCount(followersCount) + formatSi(followersCount)}</span> Followers</div>
-                                <div><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
-                                <div><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
+                                <div className="counts-stack"><span className="counts-bold">{formatCount(followersCount) + formatSi(followersCount)}</span> Followers</div>
+                                <div className="counts-stack"><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
+                                <div className="counts-stack"><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
                             </div>
 
                             {bio &&
@@ -290,43 +334,11 @@ const PublicProfile = ({
                                 }
                             </div>
 
-                            <div className="user-follow">
-                                {userInformation ?
-                                    userFollowers.length === 0
-                                        ? <button
-                                            className="btn-follow"
-                                            onClick={addFollower}
-                                        >
-                                            {followed
-                                                ? "Following"
-                                                : "Follow"
-                                            }
-                                        </button>
-                                        : userFollowers.map((user) => {
-                                            return (<Fragment key={user.id}>
-                                                {(user.followedBy).includes(userInformation && userInformation.username) &&
-                                                    <button
-                                                        className="btn-follow"
-                                                        onClick={removeFollower}
-                                                    >
-                                                        Following
-                                                    </button>
-                                                }
-                                            </Fragment>)
-                                        })
-                                    :
-                                    <button
-                                        className="btn-follow"
-                                        onClick={addFollower}
-                                    >
-                                        Follow
-                                    </button>
-                                }
-
-
-                            </div>
                         </div>
                     </div>
+
+
+
                     <hr />
                     <div className="pt-2">
                         {/* no need to reverse the list as it is getting reversed from the server itself  */}
