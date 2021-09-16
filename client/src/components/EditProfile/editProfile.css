@@ -216,6 +216,10 @@
     /* width: 100%; */
 }
 
+.sb-avatar img {
+    object-fit: cover !important;
+}
+
 .social-profile-icon-links a {
     color: #374151;
 }

@@ -223,6 +223,10 @@ footer span {
     color: #fff;
     font-weight: 600;
     background-color: var(--on-hover);
+    transition: 0.3s;
+}
+.go-to-feed button:hover {
+   transform: scale(1.1);
 }
 
 @media only screen and (max-width: 1024px) {

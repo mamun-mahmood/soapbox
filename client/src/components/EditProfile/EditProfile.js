@@ -238,9 +238,9 @@ const EditProfile = ({
                             }}
                         />
                         <div className="bio-count">
-                            <span className={newBio.length > 250 && "text-danger"}>
+                            <span className={newBio && newBio.length > 250 && "text-danger"}>
                                 {" "}
-                                {newBio.length}/300
+                                {newBio && newBio.length}/300
                             </span>
                         </div>
                     </div>

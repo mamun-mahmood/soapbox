@@ -44,7 +44,7 @@ const ProfilePage = () => {
                 }
                 {!loading &&
                     userInfo.map((user) => {
-                        return (<div key={user.id}>
+                        return (<div style={{ width: "100%" }} key={user.id}>
                             <Profile
                                 userId={user.id}
                                 verified={user.verified}

@@ -4,6 +4,7 @@ import format from "date-fns/format"
 import ClickAwayListener from 'react-click-away-listener';
 import MediaContent from './MediaContent';
 import HootComments from './Comment/HootComments';
+import ReactTooltip from 'react-tooltip';
 import toast from 'react-hot-toast';
 import Avatar from 'react-avatar';
 import { Link, useHistory } from 'react-router-dom'
@@ -302,6 +303,7 @@ const HootInside = ({
                 <Expire expiryDate={expiryDate} hootImgId={hootImgId}>
                     <div className="home">
                         <div className="home-container">
+                            <ReactTooltip />
                             <div className="post-heading">
                                 <div
                                     onMouseEnter={() => setHoverInfo(true)}
@@ -315,7 +317,7 @@ const HootInside = ({
                                                 round={true}
                                                 name={name ? name : username}
                                                 src={profilePicPath}
-                                                className="skeleton-img"
+                                                className={profilePic === null ? null : "skeleton-img"}
                                             />
                                         </div>
 
@@ -329,7 +331,7 @@ const HootInside = ({
                                             {verified === 1
                                                 ?
                                                 <div className="verification-badge">
-                                                    <HiBadgeCheck />
+                                                    <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" />
                                                 </div>
                                                 : null
                                             }
@@ -369,17 +371,17 @@ const HootInside = ({
                                                     {verified === 1
                                                         ?
                                                         <div className="verification-badge">
-                                                            <HiBadgeCheck />
+                                                            <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" data-class="hover-tootltip" />
                                                         </div>
                                                         : null
                                                     }
                                                 </div>
                                                 <div className="hover-at-name">@{username}</div>
-                                                {verified === 1
+                                                {/* {verified === 1
                                                     ?
                                                     <small className="verified-account">Verified account</small>
                                                     : null
-                                                }
+                                                } */}
                                             </div>
                                             <div className="user-hoot-count">
                                                 <span className="hoot-counts">{users.length}</span>
@@ -913,7 +915,7 @@ const HootInside = ({
                                             round={true}
                                             name={name ? name : username}
                                             src={profilePicPath}
-                                            className="skeleton-img"
+                                            className={profilePic === null ? null : "skeleton-img"}
                                         />
                                     </div>
 
@@ -927,7 +929,7 @@ const HootInside = ({
                                         {verified === 1
                                             ?
                                             <div className="verification-badge">
-                                                <HiBadgeCheck />
+                                                <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" />
                                             </div>
                                             : null
                                         }
@@ -967,17 +969,17 @@ const HootInside = ({
                                                 {verified === 1
                                                     ?
                                                     <div className="verification-badge">
-                                                        <HiBadgeCheck />
+                                                        <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" />
                                                     </div>
                                                     : null
                                                 }
                                             </div>
                                             <div className="hover-at-name">@{username}</div>
-                                            {verified === 1
+                                            {/* {verified === 1
                                                 ?
                                                 <small className="verified-account">Verified account</small>
                                                 : null
-                                            }
+                                            } */}
                                         </div>
                                         <div className="user-hoot-count">
                                             <span className="hoot-counts">{users.length}</span>

@@ -13,6 +13,7 @@ import HootOutside from './HootOutside/HootOutside';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 import toast from 'react-hot-toast';
+import ReactTooltip from 'react-tooltip';
 
 const PublicProfile = ({
     verified,
@@ -71,10 +72,11 @@ const PublicProfile = ({
 
     const addFollower = async () => {
         await getUserFollowData();
-        setFollowed(true)
-        setFollowersCount(followersCount + 1)
 
         if (userInformation) {
+            setFollowed(true)
+            setFollowersCount(followersCount + 1)
+
             axios.post(`${BaseURL}/user/followedBy`, {
                 username: userName,
                 loggedInUsername: userInformation.username
@@ -198,6 +200,7 @@ const PublicProfile = ({
                                     src={profilePicPath}
                                 />
                             </div>
+                            <ReactTooltip />
                             {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
                             <div className="user-info">
                                 {/* <div className="follow-user"> */}
@@ -207,7 +210,7 @@ const PublicProfile = ({
                                         {verified === 1
                                             ?
                                             <div className="profile-verification-badge">
-                                                <HiBadgeCheck />
+                                                <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" />
                                             </div>
                                             : null
                                         }
@@ -341,6 +344,16 @@ const PublicProfile = ({
 
                     <hr />
                     <div className="pt-2">
+                        {users.length === 0 &&
+                            <div className="no-hoots">
+                                <p>No hoots yet!</p>
+                                {/* <div className="profile-hoot">
+                                    <Link to="/create">
+                                        Create Hoot
+                                    </Link>
+                                </div> */}
+                            </div>
+                        }
                         {/* no need to reverse the list as it is getting reversed from the server itself  */}
                         <div className="hoot-profile-layout">
                             {!loading &&
@@ -348,7 +361,7 @@ const PublicProfile = ({
                                     dataLength={users.length}
                                     next={fetchProfileHoots}
                                     hasMore={hasMore}
-                                    loader={<InfiniteScrollLoader />}
+                                    loader={users.length > 10 && <InfiniteScrollLoader />}
                                 >
                                     <div className="hoot-profile-layout">
                                         {users.map((user) => {

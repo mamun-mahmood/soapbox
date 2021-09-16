@@ -63,8 +63,8 @@ const LoginComp = () => {
     return (
         <div>
             <Form className="login-form mx-auto p-4 pb-0">
-                <h1 className="text-center mb-4 login-head">Login</h1>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <h3 className="text-center mb-2 login-head">Login</h3>
+                <Form.Group className="mb-1" controlId="formBasicEmail">
                     <Form.Label className="text-color-auth">Email</Form.Label>
                     <Form.Control
                         type="email"
@@ -77,7 +77,7 @@ const LoginComp = () => {
                     </Form.Text>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-1" controlId="formBasicPassword">
                     <Form.Label className="text-color-auth">Password</Form.Label>
                     <Form.Control
                         type="password"

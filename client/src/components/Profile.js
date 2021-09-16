@@ -12,6 +12,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from './HootOutside/HootOutside';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
+import ReactTooltip from 'react-tooltip';
 
 const Profile = ({
     verified,
@@ -114,7 +115,6 @@ const Profile = ({
             {!loading &&
                 <div className="profile-page">
                     <div className="new-profile">
-
                         <div className="profile-container">
                             <div className="profile-picture">
                                 <Avatar
@@ -124,6 +124,7 @@ const Profile = ({
                                     src={profilePicPath}
                                 />
                             </div>
+                            <ReactTooltip />
                             {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
                             <div className="user-info">
                                 <div className="display-name">
@@ -132,7 +133,7 @@ const Profile = ({
                                         {verified === 1
                                             ?
                                             <div className="profile-verification-badge">
-                                                <HiBadgeCheck />
+                                                <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" />
                                             </div>
                                             : null
                                         }
@@ -256,11 +257,12 @@ const Profile = ({
                         }
                         {/* no need to reverse the list as it is getting reversed from the server itself  */}
                         {!loading &&
+                            myUploads.length > 0 &&
                             <InfiniteScroll
                                 dataLength={myUploads.length}
                                 next={fetchProfileHoots}
                                 hasMore={hasMore}
-                                loader={<InfiniteScrollLoader />}
+                                loader={myUploads.length > 10 && <InfiniteScrollLoader />}
                             >
                                 <div className="hoot-profile-layout">
                                     {myUploads.map((upload) => {

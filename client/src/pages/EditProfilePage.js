@@ -46,7 +46,7 @@ const EditProfilePage = () => {
 
                 {!loading &&
                     userInfo.map((user) => {
-                        return (<div key={user.id}>
+                        return (<div style={{ width: "100%" }} key={user.id}>
                             <EditProfile
                                 userId={user.id}
                                 name={user.name}

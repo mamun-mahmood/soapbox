@@ -119,7 +119,7 @@ const NavBar = () => {
         //         </div>
         //     </nav>
         // </div>
-        <nav className="main-nav shadow-sm">
+        <nav className="main-nav shadow-sm" style={{ zIndex: "11111" }}>
             <div className="max-width-nav">
                 <div className="main-brand">
                     {/* <Link to="/home" className="navbar-brand cursor-pointer"> */}
@@ -138,7 +138,8 @@ const NavBar = () => {
                     {localStorage.getItem("loggedIn") ?
                         <Fragment>
                             <NavLink
-                                activeClassName="nav-link-active"
+                                // activeClassName="nav-link-active"
+                                activeClassName=""
                                 className="nav-link main-title"
                                 // to="/home"
                                 to="/"

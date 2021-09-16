@@ -19,6 +19,7 @@ const SignupComp = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
 
     const signup = (event) => {
         event.preventDefault();
@@ -29,15 +30,15 @@ const SignupComp = () => {
             email,
             password,
         }).then((response) => {
-            // history.push("/login");
+            setMessage(response.data.message)
         })
     }
 
     return (
         <div>
             <Form className="login-form mx-auto p-4 pb-0">
-                <h1 className="text-center mb-4 signup-head">Sign Up</h1>
-                <Form.Group className="mb-3" controlId="formBasicText">
+                <h3 className="text-center mb-1 signup-head">Sign Up</h3>
+                <Form.Group className="mb-1" controlId="formBasicText">
                     <Form.Label className="text-color-auth">Name</Form.Label>
                     <Form.Control
                         type="text"
@@ -48,7 +49,7 @@ const SignupComp = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicText">
+                <Form.Group className="mb-1" controlId="formBasicText">
                     <Form.Label className="text-color-auth">Username</Form.Label>
                     <Form.Control
                         type="text"
@@ -59,7 +60,7 @@ const SignupComp = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-1" controlId="formBasicEmail">
                     <Form.Label className="text-color-auth">Email</Form.Label>
                     <Form.Control
                         type="email"
@@ -73,7 +74,7 @@ const SignupComp = () => {
                     </Form.Text>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-1" controlId="formBasicPassword">
                     <Form.Label className="text-color-auth">Password</Form.Label>
                     <Form.Control
                         type="password"
@@ -94,6 +95,7 @@ const SignupComp = () => {
                     Sign Up
                 </Button> */}
 
+                <strong className="text-center d-flex justify-content-center m-2 text-color-auth">{message}</strong>
                 <button
                     className="d-grid col-12 btn-main"
                     variant="primary"

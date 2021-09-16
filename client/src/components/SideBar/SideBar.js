@@ -229,18 +229,71 @@ const SideBar = () => {
                         Icon={BiMessageDetail}
                         link="/private-message"
                     />
-                    <SideBarOption
+                    {/* <SideBarOption
                         option="XMG Wallet"
                         Icon={BiWallet}
                         link="/xmg-wallet"
-                    />
+                    /> */}
+                    <li>
+                        <a
+                            activeClassName="sidebar-option-active"
+                            // className={looks}
+                            href="https://fortisab.com/"
+                            target="_blank" rel="noopener noreferrer"
+                        >
+                            {/* <BiWallet className={"sidebar-icon"} /> */}
+                            <span>
+                                Fortis Auction Blockmarket
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            activeClassName="sidebar-option-active"
+                            // className={looks}
+                            href="https://megahoot.org/"
+                            target="_blank" rel="noopener noreferrer"
+                        >
+                            {/* <BiWallet className={"sidebar-icon"} /> */}
+                            <span>
+                                XMG Wallet
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            activeClassName="sidebar-option-active"
+                            // className={looks}
+                            href="https://www.pecunovus.com/get-your-wallet/"
+                            target="_blank" rel="noopener noreferrer"
+                        >
+                            {/* <BiWallet className={"sidebar-icon"} /> */}
+                            <span>
+                                Pecu Novus Wallet
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            activeClassName="sidebar-option-active"
+                            // className={looks}
+                            href="https://megahootvault.org/"
+                            target="_blank" rel="noopener noreferrer"
+                        >
+                            {/* <BiWallet className={"sidebar-icon"} /> */}
+                            <span>
+                                Megahoot Vault
+                            </span>
+                        </a>
+                    </li>
+
                     <li>
                         <hr className="my-2" />
                     </li>
 
                     <li>
                         <small className="info cursor-pointer">About</small>{" "}
-                        <small className="info cursor-pointer">Fortis</small>{" "}
                         <small className="info cursor-pointer">Contact</small>
                     </li>
                     <li>

@@ -7,7 +7,7 @@ const SideBarOption = ({ option, link, Icon, looks }) => {
             {link
                 ?
                 <NavLink
-                    activeClassName="sidebar-option-active"
+                    activeClassName={option === "Home" ? null : "sidebar-option-active"}
                     className={looks}
                     to={link}
                 >
