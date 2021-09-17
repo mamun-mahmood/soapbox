@@ -1,4 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect, useContext } from 'react'
+// import User from '../context/UserContext'
 import SideBar from '../components/SideBar/SideBar'
 import NavBar from '../components/NavBar/NavBar'
 import Profile from '../components/Profile'
@@ -45,6 +46,7 @@ const ProfilePage = () => {
                 {!loading &&
                     userInfo.map((user) => {
                         return (<div style={{ width: "100%" }} key={user.id}>
+                            {/* <User> */}
                             <Profile
                                 userId={user.id}
                                 verified={user.verified}
@@ -65,6 +67,7 @@ const ProfilePage = () => {
                                 medium={user.medium}
                                 tumblr={user.tumblr}
                             />
+                            {/* </User> */}
                             <Helmet>
                                 <title>{username} ({user.name}) on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
                                 <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />

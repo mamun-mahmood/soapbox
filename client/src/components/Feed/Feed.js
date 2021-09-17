@@ -39,7 +39,7 @@ const Feed = () => {
     }
 
     return (
-        <div className="feed start">
+        <div className="feed start" style={{ width: "100%" }}>
             {/* no need to reverse the list as it is getting reversed from the server itself  */}
             {uploads &&
                 <InfiniteScroll

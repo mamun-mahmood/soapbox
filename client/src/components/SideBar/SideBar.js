@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
 import SideBarOption from './SideBarOption'
 import { BsLightning } from 'react-icons/bs'
-import { useHistory } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import { FiHome, FiHash } from 'react-icons/fi'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import './sidebar.css';
@@ -66,6 +66,7 @@ const SideBar = () => {
         const getStocksData = async () => {
             await axios.get(`${BaseURL}/stocks`)
                 .then((response) => {
+                    // setStocks(Array.from(new Set((response.data).reverse())));
                     setStocks((response.data).reverse());
                 });
         }
@@ -192,7 +193,7 @@ const SideBar = () => {
                             {hashtags.slice(0, 8).map((hashtag) => {
                                 return (<div key={hashtag.id}>
                                     <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                        onClick={() => history.push(`/hashtags/${(hashtag.hashtag).replace('#', '')}`)}>{hashtag.hashtag}
+                                        onClick={() => history.push(`/hashtags/${(hashtag.hashtag).replace('#', '')}`)}>{hashtag.hashtag.toLowerCase()}
                                     </small>
                                 </div>)
                             })}
@@ -215,20 +216,39 @@ const SideBar = () => {
                                     return stock
                                 }
                             }) */}
-                            {stocks.slice(0, 8).map((stock) => {
+                            {stocks.filter((stock) => {
+                                const regex = /\d/;
+                                if (regex.test(stock.stock) === false) {
+                                    {/* return stocks.indexOf(stock) == index */ }
+                                    return stock
+                                }
+                            }).slice(0, 8).map((stock) => {
                                 return (<div key={stock.id}>
                                     <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                        onClick={() => history.push(`/stocks/${(stock.stock).replace('$', '')}`)}>{stock.stock}
+                                        onClick={() => history.push(`/stocks/${(stock.stock).replace('$', '')}`)}>{stock.stock.toUpperCase()}
                                     </small>
                                 </div>)
                             })}
                         </div>
                     </li>
-                    <SideBarOption
+                    {/* <SideBarOption
                         option="Private Messages"
                         Icon={BiMessageDetail}
                         link="/private-message"
-                    />
+                    /> */}
+
+                    <li>
+                        <NavLink
+                            style={{ padding: "0.1rem 0.5rem" }}
+                            activeClassName={"Private Messages" === "Home" ? null : "sidebar-option-active"}
+                            to="/private-message"
+                        >
+                            {/* <BiMessageDetail className={"sidebar-icon"} /> */}
+                            <span>
+                                Private Messages
+                            </span>
+                        </NavLink>
+                    </li>
                     {/* <SideBarOption
                         option="XMG Wallet"
                         Icon={BiWallet}
@@ -236,8 +256,8 @@ const SideBar = () => {
                     /> */}
                     <li>
                         <a
+                            style={{ padding: "0.1rem 0.5rem" }}
                             activeClassName="sidebar-option-active"
-                            // className={looks}
                             href="https://fortisab.com/"
                             target="_blank" rel="noopener noreferrer"
                         >
@@ -249,8 +269,8 @@ const SideBar = () => {
                     </li>
                     <li>
                         <a
+                            style={{ padding: "0.1rem 0.5rem" }}
                             activeClassName="sidebar-option-active"
-                            // className={looks}
                             href="https://megahoot.org/"
                             target="_blank" rel="noopener noreferrer"
                         >
@@ -263,8 +283,8 @@ const SideBar = () => {
 
                     <li>
                         <a
+                            style={{ padding: "0.1rem 0.5rem" }}
                             activeClassName="sidebar-option-active"
-                            // className={looks}
                             href="https://www.pecunovus.com/get-your-wallet/"
                             target="_blank" rel="noopener noreferrer"
                         >
@@ -276,8 +296,8 @@ const SideBar = () => {
                     </li>
                     <li>
                         <a
+                            style={{ padding: "0.1rem 0.5rem" }}
                             activeClassName="sidebar-option-active"
-                            // className={looks}
                             href="https://megahootvault.org/"
                             target="_blank" rel="noopener noreferrer"
                         >
@@ -292,27 +312,30 @@ const SideBar = () => {
                         <hr className="my-2" />
                     </li>
 
-                    <li>
-                        <small className="info cursor-pointer">About</small>{" "}
-                        <small className="info cursor-pointer">Contact</small>
-                    </li>
-                    <li>
-                        <small className="info cursor-pointer">Privacy Policy</small>
-                    </li>
-                    <li>
-                        <small className="info cursor-pointer">Terms Of Service</small>
-                    </li>
-                    <div className="megahoot-com">
-                        <small className="info cursor-pointer">
-                            <a href="https://www.megahoot.com/" target="_blank" rel="noopener noreferrer">
-                                MegaHoot Technologies, Inc
-                            </a>
-                        </small>
+                    <div style={{ paddingLeft: "0.5rem" }}>
+                        <li>
+                            <small className="info cursor-pointer" >About</small>{" "}
+                            <small className="info cursor-pointer">Contact</small>
+                        </li>
+                        <li>
+                            <small className="info cursor-pointer">Privacy Policy</small>
+                        </li>
+                        <li>
+                            <small className="info cursor-pointer">Terms Of Service</small>
+                        </li>
+                        <div className="megahoot-com">
+                            <small className="info cursor-pointer">
+                                <a href="https://www.megahoot.com/" target="_blank" rel="noopener noreferrer">
+                                    MegaHoot Technologies, Inc
+                                </a>
+                            </small>
+                        </div>
+                        <li>
+                            <small className="info">&copy; Copyright 2021 MegaHoot Technologies, Inc</small>
+                        </li>
                     </div>
-                    <li>
-                        <small className="info">&copy; Copyright 2021 MegaHoot Technologies, Inc</small>
-                    </li>
                 </div>
+
             </ui>
         </div>
     )

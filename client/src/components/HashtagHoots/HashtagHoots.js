@@ -105,7 +105,7 @@ const HashtagHoots = () => {
                     <div className="hashtag-hoot-wrapper">
                         <div className="hashtag-hoots-name" >
                             <div className="hashtag-header">
-                                <FaHashtag />{hashtag}
+                                <FaHashtag />{hashtag.toLowerCase()}
                             </div>
                             <span>
                                 {formatCount(totalViews) + formatSi(totalViews)} Views

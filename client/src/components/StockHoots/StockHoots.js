@@ -97,7 +97,7 @@ const stockHoots = () => {
                     <div className="stock-hoot-wrapper">
                         <div className="stock-hoots-name" >
                             <div className="stock-header">
-                                <BiDollar />{stock}
+                                <BiDollar />{stock.toUpperCase()}
                             </div>
                             <span>
                                 {formatCount(totalViews) + formatSi(totalViews)} Views

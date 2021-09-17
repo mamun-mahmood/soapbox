@@ -1,4 +1,5 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useEffect, useState, Fragment, useContext } from 'react'
+// import { UserContext } from '../context/UserContext';
 import axios from 'axios'
 import format from "date-fns/format"
 import ClickAwayListener from 'react-click-away-listener';
@@ -78,6 +79,8 @@ const HootInside = ({
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
     const [users, setUsers] = useState([]);
+
+    // const [user, setUser] = useContext(UserContext);
 
     const history = useHistory();
 
@@ -387,6 +390,10 @@ const HootInside = ({
                                                 <span className="hoot-counts">{users.length}</span>
                                                 hoots
                                             </div>
+                                            {/* <div className="user-hoot-count">
+                                                <span className="hoot-counts">{user.views}</span>
+                                                views
+                                            </div> */}
                                         </div>
                                     </div>
                                 }
@@ -902,6 +909,7 @@ const HootInside = ({
                 :
                 <div className="home">
                     <div className="home-container">
+                        <ReactTooltip />
                         <div className="post-heading">
                             <div
                                 onMouseEnter={() => setHoverInfo(true)}
@@ -985,6 +993,10 @@ const HootInside = ({
                                             <span className="hoot-counts">{users.length}</span>
                                             hoots
                                         </div>
+                                        {/* <div className="user-hoot-count">
+                                            <span className="hoot-counts">{user.views}</span>
+                                            views
+                                        </div> */}
                                     </div>
                                 </div>
                             }

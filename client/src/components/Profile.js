@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect, Fragment, useContext } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Avatar from 'react-avatar';
@@ -13,6 +13,7 @@ import HootOutside from './HootOutside/HootOutside';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 import ReactTooltip from 'react-tooltip';
+// import { UserContext } from '../context/UserContext';
 
 const Profile = ({
     verified,
@@ -40,6 +41,8 @@ const Profile = ({
     const [hasMore, setHasMore] = useState(true);
     const [followersCount, setFollowersCount] = useState(followers)
     const [page, setpage] = useState(2);
+
+    // const [user, setUser] = useContext(UserContext);
 
     const LIMIT = 9;
 
@@ -85,6 +88,15 @@ const Profile = ({
         totalViews += upload.views
         totalLikes += upload.likes
     })
+
+    // const totalCounts = {
+    //     views: formatCount(totalViews) + formatSi(totalViews),
+    //     likes: formatCount(totalLikes) + formatSi(totalLikes)
+    // }
+
+    // useEffect(() => {
+    //     setUser(totalCounts);
+    // }, [])
 
     // count will be formatted 
     const formatCount = count => {

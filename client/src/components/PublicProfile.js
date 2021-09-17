@@ -357,6 +357,7 @@ const PublicProfile = ({
                         {/* no need to reverse the list as it is getting reversed from the server itself  */}
                         <div className="hoot-profile-layout">
                             {!loading &&
+                                users.length > 0 &&
                                 <InfiniteScroll
                                     dataLength={users.length}
                                     next={fetchProfileHoots}

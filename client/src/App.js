@@ -23,6 +23,7 @@ import HashtagHootsPage from './pages/HashtagHootsPage';
 import StocksPage from './pages/StocksPage';
 import StockHootsPage from './pages/StockHootsPage';
 import ExplorePage from './pages/ExplorePage';
+import ReactTooltip from 'react-tooltip';
 
 // const Home = Loadable({
 //   loader: () => import('./pages/Home/Home' /* webpackChunkName: "Home" */),

@@ -61,10 +61,9 @@ const MediaContent = ({
     return (
         <Fragment>
             {mimeType.match(/image/gi) == "image" &&
-                <LazyLoad
-                    offset={2000}
-                    placeholder={<PlaceholderComponent />}
-                // height={200}
+                <div
+                // offset={15000}
+                // placeholder={<PlaceholderComponent />}
                 >
                     <img
                         ref={ref}
@@ -77,15 +76,13 @@ const MediaContent = ({
                             imgRef();
                         }}
                     />
-                </LazyLoad>
+                </div>
             }
 
             {mimeType.match(/video/gi) == "video" &&
-                <LazyLoad
-                    offset={2000}
-                    placeholder={<PlaceholderComponent />}
-
-                // height={200}
+                <div
+                // offset={15000}
+                // placeholder={<PlaceholderComponent />}
                 >
                     <video
                         loop muted controls autoPlay
@@ -101,15 +98,13 @@ const MediaContent = ({
                         />
                         Your browser does not support HTML video.
                     </video>
-                </LazyLoad>
+                </div>
             }
 
             {mimeType.match(/audio/gi) == "audio" &&
                 <LazyLoad
-                    offset={2000}
+                    offset={15000}
                     placeholder={<PlaceholderComponent />}
-
-                // height={200}
                 >
                     <audio
                         className={editOpen ? "hoot-ado-fix" : "hoot-ado"}
