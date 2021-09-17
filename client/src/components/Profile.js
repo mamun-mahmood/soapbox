@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useContext } from 'react'
+import React, { useState, useEffect, Fragment, useContext, useCallback } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Avatar from 'react-avatar';
@@ -88,6 +88,16 @@ const Profile = ({
         totalViews += upload.views
         totalLikes += upload.likes
     })
+
+    // const userTotalCounts = useCallback(() => {
+    //     axios.put(`${BaseURL}/upload/user/totalCounts/${username}`, {
+    //         totalViews: totalViews,
+    //         totalLikes: totalLikes
+    //     })
+    // }, [totalViews, totalLikes])
+
+    // userTotalCounts();
+
 
     // const totalCounts = {
     //     views: formatCount(totalViews) + formatSi(totalViews),

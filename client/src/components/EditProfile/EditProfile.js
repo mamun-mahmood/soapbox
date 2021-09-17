@@ -228,7 +228,7 @@ const EditProfile = ({
                     <div className="edit-parameter">Bio</div>
                     <div className="edit-item-info bio-area">
                         <textarea
-                            maxLength="300"
+                            maxLength="160"
                             type="text"
                             placeholder="Write a short bio to show on your profile"
                             value={newBio}
@@ -238,9 +238,9 @@ const EditProfile = ({
                             }}
                         />
                         <div className="bio-count">
-                            <span className={newBio && newBio.length > 250 && "text-danger"}>
+                            <span className={newBio && newBio.length > 120 && "text-danger"}>
                                 {" "}
-                                {newBio && newBio.length}/300
+                                {newBio ? newBio.length : 0}/160
                             </span>
                         </div>
                     </div>

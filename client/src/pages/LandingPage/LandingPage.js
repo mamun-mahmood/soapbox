@@ -18,9 +18,14 @@ const SignupComp = Loadable({
         return <FormLoading />
     }
 })
+
 const LandingPage = () => {
     const [toggle, setToggle] = useState(true);
     const locattion = useLocation();
+
+    const handleChange = (value) => {
+        setToggle(value);
+    }
 
     return (
         <div className="page">
@@ -50,7 +55,7 @@ const LandingPage = () => {
 
                 <div className="landing-rs">
                     <div>
-                        {toggle ? <LoginComp /> : <SignupComp />}
+                        {toggle ? <LoginComp /> : <SignupComp handleChange={handleChange} />}
 
                         {toggle ?
                             <div className="text-center text-decoration-none mt-2">

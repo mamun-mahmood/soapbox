@@ -41,6 +41,7 @@ const Post = ({
                         profilePic={user.profilePic}
                         verified={user.verified}
                         hootId={hootId}
+                        bio={user.bio}
                         username={username}
                         mimeType={mimeType}
                         hootImgId={hootImgId}

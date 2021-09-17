@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useContext } from 'react'
+import React, { useEffect, useState, Fragment, useContext, useCallback } from 'react'
 // import { UserContext } from '../context/UserContext';
 import axios from 'axios'
 import format from "date-fns/format"
@@ -98,13 +98,30 @@ const HootInside = ({
     const usernamesFound = caption.split(' ').filter(v => v.startsWith('@'));
 
     useEffect(() => {
-        // getting all uploads(hoots) 
+        // getting all uploads(hoots) of particuler user 
         axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
             setUsers(response.data);
         })
 
         setEditCaption(caption);
     }, [])
+
+    var totalViews = 0;
+    var totalLikes = 0;
+
+    users.map((upload) => {
+        totalViews += upload.views
+        totalLikes += upload.likes
+    })
+
+    // const userTotalCounts = useCallback(() => {
+    //     axios.put(`${BaseURL}/upload/user/totalCounts/${username}`, {
+    //         totalViews: totalViews,
+    //         totalLikes: totalLikes
+    //     })
+    // }, [totalViews, totalLikes])
+
+    // userTotalCounts();
 
     var commentName = null;
     var commentProfilePic = null;
@@ -374,26 +391,38 @@ const HootInside = ({
                                                     {verified === 1
                                                         ?
                                                         <div className="verification-badge">
-                                                            <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" data-class="hover-tootltip" />
+                                                            <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" />
                                                         </div>
                                                         : null
                                                     }
                                                 </div>
                                                 <div className="hover-at-name">@{username}</div>
                                                 {/* {verified === 1
-                                                    ?
-                                                    <small className="verified-account">Verified account</small>
-                                                    : null
-                                                } */}
-                                            </div>
-                                            <div className="user-hoot-count">
-                                                <span className="hoot-counts">{users.length}</span>
-                                                hoots
+                                                ?
+                                                <small className="verified-account">Verified account</small>
+                                                : null
+                                            } */}
                                             </div>
                                             {/* <div className="user-hoot-count">
-                                                <span className="hoot-counts">{user.views}</span>
-                                                views
-                                            </div> */}
+                                            <span className="hoot-counts">{users.length}</span>
+                                            hoots
+                                        </div> */}
+                                            <div className="user-hoot-count">
+                                                <div>
+                                                    <span className="hoot-counts">{formatCount(totalViews) + formatSi(totalViews)}</span>
+                                                    views
+                                                </div>
+                                                {/* </div>
+                                        <div className="user-hoot-count"> */}
+                                                <div>
+                                                    <span className="hoot-counts">{formatCount(totalLikes) + formatSi(totalLikes)}</span>
+                                                    likes
+                                                </div>
+                                            </div>
+                                            <hr style={{ margin: "0.2rem", marginRight: "0" }} />
+                                            <div className="user-bio-hover">
+                                                {bio}
+                                            </div>
                                         </div>
                                     </div>
                                 }
@@ -946,6 +975,7 @@ const HootInside = ({
                                 </div>
                             </div>
 
+                            {/* {hoverInfo && */}
                             {hoverInfo &&
                                 <div
                                     onMouseEnter={() => setHoverInfo(true)}
@@ -989,14 +1019,26 @@ const HootInside = ({
                                                 : null
                                             } */}
                                         </div>
-                                        <div className="user-hoot-count">
+                                        {/* <div className="user-hoot-count">
                                             <span className="hoot-counts">{users.length}</span>
                                             hoots
-                                        </div>
-                                        {/* <div className="user-hoot-count">
-                                            <span className="hoot-counts">{user.views}</span>
-                                            views
                                         </div> */}
+                                        <div className="user-hoot-count">
+                                            <div>
+                                                <span className="hoot-counts">{formatCount(totalViews) + formatSi(totalViews)}</span>
+                                                views
+                                            </div>
+                                            {/* </div>
+                                        <div className="user-hoot-count"> */}
+                                            <div>
+                                                <span className="hoot-counts">{formatCount(totalLikes) + formatSi(totalLikes)}</span>
+                                                likes
+                                            </div>
+                                        </div>
+                                        <hr style={{ margin: "0.2rem", marginRight: "0" }} />
+                                        <div className="user-bio-hover">
+                                            {bio}
+                                        </div>
                                     </div>
                                 </div>
                             }

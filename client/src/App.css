@@ -303,27 +303,42 @@ hr {
 
 .counts-bold {
   color: #374151;
-  font-weight: 700;
+  font-weight: 600;
 }
 .hoot-counts {
   padding: 0 0.2rem;
   font-weight: 600;
-  font-size: 1rem;
-  color: #374151;
+  /* font-size: 1.1rem; */
+  color: #1F2937;
 }
 
 .user-hoot-count {
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
+  gap: 1rem;
   align-items: flex-end;
   padding-right: 0.15rem;
+  font-size: 1.1rem;
+  padding-top: 0.5rem;
+}
+
+.user-bio-hover {
+  padding: 0.2rem;
+  font-size: small;
 }
 
 .hoot-user-info {
   display: flex;
-  justify-content: space-between;
-  padding-top: 1rem;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  /* padding-top: 1rem; */
 }
+
+/* to make tooltip visible on hover  */
+/* .t94bd89d3-c8da-498c-9c3d-711fdeae61c3.place-top {
+  z-index: 111111 !important;
+  margin-top: -10px;
+} */
 
 .user-name {
   text-align: center;
@@ -600,7 +615,7 @@ hr {
 }
 
 .hover-at-name {
-  padding: 0 0.3rem;
+  padding: 0 0.2rem;
   font-weight: 400;
   font-size: small;
   cursor: pointer;
@@ -624,7 +639,9 @@ hr {
   position: absolute;
   top: 4rem;
   left: 1.5rem;
-  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  /* padding: 0.5rem 1rem 0.7rem 0.7rem; */
+  padding: 0.7rem;
+  padding-right: 1rem;
   background-color: #dcd5fa;
   border-radius: 0.5rem;
   box-shadow: var(--secondary-color) 0px 0px 5px;

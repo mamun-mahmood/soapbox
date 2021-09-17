@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Form } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 
-const SignupComp = () => {
+const SignupComp = ({ handleChange }) => {
     const history = useHistory();
 
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -23,7 +23,9 @@ const SignupComp = () => {
 
     const signup = (event) => {
         event.preventDefault();
-
+        setTimeout(() => {
+            handleChange(true);
+        }, 1000);
         axios.post(`${BaseURL}/user/signup`, {
             name,
             username,

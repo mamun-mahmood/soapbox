@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from 'react'
 import Loadable from 'react-loadable';
 import toast, { Toaster } from 'react-hot-toast';
+// import User from './context/UserContext';
+// import { UserContext } from './context/UserContext';
 import PageNotFound from './pages/PageNotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import LandingPage from './pages/LandingPage/LandingPage'
@@ -71,6 +73,7 @@ import ReactTooltip from 'react-tooltip';
 
 function App() {
   return (
+    // <User>
     <Router>
       {/* <Suspense fallback={Loading}> */}
       <Toaster
@@ -138,6 +141,7 @@ function App() {
       </Switch>
       {/* </Suspense> */}
     </Router>
+    //</User>
   );
 }
 
