@@ -37,6 +37,7 @@ const HootInside = ({
     likes,
     views,
     caption,
+    link,
     ephemeral,
     expiryDate,
     timeStamp,
@@ -648,6 +649,10 @@ const HootInside = ({
                                         autoEscape={true}
                                         textToHighlight={caption}
                                     />
+                                </span>
+                                <br />
+                                {" "}<span className="hoot-link">
+                                    {link}
                                 </span>
                             </div>
                             {/* <hr className="mx-1" /> */}
@@ -1263,6 +1268,10 @@ const HootInside = ({
                                     autoEscape={true}
                                     textToHighlight={caption}
                                 />
+                            </span>
+                            <br />
+                            {" "}<span className="hoot-link">
+                                <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
                             </span>
                         </div>
                         {/* <hr className="mx-1" /> */}

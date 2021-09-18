@@ -11,6 +11,7 @@ const Post = ({
     likes,
     views,
     caption,
+    link,
     ephemeral,
     expiryDate,
     timeStamp,
@@ -48,6 +49,7 @@ const Post = ({
                         likes={likes}
                         views={views}
                         caption={caption}
+                        link={link}
                         ephemeral={ephemeral}
                         expiryDate={expiryDate}
                         timeStamp={timeStamp}

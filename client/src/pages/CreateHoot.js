@@ -31,6 +31,7 @@ const CreatePost = () => {
     const [ephemeralCheck, setEphemeralCheck] = useState(false);
     const [privateCheck, setPrivateCheck] = useState(false);
     const [link, setLink] = useState("");
+    // const [links, setLinks] = useState([{ link: "" }]);
     const [linkModalOpen, setLinkModalOpen] = useState(false);
 
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -62,6 +63,7 @@ const CreatePost = () => {
         const formData = new FormData();
         formData.append("timeStamp", timeStamp)
         formData.append("caption", caption)
+        formData.append("link", link)
         formData.append("ephemeral", ephemeralCheck ? 1 : 0)
         formData.append("expiryDate", ephemeralCheck ? expiryDate : 0)
         formData.append("authorEmail", email)
@@ -137,12 +139,54 @@ const CreatePost = () => {
         setPrivateCheck(!privateCheck)
     }
 
+    // let handleChange = (i, e) => {
+    //     let newLinks = [...links];
+    //     newLinks[i][e.target.link] = e.target.value;
+    //     setLinks(newLinks);
+    // }
+
+    // let addNewLink = () => {
+    //     setLinks([...links, { link: "" }])
+    // }
+
+    // let removeLinks = (i) => {
+    //     let newLinks = [...links];
+    //     newLinks.splice(i, 1);
+    //     setLinks(newLinks)
+    // }
+
+    // let handleSubmit = (event) => {
+    //     alert(JSON.stringify(links));
+    // }
+
     const insertLink = () => {
-        setLink();
+        // handleSubmit()
+        toast.success('Link inserted')
+        setLinkModalOpen(false);
     }
 
-    // ephemeralCheck ? console.log("ephemeralCheck: 1", ephemeralCheck) : console.log("ephemeralCheck: 0", ephemeralCheck)
-    // ephemeralCheck ? console.log(1) : console.log(0);
+    // const [formValues, setFormValues] = useState([{ name: "" }])
+
+    // let handleChange = (i, e) => {
+    //     let newFormValues = [...formValues];
+    //     newFormValues[i][e.target.name] = e.target.value;
+    //     setFormValues(newFormValues);
+    // }
+
+    // let addFormFields = () => {
+    //     setFormValues([...formValues, { name: "" }])
+    // }
+
+    // let removeFormFields = (i) => {
+    //     let newFormValues = [...formValues];
+    //     newFormValues.splice(i, 1);
+    //     setFormValues(newFormValues)
+    // }
+
+    // let handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     alert(JSON.stringify(formValues));
+    // }
 
     return (
         <Fragment>
@@ -256,12 +300,34 @@ const CreatePost = () => {
                                         <ClickAwayListener onClickAway={() => { setLinkModalOpen(false) }}>
                                             <div className="link-modal">
                                                 <h4>Insert Link</h4>
+
                                                 <input autoFocus type="text" value={link} onChange={(event) => { setLink(event.target.value) }} />
-                                                <div className="btn-post mt-3 link-info">
+                                                {/* 
+                                                <form onSubmit={handleSubmit}>
+                                                    {formValues.map((element, index) => (
+                                                        <div className="form-inline" key={index}>
+                                                            <label>Name</label>
+                                                            <input type="text" name="name" value={element.name || ""} onChange={e => handleChange(index, e)} />
+                                                            {
+                                                                index ?
+                                                                    <button type="button" className="button remove" onClick={() => removeFormFields(index)}>Remove</button>
+                                                                    : null
+                                                            }
+                                                        </div>
+                                                    ))}
+                                                    <div className="button-section">
+                                                        <button className="button add" type="button" onClick={() => addFormFields()}>Add</button>
+                                                        <button className="button submit" type="submit">Submit</button>
+                                                    </div>
+                                                </form> */}
+
+                                                <div className="btn-post mt-2 link-info">
                                                     <Button
                                                         variant="primary"
                                                         className="btn-login"
+                                                        style={{ padding: "0.2rem 0.5rem", borderRadius: "0.4rem" }}
                                                         onClick={insertLink}
+                                                    // disabled={!link}
                                                     >
                                                         Insert
                                                     </Button>{' '}
