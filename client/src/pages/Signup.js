@@ -11,7 +11,8 @@ const Signup = () => {
 
     useEffect(() => {
         if (localStorage.getItem("loggedIn")) {
-            history.push("/home");
+            // history.push("/home");
+            history.push("/");
         }
     }, [])
 

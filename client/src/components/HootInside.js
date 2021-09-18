@@ -80,8 +80,6 @@ const HootInside = ({
     const [newComment, setNewComment] = useState("");
     const [users, setUsers] = useState([]);
 
-    // const [user, setUser] = useContext(UserContext);
-
     const history = useHistory();
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
@@ -113,15 +111,6 @@ const HootInside = ({
         totalViews += upload.views
         totalLikes += upload.likes
     })
-
-    // const userTotalCounts = useCallback(() => {
-    //     axios.put(`${BaseURL}/upload/user/totalCounts/${username}`, {
-    //         totalViews: totalViews,
-    //         totalLikes: totalLikes
-    //     })
-    // }, [totalViews, totalLikes])
-
-    // userTotalCounts();
 
     var commentName = null;
     var commentProfilePic = null;
@@ -174,7 +163,7 @@ const HootInside = ({
 
         axios.delete(`${BaseURL}/upload/delete/${hootImgId}`)
 
-        history.push('/home');
+        history.push('/');
         window.location.reload();
     }
 

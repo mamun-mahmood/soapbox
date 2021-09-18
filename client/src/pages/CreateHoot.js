@@ -9,11 +9,13 @@ import getTime from 'date-fns/getTime'
 import addSeconds from 'date-fns/addSeconds'
 import addMinutes from 'date-fns/addMinutes'
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds'
+import ClickAwayListener from 'react-click-away-listener';
+import ReactTooltip from 'react-tooltip';
 import { Button } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { IoCloseOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
-import { FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft, FiLink2 } from "react-icons/fi";
 import BeatLoader from "react-spinners/BeatLoader";
 import NavBar from '../components/NavBar/NavBar'
 import { BiWindows } from 'react-icons/bi';
@@ -28,6 +30,8 @@ const CreatePost = () => {
     const [saveLoading, setSaveLoading] = useState(false);
     const [ephemeralCheck, setEphemeralCheck] = useState(false);
     const [privateCheck, setPrivateCheck] = useState(false);
+    const [link, setLink] = useState("");
+    const [linkModalOpen, setLinkModalOpen] = useState(false);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -133,6 +137,10 @@ const CreatePost = () => {
         setPrivateCheck(!privateCheck)
     }
 
+    const insertLink = () => {
+        setLink();
+    }
+
     // ephemeralCheck ? console.log("ephemeralCheck: 1", ephemeralCheck) : console.log("ephemeralCheck: 0", ephemeralCheck)
     // ephemeralCheck ? console.log(1) : console.log(0);
 
@@ -169,6 +177,8 @@ const CreatePost = () => {
                         {/* <img className="avatar" src="/images/default_user_profile.svg" alt="avatar" /> */}
                         <div className="name avatar_name">{userName}</div>
 
+                        <ReactTooltip />
+
                         <div className="post-content">
                             <textarea
                                 autoFocus
@@ -182,9 +192,15 @@ const CreatePost = () => {
                                 }}
                             ></textarea>
 
+                            {link &&
+                                <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all" }}>
+                                    <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                </div>
+                            }
+
                             <div className="d-flex justify-content-between m-1 btn-caption-top">
                                 <form action="">
-                                    <div className="d-flex justify-content-end my-2">
+                                    <div className="d-flex justify-content-end my-2 align-items-center">
 
                                         {/* Photo */}
                                         <label htmlFor="post-image" className="btn-label">
@@ -224,8 +240,37 @@ const CreatePost = () => {
                                             onChange={handleFile}
                                             hidden
                                         />
+
+                                        <FiLink2
+                                            className="insert-link"
+                                            data-tip="Insert Link" data-text-color="#8249A0" data-background-color="#D9D2FA"
+                                            onClick={() => { setLinkModalOpen(true) }}
+                                        />
                                     </div>
                                 </form>
+
+                                {/* Link Modal */}
+                                {linkModalOpen &&
+                                    <Fragment>
+                                        <div className="modal-overlay"></div>
+                                        <ClickAwayListener onClickAway={() => { setLinkModalOpen(false) }}>
+                                            <div className="link-modal">
+                                                <h4>Insert Link</h4>
+                                                <input autoFocus type="text" value={link} onChange={(event) => { setLink(event.target.value) }} />
+                                                <div className="btn-post mt-3 link-info">
+                                                    <Button
+                                                        variant="primary"
+                                                        className="btn-login"
+                                                        onClick={insertLink}
+                                                    >
+                                                        Insert
+                                                    </Button>{' '}
+                                                </div>
+                                                <IoCloseOutline className="close-modal" onClick={() => setLinkModalOpen(false)} />
+                                            </div>
+                                        </ClickAwayListener>
+                                    </Fragment>
+                                }
 
                                 <div className="caption-count">
                                     <h6 className={caption.length > 280 && "text-danger"}>

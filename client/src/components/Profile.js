@@ -89,25 +89,6 @@ const Profile = ({
         totalLikes += upload.likes
     })
 
-    // const userTotalCounts = useCallback(() => {
-    //     axios.put(`${BaseURL}/upload/user/totalCounts/${username}`, {
-    //         totalViews: totalViews,
-    //         totalLikes: totalLikes
-    //     })
-    // }, [totalViews, totalLikes])
-
-    // userTotalCounts();
-
-
-    // const totalCounts = {
-    //     views: formatCount(totalViews) + formatSi(totalViews),
-    //     likes: formatCount(totalLikes) + formatSi(totalLikes)
-    // }
-
-    // useEffect(() => {
-    //     setUser(totalCounts);
-    // }, [])
-
     // count will be formatted 
     const formatCount = count => {
         if (count < 1e3) return count;
