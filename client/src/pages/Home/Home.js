@@ -41,7 +41,7 @@ const Home = () => {
                 <meta name="twitter:image" content="/images/MegaHoot_Owl3_app.png" />
 
                 {/* OpenGraph tags */}
-                <meta property="og:url" content="https://www.megahoot.net/home" />
+                <meta property="og:url" content="https://www.megahoot.net/" />
                 <meta property="og:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:image" content="/images/MegaHoot_Owl3_app.png" />

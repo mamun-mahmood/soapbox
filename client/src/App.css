@@ -1181,16 +1181,19 @@ hr {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 500px;
+  max-height: 500px;
   background-color: #dcd5fa;
-  /* border: 0.1rem solid var(--primary-color); */
+  overflow: auto;
   border-radius: 0.5rem;
   padding: 2rem 2rem 1rem 2rem;
   z-index: 1000;
   box-shadow: var(--secondary-color) 0px 0px 5px;
+  transition: 0.3s;
 }
 
 .link-modal input {
-  padding: 0.1rem 0.5rem;
+  padding: 0.2rem 0.4rem;
+  margin: 0.3rem 0;
   border: 2px solid #D1D5DB;
   border-radius: 0.4rem;
   outline: none;
@@ -1199,7 +1202,27 @@ hr {
   transition: 0.1s;
 }
 
+.form-inline {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.btn-minus-link {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin: 0 0.2rem;
+  cursor: pointer;
+}
+.form-inline button{
+  margin: 0.3rem 0.2rem;
+  margin-right: 0;
+  padding: .1rem .4rem;
+}
+
 .link-modal input:hover {
+  border: solid 2px var(--primary-color);
+}
+.link-modal input:focus {
   border: solid 2px var(--primary-color);
 }
 .hoot-comment-modal {
@@ -1224,7 +1247,10 @@ hr {
   text-align: center;
 }
 .link-modal > .link-info {
-  text-align: right;
+  /* text-align: right; */
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
 @media only screen and (max-width: 700px) {
   .delete-modal {
@@ -1853,6 +1879,47 @@ hr {
   border-radius: .2rem;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+.btn-add-link {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--primary-color);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  border-radius: 0.4rem !important;
+  padding: .1rem .4rem;
+  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  font-size: 1rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.btn-insert-link {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: var(--primary-color);
+  border-radius: 0.4rem !important;
+  padding: .1rem .4rem;
+  border: 1px solid var(--primary-color);
+  margin-left: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: 0.1s;
+}
 
 .insert-link {
   color: var(--primary-color);
@@ -1886,6 +1953,23 @@ hr {
 .btn-label:active {
   background-color: var(--on-hover);
   border-color: var(--on-hover);
+}
+.btn-add-link:hover {
+  color: #fff;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-add-link:active {
+  background-color: var(--on-hover);
+  border-color: var(--on-hover);
+}
+.btn-insert-link:hover {
+  background-color: var(--on-hover);
+  border-color: var(--on-hover);
+}
+.btn-insert-link:active {
+  transform: scale(0.95);
 }
 
 .label {

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
 import SideBarOption from './SideBarOption'
 import { BsLightning } from 'react-icons/bs'
-import { NavLink, useHistory } from 'react-router-dom'
+import { Link, NavLink, useHistory } from 'react-router-dom'
 import { FiHome, FiHash } from 'react-icons/fi'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import './sidebar.css';
@@ -241,7 +241,7 @@ const SideBar = () => {
                         <NavLink
                             style={{ padding: "0.1rem 0.5rem" }}
                             activeClassName={"Private Messages" === "Home" ? null : "sidebar-option-active"}
-                            to="/private-message"
+                            to="/private-messages"
                         >
                             {/* <BiMessageDetail className={"sidebar-icon"} /> */}
                             <span>
@@ -280,7 +280,7 @@ const SideBar = () => {
                             </span>
                         </a>
                     </li>
-
+                    {/* 
                     <li>
                         <a
                             style={{ padding: "0.1rem 0.5rem" }}
@@ -288,17 +288,17 @@ const SideBar = () => {
                             href="https://www.pecunovus.com/get-your-wallet/"
                             target="_blank" rel="noopener noreferrer"
                         >
-                            {/* <BiWallet className={"sidebar-icon"} /> */}
                             <span>
                                 Pecu Novus Wallet
                             </span>
                         </a>
-                    </li>
+                    </li> */}
+
                     <li>
                         <a
                             style={{ padding: "0.1rem 0.5rem" }}
                             activeClassName="sidebar-option-active"
-                            href="https://megahootvault.org/"
+                            href="https://megahootvault.com/"
                             target="_blank" rel="noopener noreferrer"
                         >
                             {/* <BiWallet className={"sidebar-icon"} /> */}
@@ -317,9 +317,13 @@ const SideBar = () => {
                             <small className="info cursor-pointer" >About</small>{" "}
                             <small className="info cursor-pointer">Contact</small>
                         </li>
-                        <li>
-                            <small className="info cursor-pointer">Privacy Policy</small>
-                        </li>
+                        <div className="megahoot-com">
+                            <small className="info cursor-pointer">
+                                <Link to="/privacy">
+                                    Privacy Policy
+                                </Link>
+                            </small>
+                        </div>
                         <li>
                             <small className="info cursor-pointer">Terms Of Service</small>
                         </li>

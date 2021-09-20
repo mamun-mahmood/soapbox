@@ -96,6 +96,13 @@ const HootInside = ({
     const stocksFound = caption.split(' ').filter(v => v.startsWith('$'));
     const usernamesFound = caption.split(' ').filter(v => v.startsWith('@'));
 
+    // const linkData = link
+    // link && console.log("linkData", linkData);
+
+    // // extraLinks = JSON.parse(linkData);
+    // const fromDBLinks = JSON.parse(linkData)
+    const [dbLink, setDbLink] = useState([]);
+
     useEffect(() => {
         // getting all uploads(hoots) of particuler user 
         axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
@@ -103,7 +110,13 @@ const HootInside = ({
         })
 
         setEditCaption(caption);
+        setDbLink(JSON.parse(link))
     }, [])
+
+    // dbLink
+    //     ?
+    //     console.log("DBLINK from use effect", dbLink)
+    //     : null
 
     var totalViews = 0;
     var totalLikes = 0;
@@ -305,6 +318,29 @@ const HootInside = ({
             toast.error('please login');
         }
     }
+    // const jsonLink = JSON.parse(JSON.stringify(link));
+    // console.log("link", jsonLink);
+    // console.log("stringify link", JSON.stringify(link));
+
+    // var outputArray = [];
+    // for (let element in jsonLink) {
+    //     outputArray.push({
+    //         id: element,
+    //         name: jsonLink[element]
+    //     });
+    // }
+    // console.log(outputArray)
+
+    // const obj = JSON.parse(link);
+
+    var extraLinks = [
+        // { name: 'https://bapunawarsaddam.medium.com/add-and-remove-…amically-using-react-and-react-hooks-3b033c3c0bf5' },
+        // { name: 'https://www.youtube.com/watch?v=YehL_mrK94o' }
+    ]
+
+
+
+    // link != null && (console.log("fromDBLinks parsed", fromDBLinks), setDbLink(fromDBLinks))
 
     return (
         <Fragment>
@@ -651,9 +687,19 @@ const HootInside = ({
                                     />
                                 </span>
                                 <br />
-                                {" "}<span className="hoot-link">
+                                {/* {" "}<span className="hoot-link">
                                     {link}
-                                </span>
+                                </span> */}
+                                {dbLink ?
+                                    dbLink.map((link, index) => {
+                                        return (
+                                            <div key={index} style={{ padding: "0rem 0.5rem 0rem 0rem", wordBreak: "break-all" }}>
+                                                <a href={link.name} target="_blank" rel="noopener noreferrer" className="link-content">{link.name}</a>
+                                            </div>
+                                        )
+                                    })
+                                    : null
+                                }
                             </div>
                             {/* <hr className="mx-1" /> */}
                             <div className="right-icons">
@@ -1270,9 +1316,19 @@ const HootInside = ({
                                 />
                             </span>
                             <br />
-                            {" "}<span className="hoot-link">
+                            {/* {" "}<span className="hoot-link">
                                 <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
-                            </span>
+                            </span> */}
+                            {dbLink ?
+                                dbLink.map((link, index) => {
+                                    return (
+                                        <div key={index} style={{ padding: "0rem 0.5rem 0rem 0rem", wordBreak: "break-all" }}>
+                                            <a href={link.name} target="_blank" rel="noopener noreferrer" className="link-content">{link.name}</a>
+                                        </div>
+                                    )
+                                })
+                                : null
+                            }
                         </div>
                         {/* <hr className="mx-1" /> */}
                         <div className="right-icons">

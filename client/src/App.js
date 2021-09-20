@@ -26,6 +26,8 @@ import StocksPage from './pages/StocksPage';
 import StockHootsPage from './pages/StockHootsPage';
 import ExplorePage from './pages/ExplorePage';
 import ReactTooltip from 'react-tooltip';
+import PrivacyPage from './pages/PrivacyPage';
+import PrivateMessagesPage from './pages/PrivateMessagesPage';
 
 // const Home = Loadable({
 //   loader: () => import('./pages/Home/Home' /* webpackChunkName: "Home" */),
@@ -133,6 +135,14 @@ function App() {
         <Route path="/explore">
           {/* <ProtectedRoute page={ExplorePage} /> */}
           <ExplorePage />
+        </Route>
+        <Route path="/privacy">
+          {/* <ProtectedRoute page={ExplorePage} /> */}
+          <PrivacyPage />
+        </Route>
+        <Route path="/private-messages">
+          {/* <ProtectedRoute page={ExplorePage} /> */}
+          <PrivateMessagesPage />
         </Route>
 
         <Route path="*">

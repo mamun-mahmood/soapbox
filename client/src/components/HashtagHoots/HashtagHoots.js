@@ -137,6 +137,7 @@ const HashtagHoots = () => {
                                 likes={upload.likes}
                                 views={upload.views}
                                 caption={upload.caption}
+                                link={upload.link}
                                 ephemeral={upload.ephemeral}
                                 expiryDate={upload.expiryDate}
                                 timeStamp={upload.timeStamp}
