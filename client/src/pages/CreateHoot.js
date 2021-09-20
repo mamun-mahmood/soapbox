@@ -63,7 +63,8 @@ const CreatePost = () => {
         const formData = new FormData();
         formData.append("timeStamp", timeStamp)
         formData.append("caption", caption)
-        formData.append("link", JSON.stringify(formValues))
+        // formData.append("link", JSON.stringify(formValues))
+        formData.append("link", link)
         formData.append("ephemeral", ephemeralCheck ? 1 : 0)
         formData.append("expiryDate", ephemeralCheck ? expiryDate : 0)
         formData.append("authorEmail", email)
@@ -250,12 +251,12 @@ const CreatePost = () => {
                             ></textarea>
 
                             {/* inserted links  */}
-                            {/* {link &&
+                            {link &&
                                 <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all" }}>
                                     <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
                                 </div>
-                            } */}
-                            <div style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>
+                            }
+                            {/* <div style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>
                                 {formValues.map((link, index) => {
                                     return (
                                         <div key={index} style={{ padding: "0rem 0.5rem 0rem 0.5rem", wordBreak: "break-all" }}>
@@ -263,7 +264,7 @@ const CreatePost = () => {
                                         </div>
                                     )
                                 })}
-                            </div>
+                            </div> */}
 
                             <div className="d-flex justify-content-between m-1 btn-caption-top">
                                 <form action="">
@@ -324,10 +325,10 @@ const CreatePost = () => {
                                             <div className="link-modal">
                                                 <h5>Insert link(s)</h5>
 
-                                                {/* <input autoFocus type="text" value={link} onChange={(event) => { setLink(event.target.value) }} /> */}
+                                                <input autoFocus type="text" value={link} onChange={(event) => { setLink(event.target.value) }} />
 
                                                 {/* <form onSubmit={handleSubmit}> */}
-                                                <div>
+                                                {/* <div>
                                                     {formValues.map((element, index) => (
                                                         <div className="form-inline" key={index}>
                                                             <input
@@ -344,12 +345,12 @@ const CreatePost = () => {
                                                             }
                                                         </div>
                                                     ))}
-                                                </div>
+                                                </div> */}
 
                                                 <div className="btn-post mt-2 link-info">
-                                                    <button className="btn-add-link" type="button" onClick={() => addFormFields()}>
+                                                    {/* <button className="btn-add-link" type="button" onClick={() => addFormFields()}>
                                                         Add
-                                                    </button>
+                                                    </button> */}
                                                     <button
                                                         className="btn-insert-link"
                                                         onClick={insertLink}

@@ -101,7 +101,7 @@ const HootInside = ({
 
     // // extraLinks = JSON.parse(linkData);
     // const fromDBLinks = JSON.parse(linkData)
-    const [dbLink, setDbLink] = useState([]);
+    // const [dbLink, setDbLink] = useState([]);
 
     useEffect(() => {
         // getting all uploads(hoots) of particuler user 
@@ -110,7 +110,7 @@ const HootInside = ({
         })
 
         setEditCaption(caption);
-        setDbLink(JSON.parse(link))
+        // setDbLink(JSON.parse(link))
     }, [])
 
     // dbLink
@@ -333,12 +333,10 @@ const HootInside = ({
 
     // const obj = JSON.parse(link);
 
-    var extraLinks = [
-        // { name: 'https://bapunawarsaddam.medium.com/add-and-remove-…amically-using-react-and-react-hooks-3b033c3c0bf5' },
-        // { name: 'https://www.youtube.com/watch?v=YehL_mrK94o' }
-    ]
-
-
+    // var extraLinks = [
+    //     // { name: 'https://bapunawarsaddam.medium.com/add-and-remove-…amically-using-react-and-react-hooks-3b033c3c0bf5' },
+    //     // { name: 'https://www.youtube.com/watch?v=YehL_mrK94o' }
+    // ]
 
     // link != null && (console.log("fromDBLinks parsed", fromDBLinks), setDbLink(fromDBLinks))
 
@@ -687,10 +685,10 @@ const HootInside = ({
                                     />
                                 </span>
                                 <br />
-                                {/* {" "}<span className="hoot-link">
-                                    {link}
-                                </span> */}
-                                {dbLink ?
+                                {" "}<span className="hoot-link">
+                                    <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                </span>
+                                {/* {dbLink ?
                                     dbLink.map((link, index) => {
                                         return (
                                             <div key={index} style={{ padding: "0rem 0.5rem 0rem 0rem", wordBreak: "break-all" }}>
@@ -699,7 +697,7 @@ const HootInside = ({
                                         )
                                     })
                                     : null
-                                }
+                                } */}
                             </div>
                             {/* <hr className="mx-1" /> */}
                             <div className="right-icons">
@@ -1316,10 +1314,10 @@ const HootInside = ({
                                 />
                             </span>
                             <br />
-                            {/* {" "}<span className="hoot-link">
+                            {" "}<span className="hoot-link">
                                 <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
-                            </span> */}
-                            {dbLink ?
+                            </span>
+                            {/* {dbLink ?
                                 dbLink.map((link, index) => {
                                     return (
                                         <div key={index} style={{ padding: "0rem 0.5rem 0rem 0rem", wordBreak: "break-all" }}>
@@ -1328,7 +1326,7 @@ const HootInside = ({
                                     )
                                 })
                                 : null
-                            }
+                            } */}
                         </div>
                         {/* <hr className="mx-1" /> */}
                         <div className="right-icons">
