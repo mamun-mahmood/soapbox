@@ -158,29 +158,29 @@ const CreatePost = () => {
     //     alert(JSON.stringify(links));
     // }
 
-    const [formValues, setFormValues] = useState([{ name: "" }])
+    // const [formValues, setFormValues] = useState([{ name: "" }])
 
-    let handleChange = (i, e) => {
-        let newFormValues = [...formValues];
-        newFormValues[i][e.target.name] = e.target.value;
-        setFormValues(newFormValues);
-    }
+    // let handleChange = (i, e) => {
+    //     let newFormValues = [...formValues];
+    //     newFormValues[i][e.target.name] = e.target.value;
+    //     setFormValues(newFormValues);
+    // }
 
-    let addFormFields = () => {
-        setFormValues([...formValues, { name: "" }])
-    }
+    // let addFormFields = () => {
+    //     setFormValues([...formValues, { name: "" }])
+    // }
 
-    let removeFormFields = (i) => {
-        let newFormValues = [...formValues];
-        newFormValues.splice(i, 1);
-        setFormValues(newFormValues)
-    }
+    // let removeFormFields = (i) => {
+    //     let newFormValues = [...formValues];
+    //     newFormValues.splice(i, 1);
+    //     setFormValues(newFormValues)
+    // }
 
-    let handleSubmit = (event) => {
-        // event.preventDefault();
-        // alert(JSON.stringify(formValues));
-        // console.log(formValues);
-    }
+    // let handleSubmit = (event) => {
+    //     // event.preventDefault();
+    //     // alert(JSON.stringify(formValues));
+    //     // console.log(formValues);
+    // }
 
     const insertLink = (event) => {
         // handleSubmit()
@@ -193,13 +193,13 @@ const CreatePost = () => {
         // let json = JSON.stringify(jsonObject);
         // console.log(formValues);
         // console.log(json);
-        const stringify = JSON.stringify(formValues);
-        const parse = JSON.parse(stringify);
-        const parse1 = JSON.parse(formValues);
-        console.log("formValues: ", formValues);
-        console.log("stringify: ", stringify);
-        console.log("parse: ", parse);
-        console.log("parse1: ", parse1);
+        // const stringify = JSON.stringify(formValues);
+        // const parse = JSON.parse(stringify);
+        // const parse1 = JSON.parse(formValues);
+        // console.log("formValues: ", formValues);
+        // console.log("stringify: ", stringify);
+        // console.log("parse: ", parse);
+        // console.log("parse1: ", parse1);
     }
 
     return (

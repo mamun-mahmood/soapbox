@@ -6,9 +6,9 @@ const PrivateMessagesPage = () => {
     return (
         <Fragment>
             <NavBar />
-            <div className="text-center page-404-not-found">
-                <h3>Our Developers are working hard</h3>
-                <span style={{ color: "#8249A0", fontWeight: "500" }}>Private Messages</span>{" "}<span style={{ fontWeight: "400" }}>coming soon...</span>
+            <div className="private-message-page">
+                <h2>Our Developers are working hard</h2>
+                <span style={{ color: "#8249A0", fontWeight: "500", fontSize: "1.2rem" }}>Private Messages</span>{" "}<span style={{ fontWeight: "400", fontSize: "1.2rem" }}>coming soon</span>
             </div>
 
             <Helmet>

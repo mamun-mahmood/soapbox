@@ -1935,6 +1935,7 @@ hr {
 }
 
 .link-content {
+  font-size: medium;
   font-weight: 500;
   text-decoration: none;
   color: var(--primary-color);
@@ -2025,6 +2026,34 @@ hr {
   color: var(--secondary-color);
   background-color: var(--on-hover);
   border-color: var(--on-hover);
+}
+
+.heading-legal {
+  background-color: #D9D2FA;
+  min-height: 300px;
+  padding: 5rem 0;
+}
+
+.heading-legal h1 {
+  max-width: 1100px;
+  padding: 1rem;
+  margin: 0 auto;
+  color: #374151;
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.main-content-legel {
+  font-size: large;
+  max-width: 1100px;
+  padding: 1rem;
+  margin: 0 auto;
+  color: #374151;
+}
+
+.private-message-page {
+text-align: center;
+padding: 6rem 1rem;
 }
 
 @media screen and (max-width: 768px) {

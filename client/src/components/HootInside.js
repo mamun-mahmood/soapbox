@@ -928,7 +928,7 @@ const HootInside = ({
 
                             {/*created time and  edited time */}
                             <div className="view-post-comment">
-                                <div className="post-time">{timeStamp}</div>
+                                {/* <div className="post-time">{timeStamp}</div> */}
                                 {/* {(isEdited === 1) && <small class="badge outline-badge d-flex flex-end">EDITED</small>} */}
                                 {(isEdited === 1) &&
                                     <div className="post-time">
@@ -1557,7 +1557,7 @@ const HootInside = ({
 
                         {/*created time and  edited time */}
                         <div className="view-post-comment">
-                            <div className="post-time">{timeStamp}</div>
+                            {/* <div className="post-time">{timeStamp}</div> */}
                             {/* {(isEdited === 1) && <small class="badge outline-badge d-flex flex-end">EDITED</small>} */}
                             {(isEdited === 1) &&
                                 <div className="post-time">

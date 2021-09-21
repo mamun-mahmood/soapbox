@@ -66,7 +66,6 @@ const SideBar = () => {
         const getStocksData = async () => {
             await axios.get(`${BaseURL}/stocks`)
                 .then((response) => {
-                    // setStocks(Array.from(new Set((response.data).reverse())));
                     setStocks((response.data).reverse());
                 });
         }
@@ -106,30 +105,6 @@ const SideBar = () => {
         <div className="sidebar start">
             <ui style={{ position: "fixed" }}>
                 <div className="scrollable">
-                    {/* <div className="toggle">
-                        <span
-                            className={mainActive}
-                            onClick={() => {
-                                setMainActive("active");
-                                setMyListActive("");
-                            }}
-                        >
-                            Main
-                        </span>
-                        <div className="dot">
-                            •
-                        </div>
-                        <span
-                            className={myListActive}
-                            onClick={() => {
-                                setMyListActive("active");
-                                setMainActive("");
-                            }}
-                        >
-                            My List
-                        </span>
-                    </div> */}
-
                     <li>
                         <input
                             type="checkbox"
@@ -169,20 +144,24 @@ const SideBar = () => {
                         />
                         : null
                     }
+
                     <SideBarOption
                         option="Explore"
                         link="/explore"
                         Icon={BsLightning}
                     />
+
                     <SideBarOption
                         option="Hashtags"
                         Icon={FiHash}
                         link=""
                         looks={"looks"}
                     />
+
                     <li>
                         <hr className="my-2" />
                     </li>
+
                     <li>
                         <div className="hashtags">
                             {/* .filter((hashtag) => {
@@ -206,9 +185,11 @@ const SideBar = () => {
                         link=""
                         looks={"looks"}
                     />
+
                     <li>
                         <hr className="my-2" />
                     </li>
+
                     <li>
                         <div className="hashtags">
                             {/* .filter((stock) => {
@@ -219,7 +200,6 @@ const SideBar = () => {
                             {stocks.filter((stock) => {
                                 const regex = /\d/;
                                 if (regex.test(stock.stock) === false) {
-                                    {/* return stocks.indexOf(stock) == index */ }
                                     return stock
                                 }
                             }).slice(0, 8).map((stock) => {
@@ -231,11 +211,6 @@ const SideBar = () => {
                             })}
                         </div>
                     </li>
-                    {/* <SideBarOption
-                        option="Private Messages"
-                        Icon={BiMessageDetail}
-                        link="/private-message"
-                    /> */}
 
                     <li>
                         <NavLink
@@ -243,17 +218,10 @@ const SideBar = () => {
                             activeClassName={"Private Messages" === "Home" ? null : "sidebar-option-active"}
                             to="/private-messages"
                         >
-                            {/* <BiMessageDetail className={"sidebar-icon"} /> */}
-                            <span>
-                                Private Messages
-                            </span>
+                            <span>Private Messages</span>
                         </NavLink>
                     </li>
-                    {/* <SideBarOption
-                        option="XMG Wallet"
-                        Icon={BiWallet}
-                        link="/xmg-wallet"
-                    /> */}
+
                     <li>
                         <a
                             style={{ padding: "0.1rem 0.5rem" }}
@@ -261,12 +229,10 @@ const SideBar = () => {
                             href="https://fortisab.com/"
                             target="_blank" rel="noopener noreferrer"
                         >
-                            {/* <BiWallet className={"sidebar-icon"} /> */}
-                            <span>
-                                Fortis Auction Blockmarket
-                            </span>
+                            <span>Fortis Auction Blockmarket</span>
                         </a>
                     </li>
+
                     <li>
                         <a
                             style={{ padding: "0.1rem 0.5rem" }}
@@ -274,25 +240,9 @@ const SideBar = () => {
                             href="https://megahoot.org/"
                             target="_blank" rel="noopener noreferrer"
                         >
-                            {/* <BiWallet className={"sidebar-icon"} /> */}
-                            <span>
-                                XMG Wallet
-                            </span>
+                            <span>XMG Wallet</span>
                         </a>
                     </li>
-                    {/* 
-                    <li>
-                        <a
-                            style={{ padding: "0.1rem 0.5rem" }}
-                            activeClassName="sidebar-option-active"
-                            href="https://www.pecunovus.com/get-your-wallet/"
-                            target="_blank" rel="noopener noreferrer"
-                        >
-                            <span>
-                                Pecu Novus Wallet
-                            </span>
-                        </a>
-                    </li> */}
 
                     <li>
                         <a
@@ -301,10 +251,7 @@ const SideBar = () => {
                             href="https://megahootvault.com/"
                             target="_blank" rel="noopener noreferrer"
                         >
-                            {/* <BiWallet className={"sidebar-icon"} /> */}
-                            <span>
-                                Megahoot Vault
-                            </span>
+                            <span>Megahoot Vault</span>
                         </a>
                     </li>
 
@@ -317,16 +264,23 @@ const SideBar = () => {
                             <small className="info cursor-pointer" >About</small>{" "}
                             <small className="info cursor-pointer">Contact</small>
                         </li>
+
                         <div className="megahoot-com">
                             <small className="info cursor-pointer">
-                                <Link to="/privacy">
+                                <Link to="/privacy-policy">
                                     Privacy Policy
                                 </Link>
                             </small>
                         </div>
-                        <li>
-                            <small className="info cursor-pointer">Terms Of Service</small>
-                        </li>
+
+                        <div className="megahoot-com">
+                            <small className="info cursor-pointer">
+                                <Link to="/tos">
+                                    Terms Of Service
+                                </Link>
+                            </small>
+                        </div>
+
                         <div className="megahoot-com">
                             <small className="info cursor-pointer">
                                 <a href="https://www.megahoot.com/" target="_blank" rel="noopener noreferrer">
@@ -334,12 +288,12 @@ const SideBar = () => {
                                 </a>
                             </small>
                         </div>
+
                         <li>
                             <small className="info">&copy; Copyright 2021 MegaHoot Technologies, Inc</small>
                         </li>
                     </div>
                 </div>
-
             </ui>
         </div>
     )
