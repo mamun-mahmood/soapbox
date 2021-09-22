@@ -6,7 +6,8 @@
 
 .page {
     height: 100vh;
-    background-image: linear-gradient(to left top, #8249a0, #8f68b5, #9e86c7, #b0a3d9, #c5c0e8, #c5c0e8, #c5c0e8, #c5c0e8, #b0a3d9, #9e86c7, #8f68b5, #8249a0);
+    /* background-image: linear-gradient(to left top, #8249a0, #8f68b5, #9e86c7, #b0a3d9, #c5c0e8, #c5c0e8, #c5c0e8, #c5c0e8, #b0a3d9, #9e86c7, #8f68b5, #8249a0); */
+    background-color: #C5C0E8;
 }
 
 .nav {
@@ -122,6 +123,7 @@ dl, ol, ul {
 
 .landing-ls {
     flex: 65%;
+    gap: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -130,17 +132,17 @@ dl, ol, ul {
 }
 
 .landing-ls span {
-    max-width: 600px;
+    max-width: 420px;
     text-align: center;
     color: var(--primary-color);
-    font-size: 2rem;
+    font-size: 1.3rem;
     font-weight: 700;
 }
 
 .landing-ls img {
-    width: 300px;
+    width: auto;
     min-width: 300px;
-    max-height: 400px;
+    max-height: 450px;
     object-fit: scale-down;
     padding: 0.5rem;
     border-radius: 0.8rem;
@@ -149,7 +151,7 @@ dl, ol, ul {
 .landing-rs {
     flex: 35%;
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -229,6 +231,25 @@ footer span {
    transform: scale(1.1);
 }
 
+.landing-text {
+    font-size: 0.95rem;
+    transition: 0.5s;
+}
+@media only screen and (max-width: 1185px) {
+    .landing-text {
+        font-size: 0.9rem;
+    }
+}
+@media only screen and (max-width: 1120px) {
+    .landing-text {
+        font-size: 0.85rem;
+    }
+}
+@media only screen and (max-width: 1080px) {
+    .landing-text {
+        font-size: 0.8rem;
+    }
+}
 @media only screen and (max-width: 1024px) {
     .landing-ls img {
         width: 300px;

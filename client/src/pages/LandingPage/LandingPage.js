@@ -40,30 +40,44 @@ const LandingPage = () => {
                         <a href={locattion.pathname}>
                             <img
                                 onContextMenu={(e) => e.preventDefault()}
-                                src="./images/soapbox_landing_image"
-                                alt="soapbox_landing_page"
+                                src="./images/MegaHootApp_mobilemockup_web_SPBX.png"
+                                alt="MegaHoot Soapbox"
                             />
                         </a>
                         <div className="landing-text">
                             <p>
                                 MegaHoot Soapbox Where Content Creators Monetize Their Private Channels and Build Their Brand, Build Their Business With No Startup Cost.
-                                {/* <br /> */}
                             </p>
                             <p>
                                 Content Creators can offer monthly subscriptions or have one time events with ticket sales or both. They will be able to offer their subscribers , their fans , the ability to join their live broadcast on MegaHoot Soapbox and interact in real time, this can be one on one or for large audiences.
                             </p>
-                            {/* <br /> <br /> */}
                             <p>
                                 Content Creators come partner with MegaHoot Technologies and maximize the benefits from working with us.
                             </p>
-                            {/* <br /> <br /> */}
                             <p>
-                                Fastrack to account verification, that badge everyone wants.
-                                Higher content partner payouts plus unique incentives
-                                Access to other MegaHoot Technologies products
-                                Create a PPV live event with ticketing at no initial cost to you
-                                Access to selling your digital products
-                                Partnership level growth initiative system and much more
+                                <ul>
+                                    <li>
+                                        FastTrack to account verification, that badge everyone wants.
+                                    </li>
+                                    <li>
+                                        Higher content partner payouts plus unique incentives
+                                    </li>
+                                    <li>
+                                        Access to other MegaHoot Technologies products
+                                    </li>
+                                    <li>
+                                        Create a PPV live event with ticketing at no initial cost to you
+                                    </li>
+                                    <li>
+                                        Access to selling your digital products
+                                    </li>
+                                    <li>
+                                        Partnership level growth initiative system and much more
+                                    </li>
+                                    <li>
+                                        NFT Partnership Opportunities
+                                    </li>
+                                </ul>
                             </p>
                         </div>
                     </div>
