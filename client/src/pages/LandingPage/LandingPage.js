@@ -34,7 +34,7 @@ const LandingPage = () => {
             <main className="landing-page">
                 <div className="landing-ls">
                     <span>
-                        MegaHoot Brings Value to Content Creators Globally
+                        MegaHoot Partnering with Content Creators Globally
                     </span>
                     <div className="img-text">
                         <a href={locattion.pathname}>
@@ -45,10 +45,26 @@ const LandingPage = () => {
                             />
                         </a>
                         <div className="landing-text">
-                            MegaHoot Soapbox Where Content Creators Monetize Their Private Channels and Build Their Brand, Build Their Business With No Startup Cost.
-                            <br />
-                            <br />
-                            Content Creators can offer monthly subscriptions or have one time events with ticket sales or both. They will be able to offer their subscribers , their fans , the ability to join their live broadcast on MegaHoot Soapbox and interact in real time, this can be one on one or for large audiences.
+                            <p>
+                                MegaHoot Soapbox Where Content Creators Monetize Their Private Channels and Build Their Brand, Build Their Business With No Startup Cost.
+                                {/* <br /> */}
+                            </p>
+                            <p>
+                                Content Creators can offer monthly subscriptions or have one time events with ticket sales or both. They will be able to offer their subscribers , their fans , the ability to join their live broadcast on MegaHoot Soapbox and interact in real time, this can be one on one or for large audiences.
+                            </p>
+                            {/* <br /> <br /> */}
+                            <p>
+                                Content Creators come partner with MegaHoot Technologies and maximize the benefits from working with us.
+                            </p>
+                            {/* <br /> <br /> */}
+                            <p>
+                                Fastrack to account verification, that badge everyone wants.
+                                Higher content partner payouts plus unique incentives
+                                Access to other MegaHoot Technologies products
+                                Create a PPV live event with ticketing at no initial cost to you
+                                Access to selling your digital products
+                                Partnership level growth initiative system and much more
+                            </p>
                         </div>
                     </div>
                 </div>
