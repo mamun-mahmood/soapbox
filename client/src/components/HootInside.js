@@ -274,10 +274,10 @@ const HootInside = ({
     useEffect(() => {
         if (likes === 0) {
             setTimeout(() => {
-                setlikesCount(likesCount + random(1, 20));
+                setlikesCount(likesCount + random(20, 50));
             }, 30000);
         } else {
-            setlikesCount(likesCount + random(1, 20));
+            setlikesCount(likesCount + random(20, 50));
         }
 
         // to make likes count 0 

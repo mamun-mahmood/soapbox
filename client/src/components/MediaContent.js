@@ -24,7 +24,7 @@ const MediaContent = ({
 
     // on every page load view will increase reandomly - just remove this useEffect to get back to normal view counts
     useEffect(() => {
-        setViewCount(viewCount + random(1, 200));
+        setViewCount(viewCount + random(50, 400));
 
         // to make view count 0 
         // setViewCount(0)

@@ -3,17 +3,21 @@ import axios from 'axios'
 import SideBarOption from './SideBarOption'
 import { BsLightning } from 'react-icons/bs'
 import { Link, NavLink, useHistory } from 'react-router-dom'
-import { FiHome, FiHash } from 'react-icons/fi'
+import { FiHome, FiHash, FiSearch, FiShield } from 'react-icons/fi'
+import { RiShieldFlashLine } from 'react-icons/ri'
+import { IoCloseOutline } from 'react-icons/io5'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import './sidebar.css';
 
 const SideBar = () => {
-    const [mainActive, setMainActive] = useState("active");
+    // const [mainActive, setMainActive] = useState("active");
     const [hashtags, setHashtags] = useState([]);
     const [stocks, setStocks] = useState([]);
-    const [allUploads, setAllUploads] = useState([]);
-    const [myListActive, setMyListActive] = useState("");
+    // const [allUploads, setAllUploads] = useState([]);
+    // const [myListActive, setMyListActive] = useState("");
     const [gender, setGender] = useState(false)
+    const [searchHashtagTerm, setSearchHashtagTerm] = useState("");
+    const [searchStockTerm, setSearchStockTerm] = useState("");
     const history = useHistory()
 
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -35,8 +39,23 @@ const SideBar = () => {
                     setHashtags((response.data).reverse());
                 });
         }
-        getHashtagsData();
+
+        try {
+            getHashtagsData();
+        } catch (error) {
+            console.log(error);
+        }
     }, [])
+
+    const defaultHashtags = [
+        "#funny",
+        "#nft",
+        "#wallstreet",
+        "#realestate",
+        "#fitness",
+        "#fashion",
+        "#beauty"
+    ]
 
     // const updateTotalHashtagViews = useCallback((hashtag, totalViews) => {
     //     axios.put(`${BaseURL}/hashtags`, {
@@ -69,8 +88,26 @@ const SideBar = () => {
                     setStocks((response.data).reverse());
                 });
         }
-        getStocksData();
+
+        try {
+            getStocksData();
+        } catch (error) {
+            console.log(error);
+        }
     }, [])
+
+    const defaultStocks = [
+        "$AAPL",
+        "$FB",
+        "$AMZN",
+        "$IBM",
+        "$BTC",
+        "$ETH",
+        "$PLTR",
+        "$GM",
+        "$F",
+        "$TSLA"
+    ]
 
     // const updateTotalStockViews = useCallback((stock, totalViews) => {
     //     axios.put(`${BaseURL}/stocks`, {
@@ -136,6 +173,12 @@ const SideBar = () => {
                         Icon={FiHome}
                     />
 
+                    <SideBarOption
+                        option="Private Channels"
+                        Icon={RiShieldFlashLine}
+                        link=""
+                    />
+
                     {userInfo
                         ? <SideBarOption
                             option="Profile"
@@ -151,53 +194,112 @@ const SideBar = () => {
                         Icon={BsLightning}
                     />
 
-                    <SideBarOption
+                    {/* <SideBarOption
                         option="Hashtags"
                         Icon={FiHash}
                         link=""
                         looks={"looks"}
-                    />
+                    /> */}
 
                     <li>
-                        <hr className="my-2" />
+                        <div className="search-on-sidebar">
+                            <input
+                                value={searchHashtagTerm}
+                                onChange={(event) => { setSearchHashtagTerm(event.target.value) }}
+                                type="text"
+                                placeholder="Search hashtags"
+                            />
+                            {searchHashtagTerm &&
+                                <IoCloseOutline className="search-close-on-sidebar"
+                                    onClick={() => { setSearchHashtagTerm("") }}
+                                />
+                            }
+                        </div>
                     </li>
+
+                    {/* <li>
+                        <hr className="my-2" />
+                    </li> */}
 
                     <li>
                         <div className="hashtags">
-                            {/* .filter((hashtag) => {
-                                if (hashtag.totalViews !== 0) {
-                                    return hashtag
-                                }
-                            }) */}
-                            {hashtags.slice(0, 8).map((hashtag) => {
+                            {/* when fetching hashtags from server we are using it as hashtag.hashtag inside map    */}
+                            {/* {hashtags.slice(0, 8).map((hashtag) => {
                                 return (<div key={hashtag.id}>
                                     <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
                                         onClick={() => history.push(`/hashtags/${(hashtag.hashtag).replace('#', '')}`)}>{hashtag.hashtag.toLowerCase()}
                                     </small>
                                 </div>)
-                            })}
+                            })} */}
+
+                            {/* displating default hashtags  */}
+                            {/* {defaultHashtags.slice(0, 8).map((hashtag, index) => {
+                                return (<div key={index}>
+                                    <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                        onClick={() => history.push(`/hashtags/${(hashtag).replace('#', '')}`)}>{hashtag.toLowerCase()}
+                                    </small>
+                                </div>)
+                            })} */}
+
+                            {searchHashtagTerm
+                                ? hashtags.filter((hashtag) => {
+                                    // this displays hashtags respective to search term
+                                    if (searchHashtagTerm === "") {
+                                        return hashtag;
+                                    } else if (hashtag.hashtag.toLowerCase().includes(searchHashtagTerm.toLowerCase())) {
+                                        return hashtag;
+                                    }
+                                }).slice(0, 8).map((hashtag) => {
+                                    return (<div key={hashtag.id}>
+                                        <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                            onClick={() => history.push(`/hashtags/${(hashtag.hashtag).replace('#', '')}`)}>{hashtag.hashtag.toLowerCase()}
+                                        </small>
+                                    </div>)
+                                })
+                                :
+                                defaultHashtags.slice(0, 8).map((hashtag, index) => {
+                                    return (<div key={index}>
+                                        <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                            onClick={() => history.push(`/hashtags/${(hashtag).replace('#', '')}`)}>{hashtag.toLowerCase()}
+                                        </small>
+                                    </div>)
+                                })
+                            }
                         </div>
                     </li>
 
-                    <SideBarOption
+                    {/* <SideBarOption
                         option="Stocks"
                         Icon={BiDollar}
                         link=""
                         looks={"looks"}
-                    />
+                    /> */}
 
                     <li>
-                        <hr className="my-2" />
+                        <div className="search-on-sidebar">
+                            <input
+                                value={searchStockTerm}
+                                onChange={(event) => { setSearchStockTerm(event.target.value) }}
+                                type="text"
+                                placeholder="Search stocks"
+                            />
+                            {searchStockTerm &&
+                                <IoCloseOutline
+                                    className="search-close-on-sidebar"
+                                    onClick={() => { setSearchStockTerm("") }}
+                                />
+                            }
+                        </div>
                     </li>
+
+                    {/* <li>
+                        <hr className="my-2" />
+                    </li> */}
 
                     <li>
                         <div className="hashtags">
-                            {/* .filter((stock) => {
-                                if (stock.totalViews !== 0) {
-                                    return stock
-                                }
-                            }) */}
-                            {stocks.filter((stock) => {
+                            {/* when fetching stocks from server we are using it as stock.stock inside map and removing stocks which has decimals in it using filter  */}
+                            {/* {stocks.filter((stock) => {
                                 const regex = /\d/;
                                 if (regex.test(stock.stock) === false) {
                                     return stock
@@ -208,7 +310,56 @@ const SideBar = () => {
                                         onClick={() => history.push(`/stocks/${(stock.stock).replace('$', '')}`)}>{stock.stock.toUpperCase()}
                                     </small>
                                 </div>)
-                            })}
+                            })} */}
+
+                            {/* displating default stocks  */}
+                            {/* {defaultStocks.filter((stock) => {
+                                const regex = /\d/;
+                                if (regex.test(stock) === false) {
+                                    return stock
+                                }
+                            }).slice(0, 10).map((stock, index) => {
+                                return (<div key={index}>
+                                    <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                        onClick={() => history.push(`/stocks/${(stock).replace('$', '')}`)}>{stock.toUpperCase()}
+                                    </small>
+                                </div>)
+                            })} */}
+
+                            {searchStockTerm
+                                ? stocks.filter((stock) => {
+                                    // this filters decimal number stocks
+                                    const regex = /\d/;
+                                    if (regex.test(stock.stock) === false) {
+                                        return stock
+                                    }
+                                }).filter((stock) => {
+                                    // this displays stocks respective to search term
+                                    if (searchStockTerm === "") {
+                                        return stock;
+                                    } else if (stock.stock.toLowerCase().includes(searchStockTerm.toLowerCase())) {
+                                        return stock;
+                                    }
+                                }).slice(0, 8).map((stock) => {
+                                    return (<div key={stock.id}>
+                                        <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                            onClick={() => history.push(`/stocks/${(stock.stock).replace('$', '')}`)}>{stock.stock.toUpperCase()}
+                                        </small>
+                                    </div>)
+                                })
+                                : defaultStocks.filter((stock) => {
+                                    const regex = /\d/;
+                                    if (regex.test(stock) === false) {
+                                        return stock
+                                    }
+                                }).slice(0, 10).map((stock, index) => {
+                                    return (<div key={index}>
+                                        <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
+                                            onClick={() => history.push(`/stocks/${(stock).replace('$', '')}`)}>{stock.toUpperCase()}
+                                        </small>
+                                    </div>)
+                                })
+                            }
                         </div>
                     </li>
 
@@ -275,7 +426,7 @@ const SideBar = () => {
 
                         <div className="megahoot-com">
                             <small className="info cursor-pointer">
-                                <Link to="/tos">
+                                <Link to="/TOS">
                                     Terms Of Service
                                 </Link>
                             </small>

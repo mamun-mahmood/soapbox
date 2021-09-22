@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet';
 import { FiSearch } from 'react-icons/fi';
 import HootOutside from '../HootOutside/HootOutside';
-import Post from '../Post';
 import './explore.css'
 
 const Explore = () => {
@@ -32,7 +31,12 @@ const Explore = () => {
     return (
         <div className="explore start">
             <div className="search-bar">
-                <input ref={searchRef} onChange={(event) => { setSearchTerm(event.target.value) }} type="text" placeholder="Search Hoots based on Hashtags, Stocks and Keywords" />
+                <input
+                    ref={searchRef}
+                    onChange={(event) => { setSearchTerm(event.target.value) }}
+                    type="text"
+                    placeholder="Search Hoots based on Hashtags, Stocks and Keywords"
+                />
                 <FiSearch className="search-icon" onClick={() => { searchRef.current.focus() }} />
             </div>
             <div className="hoot-profile-layout">

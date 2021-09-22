@@ -91,7 +91,7 @@ function App() {
           <PrivateMessagesPage />
         </Route>
 
-        <Route path="/tos">
+        <Route path="/TOS">
           {/* <ProtectedRoute page={TermsOfServicePage} /> */}
           <TermsOfServicePage />
         </Route>
