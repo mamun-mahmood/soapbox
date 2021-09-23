@@ -132,7 +132,7 @@ dl, ol, ul {
 }
 
 .landing-ls span {
-    max-width: 420px;
+    /* max-width: 420px; */
     text-align: center;
     color: var(--primary-color);
     font-size: 1.3rem;

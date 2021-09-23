@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useContext, useCallback } from 'react'
+import React, { useEffect, useState, Fragment, useContext, useCallback, useRef, useLayoutEffect } from 'react'
 // import { UserContext } from '../context/UserContext';
 import axios from 'axios'
 import format from "date-fns/format"
@@ -11,7 +11,7 @@ import Avatar from 'react-avatar';
 import { Link, useHistory } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
-import { FiTwitter, FiShare2, FiRepeat, FiMail, FiMessageSquare, FiEye, FiLink, FiShare } from 'react-icons/fi'
+import { FiTwitter, FiShare2, FiRepeat, FiMail, FiMessageSquare, FiEye, FiLink, FiShare, FiCopy } from 'react-icons/fi'
 import { FaHeart, FaRegHeart, FaTumblr } from 'react-icons/fa'
 import { RiFacebookCircleLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
@@ -73,6 +73,7 @@ const HootInside = ({
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+    const [isEmbedModalOpen, setIsEmbedModalOpen] = useState(false);
     const [editCaption, setEditCaption] = useState("");
     const [isEdited, setIsEdited] = useState(edited);
     const [liked, setLiked] = useState(false);
@@ -340,13 +341,51 @@ const HootInside = ({
 
     // link != null && (console.log("fromDBLinks parsed", fromDBLinks), setDbLink(fromDBLinks))
 
+    const openEmbedModal = () => {
+        setIsEmbedModalOpen(true);
+        setIsMoreModalOpen(false);
+    }
+
+    const embedHootLink = `https://www.megahoot.net/embed/hoot/${hootId}`
+    // const embedHootLink = `http://localhost:3000/embed/hoot/${hootId}`
+
+    const homeRef = useRef(null);
+    const [iframeHeight, setIframeHeight] = useState(0)
+    const [iframeWidth, setIframeWidth] = useState(0)
+
+    useLayoutEffect(() => {
+        setIframeWidth(homeRef.current.clientWidth);
+        setIframeHeight(homeRef.current.clientHeight);
+    }, [])
+
+
+    // useEffect(() => {
+    //     const element = document.getElementById('element-id');
+    //     if (element) {
+    //         setIframeWidth(element.scrollHeight);
+    //         setIframeHeight(element.scrollHeight);
+    //     }
+    // }, []);
+
+    const addedIframeHeight = iframeHeight + 160;
+
+    const iframe = `<iframe src=${embedHootLink} name="hootiFrame" scrolling="no" width="100%" height=600></iframe>`
+
+    const copyIframe = () => {
+        navigator.clipboard.writeText(iframe);
+        setTimeout(() => {
+            setIsEmbedModalOpen(false)
+        }, 100);
+        toast.success('Code copied to clipboard');
+    }
+
     return (
         <Fragment>
             {ephemeral === 1
                 ?
                 <Expire expiryDate={expiryDate} hootImgId={hootImgId}>
                     <div className="home">
-                        <div className="home-container">
+                        <div className="home-container" ref={homeRef} id="element-id">
                             <ReactTooltip />
                             <div className="post-heading">
                                 <div
@@ -478,28 +517,28 @@ const HootInside = ({
                                                     username === userInfo.username ?
                                                         <div className="more-options">
                                                             <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                            <span onClick={openEmbedModal}>Embed hoot</span>
                                                             <span onClick={shareVia}>Share to</span>
                                                             <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                             <span onClick={copyTextToClipboard}>Copy Text</span>
                                                             <span onClick={openEditModal}>Edit</span>
                                                             <span onClick={openDeleteModal}> Delete</span>
-                                                            {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                                         </div>
                                                         :
                                                         <div className="more-options">
                                                             <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                            <span onClick={openEmbedModal}>Embed hoot</span>
                                                             <span onClick={shareVia}>Share to</span>
                                                             <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                             <span onClick={copyTextToClipboard}>Copy Text</span>
-                                                            {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                                         </div>
                                                     :
                                                     <div className="more-options">
                                                         <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                        <span onClick={openEmbedModal}>Embed hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
-                                                        {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                                     </div>
                                                 }
 
@@ -514,6 +553,34 @@ const HootInside = ({
                                                 } */}
                                                 {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                                                 {/* <IoCloseOutline className="close-modal" onClick={() => setIsMoreModalOpen(false)} /> */}
+                                            </div>
+                                        </ClickAwayListener>
+                                    </Fragment>
+                                }
+
+                                {/* embed modal  */}
+                                {isEmbedModalOpen &&
+                                    <Fragment>
+                                        <div className="modal-overlay"></div>
+                                        <ClickAwayListener onClickAway={() => { setIsEmbedModalOpen(false) }}>
+                                            <div className="embed-modal">
+                                                <h4>Embed Hoot</h4>
+                                                <div>How to Embed this Hoot:</div>
+                                                <div style={{ margin: "0.5rem 0" }}>Paste this code directly into the HTML portion of your site, and you'll be good to go.</div>
+
+                                                <div className="embed-iframe">
+                                                    {iframe}
+                                                </div>
+                                                <div className="btn-post mt-3 embed-info">
+                                                    <Button
+                                                        variant="primary mx-1"
+                                                        className="btn-login"
+                                                        onClick={copyIframe}
+                                                    >
+                                                        <FiCopy /> Copy code
+                                                    </Button>{' '}
+                                                </div>
+                                                <IoCloseOutline className="close-modal" onClick={() => setIsEmbedModalOpen(false)} />
                                             </div>
                                         </ClickAwayListener>
                                     </Fragment>
@@ -975,7 +1042,7 @@ const HootInside = ({
                 </Expire>
                 :
                 <div className="home">
-                    <div className="home-container">
+                    <div className="home-container" ref={homeRef} id="element-id">
                         <ReactTooltip />
                         <div className="post-heading">
                             <div
@@ -1108,6 +1175,7 @@ const HootInside = ({
                                                 username === userInfo.username ?
                                                     <div className="more-options">
                                                         <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                        <span onClick={openEmbedModal}>Embed hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -1118,6 +1186,7 @@ const HootInside = ({
                                                     :
                                                     <div className="more-options">
                                                         <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                        <span onClick={openEmbedModal}>Embed hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -1126,6 +1195,7 @@ const HootInside = ({
                                                 :
                                                 <div className="more-options">
                                                     <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                    <span onClick={openEmbedModal}>Embed hoot</span>
                                                     <span onClick={shareVia}>Share to</span>
                                                     <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                     <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -1143,6 +1213,34 @@ const HootInside = ({
                                                     </div>
                                                 } */}
                                             {/* <IoCloseOutline className="close-modal" onClick={() => setIsMoreModalOpen(false)} /> */}
+                                        </div>
+                                    </ClickAwayListener>
+                                </Fragment>
+                            }
+
+                            {/* embed modal  */}
+                            {isEmbedModalOpen &&
+                                <Fragment>
+                                    <div className="modal-overlay"></div>
+                                    <ClickAwayListener onClickAway={() => { setIsEmbedModalOpen(false) }}>
+                                        <div className="embed-modal">
+                                            <h4>Embed Hoot</h4>
+                                            <div>How to Embed this Hoot:</div>
+                                            <div style={{ margin: "0.5rem 0" }}>Paste this code directly into the HTML portion of your site, and you'll be good to go.</div>
+
+                                            <div className="embed-iframe">
+                                                {iframe}
+                                            </div>
+                                            <div className="btn-post mt-3 embed-info">
+                                                <Button
+                                                    variant="primary mx-1"
+                                                    className="btn-login"
+                                                    onClick={copyIframe}
+                                                >
+                                                    <FiCopy /> Copy code
+                                                </Button>{' '}
+                                            </div>
+                                            <IoCloseOutline className="close-modal" onClick={() => setIsEmbedModalOpen(false)} />
                                         </div>
                                     </ClickAwayListener>
                                 </Fragment>
@@ -1567,7 +1665,7 @@ const HootInside = ({
                             }
 
                             {(ephemeral === 1) &&
-                                <small class="badge outline-badge d-flex flex-end">{ephemeral}</small>
+                                <small class="badge outline-badge d-flex flex-end">EPHEMERAL</small>
                             }
                         </div>
 
@@ -1602,7 +1700,7 @@ const HootInside = ({
                     </div>
                 </div>
             }
-        </Fragment >
+        </Fragment>
     )
 }
 

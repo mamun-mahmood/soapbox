@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useState } from 'react'
-// import User from '../context/UserContext';
 import axios from 'axios';
 import HootInside from './HootInside';
 
@@ -36,7 +35,6 @@ const Post = ({
         <div>
             {userInformation.map((user) => {
                 return (<div key={user.id}>
-                    {/* <User> */}
                     <HootInside
                         name={user.name}
                         profilePic={user.profilePic}
@@ -56,7 +54,6 @@ const Post = ({
                         edited={edited}
                         editedTimeStamp={editedTimeStamp}
                     />
-                    {/* </User> */}
                 </div>);
             })}
         </div>

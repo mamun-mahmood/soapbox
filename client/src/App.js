@@ -1,6 +1,5 @@
 import React, { lazy, Suspense } from 'react'
-import Loadable from 'react-loadable';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import PageNotFound from './pages/PageNotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import LandingPage from './pages/LandingPage/LandingPage'
@@ -23,6 +22,7 @@ import ExplorePage from './pages/ExplorePage';
 import PrivacyPage from './pages/PrivacyPage';
 import PrivateMessagesPage from './pages/PrivateMessagesPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
+import EmbedHootPage from './pages/EmbedHootPage';
 
 function App() {
   return (
@@ -42,6 +42,11 @@ function App() {
         <Route exact path="/">
           {/* <ProtectedRoute page={Home} /> */}
           <Home />
+        </Route>
+
+        <Route path="/embed/hoot/:hootId">
+          {/* <ProtectedRoute page={EmbedHootPage} /> */}
+          <EmbedHootPage />
         </Route>
 
         <Route path="/create">
