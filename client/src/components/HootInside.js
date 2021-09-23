@@ -17,7 +17,7 @@ import { RiFacebookCircleLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
-import { HiBadgeCheck } from 'react-icons/hi'
+import { HiBadgeCheck, HiOutlineCode } from 'react-icons/hi'
 import Highlighter from "react-highlight-words"
 import './IndividualHoot/individualHoot.css'
 import Expire from './Expire';
@@ -342,21 +342,21 @@ const HootInside = ({
     // link != null && (console.log("fromDBLinks parsed", fromDBLinks), setDbLink(fromDBLinks))
 
     const openEmbedModal = () => {
+        setIsShareModalOpen(false);
         setIsEmbedModalOpen(true);
-        setIsMoreModalOpen(false);
     }
 
     const embedHootLink = `https://www.megahoot.net/embed/hoot/${hootId}`
     // const embedHootLink = `http://localhost:3000/embed/hoot/${hootId}`
 
     const homeRef = useRef(null);
-    const [iframeHeight, setIframeHeight] = useState(0)
-    const [iframeWidth, setIframeWidth] = useState(0)
+    // const [iframeHeight, setIframeHeight] = useState(0)
+    // const [iframeWidth, setIframeWidth] = useState(0)
 
-    useLayoutEffect(() => {
-        setIframeWidth(homeRef.current.clientWidth);
-        setIframeHeight(homeRef.current.clientHeight);
-    }, [])
+    // useLayoutEffect(() => {
+    //     setIframeWidth(homeRef.current.clientWidth);
+    //     setIframeHeight(homeRef.current.clientHeight);
+    // }, [])
 
 
     // useEffect(() => {
@@ -366,8 +366,6 @@ const HootInside = ({
     //         setIframeHeight(element.scrollHeight);
     //     }
     // }, []);
-
-    const addedIframeHeight = iframeHeight + 160;
 
     const iframe = `<iframe src=${embedHootLink} name="hootiFrame" scrolling="no" width="100%" height=600></iframe>`
 
@@ -517,7 +515,6 @@ const HootInside = ({
                                                     username === userInfo.username ?
                                                         <div className="more-options">
                                                             <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
-                                                            <span onClick={openEmbedModal}>Embed hoot</span>
                                                             <span onClick={shareVia}>Share to</span>
                                                             <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                             <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -527,7 +524,6 @@ const HootInside = ({
                                                         :
                                                         <div className="more-options">
                                                             <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
-                                                            <span onClick={openEmbedModal}>Embed hoot</span>
                                                             <span onClick={shareVia}>Share to</span>
                                                             <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                             <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -535,7 +531,6 @@ const HootInside = ({
                                                     :
                                                     <div className="more-options">
                                                         <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
-                                                        <span onClick={openEmbedModal}>Embed hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -844,7 +839,18 @@ const HootInside = ({
                                                                 <div className="share-icons-text">
                                                                     <FiRepeat className="twitter-share" />
                                                                     <span className="share-hoot-to">
-                                                                        Re-hoot
+                                                                        Re-Hoot
+                                                                    </span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+
+                                                        <div className="share-icons">
+                                                            <a target="_blank" rel="nofollow" class="block button-transparent">
+                                                                <div className="share-icons-text" onClick={openEmbedModal}>
+                                                                    <HiOutlineCode className="twitter-share" />
+                                                                    <span className="share-hoot-to">
+                                                                        Embed Hoot
                                                                     </span>
                                                                 </div>
                                                             </a>
@@ -1175,7 +1181,6 @@ const HootInside = ({
                                                 username === userInfo.username ?
                                                     <div className="more-options">
                                                         <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
-                                                        <span onClick={openEmbedModal}>Embed hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -1186,7 +1191,6 @@ const HootInside = ({
                                                     :
                                                     <div className="more-options">
                                                         <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
-                                                        <span onClick={openEmbedModal}>Embed hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -1195,7 +1199,6 @@ const HootInside = ({
                                                 :
                                                 <div className="more-options">
                                                     <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
-                                                    <span onClick={openEmbedModal}>Embed hoot</span>
                                                     <span onClick={shareVia}>Share to</span>
                                                     <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                     <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -1499,12 +1502,24 @@ const HootInside = ({
                                             <span className="share-hoot-to share-head">Share Hoot to...</span>
                                         </div> */}
                                                 <div className="share-flex-icons">
+
                                                     <div className="share-icons">
                                                         <a target="_blank" rel="nofollow" class="block button-transparent">
                                                             <div className="share-icons-text">
                                                                 <FiRepeat className="twitter-share" />
                                                                 <span className="share-hoot-to">
-                                                                    Re-hoot
+                                                                    Re-Hoot
+                                                                </span>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+
+                                                    <div className="share-icons">
+                                                        <a target="_blank" rel="nofollow" class="block button-transparent">
+                                                            <div className="share-icons-text" onClick={openEmbedModal}>
+                                                                <HiOutlineCode className="twitter-share" />
+                                                                <span className="share-hoot-to">
+                                                                    Embed Hoot
                                                                 </span>
                                                             </div>
                                                         </a>

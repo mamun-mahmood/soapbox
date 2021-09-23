@@ -93,7 +93,8 @@ const EmbedHoot = ({
         <Fragment>
             {userInformation.map((user) => {
                 const profilePicPath = `${BaseURL}/profile-pictures/${user.profilePic}`;
-                const individualLink = `http://localhost:3000/${username}/hoot/${hootId}`;
+                {/* const individualLink = `http://localhost:3000/${username}/hoot/${hootId}`; */ }
+                const individualLink = `https://www.megahoot.net/${username}/hoot/${hootId}`;
 
                 return (
                     <Fragment key={user.id}>
