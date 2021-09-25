@@ -15,7 +15,8 @@ const Post = ({
     expiryDate,
     timeStamp,
     edited,
-    editedTimeStamp
+    editedTimeStamp,
+    notSubscribed
 }) => {
     const [userInformation, setUserInformation] = useState([]);
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -53,6 +54,7 @@ const Post = ({
                         timeStamp={timeStamp}
                         edited={edited}
                         editedTimeStamp={editedTimeStamp}
+                        notSubscribed={notSubscribed}
                     />
                 </div>);
             })}

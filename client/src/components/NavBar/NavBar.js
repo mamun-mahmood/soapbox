@@ -5,7 +5,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { FiMenu } from 'react-icons/fi';
 import './navbar.css';
 
-const NavBar = () => {
+const NavBar = ({ width, header }) => {
     const history = useHistory();
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
@@ -120,7 +120,7 @@ const NavBar = () => {
         //     </nav>
         // </div>
         <nav className="main-nav shadow-sm" style={{ zIndex: "11111" }}>
-            <div className="max-width-nav">
+            <div className="max-width-nav" style={{ maxWidth: width }}>
                 <div className="main-brand">
                     {/* <Link to="/home" className="navbar-brand cursor-pointer"> */}
                     <Link to="/" className="navbar-brand cursor-pointer">
@@ -132,6 +132,9 @@ const NavBar = () => {
                             onContextMenu={(e) => e.preventDefault()}
                         />
                     </Link>
+                    <div className="nav-header">
+                        {header}
+                    </div>
                 </div>
 
                 <ul className="main-list-inline" id={showLinks ? "main-hidden" : ""}>

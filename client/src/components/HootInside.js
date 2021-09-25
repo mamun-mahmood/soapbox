@@ -42,7 +42,8 @@ const HootInside = ({
     expiryDate,
     timeStamp,
     edited,
-    editedTimeStamp
+    editedTimeStamp,
+    notSubscribed
 }) => {
     // API url 
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -383,7 +384,7 @@ const HootInside = ({
                 ?
                 <Expire expiryDate={expiryDate} hootImgId={hootImgId}>
                     <div className="home">
-                        <div className="home-container" ref={homeRef} id="element-id">
+                        <div className="home-container" ref={homeRef} id="element-id" style={notSubscribed}>
                             <ReactTooltip />
                             <div className="post-heading">
                                 <div
@@ -1048,7 +1049,7 @@ const HootInside = ({
                 </Expire>
                 :
                 <div className="home">
-                    <div className="home-container" ref={homeRef} id="element-id">
+                    <div className="home-container" ref={homeRef} id="element-id" style={notSubscribed}>
                         <ReactTooltip />
                         <div className="post-heading">
                             <div

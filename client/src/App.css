@@ -388,8 +388,11 @@ hr {
 }
 
 .btn-edit-profile {
-  width: 82%;
+  width: 70%;
   height: 35px;
+
+  display: block;
+  padding: 0 1rem;
 
   color: #374151;
   background-color: #F8F9FA;
@@ -397,7 +400,7 @@ hr {
   font-weight: 600;
 
   margin: 1rem;
-  /* margin-top: 0.2rem; */
+  margin-bottom: 0rem;
 
   border-radius: 0.3rem;
   border: 1.5px solid var(--border-color);
@@ -410,6 +413,41 @@ hr {
 }
 
 .btn-edit-profile a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  color: #374151;
+  text-decoration: none;
+}
+
+.btn-add-private-c {
+  width: 70%;
+  height: 35px;
+
+  display: block;
+  padding: 0 1rem;
+
+  color: #374151;
+  background-color: #F8F9FA;
+
+  font-weight: 600;
+
+  margin: 1rem;
+  margin-top: 0.5rem;
+
+  border-radius: 0.3rem;
+  border: 1.5px solid var(--border-color);
+}
+
+.btn-add-private-c:hover {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-add-private-c a {
   display: flex;
   justify-content: center;
   align-items: center;

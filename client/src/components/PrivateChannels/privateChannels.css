@@ -1,0 +1,198 @@
+.private-channels {
+    padding-top: 4.5rem;
+}
+
+.channel-banner img {
+    position: fixed;
+    width: 100%;
+    height: 10.5rem;
+    object-fit: cover;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.channel-content {
+    display: flex;
+}
+
+.channel-user-info {
+    position: fixed;
+    top: 15rem;
+    z-index: 2;
+
+    flex: 30%;
+    width: 400px;
+    height: 100%;
+    background-color: #EDE9FF;
+}
+
+.channel-user-content {
+    flex: 70%;
+    width: 100%;
+    height: 500px;
+}
+
+.profile-pic {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+.profile-pic img {
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 130px;
+    height: 130px;
+
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: #EDE9FF;
+    border: 6px solid #EDE9FF;
+    cursor: pointer;
+}
+
+.user-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+.user-information .name {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.user-information span {
+    font-weight: 500;
+}
+
+.user-information .bio {
+    text-align: center;
+    word-break: break-all;
+    padding: 0.5rem 1rem;
+}
+
+.user-information .btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btns button {
+    margin: 0.5rem 0;
+    padding: 0.3rem 1rem;
+    border: none;
+    font-size: large;
+    border-radius: 0.3rem;
+    color: #EDE9FF;
+    background-color: var(--primary-color);
+}
+
+.user-information .social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.live-events {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.live-header {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    /* font-weight: 600; */
+    background-color: #DCD5FA;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.live-cards {
+    position: relative;
+    width: 110px;
+    height: 140px;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #DCD5FA;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.live-cards img {
+    width: 110px;
+    height: 140px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.live-cards:hover {
+    transform: scale(1.05);
+}
+
+.live-cards button {
+    position: absolute;
+    bottom: 0;
+    left: 0.1rem;
+    width: 90%;
+    margin: 0.4rem 0.25rem;
+    padding: 0.2rem 0.5rem;
+    border: none;
+    border-radius: 0.3rem;
+    color: #EDE9FF;
+    background-color: var(--primary-color);
+}
+
+.channel-user-content {
+    margin-left: 400px;
+    margin-top: 10.5rem;
+}
+
+.channel-tabs {
+    position: fixed;
+    height: 40px;
+
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    background-color: #F7F6FF;
+    z-index: 1;
+}
+
+.channel-tabs span {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+/* .channel-tabs span:nth-child(1) {
+    border-bottom: 2px solid var(--primary-color);
+    padding: 0.5rem;
+} */
+
+.channel-media {
+    margin-top: 2.5rem;
+}

@@ -13,7 +13,7 @@ import HootOutside from './HootOutside/HootOutside';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 import ReactTooltip from 'react-tooltip';
-// import { UserContext } from '../context/UserContext';
+import toast from 'react-hot-toast';
 
 const Profile = ({
     verified,
@@ -41,8 +41,7 @@ const Profile = ({
     const [hasMore, setHasMore] = useState(true);
     const [followersCount, setFollowersCount] = useState(followers)
     const [page, setpage] = useState(2);
-
-    // const [user, setUser] = useContext(UserContext);
+    const [privateChannel, setPrivateChannel] = useState(false);
 
     const LIMIT = 9;
 
@@ -107,6 +106,11 @@ const Profile = ({
         if (count >= 1e12) return "T";
     };
 
+    const addPrivateChannel = () => {
+        setPrivateChannel(true);
+        toast.success("Private Channel added");
+    }
+
     return (
         <div className="profile-page-main">
             {loading &&
@@ -148,6 +152,19 @@ const Profile = ({
                                         Edit Profile
                                     </Link>
                                 </button>
+
+                                {privateChannel
+                                    ?
+                                    <button className="btn-add-private-c">
+                                        <Link to={`/private/c/${username}`}>
+                                            Go to Private Channel
+                                        </Link>
+                                    </button>
+                                    :
+                                    <button className="btn-add-private-c" onClick={addPrivateChannel}>
+                                        Add Private Channel
+                                    </button>
+                                }
 
 
                                 {/* <button className="btn-edit-profile">

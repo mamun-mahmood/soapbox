@@ -23,6 +23,7 @@ import PrivacyPage from './pages/PrivacyPage';
 import PrivateMessagesPage from './pages/PrivateMessagesPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import EmbedHootPage from './pages/EmbedHootPage';
+import PrivateChannelsPage from './pages/PrivateChannelsPage';
 
 function App() {
   return (
@@ -94,6 +95,11 @@ function App() {
         <Route path="/private-messages">
           {/* <ProtectedRoute page={PrivateMessagesPage} /> */}
           <PrivateMessagesPage />
+        </Route>
+
+        <Route path="/private/channels/:username">
+          {/* <ProtectedRoute page={PrivateChannelsPage} /> */}
+          <PrivateChannelsPage />
         </Route>
 
         <Route path="/TOS">

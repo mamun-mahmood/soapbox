@@ -46,7 +46,6 @@ const ProfilePage = () => {
                 {!loading &&
                     userInfo.map((user) => {
                         return (<div style={{ width: "100%" }} key={user.id}>
-                            {/* <User> */}
                             <Profile
                                 userId={user.id}
                                 verified={user.verified}
@@ -67,7 +66,6 @@ const ProfilePage = () => {
                                 medium={user.medium}
                                 tumblr={user.tumblr}
                             />
-                            {/* </User> */}
                             <Helmet>
                                 <title>{username} ({user.name}) on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
                                 <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />

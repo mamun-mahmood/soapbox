@@ -176,7 +176,7 @@ const SideBar = () => {
                     <SideBarOption
                         option="Private Channels"
                         Icon={RiShieldFlashLine}
-                        link=""
+                        link={`/private/channels/${username}`}
                     />
 
                     {userInfo
