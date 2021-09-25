@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import axios from 'axios'
 import Avatar from 'react-avatar';
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { HiBadgeCheck } from 'react-icons/hi'
 import { FiTwitter } from 'react-icons/fi'
 import { RiFacebookCircleLine, RiSnapchatLine, RiPinterestLine } from 'react-icons/ri'
@@ -250,6 +250,12 @@ const PublicProfile = ({
                                         </button>
                                     }
                                 </div>
+
+                                <button className="public-btn-add-private-c">
+                                    {/* <Link to={`/private/channels/${username}`}> */}
+                                    Go to Private Channel
+                                    {/* </Link> */}
+                                </button>
 
 
                                 {/* <button className="btn-edit-profile">

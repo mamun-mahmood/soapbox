@@ -156,7 +156,7 @@ const Profile = ({
                                 {privateChannel
                                     ?
                                     <button className="btn-add-private-c">
-                                        <Link to={`/private/c/${username}`}>
+                                        <Link to={`/private/channels/${username}`}>
                                             Go to Private Channel
                                         </Link>
                                     </button>
