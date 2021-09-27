@@ -3,7 +3,7 @@
 }
 
 .channel-banner img {
-    position: fixed;
+    /* position: fixed; */
     width: 100%;
     height: 10.5rem;
     object-fit: cover;
@@ -12,31 +12,49 @@
 }
 
 .channel-content {
+    width: 100%;
+    /* max-width: 1100px; */
+    /* height: 100vh; */
+    /* margin: 0 auto; */
     display: flex;
+    /* gap: 1rem; */
+    justify-content: space-evenly;
 }
 
-.channel-user-info {
-    position: fixed;
-    top: 15rem;
+.channel-user-info { 
+    /* flex: 30%; */
+    /* display: flex;
+    flex-direction: column;
+    width: 350px;
+    
+    background-color: #EDE9FF; */
     z-index: 2;
 
-    flex: 30%;
-    width: 400px;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    width: 380px;
+    flex: 0 0 380px;
     background-color: #EDE9FF;
+    transition: 0.3s;
+}
+
+.channel-user-info ul {
+    /* padding: 0 8px 0 8px !important; */
+    padding-left: 0 ;
+    list-style-type: none;
 }
 
 .channel-user-content {
-    flex: 70%;
+    /* flex: 70%; */
     width: 100%;
-    height: 500px;
+    height: 100%;
 }
 
 .profile-pic {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;   
 }
 
 .profile-pic img {
@@ -113,13 +131,13 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .live-header {
     text-align: center;
     font-size: 1.5rem;
     color: var(--text-color);
-    /* font-weight: 600; */
     background-color: #DCD5FA;
     margin: 0.5rem;
     border-radius: 0.5rem;
@@ -127,7 +145,7 @@
 
 .live-cards {
     position: relative;
-    width: 110px;
+    width: 100px;
     height: 140px;
     margin: 0.5rem;
     border-radius: 0.5rem;
@@ -139,7 +157,7 @@
 }
 
 .live-cards img {
-    width: 110px;
+    width: 100px;
     height: 140px;
     border-radius: 0.5rem;
     object-fit: cover;
@@ -153,7 +171,7 @@
 .live-cards button {
     position: absolute;
     bottom: 0;
-    left: 0.1rem;
+    left: 0.05rem;
     width: 90%;
     margin: 0.4rem 0.25rem;
     padding: 0.2rem 0.5rem;
@@ -163,22 +181,28 @@
     background-color: var(--primary-color);
 }
 
-.channel-user-content {
+/* .channel-user-content {
     margin-left: 400px;
     margin-top: 10.5rem;
-}
+} */
 
 .channel-tabs {
-    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* position: fixed; */
     height: 40px;
 
     width: 100%;
+    background-color: #F7F6FF;
+    z-index: 1;
+}
+
+.channel-tabs .tabs {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 2rem;
-    background-color: #F7F6FF;
-    z-index: 1;
 }
 
 .channel-tabs span {
@@ -193,6 +217,39 @@
     padding: 0.5rem;
 } */
 
-.channel-media {
+/* .channel-media {
     margin-top: 2.5rem;
+} */
+
+.search-channel-content {
+    margin-right: 0.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 1050px) {
+    .channel-user-info {
+        width: 300px;
+        flex: 0 0 300px;
+    }
+
+    .live-cards {
+        position: relative;
+        width: 80px;
+        height: 140px;
+        margin: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: #DCD5FA;
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+}
+
+@media only screen and (max-width: 970px) {
+    .channel-user-info {
+        display: none;
+    }
 }

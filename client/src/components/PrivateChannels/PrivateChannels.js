@@ -5,7 +5,7 @@ import Post from '../Post'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import InfiniteScrollLoader from '../Feed/InfiniteScrollLoader'
 import { formatCount, formatSi } from '../../Helpers/formatNumbers'
-import { FiTwitter } from 'react-icons/fi'
+import { FiTwitter, FiSearch } from 'react-icons/fi'
 import { SiTiktok } from 'react-icons/si'
 import { RiFacebookCircleLine, RiPinterestLine, RiSnapchatLine } from 'react-icons/ri'
 import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineMedium, AiOutlineReddit } from 'react-icons/ai'
@@ -86,112 +86,117 @@ const PrivateChannels = () => {
                 <div className="channel-content">
                     {userInfo.map((user) => {
                         return (<Fragment key={user.id}>
-                            <div className="channel-user-info">
-                                <div className="profile-pic">
-                                    <img src={`${BaseURL}/profile-pictures/${user.profilePic}`} alt="profile" />
-                                </div>
-                                <div className="user-information">
-                                    <div className="name">{user.name}</div>
-                                    <div className="username">@{user.username}</div>
-                                    <div className="followers"><b>{formatCount(user.followers) + formatSi(user.followers)}</b><span> Followers</span></div>
-                                    <div className="btns">
-                                        <button>Follow</button>
-                                        <button>Subscribe</button>
+                            <div className="channel-user-info" >
+                                <ul style={{ position: "sticky", top: "9rem", alignSelf: "flex-start" }}>
+                                    <div className="profile-pic">
+                                        <img src={`${BaseURL}/profile-pictures/${user.profilePic}`} alt="profile" />
                                     </div>
-                                    {user.bio &&
-                                        <div className="user-desc">
-                                            {user.bio}
+                                    <div className="user-information">
+                                        <div className="name">{user.name}</div>
+                                        <div className="username">@{user.username}</div>
+                                        <div className="followers"><b>{formatCount(user.followers) + formatSi(user.followers)}</b><span> Followers</span></div>
+                                        <div className="btns">
+                                            <button>Follow</button>
+                                            <button>Subscribe</button>
                                         </div>
-                                    }
-                                    {user.website &&
-                                        <a
-                                            href={!user.website.includes("https://") ? ("https://" + user.website) : user.website}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="profile-website"
-                                        >
-                                            {user.website.includes("https://") ? user.website.slice(8) : user.website}
-                                        </a>
-                                    }
+                                        {user.bio &&
+                                            <div className="user-desc">
+                                                {user.bio}
+                                            </div>
+                                        }
+                                        {user.website &&
+                                            <a
+                                                href={!user.website.includes("https://") ? ("https://" + user.website) : user.website}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="profile-website"
+                                            >
+                                                {user.website.includes("https://") ? user.website.slice(8) : user.website}
+                                            </a>
+                                        }
 
-                                    <div className="social-profile-icon-links">
-                                        {user.twitter &&
-                                            <a href={!user.twitter.includes("https://") ? ("https://" + user.twitter) : user.twitter} target="_blank" rel="noopener noreferrer" >
-                                                <FiTwitter className="social-profile-icon s-twitter" />
-                                            </a>
-                                        }
-                                        {user.instagram &&
-                                            <a href={!user.instagram.includes("https://") ? ("https://" + user.instagram) : user.instagram} target="_blank" rel="noopener noreferrer" >
-                                                <AiOutlineInstagram className="social-profile-icon s-instagram" />
-                                            </a>
-                                        }
-                                        {user.linkedIn &&
-                                            <a href={!user.linkedIn.includes("https://") ? ("https://" + user.linkedIn) : user.linkedIn} target="_blank" rel="noopener noreferrer" >
-                                                <AiOutlineLinkedin className="social-profile-icon s-linkedin" />
-                                            </a>
-                                        }
-                                        {user.facebook &&
-                                            <a href={!user.facebook.includes("https://") ? ("https://" + user.facebook) : user.facebook} target="_blank" rel="noopener noreferrer">
-                                                <RiFacebookCircleLine className="social-profile-icon s-facebook" />
-                                            </a>
-                                        }
-                                        {user.tiktok &&
-                                            <a href={!user.tiktok.includes("https://") ? ("https://" + user.tiktok) : user.tiktok} target="_blank" rel="noopener noreferrer" >
-                                                <SiTiktok className="social-profile-icon s-tiktok" />
-                                            </a>
-                                        }
-                                        {user.snapchat &&
-                                            <a href={!user.snapchat.includes("https://") ? ("https://" + user.snapchat) : user.snapchat} target="_blank" rel="noopener noreferrer" >
-                                                <RiSnapchatLine className="social-profile-icon s-snapchat" />
-                                            </a>
-                                        }
-                                        {user.reddit &&
-                                            <a href={!user.reddit.includes("https://") ? ("https://" + user.reddit) : user.reddit} target="_blank" rel="noopener noreferrer" >
-                                                <AiOutlineReddit className="social-profile-icon s-reddit" />
-                                            </a>
-                                        }
-                                        {user.pinterest &&
-                                            <a href={!user.pinterest.includes("https://") ? ("https://" + user.pinterest) : user.pinterest} target="_blank" rel="noopener noreferrer" >
-                                                <RiPinterestLine className="social-profile-icon s-pinterest" />
-                                            </a>
-                                        }
-                                        {user.medium &&
-                                            <a href={!user.medium.includes("https://") ? ("https://" + user.medium) : user.medium} target="_blank" rel="noopener noreferrer" >
-                                                <AiOutlineMedium className="social-profile-icon s-medium" />
-                                            </a>
-                                        }
-                                        {user.tumblr &&
-                                            <a href={!user.tumblr.includes("https://") ? ("https://" + user.tumblr) : user.tumblr} target="_blank" rel="noopener noreferrer" >
-                                                <FaTumblr className="social-profile-icon s-tumblr" />
-                                            </a>
-                                        }
-                                    </div>
-                                </div>
-                                <div className="channel-live-events">
-                                    <div className="live-header">Live Events</div>
-                                    <div className="live-events">
-                                        <div className="live-cards">
-                                            <img src={live} alt="live" />
-                                            <button>Buy</button>
-                                        </div>
-                                        <div className="live-cards">
-                                            <img src={live} alt="live" />
-                                            <button>Buy</button>
-                                        </div>
-                                        <div className="live-cards">
-                                            <img src={live} alt="live" />
-                                            <button>Buy</button>
+                                        <div className="social-profile-icon-links">
+                                            {user.twitter &&
+                                                <a href={!user.twitter.includes("https://") ? ("https://" + user.twitter) : user.twitter} target="_blank" rel="noopener noreferrer" >
+                                                    <FiTwitter className="social-profile-icon s-twitter" />
+                                                </a>
+                                            }
+                                            {user.instagram &&
+                                                <a href={!user.instagram.includes("https://") ? ("https://" + user.instagram) : user.instagram} target="_blank" rel="noopener noreferrer" >
+                                                    <AiOutlineInstagram className="social-profile-icon s-instagram" />
+                                                </a>
+                                            }
+                                            {user.linkedIn &&
+                                                <a href={!user.linkedIn.includes("https://") ? ("https://" + user.linkedIn) : user.linkedIn} target="_blank" rel="noopener noreferrer" >
+                                                    <AiOutlineLinkedin className="social-profile-icon s-linkedin" />
+                                                </a>
+                                            }
+                                            {user.facebook &&
+                                                <a href={!user.facebook.includes("https://") ? ("https://" + user.facebook) : user.facebook} target="_blank" rel="noopener noreferrer">
+                                                    <RiFacebookCircleLine className="social-profile-icon s-facebook" />
+                                                </a>
+                                            }
+                                            {user.tiktok &&
+                                                <a href={!user.tiktok.includes("https://") ? ("https://" + user.tiktok) : user.tiktok} target="_blank" rel="noopener noreferrer" >
+                                                    <SiTiktok className="social-profile-icon s-tiktok" />
+                                                </a>
+                                            }
+                                            {user.snapchat &&
+                                                <a href={!user.snapchat.includes("https://") ? ("https://" + user.snapchat) : user.snapchat} target="_blank" rel="noopener noreferrer" >
+                                                    <RiSnapchatLine className="social-profile-icon s-snapchat" />
+                                                </a>
+                                            }
+                                            {user.reddit &&
+                                                <a href={!user.reddit.includes("https://") ? ("https://" + user.reddit) : user.reddit} target="_blank" rel="noopener noreferrer" >
+                                                    <AiOutlineReddit className="social-profile-icon s-reddit" />
+                                                </a>
+                                            }
+                                            {user.pinterest &&
+                                                <a href={!user.pinterest.includes("https://") ? ("https://" + user.pinterest) : user.pinterest} target="_blank" rel="noopener noreferrer" >
+                                                    <RiPinterestLine className="social-profile-icon s-pinterest" />
+                                                </a>
+                                            }
+                                            {user.medium &&
+                                                <a href={!user.medium.includes("https://") ? ("https://" + user.medium) : user.medium} target="_blank" rel="noopener noreferrer" >
+                                                    <AiOutlineMedium className="social-profile-icon s-medium" />
+                                                </a>
+                                            }
+                                            {user.tumblr &&
+                                                <a href={!user.tumblr.includes("https://") ? ("https://" + user.tumblr) : user.tumblr} target="_blank" rel="noopener noreferrer" >
+                                                    <FaTumblr className="social-profile-icon s-tumblr" />
+                                                </a>
+                                            }
                                         </div>
                                     </div>
-                                </div>
+                                    <div className="channel-live-events">
+                                        <div className="live-header">Live Events</div>
+                                        <div className="live-events">
+                                            <div className="live-cards">
+                                                <img src={live} alt="live" />
+                                                <button>Buy</button>
+                                            </div>
+                                            <div className="live-cards">
+                                                <img src={live} alt="live" />
+                                                <button>Buy</button>
+                                            </div>
+                                            <div className="live-cards">
+                                                <img src={live} alt="live" />
+                                                <button>Buy</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
                             </div>
                         </Fragment>)
                     })}
                     <div className="channel-user-content">
-                        <div className="channel-tabs shadow-sm">
-                            <span>Hoots</span>
-                            <span>Photos</span>
-                            <span>Videos</span>
+                        <div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
+                            <div className="tabs">
+                                <span>Hoots</span>
+                                <span>Photos</span>
+                                <span>Videos</span>
+                            </div>
+                            <FiSearch className="search-channel-content" />
                         </div>
                         <div className="channel-media" id="feed">
                             {uploads &&
@@ -219,7 +224,7 @@ const PrivateChannels = () => {
                                                     timeStamp={upload.timeStamp}
                                                     edited={upload.edited}
                                                     editedTimeStamp={upload.editedTimeStamp}
-                                                    notSubscribed={notSubscribed}
+                                                // notSubscribed={notSubscribed}
                                                 />
                                             </div>
                                         )
