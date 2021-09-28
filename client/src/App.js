@@ -24,7 +24,7 @@ import PrivateMessagesPage from './pages/PrivateMessagesPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import EmbedHootPage from './pages/EmbedHootPage';
 import PrivateChannelsPage from './pages/PrivateChannelsPage';
-
+import SoapboxHall from './components/VideoAudioCall/SoapboxHall'
 function App() {
   return (
     <Router>
@@ -44,7 +44,13 @@ function App() {
           {/* <ProtectedRoute page={Home} /> */}
           <Home />
         </Route>
-
+        <Route exact path="/">
+          {/* <ProtectedRoute page={Home} /> */}
+          <Home />
+        </Route>
+        <Route path="/:FakeData/SoapboxHall/:hallId?/:userName?/:randomFakeKey?">
+        <ProtectedRoute page={SoapboxHall} />
+        </Route>
         <Route path="/embed/hoot/:hootId">
           {/* <ProtectedRoute page={EmbedHootPage} /> */}
           <EmbedHootPage />
@@ -97,7 +103,7 @@ function App() {
           <PrivateMessagesPage />
         </Route>
 
-        <Route path="/private/channels/:username">
+        <Route path="/:fakeKey/private/channels/:username/:randomKey">
           {/* <ProtectedRoute page={PrivateChannelsPage} /> */}
           <PrivateChannelsPage />
         </Route>

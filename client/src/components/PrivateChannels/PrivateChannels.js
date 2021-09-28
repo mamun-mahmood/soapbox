@@ -8,20 +8,23 @@ import { formatCount, formatSi } from '../../Helpers/formatNumbers'
 import { FaTumblr } from 'react-icons/fa'
 import { SiTiktok } from 'react-icons/si'
 import { FiTwitter, FiSearch } from 'react-icons/fi'
-import { RiFacebookCircleLine, RiPinterestLine, RiSnapchatLine } from 'react-icons/ri'
+import { RiFacebookCircleLine, RiLiveFill, RiPinterestLine, RiRecordCircleFill, RiSnapchatLine } from 'react-icons/ri'
 import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineMedium, AiOutlineReddit } from 'react-icons/ai'
 import EndMsg from '../Feed/EndMsg'
 import banner from '../../assets/banner-3.jfif'
 import live from '../../assets/banner-3.jfif'
 import './privateChannels.css'
 import toast from 'react-hot-toast'
-
+import { IoRecording } from 'react-icons/io5'
+import { BiVideoRecording } from 'react-icons/bi'
+import { Event, LiveTvRounded } from '@material-ui/icons'
+import { v4 as uuidv4 } from 'uuid';
 const PrivateChannels = () => {
     const [uploads, setUploads] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
     const [subscribe, setSubscribe] = useState(false);
-
+    const [callRequest, setCallRequest] = useState(false);
     const { username } = useParams();
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -38,6 +41,7 @@ const PrivateChannels = () => {
             await axios.get(`${BaseURL}/user/${username}`)
                 .then((response) => {
                     setUserInfo(response.data);
+                    console.log(userInformation)
                 });
             setLoading(false);
         }
@@ -105,6 +109,37 @@ const PrivateChannels = () => {
         });
     }
 
+
+    const callRequestUser = () => {
+        setCallRequest(!callRequest);
+
+        toast.success(`Requested call to ${username}`, {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
+    }
+
+    const cancelCallRequestUser = () => {
+        setCallRequest(!callRequest);
+
+        toast.success(`Cancelled call request to ${username}`, {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
+    }
+
     return (
         <Fragment>
             <div className="private-channels">
@@ -114,8 +149,8 @@ const PrivateChannels = () => {
                 <div className="channel-content">
                     {userInfo.map((user) => {
                         return (<Fragment key={user.id}>
-                            <div className="channel-user-info" >
-                                <ul style={{ position: "sticky", top: "9rem", alignSelf: "flex-start" }}>
+                            <div className="channel-user-info"  >
+                                <ul style={{ position: "sticky", top: "9rem", alignSelf: "flex-start" ,padding:'1rem'}}>
                                     <div className="profile-pic">
                                         <img src={`${BaseURL}/profile-pictures/${user.profilePic}`} alt="profile" />
                                     </div>
@@ -124,10 +159,15 @@ const PrivateChannels = () => {
                                         <div className="username">@{user.username}</div>
                                         <div className="followers"><b>{formatCount(user.followers) + formatSi(user.followers)}</b><span> Followers</span></div>
                                         <div className="btns">
-                                            <button>Follow</button>
-                                            <button onClick={subscribe ? unSubscribeUser : subscribeUser}>
+                                       {userInformation.username==username?<button  onClick={()=>{history.push(`/${uuidv4()}/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`)}} >Go Live <BiVideoRecording /></button>: 
+                                             <button onClick={callRequest ? cancelCallRequestUser : callRequestUser} > {callRequest ? "Call Requested" : "Request Call"}</button>
+                                      } 
+                                         {userInformation.username==username?<button >Create Event <Event/> </button>: null
+                                      } 
+                                      {userInformation.username!==username? <button onClick={subscribe ? unSubscribeUser : subscribeUser}>
                                                 {subscribe ? "Subscribed" : "Subscribe"}
-                                            </button>
+                                            </button>:null}
+                                           
                                         </div>
                                         {user.bio &&
                                             <div className="user-desc">
@@ -145,7 +185,7 @@ const PrivateChannels = () => {
                                             </a>
                                         }
 
-                                        <div className="social-profile-icon-links">
+                                        <div className="social-profile-icon-links" style={{flexWrap:'wrap'}}>
                                             {user.twitter &&
                                                 <a href={!user.twitter.includes("https://") ? ("https://" + user.twitter) : user.twitter} target="_blank" rel="noopener noreferrer" >
                                                     <FiTwitter className="social-profile-icon s-twitter" />
@@ -191,7 +231,7 @@ const PrivateChannels = () => {
                                                     <AiOutlineMedium className="social-profile-icon s-medium" />
                                                 </a>
                                             }
-                                            {user.tumblr &&
+                                            {user.tumblr && 
                                                 <a href={!user.tumblr.includes("https://") ? ("https://" + user.tumblr) : user.tumblr} target="_blank" rel="noopener noreferrer" >
                                                     <FaTumblr className="social-profile-icon s-tumblr" />
                                                 </a>
@@ -219,6 +259,9 @@ const PrivateChannels = () => {
                             </div>
                         </Fragment>)
                     })}
+
+
+                    {userInformation.username!==username?
                     <div className="channel-user-content">
                         <div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
                             <div className="tabs">
@@ -294,6 +337,26 @@ const PrivateChannels = () => {
                             }
                         </div>
                     </div>
+              :null }
+
+              {userInformation.username==username?
+              <div className="channel-user-content" >
+
+<div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
+                            <div className="tabs">
+                                <span>Requests</span>
+                                <span>Subscribers</span>
+                                <span>Notification</span>
+                                <span 
+                                onClick={()=>{history.push(`/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`)}}>Live Room<LiveTvRounded/></span>
+                            </div>
+                            <FiSearch className="search-channel-content" />
+                        </div>
+              </div>
+              :null}
+                   
+              
+              
                 </div>
             </div>
         </Fragment>
