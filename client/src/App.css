@@ -222,8 +222,6 @@ code {
   padding-bottom: 0.2rem;
   padding-right: 0.1rem;
   font-size: larger;
-  /* color: #542C5D; */
-  /* color: #7933ae; */
   color: #a888bf;
   outline: none;
 }
@@ -514,6 +512,7 @@ hr {
 
   padding: 0 0.5rem;  
   margin: 0.5rem;
+  margin-bottom: 0.1rem;
 }
 
 .btn-follow:hover {

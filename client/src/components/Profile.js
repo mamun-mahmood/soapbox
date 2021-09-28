@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment, useContext, useCallback } from 'r
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Avatar from 'react-avatar';
+import { formatCount, formatSi } from '../Helpers/formatNumbers'
 import { HiBadgeCheck } from 'react-icons/hi'
 import { FiTwitter } from 'react-icons/fi'
 import { RiFacebookCircleLine, RiSnapchatLine, RiPinterestLine } from 'react-icons/ri'
@@ -17,6 +18,7 @@ import toast from 'react-hot-toast';
 
 const Profile = ({
     verified,
+    privateChannel,
     followers,
     userName,
     name,
@@ -41,7 +43,7 @@ const Profile = ({
     const [hasMore, setHasMore] = useState(true);
     const [followersCount, setFollowersCount] = useState(followers)
     const [page, setpage] = useState(2);
-    const [privateChannel, setPrivateChannel] = useState(false);
+    const [privateC, setPrivateC] = useState(privateChannel)
 
     const LIMIT = 9;
 
@@ -88,27 +90,46 @@ const Profile = ({
         totalLikes += upload.likes
     })
 
-    // count will be formatted 
-    const formatCount = count => {
-        if (count < 1e3) return count;
-        if (count >= 1e3 && count < 1e6) return +(count / 1e3).toFixed(1);
-        if (count >= 1e6 && count < 1e9) return +(count / 1e6).toFixed(1);
-        if (count >= 1e9 && count < 1e12) return +(count / 1e9).toFixed(1);
-        if (count >= 1e12) return +(count / 1e12).toFixed(1);
-    };
-
-    // si stands for International System of Units
-    const formatSi = count => {
-        if (count < 1e3) return "";
-        if (count >= 1e3 && count < 1e6) return "K";
-        if (count >= 1e6 && count < 1e9) return "M";
-        if (count >= 1e9 && count < 1e12) return "B";
-        if (count >= 1e12) return "T";
-    };
-
     const addPrivateChannel = () => {
-        setPrivateChannel(true);
-        toast.success("Private Channel added");
+        if (verified) {
+            setPrivateC(1);
+            const privateChannel = async () => {
+                await axios.put(`${BaseURL}/user/private-channel`, {
+                    privateChannel: 1,
+                    username: username
+                })
+            }
+
+            const privateChannelToast = privateChannel();
+            toast.promise(privateChannelToast, {
+                loading: 'Adding your Private Channel...',
+                success: 'Private Channel added Successfully',
+                error: 'Please try again',
+            }, {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                },
+                iconTheme: {
+                    primary: '#8249A0',
+                    secondary: '#FFFAEE',
+                },
+            });
+        } else {
+            setPrivateC(0);
+            toast(() => (
+                <div>
+                    Only Available to Verified
+                    <HiBadgeCheck className="verification-badge" />
+                    Creators
+                </div>
+            ), {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                }
+            })
+        }
     }
 
     return (
@@ -152,26 +173,20 @@ const Profile = ({
                                         Edit Profile
                                     </Link>
                                 </button>
-
-                                {privateChannel
-                                    ?
-                                    <button className="btn-add-private-c">
+                                <ReactTooltip />
+                                {privateC
+                                    ? <button className="btn-add-private-c">
                                         <Link to={`/private/channels/${username}`}>
                                             Go to Private Channel
                                         </Link>
                                     </button>
-                                    :
-                                    <button className="btn-add-private-c" onClick={addPrivateChannel}>
+                                    : <button
+                                        className="btn-add-private-c"
+                                        onClick={addPrivateChannel}
+                                    >
                                         Add Private Channel
                                     </button>
                                 }
-
-
-                                {/* <button className="btn-edit-profile">
-                                <Link to={`/edit/profile/${username}`}>
-                                    Edit Profile
-                                </Link>
-                            </button> */}
                             </div>
                         </div>
                         <div className="profile-links">
@@ -251,11 +266,8 @@ const Profile = ({
                                     </a>
                                 }
                             </div>
-
                         </div>
                     </div>
-
-
 
                     <hr />
                     <div className="pt-2">

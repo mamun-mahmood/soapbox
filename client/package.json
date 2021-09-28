@@ -36,7 +36,6 @@
     "react-spinners": "^0.11.0",
     "react-tooltip": "^4.2.21",
     "react-transition-group": "^4.4.2",
-    "react-visibility-sensor": "^5.1.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

@@ -8,6 +8,7 @@ import { RiShieldFlashLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import './sidebar.css';
+import toast from 'react-hot-toast'
 
 const SideBar = () => {
     // const [mainActive, setMainActive] = useState("active");

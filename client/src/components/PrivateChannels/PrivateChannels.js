@@ -5,20 +5,22 @@ import Post from '../Post'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import InfiniteScrollLoader from '../Feed/InfiniteScrollLoader'
 import { formatCount, formatSi } from '../../Helpers/formatNumbers'
-import { FiTwitter, FiSearch } from 'react-icons/fi'
+import { FaTumblr } from 'react-icons/fa'
 import { SiTiktok } from 'react-icons/si'
+import { FiTwitter, FiSearch } from 'react-icons/fi'
 import { RiFacebookCircleLine, RiPinterestLine, RiSnapchatLine } from 'react-icons/ri'
 import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineMedium, AiOutlineReddit } from 'react-icons/ai'
-import './privateChannels.css'
 import EndMsg from '../Feed/EndMsg'
 import banner from '../../assets/banner-3.jfif'
 import live from '../../assets/banner-3.jfif'
-import { FaTumblr } from 'react-icons/fa'
+import './privateChannels.css'
+import toast from 'react-hot-toast'
 
 const PrivateChannels = () => {
     const [uploads, setUploads] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
+    const [subscribe, setSubscribe] = useState(false);
 
     const { username } = useParams();
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -32,10 +34,6 @@ const PrivateChannels = () => {
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
 
     useEffect(() => {
-        if (username !== userInformation.username) {
-            const profilePath = `/user/${username}`;
-            history.push(profilePath);
-        }
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`)
                 .then((response) => {
@@ -77,6 +75,36 @@ const PrivateChannels = () => {
         pointerEvents: "none"
     }
 
+    const subscribeUser = () => {
+        setSubscribe(!subscribe);
+
+        toast.success(`Subscribed to ${username}`, {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
+    }
+
+    const unSubscribeUser = () => {
+        setSubscribe(!subscribe);
+
+        toast.success(`Unsubscribed to ${username}`, {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
+    }
+
     return (
         <Fragment>
             <div className="private-channels">
@@ -97,7 +125,9 @@ const PrivateChannels = () => {
                                         <div className="followers"><b>{formatCount(user.followers) + formatSi(user.followers)}</b><span> Followers</span></div>
                                         <div className="btns">
                                             <button>Follow</button>
-                                            <button>Subscribe</button>
+                                            <button onClick={subscribe ? unSubscribeUser : subscribeUser}>
+                                                {subscribe ? "Subscribed" : "Subscribe"}
+                                            </button>
                                         </div>
                                         {user.bio &&
                                             <div className="user-desc">
@@ -200,7 +230,8 @@ const PrivateChannels = () => {
                         </div>
                         <div className="channel-media" id="feed">
                             {uploads &&
-                                <InfiniteScroll
+                                subscribe
+                                ? <InfiniteScroll
                                     dataLength={uploads.length}
                                     next={fetchMoreHoots}
                                     hasMore={hasMore}
@@ -224,12 +255,42 @@ const PrivateChannels = () => {
                                                     timeStamp={upload.timeStamp}
                                                     edited={upload.edited}
                                                     editedTimeStamp={upload.editedTimeStamp}
-                                                // notSubscribed={notSubscribed}
+                                                    notSubscribed={notSubscribed}
                                                 />
                                             </div>
                                         )
                                     })}
                                 </InfiniteScroll>
+                                : uploads.slice(0, 1).map((upload) => {
+                                    return (
+                                        <div key={upload}>
+                                            <Post
+                                                hootId={upload.id}
+                                                username={upload.authorUsername}
+                                                mimeType={upload.mimeType}
+                                                hootImgId={upload.image}
+                                                likes={upload.likes}
+                                                views={upload.views}
+                                                caption={upload.caption}
+                                                link={upload.link}
+                                                ephemeral={upload.ephemeral}
+                                                expiryDate={upload.expiryDate}
+                                                timeStamp={upload.timeStamp}
+                                                edited={upload.edited}
+                                                editedTimeStamp={upload.editedTimeStamp}
+                                                notSubscribed={notSubscribed}
+                                            />
+                                        </div>
+                                    )
+                                })
+                            }
+
+                            {subscribe
+                                ? null
+                                :
+                                <div className="subscribe-to-see-more">
+                                    <button>Subscribe to see more</button>
+                                </div>
                             }
                         </div>
                     </div>

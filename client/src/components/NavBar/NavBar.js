@@ -16,7 +16,16 @@ const NavBar = ({ width, header }) => {
     }
 
     const logout = () => {
-        toast.success('logout Successful');
+        toast.success('logout Successful', {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
 
         history.push("/login");
         localStorage.clear();

@@ -49,6 +49,7 @@ const ProfilePage = () => {
                             <Profile
                                 userId={user.id}
                                 verified={user.verified}
+                                privateChannel={user.privateChannel}
                                 followers={user.followers}
                                 name={user.name}
                                 userName={user.username}

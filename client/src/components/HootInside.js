@@ -227,7 +227,16 @@ const HootInside = ({
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
         }, 100);
-        toast.success('Link to hoot copied to clipboard');
+        toast.success('Link to hoot copied to clipboard', {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
     }
 
     const copyTextToClipboard = () => {
@@ -236,7 +245,16 @@ const HootInside = ({
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
         }, 100);
-        toast.success('Text copied to clipboard');
+        toast.success('Text copied to clipboard', {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
     }
 
     const shareVia = async () => {
@@ -375,7 +393,16 @@ const HootInside = ({
         setTimeout(() => {
             setIsEmbedModalOpen(false)
         }, 100);
-        toast.success('Code copied to clipboard');
+        toast.success('Code copied to clipboard', {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
     }
 
     return (
@@ -1049,7 +1076,7 @@ const HootInside = ({
                 </Expire>
                 :
                 <div className="home">
-                    <div className="home-container" ref={homeRef} id="element-id" style={notSubscribed}>
+                    <div className="home-container">
                         <ReactTooltip />
                         <div className="post-heading">
                             <div

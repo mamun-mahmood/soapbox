@@ -91,6 +91,15 @@ const CreatePost = () => {
             loading: 'Sending Hoot...',
             success: 'Hoot Successful',
             error: 'Please try again',
+        }, {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
         });
 
         setTimeout(() => {
@@ -184,7 +193,16 @@ const CreatePost = () => {
 
     const insertLink = (event) => {
         // handleSubmit()
-        toast.success('Link inserted')
+        toast.success('Link inserted', {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        })
         setLinkModalOpen(false);
         event.preventDefault();
         // alert(JSON.stringify(formValues));
@@ -403,7 +421,7 @@ const CreatePost = () => {
                                     onChange={makePrivate}
                                 />
                                 <span>
-                                    Private Hoot{" "}
+                                    Private{" "}
                                 </span>
                             </div>
                         </div>

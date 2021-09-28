@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import axios from 'axios'
 import Avatar from 'react-avatar';
+import { formatCount, formatSi } from '../Helpers/formatNumbers'
 import { Link, useParams } from 'react-router-dom'
 import { HiBadgeCheck } from 'react-icons/hi'
 import { FiTwitter } from 'react-icons/fi'
@@ -17,6 +18,7 @@ import ReactTooltip from 'react-tooltip';
 
 const PublicProfile = ({
     verified,
+    privateChannel,
     followers,
     name,
     userName,
@@ -84,7 +86,16 @@ const PublicProfile = ({
         }
 
         if (userInformation) {
-            toast.success(`Followed ${userName}`);
+            toast.success(`Followed ${userName}`, {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                },
+                iconTheme: {
+                    primary: '#8249A0',
+                    secondary: '#FFFAEE',
+                },
+            });
         } else {
             toast.error('please login');
         }
@@ -99,7 +110,16 @@ const PublicProfile = ({
             axios.delete(`${BaseURL}/user/followedBy/${userInformation.username}`)
         }
 
-        toast(`Unfollowed ${userName}`);
+        toast.success(`Unfollowed ${userName}`, {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
     }
 
     const random = (min = 10, max = 50) => {
@@ -161,24 +181,6 @@ const PublicProfile = ({
         totalViews += user.views
         totalLikes += user.likes
     })
-
-    // count will be formatted 
-    const formatCount = count => {
-        if (count < 1e3) return count;
-        if (count >= 1e3 && count < 1e6) return +(count / 1e3).toFixed(1);
-        if (count >= 1e6 && count < 1e9) return +(count / 1e6).toFixed(1);
-        if (count >= 1e9 && count < 1e12) return +(count / 1e9).toFixed(1);
-        if (count >= 1e12) return +(count / 1e12).toFixed(1);
-    };
-
-    // si stands for International System of Units
-    const formatSi = count => {
-        if (count < 1e3) return "";
-        if (count >= 1e3 && count < 1e6) return "K";
-        if (count >= 1e6 && count < 1e9) return "M";
-        if (count >= 1e9 && count < 1e12) return "B";
-        if (count >= 1e12) return "T";
-    };
 
     return (
         <Fragment>
@@ -251,18 +253,15 @@ const PublicProfile = ({
                                     }
                                 </div>
 
-                                <button className="public-btn-add-private-c">
-                                    {/* <Link to={`/private/channels/${username}`}> */}
-                                    Go to Private Channel
-                                    {/* </Link> */}
-                                </button>
-
-
-                                {/* <button className="btn-edit-profile">
-        <Link to={`/edit/profile/${username}`}>
-            Edit Profile
-        </Link>
-    </button> */}
+                                {privateChannel
+                                    ?
+                                    <button className="public-btn-add-private-c">
+                                        <Link to={`/private/channels/${username}`}>
+                                            Go to Private Channel
+                                        </Link>
+                                    </button>
+                                    : null
+                                }
                             </div>
                         </div>
                         <div className="profile-links">
