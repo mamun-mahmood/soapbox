@@ -278,9 +278,9 @@ const PrivateChannels = () => {
                         </Fragment>)
                     })}
 
-                    {/* {userInformation.username !== username ? */}
-                    <div className="channel-user-content">
-                        <div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
+                    {userInformation.username !== username ?
+                        <div className="channel-user-content">
+                            {/* <div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
                             <div className="tabs">
                                 <span>Requests</span>
                                 <span>Subscribers</span>
@@ -293,58 +293,66 @@ const PrivateChannels = () => {
                                 </span>
                             </div>
                             <FiSearch className="search-channel-content" />
-                        </div>
-                        <div className="channel-media" id="feed">
-                            {uploads &&
-                                <InfiniteScroll
-                                    dataLength={uploads.length}
-                                    next={fetchMoreHoots}
-                                    hasMore={hasMore}
-                                    loader={<InfiniteScrollLoader />}
-                                    endMessage={<EndMsg />}
-                                >
-                                    {uploads.map((upload) => {
-                                        return (
-                                            <div key={upload}>
-                                                {upload.private === 1 ?
-                                                    <Post
-                                                        hootId={upload.id}
-                                                        username={upload.authorUsername}
-                                                        mimeType={upload.mimeType}
-                                                        hootImgId={upload.image}
-                                                        likes={upload.likes}
-                                                        views={upload.views}
-                                                        caption={upload.caption}
-                                                        link={upload.link}
-                                                        ephemeral={upload.ephemeral}
-                                                        privateHoot={upload.private}
-                                                        expiryDate={upload.expiryDate}
-                                                        timeStamp={upload.timeStamp}
-                                                        edited={upload.edited}
-                                                        editedTimeStamp={upload.editedTimeStamp}
-                                                    // privateProtected={privateProtected}
-                                                    />
-                                                    :
-                                                    null
-                                                }
-                                            </div>
-                                        )
-                                    })}
-                                </InfiniteScroll>
-                            }
-
-                            {subscribe
-                                ? null
-                                :
-                                <div className="subscribe-to-see-more">
-                                    <button>Subscribe to see more</button>
+                        </div> */}
+                            <div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
+                                <div className="tabs">
+                                    <span>Hoots</span>
+                                    <span>Photos</span>
+                                    <span>Videos</span>
                                 </div>
-                            }
-                        </div>
-                    </div>
-                    {/* : null} */}
+                                <FiSearch className="search-channel-content" />
+                            </div>
+                            <div className="channel-media" id="feed">
+                                {uploads &&
+                                    <InfiniteScroll
+                                        dataLength={uploads.length}
+                                        next={fetchMoreHoots}
+                                        hasMore={hasMore}
+                                        loader={<InfiniteScrollLoader />}
+                                        endMessage={<EndMsg />}
+                                    >
+                                        {uploads.map((upload) => {
+                                            return (
+                                                <div key={upload}>
+                                                    {upload.private === 1 ?
+                                                        <Post
+                                                            hootId={upload.id}
+                                                            username={upload.authorUsername}
+                                                            mimeType={upload.mimeType}
+                                                            hootImgId={upload.image}
+                                                            likes={upload.likes}
+                                                            views={upload.views}
+                                                            caption={upload.caption}
+                                                            link={upload.link}
+                                                            ephemeral={upload.ephemeral}
+                                                            privateHoot={upload.private}
+                                                            expiryDate={upload.expiryDate}
+                                                            timeStamp={upload.timeStamp}
+                                                            edited={upload.edited}
+                                                            editedTimeStamp={upload.editedTimeStamp}
+                                                        // privateProtected={privateProtected}
+                                                        />
+                                                        :
+                                                        null
+                                                    }
+                                                </div>
+                                            )
+                                        })}
+                                    </InfiniteScroll>
+                                }
 
-                    {/* {userInformation.username == username
+                                {subscribe
+                                    ? null
+                                    :
+                                    <div className="subscribe-to-see-more">
+                                        <button>Subscribe to see more</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        : null}
+
+                    {userInformation.username == username
                         ? <div className="channel-user-content" >
                             <div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
                                 <div className="tabs">
@@ -362,7 +370,7 @@ const PrivateChannels = () => {
                             </div>
                         </div>
                         : null
-                    } */}
+                    }
                 </div>
             </div>
         </Fragment>
