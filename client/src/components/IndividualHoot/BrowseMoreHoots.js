@@ -61,6 +61,7 @@ const BrowseMoreHoots = ({ hashtagsFound, iHootId }) => {
                                     caption={upload.caption}
                                     link={upload.link}
                                     ephemeral={upload.ephemeral}
+                                    privateHoot={upload.private}
                                     expiryDate={upload.expiryDate}
                                     timeStamp={upload.timeStamp}
                                     edited={upload.edited}

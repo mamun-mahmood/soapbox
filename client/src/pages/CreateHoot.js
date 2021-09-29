@@ -66,6 +66,7 @@ const CreatePost = () => {
         // formData.append("link", JSON.stringify(formValues))
         formData.append("link", link)
         formData.append("ephemeral", ephemeralCheck ? 1 : 0)
+        formData.append("private", privateCheck ? 1 : 0)
         formData.append("expiryDate", ephemeralCheck ? expiryDate : 0)
         formData.append("authorEmail", email)
         formData.append("file", file);

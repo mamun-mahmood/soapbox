@@ -73,10 +73,8 @@ const PrivateChannels = () => {
         setpage(page + 1);
     }
 
-    const notSubscribed = {
-        filter: "blur(4px)",
+    const privateProtected = {
         userSelect: "none",
-        pointerEvents: "none"
     }
 
     const subscribeUser = () => {
@@ -142,7 +140,7 @@ const PrivateChannels = () => {
 
     return (
         <Fragment>
-            <div className="private-channels">
+            <div className="private-channels" style={{ userSelect: "none" }}>
                 <div className="channel-banner">
                     <img src={banner} alt="banner" />
                 </div>
@@ -150,7 +148,7 @@ const PrivateChannels = () => {
                     {userInfo.map((user) => {
                         return (<Fragment key={user.id}>
                             <div className="channel-user-info"  >
-                                <ul style={{ position: "sticky", top: "9rem", alignSelf: "flex-start" ,padding:'1rem'}}>
+                                <ul style={{ position: "sticky", top: "9rem", alignSelf: "flex-start", padding: '1rem' }}>
                                     <div className="profile-pic">
                                         <img src={`${BaseURL}/profile-pictures/${user.profilePic}`} alt="profile" />
                                     </div>
@@ -159,21 +157,40 @@ const PrivateChannels = () => {
                                         <div className="username">@{user.username}</div>
                                         <div className="followers"><b>{formatCount(user.followers) + formatSi(user.followers)}</b><span> Followers</span></div>
                                         <div className="btns">
-                                       {userInformation.username==username?<button  onClick={()=>{history.push(`/${uuidv4()}/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`)}} >Go Live <BiVideoRecording /></button>: 
-                                             <button onClick={callRequest ? cancelCallRequestUser : callRequestUser} > {callRequest ? "Call Requested" : "Request Call"}</button>
-                                      } 
-                                         {userInformation.username==username?<button >Create Event <Event/> </button>: null
-                                      } 
-                                      {userInformation.username!==username? <button onClick={subscribe ? unSubscribeUser : subscribeUser}>
-                                                {subscribe ? "Subscribed" : "Subscribe"}
-                                            </button>:null}
-                                           
+                                            {userInformation.username == username
+                                                ? <button onClick={() => { history.push(`/${uuidv4()}/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`) }} >
+                                                    <div className="channel-btn-icon">
+                                                        Go Live
+                                                        <BiVideoRecording style={{ fontSize: "1.55rem" }} />
+                                                    </div>
+                                                </button>
+                                                : <button onClick={callRequest ? cancelCallRequestUser : callRequestUser} >
+                                                    {callRequest ? "Call Requested" : "Request Call"}
+                                                </button>
+                                            }
+                                            {userInformation.username == username
+                                                ? <button>
+                                                    <div className="channel-btn-icon">
+                                                        Create Event
+                                                        <Event />
+                                                    </div>
+                                                </button>
+                                                : null
+                                            }
+                                            {userInformation.username !== username
+                                                ? <button onClick={subscribe ? unSubscribeUser : subscribeUser}>
+                                                    {subscribe ? "Subscribed" : "Subscribe"}
+                                                </button>
+                                                : null
+                                            }
                                         </div>
+
                                         {user.bio &&
                                             <div className="user-desc">
                                                 {user.bio}
                                             </div>
                                         }
+
                                         {user.website &&
                                             <a
                                                 href={!user.website.includes("https://") ? ("https://" + user.website) : user.website}
@@ -185,7 +202,7 @@ const PrivateChannels = () => {
                                             </a>
                                         }
 
-                                        <div className="social-profile-icon-links" style={{flexWrap:'wrap'}}>
+                                        <div className="social-profile-icon-links" style={{ flexWrap: 'wrap' }}>
                                             {user.twitter &&
                                                 <a href={!user.twitter.includes("https://") ? ("https://" + user.twitter) : user.twitter} target="_blank" rel="noopener noreferrer" >
                                                     <FiTwitter className="social-profile-icon s-twitter" />
@@ -231,13 +248,14 @@ const PrivateChannels = () => {
                                                     <AiOutlineMedium className="social-profile-icon s-medium" />
                                                 </a>
                                             }
-                                            {user.tumblr && 
+                                            {user.tumblr &&
                                                 <a href={!user.tumblr.includes("https://") ? ("https://" + user.tumblr) : user.tumblr} target="_blank" rel="noopener noreferrer" >
                                                     <FaTumblr className="social-profile-icon s-tumblr" />
                                                 </a>
                                             }
                                         </div>
                                     </div>
+
                                     <div className="channel-live-events">
                                         <div className="live-header">Live Events</div>
                                         <div className="live-events">
@@ -260,21 +278,25 @@ const PrivateChannels = () => {
                         </Fragment>)
                     })}
 
-
-                    {userInformation.username!==username?
+                    {/* {userInformation.username !== username ? */}
                     <div className="channel-user-content">
                         <div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
                             <div className="tabs">
-                                <span>Hoots</span>
-                                <span>Photos</span>
-                                <span>Videos</span>
+                                <span>Requests</span>
+                                <span>Subscribers</span>
+                                <span>Notification</span>
+                                <span onClick={() => { history.push(`/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`) }}>
+                                    <div className="channel-btn-icon">
+                                        Live Room
+                                        <LiveTvRounded />
+                                    </div>
+                                </span>
                             </div>
                             <FiSearch className="search-channel-content" />
                         </div>
                         <div className="channel-media" id="feed">
                             {uploads &&
-                                subscribe
-                                ? <InfiniteScroll
+                                <InfiniteScroll
                                     dataLength={uploads.length}
                                     next={fetchMoreHoots}
                                     hasMore={hasMore}
@@ -284,48 +306,31 @@ const PrivateChannels = () => {
                                     {uploads.map((upload) => {
                                         return (
                                             <div key={upload}>
-                                                <Post
-                                                    hootId={upload.id}
-                                                    username={upload.authorUsername}
-                                                    mimeType={upload.mimeType}
-                                                    hootImgId={upload.image}
-                                                    likes={upload.likes}
-                                                    views={upload.views}
-                                                    caption={upload.caption}
-                                                    link={upload.link}
-                                                    ephemeral={upload.ephemeral}
-                                                    expiryDate={upload.expiryDate}
-                                                    timeStamp={upload.timeStamp}
-                                                    edited={upload.edited}
-                                                    editedTimeStamp={upload.editedTimeStamp}
-                                                    notSubscribed={notSubscribed}
-                                                />
+                                                {upload.private === 1 ?
+                                                    <Post
+                                                        hootId={upload.id}
+                                                        username={upload.authorUsername}
+                                                        mimeType={upload.mimeType}
+                                                        hootImgId={upload.image}
+                                                        likes={upload.likes}
+                                                        views={upload.views}
+                                                        caption={upload.caption}
+                                                        link={upload.link}
+                                                        ephemeral={upload.ephemeral}
+                                                        privateHoot={upload.private}
+                                                        expiryDate={upload.expiryDate}
+                                                        timeStamp={upload.timeStamp}
+                                                        edited={upload.edited}
+                                                        editedTimeStamp={upload.editedTimeStamp}
+                                                    // privateProtected={privateProtected}
+                                                    />
+                                                    :
+                                                    null
+                                                }
                                             </div>
                                         )
                                     })}
                                 </InfiniteScroll>
-                                : uploads.slice(0, 1).map((upload) => {
-                                    return (
-                                        <div key={upload}>
-                                            <Post
-                                                hootId={upload.id}
-                                                username={upload.authorUsername}
-                                                mimeType={upload.mimeType}
-                                                hootImgId={upload.image}
-                                                likes={upload.likes}
-                                                views={upload.views}
-                                                caption={upload.caption}
-                                                link={upload.link}
-                                                ephemeral={upload.ephemeral}
-                                                expiryDate={upload.expiryDate}
-                                                timeStamp={upload.timeStamp}
-                                                edited={upload.edited}
-                                                editedTimeStamp={upload.editedTimeStamp}
-                                                notSubscribed={notSubscribed}
-                                            />
-                                        </div>
-                                    )
-                                })
                             }
 
                             {subscribe
@@ -337,26 +342,27 @@ const PrivateChannels = () => {
                             }
                         </div>
                     </div>
-              :null }
+                    {/* : null} */}
 
-              {userInformation.username==username?
-              <div className="channel-user-content" >
-
-<div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
-                            <div className="tabs">
-                                <span>Requests</span>
-                                <span>Subscribers</span>
-                                <span>Notification</span>
-                                <span 
-                                onClick={()=>{history.push(`/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`)}}>Live Room<LiveTvRounded/></span>
+                    {/* {userInformation.username == username
+                        ? <div className="channel-user-content" >
+                            <div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
+                                <div className="tabs">
+                                    <span>Requests</span>
+                                    <span>Subscribers</span>
+                                    <span>Notification</span>
+                                    <span onClick={() => { history.push(`/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`) }}>
+                                        <div className="channel-btn-icon">
+                                            Live Room
+                                            <LiveTvRounded />
+                                        </div>
+                                    </span>
+                                </div>
+                                <FiSearch className="search-channel-content" />
                             </div>
-                            <FiSearch className="search-channel-content" />
                         </div>
-              </div>
-              :null}
-                   
-              
-              
+                        : null
+                    } */}
                 </div>
             </div>
         </Fragment>

@@ -9,7 +9,7 @@ const PrivateChannelsPage = () => {
     const { username } = useParams();
 
     return (
-        <Fragment>
+        <div onContextMenu={(e) => e.preventDefault()}>
             <NavBar width={"none"} header={"Soapbox Private Channels"} />
             <PrivateChannels />
             <FloatingButton />
@@ -27,7 +27,7 @@ const PrivateChannelsPage = () => {
                 <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:image" content="/images/MegaHoot_Owl3_app.png" />
             </Helmet>
-        </Fragment>
+        </div>
     )
 }
 

@@ -109,7 +109,7 @@
     padding: 0.3rem 1rem;
     border: none;
     font-size: large;
-    border-radius: 0.5rem;
+    border-radius: 5rem;
     color: #EDE9FF;
     background-color: var(--primary-color);
     transition: 0.3s;
@@ -119,7 +119,7 @@
     transform: scale(1.05);
 }
 .btns button:active {
-    transform: scale(0.95);
+    transform: scale(0.99);
 }
 
 .user-information .social-links {
@@ -261,6 +261,13 @@
 
 .subscribe-to-see-more button:hover {
     transform: scale(1.1);
+}
+
+.channel-btn-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
 }
 
 @media only screen and (max-width: 1050px) {

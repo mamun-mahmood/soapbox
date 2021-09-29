@@ -39,11 +39,12 @@ const HootInside = ({
     caption,
     link,
     ephemeral,
+    privateHoot,
     expiryDate,
     timeStamp,
     edited,
     editedTimeStamp,
-    notSubscribed
+    privateProtected
 }) => {
     // API url 
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -104,6 +105,8 @@ const HootInside = ({
     // // extraLinks = JSON.parse(linkData);
     // const fromDBLinks = JSON.parse(linkData)
     // const [dbLink, setDbLink] = useState([]);
+
+    console.log("private hoot: ", privateHoot);
 
     useEffect(() => {
         // getting all uploads(hoots) of particuler user 
@@ -411,7 +414,7 @@ const HootInside = ({
                 ?
                 <Expire expiryDate={expiryDate} hootImgId={hootImgId}>
                     <div className="home">
-                        <div className="home-container" ref={homeRef} id="element-id" style={notSubscribed}>
+                        <div className="home-container" ref={homeRef} id="element-id" style={privateProtected}>
                             <ReactTooltip />
                             <div className="post-heading">
                                 <div
@@ -1041,6 +1044,10 @@ const HootInside = ({
                                 {(ephemeral === 1) &&
                                     <small class="badge outline-badge d-flex flex-end">EPHEMERAL</small>
                                 }
+
+                                {(privateHoot === 1) &&
+                                    <small class="badge outline-badge d-flex flex-end">PRIVATE</small>
+                                }
                             </div>
 
                             <hr className="mx-1 my-1 hr-color" />
@@ -1076,7 +1083,7 @@ const HootInside = ({
                 </Expire>
                 :
                 <div className="home">
-                    <div className="home-container">
+                    <div className="home-container" style={privateProtected}>
                         <ReactTooltip />
                         <div className="post-heading">
                             <div
@@ -1709,6 +1716,10 @@ const HootInside = ({
 
                             {(ephemeral === 1) &&
                                 <small class="badge outline-badge d-flex flex-end">EPHEMERAL</small>
+                            }
+
+                            {(privateHoot === 1) &&
+                                <small class="badge outline-badge d-flex flex-end">PRIVATE</small>
                             }
                         </div>
 

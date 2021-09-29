@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+
+::-moz-selection { /* Code for Firefox */
+  background: #D9D2FA;
+}
+
+::selection {
+  background: #D9D2FA;
+}
+
 /* Custom Scrollbar
 /* width */
 ::-webkit-scrollbar {
@@ -21,7 +31,6 @@
   background: #e1b8f8;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
 
 :root {
   --primary-color: #8249A0;

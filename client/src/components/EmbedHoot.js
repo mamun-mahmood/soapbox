@@ -16,6 +16,7 @@ const EmbedHoot = ({
     caption,
     link,
     ephemeral,
+    privateHoot,
     mimeType,
     hootImgId,
     likes,
@@ -274,6 +275,10 @@ const EmbedHoot = ({
 
                                         {(ephemeral === 1) &&
                                             <small class="badge outline-badge d-flex flex-end">EPHEMERAL</small>
+                                        }
+
+                                        {(privateHoot === 1) &&
+                                            <small class="badge outline-badge d-flex flex-end">PRIVATE</small>
                                         }
                                     </div>
                                     <hr className="mx-1 my-1 hr-color" />

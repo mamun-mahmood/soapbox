@@ -12,11 +12,12 @@ const Post = ({
     caption,
     link,
     ephemeral,
+    privateHoot,
     expiryDate,
     timeStamp,
     edited,
     editedTimeStamp,
-    notSubscribed
+    privateProtected
 }) => {
     const [userInformation, setUserInformation] = useState([]);
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -50,11 +51,12 @@ const Post = ({
                         caption={caption}
                         link={link}
                         ephemeral={ephemeral}
+                        privateHoot={privateHoot}
                         expiryDate={expiryDate}
                         timeStamp={timeStamp}
                         edited={edited}
                         editedTimeStamp={editedTimeStamp}
-                        notSubscribed={notSubscribed}
+                        privateProtected={privateProtected}
                     />
                 </div>);
             })}
