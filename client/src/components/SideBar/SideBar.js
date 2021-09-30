@@ -327,15 +327,15 @@ const SideBar = () => {
                         </li>
 
                         {/* for development  */}
-                        <SuggestedFollow suggestedUsername={"hrshmistry"} />
+                        {/* <SuggestedFollow suggestedUsername={"hrshmistry"} />
                         <SuggestedFollow suggestedUsername={"john"} />
-                        <SuggestedFollow suggestedUsername={"hey"} />
+                        <SuggestedFollow suggestedUsername={"hey"} /> */}
 
                         {/* for production  */}
-                        {/* <SuggestedFollow suggestedUsername={"fitness"} />
+                        <SuggestedFollow suggestedUsername={"fitness"} />
                         <SuggestedFollow suggestedUsername={"americanmuscle"} />
                         <SuggestedFollow suggestedUsername={"luxury"} />
-                        <SuggestedFollow suggestedUsername={"crossfit"} /> */}
+                        <SuggestedFollow suggestedUsername={"crossfit"} />
                     </div>
 
                     {/* suggested hoots  */}
