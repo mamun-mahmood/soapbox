@@ -8,20 +8,22 @@ import { RiShieldFlashLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import './sidebar.css';
-import toast from 'react-hot-toast'
+// import toast from 'react-hot-toast'
+import SuggestedFollow from './SuggestedFollow'
+import SuggestedHoots from './SuggestedHoots'
 
 const SideBar = () => {
     // const [mainActive, setMainActive] = useState("active");
-    const [hashtags, setHashtags] = useState([]);
-    const [stocks, setStocks] = useState([]);
+    // const [hashtags, setHashtags] = useState([]);
+    // const [stocks, setStocks] = useState([]);
     // const [allUploads, setAllUploads] = useState([]);
     // const [myListActive, setMyListActive] = useState("");
     const [gender, setGender] = useState(false)
-    const [searchHashtagTerm, setSearchHashtagTerm] = useState("");
-    const [searchStockTerm, setSearchStockTerm] = useState("");
-    const history = useHistory()
+    // const [searchHashtagTerm, setSearchHashtagTerm] = useState("");
+    // const [searchStockTerm, setSearchStockTerm] = useState("");
+    // const history = useHistory()
 
-    const BaseURL = process.env.REACT_APP_API_URL;
+    // const BaseURL = process.env.REACT_APP_API_URL;
 
     // useEffect(() => {
     //     const getAllUploadData = async () => {
@@ -33,30 +35,30 @@ const SideBar = () => {
     // }, [])
 
     // Hashtags
-    useEffect(() => {
-        const getHashtagsData = async () => {
-            await axios.get(`${BaseURL}/hashtags`)
-                .then((response) => {
-                    setHashtags((response.data).reverse());
-                });
-        }
+    // useEffect(() => {
+    //     const getHashtagsData = async () => {
+    //         await axios.get(`${BaseURL}/hashtags`)
+    //             .then((response) => {
+    //                 setHashtags((response.data).reverse());
+    //             });
+    //     }
 
-        try {
-            getHashtagsData();
-        } catch (error) {
-            console.log(error);
-        }
-    }, [])
+    //     try {
+    //         getHashtagsData();
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }, [])
 
-    const defaultHashtags = [
-        "#funny",
-        "#nft",
-        "#wallstreet",
-        "#realestate",
-        "#fitness",
-        "#fashion",
-        "#beauty"
-    ]
+    // const defaultHashtags = [
+    //     "#funny",
+    //     "#nft",
+    //     "#wallstreet",
+    //     "#realestate",
+    //     "#fitness",
+    //     "#fashion",
+    //     "#beauty"
+    // ]
 
     // const updateTotalHashtagViews = useCallback((hashtag, totalViews) => {
     //     axios.put(`${BaseURL}/hashtags`, {
@@ -82,33 +84,33 @@ const SideBar = () => {
     // });
 
     // Stocks
-    useEffect(() => {
-        const getStocksData = async () => {
-            await axios.get(`${BaseURL}/stocks`)
-                .then((response) => {
-                    setStocks((response.data).reverse());
-                });
-        }
+    // useEffect(() => {
+    //     const getStocksData = async () => {
+    //         await axios.get(`${BaseURL}/stocks`)
+    //             .then((response) => {
+    //                 setStocks((response.data).reverse());
+    //             });
+    //     }
 
-        try {
-            getStocksData();
-        } catch (error) {
-            console.log(error);
-        }
-    }, [])
+    //     try {
+    //         getStocksData();
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }, [])
 
-    const defaultStocks = [
-        "$AAPL",
-        "$FB",
-        "$AMZN",
-        "$IBM",
-        "$BTC",
-        "$ETH",
-        "$PLTR",
-        "$GM",
-        "$F",
-        "$TSLA"
-    ]
+    // const defaultStocks = [
+    //     "$AAPL",
+    //     "$FB",
+    //     "$AMZN",
+    //     "$IBM",
+    //     "$BTC",
+    //     "$ETH",
+    //     "$PLTR",
+    //     "$GM",
+    //     "$F",
+    //     "$TSLA"
+    // ]
 
     // const updateTotalStockViews = useCallback((stock, totalViews) => {
     //     axios.put(`${BaseURL}/stocks`, {
@@ -202,7 +204,7 @@ const SideBar = () => {
                         looks={"looks"}
                     /> */}
 
-                    <li>
+                    {/* <li>
                         <div className="search-on-sidebar">
                             <input
                                 value={searchHashtagTerm}
@@ -216,32 +218,14 @@ const SideBar = () => {
                                 />
                             }
                         </div>
-                    </li>
+                    </li> */}
 
                     {/* <li>
                         <hr className="my-2" />
                     </li> */}
 
-                    <li>
+                    {/* <li>
                         <div className="hashtags">
-                            {/* when fetching hashtags from server we are using it as hashtag.hashtag inside map    */}
-                            {/* {hashtags.slice(0, 8).map((hashtag) => {
-                                return (<div key={hashtag.id}>
-                                    <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                        onClick={() => history.push(`/hashtags/${(hashtag.hashtag).replace('#', '')}`)}>{hashtag.hashtag.toLowerCase()}
-                                    </small>
-                                </div>)
-                            })} */}
-
-                            {/* displating default hashtags  */}
-                            {/* {defaultHashtags.slice(0, 8).map((hashtag, index) => {
-                                return (<div key={index}>
-                                    <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                        onClick={() => history.push(`/hashtags/${(hashtag).replace('#', '')}`)}>{hashtag.toLowerCase()}
-                                    </small>
-                                </div>)
-                            })} */}
-
                             {searchHashtagTerm
                                 ? hashtags.filter((hashtag) => {
                                     // this displays hashtags respective to search term
@@ -267,7 +251,7 @@ const SideBar = () => {
                                 })
                             }
                         </div>
-                    </li>
+                    </li> */}
 
                     {/* <SideBarOption
                         option="Stocks"
@@ -276,7 +260,7 @@ const SideBar = () => {
                         looks={"looks"}
                     /> */}
 
-                    <li>
+                    {/* <li>
                         <div className="search-on-sidebar">
                             <input
                                 value={searchStockTerm}
@@ -291,42 +275,14 @@ const SideBar = () => {
                                 />
                             }
                         </div>
-                    </li>
+                    </li> */}
 
                     {/* <li>
                         <hr className="my-2" />
                     </li> */}
 
-                    <li>
+                    {/* <li>
                         <div className="hashtags">
-                            {/* when fetching stocks from server we are using it as stock.stock inside map and removing stocks which has decimals in it using filter  */}
-                            {/* {stocks.filter((stock) => {
-                                const regex = /\d/;
-                                if (regex.test(stock.stock) === false) {
-                                    return stock
-                                }
-                            }).slice(0, 8).map((stock) => {
-                                return (<div key={stock.id}>
-                                    <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                        onClick={() => history.push(`/stocks/${(stock.stock).replace('$', '')}`)}>{stock.stock.toUpperCase()}
-                                    </small>
-                                </div>)
-                            })} */}
-
-                            {/* displating default stocks  */}
-                            {/* {defaultStocks.filter((stock) => {
-                                const regex = /\d/;
-                                if (regex.test(stock) === false) {
-                                    return stock
-                                }
-                            }).slice(0, 10).map((stock, index) => {
-                                return (<div key={index}>
-                                    <small className="badge-hashtag outline-badge-hashtags d-flex flex-end"
-                                        onClick={() => history.push(`/stocks/${(stock).replace('$', '')}`)}>{stock.toUpperCase()}
-                                    </small>
-                                </div>)
-                            })} */}
-
                             {searchStockTerm
                                 ? stocks.filter((stock) => {
                                     // this filters decimal number stocks
@@ -362,7 +318,33 @@ const SideBar = () => {
                                 })
                             }
                         </div>
-                    </li>
+                    </li> */}
+
+                    {/* suggested Users  */}
+                    <div style={{ paddingLeft: "1rem" }}>
+                        <li>
+                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Suggested Follows</small>{" "}
+                        </li>
+
+                        {/* for development  */}
+                        {/* <SuggestedFollow suggestedUsername={"hrshmistry"} />
+                        <SuggestedFollow suggestedUsername={"john"} />
+                        <SuggestedFollow suggestedUsername={"hey"} /> */}
+
+                        {/* for production  */}
+                        <SuggestedFollow suggestedUsername={"fitness"} />
+                        <SuggestedFollow suggestedUsername={"americanmuscle"} />
+                        <SuggestedFollow suggestedUsername={"luxury"} />
+                        <SuggestedFollow suggestedUsername={"crossfit"} />
+                    </div>
+
+                    {/* suggested hoots  */}
+                    <div style={{ paddingLeft: "1rem" }}>
+                        <li>
+                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Suggested Hoots</small>{" "}
+                        </li>
+                        <SuggestedHoots />
+                    </div>
 
                     <li>
                         <NavLink
@@ -442,7 +424,7 @@ const SideBar = () => {
                         </div>
 
                         <li>
-                            <small className="info">&copy; Copyright 2021 MegaHoot Technologies, Inc</small>
+                            <small className="info" style={{ paddingBottom: "1rem" }}>&copy; 2021 MegaHoot Technologies, Inc</small>
                         </li>
                     </div>
                 </div>

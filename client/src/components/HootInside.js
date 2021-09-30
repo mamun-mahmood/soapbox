@@ -396,7 +396,7 @@ const HootInside = ({
         setTimeout(() => {
             setIsEmbedModalOpen(false)
         }, 100);
-        toast.success('Code copied to clipboard', {
+        toast.success('Embed Code copied to clipboard', {
             style: {
                 border: '2px solid #8249A0',
                 color: '#8249A0',

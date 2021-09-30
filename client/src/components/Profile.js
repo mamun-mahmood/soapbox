@@ -16,6 +16,7 @@ import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 import ReactTooltip from 'react-tooltip';
 import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
+
 const Profile = ({
     verified,
     privateChannel,
