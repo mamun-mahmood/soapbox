@@ -145,7 +145,7 @@ const PublicProfile = ({
     useEffect(() => {
         const getUserUploadData = async () => {
             await axios.all[(
-                axios.get(`${BaseURL}/upload/user/p/${username}?page=1&limit=5`)
+                axios.get(`${BaseURL}/upload/user/p/${username}?page=1&limit=${LIMIT}`)
                     .then((response) => {
                         setUsers(response.data.results);
                     }),
@@ -202,10 +202,10 @@ const PublicProfile = ({
                                     src={profilePicPath}
                                 />
                             </div>
+
                             <ReactTooltip />
-                            {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
+
                             <div className="user-info">
-                                {/* <div className="follow-user"> */}
                                 <div className="display-name">
                                     <div className="profile-name-verification">
                                         <h1>{name}</h1>
@@ -218,7 +218,9 @@ const PublicProfile = ({
                                         }
                                     </div>
                                 </div>
+
                                 <div className="user-name-page">@{username}</div>
+
                                 <div className="user-follow">
                                     {userInformation ?
                                         userFollowers.length === 0
@@ -253,8 +255,7 @@ const PublicProfile = ({
                                     }
                                 </div>
 
-                                {privateChannel
-                                    ?
+                                {privateChannel ?
                                     <button className="public-btn-add-private-c">
                                         <Link to={`/private/channels/${username}`}>
                                             Go to Private Channel
@@ -264,8 +265,8 @@ const PublicProfile = ({
                                 }
                             </div>
                         </div>
-                        <div className="profile-links">
 
+                        <div className="profile-links">
                             <div className="user-counts">
                                 <div className="counts-stack"><span className="counts-bold">{formatCount(followersCount) + formatSi(followersCount)}</span> Followers</div>
                                 <div className="counts-stack"><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
@@ -345,47 +346,47 @@ const PublicProfile = ({
                         </div>
                     </div>
 
-
-
                     <hr />
+
                     <div className="pt-2">
                         {users.length === 0 &&
                             <div className="no-hoots">
                                 <p>No hoots yet!</p>
-                                {/* <div className="profile-hoot">
-                                    <Link to="/create">
-                                        Create Hoot
-                                    </Link>
-                                </div> */}
                             </div>
                         }
+
+                        {loading &&
+                            <div className="loading">
+                                <BeatLoader color={"#8249A0"} size={20} />
+                            </div>
+                        }
+
                         {/* no need to reverse the list as it is getting reversed from the server itself  */}
-                        <div className="hoot-profile-layout">
-                            {!loading &&
-                                users.length > 0 &&
-                                <InfiniteScroll
-                                    dataLength={users.length}
-                                    next={fetchProfileHoots}
-                                    hasMore={hasMore}
-                                    loader={users.length > 10 && <InfiniteScrollLoader />}
-                                >
-                                    <div className="hoot-profile-layout">
-                                        {users.map((user) => {
-                                            return (
-                                                <div key={user.id}>
-                                                    <HootOutside
-                                                        hootId={user.id}
-                                                        username={user.authorUsername}
-                                                        mimeType={user.mimeType}
-                                                        hootImgId={user.image}
-                                                    />
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                </InfiniteScroll>
-                            }
-                        </div>
+                        {!loading &&
+                            users.length > 0 &&
+                            <InfiniteScroll
+                                dataLength={users.length}
+                                next={fetchProfileHoots}
+                                hasMore={hasMore}
+                                loader={users.length > 10 && <InfiniteScrollLoader />}
+                            >
+                                <div className="hoot-profile-layout">
+                                    {users.map((user) => {
+                                        return (
+                                            <div key={user.id}>
+                                                <HootOutside
+                                                    hootId={user.id}
+                                                    username={user.authorUsername}
+                                                    mimeType={user.mimeType}
+                                                    hootImgId={user.image}
+                                                    profilePicPath={profilePicPath}
+                                                />
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </InfiniteScroll>
+                        }
                     </div>
                 </div>
             }

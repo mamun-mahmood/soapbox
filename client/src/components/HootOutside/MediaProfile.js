@@ -2,13 +2,15 @@ import React, { useState, useRef } from 'react'
 import LazyLoad from 'react-lazyload';
 import { useHistory } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa'
-import { MdGif } from 'react-icons/md'
+import { MdGif, MdMusicNote } from 'react-icons/md'
+import { AiFillAudio } from 'react-icons/ai'
 
 const MediaProfile = ({
     mimeType,
     filePath,
     username,
-    hootId
+    hootId,
+    profilePicPath
 }) => {
     const history = useHistory();
     const [isVertical, setIsVertical] = useState("hoot-img-vertical-profile");
@@ -28,7 +30,10 @@ const MediaProfile = ({
     return (
         <div className="media-center">
             {mimeType.match(/image/gi) == "image" &&
-                <LazyLoad offset={0} className="img-container">
+                <LazyLoad
+                    offset={0}
+                    className="img-container"
+                >
                     <img
                         ref={ref}
                         src={filePath}
@@ -50,10 +55,12 @@ const MediaProfile = ({
             }
 
             {mimeType.match(/video/gi) == "video" &&
-                <LazyLoad offset={0} className="vdo-container">
+                <LazyLoad
+                    offset={0}
+                    className="vdo-container"
+                >
                     <video
                         loop muted
-                        // controls
                         disablePictureInPicture
                         className="hoot-vdo-profile"
                         controlsList="nodownload"
@@ -76,20 +83,27 @@ const MediaProfile = ({
             }
 
             {mimeType.match(/audio/gi) == "audio" &&
-                <LazyLoad offset={0}>
-                    <audio
-                        className="hoot-ado-profile"
-                        // controls
+                <LazyLoad
+                    offset={0}
+                    className="vdo-container"
+                >
+                    <video
+                        className="hoot-vdo-profile"
+                        poster={profilePicPath}
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
                         onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
                     >
                         <source
                             src={filePath}
-                            type={mimeType}
+                            type="video/mp4"
                         />
                         Your browser does not support the audio element.
-                    </audio>
+                    </video>
+                    <MdMusicNote
+                        className="play-vdo-overlay"
+                        onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
+                    />
                 </LazyLoad>
             }
         </div>

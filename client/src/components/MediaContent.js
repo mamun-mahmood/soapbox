@@ -8,7 +8,8 @@ const MediaContent = ({
     filePath,
     views,
     image,
-    editOpen
+    editOpen,
+    profilePicPath
 }) => {
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -102,24 +103,25 @@ const MediaContent = ({
             }
 
             {mimeType.match(/audio/gi) == "audio" &&
-                <LazyLoad
-                    offset={15000}
-                    placeholder={<PlaceholderComponent />}
+                <div
+                // offset={15000}
+                // placeholder={<PlaceholderComponent />}
                 >
-                    <audio
+                    <video
                         className={editOpen ? "hoot-ado-fix" : "hoot-ado"}
                         controls
+                        poster={profilePicPath}
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
                         onLoadStart={(e) => setViewCount(viewCount + 1)}
                     >
                         <source
                             src={filePath}
-                            type={mimeType}
+                            type="video/mp4"
                         />
                         Your browser does not support the audio element.
-                    </audio>
-                </LazyLoad>
+                    </video>
+                </div>
             }
         </Fragment>
     )

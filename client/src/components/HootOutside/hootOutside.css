@@ -34,7 +34,7 @@
     width: 100%;
 
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
 
@@ -246,6 +246,11 @@
     }
 } */
 
+@media only screen and (max-width: 550px) {
+    .hoot-profile-layout {
+        justify-content: center;
+    }
+}
 @media only screen and (max-width: 470px) { 
     .hoot-img-vertical-profile {
         width: 300px;

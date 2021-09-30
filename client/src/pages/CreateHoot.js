@@ -463,16 +463,17 @@ const CreatePost = () => {
                         }
 
                         {mimeType.match(/audio/gi) == "audio" &&
-                            <audio
+                            <video
+                                poster={profilePicPath}
                                 className="hoot-ado"
                                 controls
                             >
                                 <source
                                     src={src}
-                                    type={mimeType}
+                                    type="video/mp4"
                                 />
                                 Your browser does not support the audio element.
-                            </audio>
+                            </video>
                         }
                     </div>
                 </div>

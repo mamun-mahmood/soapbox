@@ -114,6 +114,15 @@ const EditProfile = ({
             loading: 'Saving...',
             success: 'Profile saved',
             error: 'Could not save',
+        }, {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
         });
 
         setTimeout(() => {

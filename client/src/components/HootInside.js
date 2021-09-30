@@ -633,7 +633,7 @@ const HootInside = ({
                                                     <div className="edit-content">
                                                         {/* left side image */}
                                                         <div className="post-media">
-                                                            <MediaContent mimeType={mimeType} filePath={filePath} editOpen={isEditModalOpen} />
+                                                            <MediaContent mimeType={mimeType} filePath={filePath} editOpen={isEditModalOpen} profilePicPath={profilePicPath} />
                                                         </div>
                                                         {/* right side edit box */}
                                                         <div className="edit-caption d-flex flex-wrap">
@@ -800,6 +800,7 @@ const HootInside = ({
                                     filePath={filePath}
                                     views={views}
                                     image={hootImgId}
+                                    profilePicPath={profilePicPath}
                                 />
                                 {/* </div> */}
                                 <div className="post-icons">
@@ -1305,7 +1306,7 @@ const HootInside = ({
                                                 <div className="edit-content">
                                                     {/* left side image */}
                                                     <div className="post-media">
-                                                        <MediaContent mimeType={mimeType} filePath={filePath} editOpen={isEditModalOpen} />
+                                                        <MediaContent mimeType={mimeType} filePath={filePath} editOpen={isEditModalOpen} profilePicPath={profilePicPath} />
                                                     </div>
                                                     {/* right side edit box */}
                                                     <div className="edit-caption d-flex flex-wrap">
@@ -1472,6 +1473,7 @@ const HootInside = ({
                                 filePath={filePath}
                                 views={views}
                                 image={hootImgId}
+                                profilePicPath={profilePicPath}
                             />
                             {/* </div> */}
                             <div className="post-icons">

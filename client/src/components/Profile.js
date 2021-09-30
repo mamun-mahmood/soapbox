@@ -152,8 +152,9 @@ const Profile = ({
                                     src={profilePicPath}
                                 />
                             </div>
+
                             <ReactTooltip />
-                            {/* <img className="profile-picture" src="/images/default_user_profile.svg" alt="profile" /> */}
+
                             <div className="user-info">
                                 <div className="display-name">
                                     <div className="profile-name-verification">
@@ -167,13 +168,17 @@ const Profile = ({
                                         }
                                     </div>
                                 </div>
+
                                 <div className="user-name-page">@{username}</div>
+
                                 <button className="btn-edit-profile">
                                     <Link to={`/edit/profile/${username}`}>
                                         Edit Profile
                                     </Link>
                                 </button>
+
                                 <ReactTooltip />
+
                                 {privateC
                                     ? <button className="btn-add-private-c">
                                         <Link to={`/${uuidv4()}/private/channels/${username}/${uuidv4()}`}>
@@ -189,8 +194,8 @@ const Profile = ({
                                 }
                             </div>
                         </div>
-                        <div className="profile-links">
 
+                        <div className="profile-links">
                             <div className="user-counts">
                                 <div className="counts-stack"><span className="counts-bold">{formatCount(followers) + formatSi(followers)}</span> Followers</div>
                                 <div className="counts-stack"><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
@@ -270,6 +275,7 @@ const Profile = ({
                     </div>
 
                     <hr />
+
                     <div className="pt-2">
                         {myUploads.length === 0 &&
                             <div className="no-hoots">
@@ -287,6 +293,7 @@ const Profile = ({
                                 <BeatLoader color={"#8249A0"} size={20} />
                             </div>
                         }
+
                         {/* no need to reverse the list as it is getting reversed from the server itself  */}
                         {!loading &&
                             myUploads.length > 0 &&
@@ -305,6 +312,7 @@ const Profile = ({
                                                     username={upload.authorUsername}
                                                     mimeType={upload.mimeType}
                                                     hootImgId={upload.image}
+                                                    profilePicPath={profilePicPath}
                                                 />
                                             </div>
                                         )
@@ -315,7 +323,6 @@ const Profile = ({
                     </div>
                 </div>
             }
-
         </div>
     )
 }

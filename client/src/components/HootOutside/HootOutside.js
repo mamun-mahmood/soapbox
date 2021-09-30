@@ -7,6 +7,7 @@ const HootOutside = ({
     username,
     mimeType,
     hootImgId,
+    profilePicPath
 }) => {
     const BaseURL = process.env.REACT_APP_API_URL;
     const filePath = `${BaseURL}/images/${hootImgId}`;
@@ -18,6 +19,7 @@ const HootOutside = ({
                 username={username}
                 mimeType={mimeType}
                 filePath={filePath}
+                profilePicPath={profilePicPath}
             />
         </Fragment>
     )
