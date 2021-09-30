@@ -66,7 +66,7 @@ const Profile = ({
             setLoading(false);
         }
         getUserUploadData();
-    }, [])
+    }, [username])
 
     const fetchProfileHoots = async () => {
         await axios.get(`${BaseURL}/upload/user/p/${username}?page=${page}&limit=${LIMIT}`)

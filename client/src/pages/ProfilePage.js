@@ -31,7 +31,7 @@ const ProfilePage = () => {
             setLoading(false);
         }
         getUserData();
-    }, [])
+    }, [username])
 
     return (
         <Fragment>

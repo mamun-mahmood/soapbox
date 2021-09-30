@@ -32,7 +32,7 @@ const PublicProfilePage = () => {
             setLoading(false);
         }
         getUserData();
-    }, [])
+    }, [username])
 
     return (
         <Fragment>

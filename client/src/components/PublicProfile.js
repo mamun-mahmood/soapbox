@@ -143,6 +143,10 @@ const PublicProfile = ({
     }, [])
 
     useEffect(() => {
+        // window.location.reload();
+    }, [])
+
+    useEffect(() => {
         const getUserUploadData = async () => {
             await axios.all[(
                 axios.get(`${BaseURL}/upload/user/p/${username}?page=1&limit=${LIMIT}`)
@@ -157,7 +161,8 @@ const PublicProfile = ({
             setLoading(false);
         }
         getUserUploadData();
-    }, [])
+
+    }, [username])
 
     const fetchProfileHoots = async () => {
         await axios.get(`${BaseURL}/upload/user/p/${username}?page=${page}&limit=${LIMIT}`)
