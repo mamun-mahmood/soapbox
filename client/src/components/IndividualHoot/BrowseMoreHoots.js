@@ -45,7 +45,7 @@ const BrowseMoreHoots = ({ hashtagsFound, iHootId }) => {
                     dataLength={uploads.length}
                     next={fetchMoreHoots}
                     hasMore={hasMore}
-                    loader={<InfiniteScrollLoader />}
+                // loader={<InfiniteScrollLoader />}
                 >
                     {uploads.filter(upload => upload.id !== iHootId).map((upload) => {
                         return (<div key={upload.id}>

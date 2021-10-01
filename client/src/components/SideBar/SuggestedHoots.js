@@ -71,7 +71,7 @@ const SuggestedHoots = () => {
                                     >
                                         <source
                                             src={`${BaseURL}/images/${upload.image}`}
-                                            type={upload.mimeType}
+                                        // type={upload.mimeType}
                                         />
                                         Your browser does not support HTML video.
                                     </video>

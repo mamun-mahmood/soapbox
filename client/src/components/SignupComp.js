@@ -23,9 +23,7 @@ const SignupComp = ({ handleChange }) => {
 
     const signup = (event) => {
         event.preventDefault();
-        setTimeout(() => {
-            handleChange(true);
-        }, 1000);
+
         axios.post(`${BaseURL}/user/signup`, {
             name,
             username,
@@ -34,6 +32,12 @@ const SignupComp = ({ handleChange }) => {
         }).then((response) => {
             setMessage(response.data.message)
         })
+    }
+
+    if (message == "Signup Successful!") {
+        setTimeout(() => {
+            handleChange(true);
+        }, 1000);
     }
 
     return (
@@ -98,6 +102,7 @@ const SignupComp = ({ handleChange }) => {
                 </Button> */}
 
                 <strong className="text-center d-flex justify-content-center m-2 text-color-auth">{message}</strong>
+
                 <button
                     className="d-grid col-12 btn-main"
                     variant="primary"
