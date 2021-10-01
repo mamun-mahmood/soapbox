@@ -71,7 +71,7 @@ const MediaProfile = ({
                     >
                         <source
                             src={filePath}
-                            type={mimeType}
+                        // type={mimeType}
                         />
                         Your browser does not support HTML video.
                     </video>
@@ -96,7 +96,8 @@ const MediaProfile = ({
                     >
                         <source
                             src={filePath}
-                            type="video/mp4"
+                        // type="video/mp4"
+                        // type={mimeType}
                         />
                         Your browser does not support the audio element.
                     </video>
@@ -109,5 +110,21 @@ const MediaProfile = ({
         </div>
     )
 }
+
+{/* <LazyLoad offset={0}>
+                    <audio
+                        className="hoot-ado-profile"
+                        // controls
+                        controlsList="nodownload"
+                        onContextMenu={(e) => e.preventDefault()}
+                        onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
+                    >
+                        <source
+                            src={filePath}
+                        // type={mimeType}
+                        />
+                        Your browser does not support the audio element.
+                    </audio>
+                </LazyLoad> */}
 
 export default MediaProfile

@@ -95,7 +95,7 @@ const MediaContent = ({
                     >
                         <source
                             src={filePath}
-                            type={mimeType}
+                        // type={mimeType}
                         />
                         Your browser does not support HTML video.
                     </video>
@@ -117,14 +117,34 @@ const MediaContent = ({
                     >
                         <source
                             src={filePath}
-                            type="video/mp4"
+                        // type="video/mp4"
                         />
                         Your browser does not support the audio element.
                     </video>
                 </div>
+
             }
         </Fragment>
     )
 }
+{/* <LazyLoad
+                    offset={15000}
+                    placeholder={<PlaceholderComponent />}
+                >
+                    <audio
+                        className={editOpen ? "hoot-ado-fix" : "hoot-ado"}
+                        controls
+                        controlsList="nodownload"
+                        onContextMenu={(e) => e.preventDefault()}
+                        onLoadStart={(e) => setViewCount(viewCount + 1)}
+                    >
+                        <source
+                            src={filePath}
+                        // type={mimeType}
+                        />
+                        Your browser does not support the audio element.
+                    </audio>
+                </LazyLoad> */}
+
 
 export default MediaContent

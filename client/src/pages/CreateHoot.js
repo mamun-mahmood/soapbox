@@ -456,7 +456,7 @@ const CreatePost = () => {
                             >
                                 <source
                                     src={src}
-                                    type={mimeType}
+                                // type={mimeType}
                                 />
                                 Your browser does not support HTML video.
                             </video>
@@ -470,11 +470,24 @@ const CreatePost = () => {
                             >
                                 <source
                                     src={src}
-                                    type="video/mp4"
+                                // type={mimeType}
                                 />
                                 Your browser does not support the audio element.
                             </video>
                         }
+
+                        {/* {mimeType.match(/audio/gi) == "audio" &&
+                            <audio
+                                className="hoot-ado"
+                                controls
+                            >
+                                <source
+                                    src={src}
+                                // type={mimeType}
+                                />
+                                Your browser does not support the audio element.
+                            </audio>
+                        } */}
                     </div>
                 </div>
             }

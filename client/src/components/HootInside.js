@@ -106,8 +106,6 @@ const HootInside = ({
     // const fromDBLinks = JSON.parse(linkData)
     // const [dbLink, setDbLink] = useState([]);
 
-    console.log("private hoot: ", privateHoot);
-
     useEffect(() => {
         // getting all uploads(hoots) of particuler user 
         axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
