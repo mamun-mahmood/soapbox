@@ -2,6 +2,7 @@
   "name": "soapbox",
   "version": "0.1.0",
   "private": true,
+  
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.14.1",
@@ -40,6 +41,7 @@
     "react-transition-group": "^4.4.2",
     "socket.io-client": "^2.3.0",
     "uuid": "^8.3.2",
+    "video-stream-merger": "^4.0.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

@@ -359,7 +359,7 @@ const PrivateChannels = () => {
                                     <span>Requests</span>
                                     <span>Subscribers</span>
                                     <span>Notification</span>
-                                    <span onClick={() => { history.push(`/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`) }}>
+                                    <span onClick={() => { history.push(`/${uuidv4()}/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`) }}>
                                         <div className="channel-btn-icon">
                                             Live Room
                                             <LiveTvRounded />

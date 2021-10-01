@@ -424,7 +424,7 @@ class SoapboxHall extends Component {
         return (
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' }}>
-                <div id="meetingRoomHeader" onMouseEnter={() => { this.setState({ showControlls: false }) }} ><h3>{`${this.props.match.params.userName}'s Live Experience`}</h3><h5>{"POWERED BY VEROHIVE"}</h5></div>
+                <div id="meetingRoomHeader" onMouseEnter={() => { this.setState({ showControlls: false }) }} ><h3>{`Soapbox Live Experience`}</h3><h5>{"POWERED BY VEROHIVE"}</h5></div>
                 <div id="meetingRoom"    ></div>
                 <div id="controlls"  >
 

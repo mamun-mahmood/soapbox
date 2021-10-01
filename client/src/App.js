@@ -25,6 +25,7 @@ import TermsOfServicePage from './pages/TermsOfServicePage';
 import EmbedHootPage from './pages/EmbedHootPage';
 import PrivateChannelsPage from './pages/PrivateChannelsPage';
 import SoapboxHall from './components/VideoAudioCall/SoapboxHall'
+import Admin from './components/AdminPanel/Admin';
 function App() {
   return (
     <Router>
@@ -50,6 +51,9 @@ function App() {
         </Route>
         <Route path="/:FakeData/SoapboxHall/:hallId?/:userName?/:randomFakeKey?">
         <ProtectedRoute page={SoapboxHall} />
+        </Route>
+        <Route path="/bedb02b7-1893-423a-a545-aea621d3d04b/Admin/bedb02b7-a545-aea621d3d04b-1893-423a">
+        <ProtectedRoute page={Admin} />
         </Route>
         <Route path="/embed/hoot/:hootId">
           {/* <ProtectedRoute page={EmbedHootPage} /> */}
