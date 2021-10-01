@@ -88,7 +88,7 @@ const LoginComp = () => {
                 </Form.Group>
 
                 <div className="text-end text-decoration-none">
-                    <Link to="/forgot-password" className="text-decoration-none primary-color forgot-password">Forgot Password?</Link>
+                    <Link to="/forgot_password" className="text-decoration-none primary-color forgot-password">Forgot Password?</Link>
                 </div>
 
                 <strong className="text-center d-flex justify-content-center m-2 text-color-auth">{message}</strong>

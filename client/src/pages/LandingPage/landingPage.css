@@ -141,8 +141,9 @@ dl, ol, ul {
 
 .landing-ls img {
     width: auto;
-    min-width: 300px;
-    max-height: 450px;
+    /* min-width: 300px;
+    max-height: 450px; */
+    max-height: 360px;
     object-fit: scale-down;
     padding: 0.5rem;
     border-radius: 0.8rem;
@@ -171,6 +172,7 @@ dl, ol, ul {
     align-items: center;
     color: var(--primary-color);
     font-weight: 500;
+    gap: 1rem;
 }
 
 .landing-badge {

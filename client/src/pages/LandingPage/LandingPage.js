@@ -40,24 +40,24 @@ const LandingPage = () => {
                         <a href={locattion.pathname}>
                             <img
                                 onContextMenu={(e) => e.preventDefault()}
-                                src="./images/MegaHootApp_mobilemockup_web_SPBX.png"
+                                src="./images/MegaHoot_Soapbox_LandingPageWeb.png"
                                 alt="MegaHoot Soapbox"
                             />
                         </a>
                         <div className="landing-text">
                             <p>
-                                MegaHoot Soapbox Where Content Creators Monetize Their Private Channels and Build Their Brand, Build Their Business With No Startup Cost.
+                                MegaHoot Soapbox Where Content Creators Monetize Their Private Channels, Virtual Experiences, Personal Messages and Build Their Brand, Build Their Business With No Startup Cost.
                             </p>
                             <p>
-                                Content Creators can offer monthly subscriptions or have one time events with ticket sales or both. They will be able to offer their subscribers , their fans , the ability to join their live broadcast on MegaHoot Soapbox and interact in real time, this can be one on one or for large audiences.
+                                Content Creators can offer monthly subscriptions for their Private Channel, have one time or weekly PPV live events with ticket sales, offer personal messages and live one on one OR group Vero Calls. They will be able to offer their subscribers , their fans , the ability to join their live broadcast on MegaHoot Soapbox and interact in real time with the chat feature, this can be for a small or large audience.
                             </p>
                             <p>
-                                Content Creators come partner with MegaHoot Technologies and maximize the benefits from working with us.
+                                Content Creators find a great partner in MegaHoot Technologies with MegaHoot Soapbox, maximizing the benefits of our content partners.
                             </p>
                             <p>
                                 <ul>
                                     <li>
-                                        FastTrack to account verification, that badge everyone wants.
+                                        FastTrack to account verification
                                     </li>
                                     <li>
                                         Higher content partner payouts plus unique incentives
@@ -66,16 +66,19 @@ const LandingPage = () => {
                                         Access to other MegaHoot Technologies products
                                     </li>
                                     <li>
-                                        Create a PPV live event with ticketing at no initial cost to you
+                                        Pay Per View creation with ticketing with no startup cost
                                     </li>
                                     <li>
-                                        Access to selling your digital products
-                                    </li>
-                                    <li>
-                                        Partnership level growth initiative system and much more
+                                        Access to selling digital products and collectibles
                                     </li>
                                     <li>
                                         NFT Partnership Opportunities
+                                    </li>
+                                    <li>
+                                        Fraud protection for both creators and members
+                                    </li>
+                                    <li>
+                                        Authentication System for Autographs and much more
                                     </li>
                                 </ul>
                             </p>

@@ -26,6 +26,7 @@ import EmbedHootPage from './pages/EmbedHootPage';
 import PrivateChannelsPage from './pages/PrivateChannelsPage';
 import SoapboxHall from './components/VideoAudioCall/SoapboxHall'
 import Admin from './components/AdminPanel/Admin';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 function App() {
   return (
     <Router>
@@ -50,7 +51,7 @@ function App() {
           <Home />
         </Route>
         <Route path="/:FakeData/SoapboxHall/:hallId?/:userName?/:randomFakeKey?">
-        <ProtectedRoute page={SoapboxHall} />
+          <ProtectedRoute page={SoapboxHall} />
         </Route>
         <Route path="/bedb02b7-1893-423a-a545-aea621d3d04b/Admin/bedb02b7-a545-aea621d3d04b-1893-423a">
         <ProtectedRoute page={Admin} />
@@ -115,6 +116,11 @@ function App() {
         <Route path="/TOS">
           {/* <ProtectedRoute page={TermsOfServicePage} /> */}
           <TermsOfServicePage />
+        </Route>
+
+        <Route path="/forgot_password">
+          {/* <ProtectedRoute page={TermsOfServicePage} /> */}
+          <ForgotPassword />
         </Route>
 
         <Route path="*">
