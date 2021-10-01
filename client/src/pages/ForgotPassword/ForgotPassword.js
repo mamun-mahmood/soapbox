@@ -16,16 +16,25 @@ const ForgotPassword = () => {
                 To: email,
                 subject: "Please reset your password",
                 text: "reset link for " + email,
-                html: `<img src={SBlogo} style="width: 100px;">'
+                html: `<img src="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png" style="width: 100px;">
                         <h2 style="color: #5b5b5b;">Reset your Soapbox password</h2>
+                        
+                        <h4>You have requested to reset your password, please click the link below, it will expire in 30 minutes.</h4>
+                        <br />
+                        <a href="https://www.megahoot.net/reset_password/0c0c9970-de97-45fd-8715-38293de38b3e">reset password</a>
+                        <br />
+                        <h4>
+                        If you did not request to reset your passwors then there is not further for you to do, your password will not reset once the link expires.
+                        </h4>
 
-                        <h4 style="color: #757575;">Cheers!</h4>
-                        <h4 style="color: #757575;">MegaHoot Soapbox Team</h4>
+                        <h4>Thank you for using MegaHoot Soapbox</h4>
                         `,
             }),
         }).then(() => {
             setMessage("Email sent successfully")
         }).catch((err) => { console.log(err) })
+
+
 
         // fetch("/nodemailer", {
         //     method: "post",
