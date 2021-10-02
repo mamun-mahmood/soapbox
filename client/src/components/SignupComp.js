@@ -50,6 +50,7 @@ const SignupComp = ({ handleChange }) => {
                         type="text"
                         placeholder="Name"
                         value={name}
+                        className="login-form-input"
                         onChange={(event) => { setName(event.target.value) }}
                     // disabled
                     />
@@ -61,6 +62,7 @@ const SignupComp = ({ handleChange }) => {
                         type="text"
                         placeholder="Username"
                         value={username}
+                        className="login-form-input"
                         onChange={(event) => { setUsername(event.target.value) }}
                     // disabled
                     />
@@ -72,6 +74,7 @@ const SignupComp = ({ handleChange }) => {
                         type="email"
                         placeholder="Email"
                         value={email}
+                        className="login-form-input"
                         onChange={(event) => { setEmail(event.target.value) }}
                     // disabled
                     />
@@ -86,6 +89,7 @@ const SignupComp = ({ handleChange }) => {
                         type="password"
                         placeholder="Password"
                         value={password}
+                        className="login-form-input"
                         onChange={(event) => { setPassword(event.target.value) }}
                     // disabled
                     />
@@ -104,7 +108,7 @@ const SignupComp = ({ handleChange }) => {
                 <strong className="text-center d-flex justify-content-center m-2 text-color-auth">{message}</strong>
 
                 <button
-                    className="d-grid col-12 btn-main"
+                    className="d-grid col-12 btn-main login-form-button"
                     variant="primary"
                     type="submit"
                     onClick={signup}

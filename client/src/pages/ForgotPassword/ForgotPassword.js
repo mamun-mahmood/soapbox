@@ -10,59 +10,26 @@ const ForgotPassword = () => {
     const BaseURL = process.env.REACT_APP_API_URL;
 
     const sendResetLink = () => {
-        console.log("email", email);
-        axios.post(`${BaseURL}/nodemailer`, {
-            body: JSON.stringify({
-                To: email,
-                subject: "Please reset your password",
-                text: "reset link for " + email,
-                html: `<img src="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png" style="width: 100px;">
-                        <h2 style="color: #5b5b5b;">Reset your Soapbox password</h2>
-                        
-                        <h4>You have requested to reset your password, please click the link below, it will expire in 30 minutes.</h4>
-                        <br />
-                        <a href="https://www.megahoot.net/reset_password/0c0c9970-de97-45fd-8715-38293de38b3e">reset password</a>
-                        <br />
-                        <h4>
-                        If you did not request to reset your passwors then there is not further for you to do, your password will not reset once the link expires.
-                        </h4>
+        const sendEmail = async () => {
+            await axios.post(`${BaseURL}/nodemailer/forgot-password`, {
+                body: JSON.stringify({
+                    To: email,
+                    subject: "Please reset your password",
+                    text: "reset link for " + email,
+                }),
+            }).then((response) => {
+                setMessage(response.data.message);
+            }).catch((err) => { console.log(err) })
+        };
 
-                        <h4>Thank you for using MegaHoot Soapbox</h4>
-                        `,
-            }),
-        }).then(() => {
-            setMessage("Email sent successfully")
-        }).catch((err) => { console.log(err) })
-
-
-
-        // fetch("/nodemailer", {
-        //     method: "post",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         To: email,
-        //         subject: "Please reset your password",
-        //         text: "reset link for " + email,
-        //         html: `<img src={SBlogo} style="width: 100px;">'
-        //                 <h1 style="color: #5b5b5b;">Reset your Soapbox password</h1>
-
-        //                 <h4 style="color: #757575;">Cheers!</h4>
-        //                 <h4 style="color: #757575;">MegaHoot Soapbox Team</h4>
-        //                 `,
-        //     }),
-        // }).then(() => {
-        //     console.log("email sent successfully");
-        // }).catch((err) => console.log(err));
-    };
-
+        sendEmail();
+    }
 
     return (
         <div className="FP">
             <div className="forgot-password-box">
                 <div className="soapbox-forgot-password-logo">
-                    <img src={SBlogo} alt="Soapbox" />
+                    <img src={SBlogo} alt="Soapbox" onContextMenu={(e) => e.preventDefault()} />
                 </div>
                 <div className="reset-password-header">
                     Reset your password
@@ -84,12 +51,17 @@ const ForgotPassword = () => {
                     >Send Reset Instructions</button>
                 </div>
                 <small>{message}</small>
+                <div className="text-center text-decoration-none mt-2">
+                    <small className="text-color-auth">New to Soapbox? </small>
+                    <Link to="/login" className="text-decoration-none primary-color fw-bold"> Sign up</Link><br />
+                </div>
             </div>
             <div className="FP-footer">
                 <Link to="/TOS">Terms Of Service</Link>
                 <Link to="/privacy-policy">Privacy Policy</Link>
                 <a href="soapbox:;">About</a>
                 <a href="soapbox:;">Contact</a>
+                <Link to="/">Home</Link>
                 <br />
                 <div style={{ margin: "0.5rem", marginTop: "0.2rem", padding: "0", textAlign: "center", color: "#9CA3AF" }}>
                     &copy; 2021<a href="https://www.megahoot.com/"> MegaHoot Technologies, Inc</a>

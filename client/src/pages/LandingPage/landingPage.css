@@ -140,13 +140,12 @@ dl, ol, ul {
 }
 
 .landing-ls img {
-    width: auto;
-    /* min-width: 300px;
-    max-height: 450px; */
-    max-height: 360px;
+    /* width: auto; */
+    /* min-width: 300px; */
+    max-height: 480px;
     object-fit: scale-down;
     padding: 0.5rem;
-    border-radius: 0.8rem;
+    border-radius: 0.9rem;
 }
 
 .landing-rs {
@@ -227,9 +226,11 @@ footer span {
     color: #fff;
     font-weight: 600;
     background-color: var(--on-hover);
+    border: none;
     transition: 0.3s;
 }
 .go-to-feed button:hover {
+    border: none;
    transform: scale(1.1);
 }
 
@@ -237,6 +238,22 @@ footer span {
     font-size: 0.95rem;
     transition: 0.5s;
 }
+
+.login-form-input {
+    border: none;
+}
+.login-form-input:hover {
+    border: none;
+}
+
+.login-form-button{
+    border: none !important;
+}
+
+.login-form-button:hover {
+    border: none !important;
+}
+
 @media only screen and (max-width: 1185px) {
     .landing-text {
         font-size: 0.9rem;

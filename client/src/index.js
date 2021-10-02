@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import MyListContext from './context/MyListContext';
 // import { hydrate, render } from 'react-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -19,7 +20,9 @@ import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MyListContext>
+      <App />
+    </MyListContext>
   </React.StrictMode>,
   document.getElementById('root')
 );

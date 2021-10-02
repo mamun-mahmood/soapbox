@@ -48,13 +48,6 @@ const LoginComp = () => {
         }
         userLogin();
 
-        // const userLoginToast = userLogin();
-        // toast.promise(userLoginToast, {
-        //     loading: 'logging in...',
-        //     success: 'Login Successful',
-        //     error: 'Login Unsuccessful',
-        // });
-
         setTimeout(() => {
             setSaveLoading(false);
         }, 1000);
@@ -70,6 +63,7 @@ const LoginComp = () => {
                         type="email"
                         placeholder="Email"
                         value={email}
+                        className="login-form-input"
                         onChange={(event) => { setEmail(event.target.value) }}
                     />
                     <Form.Text className="text-muted">
@@ -83,6 +77,7 @@ const LoginComp = () => {
                         type="password"
                         placeholder="Password"
                         value={password}
+                        className="login-form-input"
                         onChange={(event) => { setPassword(event.target.value) }}
                     />
                 </Form.Group>
@@ -104,7 +99,7 @@ const LoginComp = () => {
                 </Button> */}
 
                 <button
-                    className="d-grid col-12 btn-main"
+                    className="d-grid col-12 btn-main login-form-button"
                     variant="primary"
                     type="submit"
                     onClick={login}

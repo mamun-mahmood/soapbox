@@ -40,7 +40,7 @@ const LandingPage = () => {
                         <a href={locattion.pathname}>
                             <img
                                 onContextMenu={(e) => e.preventDefault()}
-                                src="./images/MegaHoot_Soapbox_LandingPageWeb.png"
+                                src="./images/MegaHoot_Soapbox_LandingPage_600_web.png"
                                 alt="MegaHoot Soapbox"
                             />
                         </a>
@@ -49,7 +49,7 @@ const LandingPage = () => {
                                 MegaHoot Soapbox Where Content Creators Monetize Their Private Channels, Virtual Experiences, Personal Messages and Build Their Brand, Build Their Business With No Startup Cost.
                             </p>
                             <p>
-                                Content Creators can offer monthly subscriptions for their Private Channel, have one time or weekly PPV live events with ticket sales, offer personal messages and live one on one OR group Vero Calls. They will be able to offer their subscribers , their fans , the ability to join their live broadcast on MegaHoot Soapbox and interact in real time with the chat feature, this can be for a small or large audience.
+                                Content Creators can offer monthly subscriptions for their Private Channel, have one time or weekly PPV live events with ticket sales, offer personal messages and live one on one OR group Vero Calls. They will be able to offer their subscribers, their fans, the ability to join their live broadcast on MegaHoot Soapbox and interact in real time with the chat feature, this can be for a small or large audience.
                             </p>
                             <p>
                                 Content Creators find a great partner in MegaHoot Technologies with MegaHoot Soapbox, maximizing the benefits of our content partners.

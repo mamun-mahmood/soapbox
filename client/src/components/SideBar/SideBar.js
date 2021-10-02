@@ -18,11 +18,23 @@ const SideBar = () => {
     // const [stocks, setStocks] = useState([]);
     // const [allUploads, setAllUploads] = useState([]);
     // const [myListActive, setMyListActive] = useState("");
-    const [gender, setGender] = useState(false)
+    const [myList, setMyList] = useState(false)
     // const [searchHashtagTerm, setSearchHashtagTerm] = useState("");
     // const [searchStockTerm, setSearchStockTerm] = useState("");
     // const history = useHistory()
 
+    // const history = useHistory();
+
+    // if (myList) {
+    //     setTimeout(() => {
+    //         history.push('/mylist');
+    //     }, 250);
+    // }
+    // else {
+    //     setTimeout(() => {
+    //         history.push('/');
+    //     }, 250);
+    // }
     // const BaseURL = process.env.REACT_APP_API_URL;
 
     // useEffect(() => {
@@ -151,7 +163,7 @@ const SideBar = () => {
                             name="gender-toggle"
                             id="gender-toggle"
                             className="toggle-container toggle-container-light"
-                            onChange={() => setGender(!gender)}
+                            onChange={() => setMyList(!myList)}
                         />
                         <label htmlFor="gender-toggle" className="toggle-button">
                             <span
