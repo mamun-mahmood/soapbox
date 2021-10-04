@@ -37,11 +37,6 @@
 }
 
 .search-icon {
-    /* position: absolute;
-    top: 1.6rem;
-    right: 1rem;
-    z-index: 1111; */
-
     color: var(--primary-color);
     font-size: x-large;
     font-weight: 700;
@@ -59,4 +54,12 @@
 
 .search-bar input:focus {
     border-color: var(--primary-color);
+}
+
+.no-search-result {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-color);
 }

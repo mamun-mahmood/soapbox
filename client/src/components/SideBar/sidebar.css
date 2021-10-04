@@ -531,6 +531,9 @@
     .suggested-hoots {
         display: none;
     }
+    .see-more-suggested {
+        display: none;
+    }
     .search-on-sidebar {
         display: none;
     }

@@ -28,7 +28,7 @@ const RandomSuggestedFollows = () => {
 
                 setVerifiedUsers([...verifiedUsers, ...verifiedUsersFromServer]);
 
-                // if (hootsFromServer === 0 || hootsFromServer < LIMIT) {
+                // if (verifiedUsersFromServer === 0 || verifiedUsersFromServer < LIMIT) {
                 //     setHasMore(false);
                 // }
             });
