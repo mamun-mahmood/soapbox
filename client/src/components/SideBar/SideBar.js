@@ -8,9 +8,8 @@ import { RiShieldFlashLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import './sidebar.css';
-// import toast from 'react-hot-toast'
-import SuggestedFollow from './SuggestedFollow'
-import SuggestedHoots from './SuggestedHoots'
+import RandomSuggestedFollows from './RandomSuggestedFollows'
+import RamdomSuggestedHoots from './RandomSuggestedHoots'
 
 const SideBar = () => {
     // const [mainActive, setMainActive] = useState("active");
@@ -332,31 +331,20 @@ const SideBar = () => {
                         </div>
                     </li> */}
 
-                    {/* suggested Users  */}
+                    {/* suggested Follows  */}
                     <div style={{ paddingLeft: "1rem" }}>
                         <li>
                             <small style={{ marginLeft: "-0.5rem" }} className="info" >Suggested Follows</small>{" "}
                         </li>
-
-                        {/* for development  */}
-                        {/* <SuggestedFollow suggestedUsername={"hrshmistry"} />
-                        <SuggestedFollow suggestedUsername={"john"} />
-                        <SuggestedFollow suggestedUsername={"hey"} />
-                        <SuggestedFollow suggestedUsername={"laptop"} /> */}
-
-                        {/* for production  */}
-                        <SuggestedFollow suggestedUsername={"fitness"} />
-                        <SuggestedFollow suggestedUsername={"americanmuscle"} />
-                        <SuggestedFollow suggestedUsername={"luxury"} />
-                        <SuggestedFollow suggestedUsername={"crossfit"} />
+                        <RandomSuggestedFollows />
                     </div>
 
-                    {/* suggested hoots  */}
+                    {/* suggested Hoots  */}
                     <div style={{ paddingLeft: "1rem" }}>
                         <li>
                             <small style={{ marginLeft: "-0.5rem" }} className="info" >Suggested Hoots</small>{" "}
                         </li>
-                        <SuggestedHoots />
+                        <RamdomSuggestedHoots />
                     </div>
 
                     <li>
