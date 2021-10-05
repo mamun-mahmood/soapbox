@@ -2,35 +2,47 @@ import React, { Fragment, useEffect, useState } from 'react'
 import ClickAwayListener from 'react-click-away-listener';
 import './myList.css'
 import { RiPlayListAddFill } from 'react-icons/ri'
-import { Button } from 'react-bootstrap';
 import { IoCloseOutline } from 'react-icons/io5';
-import { useParams } from 'react-router';
 import { AiFillMinusCircle } from 'react-icons/ai';
 import axios from 'axios';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Post from '../Post';
 
 const MyList = ({ username }) => {
-
     const [isCreateMyListModalOpen, setIsCreateMyListModalOpen] = useState(false);
     const [dLine, setDLine] = useState(true);
     const [formValues, setFormValues] = useState([{ name: "" }])
     const BaseURL = process.env.REACT_APP_API_URL;
 
-
+    const [keywordsFromDb, setKeywordsFromDb] = useState([]);
     const [relatedHoots, setRelatedHoots] = useState([]);
 
+    // getting related keywords 
     useEffect(() => {
         const getkeywordRelatedHoots = async () => {
             await axios.get(`${BaseURL}/mylist/related/${username}`)
                 .then((response) => {
-                    console.log("realted hoots: ", response.data);
                     setRelatedHoots(response.data);
+                    console.log(response.data);
+                    console.log(response);
                 })
         }
 
         getkeywordRelatedHoots();
     }, [])
+    console.log("relatedHoots: ", relatedHoots);
 
-    console.log("realted hoots: ", relatedHoots);
+    // // getting all keywords 
+    // useEffect(() => {
+    //     const getAllKeywords = async () => {
+    //         await axios.get(`${BaseURL}/mylist/${username}`)
+    //             .then((response) => {
+    //                 setKeywordsFromDb(JSON.parse(response.data));
+    //             })
+    //     }
+
+    //     getAllKeywords();
+    // }, [])
 
     let handleChange = (i, e) => {
         // setDLine(false)
@@ -56,7 +68,7 @@ const MyList = ({ username }) => {
         setDLine(false)
         setIsCreateMyListModalOpen(false)
 
-        // converting array of object to normal array 
+        // converting array of object to normal array
         const arrList = formValues.map((list) => {
             return (
                 list.name
@@ -73,12 +85,6 @@ const MyList = ({ username }) => {
         }
 
         sendKeywordsToDb();
-
-        // console.log("array: ", arrList);
-        // console.log("array stringify: ", JSON.stringify(arrList));
-        // console.log("array parse: ", JSON.parse(JSON.stringify(arrList)));
-        // console.log("array of object stringify: ", (JSON.stringify(formValues)));
-        // console.log("normal array of object: ", formValues);
     }
 
     return (
@@ -91,11 +97,7 @@ const MyList = ({ username }) => {
                 />
             </div>
             <hr />
-            {/* {relatedHoots.length > 0
-                ? <div>got hoots</div>
-                :
-                <div className="default-mylist-line">You haven't created List. When you do, they'll show up here.</div>
-            } */}
+
             {dLine &&
                 <div className="default-mylist-line">You haven't created List. When you do, they'll show up here.</div>
             }
@@ -113,6 +115,27 @@ const MyList = ({ username }) => {
                     )
                 })}
             </div>
+
+            {relatedHoots.map((upload) => {
+                return (<div key={upload.id}>
+                    <Post
+                        hootId={upload.id}
+                        username={upload.authorUsername}
+                        mimeType={upload.mimeType}
+                        hootImgId={upload.image}
+                        likes={upload.likes}
+                        views={upload.views}
+                        caption={upload.caption}
+                        link={upload.link}
+                        ephemeral={upload.ephemeral}
+                        privateHoot={upload.private}
+                        expiryDate={upload.expiryDate}
+                        timeStamp={upload.timeStamp}
+                        edited={upload.edited}
+                        editedTimeStamp={upload.editedTimeStamp}
+                    />
+                </div>)
+            })}
 
             {/* Create My List Modal */}
             {isCreateMyListModalOpen &&
