@@ -182,7 +182,8 @@ const Profile = ({
 
                                 {privateC
                                     ? <button className="btn-add-private-c">
-                                        <Link to={`/${uuidv4()}/private/channels/${username}/${uuidv4()}`}>
+                                      
+                                        <Link to={`/${uuidv4()}/SoapboxHall/${uuidv4()}/${username}/${uuidv4()}/${uuidv4()}`}>
                                             Go to Private Channel
                                         </Link>
                                     </button>

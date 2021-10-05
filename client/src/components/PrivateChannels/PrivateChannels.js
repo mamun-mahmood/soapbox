@@ -156,33 +156,47 @@ const PrivateChannels = () => {
                                         <div className="name">{user.name}</div>
                                         <div className="username">@{user.username}</div>
                                         <div className="followers"><b>{formatCount(user.followers) + formatSi(user.followers)}</b><span> Followers</span></div>
-                                        <div className="btns">
+                               
+                                        <div >
                                             {userInformation.username == username
-                                                ? <button onClick={() => { history.push(`/${uuidv4()}/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`) }} >
+                                                ?
+                                                <div className="control btns">
+                                                <button onClick={() => { history.push(`/${uuidv4()}/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`) }} >
                                                     <div className="channel-btn-icon">
                                                         Go Live
                                                         <BiVideoRecording style={{ fontSize: "1.55rem" }} />
                                                     </div>
                                                 </button>
-                                                : <button onClick={callRequest ? cancelCallRequestUser : callRequestUser} >
-                                                    {callRequest ? "Call Requested" : "Request Call"}
-                                                </button>
-                                            }
-                                            {userInformation.username == username
-                                                ? <button>
+                                                <button>
                                                     <div className="channel-btn-icon">
                                                         Create Event
                                                         <Event />
                                                     </div>
                                                 </button>
-                                                : null
-                                            }
-                                            {userInformation.username !== username
-                                                ? <button onClick={subscribe ? unSubscribeUser : subscribeUser}>
-                                                    {subscribe ? "Subscribed" : "Subscribe"}
+                                                </div>
+                                                :<div className="control btns"> 
+                                                
+                                                <button  >
+                                                    {callRequest ? "Virtual Experiences" : "Virtual Experiences"}
                                                 </button>
-                                                : null
+                                                <button >
+                                                    {callRequest ? "1 on 1 call" : "1 on 1 call"}
+                                                </button>
+                                                <button >
+                                                    {callRequest ? "Group call" : "Group call"}
+                                                </button>
+                                                <button >
+                                                    {subscribe ? "Personal Message" : "Personal Message"}
+                                                </button>
+                                                <button>
+                                                    {subscribe ? "Verified Autograph" : "Verified Autograph"}
+                                                </button>
+                                                <button >
+                                                    {subscribe ? "Digital Items" : "Digital Items"}
+                                                </button>
+                                                </div>
                                             }
+                                           
                                         </div>
 
                                         {user.bio &&

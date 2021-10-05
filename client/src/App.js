@@ -111,8 +111,8 @@ function App() {
         </Route>
 
         <Route path="/:fakeKey/private/channels/:username/:randomKey">
-          {/* <ProtectedRoute page={PrivateChannelsPage} /> */}
-          <PrivateChannelsPage />
+          <ProtectedRoute page={PrivateChannelsPage} />
+          {/* <PrivateChannelsPage /> */}
         </Route>
 
         <Route path="/TOS">
