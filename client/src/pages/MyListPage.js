@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
 import { Helmet } from 'react-helmet'
-import Feed from '../../components/Feed/Feed'
-import FloatingButton from '../../components/FloatingButton/FloatingButton'
-import NavBar from '../../components/NavBar/NavBar'
-import SideBar from '../../components/SideBar/SideBar'
+import { useParams } from 'react-router'
+import FloatingButton from '../components/FloatingButton/FloatingButton'
+import MyList from '../components/MyList/MyList'
+import NavBar from '../components/NavBar/NavBar'
+import SideBar from '../components/SideBar/SideBar'
 
-const MyList = () => {
+const MyListPage = () => {
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
 
     return (
@@ -13,7 +14,7 @@ const MyList = () => {
             <NavBar />
             <div className="main-body">
                 <SideBar />
-                <Feed />
+                <MyList username={userInfo.username} />
                 <FloatingButton />
             </div>
 
@@ -39,4 +40,4 @@ const MyList = () => {
     )
 }
 
-export default MyList
+export default MyListPage

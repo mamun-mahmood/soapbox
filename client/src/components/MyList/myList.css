@@ -1,0 +1,116 @@
+.myList {
+    width: 100%;
+    padding: 1rem;
+    padding-top: 5.4rem;
+    color: var(--text-color);
+}
+
+.top-mylist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.add-myList-input {
+    width: 100%;
+    /* padding: 0.5rem 0rem; */
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.add-myList-input input {
+    padding: 0 0.5rem;
+    margin: 0.1rem 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1rem;
+
+    border: 2px solid #D1D5DB;
+    border-radius: 0.5rem;
+
+    width: 100%;
+    height: 35px;
+
+    outline: none;
+    transition: 0.3s;
+}
+
+.add-myList-input input:hover {
+    border-color: var(--primary-color);
+}
+
+.add-myList-input input:focus {
+    border-color: var(--primary-color);
+}
+
+.add-mylist {
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.default-mylist-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+}
+
+.badge-keyword {
+    display: inline;
+    width: auto;
+    border-radius: 1rem;
+    padding: 0rem 0.5rem;
+    margin: 0.2rem;
+    font-size: medium;
+    /* cursor: pointer; */
+}
+
+.outline-badge-keywords {
+    border: solid 1px #dfd9fa;
+    color: #9f93d5;
+}
+
+.outline-badge-keywords:hover {
+    border: solid 1px var(--primary-color);
+    background-color: #EDEDFF;
+    transition: 0.5s;
+}
+
+.outline-badge-keywords:active {
+    border: solid 1px var(--primary-color);
+    background-color: #d4d4ff;
+    transition: 0.5s;
+}
+
+.btn-mylist {
+    padding: 0.5rem 1rem;
+
+    color: #fff;
+    background-color: var(--primary-color);
+
+    border: 1px solid var(--primary-color);
+    border-radius: 0.5rem;
+}
+.btn-mylist:hover {
+    background-color: var(--on-hover);
+    border: 1px solid var(--primary-color);
+}
+.btn-mylist:active {
+    background-color: var(--on-hover);
+    border: 1px solid var(--primary-color);
+}
+
+.keyword-wrapper {
+    margin: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0;
+}

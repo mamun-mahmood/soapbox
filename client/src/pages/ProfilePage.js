@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useParams, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import BeatLoader from "react-spinners/BeatLoader";
+import { MyLists } from '../context/MyListContext'
 
 const ProfilePage = () => {
     const history = useHistory();
@@ -18,7 +19,11 @@ const ProfilePage = () => {
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const BaseURL = process.env.REACT_APP_API_URL;
 
+    const { myList, setMyList } = useContext(MyLists);
+
     useEffect(() => {
+        // setMyList(false);
+
         if (username !== userInformation.username) {
             const profilePath = `/user/${username}`;
             history.push(profilePath);

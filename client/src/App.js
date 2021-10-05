@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useContext, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast';
 import PageNotFound from './pages/PageNotFound'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -6,8 +6,9 @@ import LandingPage from './pages/LandingPage/LandingPage'
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
 } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import "./App.css"
 
 import Home from './pages/Home/Home'
@@ -28,8 +29,17 @@ import SoapboxHall from './components/VideoAudioCall/SoapboxHall'
 import Admin from './components/AdminPanel/Admin';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
-import MyList from './pages/MyList/MyList';
+import MyListPage from './pages/MyListPage';
+
 function App() {
+  // const { myList, setMyList } = useContext(MyLists);
+
+  // useEffect(() => {
+  //   if (myList) {
+  //     setMyList(false);
+  //   }
+  // }, [])
+
   return (
     <Router>
       <Toaster
@@ -111,8 +121,8 @@ function App() {
         </Route>
 
         <Route path="/:fakeKey/private/channels/:username/:randomKey">
-          {/* <ProtectedRoute page={PrivateChannelsPage} /> */}
-          <PrivateChannelsPage />
+          <ProtectedRoute page={PrivateChannelsPage} />
+          {/* <PrivateChannelsPage /> */}
         </Route>
 
         <Route path="/TOS">
@@ -130,9 +140,9 @@ function App() {
           <ResetPassword />
         </Route>
 
-        {/* <Route path="/mylist">
-          <MyList />
-        </Route> */}
+        <Route path="/:username/mylist">
+          <MyListPage />
+        </Route>
 
         <Route path="*">
           <PageNotFound />

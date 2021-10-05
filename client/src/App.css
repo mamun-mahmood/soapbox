@@ -1262,6 +1262,22 @@ hr {
   z-index: 1000;
   box-shadow: var(--secondary-color) 0px 0px 5px;
 }
+
+.myList-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  max-height: 500px;
+  overflow-y: auto;
+  background-color: #dcd5fa;
+  /* border: 0.1rem solid var(--primary-color); */
+  border-radius: 0.5rem;
+  padding: 2rem 2rem 1rem 2rem;
+  z-index: 1000;
+  box-shadow: var(--secondary-color) 0px 0px 5px;
+}
 .embed-modal {
   position: fixed;
   top: 50%;
@@ -1356,6 +1372,10 @@ hr {
 .delete-modal > h4, .delete-info {
   text-align: center;
 }
+.myList-info .myList-desc {
+  text-align: left;
+}
+
 .embed-modal > h4, .embed-info {
   text-align: center;
 }
@@ -1370,6 +1390,9 @@ hr {
   .delete-modal {
     width: 400px;
   }
+  .myList-modal {
+    width: 400px;
+  }
   .embed-modal {
     width: 400px;
   }
@@ -1382,6 +1405,9 @@ hr {
 }
 @media only screen and (max-width: 500px) {
   .delete-modal {
+    width: 300px;
+  }
+  .myList-modal {
     width: 300px;
   }
   .embed-modal {
@@ -2078,12 +2104,12 @@ hr {
 .btn-add-link:hover {
   color: #fff;
   background-color: var(--primary-color);
-  border-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
 
 .btn-add-link:active {
   background-color: var(--on-hover);
-  border-color: var(--on-hover);
+  border: 1px solid var(--primary-color);
 }
 .btn-insert-link:hover {
   background-color: var(--on-hover);

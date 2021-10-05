@@ -1,15 +1,16 @@
-import React, { Fragment, useEffect, useState, useCallback } from 'react'
+import React, { Fragment, useEffect, useState, useCallback, useContext } from 'react'
 import axios from 'axios'
 import SideBarOption from './SideBarOption'
 import { BsLightning } from 'react-icons/bs'
 import { Link, NavLink, useHistory } from 'react-router-dom'
 import { FiHome, FiHash, FiSearch, FiShield } from 'react-icons/fi'
-import { RiShieldFlashLine } from 'react-icons/ri'
+import { RiFileList3Line, RiShieldFlashLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import './sidebar.css';
 import RandomSuggestedFollows from './RandomSuggestedFollows'
 import RamdomSuggestedHoots from './RandomSuggestedHoots'
+import { MyLists } from '../../context/MyListContext'
 
 const SideBar = () => {
     // const [mainActive, setMainActive] = useState("active");
@@ -17,12 +18,36 @@ const SideBar = () => {
     // const [stocks, setStocks] = useState([]);
     // const [allUploads, setAllUploads] = useState([]);
     // const [myListActive, setMyListActive] = useState("");
-    const [myList, setMyList] = useState(false)
     // const [searchHashtagTerm, setSearchHashtagTerm] = useState("");
     // const [searchStockTerm, setSearchStockTerm] = useState("");
     // const history = useHistory()
 
-    // const history = useHistory();
+    const history = useHistory();
+    const { myList, setMyList } = useContext(MyLists);
+
+    // useEffect(() => {
+    //     if (myList === true) {
+    //         // if (window.location.pathname !== '/mylist') {
+    //         //     setMyList(false);
+    //         // } else {
+    //         setTimeout(() => {
+    //             history.push('/mylist');
+    //         }, 200);
+    //         // }
+    //     }
+
+    //     if (myList === false) {
+    //         if (window.location.pathname === '/mylist') {
+    //             setTimeout(() => {
+    //                 history.push('/');
+    //             }, 200);
+    //         } else {
+    //             setTimeout(() => {
+    //                 history.push(window.location.pathname);
+    //             }, 200);
+    //         }
+    //     }
+    // }, [myList])
 
     // if (myList) {
     //     setTimeout(() => {
@@ -34,6 +59,8 @@ const SideBar = () => {
     //         history.push('/');
     //     }, 250);
     // }
+
+
     // const BaseURL = process.env.REACT_APP_API_URL;
 
     // useEffect(() => {
@@ -156,13 +183,14 @@ const SideBar = () => {
         <div className="sidebar start">
             <ui style={{ position: "fixed" }}>
                 <div className="scrollable">
-                    <li>
+                    {/* <li>
                         <input
                             type="checkbox"
                             name="gender-toggle"
                             id="gender-toggle"
                             className="toggle-container toggle-container-light"
-                            onChange={() => setMyList(!myList)}
+                            checked={myList}
+                            onChange={() => { setMyList(!myList) }}
                         />
                         <label htmlFor="gender-toggle" className="toggle-button">
                             <span
@@ -178,7 +206,7 @@ const SideBar = () => {
                                 My List
                             </span>
                         </label>
-                    </li>
+                    </li> */}
 
                     <SideBarOption
                         option="Home"
@@ -186,6 +214,16 @@ const SideBar = () => {
                         link="/"
                         Icon={FiHome}
                     />
+
+                    {userInfo
+                        ?
+                        <SideBarOption
+                            option="My List"
+                            link={`/${username}/mylist`}
+                            Icon={RiFileList3Line}
+                        />
+                        : null
+                    }
 
                     <SideBarOption
                         option="Private Channels"
