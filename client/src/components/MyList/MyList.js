@@ -7,23 +7,28 @@ import { AiFillMinusCircle } from 'react-icons/ai';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from '../Post';
+import InfiniteScrollLoader from '../Feed/InfiniteScrollLoader';
+import EndMsg from '../Feed/EndMsg';
 
 const MyList = ({ username }) => {
     const [isCreateMyListModalOpen, setIsCreateMyListModalOpen] = useState(false);
     const [dLine, setDLine] = useState(true);
+    const [hasMore, setHasMore] = useState(true);
+    const [page, setpage] = useState(2);
     const [formValues, setFormValues] = useState([{ name: "" }])
     const BaseURL = process.env.REACT_APP_API_URL;
 
     const [keywordsFromDb, setKeywordsFromDb] = useState([]);
     const [relatedHoots, setRelatedHoots] = useState([]);
 
+    const LIMIT = 3;
     // getting related keywords 
     useEffect(() => {
         const getkeywordRelatedHoots = async () => {
-            await axios.get(`${BaseURL}/mylist/related/${username}`)
+            await axios.get(`${BaseURL}/mylist/related/${username}/?page=1&limit=${LIMIT}`)
                 .then((response) => {
-                    setRelatedHoots(response.data);
-                    console.log(response.data);
+                    setRelatedHoots(response.data.results);
+                    console.log(response.data.results);
                     console.log(response);
                 })
         }
@@ -32,17 +37,21 @@ const MyList = ({ username }) => {
     }, [])
     console.log("relatedHoots: ", relatedHoots);
 
-    // // getting all keywords 
-    // useEffect(() => {
-    //     const getAllKeywords = async () => {
-    //         await axios.get(`${BaseURL}/mylist/${username}`)
-    //             .then((response) => {
-    //                 setKeywordsFromDb(JSON.parse(response.data));
-    //             })
-    //     }
+    const fetchMoreRelatedHoots = async () => {
+        await axios.get(`${BaseURL}/mylist/related/${username}/?page=${page}&limit=${LIMIT}`)
+            .then((response) => {
+                const relatedHootsFromServer = response.data.results;
+                console.log("more hoots, ", response.data.results);
 
-    //     getAllKeywords();
-    // }, [])
+                setRelatedHoots([...relatedHoots, ...relatedHootsFromServer]);
+
+                if (relatedHootsFromServer === 0 || relatedHootsFromServer < LIMIT) {
+                    setHasMore(false);
+                }
+            });
+
+        setpage(page + 1);
+    }
 
     let handleChange = (i, e) => {
         // setDLine(false)
@@ -98,7 +107,7 @@ const MyList = ({ username }) => {
             </div>
             <hr />
 
-            {dLine &&
+            {relatedHoots.length == 0 &&
                 <div className="default-mylist-line">You haven't created List. When you do, they'll show up here.</div>
             }
 
@@ -116,26 +125,39 @@ const MyList = ({ username }) => {
                 })}
             </div>
 
-            {relatedHoots.map((upload) => {
-                return (<div key={upload.id}>
-                    <Post
-                        hootId={upload.id}
-                        username={upload.authorUsername}
-                        mimeType={upload.mimeType}
-                        hootImgId={upload.image}
-                        likes={upload.likes}
-                        views={upload.views}
-                        caption={upload.caption}
-                        link={upload.link}
-                        ephemeral={upload.ephemeral}
-                        privateHoot={upload.private}
-                        expiryDate={upload.expiryDate}
-                        timeStamp={upload.timeStamp}
-                        edited={upload.edited}
-                        editedTimeStamp={upload.editedTimeStamp}
-                    />
-                </div>)
-            })}
+            {relatedHoots &&
+                <InfiniteScroll
+                    dataLength={relatedHoots.length}
+                    next={fetchMoreRelatedHoots}
+                    hasMore={hasMore}
+                    loader={<InfiniteScrollLoader />}
+                    endMessage={<EndMsg />}
+                >
+                    {relatedHoots.map((relatedHoot) => {
+                        return (
+                            relatedHoot.map((upload) => {
+                                return (<div key={upload.id}>
+                                    <Post
+                                        hootId={upload.id}
+                                        username={upload.authorUsername}
+                                        mimeType={upload.mimeType}
+                                        hootImgId={upload.image}
+                                        likes={upload.likes}
+                                        views={upload.views}
+                                        caption={upload.caption}
+                                        link={upload.link}
+                                        ephemeral={upload.ephemeral}
+                                        privateHoot={upload.private}
+                                        expiryDate={upload.expiryDate}
+                                        timeStamp={upload.timeStamp}
+                                        edited={upload.edited}
+                                        editedTimeStamp={upload.editedTimeStamp}
+                                    />
+                                </div>)
+                            }))
+                    })}
+                </InfiniteScroll>
+            }
 
             {/* Create My List Modal */}
             {isCreateMyListModalOpen &&
