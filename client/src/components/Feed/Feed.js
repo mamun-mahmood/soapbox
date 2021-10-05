@@ -48,11 +48,6 @@ const Feed = () => {
                     hasMore={hasMore}
                     loader={<InfiniteScrollLoader />}
                     endMessage={<EndMsg />}
-                // refreshFunction={fetchMoreHoots}
-                // pullDownToRefresh
-                // pullDownToRefreshThreshold={50}
-                // pullDownToRefreshContent={<PullDown />}
-                // releaseToRefreshContent={<Release />}
                 >
                     {uploads.map((upload) => {
                         return (<div key={upload.id}>

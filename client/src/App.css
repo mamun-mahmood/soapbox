@@ -751,6 +751,10 @@ hr {
   animation: skeleton-avatar-loading 0.7s linear infinite alternate;
 }
 
+.skeleton-img-no-src {
+  background-color: #d9d1f8;
+}
+
 @keyframes skeleton-avatar-loading {
   0% {
     /* background-color: hsl(200, 20%, 80%); */

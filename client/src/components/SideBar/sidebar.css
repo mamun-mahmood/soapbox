@@ -459,6 +459,14 @@
   border-radius: 0.95rem;
 }
 
+.see-more-suggested {
+    color: #9CA3AF;
+    font-weight: bold;
+    font-size: small;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 1000px) {
     .toggle {
         display: none;
@@ -521,6 +529,9 @@
         display: none;
     }
     .suggested-hoots {
+        display: none;
+    }
+    .see-more-suggested {
         display: none;
     }
     .search-on-sidebar {
