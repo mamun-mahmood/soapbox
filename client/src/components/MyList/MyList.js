@@ -21,15 +21,27 @@ const MyList = ({ username }) => {
     const [keywordsFromDb, setKeywordsFromDb] = useState([]);
     const [relatedHoots, setRelatedHoots] = useState([]);
 
-    const LIMIT = 3;
+    const LIMIT = 10;
+
+    useEffect(() => {
+        const getkeywordRelatedHoots = async () => {
+            await axios.get(`${BaseURL}/mylist/related/${username}`)
+                .then((response) => {
+                    // setRelatedHoots(response.data.results);
+                    console.log("response whole: ", response.data);
+                })
+        }
+
+        getkeywordRelatedHoots();
+    }, [])
     // getting related keywords 
     useEffect(() => {
         const getkeywordRelatedHoots = async () => {
-            await axios.get(`${BaseURL}/mylist/related/${username}/?page=1&limit=${LIMIT}`)
+            await axios.get(`${BaseURL}/mylist/related/${username}/p?page=1&limit=${LIMIT}`)
                 .then((response) => {
                     setRelatedHoots(response.data.results);
                     console.log(response.data.results);
-                    console.log(response);
+                    console.log("response: ", response);
                 })
         }
 
@@ -37,8 +49,10 @@ const MyList = ({ username }) => {
     }, [])
     console.log("relatedHoots: ", relatedHoots);
 
+
+
     const fetchMoreRelatedHoots = async () => {
-        await axios.get(`${BaseURL}/mylist/related/${username}/?page=${page}&limit=${LIMIT}`)
+        await axios.get(`${BaseURL}/mylist/related/${username}/p?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const relatedHootsFromServer = response.data.results;
                 console.log("more hoots, ", response.data.results);
@@ -130,31 +144,30 @@ const MyList = ({ username }) => {
                     dataLength={relatedHoots.length}
                     next={fetchMoreRelatedHoots}
                     hasMore={hasMore}
-                    loader={<InfiniteScrollLoader />}
+                    // loader={<InfiniteScrollLoader />}
                     endMessage={<EndMsg />}
                 >
-                    {relatedHoots.map((relatedHoot) => {
+                    {relatedHoots.map((upload) => {
                         return (
-                            relatedHoot.map((upload) => {
-                                return (<div key={upload.id}>
-                                    <Post
-                                        hootId={upload.id}
-                                        username={upload.authorUsername}
-                                        mimeType={upload.mimeType}
-                                        hootImgId={upload.image}
-                                        likes={upload.likes}
-                                        views={upload.views}
-                                        caption={upload.caption}
-                                        link={upload.link}
-                                        ephemeral={upload.ephemeral}
-                                        privateHoot={upload.private}
-                                        expiryDate={upload.expiryDate}
-                                        timeStamp={upload.timeStamp}
-                                        edited={upload.edited}
-                                        editedTimeStamp={upload.editedTimeStamp}
-                                    />
-                                </div>)
-                            }))
+                            <div key={upload.id}>
+                                <Post
+                                    hootId={upload.id}
+                                    username={upload.authorUsername}
+                                    mimeType={upload.mimeType}
+                                    hootImgId={upload.image}
+                                    likes={upload.likes}
+                                    views={upload.views}
+                                    caption={upload.caption}
+                                    link={upload.link}
+                                    ephemeral={upload.ephemeral}
+                                    privateHoot={upload.private}
+                                    expiryDate={upload.expiryDate}
+                                    timeStamp={upload.timeStamp}
+                                    edited={upload.edited}
+                                    editedTimeStamp={upload.editedTimeStamp}
+                                />
+                            </div>
+                        )
                     })}
                 </InfiniteScroll>
             }
