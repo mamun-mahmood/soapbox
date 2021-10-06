@@ -9,6 +9,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from '../Post';
 import InfiniteScrollLoader from '../Feed/InfiniteScrollLoader';
 import EndMsg from '../Feed/EndMsg';
+import UserFollowHoots from './UserFollowHoots';
 
 const MyList = ({ username }) => {
     const [isCreateMyListModalOpen, setIsCreateMyListModalOpen] = useState(false);
@@ -21,41 +22,72 @@ const MyList = ({ username }) => {
     const [keywordsFromDb, setKeywordsFromDb] = useState([]);
     const [relatedHoots, setRelatedHoots] = useState([]);
 
-    const LIMIT = 10;
+    const [userFollows, setUserFollows] = useState([]);
 
+    // const [allUserFollows, setAllUserFollows] = useState([]);
+    // const sendUserFollows = async () => {
+    //     const followArr = userFollows.map((user) => {
+    //         return (
+    //             user.username
+    //         )
+    //     })
+
+    //     // await axios.get(`${BaseURL}/mylist/follows`, {
+    //     //     users: followArr
+    //     // }).then((response) => {
+    //     //     setAllUserFollows(response.data);
+    //     // })
+    // }
+
+    // list of users to whom loggedIn user follows 
     useEffect(() => {
-        const getkeywordRelatedHoots = async () => {
-            await axios.get(`${BaseURL}/mylist/related/${username}`)
+        const getAllUserFollows = async () => {
+            await axios.get(`${BaseURL}/user/follows/${username}`)
                 .then((response) => {
-                    // setRelatedHoots(response.data.results);
-                    console.log("response whole: ", response.data);
+                    setUserFollows(response.data);
                 })
         }
 
-        getkeywordRelatedHoots();
+        getAllUserFollows();
     }, [])
-    // getting related keywords 
+
+    // if (userFollows.length > 0) {
+    //     sendUserFollows();
+    // }
+
+    useEffect(() => {
+        const getAllKeywords = async () => {
+            axios.get(`${BaseURL}/mylist/${username}`)
+                .then((response) => {
+                    if (response.data.length == 0) {
+                        null
+                    } else {
+                        setKeywordsFromDb(JSON.parse(response.data[0].keywords));
+                    }
+                })
+        }
+
+        getAllKeywords();
+    }, [username])
+
+    const LIMIT = 10;
+
+    // getting related hoots
     useEffect(() => {
         const getkeywordRelatedHoots = async () => {
             await axios.get(`${BaseURL}/mylist/related/${username}/p?page=1&limit=${LIMIT}`)
                 .then((response) => {
                     setRelatedHoots(response.data.results);
-                    console.log(response.data.results);
-                    console.log("response: ", response);
                 })
         }
 
         getkeywordRelatedHoots();
     }, [])
-    console.log("relatedHoots: ", relatedHoots);
-
-
 
     const fetchMoreRelatedHoots = async () => {
         await axios.get(`${BaseURL}/mylist/related/${username}/p?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const relatedHootsFromServer = response.data.results;
-                console.log("more hoots, ", response.data.results);
 
                 setRelatedHoots([...relatedHoots, ...relatedHootsFromServer]);
 
@@ -68,7 +100,6 @@ const MyList = ({ username }) => {
     }
 
     let handleChange = (i, e) => {
-        // setDLine(false)
         let newFormValues = [...formValues];
         newFormValues[i][e.target.name] = e.target.value;
         setFormValues(newFormValues);
@@ -98,7 +129,11 @@ const MyList = ({ username }) => {
             )
         })
 
-        const keywordsArrStringify = JSON.stringify(arrList);
+        // appending new keywords to existing keywords from db 
+        const finalArr = [...keywordsFromDb, ...arrList.filter(n => n)];
+
+        // removing empty elements by filtering 
+        const keywordsArrStringify = JSON.stringify(finalArr);
 
         const sendKeywordsToDb = async () => {
             await axios.post(`${BaseURL}/mylist/add`, {
@@ -108,6 +143,10 @@ const MyList = ({ username }) => {
         }
 
         sendKeywordsToDb();
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
     }
 
     return (
@@ -121,57 +160,6 @@ const MyList = ({ username }) => {
             </div>
             <hr />
 
-            {relatedHoots.length == 0 &&
-                <div className="default-mylist-line">You haven't created List. When you do, they'll show up here.</div>
-            }
-
-            <div className="keyword-wrapper">
-                {formValues.map((link, index) => {
-                    return (
-                        <span key={index}>
-                            {link.name === "" ||
-                                <small className="badge-keyword outline-badge-keywords">
-                                    {link.name}
-                                </small>
-                            }
-                        </span>
-                    )
-                })}
-            </div>
-
-            {relatedHoots &&
-                <InfiniteScroll
-                    dataLength={relatedHoots.length}
-                    next={fetchMoreRelatedHoots}
-                    hasMore={hasMore}
-                    // loader={<InfiniteScrollLoader />}
-                    endMessage={<EndMsg />}
-                >
-                    {relatedHoots.map((upload) => {
-                        return (
-                            <div key={upload.id}>
-                                <Post
-                                    hootId={upload.id}
-                                    username={upload.authorUsername}
-                                    mimeType={upload.mimeType}
-                                    hootImgId={upload.image}
-                                    likes={upload.likes}
-                                    views={upload.views}
-                                    caption={upload.caption}
-                                    link={upload.link}
-                                    ephemeral={upload.ephemeral}
-                                    privateHoot={upload.private}
-                                    expiryDate={upload.expiryDate}
-                                    timeStamp={upload.timeStamp}
-                                    edited={upload.edited}
-                                    editedTimeStamp={upload.editedTimeStamp}
-                                />
-                            </div>
-                        )
-                    })}
-                </InfiniteScroll>
-            }
-
             {/* Create My List Modal */}
             {isCreateMyListModalOpen &&
                 <Fragment>
@@ -180,7 +168,14 @@ const MyList = ({ username }) => {
                         <div className="myList-modal">
                             <h4>Create My List</h4>
                             <div className="myList-info">
-                                <div className="myList-desc">Add keywords to create My List which will show Hoots only related to added keywords.</div>
+                                <div className="myList-desc">
+                                    {keywordsFromDb.length > 0
+                                        ?
+                                        "Add new keywords to your existing keywords in My List which will show Hoots only related to added keywords."
+                                        :
+                                        "Add keywords to Create My List which will show Hoots only related to added keywords."
+                                    }
+                                </div>
                                 <form onSubmit={handleSubmit}>
                                     <div style={{ paddingTop: "1rem" }}>
                                         {formValues.map((element, index) => (
@@ -220,6 +215,76 @@ const MyList = ({ username }) => {
                     </ClickAwayListener>
                 </Fragment>
             }
+
+            {relatedHoots.length == 0 && userFollows.length === 0 &&
+                <div className="default-mylist-line">You haven't created List. When you do, they'll show up here.</div>
+            }
+
+            <div className="keyword-wrapper">
+                {keywordsFromDb.map((keyword, index) => {
+                    return (
+                        <span key={index}>
+                            {keyword === "" ||
+                                <small className="badge-keyword outline-badge-keywords">
+                                    {keyword}
+                                </small>
+                            }
+                        </span>
+                    )
+                })}
+                {formValues.map((keyword, index) => {
+                    return (
+                        <span key={index}>
+                            {keyword.name === "" ||
+                                <small className="badge-keyword outline-badge-keywords">
+                                    {keyword.name}
+                                </small>
+                            }
+                        </span>
+                    )
+                })}
+            </div>
+
+            {/* related hoots based on keywords  */}
+            {relatedHoots &&
+                <InfiniteScroll
+                    dataLength={relatedHoots.length}
+                    next={fetchMoreRelatedHoots}
+                    hasMore={hasMore}
+                >
+                    {relatedHoots.map((upload) => {
+                        return (
+                            <div key={upload.id}>
+                                <Post
+                                    hootId={upload.id}
+                                    username={upload.authorUsername}
+                                    mimeType={upload.mimeType}
+                                    hootImgId={upload.image}
+                                    likes={upload.likes}
+                                    views={upload.views}
+                                    caption={upload.caption}
+                                    link={upload.link}
+                                    ephemeral={upload.ephemeral}
+                                    privateHoot={upload.private}
+                                    expiryDate={upload.expiryDate}
+                                    timeStamp={upload.timeStamp}
+                                    edited={upload.edited}
+                                    editedTimeStamp={upload.editedTimeStamp}
+                                />
+                            </div>
+                        )
+                    })}
+                </InfiniteScroll>
+            }
+
+            {/* users hoots of which loggedIn user follows  */}
+            {userFollows.map((user) => {
+                return (
+                    <div key={user.id}>
+                        <UserFollowHoots user={user.username} />
+                    </div>
+                )
+            })}
         </div>
     )
 }

@@ -72,6 +72,13 @@ const PublicProfile = ({
         await getUserFollowData();
     }, [followed])
 
+    // converting array of object to normal array
+    const userFollowersArr = userFollowers.map((user) => {
+        return (
+            user.followedBy
+        )
+    })
+
     const addFollower = async () => {
         await getUserFollowData();
 
@@ -238,24 +245,35 @@ const PublicProfile = ({
                                                     : "Follow"
                                                 }
                                             </button>
-                                            : userFollowers.map((user) => {
-                                                return (<Fragment key={user.id}>
-                                                    {(user.followedBy).includes(userInformation && userInformation.username) &&
-                                                        <button
-                                                            className="btn-follow"
-                                                            onClick={removeFollower}
-                                                        >
-                                                            Following
-                                                        </button>
+                                            :
+                                            userFollowersArr.some(user => (userInformation && userInformation.username).includes(user))
+                                                ?
+                                                <button
+                                                    className="btn-follow"
+                                                    onClick={removeFollower}
+                                                >
+                                                    Following
+                                                </button>
+                                                :
+                                                <button
+                                                    className="btn-follow"
+                                                    onClick={followed ? removeFollower : addFollower}
+                                                >
+                                                    {/* Follow */}
+                                                    {followed
+                                                        ? "Following"
+                                                        : "Follow"
                                                     }
-                                                </Fragment>)
-                                            })
+                                                </button>
                                         :
                                         <button
                                             className="btn-follow"
                                             onClick={addFollower}
                                         >
-                                            Follow
+                                            {followed
+                                                ? "Following"
+                                                : "Follow"
+                                            }
                                         </button>
                                     }
                                 </div>
@@ -400,3 +418,25 @@ const PublicProfile = ({
 }
 
 export default PublicProfile
+
+
+{/* userFollowers.map((user) => {
+                                                return (<Fragment key={user.id}>
+                                                    {(user.followedBy) === (userInformation && userInformation.username)
+                                                        ?
+                                                        <button
+                                                            className="btn-follow"
+                                                            onClick={removeFollower}
+                                                        >
+                                                            Following map
+                                                        </button>
+                                                        :
+                                                        <button
+                                                            className="btn-follow"
+                                                            onClick={addFollower}
+                                                        >
+                                                            Follow map
+                                                        </button>
+                                                    }
+                                                </Fragment>)
+                                            }) */}

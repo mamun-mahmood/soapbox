@@ -200,7 +200,7 @@ const PrivateChannels = () => {
                                         </div>
 
                                         {user.bio &&
-                                            <div className="user-desc">
+                                            <div className="user-desc" style={{ textAlign: "center" }}>
                                                 {user.bio}
                                             </div>
                                         }
