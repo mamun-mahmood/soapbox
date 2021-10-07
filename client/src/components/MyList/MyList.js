@@ -13,6 +13,7 @@ import UserFollowHoots from './UserFollowHoots';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { IoCloseCircle } from 'react-icons/io5';
 import { MdSync } from 'react-icons/md';
+import toast from 'react-hot-toast';
 
 const MyList = ({ username }) => {
     const [isCreateMyListModalOpen, setIsCreateMyListModalOpen] = useState(false);
@@ -120,31 +121,26 @@ const MyList = ({ username }) => {
         setFormValues(newFormValues)
     }
 
+    // converting array of object to normal array
+    const arrList = formValues.map((list) => {
+        return (
+            list.name
+        )
+    })
+
     let handleSubmit = (event) => {
         event.preventDefault();
 
         setDLine(false)
         setIsCreateMyListModalOpen(false)
 
-        // converting array of object to normal array
-        const arrList = formValues.map((list) => {
-            return (
-                list.name
-            )
-        })
-
-        // appending new keywords to existing keywords from db 
+        // appending new keywords to existing keywords from db and removing empty elements by filtering 
         const finalArr = [...keywordsFromDb, ...arrList.filter(n => n)];
-
-        console.log("finalArr", finalArr);
-
-        // removing empty elements by filtering 
-        const keywordsArrStringify = JSON.stringify(finalArr);
 
         const sendKeywordsToDb = async () => {
             await axios.post(`${BaseURL}/mylist/add`, {
                 username: username,
-                keywordsArrStringify: keywordsArrStringify
+                keywordsArrStringify: JSON.stringify(finalArr)
             })
         }
 
@@ -155,7 +151,7 @@ const MyList = ({ username }) => {
         }, 500);
     }
 
-    const removeKeywords = async () => {
+    const removeAllKeywords = async () => {
         await axios.delete(`${BaseURL}/mylist/delete/${username}`)
             .then(() => {
                 setTimeout(() => {
@@ -164,15 +160,65 @@ const MyList = ({ username }) => {
             })
     }
 
-    const handleRemove = (word) => {
-        console.log("word: ", word);
+    const copyKeywords = () => {
+        // converting array of object to normal array
+        const arrList = formValues.map((list) => {
+            return (
+                list.name
+            )
+        })
+
+        // appending new keywords to existing keywords from db 
+        const finalArr = [...keywordsFromDb, ...arrList.filter(n => n)];
+        navigator.clipboard.writeText(finalArr.join(', '));
+
+        toast.success("My Keywords Copied to Clipboard", {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
+    }
+
+    const updateKeywords = (finalArr) => {
+        const sendKeywordsToDb = async () => {
+            await axios.post(`${BaseURL}/mylist/add`, {
+                username: username,
+                keywordsArrStringify: JSON.stringify(finalArr)
+            })
+        }
+
+        sendKeywordsToDb();
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
+    }
+
+    const handleRemoveForm = (word) => {
         const newFormValues = formValues.filter((value) => value.name !== word);
         setFormValues(newFormValues);
+
+        const newArrList = newFormValues.map((list) => {
+            return (
+                list.name
+            )
+        })
+
+        const finalArr = [...keywordsFromDb, ...newArrList.filter(n => n)];
+        updateKeywords(finalArr);
     }
+
     const handleRemoveDb = (word) => {
-        console.log("word: ", word);
         const newKeywordsFromDb = keywordsFromDb.filter((keyword) => keyword !== word);
         setKeywordsFromDb(newKeywordsFromDb);
+
+        const finalArr = [...newKeywordsFromDb, ...arrList.filter(n => n)];
+        updateKeywords(finalArr);
     }
 
     return (
@@ -184,7 +230,6 @@ const MyList = ({ username }) => {
                         <FiMoreHorizontal
                             className="add-mylist"
                             onMouseEnter={() => setIsOpenMyListMoreModal(true)}
-                        // onMouseLeave={() => setIsOpenMyListMoreModal(false)}
                         />
                     }
                     <MdSync
@@ -206,7 +251,8 @@ const MyList = ({ username }) => {
                                 onMouseLeave={() => setIsOpenMyListMoreModal(false)}
                             >
                                 <div className="more-options">
-                                    <span onClick={removeKeywords}>Remove all keywords</span>
+                                    <span onClick={removeAllKeywords}>Remove All Keywords</span>
+                                    <span onClick={copyKeywords}>Copy My Keywords</span>
                                 </div>
                             </div>
                         </ClickAwayListener>
@@ -253,10 +299,18 @@ const MyList = ({ username }) => {
                                     </div>
                                 </form>
 
-                                <button className="btn-add-link" style={{ margin: "0", marginTop: "0.5rem" }} type="button" onClick={() => addFormFields()}>
+                                <button
+                                    className="btn-add-link"
+                                    style={{ margin: "0", marginTop: "0.5rem" }}
+                                    type="button"
+                                    onClick={() => addFormFields()}
+                                >
                                     Add
                                 </button>
-                                <div className="btn-post mt-3" style={{ textAlign: "center", display: "flex", justifyContent: "flex-end" }}>
+                                <div
+                                    className="btn-post mt-3"
+                                    style={{ textAlign: "center", display: "flex", justifyContent: "flex-end" }}
+                                >
                                     <button
                                         className="btn-mylist"
                                         onClick={handleSubmit}
@@ -300,7 +354,7 @@ const MyList = ({ username }) => {
                                     {keyword.name}{" "}
                                     <IoCloseCircle
                                         style={{ marginBottom: "0.2rem", cursor: "pointer" }}
-                                        onClick={() => handleRemove(keyword.name)}
+                                        onClick={() => handleRemoveForm(keyword.name)}
                                     />
                                 </small>
                             }

@@ -1,0 +1,59 @@
+.edit-admin-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: "2px 1px 2px 1px #c7c7c7";
+}
+
+.edit-admin-panel input {
+    padding: 0.2rem 0.4rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    border: 0.1rem #a4a4a4 solid;
+    font-size: 1rem;
+    font-family: Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.admin-btn {
+  padding: 0.3rem 1rem;
+  border-radius: 0.5rem;
+  border: 0.1rem #a4a4a4 solid;
+  font-size: 1rem;
+  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+
+.edit-admin-panel input:hover,
+select:hover,
+textarea:hover,
+.admin-btn:hover {
+  border: 0.1rem #404040 solid;
+}
+
+/* Table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table tbody tr:nth-of-type(odd) {
+  background-color: #f4f4f4;
+}
+
+.table td,
+.table th {
+  text-align: left;
+  border: 0.1rem solid #e4e4e4;
+  padding: 0.5rem;
+}
+
+.table button {
+  margin: 0 0.2rem;
+}
