@@ -15,7 +15,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 import toast from 'react-hot-toast';
 import ReactTooltip from 'react-tooltip';
-
+import { v4 as uuidv4 } from 'uuid';
 const PublicProfile = ({
     verified,
     privateChannel,
@@ -280,7 +280,7 @@ const PublicProfile = ({
 
                                 {privateChannel ?
                                     <button className="public-btn-add-private-c">
-                                        <Link to={`/private/channels/${username}`}>
+                                        <Link to={`/${uuidv4()}/private/channels/${username}/${uuidv4()}`}>
                                             Go to Private Channel
                                         </Link>
                                     </button>

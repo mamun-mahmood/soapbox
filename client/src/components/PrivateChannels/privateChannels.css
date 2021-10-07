@@ -111,7 +111,7 @@
     margin: 0.5rem ;
     padding: 0.3rem 1rem;
     border: none;
-    font-size: large;
+    font-size: smaller;
     border-radius: 5rem;
     color: #EDE9FF;
     background-color: var(--primary-color);

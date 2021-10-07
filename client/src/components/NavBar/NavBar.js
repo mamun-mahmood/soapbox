@@ -149,6 +149,16 @@ const NavBar = ({ width, header }) => {
                 <ul className="main-list-inline" id={showLinks ? "main-hidden" : ""}>
                     {localStorage.getItem("loggedIn") ?
                         <Fragment>
+                             <a
+                                // activeClassName="nav-link-active"
+                                activeClassName="nav-link-active"
+                                className="nav-link main-title"
+                                // to="/home"
+                                target="_blank"
+                                href="https://www.megahoot.com/megahoot-soapbox/megahoot-soapbox-tutorials/"
+                            >
+                                Tutorial
+                            </a>
                             <NavLink
                                 // activeClassName="nav-link-active"
                                 activeClassName=""
