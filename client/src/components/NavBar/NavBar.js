@@ -149,6 +149,15 @@ const NavBar = ({ width, header }) => {
                 <ul className="main-list-inline" id={showLinks ? "main-hidden" : ""}>
                     {localStorage.getItem("loggedIn") ?
                         <Fragment>
+                            <NavLink
+                                // activeClassName="nav-link-active"
+                                activeClassName=""
+                                className="nav-link main-title"
+                                // to="/home"
+                                to="/"
+                            >
+                                Home
+                            </NavLink>
                             <a
                                 // activeClassName="nav-link-active"
                                 activeClassName="nav-link-active"
@@ -159,15 +168,6 @@ const NavBar = ({ width, header }) => {
                             >
                                 Tutorial
                             </a>
-                            <NavLink
-                                // activeClassName="nav-link-active"
-                                activeClassName=""
-                                className="nav-link main-title"
-                                // to="/home"
-                                to="/"
-                            >
-                                Home
-                            </NavLink>
                             <NavLink
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
@@ -232,11 +232,8 @@ const NavBar = ({ width, header }) => {
                             >
                                 Sign Up
                             </NavLink>
-
-
                         </Fragment>
                     }
-
                 </ul>
                 {
                     showLinks
