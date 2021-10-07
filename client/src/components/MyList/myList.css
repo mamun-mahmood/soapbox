@@ -1,4 +1,4 @@
-.myList {
+.mylist {
     width: 100%;
     padding: 1rem;
     padding-top: 5.4rem;
@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    position: relative;
 }
 
 .add-myList-input {
@@ -109,8 +109,31 @@
 }
 
 .keyword-wrapper {
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     display: flex;
     flex-wrap: wrap;
     gap: 0.2rem 0;
+}
+
+.mylist-icons {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.mylist-more-modal {
+    position: absolute;
+    top: 2.5rem;
+    right: 4rem;
+    background-color: #dcd5fa;
+    border-radius: 0.5rem;
+    z-index: 1000;
+    box-shadow: var(--secondary-color) 0px 0px 5px;
+    transition: all 3s;
+}
+
+.mylist-more {
+    padding: 0 0.5rem 0.42rem 0.65rem;
+    font-size: x-large;
+    cursor: pointer;
+    color: #374151;
 }

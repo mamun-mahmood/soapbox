@@ -3,20 +3,24 @@ import ClickAwayListener from 'react-click-away-listener';
 import './myList.css'
 import { RiPlayListAddFill } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5';
-import { AiFillMinusCircle } from 'react-icons/ai';
+import { AiFillMinusCircle, AiOutlineSync } from 'react-icons/ai';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from '../Post';
 import InfiniteScrollLoader from '../Feed/InfiniteScrollLoader';
 import EndMsg from '../Feed/EndMsg';
 import UserFollowHoots from './UserFollowHoots';
+import { FiMoreHorizontal } from 'react-icons/fi';
+import { IoCloseCircle } from 'react-icons/io5';
+import { MdSync } from 'react-icons/md';
 
 const MyList = ({ username }) => {
     const [isCreateMyListModalOpen, setIsCreateMyListModalOpen] = useState(false);
     const [dLine, setDLine] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
-    const [formValues, setFormValues] = useState([{ name: "" }])
+    const [formValues, setFormValues] = useState([{ name: "" }]);
+    const [isOpenMyListMoreModal, setIsOpenMyListMoreModal] = useState(false);
     const BaseURL = process.env.REACT_APP_API_URL;
 
     const [keywordsFromDb, setKeywordsFromDb] = useState([]);
@@ -132,6 +136,8 @@ const MyList = ({ username }) => {
         // appending new keywords to existing keywords from db 
         const finalArr = [...keywordsFromDb, ...arrList.filter(n => n)];
 
+        console.log("finalArr", finalArr);
+
         // removing empty elements by filtering 
         const keywordsArrStringify = JSON.stringify(finalArr);
 
@@ -149,14 +155,63 @@ const MyList = ({ username }) => {
         }, 500);
     }
 
+    const removeKeywords = async () => {
+        await axios.delete(`${BaseURL}/mylist/delete/${username}`)
+            .then(() => {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
+            })
+    }
+
+    const handleRemove = (word) => {
+        console.log("word: ", word);
+        const newFormValues = formValues.filter((value) => value.name !== word);
+        setFormValues(newFormValues);
+    }
+    const handleRemoveDb = (word) => {
+        console.log("word: ", word);
+        const newKeywordsFromDb = keywordsFromDb.filter((keyword) => keyword !== word);
+        setKeywordsFromDb(newKeywordsFromDb);
+    }
+
     return (
-        <div className="myList">
+        <div className="mylist">
             <div className="top-mylist-header">
                 <h4>My List</h4>
-                <RiPlayListAddFill
-                    className="add-mylist"
-                    onClick={() => { setIsCreateMyListModalOpen(true) }}
-                />
+                <div className="mylist-icons">
+                    {keywordsFromDb.length > 0 &&
+                        <FiMoreHorizontal
+                            className="add-mylist"
+                            onMouseEnter={() => setIsOpenMyListMoreModal(true)}
+                        // onMouseLeave={() => setIsOpenMyListMoreModal(false)}
+                        />
+                    }
+                    <MdSync
+                        className="add-mylist"
+                        onClick={handleSubmit}
+                    />
+                    <RiPlayListAddFill
+                        className="add-mylist"
+                        onClick={() => { setIsCreateMyListModalOpen(true) }}
+                    />
+                </div>
+
+                {isOpenMyListMoreModal &&
+                    <Fragment>
+                        <ClickAwayListener onClickAway={() => { setIsOpenMyListMoreModal(false) }}>
+                            <div
+                                className="mylist-more-modal"
+                                onMouseEnter={() => setIsOpenMyListMoreModal(true)}
+                                onMouseLeave={() => setIsOpenMyListMoreModal(false)}
+                            >
+                                <div className="more-options">
+                                    <span onClick={removeKeywords}>Remove all keywords</span>
+                                </div>
+                            </div>
+                        </ClickAwayListener>
+                    </Fragment>
+                }
             </div>
             <hr />
 
@@ -166,7 +221,7 @@ const MyList = ({ username }) => {
                     <div className="modal-overlay"></div>
                     <ClickAwayListener onClickAway={() => { setIsCreateMyListModalOpen(false) }}>
                         <div className="myList-modal">
-                            <h4>Create My List</h4>
+                            <h4>{keywordsFromDb.length > 0 ? "Update" : "Create"} My List</h4>
                             <div className="myList-info">
                                 <div className="myList-desc">
                                     {keywordsFromDb.length > 0
@@ -226,18 +281,27 @@ const MyList = ({ username }) => {
                         <span key={index}>
                             {keyword === "" ||
                                 <small className="badge-keyword outline-badge-keywords">
-                                    {keyword}
+                                    {keyword}{" "}
+                                    <IoCloseCircle
+                                        style={{ marginBottom: "0.2rem", cursor: "pointer" }}
+                                        onClick={() => handleRemoveDb(keyword)}
+                                    />
                                 </small>
                             }
                         </span>
                     )
                 })}
+
                 {formValues.map((keyword, index) => {
                     return (
                         <span key={index}>
                             {keyword.name === "" ||
                                 <small className="badge-keyword outline-badge-keywords">
-                                    {keyword.name}
+                                    {keyword.name}{" "}
+                                    <IoCloseCircle
+                                        style={{ marginBottom: "0.2rem", cursor: "pointer" }}
+                                        onClick={() => handleRemove(keyword.name)}
+                                    />
                                 </small>
                             }
                         </span>

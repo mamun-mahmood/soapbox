@@ -149,7 +149,7 @@ const NavBar = ({ width, header }) => {
                 <ul className="main-list-inline" id={showLinks ? "main-hidden" : ""}>
                     {localStorage.getItem("loggedIn") ?
                         <Fragment>
-                             <a
+                            <a
                                 // activeClassName="nav-link-active"
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
