@@ -38,13 +38,13 @@ const Home = () => {
                 <meta name="twitter:card" content="summary" />
                 <meta name="twitter:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta name="twitter:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta name="twitter:image" content="/images/MegaHoot_Owl3_app.png" />
+                <meta name="twitter:image" content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png" />
 
                 {/* OpenGraph tags */}
                 <meta property="og:url" content="https://www.megahoot.net/" />
                 <meta property="og:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta property="og:image" content="/images/MegaHoot_Owl3_app.png" />
+                <meta property="og:image" content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png" />
             </Helmet>
         </Fragment>
     )
