@@ -35,16 +35,20 @@ const Home = () => {
                 <meta name="image" content={ } /> */}
 
                 {/* Twitter Card tags */}
-                <meta name="twitter:card" content="summary" />
-                <meta name="twitter:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta name="twitter:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta name="twitter:image" content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png" />
+
+                <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@megahootinc"  />
+<meta name="twitter:creator" content="@megahootinc" />
+<meta name="twitter:title" content="Megahoot Soapbox, where Content Creators monetize their Private Channels, Virtual Experiences, Personal Messages and build their brand." />
+<meta name="twitter:description" content="Megahoot Soapbox allows Content Creators to monetize their work and themselves, market on public Soapbox, build their Private Channel and Market Place, and interact in real time with their audience" />
+<meta name="twitter:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox.png" />
+
 
                 {/* OpenGraph tags */}
                 <meta property="og:url" content="https://www.megahoot.net/" />
                 <meta property="og:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta property="og:image" content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png" />
+                <meta property="og:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox.png" />
             </Helmet>
         </Fragment>
     )
