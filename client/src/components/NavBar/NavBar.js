@@ -232,8 +232,11 @@ const NavBar = ({ width, header }) => {
                             >
                                 Sign Up
                             </NavLink>
+
+
                         </Fragment>
                     }
+
                 </ul>
                 {
                     showLinks

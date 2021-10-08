@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import '../App.css'
 
 const SocialShare = (share, Icon, name) => {
-  
+
     // <Helmet>
     // <meta name="twitter:card" content="summary" />
     // <meta name="twitter:site" content="@nytimesbits" />

@@ -5,9 +5,8 @@ import { FiSearch } from 'react-icons/fi';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from '../Feed/InfiniteScrollLoader';
 import HootOutside from '../HootOutside/HootOutside';
-import EndMsg from '../Feed/EndMsg'
-import './explore.css'
 import ExploreHoot from './ExploreHoot';
+import './explore.css'
 
 const Explore = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
@@ -16,7 +15,7 @@ const Explore = () => {
     const [byDefault, setByDefault] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
-    // const [searchPage, setSearchPage] = useState(2);
+    const [searchPage, setSearchPage] = useState(2);
     const searchRef = useRef(null);
 
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -57,28 +56,29 @@ const Explore = () => {
 
     const searchFromDb = async () => {
         setByDefault(false);
-        // await axios.post(`${BaseURL}/upload/search/p?page=${page}&limit=${LIMIT}&keyword=${searchKeyword}`)
-        await axios.post(`${BaseURL}/upload/search?keyword=${searchKeyword}`)
+        await axios.get(`${BaseURL}/upload/search/p?page=1&limit=${LIMIT}&keyword=${searchKeyword}`)
             .then((response) => {
-                setSearchResults(response.data);
+                setSearchResults(response.data.results);
             });
         searchRef.current.focus();
     }
 
-    // const fetchMoreSearchResults = async () => {
-    //     await axios.get(`${BaseURL}/upload/search/p?page=${searchPage}&limit=${LIMIT}&keyword=${searchKeyword}`)
-    //         .then((response) => {
-    //             const searchResultsFromServer = response.data.results;
+    console.log("searchResults: ", searchResults);
 
-    //             setSearchResults([...searchResults, ...searchResultsFromServer]);
+    const fetchMoreSearchResults = async () => {
+        await axios.get(`${BaseURL}/upload/search/p?page=${searchPage}&limit=${LIMIT}&keyword=${searchKeyword}`)
+            .then((response) => {
+                const searchResultsFromServer = response.data.results;
 
-    //             if (searchResultsFromServer === 0 || searchResultsFromServer < LIMIT) {
-    //                 setHasMore(false);
-    //             }
-    //         });
+                setSearchResults([...searchResults, ...searchResultsFromServer]);
 
-    //     setSearchPage(searchPage + 1);
-    // }
+                if (searchResultsFromServer === 0 || searchResultsFromServer < LIMIT) {
+                    setHasMore(false);
+                }
+            });
+
+        setSearchPage(searchPage + 1);
+    }
 
     const onEnterKey = (event) => {
         if (event.keyCode === 13) {
@@ -136,53 +136,10 @@ const Explore = () => {
                 :
                 searchResults.length > 0
                     ?
-                    <div className="hoot-profile-layout">
-                        {searchResults.map((hoot) => {
-                            return (
-                                <div key={hoot.id}>
-                                    {hoot.mimeType.substr(0, 5) == "audio"
-                                        ?
-                                        <ExploreHoot
-                                            hootId={hoot.id}
-                                            username={hoot.authorUsername}
-                                            mimeType={hoot.mimeType}
-                                            hootImgId={hoot.image}
-                                        />
-                                        :
-                                        <HootOutside
-                                            hootId={hoot.id}
-                                            username={hoot.authorUsername}
-                                            mimeType={hoot.mimeType}
-                                            hootImgId={hoot.image}
-                                        />
-                                    }
-
-                                </div>)
-                        })}
-                    </div>
-                    :
-                    <div className="no-search-result">
-                        No results for {searchKeyword}
-                    </div>
-            }
-
-            <Helmet>
-                <title>Explore {searchKeyword} Hoots on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
-            </Helmet>
-        </div>
-    )
-}
-
-export default Explore
-
-
-// search results in infinite scroll and pagnation 
-
-{/* <InfiniteScroll
+                    <InfiniteScroll
                         dataLength={searchResults.length}
                         next={fetchMoreSearchResults}
                         hasMore={hasMore}
-                    // loader={trendingHoots.length > 10 && <InfiniteScrollLoader />}
                     >
                         <div className="hoot-profile-layout">
                             {searchResults.map((hoot) => {
@@ -208,4 +165,18 @@ export default Explore
                                     </div>)
                             })}
                         </div>
-                    </InfiniteScroll> */}
+                    </InfiniteScroll>
+                    :
+                    <div className="no-search-result">
+                        No results for {searchKeyword}
+                    </div>
+            }
+
+            <Helmet>
+                <title>Explore {searchKeyword} Hoots on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
+            </Helmet>
+        </div>
+    )
+}
+
+export default Explore
