@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import Avatar from 'react-avatar'
+import toast from 'react-hot-toast'
 import { HiBadgeCheck } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 import { formatCount, formatSi } from '../../Helpers/formatNumbers'
@@ -8,6 +9,21 @@ import { formatCount, formatSi } from '../../Helpers/formatNumbers'
 const SuggestedFollow = ({ verifiedUser }) => {
     const [users, setUsers] = useState([]);
     const [hoverInfo, setHoverInfo] = useState(false);
+    const [followed, setFollowed] = useState(false);
+    const [followedAlready, setFollowedAlready] = useState(true);
+    const [userFollowers, setUserFollowers] = useState([]);
+
+    const getUserFollowData = async () => {
+        await axios.get(`${BaseURL}/user/followers/${verifiedUser.username}`)
+            .then((response) => {
+                setUserFollowers(response.data);
+            })
+    }
+
+    useEffect(() => {
+        getUserFollowData();
+    }, [followed])
+
     const BaseURL = process.env.REACT_APP_API_URL;
 
     // getting all uploads(hoots) of particuler user for counting all views and likes
@@ -32,6 +48,91 @@ const SuggestedFollow = ({ verifiedUser }) => {
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
     const path = userInfo ? ((userInfo.username === verifiedUser.username ? `/profile/${verifiedUser.username}` : `/user/${verifiedUser.username}`)) : `/user/${verifiedUser.username}`
+
+    const addFollower = async () => {
+        await getUserFollowData();
+
+        if (userInfo) {
+            setFollowed(true)
+
+            axios.post(`${BaseURL}/user/followedBy`, {
+                username: verifiedUser.username,
+                loggedInUsername: userInfo.username
+            })
+        }
+
+        if (userInfo) {
+            toast.success(`Followed ${verifiedUser.username}`, {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                },
+                iconTheme: {
+                    primary: '#8249A0',
+                    secondary: '#FFFAEE',
+                },
+            });
+        } else {
+            toast.error('Please login', {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                },
+                iconTheme: {
+                    primary: '#8249A0',
+                    secondary: '#FFFAEE',
+                },
+            });
+        }
+    }
+
+    const removeFollower = async () => {
+        await getUserFollowData();
+        setFollowed(false);
+        setFollowedAlready(false);
+
+        if (userInfo) {
+            axios.post(`${BaseURL}/user/followedBy/delete`, {
+                username: verifiedUser.username,
+                loggedInUsername: userInfo.username
+            })
+        }
+
+        toast.success(`Unfollowed ${verifiedUser.username}`, {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
+    }
+
+    // converting array of object to normal array
+    const userFollowersArr = userFollowers.map((user) => {
+        return (
+            user.followedBy
+        )
+    })
+
+    const followAction = () => {
+        if (userInfo) {
+            null
+        } else {
+            toast.error('Please login', {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                },
+                iconTheme: {
+                    primary: '#8249A0',
+                    secondary: '#FFFAEE',
+                },
+            });
+        }
+    }
 
     return (
         <Fragment>
@@ -91,7 +192,55 @@ const SuggestedFollow = ({ verifiedUser }) => {
                                     />
                                 </div>
                             </Link>
-                            <button className="hover-btn-hoot-follow">Follow</button>
+
+                            {/* <button className="hover-btn-hoot-follow">Follow</button> */}
+                            {userInfo
+                                ?
+                                userInfo.username === verifiedUser.username
+                                    ?
+                                    null
+                                    :
+                                    userFollowers.length === 0
+                                        ?
+                                        <button
+                                            className="btn-hoot-follow"
+                                            onClick={addFollower}
+                                        >
+                                            {followed
+                                                ? "Following"
+                                                : "Follow"
+                                            }
+                                        </button>
+                                        :
+                                        userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                            ?
+                                            <button
+                                                className="btn-hoot-follow"
+                                                onClick={followedAlready ? removeFollower : addFollower}
+                                            >
+                                                {followedAlready
+                                                    ? "Following"
+                                                    : "Follow"
+                                                }
+                                            </button>
+                                            :
+                                            <button
+                                                className="btn-hoot-follow"
+                                                onClick={followed ? removeFollower : addFollower}
+                                            >
+                                                {followed
+                                                    ? "Following"
+                                                    : "Follow"
+                                                }
+                                            </button>
+                                :
+                                <button
+                                    className="btn-hoot-follow"
+                                    onClick={followAction}
+                                >
+                                    Follow
+                                </button>
+                            }
                         </div>
 
                         <div className="hoot-user-info">

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, Fragment, useContext, useCallback, useRef, useLayoutEffect } from 'react'
-// import { UserContext } from '../context/UserContext';
 import axios from 'axios'
 import format from "date-fns/format"
 import ClickAwayListener from 'react-click-away-listener';
@@ -8,6 +7,7 @@ import HootComments from './Comment/HootComments';
 import ReactTooltip from 'react-tooltip';
 import toast from 'react-hot-toast';
 import Avatar from 'react-avatar';
+import { formatCount, formatSi } from '../Helpers/formatNumbers';
 import { Link, useHistory } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
@@ -25,7 +25,6 @@ import Expire from './Expire';
 const HootInside = ({
     userId,
     name,
-    userName,
     profilePic,
     verified,
     website,
@@ -36,6 +35,7 @@ const HootInside = ({
     hootImgId,
     likes,
     views,
+    followers,
     caption,
     link,
     ephemeral,
@@ -46,14 +46,10 @@ const HootInside = ({
     editedTimeStamp,
     privateProtected
 }) => {
-    // API url 
-    const BaseURL = process.env.REACT_APP_API_URL;
-    // main website
-    const hostURL = "https://www.megahoot.net";
-    // media url from server
-    const filePath = `${BaseURL}/images/${hootImgId}`;
-    // url for individual hoot for main soapbox website
-    const shareBaseUrl = `${hostURL}/${username}/hoot/${hootId}`;
+    const BaseURL = process.env.REACT_APP_API_URL; // API url 
+    const hostURL = "https://www.megahoot.net"; // main website
+    const filePath = `${BaseURL}/images/${hootImgId}`; // media url from server
+    const shareBaseUrl = `${hostURL}/${username}/hoot/${hootId}`; // url for individual hoot for main soapbox website
     // encoded share url for individual hoot to be shared on other social media
     const shareUrl = encodeURIComponent(shareBaseUrl);
     // const shareCaption = encodeURIComponent(`${caption.length > 10 ? caption.substring(0, 70) : caption} @${username}`);
@@ -83,6 +79,21 @@ const HootInside = ({
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
     const [users, setUsers] = useState([]);
+    const [followed, setFollowed] = useState(false);
+    const [followedAlready, setFollowedAlready] = useState(true);
+    const [userFollowers, setUserFollowers] = useState([]);
+    const [followersCount, setFollowersCount] = useState(followers)
+
+    const getUserFollowData = async () => {
+        await axios.get(`${BaseURL}/user/followers/${username}`)
+            .then((response) => {
+                setUserFollowers(response.data);
+            })
+    }
+
+    useEffect(() => {
+        getUserFollowData();
+    }, [followed])
 
     const history = useHistory();
 
@@ -90,8 +101,7 @@ const HootInside = ({
     const path = userInfo ? ((userInfo.username === username ? `/profile/${username}` : `/user/${username}`)) : `/user/${username}`
     const profilePath = `/profile/${username}`
 
-    // timeStamp can be implemented at server-side...
-    const date = new Date();
+    const date = new Date(); // timeStamp can be implemented at server-side...
     const eTimeStamp = format(date, 'LLL dd, yyyy • HH:mm');
 
     // finding out hashtags and stocks from caption and storing it in array 
@@ -106,8 +116,8 @@ const HootInside = ({
     // const fromDBLinks = JSON.parse(linkData)
     // const [dbLink, setDbLink] = useState([]);
 
+    // getting all uploads(hoots) of particuler user 
     useEffect(() => {
-        // getting all uploads(hoots) of particuler user 
         axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
             setUsers(response.data);
         })
@@ -293,6 +303,7 @@ const HootInside = ({
 
     // on every page load likes will increase reandomly - just remove this useEffect to get back to normal like counts
     useEffect(() => {
+        // we want to show likes 0 for newly created hoots and after 30 sec likes will increase
         if (likes === 0) {
             setTimeout(() => {
                 setlikesCount(likesCount + random(20, 50));
@@ -305,38 +316,22 @@ const HootInside = ({
         // setlikesCount(0)
     }, [])
 
-    // we want to show likes 0 for newly created hoots 
-    // if (likes === 0) return setLikesCount(0)
-
-    // count will be formatted 
-    const formatCount = count => {
-        if (count < 1e3) return count;
-        if (count >= 1e3 && count < 1e6) return +(count / 1e3).toFixed(1);
-        if (count >= 1e6 && count < 1e9) return +(count / 1e6).toFixed(1);
-        if (count >= 1e9 && count < 1e12) return +(count / 1e9).toFixed(1);
-        if (count >= 1e12) return +(count / 1e12).toFixed(1);
-    };
-
-    // si stands for International System of Units
-    const formatSi = count => {
-        if (count < 1e3) return "";
-        if (count >= 1e3 && count < 1e6) return "K";
-        if (count >= 1e6 && count < 1e9) return "M";
-        if (count >= 1e9 && count < 1e12) return "B";
-        if (count >= 1e12) return "T";
-    };
-
     const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
-
-    // setInterval(() => {
-    //     console.log(new Date())
-    // }, 1);
 
     const followAction = () => {
         if (userInfo) {
             null
         } else {
-            toast.error('please login');
+            toast.error('Please login', {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                },
+                iconTheme: {
+                    primary: '#8249A0',
+                    secondary: '#FFFAEE',
+                },
+            });
         }
     }
     // const jsonLink = JSON.parse(JSON.stringify(link));
@@ -395,6 +390,76 @@ const HootInside = ({
             setIsEmbedModalOpen(false)
         }, 100);
         toast.success('Embed Code copied to clipboard', {
+            style: {
+                border: '2px solid #8249A0',
+                color: '#8249A0',
+            },
+            iconTheme: {
+                primary: '#8249A0',
+                secondary: '#FFFAEE',
+            },
+        });
+    }
+
+    // converting array of object to normal array
+    const userFollowersArr = userFollowers.map((user) => {
+        return (
+            user.followedBy
+        )
+    })
+
+    const addFollower = async () => {
+        await getUserFollowData();
+
+        if (userInfo) {
+            setFollowed(true)
+            setFollowersCount(followersCount + 1)
+
+            axios.post(`${BaseURL}/user/followedBy`, {
+                username: username,
+                loggedInUsername: userInfo.username
+            })
+        }
+
+        if (userInfo) {
+            toast.success(`Followed ${username}`, {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                },
+                iconTheme: {
+                    primary: '#8249A0',
+                    secondary: '#FFFAEE',
+                },
+            });
+        } else {
+            toast.error('Please login', {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                },
+                iconTheme: {
+                    primary: '#8249A0',
+                    secondary: '#FFFAEE',
+                },
+            });
+        }
+    }
+
+    const removeFollower = async () => {
+        await getUserFollowData();
+        setFollowed(false);
+        setFollowedAlready(false);
+        setFollowersCount(followersCount - 1)
+
+        if (userInfo) {
+            axios.post(`${BaseURL}/user/followedBy/delete`, {
+                username: username,
+                loggedInUsername: userInfo.username
+            })
+        }
+
+        toast.success(`Unfollowed ${username}`, {
             style: {
                 border: '2px solid #8249A0',
                 color: '#8249A0',
@@ -469,7 +534,54 @@ const HootInside = ({
                                                 </div>
                                                 {/* <img class="hover-avatar" src={avatar} alt="avatar" /> */}
                                             </Link>
-                                            <button className="hover-btn-hoot-follow" onClick={followAction}>Follow</button>
+                                            {/* <button className="hover-btn-hoot-follow" onClick={followAction}>Follow</button> */}
+                                            {userInfo
+                                                ?
+                                                userInfo.username === username
+                                                    ?
+                                                    null
+                                                    :
+                                                    userFollowers.length === 0
+                                                        ?
+                                                        <button
+                                                            className="btn-hoot-follow"
+                                                            onClick={addFollower}
+                                                        >
+                                                            {followed
+                                                                ? "Following"
+                                                                : "Follow"
+                                                            }
+                                                        </button>
+                                                        :
+                                                        userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                                            ?
+                                                            <button
+                                                                className="btn-hoot-follow"
+                                                                onClick={followedAlready ? removeFollower : addFollower}
+                                                            >
+                                                                {followedAlready
+                                                                    ? "Following"
+                                                                    : "Follow"
+                                                                }
+                                                            </button>
+                                                            :
+                                                            <button
+                                                                className="btn-hoot-follow"
+                                                                onClick={followed ? removeFollower : addFollower}
+                                                            >
+                                                                {followed
+                                                                    ? "Following"
+                                                                    : "Follow"
+                                                                }
+                                                            </button>
+                                                :
+                                                <button
+                                                    className="btn-hoot-follow"
+                                                    onClick={followAction}
+                                                >
+                                                    Follow
+                                                </button>
+                                            }
                                         </div>
 
                                         <div className="hoot-user-info">
@@ -487,23 +599,12 @@ const HootInside = ({
                                                     }
                                                 </div>
                                                 <div className="hover-at-name">@{username}</div>
-                                                {/* {verified === 1
-                                                ?
-                                                <small className="verified-account">Verified account</small>
-                                                : null
-                                            } */}
                                             </div>
-                                            {/* <div className="user-hoot-count">
-                                            <span className="hoot-counts">{users.length}</span>
-                                            hoots
-                                        </div> */}
                                             <div className="user-hoot-count">
                                                 <div>
                                                     <span className="hoot-counts">{formatCount(totalViews) + formatSi(totalViews)}</span>
                                                     views
                                                 </div>
-                                                {/* </div>
-                                        <div className="user-hoot-count"> */}
                                                 <div>
                                                     <span className="hoot-counts">{formatCount(totalLikes) + formatSi(totalLikes)}</span>
                                                     likes
@@ -518,7 +619,54 @@ const HootInside = ({
                                 }
 
                                 <div className="user-actions">
-                                    <button className="btn-hoot-follow" onClick={followAction}>Follow</button>
+                                    {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
+                                    {userInfo
+                                        ?
+                                        userInfo.username === username
+                                            ?
+                                            null
+                                            :
+                                            userFollowers.length === 0
+                                                ?
+                                                <button
+                                                    className="btn-hoot-follow"
+                                                    onClick={addFollower}
+                                                >
+                                                    {followed
+                                                        ? "Following"
+                                                        : "Follow"
+                                                    }
+                                                </button>
+                                                :
+                                                userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                                    ?
+                                                    <button
+                                                        className="btn-hoot-follow"
+                                                        onClick={followedAlready ? removeFollower : addFollower}
+                                                    >
+                                                        {followedAlready
+                                                            ? "Following"
+                                                            : "Follow"
+                                                        }
+                                                    </button>
+                                                    :
+                                                    <button
+                                                        className="btn-hoot-follow"
+                                                        onClick={followed ? removeFollower : addFollower}
+                                                    >
+                                                        {followed
+                                                            ? "Following"
+                                                            : "Follow"
+                                                        }
+                                                    </button>
+                                        :
+                                        <button
+                                            className="btn-hoot-follow"
+                                            onClick={followAction}
+                                        >
+                                            Follow
+                                        </button>
+                                    }
                                     <div
                                         className="more"
                                         onMouseEnter={() => setIsMoreModalOpen(true)}
@@ -526,7 +674,6 @@ const HootInside = ({
                                     >
                                         <BiDotsHorizontalRounded
                                             className="more-icon"
-                                        // onClick={() => setIsMoreModalOpen(!isMoreModalOpen)}
                                         />
                                     </div>
                                 </div>
@@ -582,7 +729,7 @@ const HootInside = ({
                                     </Fragment>
                                 }
 
-                                {/* embed modal  */}
+                                {/* Embed modal  */}
                                 {isEmbedModalOpen &&
                                     <Fragment>
                                         <div className="modal-overlay"></div>
@@ -1003,32 +1150,6 @@ const HootInside = ({
                                 </div>
                             </div>
 
-                            {/* <div className="like-count">{likesCount} likes</div> */}
-                            {/* <div className="post-comment">
-                    <Link className="name-comment">
-                        <span onClick={() => { history.push(`${ path } / ${ username }`) }}
-                        >
-                            {username}
-                        </span>
-                    </Link>
-                    {" "}<span className="hoot-comment">{caption}</span>
-                </div> */}
-
-                            {/* <div className="view-post-comment">
-                    {comments.length > 0 &&
-
-                    <div
-                        className="post-view-comment"
-                        onClick={() => { history.push(`/ hoot / ${ hootId }`) }}
-                    >
-                        View all {comments.length > 0 && comments.length} comments
-                    </div>
-
-                    }
-
-                    {(isEdited === 1) && <small class="badge outline-badge d-flex flex-end">EDITED</small>}
-                </div> */}
-
                             {/*created time and  edited time */}
                             <div className="view-post-comment">
                                 {/* <div className="post-time">{timeStamp}</div> */}
@@ -1050,33 +1171,6 @@ const HootInside = ({
                             </div>
 
                             <hr className="mx-1 my-1 hr-color" />
-
-                            {/* Comment Box */}
-                            {/* <div className="comment-box">
-                    <input
-                        className="comment-input"
-                        type="text"
-                        maxLength="300"
-                        value={newComment}
-                        placeholder="Add a comment..."
-                        onChange={(event) => {
-                            setNewComment(event.target.value);
-                        }} />
-                    <button
-                        className="add-comment"
-                        onClick={addComment}
-                    >
-                        hoot
-                    </button>
-                </div> */}
-
-                            {/* comments list */}
-                            {/* {(location.pathname).match(/hoot/gi) == "hoot" ?
-                    comments.length > 0 && <HootComments comments={comments} sliceValue={0} />
-                    :
-                    comments.length > 0 && <HootComments comments={comments} sliceValue={-2} />
-                } */}
-
                         </div>
                     </div>
                 </Expire>
@@ -1140,7 +1234,54 @@ const HootInside = ({
                                             </div>
                                             {/* <img class="hover-avatar" src={avatar} alt="avatar" /> */}
                                         </Link>
-                                        <button className="hover-btn-hoot-follow" onClick={followAction}>Follow</button>
+                                        {/* <button className="hover-btn-hoot-follow" onClick={followAction}>Follow</button> */}
+                                        {userInfo
+                                            ?
+                                            userInfo.username === username
+                                                ?
+                                                null
+                                                :
+                                                userFollowers.length === 0
+                                                    ?
+                                                    <button
+                                                        className="btn-hoot-follow"
+                                                        onClick={addFollower}
+                                                    >
+                                                        {followed
+                                                            ? "Following"
+                                                            : "Follow"
+                                                        }
+                                                    </button>
+                                                    :
+                                                    userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                                        ?
+                                                        <button
+                                                            className="btn-hoot-follow"
+                                                            onClick={followedAlready ? removeFollower : addFollower}
+                                                        >
+                                                            {followedAlready
+                                                                ? "Following"
+                                                                : "Follow"
+                                                            }
+                                                        </button>
+                                                        :
+                                                        <button
+                                                            className="btn-hoot-follow"
+                                                            onClick={followed ? removeFollower : addFollower}
+                                                        >
+                                                            {followed
+                                                                ? "Following"
+                                                                : "Follow"
+                                                            }
+                                                        </button>
+                                            :
+                                            <button
+                                                className="btn-hoot-follow"
+                                                onClick={followAction}
+                                            >
+                                                Follow
+                                            </button>
+                                        }
                                     </div>
 
                                     <div className="hoot-user-info">
@@ -1189,7 +1330,54 @@ const HootInside = ({
                             }
 
                             <div className="user-actions">
-                                <button className="btn-hoot-follow" onClick={followAction}>Follow</button>
+                                {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
+                                {userInfo
+                                    ?
+                                    userInfo.username === username
+                                        ?
+                                        null
+                                        :
+                                        userFollowers.length === 0
+                                            ?
+                                            <button
+                                                className="btn-hoot-follow"
+                                                onClick={addFollower}
+                                            >
+                                                {followed
+                                                    ? "Following"
+                                                    : "Follow"
+                                                }
+                                            </button>
+                                            :
+                                            userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                                ?
+                                                <button
+                                                    className="btn-hoot-follow"
+                                                    onClick={followedAlready ? removeFollower : addFollower}
+                                                >
+                                                    {followedAlready
+                                                        ? "Following"
+                                                        : "Follow"
+                                                    }
+                                                </button>
+                                                :
+                                                <button
+                                                    className="btn-hoot-follow"
+                                                    onClick={followed ? removeFollower : addFollower}
+                                                >
+                                                    {followed
+                                                        ? "Following"
+                                                        : "Follow"
+                                                    }
+                                                </button>
+                                    :
+                                    <button
+                                        className="btn-hoot-follow"
+                                        onClick={followAction}
+                                    >
+                                        Follow
+                                    </button>
+                                }
                                 <div
                                     className="more"
                                     onMouseEnter={() => setIsMoreModalOpen(true)}
@@ -1197,7 +1385,6 @@ const HootInside = ({
                                 >
                                     <BiDotsHorizontalRounded
                                         className="more-icon"
-                                    // onClick={() => setIsMoreModalOpen(!isMoreModalOpen)}
                                     />
                                 </div>
                             </div>
@@ -1255,7 +1442,7 @@ const HootInside = ({
                                 </Fragment>
                             }
 
-                            {/* embed modal  */}
+                            {/* Embed modal  */}
                             {isEmbedModalOpen &&
                                 <Fragment>
                                     <div className="modal-overlay"></div>
@@ -1677,32 +1864,6 @@ const HootInside = ({
                             </div>
                         </div>
 
-                        {/* <div className="like-count">{likesCount} likes</div> */}
-                        {/* <div className="post-comment">
-                    <Link className="name-comment">
-                        <span onClick={() => { history.push(`${ path } / ${ username }`) }}
-                        >
-                            {username}
-                        </span>
-                    </Link>
-                    {" "}<span className="hoot-comment">{caption}</span>
-                </div> */}
-
-                        {/* <div className="view-post-comment">
-                    {comments.length > 0 &&
-
-                    <div
-                        className="post-view-comment"
-                        onClick={() => { history.push(`/ hoot / ${ hootId }`) }}
-                    >
-                        View all {comments.length > 0 && comments.length} comments
-                    </div>
-
-                    }
-
-                    {(isEdited === 1) && <small class="badge outline-badge d-flex flex-end">EDITED</small>}
-                </div> */}
-
                         {/*created time and  edited time */}
                         <div className="view-post-comment">
                             {/* <div className="post-time">{timeStamp}</div> */}
@@ -1724,33 +1885,6 @@ const HootInside = ({
                         </div>
 
                         <hr className="mx-1 my-1 hr-color" />
-
-                        {/* Comment Box */}
-                        {/* <div className="comment-box">
-                    <input
-                        className="comment-input"
-                        type="text"
-                        maxLength="300"
-                        value={newComment}
-                        placeholder="Add a comment..."
-                        onChange={(event) => {
-                            setNewComment(event.target.value);
-                        }} />
-                    <button
-                        className="add-comment"
-                        onClick={addComment}
-                    >
-                        hoot
-                    </button>
-                </div> */}
-
-                        {/* comments list */}
-                        {/* {(location.pathname).match(/hoot/gi) == "hoot" ?
-                    comments.length > 0 && <HootComments comments={comments} sliceValue={0} />
-                    :
-                    comments.length > 0 && <HootComments comments={comments} sliceValue={-2} />
-                } */}
-
                     </div>
                 </div>
             }

@@ -9,6 +9,7 @@ const Post = ({
     hootImgId,
     likes,
     views,
+    followers,
     caption,
     link,
     ephemeral,
@@ -36,29 +37,31 @@ const Post = ({
     return (
         <div>
             {userInformation.map((user) => {
-                return (<div key={user.id}>
-                    <HootInside
-                        name={user.name}
-                        profilePic={user.profilePic}
-                        verified={user.verified}
-                        hootId={hootId}
-                        bio={user.bio}
-                        username={username}
-                        mimeType={mimeType}
-                        hootImgId={hootImgId}
-                        likes={likes}
-                        views={views}
-                        caption={caption}
-                        link={link}
-                        ephemeral={ephemeral}
-                        privateHoot={privateHoot}
-                        expiryDate={expiryDate}
-                        timeStamp={timeStamp}
-                        edited={edited}
-                        editedTimeStamp={editedTimeStamp}
-                        privateProtected={privateProtected}
-                    />
-                </div>);
+                return (
+                    <div key={user.id}>
+                        <HootInside
+                            name={user.name}
+                            profilePic={user.profilePic}
+                            verified={user.verified}
+                            hootId={hootId}
+                            bio={user.bio}
+                            username={username}
+                            mimeType={mimeType}
+                            hootImgId={hootImgId}
+                            likes={likes}
+                            views={views}
+                            followers={followers}
+                            caption={caption}
+                            link={link}
+                            ephemeral={ephemeral}
+                            privateHoot={privateHoot}
+                            expiryDate={expiryDate}
+                            timeStamp={timeStamp}
+                            edited={edited}
+                            editedTimeStamp={editedTimeStamp}
+                            privateProtected={privateProtected}
+                        />
+                    </div>);
             })}
         </div>
     )

@@ -63,6 +63,7 @@ const IndividualHoot = () => {
                                     hootImgId={hoot.image}
                                     likes={hoot.likes}
                                     views={hoot.views}
+                                    followers={hoot.followers}
                                     caption={hoot.caption}
                                     link={hoot.link}
                                     ephemeral={hoot.ephemeral}

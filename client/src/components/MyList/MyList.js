@@ -380,6 +380,7 @@ const MyList = ({ username }) => {
                                     hootImgId={upload.image}
                                     likes={upload.likes}
                                     views={upload.views}
+                                    followers={upload.followers}
                                     caption={upload.caption}
                                     link={upload.link}
                                     ephemeral={upload.ephemeral}

@@ -114,7 +114,10 @@ const PublicProfile = ({
         setFollowersCount(followersCount - 1)
 
         if (userInformation) {
-            axios.delete(`${BaseURL}/user/followedBy/${userInformation.username}`)
+            axios.post(`${BaseURL}/user/followedBy/delete`, {
+                username: userName,
+                loggedInUsername: userInformation.username
+            })
         }
 
         toast.success(`Unfollowed ${userName}`, {
@@ -147,10 +150,6 @@ const PublicProfile = ({
 
         // to make followers count 0 
         // followersCount(0)
-    }, [])
-
-    useEffect(() => {
-        // window.location.reload();
     }, [])
 
     useEffect(() => {
@@ -259,7 +258,6 @@ const PublicProfile = ({
                                                     className="btn-follow"
                                                     onClick={followed ? removeFollower : addFollower}
                                                 >
-                                                    {/* Follow */}
                                                     {followed
                                                         ? "Following"
                                                         : "Follow"
@@ -418,25 +416,3 @@ const PublicProfile = ({
 }
 
 export default PublicProfile
-
-
-{/* userFollowers.map((user) => {
-                                                return (<Fragment key={user.id}>
-                                                    {(user.followedBy) === (userInformation && userInformation.username)
-                                                        ?
-                                                        <button
-                                                            className="btn-follow"
-                                                            onClick={removeFollower}
-                                                        >
-                                                            Following map
-                                                        </button>
-                                                        :
-                                                        <button
-                                                            className="btn-follow"
-                                                            onClick={addFollower}
-                                                        >
-                                                            Follow map
-                                                        </button>
-                                                    }
-                                                </Fragment>)
-                                            }) */}
