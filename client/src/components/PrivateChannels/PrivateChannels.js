@@ -45,7 +45,7 @@ const PrivateChannels = () => {
     const [groupCallPrice, setGroupCallPrice] = useState(0)
     const [requestMessagePrice, setRequestMessagePrice] = useState(0)
     const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0)
-    
+
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
     const [showRequest, setShowRequest] = useState(false)
     const [showSubscribers, setShowSubscribers] = useState(false)
@@ -71,28 +71,28 @@ const PrivateChannels = () => {
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`).then((response) => {
                 setUserInfo(response.data);
-                console.log(response,"dky");
+                console.log(response, "dky");
                 axios.get(`${BaseURL}/upload/user/${username}`)
-                .then((response) => {
-                    response.data.map((user) => {
-                        totalViews += user.views
-                        totalLikes += user.likes
-                    })
-                    setLikes(totalLikes);
-                    setViews(totalViews);
+                    .then((response) => {
+                        response.data.map((user) => {
+                            totalViews += user.views
+                            totalLikes += user.likes
+                        })
+                        setLikes(totalLikes);
+                        setViews(totalViews);
 
-                    axios.post(`${BaseURL}/user/pricings`,{
-                        username:username
-                    }).then((res)=>{
-                     console.log(res.data)
-                        setOneOnOneCallPrice(res.data[0].oneOnOneCall);
-                        setGroupCallPrice(res.data[0].groupCall);
-                        setRequestMessagePrice(res.data[0].personalMessage);
-                        setSubscribePrice(res.data[0].subscription);
-                      setVerifiedAutographPrice(res.data[0].verifiedAutographPrice)
-                       
+                        axios.post(`${BaseURL}/user/pricings`, {
+                            username: username
+                        }).then((res) => {
+                            console.log(res.data)
+                            setOneOnOneCallPrice(res.data[0].oneOnOneCall);
+                            setGroupCallPrice(res.data[0].groupCall);
+                            setRequestMessagePrice(res.data[0].personalMessage);
+                            setSubscribePrice(res.data[0].subscription);
+                            setVerifiedAutographPrice(res.data[0].verifiedAutographPrice)
+
+                        })
                     })
-                })
             });
             setLoading(false);
         };
@@ -191,18 +191,18 @@ const PrivateChannels = () => {
     };
 
 
-    const updatePricing=()=>{
-        axios.post(`${BaseURL}/user/UpdatePricings`,{
-            oneOnOneCall:oneOnOnecallPrice,
-            groupCall:groupCallPrice,
-            personalMessage:requestMessagePrice,
-            subscription:subscribePrice,
-            verifiedAutographPrice:verifiedAutographPrice,
-            username:username,
+    const updatePricing = () => {
+        axios.post(`${BaseURL}/user/UpdatePricings`, {
+            oneOnOneCall: oneOnOnecallPrice,
+            groupCall: groupCallPrice,
+            personalMessage: requestMessagePrice,
+            subscription: subscribePrice,
+            verifiedAutographPrice: verifiedAutographPrice,
+            username: username,
 
         })
-        .then((res)=>{alert('Updated successfully')})
-        .catch((err)=>{console.log(err)})
+            .then((res) => { alert('Updated successfully') })
+            .catch((err) => { console.log(err) })
     }
     return (
         <Fragment>
@@ -244,7 +244,7 @@ const PrivateChannels = () => {
                                                 </b>
                                                 <span> Views</span>
                                             </div>
-                                          
+
 
                                             {user.bio && (
                                                 <div
@@ -636,16 +636,16 @@ const PrivateChannels = () => {
                             </div> : null}
                             {showPricingSetting ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Set Service Price</h5>
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>1 on 1 call :  </label><input type="number" value={oneOnOnecallPrice} placeholder="Amount XMG"  min={5}  max={100}  onChange={(e)=>{setOneOnOneCallPrice(e.target.value)}} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>1 on 1 call :  </label><input type="number" value={oneOnOnecallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setOneOnOneCallPrice(e.target.value) }} />XMG</div>
 
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Group call :  </label><input type="number" value={groupCallPrice} placeholder="Amount XMG" min={5}  max={100} onChange={(e)=>{setGroupCallPrice(e.target.value)}} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Group call :  </label><input type="number" value={groupCallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setGroupCallPrice(e.target.value) }} />XMG</div>
 
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Personal Message :  </label><input type="number" value={requestMessagePrice} placeholder="Amount XMG" min={5}  max={100} onChange={(e)=>{setRequestMessagePrice(e.target.value)}} />XMG</div>
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>verifiedAutographPrice :  </label><input type="number" value={verifiedAutographPrice} placeholder="Amount XMG" min={5}  max={100} onChange={(e)=>{setVerifiedAutographPrice(e.target.value)}} />XMG</div>
-                                
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Subscription :  </label><input type="number"value={subscribePrice}  placeholder="Amount XMG" min={5}  max={100} onChange={(e)=>{setSubscribePrice(e.target.value)}} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Personal Message :  </label><input type="number" value={requestMessagePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setRequestMessagePrice(e.target.value) }} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>verifiedAutographPrice :  </label><input type="number" value={verifiedAutographPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setVerifiedAutographPrice(e.target.value) }} />XMG</div>
 
-                                <div className="btns" >  <button onClick={()=>{updatePricing()}}  >Update Changes</button></div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Subscription :  </label><input type="number" value={subscribePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setSubscribePrice(e.target.value) }} />XMG</div>
+
+                                <div className="btns" >  <button onClick={() => { updatePricing() }}  >Update Changes</button></div>
                             </div> : null}
                             {showSubscribers ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Subscribers</h5>

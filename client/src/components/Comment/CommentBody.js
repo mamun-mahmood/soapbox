@@ -45,9 +45,11 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
     }
 
     var commentProfilePicPath;
-    if (commentProfilePic !== null) {
-        if (commentProfilePic.match(/fakercloud/gi) == "fakercloud") {
-            commentProfilePicPath = commentProfilePic;
+    if (commentProfilePic === null) {
+        commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
+    } else {
+        if (commentProfilePic && commentProfilePic.toString().match(/fakercloud/gi) == "fakercloud") {
+            commentProfilePicPath = commentProfilePic.toString();
         } else {
             commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
         }
