@@ -40,6 +40,7 @@ const Signup = () => {
                     <h1 className="text-center mb-4">Sign Up</h1>
                     <Form.Group className="mb-3" controlId="formBasicText">
                         <Form.Label>Username</Form.Label>
+                       
                         <Form.Control
                             type="text"
                             placeholder="username"
@@ -47,6 +48,10 @@ const Signup = () => {
                             onChange={(event) => { setUsername(event.target.value) }}
                             disabled
                         />
+                          <Form.Text className="text-muted">
+                          Note: username can not be changed once created
+                        </Form.Text>
+                       
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">

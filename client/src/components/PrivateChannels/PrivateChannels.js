@@ -36,6 +36,16 @@ const PrivateChannels = () => {
     const [page, setpage] = useState(2);
     const [subscribe, setSubscribe] = useState(false);
     const [callRequest, setCallRequest] = useState(false);
+    const [oneOnOnecall,setOneOnOneCall]=useState(false)
+    const [groupCall,setGroupCall]=useState(false)
+    const [requestMessage,setRequestMessage]=useState(false)
+    const [verifiedAutograph,setVerifiedAutograph]=useState(false)
+    const [showRequest,setShowRequest]=useState(false)
+    const [showSubscribers,setShowSubscribers]=useState(false)
+    const [showNotification,setShowNotification]=useState(false)
+    
+    
+    const [showPricingSetting,setShowPricingSetting]=useState(false)
     const { username } = useParams();
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -243,26 +253,22 @@ const PrivateChannels = () => {
                                 ? "Virtual Experiences"
                                 : "Virtual Experiences"}
                             </button> */}
-                                                        <button>
-                                                            {callRequest ? "1 on 1 call" : "1 on 1 call"}
+                                                        <button onClick={()=>{setOneOnOneCall(!oneOnOnecall);setGroupCall(false);setRequestMessage(false);setVerifiedAutograph(false)}}>
+                                                        1 on 1 call
                                                         </button>
-                                                        <button>
+                                                        <button onClick={()=>{setOneOnOneCall(false);setGroupCall(!groupCall);setRequestMessage(false);setVerifiedAutograph(false)}} >
                                                             {callRequest ? "Group call" : "Group call"}
                                                         </button>
-                                                        <button>
-                                                            {subscribe
-                                                                ? "Personal Message"
-                                                                : "Personal Message"}
+                                                        <button onClick={()=>{setOneOnOneCall(false);setGroupCall(false);setRequestMessage(!requestMessage);setVerifiedAutograph(false)}} >
+                                                        Personal Message
+                                                        </button>
+                                                        <button onClick={()=>{setOneOnOneCall(false);setGroupCall(false);setRequestMessage(false);setVerifiedAutograph(!verifiedAutograph)}} >
+                                                        Verified Autograph
                                                         </button>
                                                         <button>
-                                                            {subscribe
-                                                                ? "Verified Autograph"
-                                                                : "Verified Autograph"}
+                                                        Marketplace
                                                         </button>
-                                                        <button>
-                                                            {subscribe ? "Marketplace" : "Marketplace"}
-                                                        </button>
-                                                        <button>
+                                                        <button >
                                                             {subscribe ? "Subscribe" : "Subscribe"}
                                                         </button>
                                                     </div>
@@ -458,9 +464,40 @@ const PrivateChannels = () => {
                                     <span>Photos</span>
                                     <span>Videos</span>
                                 </div>
+                             
                                 <FiSearch className="search-channel-content" />
                             </div>
+                            {oneOnOnecall?  <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'#DCD5FA',padding:'1rem',margin:'1rem'}}>
+                                    <h5>Request 1 on 1 call</h5>
+                                    <p>Cost: {`5 `}XMG</p>
+                                  
+                                 <div className="btns"> <button>Request</button></div>
+                                </div>:null}
+                          
+
+                          {groupCall? <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'#DCD5FA',padding:'1rem',margin:'1rem'}}>
+                                    <h5>Request Group call</h5>
+                                    <p>Cost: {`5 `}XMG</p>
+                                 
+                                 <div className="btns"> <button>Request</button></div>
+                                </div>:null}
+                               
+                               {requestMessage?<div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'#DCD5FA',padding:'1rem',margin:'1rem'}}>
+                                    <h5>Request Video Message</h5>
+                                    <p>Cost: {`5 `}XMG</p>
+                                    <input placeholder="Type Message" />
+                                 <div className="btns"> <button>Request</button></div>
+                                </div>:null} 
+
+                                {verifiedAutograph? <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'#DCD5FA',padding:'1rem',margin:'1rem'}}>
+                                    <h5>Verified Autograph</h5>
+                                    <p>Cost: {`5 `}XMG</p>
+                               
+                                 <div className="btns"> <button>Request</button></div>
+                                </div>:null}
+                               
                             <div className="channel-media" id="feed">
+                               
                                 {uploads && (
                                     <InfiniteScroll
                                         dataLength={uploads.length}
@@ -502,7 +539,11 @@ const PrivateChannels = () => {
                                         <button>Subscribe to see more</button>
                                     </div>
                                 )}
+                           
+                           
+                           
                             </div>
+                         
                         </div>
                     ) : null}
 
@@ -517,9 +558,10 @@ const PrivateChannels = () => {
                                 }}
                             >
                                 <div className="tabs">
-                                    <span>Requests</span>
-                                    <span>Subscribers</span>
-                                    <span>Notification</span>
+                                    <span onClick={()=>{setShowRequest(!showRequest);setShowSubscribers(false);setShowPricingSetting(false);setShowNotification(false)}} >Requests</span>
+                                    <span onClick={()=>{setShowRequest(false);setShowSubscribers(!showSubscribers);setShowPricingSetting(false);setShowNotification(false)}} >Subscribers</span>
+                                    <span onClick={()=>{setShowRequest(false);setShowSubscribers(false);setShowPricingSetting(false);setShowNotification(!showNotification)}} >Notification</span>
+                                    <span onClick={()=>{setShowRequest(false);setShowSubscribers(false);setShowPricingSetting(!showPricingSetting);setShowNotification(false)}} >Price Settings</span>
                                     <span
                                         onClick={() => {
                                             history.push(
@@ -529,13 +571,40 @@ const PrivateChannels = () => {
                                         }}
                                     >
                                         <div className="channel-btn-icon">
-                                            Live Room
+                                            Record Message
                                             <LiveTvRounded />
                                         </div>
                                     </span>
                                 </div>
-                                <FiSearch className="search-channel-content" />
+                              
+                                {/* <FiSearch className="search-channel-content" /> */}
                             </div>
+                            {showRequest? <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'#DCD5FA',padding:'1rem',margin:'1rem'}}>
+                                <h5>Requests</h5>
+                               <p>No Requests</p>
+                                </div>:null}
+                           {showPricingSetting? <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'#DCD5FA',padding:'1rem',margin:'1rem'}}>
+                                <h5>Set Service Price</h5>
+                                <div style={{display:'flex',justifyContent:'space-evenly',margin:'1rem',alignItems:'center'}}> <label>1 on 1 call :  </label><input  type= "number" placeholder="Amount XMG" />XMG</div>
+                              
+                                <div style={{display:'flex',justifyContent:'space-evenly',margin:'1rem',alignItems:'center'}}> <label>Group call :  </label><input type= "number" placeholder="Amount XMG" />XMG</div>
+                             
+                                <div style={{display:'flex',justifyContent:'space-evenly',margin:'1rem',alignItems:'center'}}> <label>Personal Message :  </label><input type= "number" placeholder="Amount XMG" />XMG</div>
+                          
+                                <div style={{display:'flex',justifyContent:'space-evenly',margin:'1rem',alignItems:'center'}}> <label>Subscription :  </label><input type= "number" placeholder="Amount XMG" />XMG</div>
+                          
+                            <div className="btns" >  <button  >Update Changes</button></div>
+                                </div>:null}
+                           {showSubscribers? <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'#DCD5FA',padding:'1rem',margin:'1rem'}}>
+                                <h5>Subscribers</h5>
+                               <p>No Subscribers</p>
+                                </div>:null}
+                                {showNotification? <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'#DCD5FA',padding:'1rem',margin:'1rem'}}>
+                                <h5>Notification</h5>
+                               <p>No Notification</p>
+                                </div>:null}
+
+                               
                         </div>
                     ) : null}
                 </div>
