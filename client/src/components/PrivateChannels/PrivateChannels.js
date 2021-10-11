@@ -53,15 +53,27 @@ const PrivateChannels = () => {
 
     const history = useHistory();
     const [userInfo, setUserInfo] = useState([]);
+    const [likes, setLikes] = useState(0);
+    const [views, setViews] = useState(0);
     const [loading, setLoading] = useState(true);
 
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
-
+    var totalViews = 0;
+    var totalLikes = 0;
     useEffect(() => {
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`).then((response) => {
                 setUserInfo(response.data);
-                console.log(userInformation);
+                console.log(response,"dky");
+                axios.get(`${BaseURL}/upload/user/${username}`)
+                .then((response) => {
+                    response.data.map((user) => {
+                        totalViews += user.views
+                        totalLikes += user.likes
+                    })
+                    setLikes(totalLikes);
+                    setViews(totalViews);
+                })
             });
             setLoading(false);
         };
@@ -189,11 +201,17 @@ const PrivateChannels = () => {
                                             <div className="username">@{user.username}</div>
                                             <div className="followers">
                                                 <b>
-                                                    {formatCount(user.followers) +
-                                                        formatSi(user.followers)}
+                                                    {formatCount(likes) +
+                                                        formatSi(likes)}
                                                 </b>
-                                                <span> Followers</span>
+                                                <span> Likes  </span>
+                                                <b>
+                                                    {formatCount(views) +
+                                                        formatSi(views)}
+                                                </b>
+                                                <span> Views</span>
                                             </div>
+                                          
 
                                             {user.bio && (
                                                 <div
