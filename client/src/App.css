@@ -100,6 +100,7 @@ code {
 .text-color-auth {
   color: var(--text-color);
   font-weight: 500;
+  margin-bottom: .1rem;
 }
 
 .login-form {
@@ -656,6 +657,7 @@ hr {
 }
 .avatar-comment-wraper {
   padding-right: 0.2rem;
+  margin-top: 0.15rem;
 }
 .avatar-comment-user-wraper {
   padding-right: 0.2rem;
@@ -1795,7 +1797,7 @@ hr {
 }
 
 .add-comment {
-  padding: 0 0.5rem;
+  padding: 0.1rem 0.5rem;
   margin: 0 0 0 0.4rem;
   border: 1px solid #c7cdd6;
   border-radius: 0.3rem;

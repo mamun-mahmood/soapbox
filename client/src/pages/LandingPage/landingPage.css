@@ -270,6 +270,9 @@ footer span {
     }
 }
 @media only screen and (max-width: 1024px) {
+    .landing-ls {
+        gap: 0;
+    }
     .landing-ls img {
         width: 300px;
         min-width: 200px;
@@ -311,7 +314,7 @@ footer span {
     }
 
     .landing-ls span {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 }
 

@@ -73,7 +73,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                 },
             });
         } else {
-            toast.error('Please login', {
+            toast.error('Please login to continue', {
                 style: {
                     border: '2px solid #8249A0',
                     color: '#8249A0',
@@ -121,7 +121,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
         if (userInfo) {
             null
         } else {
-            toast.error('Please login', {
+            toast.error('Please login to continue', {
                 style: {
                     border: '2px solid #8249A0',
                     color: '#8249A0',
