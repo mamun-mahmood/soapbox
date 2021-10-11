@@ -66,9 +66,9 @@ const SignupComp = ({ handleChange }) => {
                         onChange={(event) => { setUsername(event.target.value) }}
                     // disabled
                     />
-                     <Form.Text className="text-muted">
-                          Note: username can not be changed once created.
-                        </Form.Text>
+                    <Form.Text className="text-muted">
+                        Note: username can not be changed once created.
+                    </Form.Text>
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="formBasicEmail">

@@ -40,21 +40,21 @@ const LandingPage = () => {
                         <a href={locattion.pathname}>
                             <img
                                 onContextMenu={(e) => e.preventDefault()}
-                                src="./images/MegaHoot_Soapbox_LandingPage_600_web.png"
+                                src="./images/MegaHoot_Soapbox_LandingPage_600_2_web.png"
                                 alt="MegaHoot Soapbox"
                             />
                         </a>
                         <div className="landing-text">
                             <p>
-                                MegaHoot Soapbox Where Content Creators Monetize Their Private Channels, Virtual Experiences, Personal Messages and Build Their Brand, Build Their Business With No Startup Cost.
+                                MegaHoot Soapbox Where Content Creators Monetize Their Private Clubs, Virtual Experiences, Personal Messages and Build Their Brand, Build Their Business With No Startup Cost.
                             </p>
                             <p>
-                                Content Creators can offer monthly subscriptions for their Private Channel, have one time or weekly PPV live events with ticket sales, offer personal messages and live one on one OR group Vero Calls. They will be able to offer their subscribers, their fans, the ability to join their live broadcast on MegaHoot Soapbox and interact in real time with the chat feature, this can be for a small or large audience.
+                                Content Creators can offer monthly membership subscriptions for their Private Club, have one time or weekly PPV live events with ticket sales, offer personal messages and live one on one OR group Vero Calls. They will be able to offer their members, their fans, the ability to join their live broadcast on MegaHoot Soapbox and interact in real time with the chat feature. Members will be able to engage in the Private Clubs with interactive chats with the host, with other members and in some cases post approved listings in the Clubs Marketplace.
                             </p>
                             <p>
                                 Content Creators find a great partner in MegaHoot Technologies with MegaHoot Soapbox, maximizing the benefits of our content partners.
                             </p>
-                            <p>
+                            {/* <p>
                                 <ul>
                                     <li>
                                         FastTrack to account verification
@@ -81,7 +81,7 @@ const LandingPage = () => {
                                         Authentication System for Autographs and much more
                                     </li>
                                 </ul>
-                            </p>
+                            </p> */}
                         </div>
                     </div>
                 </div>

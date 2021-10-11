@@ -143,21 +143,21 @@ const HootInside = ({
     var commentProfilePic = null;
 
     // getting user data for comment info
-    // const [userInfoC, setUserInfoC] = useState([]);
-    // useEffect(() => {
-    //     const getUserData = async () => {
-    //         await axios.get(`${BaseURL}/user/${userInfo.username}`)
-    //             .then((response) => {
-    //                 setUserInfoC(response.data);
-    //             });
-    //     }
-    //     getUserData()
-    // }, [])
+    const [userInfoC, setUserInfoC] = useState([]);
+    useEffect(() => {
+        const getUserData = async () => {
+            await axios.get(`${BaseURL}/user/${userInfo && userInfo.username}`)
+                .then((response) => {
+                    setUserInfoC(response.data);
+                });
+        }
+        getUserData()
+    }, [])
 
-    // userInfoC.map((user) => {
-    //     commentName = user.name;
-    //     commentProfilePic = user.profilePic;
-    // })
+    userInfoC.map((user) => {
+        commentName = user.name;
+        commentProfilePic = user.profilePic;
+    })
 
     // like functionality added to hoots.
     useEffect(() => {
@@ -207,7 +207,16 @@ const HootInside = ({
 
     const addComment = () => {
         if (!userInfo) {
-            toast.error('please login')
+            toast.error('Please login to continue', {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                },
+                iconTheme: {
+                    primary: '#8249A0',
+                    secondary: '#FFFAEE',
+                },
+            })
         } else {
             axios.post(`${BaseURL}/comment/`, {
                 name: commentName,
@@ -224,7 +233,7 @@ const HootInside = ({
                     name: commentName,
                     username: userInfo && userInfo.username,
                     commentBody: newComment,
-                    commentProfilePicPath: commentProfilePicPath
+                    profilePic: commentProfilePicPath
                 }
 
                 setComments([...comments, addNewComment])
@@ -322,7 +331,7 @@ const HootInside = ({
         if (userInfo) {
             null
         } else {
-            toast.error('Please login', {
+            toast.error('Please login to continue', {
                 style: {
                     border: '2px solid #8249A0',
                     color: '#8249A0',
@@ -362,7 +371,6 @@ const HootInside = ({
     }
 
     const embedHootLink = `https://www.megahoot.net/embed/hoot/${hootId}`
-    // const embedHootLink = `http://localhost:3000/embed/hoot/${hootId}`
 
     const homeRef = useRef(null);
     // const [iframeHeight, setIframeHeight] = useState(0)
@@ -433,7 +441,7 @@ const HootInside = ({
                 },
             });
         } else {
-            toast.error('Please login', {
+            toast.error('Please login to continue', {
                 style: {
                     border: '2px solid #8249A0',
                     color: '#8249A0',
@@ -864,15 +872,13 @@ const HootInside = ({
                                             <div className="hoot-comment-modal">
                                                 <h4>{comments.length > 0 && comments.length} Comments,</h4>
                                                 {/* Comment Box */}
-
                                                 <div className="comment-box-end">
                                                     <div className="comment-box">
                                                         <input
                                                             className="comment-input"
                                                             type="text"
-                                                            maxLength="290"
+                                                            maxLength="300"
                                                             value={newComment}
-                                                            // placeholder={`Comment as ${userInfo.username}`}
                                                             placeholder="Add a Comment"
                                                             onChange={(event) => {
                                                                 setNewComment(event.target.value);
@@ -886,14 +892,6 @@ const HootInside = ({
                                                         </button>
                                                     </div>
 
-                                                    {/* comments list */}
-                                                    {/* comments based on location */}
-                                                    {/* {(location.pathname).match(/hoot/gi) == "hoot" ?
-                                    comments.length > 0 && <HootComments comments={comments} sliceValue={0} />
-                                    :
-                                    comments.length > 0 && <HootComments comments={comments} sliceValue={-2} />
-                                } */}
-
                                                     {/* all comments */}
                                                     <div className="commets-scroll">
                                                         {comments.length > 0 &&
@@ -905,7 +903,6 @@ const HootInside = ({
                                                         }
                                                     </div>
                                                 </div>
-
                                                 <IoCloseOutline className="close-modal" onClick={() => setIsCommentModalOpen(false)} />
                                             </div>
                                         </ClickAwayListener>
@@ -1577,15 +1574,13 @@ const HootInside = ({
                                         <div className="hoot-comment-modal">
                                             <h4>{comments.length > 0 && comments.length} Comments,</h4>
                                             {/* Comment Box */}
-
                                             <div className="comment-box-end">
                                                 <div className="comment-box">
                                                     <input
                                                         className="comment-input"
                                                         type="text"
-                                                        maxLength="290"
+                                                        maxLength="300"
                                                         value={newComment}
-                                                        // placeholder={`Comment as ${userInfo.username}`}
                                                         placeholder="Add a Comment"
                                                         onChange={(event) => {
                                                             setNewComment(event.target.value);
@@ -1599,14 +1594,6 @@ const HootInside = ({
                                                     </button>
                                                 </div>
 
-                                                {/* comments list */}
-                                                {/* comments based on location */}
-                                                {/* {(location.pathname).match(/hoot/gi) == "hoot" ?
-                                    comments.length > 0 && <HootComments comments={comments} sliceValue={0} />
-                                    :
-                                    comments.length > 0 && <HootComments comments={comments} sliceValue={-2} />
-                                } */}
-
                                                 {/* all comments */}
                                                 <div className="commets-scroll">
                                                     {comments.length > 0 &&
@@ -1618,7 +1605,6 @@ const HootInside = ({
                                                     }
                                                 </div>
                                             </div>
-
                                             <IoCloseOutline className="close-modal" onClick={() => setIsCommentModalOpen(false)} />
                                         </div>
                                     </ClickAwayListener>

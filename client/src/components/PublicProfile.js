@@ -104,7 +104,16 @@ const PublicProfile = ({
                 },
             });
         } else {
-            toast.error('please login');
+            toast.error('Please login to continue', {
+                style: {
+                    border: '2px solid #8249A0',
+                    color: '#8249A0',
+                },
+                iconTheme: {
+                    primary: '#8249A0',
+                    secondary: '#FFFAEE',
+                },
+            });
         }
     }
 

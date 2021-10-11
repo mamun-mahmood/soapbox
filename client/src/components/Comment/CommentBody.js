@@ -162,6 +162,7 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
                                 round={true}
                                 name={name}
                                 src={commentProfilePicPath}
+                            // className={commentProfilePicPath === null ? null : "skeleton-img"}
                             />
                         </div>
                         <span className="owner">{name}&nbsp;</span>
