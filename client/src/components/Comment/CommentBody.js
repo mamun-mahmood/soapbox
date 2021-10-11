@@ -44,7 +44,14 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
         console.log("comment Edited:", editComment);
     }
 
-    const commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
+    var commentProfilePicPath;
+    if (commentProfilePic !== null) {
+        if (commentProfilePic.match(/fakercloud/gi) == "fakercloud") {
+            commentProfilePicPath = commentProfilePic;
+        } else {
+            commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
+        }
+    }
 
     return (
         <Fragment>

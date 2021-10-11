@@ -1,9 +1,11 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import LazyLoad from 'react-lazyload';
+import faker from 'faker';
 import BeatLoader from "react-spinners/BeatLoader";
 
 const MediaContent = ({
+    hootId,
     mimeType,
     filePath,
     views,
@@ -50,6 +52,8 @@ const MediaContent = ({
         } else {
             setIsVertical("hoot-img-horizontal");
         }
+
+        autoComments();
     }
 
     const PlaceholderComponent = () => {
@@ -59,6 +63,23 @@ const MediaContent = ({
             </div>
         )
     }
+
+    const fakeCommentFirstName = faker.name.firstName();
+    const fakeCommentUsername = fakeCommentFirstName.toLowerCase();
+    const fakeCommentBody = faker.random.words() + " " + faker.random.words();
+    const fakeCommentAvatar = faker.image.avatar();
+
+    // auto commenting  
+    const autoComments = async () => {
+        await axios.post(`${BaseURL}/comment/`, {
+            name: fakeCommentFirstName,
+            username: fakeCommentUsername,
+            commentBody: fakeCommentBody,
+            profilePic: fakeCommentAvatar,
+            hootId: hootId
+        })
+    }
+
     return (
         <Fragment>
             {mimeType.match(/image/gi) == "image" &&
@@ -72,10 +93,7 @@ const MediaContent = ({
                         alt="soapbox-img"
                         className={isVertical}
                         onContextMenu={(e) => e.preventDefault()}
-                        onLoad={(e) => {
-                            setViewCount(viewCount + 1)
-                            imgRef();
-                        }}
+                        onLoad={(e) => { setViewCount(viewCount + 1), imgRef() }}
                     />
                 </div>
             }
@@ -91,7 +109,7 @@ const MediaContent = ({
                         className="hoot-vdo"
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
-                        onLoadStart={(e) => setViewCount(viewCount + 1)}
+                        onLoadStart={(e) => setViewCount(viewCount + 1), autoComments}
                     >
                         <source
                             src={filePath}
@@ -113,7 +131,7 @@ const MediaContent = ({
                         poster={profilePicPath}
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
-                        onLoadStart={(e) => setViewCount(viewCount + 1)}
+                        onLoadStart={(e) => setViewCount(viewCount + 1), autoComments}
                     >
                         <source
                             src={filePath}

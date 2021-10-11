@@ -19,6 +19,7 @@ import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
 import { HiBadgeCheck, HiOutlineCode } from 'react-icons/hi'
 import Highlighter from "react-highlight-words"
+import faker from 'faker';
 import './IndividualHoot/individualHoot.css'
 import Expire from './Expire';
 
@@ -204,6 +205,21 @@ const HootInside = ({
 
         window.location.reload();
     }
+
+    // // auto commenting  
+    // const autoComments = async () => {
+    //     await axios.post(`${BaseURL}/comment/`, {
+    //         name: faker.name.firstName(),
+    //         username: faker.name.firstName().toLowerCase(),
+    //         commentBody: faker.lorem.sentence(),
+    //         profilePic: commentProfilePic,
+    //         hootId: hootId
+    //     })
+    // }
+
+    // setInterval(() => {
+    //     autoComments();
+    // }, 2000);
 
     const addComment = () => {
         if (!userInfo) {
@@ -786,7 +802,13 @@ const HootInside = ({
                                                     <div className="edit-content">
                                                         {/* left side image */}
                                                         <div className="post-media">
-                                                            <MediaContent mimeType={mimeType} filePath={filePath} editOpen={isEditModalOpen} profilePicPath={profilePicPath} />
+                                                            <MediaContent
+                                                                hootId={hootId}
+                                                                mimeType={mimeType}
+                                                                filePath={filePath}
+                                                                editOpen={isEditModalOpen}
+                                                                profilePicPath={profilePicPath}
+                                                            />
                                                         </div>
                                                         {/* right side edit box */}
                                                         <div className="edit-caption d-flex flex-wrap">
@@ -880,6 +902,7 @@ const HootInside = ({
                                                             maxLength="300"
                                                             value={newComment}
                                                             placeholder="Add a Comment"
+                                                            onKeyDown={(event) => { event.keyCode === 13 && addComment() }}
                                                             onChange={(event) => {
                                                                 setNewComment(event.target.value);
                                                             }} />
@@ -938,6 +961,7 @@ const HootInside = ({
                             <div className="right-icons">
                                 {/* <div className="post-media"> */}
                                 <MediaContent
+                                    hootId={hootId}
                                     mimeType={mimeType}
                                     filePath={filePath}
                                     views={views}
@@ -1488,7 +1512,13 @@ const HootInside = ({
                                                 <div className="edit-content">
                                                     {/* left side image */}
                                                     <div className="post-media">
-                                                        <MediaContent mimeType={mimeType} filePath={filePath} editOpen={isEditModalOpen} profilePicPath={profilePicPath} />
+                                                        <MediaContent
+                                                            hootId={hootId}
+                                                            mimeType={mimeType}
+                                                            filePath={filePath}
+                                                            editOpen={isEditModalOpen}
+                                                            profilePicPath={profilePicPath}
+                                                        />
                                                     </div>
                                                     {/* right side edit box */}
                                                     <div className="edit-caption d-flex flex-wrap">
@@ -1582,6 +1612,7 @@ const HootInside = ({
                                                         maxLength="300"
                                                         value={newComment}
                                                         placeholder="Add a Comment"
+                                                        onKeyDown={(event) => { event.keyCode === 13 && addComment() }}
                                                         onChange={(event) => {
                                                             setNewComment(event.target.value);
                                                         }} />
@@ -1640,6 +1671,7 @@ const HootInside = ({
                         <div className="right-icons">
                             {/* <div className="post-media"> */}
                             <MediaContent
+                                hootId={hootId}
                                 mimeType={mimeType}
                                 filePath={filePath}
                                 views={views}
