@@ -10,7 +10,7 @@ const PrivateChannelsPage = () => {
 
     return (
         <div onContextMenu={(e) => e.preventDefault()}>
-            <NavBar width={"none"} header={"Soapbox Private Channels"} />
+            <NavBar width={"none"} header={"Soapbox Private Clubs"} />
             <PrivateChannels />
             <FloatingButton />
 

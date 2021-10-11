@@ -103,8 +103,8 @@ const Profile = ({
 
             const privateChannelToast = privateChannel();
             toast.promise(privateChannelToast, {
-                loading: 'Adding your Private Channel...',
-                success: 'Private Channel added Successfully',
+                loading: 'Adding your Private Club...',
+                success: 'Private Club added Successfully',
                 error: 'Please try again',
             }, {
                 style: {
@@ -185,14 +185,14 @@ const Profile = ({
 
                                         {/* <Link to={`/${uuidv4()}/SoapboxHall/${uuidv4()}/${username}/${uuidv4()}/${uuidv4()}`}> */}
                                         <Link to={`/${uuidv4()}/private/channels/${username}/${uuidv4()}`}>
-                                            Go to Private Channel
+                                            Go to Private Club
                                         </Link>
                                     </button>
                                     : <button
                                         className="btn-add-private-c"
                                         onClick={addPrivateChannel}
                                     >
-                                        Add Private Channel
+                                        Add Private Club
                                     </button>
                                 }
                             </div>
