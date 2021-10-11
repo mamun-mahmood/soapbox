@@ -43,6 +43,22 @@ const MediaContent = ({
         })
     }, [viewCount])
 
+    const fakeCommentFirstName = faker.name.firstName();
+    const fakeCommentUsername = fakeCommentFirstName.toLowerCase();
+    const fakeCommentBody = faker.random.words() + " " + faker.random.words();
+    const fakeCommentAvatar = faker.image.avatar();
+
+    // auto commenting  
+    const autoComments = async () => {
+        await axios.post(`${BaseURL}/comment/`, {
+            name: fakeCommentFirstName,
+            username: fakeCommentUsername,
+            commentBody: fakeCommentBody,
+            profilePic: fakeCommentAvatar,
+            hootId: hootId
+        })
+    }
+
     const imgRef = () => {
         const width = ref.current.clientWidth;
         const height = ref.current.clientHeight;
@@ -53,7 +69,7 @@ const MediaContent = ({
             setIsVertical("hoot-img-horizontal");
         }
 
-        // autoComments();
+        autoComments();
     }
 
     const PlaceholderComponent = () => {
@@ -63,22 +79,6 @@ const MediaContent = ({
             </div>
         )
     }
-
-    // const fakeCommentFirstName = faker.name.firstName();
-    // const fakeCommentUsername = fakeCommentFirstName.toLowerCase();
-    // const fakeCommentBody = faker.random.words() + " " + faker.random.words();
-    // const fakeCommentAvatar = faker.image.avatar();
-
-    // // auto commenting  
-    // const autoComments = async () => {
-    //     await axios.post(`${BaseURL}/comment/`, {
-    //         name: fakeCommentFirstName,
-    //         username: fakeCommentUsername,
-    //         commentBody: fakeCommentBody,
-    //         profilePic: fakeCommentAvatar,
-    //         hootId: hootId
-    //     })
-    // }
 
     return (
         <Fragment>
@@ -109,8 +109,7 @@ const MediaContent = ({
                         className="hoot-vdo"
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
-                        onLoadStart={(e) => setViewCount(viewCount + 1)
-                            // , autoComments
+                        onLoadStart={(e) => setViewCount(viewCount + 1), autoComments
                         }
                     >
                         <source
@@ -133,8 +132,7 @@ const MediaContent = ({
                         poster={profilePicPath}
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
-                        onLoadStart={(e) => setViewCount(viewCount + 1)
-                            // , autoComments
+                        onLoadStart={(e) => setViewCount(viewCount + 1), autoComments
                         }
                     >
                         <source
