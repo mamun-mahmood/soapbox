@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import LazyLoad from 'react-lazyload';
 import faker from 'faker';
+import { words } from '../Helpers/Constants'
 import BeatLoader from "react-spinners/BeatLoader";
 
 const MediaContent = ({
@@ -39,116 +40,24 @@ const MediaContent = ({
             views: viewCount,
             image: image
         }).then((response) => {
-            // console.log(response.data.views);
         })
     }, [viewCount])
 
     const fakeCommentFirstName = faker.name.firstName();
     const fakeCommentUsername = fakeCommentFirstName.toLowerCase();
-    // const fakeCommentBody = faker.random.words() + " " + faker.random.words();
     const fakeCommentAvatar = faker.image.avatar();
-
-    const words = [
-        "Awesome",
-        "Brilliant",
-        "Amazing",
-        "cool",
-        "exciting",
-        "Stay creative",
-        "Awesome Hoot",
-        "Sweet",
-        "kewl",
-        "beautiful",
-        "you blew me away",
-        "Love it!",
-        "Keep rolling!!",
-        "Join the Club",
-        "confidence is key , throw the key away 🥰😘😊",
-        "Just keep smiling 💖✌🏻😘",
-        "this inspired me🧚‍♀️💖",
-        "Practice makes perfect 🥰",
-        "You’re on top of the world",
-        "wow look at your talent!",
-        "Neat!",
-        "Never seen a selfie of yours that I don’t like.",
-        "You are the coolest.",
-        "Blessing your Soapbox feed once again",
-        "The hottest pal in the town",
-        "Keep Shining",
-        "make the most of it all",
-        "come join us",
-        "awesome content",
-        "wicked hoot",
-        "where's the MORE",
-        "who did what and why",
-        "where are we going",
-        "dont know why but I like this hoot",
-        "Hoots are bad ass",
-        "my comments are my own",
-        "wheres your club?",
-        "Twitter Twitter yadda yadda",
-        "InstaWHAT....",
-        "Keep sharing the wicked content",
-        "Jumpin' head first",
-        "who what and when",
-        "bring the noise",
-        "Funky",
-        "sweet hoot",
-        "saucy but kewl",
-        "hey , cool hoot",
-        "keep posting sweet stuff",
-        "Watching the waves",
-        "Sun is shinning",
-        "Post more Hoots!",
-        "Life is life",
-        "love it",
-        "looking good",
-        "sharp",
-        "whaaaatttt",
-        "bring it dont sing it",
-        "woooowwww",
-        "whoooaaaaaaa",
-        "WTF",
-        "FOMO",
-        "Bringing it round and round",
-    ]
-
-    const emojis = [
-        "😀",
-        "😀😍",
-        "",
-        "🙏🏻👏🏻",
-        "😍",
-        "👏🏻🙏🏻😊",
-        "😊",
-        "",
-        "😍💗",
-        "🙏🏻",
-        "😍🦉",
-        "👍🏻",
-        "",
-        "👏🏻👍🏻😀",
-        "🦉",
-        "💗",
-        "😊💗",
-        "",
-        "👏🏻",
-        "👍🏻👏🏻",
-        "🦉😀👍🏻",
-        "",
-        "😍😍😍",
-    ]
 
     // auto commenting  
     const autoComments = async () => {
         await axios.post(`${BaseURL}/comment/`, {
             name: fakeCommentFirstName,
             username: fakeCommentUsername,
-            commentBody: words[Math.floor(Math.random() * words.length)] + " " + emojis[Math.floor(Math.random() * emojis.length)],
+            commentBody: words[Math.floor(Math.random() * words.length)],
             profilePic: fakeCommentAvatar,
             hootId: hootId
         })
     }
+
 
     const imgRef = () => {
         const width = ref.current.clientWidth;
@@ -200,8 +109,7 @@ const MediaContent = ({
                         className="hoot-vdo"
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
-                        onLoadStart={(e) => setViewCount(viewCount + 1), autoComments
-                        }
+                        onLoadStart={(e) => setViewCount(viewCount + 1), autoComments}
                     >
                         <source
                             src={filePath}
@@ -223,8 +131,7 @@ const MediaContent = ({
                         poster={profilePicPath}
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
-                        onLoadStart={(e) => setViewCount(viewCount + 1), autoComments
-                        }
+                        onLoadStart={(e) => setViewCount(viewCount + 1), autoComments}
                     >
                         <source
                             src={filePath}
@@ -238,24 +145,5 @@ const MediaContent = ({
         </Fragment>
     )
 }
-{/* <LazyLoad
-                    offset={15000}
-                    placeholder={<PlaceholderComponent />}
-                >
-                    <audio
-                        className={editOpen ? "hoot-ado-fix" : "hoot-ado"}
-                        controls
-                        controlsList="nodownload"
-                        onContextMenu={(e) => e.preventDefault()}
-                        onLoadStart={(e) => setViewCount(viewCount + 1)}
-                    >
-                        <source
-                            src={filePath}
-                        // type={mimeType}
-                        />
-                        Your browser does not support the audio element.
-                    </audio>
-                </LazyLoad> */}
-
 
 export default MediaContent
