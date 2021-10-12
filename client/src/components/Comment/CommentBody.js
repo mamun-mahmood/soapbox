@@ -44,16 +44,16 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
         console.log("comment Edited:", editComment);
     }
 
-    var commentProfilePicPath;
-    if (commentProfilePic === null) {
-        commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
-    } else {
-        if (commentProfilePic && commentProfilePic.toString().match(/fakercloud/gi) == "fakercloud") {
-            commentProfilePicPath = commentProfilePic;
-        } else {
-            commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
-        }
-    }
+    // var commentProfilePicPath = null;
+    // if (commentProfilePic === null) {
+    //     commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
+    // } else {
+    //     if (commentProfilePic && commentProfilePic.toString().match(/fakercloud/gi) == "fakercloud") {
+    //         commentProfilePicPath = commentProfilePic;
+    //     } else {
+    //         commentProfilePicPath = `${BaseURL}/profile-pictures/${commentProfilePic}`;
+    //     }
+    // }
 
     return (
         <Fragment>
@@ -103,7 +103,8 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
                                                 size={50}
                                                 round={true}
                                                 name={name}
-                                                src={commentProfilePicPath}
+                                                // src={commentProfilePicPath}
+                                                src={commentProfilePic.toString().match(/fakercloud/gi) == "fakercloud" ? commentProfilePic : `${BaseURL}/profile-pictures/${commentProfilePic}`}
                                             />
                                         </div>
                                         <div className="name avatar_name">{name}</div>
@@ -164,14 +165,13 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
 
             <div className="main">
                 <div className="">
-                    <div className="comment-owner">
+                    {/* <div className="comment-owner">
                         <div className="avatar-comment-wraper">
                             <Avatar
                                 size={20}
                                 round={true}
                                 name={name}
                                 src={commentProfilePicPath}
-                            // className={commentProfilePicPath === null ? null : "skeleton-img"}
                             />
                         </div>
                         <span className="owner">{name}&nbsp;</span>
@@ -179,7 +179,29 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
                     </div>
                     <span className="content">
                         {commentBody}
-                    </span>
+                    </span> */}
+                    <div className="comment-owner">
+                        <div className="comment-profile-pic">
+                            <div className="avatar-comment-wraper">
+                                <Avatar
+                                    size={20}
+                                    round={true}
+                                    name={name}
+                                    // src={commentProfilePicPath}
+                                    src={commentProfilePic.toString().match(/fakercloud/gi) == "fakercloud" ? commentProfilePic : `${BaseURL}/profile-pictures/${commentProfilePic}`}
+                                />
+                            </div>
+                        </div>
+                        <div className="comment-right">
+                            <div className="comment-username-name">
+                                <span className="owner">{name}&nbsp;</span>
+                                <div className="at-name">@{username}</div>
+                            </div>
+                            <span className="content">
+                                {commentBody}
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="c-more">

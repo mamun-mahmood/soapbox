@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import LazyLoad from 'react-lazyload';
 import faker from 'faker';
-import { words } from '../Helpers/Constants'
+import { words, numbers } from '../Helpers/Constants'
 import BeatLoader from "react-spinners/BeatLoader";
 
 const MediaContent = ({
@@ -44,20 +44,22 @@ const MediaContent = ({
     }, [viewCount])
 
     const fakeCommentFirstName = faker.name.firstName();
+    const fakeCommentLastName = faker.name.lastName();
     const fakeCommentUsername = fakeCommentFirstName.toLowerCase();
     const fakeCommentAvatar = faker.image.avatar();
+    const fakeCommentBody = words[Math.floor(Math.random() * words.length)];
+    const fakeCommentNumber = numbers[Math.floor(Math.random() * numbers.length)].toLowerCase();
 
     // auto commenting  
     const autoComments = async () => {
         await axios.post(`${BaseURL}/comment/`, {
-            name: fakeCommentFirstName,
-            username: fakeCommentUsername,
-            commentBody: words[Math.floor(Math.random() * words.length)],
+            name: fakeCommentFirstName + " " + fakeCommentLastName,
+            username: fakeCommentUsername + fakeCommentNumber,
+            commentBody: fakeCommentBody,
             profilePic: fakeCommentAvatar,
             hootId: hootId
         })
     }
-
 
     const imgRef = () => {
         const width = ref.current.clientWidth;

@@ -223,7 +223,7 @@ const HootInside = ({
 
     const addComment = () => {
         if (!userInfo) {
-            toast.error('Please login to continue', {
+            toast.error('Please Login to Continue', {
                 style: {
                     border: '2px solid #8249A0',
                     color: '#8249A0',
@@ -917,12 +917,16 @@ const HootInside = ({
 
                                                     {/* all comments */}
                                                     <div className="commets-scroll">
-                                                        {comments.length > 0 &&
+                                                        {userInfo
+                                                            ?
+                                                            comments.length > 0 &&
                                                             <HootComments
                                                                 comments={comments}
                                                                 verified={verified}
                                                                 sliceValue={0}
                                                             />
+                                                            :
+                                                            <div className="login-to-comment">Please Login to Continue</div>
                                                         }
                                                     </div>
                                                 </div>
@@ -1627,12 +1631,16 @@ const HootInside = ({
 
                                                 {/* all comments */}
                                                 <div className="commets-scroll">
-                                                    {comments.length > 0 &&
+                                                    {userInfo
+                                                        ?
+                                                        comments.length > 0 &&
                                                         <HootComments
                                                             comments={comments}
                                                             verified={verified}
                                                             sliceValue={0}
                                                         />
+                                                        :
+                                                        <div className="login-to-comment">Please Login to Continue</div>
                                                     }
                                                 </div>
                                             </div>
