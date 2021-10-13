@@ -65,7 +65,7 @@ const PrivateChannels = () => {
     const [loading, setLoading] = useState(true);
 
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
-  
+
     var totalViews = 0;
     var totalLikes = 0;
     useEffect(() => {
@@ -549,7 +549,6 @@ const PrivateChannels = () => {
                             </div> : null}
 
                             <div className="channel-media" id="feed">
-
                                 {uploads && (
                                     <InfiniteScroll
                                         dataLength={uploads.length}
@@ -658,48 +657,42 @@ const PrivateChannels = () => {
                             </div> : null}
 
                             <div className="channel-media" id="feed">
-
-{uploads && (
-    <InfiniteScroll
-        dataLength={uploads.length}
-        next={fetchMoreHoots}
-        hasMore={hasMore}
-        loader={<InfiniteScrollLoader />}
-    >
-        {uploads.map((upload) => {
-            return (
-                <div key={upload}>
-                    {upload.private === 1 ? (
-                        <Post
-                            hootId={upload.id}
-                            username={upload.authorUsername}
-                            mimeType={upload.mimeType}
-                            hootImgId={upload.image}
-                            likes={upload.likes}
-                            views={upload.views}
-                            followers={upload.followers}
-                            caption={upload.caption}
-                            link={upload.link}
-                            ephemeral={upload.ephemeral}
-                            privateHoot={upload.private}
-                            expiryDate={upload.expiryDate}
-                            timeStamp={upload.timeStamp}
-                            edited={upload.edited}
-                            editedTimeStamp={upload.editedTimeStamp}
-                        // privateProtected={privateProtected}
-                        />
-                    ) : null}
-                </div>
-            );
-        })}
-    </InfiniteScroll>
-)}
-
-
-
-
-
-</div>
+                                {uploads && (
+                                    <InfiniteScroll
+                                        dataLength={uploads.length}
+                                        next={fetchMoreHoots}
+                                        hasMore={hasMore}
+                                        loader={<InfiniteScrollLoader />}
+                                    >
+                                        {uploads.map((upload) => {
+                                            return (
+                                                <div key={upload}>
+                                                    {upload.private === 1 ? (
+                                                        <Post
+                                                            hootId={upload.id}
+                                                            username={upload.authorUsername}
+                                                            mimeType={upload.mimeType}
+                                                            hootImgId={upload.image}
+                                                            likes={upload.likes}
+                                                            views={upload.views}
+                                                            followers={upload.followers}
+                                                            caption={upload.caption}
+                                                            link={upload.link}
+                                                            ephemeral={upload.ephemeral}
+                                                            privateHoot={upload.private}
+                                                            expiryDate={upload.expiryDate}
+                                                            timeStamp={upload.timeStamp}
+                                                            edited={upload.edited}
+                                                            editedTimeStamp={upload.editedTimeStamp}
+                                                        // privateProtected={privateProtected}
+                                                        />
+                                                    ) : null}
+                                                </div>
+                                            );
+                                        })}
+                                    </InfiniteScroll>
+                                )}
+                            </div>
                         </div>
                     ) : null}
                 </div>
