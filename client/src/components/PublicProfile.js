@@ -288,7 +288,7 @@ const PublicProfile = ({
                                 {privateChannel ?
                                     <button className="public-btn-add-private-c">
                                         <Link to={`/${uuidv4()}/private/channels/${username}/${uuidv4()}`}>
-                                            Go to Private Channel
+                                            Go to Private Club
                                         </Link>
                                     </button>
                                     : null
