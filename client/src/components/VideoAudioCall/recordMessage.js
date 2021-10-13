@@ -1,19 +1,25 @@
 import React, { useState, useEffect, Component } from 'react'
 import socket, { startSocket } from './socket'
 import kurentoUtils from "kurento-utils";
-import { Call, CallEnd, Camera, CameraEnhance, CameraFront, CameraRear, Chat, ControlCamera, Group, Mic, MicOff, MoreVert, PersonAdd, Settings, VideoCall, Videocam, VideocamOff, VolumeMute } from '@material-ui/icons';
+import { Call, CallEnd, Camera, CameraEnhance, CameraFront, CameraRear, Chat, ControlCamera, Group, Mic, MicOff, MoreVert, Pause, PauseCircleFilled, PauseOutlined, PersonAdd, PlayArrow, Settings, Share, VideoCall, Videocam, VideocamOff, VolumeMute } from '@material-ui/icons';
 import './index.css'
 import { withRouter } from "react-router";
-class SoapboxHall extends Component {
+import { v4 as uuidv4 } from "uuid";
+
+import {VideoStreamMerger} from 'video-stream-merger'
+
+class RecordMessage extends Component {
     constructor(props) {
         super(props);
-        this.state = { chatBox: false, camMuted: false, showControlls: true,maxVideoStream:'' }
+        this.state = { chatBox: false, camMuted: false, showControlls: true }
 
     }
     // getting dom elements
 
 
     componentDidMount = () => {
+     
+      
         var divRoomSelection = document.getElementById('roomSelection');
         var divMeetingRoom = document.getElementById('meetingRoom');
         var inputRoom = document.getElementById('room');
@@ -26,7 +32,7 @@ class SoapboxHall extends Component {
         var participants = {};
 
         // Let's do this
-
+        var merger = new VideoStreamMerger();
 
 
         function submitHandler() {
@@ -95,7 +101,7 @@ class SoapboxHall extends Component {
 
             myarray.forEach((userid) => {
                 if (myarray.length == 1) {
-                    document.getElementById(userid).style.width = `300px`;
+                    document.getElementById(userid).style.width = `${(document.getElementById('meetingRoom').offsetHeight / 9 - 5) * 16}px`;
                     document.getElementById(userid).style.minWidth = "300px";
                     document.getElementById(userid).style.maxWidth = "90vw";
                     document.getElementById(userid).style.maxHeight = `${(document.getElementById(userid).offsetWidth / 16) * 9}px`;
@@ -107,7 +113,7 @@ class SoapboxHall extends Component {
                 } else if (myarray.length == 2) {
 
 
-                    document.getElementById(userid).style.width = "300px";
+                    document.getElementById(userid).style.width = "40vw";
                     document.getElementById(userid).style.minWidth = "300px"
                     document.getElementById(userid).style.maxHeight = `${(document.getElementById(userid).offsetWidth / 16) * 9}px`;
                     document.getElementById(userid).style.objectFit = "cover";
@@ -130,7 +136,7 @@ class SoapboxHall extends Component {
             });
 
         };
-        const receiveVideo=(userid, username)=> {
+        function receiveVideo(userid, username) {
             myarray = [...myarray, userid];
             var video = document.createElement('video');
             var div = document.createElement('div');
@@ -139,17 +145,7 @@ class SoapboxHall extends Component {
             var name = document.createElement('div');
             video.id = userid;
             video.autoplay = true;
-            video.onclick=()=>{
-              
-                document.getElementById("maxVideoStream").srcObject = video.srcObject;
-                document.getElementById("maxVideoStream").autoplay = true;
 
-                document.getElementById("maxVideoStream").style.width = "99vw";
-                document.getElementById("maxVideoStream").style.minWidth = "300px"
-                document.getElementById("maxVideoStream").style.maxHeight = `${(document.getElementById("maxVideoStream").offsetWidth / 16) * 9}px`;
-                document.getElementById("maxVideoStream").style.objectFit = "cover";
-                }
-               video.style.cursor="pointer"
             name.appendChild(document.createTextNode(username));
             div.appendChild(video);
             div.appendChild(name);
@@ -201,10 +197,9 @@ class SoapboxHall extends Component {
             }
 
             dynamicVideoLayout(userid)
-           
         }
 
-        const onExistingParticipants=(userid, existingUsers)=> {
+        function onExistingParticipants(userid, existingUsers) {
             myarray = [...myarray, userid];
             var video = document.createElement('video');
             var div = document.createElement('div');
@@ -218,18 +213,7 @@ class SoapboxHall extends Component {
             div.appendChild(video);
             div.appendChild(name);
             divMeetingRoom.appendChild(div);
-            video.style.cursor="pointer"
-            video.onclick=()=>{
-              
-                document.getElementById("maxVideoStream").srcObject = video.srcObject;
-                document.getElementById("maxVideoStream").autoplay = true;
 
-                document.getElementById("maxVideoStream").style.width = "99vw";
-                document.getElementById("maxVideoStream").style.minWidth = "300px"
-                document.getElementById("maxVideoStream").style.maxHeight = `${(document.getElementById("maxVideoStream").offsetWidth / 16) * 9}px`;
-                document.getElementById("maxVideoStream").style.objectFit = "cover";
-               
-                }
             var user = {
                 id: userid,
                 username: userName,
@@ -306,7 +290,7 @@ class SoapboxHall extends Component {
             }
             dynamicVideoLayout(userid)
         }
-
+     
         function onReceiveVideoAnswer(senderid, sdpAnswer) {
             participants[senderid].rtcPeer.processAnswer(sdpAnswer);
         }
@@ -440,6 +424,96 @@ class SoapboxHall extends Component {
             window.onbeforeunload = null; // necessary to prevent infinite loop, that kills your browser 
         }
 
+        let recordingTimeMS = 3 * 600000;
+        var stopcount = 0;
+    
+        const startRecording = (stream, lengthInMS) => {
+            let recorder = new MediaRecorder(stream);
+            let data = [];
+      
+            recorder.ondataavailable = (event) => data.push(event.data);
+            recorder.start();
+           
+            let stopped = new Promise((resolve, reject) => {
+              recorder.onstop = resolve;
+              recorder.onerror = (event) => reject(event.name);
+            });
+            let killrecord = new Promise((resolve, reject) => {
+                document.getElementById('stopRecord').onclick = resolve;
+              recorder.onerror = (event) => reject(event.name);
+            });
+              document.getElementById('stopRecord').onclick=()=>{
+                  recorder.stop()
+              }
+            return Promise.all([stopped, killrecord]).then(() => data);
+          };
+
+
+        //   document.getElementById('startRecord').onclick=()=>{
+        //       var downloadButton=document.getElementById('download')
+        //        startRecording(document.getElementById(myarray[0].srcObject), recordingTimeMS)
+        //   .then((recordedChunks) => {
+        //     let recordedBlob = new Blob(recordedChunks, {
+        //       mimeType: "video/webm",
+        //     });
+          
+        //     downloadButton.href = URL.createObjectURL(recordedBlob);
+        //     downloadButton.title = uuidv4() + ".webm";
+        //     downloadButton.download = uuidv4() + ".webm";
+
+        //   })
+        //   .catch(console.log("err"));
+        //   }
+         
+          document.getElementById('startRecord').addEventListener(
+            "click",
+            () => {
+      
+      
+              merger.addStream(document.getElementById(myarray[0]).srcObject, {
+                x: 60, // position of the topleft corner
+                y: 40,
+                width: 580,
+                height: 320,
+                mute: false,
+                draw: (ctx, frame, done) => {
+                  // You can do whatever you want with this canvas context
+      
+                //   let imgrc = document.getElementById("recordBanner");
+                //   let blackbgs = document.getElementById("blackbg");
+                //   ctx.globalAlpha = 1;
+                //   ctx.drawImage(blackbgs, 0, 0, 1280, 720);
+                  ctx.drawImage(frame, 320, 150, 640, 480);
+      
+                  done();
+                },
+                // we don't want sound from the screen (if there is any)
+              });
+      
+              merger.setOutputSize(1280, 720);
+              merger.start();
+      
+              // We now have a merged MediaStream!
+              if (merger.result) {
+                startRecording(merger.result, recordingTimeMS)
+                  .then((recordedChunks) => {
+                    var downloadButton=document.getElementById('download')
+                    let recordedBlob = new Blob(recordedChunks, {
+                      mimeType: "video/webm",
+                    });
+                  
+                    downloadButton.href = URL.createObjectURL(recordedBlob);
+                    downloadButton.title = uuidv4() + ".webm";
+                    downloadButton.download = uuidv4()  + ".webm";
+      
+                   
+                  })
+                  .catch((err)=>console.log('err',err));
+              }
+            },
+            false
+          );
+
     }
 
 
@@ -447,13 +521,9 @@ class SoapboxHall extends Component {
     render() {
         return (
 
-            <div  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' ,minHeight:'100vh'}} id="mainRoom">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' }}>
                 <div id="meetingRoomHeader" onMouseEnter={() => { this.setState({ showControlls: false }) }} ><h3>{`Soapbox Live Experience`}</h3><h5>{"POWERED BY VEROHIVE"}</h5></div>
-               
-                <div>
-                 <div id="meetingRoom"    ></div>
-                 <video id="maxVideoStream" width="300px"  controlls  ></video>
-                </div>
+                <div id="meetingRoom"    ></div>
                 <div id="controlls"  >
 
                     <li id="hangup"><CallEnd /></li>
@@ -470,9 +540,12 @@ class SoapboxHall extends Component {
 
                     }}>{this.state.camMuted ? <VideocamOff style={{ color: 'red' }} /> : <Videocam />}</li>
                     {/* <li><MicOff /></li> */}
-                    {/* <li onClick={() => { this.setState({ chatBox: !this.state.chatBox }) }}><Chat /></li>
-                    <li><Group /></li> */}
-                    <li><PersonAdd /></li>
+                    {/* <li onClick={() => { this.setState({ chatBox: !this.state.chatBox }) }}><Chat /></li> */}
+                    {/* <li><Group /></li> */}
+                    <li id="startRecord"><PlayArrow  /></li>
+                    <li id="stopRecord"><PauseOutlined /></li>
+
+                    <a id="download"><Share /></a>
                     <li><MoreVert /></li>
                 </div>
 
@@ -487,4 +560,4 @@ class SoapboxHall extends Component {
 
 }
 
-export default withRouter(SoapboxHall)
+export default withRouter(RecordMessage)

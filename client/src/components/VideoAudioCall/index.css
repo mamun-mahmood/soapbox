@@ -1,4 +1,7 @@
-
+#mainRoom{
+  background-color: #662d9138;
+  background: url("https://soapboxapi.megahoot.net/profile-pictures/soapbox_Room.png");
+}
 #meetingRoom div {
     text-align: center;
   }
@@ -29,15 +32,20 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    background-color: #662d9138;
+    background-color: #bf73fa;
     width: 100%;
+    max-width: 330px;
     height:calc(100vh - 100px);
     position: fixed;
-    top: 50px;
+    left:0px;
+    top:48px;
+    z-index: 10;
     
    
   }
-  
+  #maxVideoStream{
+z-index: 6;
+  }
   #controlls{
     display: flex;
     flex-direction: row;
@@ -49,6 +57,7 @@
     list-style: none;
     min-width: 100vw;
     padding: 0.5rem;
+    z-index: 11;
   }
   #meetingRoomHeader{
     display: flex;
