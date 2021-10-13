@@ -8,7 +8,7 @@ const HootComments = ({ comments, sliceValue, name, verified }) => {
                 <div className="">
                     {comments.slice(sliceValue).map((comment) => {
                         return (
-                            <div className="comment-info">
+                            <div className="comment-info" key={comment.id}>
                                 <CommentBody
                                     name={comment.name}
                                     username={comment.username}

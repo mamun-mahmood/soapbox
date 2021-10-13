@@ -48,6 +48,18 @@
   font-size: small;
 }
 
+.comment-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.comment-username-name {
+  display: flex;
+  height: 20px;
+  align-items: center;
+}
+
 .comment-info .main {
   display: flex;
   justify-content: space-between;
@@ -118,8 +130,12 @@
 
 .comment-owner {
   display: flex;
-  align-items: center;
   padding: 0.2rem 0;
+}
+
+.comment-profile-pic {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .comment-options {

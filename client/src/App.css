@@ -1358,17 +1358,27 @@ hr {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
+  width: 450px;
   height: 500px;
   background-color: #dcd5fa;
-  /* border: 0.1rem solid var(--primary-color); */
   border-radius: 0.5rem;
   padding: 2rem 2rem 1rem 2rem;
   z-index: 1000;
   box-shadow: var(--secondary-color) 0px 0px 5px;
+  transition: 0.3s;
 }
 .hoot-comment-modal h4 {
   padding-left: 0.5rem;
+}
+
+.login-to-comment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .delete-modal > h4, .delete-info {
