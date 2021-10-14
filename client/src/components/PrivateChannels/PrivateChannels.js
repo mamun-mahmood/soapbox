@@ -30,6 +30,11 @@ import { IoRecording } from "react-icons/io5";
 import { BiVideoRecording } from "react-icons/bi";
 import { Event, LiveTvRounded } from "@material-ui/icons";
 import { v4 as uuidv4 } from "uuid";
+import oneonone from '../../assets/oneonone.png';
+import groupcall from '../../assets/groupcall.png';
+import personalmessage from '../../assets/personalmessage.png';
+import { Form } from "react-bootstrap";
+
 const PrivateChannels = () => {
     const [uploads, setUploads] = useState([]);
     const [hasMore, setHasMore] = useState(true);
@@ -299,7 +304,7 @@ const PrivateChannels = () => {
                                                         </button>
                                                     </div>
                                                 ) : (
-                                                    <div className="control btns">
+                                                    <div className="control">
                                                         {/* <button>
                               {callRequest
                                 ? "Virtual Experiences"
@@ -312,16 +317,16 @@ const PrivateChannels = () => {
                                                             {callRequest ? "Group call" : "Group call"}
                                                         </button>
                                                         <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(!requestMessage); setVerifiedAutograph(false) }} >
-                                                            Personal Message
+                                                            Message
                                                         </button>
                                                         <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(!verifiedAutograph) }} >
-                                                            Verified Autograph
+                                                            Autograph
                                                         </button>
                                                         <button>
                                                             Marketplace
                                                         </button>
                                                         <button >
-                                                            {subscribe ? "Subscribe" : "Subscribe"}
+                                                            {subscribe ? "Membership" : "Membership"}
                                                         </button>
                                                     </div>
                                                 )}
@@ -520,22 +525,86 @@ const PrivateChannels = () => {
                                 <FiSearch className="search-channel-content" />
                             </div>
                             {oneOnOnecall ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Request 1 on 1 call</h5>
-                                <p>Cost: {oneOnOnecallPrice}XMG</p>
+                           
+                                <img src={oneonone} width="400px" />
+                                <Form className="login-form mx-auto p-4 pb-0">
+                <h5 className="text-center mb-1 signup-head">Request 1 on 1 call</h5>
+                <Form.Label className="text-color-auth">This Message is for</Form.Label>
+                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                <Form.Group className="mb-1" controlId="formBasicText" >
+                   
+                    <Form.Check 
+                        type="radio"
+                       
+                      
+                      
+                     
+                    />
+                       <Form.Text className="text-muted">
+                        Me
+                    </Form.Text>
+                   
+                   
+                </Form.Group>
+                <Form.Group className="mb-1" controlId="formBasicText" >
+                   
+                   <Form.Check 
+                       type="radio"
+                      
+                     
+                     
+                    
+                   />
+                      <Form.Text className="text-muted">
+                      Someone else
+                   </Form.Text>
+                  
+                  
+               </Form.Group>
+</div>
+                <Form.Group className="mb-1" controlId="formBasicText">
+                    <Form.Label className="text-color-auth">My email is:</Form.Label>
+                    <Form.Control
+                        type="email"
+                        placeholder="example@mail.com"
+                      
+                       
+                     
+                    />
+                </Form.Group>
 
-                                <div className="btns"> <button>Request</button></div>
+                
+               
+               
+                <button
+                    className="d-grid col-12 btn-main login-form-button"
+                    variant="primary"
+                    type="submit"
+                   
+                   
+                >
+                   Request Now for {oneOnOnecallPrice}XMG
+                </button>
+
+            </Form>
+                                {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
+
+                                <div className="btns"> <button>Request</button></div> */}
                             </div> : null}
 
 
                             {groupCall ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Request Group call</h5>
+                                <img src={groupcall} width="400px" />
                                 <p>Cost: {groupCallPrice}XMG</p>
 
                                 <div className="btns"> <button>Request</button></div>
                             </div> : null}
 
                             {requestMessage ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Request Video Message</h5>
+                                <h5>Request Personal Message</h5>
+                                
+                                <img src={personalmessage} width="400px" />
                                 <p>Cost: {requestMessagePrice}XMG</p>
                                 <input placeholder="Type Message" />
                                 <div className="btns"> <button>Request</button></div>
@@ -587,7 +656,7 @@ const PrivateChannels = () => {
 
                                 {subscribe ? null : (
                                     <div className="subscribe-to-see-more">
-                                        <button>Subscribe to see more</button>
+                                        <button>Be a member to see more</button>
                                     </div>
                                 )}
 
@@ -610,8 +679,8 @@ const PrivateChannels = () => {
                             >
                                 <div className="tabs">
                                     <span onClick={() => { setShowRequest(!showRequest); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false) }} >Requests</span>
-                                    <span onClick={() => { setShowRequest(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false) }} >Subscribers</span>
-                                    <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notification</span>
+                                    <span onClick={() => { setShowRequest(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false) }} >Memberships</span>
+                                    <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span>
                                     <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(!showPricingSetting); setShowNotification(false) }} >Price Settings</span>
                                     <span
                                         onClick={() => {
@@ -643,13 +712,13 @@ const PrivateChannels = () => {
                                 <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Personal Message :  </label><input type="number" value={requestMessagePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setRequestMessagePrice(e.target.value) }} />XMG</div>
                                 <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>verifiedAutographPrice :  </label><input type="number" value={verifiedAutographPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setVerifiedAutographPrice(e.target.value) }} />XMG</div>
 
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Subscription :  </label><input type="number" value={subscribePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setSubscribePrice(e.target.value) }} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Membership :  </label><input type="number" value={subscribePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setSubscribePrice(e.target.value) }} />XMG</div>
 
                                 <div className="btns" >  <button onClick={() => { updatePricing() }}  >Update Changes</button></div>
                             </div> : null}
                             {showSubscribers ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Subscribers</h5>
-                                <p>No Subscribers</p>
+                                <h5>Memberships</h5>
+                                <p>No Members</p>
                             </div> : null}
                             {showNotification ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Notification</h5>

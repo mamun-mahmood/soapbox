@@ -105,7 +105,19 @@
    
 }
 
+.control button{
+    border: none;
+    background-color: #DCD5FA;
+    font-size: smaller;
+    margin: 5px;
+    border-radius: 5px;
+    padding: 0.3rem ;
+   
+}
 
+.control button:hover{
+    background-color: #c5c2ce; 
+}
 
 .btns button {
     margin: 0.5rem ;
