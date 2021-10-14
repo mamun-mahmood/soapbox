@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Component } from 'react'
 import socket, { startSocket } from './socket'
 import kurentoUtils from "kurento-utils";
-import frame from '../../assets/frame.png'
+import frame from '../../assets/frame.png';
+import bgRoom from '../../assets/roombg.png';
 import { Call, CallEnd, Camera, CameraEnhance, CameraFront, CameraRear, Chat, ControlCamera, Group, Mic, MicOff, MoreVert, PersonAdd, Settings, VideoCall, Videocam, VideocamOff, VolumeMute } from '@material-ui/icons';
 import './index.css'
 import { withRouter } from "react-router";
@@ -101,18 +102,23 @@ class SoapboxHall extends Component {
                     document.getElementById(userid).style.maxWidth = "90vw";
                     document.getElementById(userid).style.maxHeight = `${(document.getElementById(userid).offsetWidth / 16) * 9}px`;
                     document.getElementById(userid).style.objectFit = "cover";
-
+                    document.getElementById(userid+"div").style.marginTop="-40px"
 
 
 
                 } else if (myarray.length == 2) {
-
+                     
 
                     document.getElementById(userid).style.width = "300px";
                     document.getElementById(userid).style.minWidth = "300px"
                     document.getElementById(userid).style.maxHeight = `${(document.getElementById(userid).offsetWidth / 16) * 9}px`;
                     document.getElementById(userid).style.objectFit = "cover";
-
+                  
+                    if(myarray.indexOf(userid)==0){
+                        document.getElementById(userid+"div").style.marginTop="15px";
+                    }else{
+                        document.getElementById(userid+"div").style.marginTop="-75px";
+                    }
 
                 } else if (myarray.length > 2 && myarray.length <= 6) {
                    
@@ -142,6 +148,7 @@ class SoapboxHall extends Component {
             div.id = userid + "div";
             var name = document.createElement('div');
             video.id = userid;
+         
             video.autoplay = true;
             video.onclick=()=>{
               this.setState({maxVideoStreamName:username})
@@ -451,12 +458,12 @@ class SoapboxHall extends Component {
     render() {
         return (
 
-            <div  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' ,minHeight:'100vh'}} id="mainRoom">
+            <div  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' ,minHeight:'100vh',background:`url(${bgRoom})`}} id="mainRoom">
                 <div id="meetingRoomHeader" onMouseEnter={() => { this.setState({ showControlls: false }) }} ><h3>{`Soapbox Live Experience`}</h3><h5>{"POWERED BY VEROHIVE"}</h5></div>
                
                 <div style={{display:'flex',flexDirection:'row',position:'fixed',top:'48px',width:'100vw'}}>
                  <div style={{flex:1}} id="meetingRoom"    ></div>
-                 <div  style={{flex:3,backgroundColor:'#BF73FA',position:'relative'}} > 
+                 <div  style={{flex:3,position:'relative'}} > 
                  <video id="maxVideoStream" style={{zIndex:1,position:'absolute'}} width="100%"   controlls  ></video>
                    <img style={{width:'100%',height:"100%",zIndex:2,position:'absolute'}} src={frame} />
                    <h5 style={{width:'100%',height:"100%",zIndex:3,position:'absolute',top:"93%",textAlign:'center',fontFamily:'cursive',fontWeight:'bold'}} >{this.state.maxVideoStreamName}</h5>
