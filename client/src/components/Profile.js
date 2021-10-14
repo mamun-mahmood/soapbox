@@ -310,13 +310,16 @@ const Profile = ({
                                     {myUploads.map((upload) => {
                                         return (
                                             <div key={upload.id}>
-                                                <HootOutside
-                                                    hootId={upload.id}
-                                                    username={upload.authorUsername}
-                                                    mimeType={upload.mimeType}
-                                                    hootImgId={upload.image}
-                                                    profilePicPath={profilePicPath}
-                                                />
+                                                {upload.private === 0
+                                                    ? (<HootOutside
+                                                        hootId={upload.id}
+                                                        username={upload.authorUsername}
+                                                        mimeType={upload.mimeType}
+                                                        hootImgId={upload.image}
+                                                        profilePicPath={profilePicPath}
+                                                    />
+                                                    ) : null
+                                                }
                                             </div>
                                         )
                                     })}

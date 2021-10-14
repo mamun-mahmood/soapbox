@@ -112,23 +112,22 @@ const Explore = () => {
                         {trendingHoots.map((hoot) => {
                             return (
                                 <div key={hoot.id}>
-                                    {hoot.mimeType.substr(0, 5) == "audio"
-                                        ?
-                                        <ExploreHoot
-                                            hootId={hoot.id}
-                                            username={hoot.authorUsername}
-                                            mimeType={hoot.mimeType}
-                                            hootImgId={hoot.image}
-                                        />
-                                        :
-                                        <HootOutside
-                                            hootId={hoot.id}
-                                            username={hoot.authorUsername}
-                                            mimeType={hoot.mimeType}
-                                            hootImgId={hoot.image}
-                                        />
+                                    {hoot.private === 0
+                                        ? (hoot.mimeType.substr(0, 5) == "audio"
+                                            ? <ExploreHoot
+                                                hootId={hoot.id}
+                                                username={hoot.authorUsername}
+                                                mimeType={hoot.mimeType}
+                                                hootImgId={hoot.image}
+                                            />
+                                            : <HootOutside
+                                                hootId={hoot.id}
+                                                username={hoot.authorUsername}
+                                                mimeType={hoot.mimeType}
+                                                hootImgId={hoot.image}
+                                            />
+                                        ) : null
                                     }
-
                                 </div>)
                         })}
                     </div>
@@ -145,23 +144,22 @@ const Explore = () => {
                             {searchResults.map((hoot) => {
                                 return (
                                     <div key={hoot.id}>
-                                        {hoot.mimeType.substr(0, 5) == "audio"
-                                            ?
-                                            <ExploreHoot
-                                                hootId={hoot.id}
-                                                username={hoot.authorUsername}
-                                                mimeType={hoot.mimeType}
-                                                hootImgId={hoot.image}
-                                            />
-                                            :
-                                            <HootOutside
-                                                hootId={hoot.id}
-                                                username={hoot.authorUsername}
-                                                mimeType={hoot.mimeType}
-                                                hootImgId={hoot.image}
-                                            />
+                                        {hoot.private === 0
+                                            ? (hoot.mimeType.substr(0, 5) == "audio"
+                                                ? <ExploreHoot
+                                                    hootId={hoot.id}
+                                                    username={hoot.authorUsername}
+                                                    mimeType={hoot.mimeType}
+                                                    hootImgId={hoot.image}
+                                                />
+                                                : <HootOutside
+                                                    hootId={hoot.id}
+                                                    username={hoot.authorUsername}
+                                                    mimeType={hoot.mimeType}
+                                                    hootImgId={hoot.image}
+                                                />
+                                            ) : null
                                         }
-
                                     </div>)
                             })}
                         </div>
