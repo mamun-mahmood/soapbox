@@ -919,12 +919,15 @@ const HootInside = ({
                                                     <div className="commets-scroll">
                                                         {userInfo
                                                             ?
-                                                            comments.length > 0 &&
-                                                            <HootComments
-                                                                comments={comments}
-                                                                verified={verified}
-                                                                sliceValue={0}
-                                                            />
+                                                            comments.length > 0
+                                                                ?
+                                                                <HootComments
+                                                                    comments={comments}
+                                                                    verified={verified}
+                                                                    sliceValue={0}
+                                                                />
+                                                                :
+                                                                <div className="login-to-comment">Be the first one to comment on this hoot</div>
                                                             :
                                                             <div className="login-to-comment">Please Login to Continue</div>
                                                         }
@@ -1633,12 +1636,15 @@ const HootInside = ({
                                                 <div className="commets-scroll">
                                                     {userInfo
                                                         ?
-                                                        comments.length > 0 &&
-                                                        <HootComments
-                                                            comments={comments}
-                                                            verified={verified}
-                                                            sliceValue={0}
-                                                        />
+                                                        comments.length > 0
+                                                            ?
+                                                            <HootComments
+                                                                comments={comments}
+                                                                verified={verified}
+                                                                sliceValue={0}
+                                                            />
+                                                            :
+                                                            <div className="login-to-comment">Be the first one to comment on this hoot</div>
                                                         :
                                                         <div className="login-to-comment">Please Login to Continue</div>
                                                     }

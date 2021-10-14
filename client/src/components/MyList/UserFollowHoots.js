@@ -49,23 +49,26 @@ const UserFollowHoots = ({ userFollows }) => {
                 {myUploads.map((upload) => {
                     return (
                         <div key={upload.id}>
-                            <Post
-                                hootId={upload.id}
-                                username={upload.authorUsername}
-                                mimeType={upload.mimeType}
-                                hootImgId={upload.image}
-                                likes={upload.likes}
-                                views={upload.views}
-                                followers={upload.followers}
-                                caption={upload.caption}
-                                link={upload.link}
-                                ephemeral={upload.ephemeral}
-                                privateHoot={upload.private}
-                                expiryDate={upload.expiryDate}
-                                timeStamp={upload.timeStamp}
-                                edited={upload.edited}
-                                editedTimeStamp={upload.editedTimeStamp}
-                            />
+                            {upload.private === 0
+                                ? (<Post
+                                    hootId={upload.id}
+                                    username={upload.authorUsername}
+                                    mimeType={upload.mimeType}
+                                    hootImgId={upload.image}
+                                    likes={upload.likes}
+                                    views={upload.views}
+                                    followers={upload.followers}
+                                    caption={upload.caption}
+                                    link={upload.link}
+                                    ephemeral={upload.ephemeral}
+                                    privateHoot={upload.private}
+                                    expiryDate={upload.expiryDate}
+                                    timeStamp={upload.timeStamp}
+                                    edited={upload.edited}
+                                    editedTimeStamp={upload.editedTimeStamp}
+                                />
+                                ) : null
+                            }
                         </div>
                     )
                 })}

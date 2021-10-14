@@ -120,6 +120,7 @@ const CreatePost = () => {
 
     var userName = "";
     var userProfilePic = "";
+    var userPrivateChannel = "";
 
     useEffect(() => {
         //getting user data
@@ -136,6 +137,7 @@ const CreatePost = () => {
     userInformation.map((user) => {
         userName = user.name
         userProfilePic = user.profilePic
+        userPrivateChannel = user.privateChannel
     })
 
     const profilePicPath = `${BaseURL}/profile-pictures/${userProfilePic}`;
@@ -420,10 +422,12 @@ const CreatePost = () => {
                                     className="ephemeral-toggle"
                                     checked={privateCheck}
                                     onChange={makePrivate}
+                                    disabled={userPrivateChannel === 0}
                                 />
                                 <span>
                                     Private{" "}
                                 </span>
+                                <small>{userPrivateChannel === 0 ? "(*requires Private Club, Please go to profile and add Private Club)" : null}</small>
                             </div>
                         </div>
                     </div>

@@ -404,13 +404,16 @@ const PublicProfile = ({
                                     {users.map((user) => {
                                         return (
                                             <div key={user.id}>
-                                                <HootOutside
-                                                    hootId={user.id}
-                                                    username={user.authorUsername}
-                                                    mimeType={user.mimeType}
-                                                    hootImgId={user.image}
-                                                    profilePicPath={profilePicPath}
-                                                />
+                                                {user.private === 0
+                                                    ? (<HootOutside
+                                                        hootId={user.id}
+                                                        username={user.authorUsername}
+                                                        mimeType={user.mimeType}
+                                                        hootImgId={user.image}
+                                                        profilePicPath={profilePicPath}
+                                                    />
+                                                    ) : null
+                                                }
                                             </div>
                                         )
                                     })}
