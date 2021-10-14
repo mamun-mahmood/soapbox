@@ -26,40 +26,25 @@ const MyList = ({ username }) => {
 
     const [keywordsFromDb, setKeywordsFromDb] = useState([]);
     const [relatedHoots, setRelatedHoots] = useState([]);
-
     const [userFollows, setUserFollows] = useState([]);
-
-    // const [allUserFollows, setAllUserFollows] = useState([]);
-    // const sendUserFollows = async () => {
-    //     const followArr = userFollows.map((user) => {
-    //         return (
-    //             user.username
-    //         )
-    //     })
-
-    //     // await axios.get(`${BaseURL}/mylist/follows`, {
-    //     //     users: followArr
-    //     // }).then((response) => {
-    //     //     setAllUserFollows(response.data);
-    //     // })
-    // }
 
     // list of users to whom loggedIn user follows 
     useEffect(() => {
         const getAllUserFollows = async () => {
             await axios.get(`${BaseURL}/user/follows/${username}`)
                 .then((response) => {
-                    setUserFollows(response.data);
+                    setUserFollows(response.data.map((user) => {
+                        return (
+                            user.username
+                        )
+                    }));
                 })
         }
 
         getAllUserFollows();
-    }, [])
+    }, [username])
 
-    // if (userFollows.length > 0) {
-    //     sendUserFollows();
-    // }
-
+    // getting user keywords 
     useEffect(() => {
         const getAllKeywords = async () => {
             axios.get(`${BaseURL}/mylist/${username}`)
@@ -367,8 +352,8 @@ const MyList = ({ username }) => {
             {relatedHoots &&
                 <InfiniteScroll
                     dataLength={relatedHoots.length}
-                    next={fetchMoreRelatedHoots}
-                    hasMore={hasMore}
+                // next={fetchMoreRelatedHoots}
+                // hasMore={hasMore}
                 >
                     {relatedHoots.map((upload) => {
                         return (
@@ -397,13 +382,7 @@ const MyList = ({ username }) => {
             }
 
             {/* users hoots of which loggedIn user follows  */}
-            {userFollows.map((user) => {
-                return (
-                    <div key={user.id}>
-                        <UserFollowHoots user={user.username} />
-                    </div>
-                )
-            })}
+            <UserFollowHoots userFollows={userFollows} />
         </div>
     )
 }

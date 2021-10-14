@@ -3,71 +3,73 @@ import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from '../Post';
 
-const UserFollowHoots = ({ user }) => {
+const UserFollowHoots = ({ userFollows }) => {
     const [myUploads, setMyUploads] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
 
-    const LIMIT = 3;
+    const LIMIT = 5;
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const getUserFollowHoots = async () => {
-            axios.get(`${BaseURL}/upload/user/follows/p/${user}?page=1&limit=${LIMIT}`)
-                .then((response) => {
-                    setMyUploads(response.data.results);
-                })
+            await axios.post(`${BaseURL}/mylist/user/follows/p/?page=1&limit=${LIMIT}`, {
+                userFollows: JSON.stringify(userFollows)
+            }).then((response) => {
+                setMyUploads(response.data.results);
+            })
         }
         getUserFollowHoots();
-    }, [user])
+    }, [userFollows])
 
     const fetchMoreUserFollowHoots = async () => {
-        await axios.get(`${BaseURL}/upload/user/follows/p/${user}?page=${page}&limit=${LIMIT}`)
-            .then((response) => {
-                const hootsFromServer = response.data.results;
+        await axios.post(`${BaseURL}/mylist/user/follows/p/?page=${page}&limit=${LIMIT}`, {
+            userFollows: JSON.stringify(userFollows)
+        }).then((response) => {
+            const hootsFromServer = response.data.results;
 
-                setMyUploads([...myUploads, ...hootsFromServer]);
+            setMyUploads([...myUploads, ...hootsFromServer]);
 
-                if (hootsFromServer === 0 || hootsFromServer < LIMIT) {
-                    setHasMore(false);
-                }
-            });
+            if (hootsFromServer === 0 || hootsFromServer < LIMIT) {
+                setHasMore(false);
+            }
+        });
 
         setpage(page + 1);
     }
 
     return (
         <div>
-            {/* <InfiniteScroll
+            <InfiniteScroll
                 dataLength={myUploads.length}
                 next={fetchMoreUserFollowHoots}
                 hasMore={hasMore}
-            > */}
-            {myUploads.map((upload) => {
-                return (
-                    <div key={upload.id}>
-                        <Post
-                            hootId={upload.id}
-                            username={upload.authorUsername}
-                            mimeType={upload.mimeType}
-                            hootImgId={upload.image}
-                            likes={upload.likes}
-                            views={upload.views}
-                            followers={upload.followers}
-                            caption={upload.caption}
-                            link={upload.link}
-                            ephemeral={upload.ephemeral}
-                            privateHoot={upload.private}
-                            expiryDate={upload.expiryDate}
-                            timeStamp={upload.timeStamp}
-                            edited={upload.edited}
-                            editedTimeStamp={upload.editedTimeStamp}
-                        />
-                    </div>
-                )
-            })}
-            {/* </InfiniteScroll> */}
+            >
+                {myUploads.map((upload) => {
+                    return (
+                        <div key={upload.id}>
+                            <Post
+                                hootId={upload.id}
+                                username={upload.authorUsername}
+                                mimeType={upload.mimeType}
+                                hootImgId={upload.image}
+                                likes={upload.likes}
+                                views={upload.views}
+                                followers={upload.followers}
+                                caption={upload.caption}
+                                link={upload.link}
+                                ephemeral={upload.ephemeral}
+                                privateHoot={upload.private}
+                                expiryDate={upload.expiryDate}
+                                timeStamp={upload.timeStamp}
+                                edited={upload.edited}
+                                editedTimeStamp={upload.editedTimeStamp}
+                            />
+                        </div>
+                    )
+                })}
+            </InfiniteScroll>
         </div>
     )
 }

@@ -8,7 +8,6 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import "./App.css"
 
 import Home from './pages/Home/Home'
@@ -33,14 +32,6 @@ import MyListPage from './pages/MyListPage';
 import recordMessage from './components/VideoAudioCall/recordMessage';
 
 function App() {
-  // const { myList, setMyList } = useContext(MyLists);
-
-  // useEffect(() => {
-  //   if (myList) {
-  //     setMyList(false);
-  //   }
-  // }, [])
-
   return (
     <Router>
       <Toaster
@@ -69,7 +60,7 @@ function App() {
         <Route path="/:FakeData/RecordMessage/:hallId?/:userName?/:randomFakeKey?">
           <ProtectedRoute page={recordMessage} />
         </Route>
-        
+
         <Route path="/bedb02b7-1893-423a-a545-aea621d3d04b/Admin/bedb02b7-a545-aea621d3d04b-1893-423a">
           <ProtectedRoute page={Admin} />
         </Route>
