@@ -117,7 +117,7 @@ class SoapboxHall extends Component {
                     if(myarray.indexOf(userid)==0){
                         document.getElementById(userid+"div").style.marginTop="15px";
                     }else{
-                        document.getElementById(userid+"div").style.marginTop="-75px";
+                        document.getElementById(userid+"div").style.marginTop="-50px";
                     }
 
                 } else if (myarray.length > 2 && myarray.length <= 6) {
