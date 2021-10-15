@@ -61,7 +61,7 @@ const PrivateChannels = () => {
     const { username } = useParams();
     const BaseURL = process.env.REACT_APP_API_URL;
 
-    const LIMIT = 10;
+    const LIMIT = 4;
 
     const history = useHistory();
     const [userInfo, setUserInfo] = useState([]);
@@ -73,6 +73,7 @@ const PrivateChannels = () => {
 
     var totalViews = 0;
     var totalLikes = 0;
+
     useEffect(() => {
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`).then((response) => {
@@ -108,7 +109,7 @@ const PrivateChannels = () => {
     useEffect(() => {
         const getAllUploadData = async () => {
             axios
-                .get(`${BaseURL}/upload/user/p/${username}?page=1&limit=${LIMIT}`)
+                .get(`${BaseURL}/upload/user/private/p/${username}?page=1&limit=${LIMIT}`)
                 .then((response) => {
                     setUploads(response.data.results);
                 });
@@ -118,7 +119,7 @@ const PrivateChannels = () => {
 
     const fetchMoreHoots = async () => {
         await axios
-            .get(`${BaseURL}/upload/user/p/${username}?page=${page}&limit=${LIMIT}`)
+            .get(`${BaseURL}/upload/user/private/p/${username}?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const hootsFromServer = response.data.results;
 
@@ -195,7 +196,6 @@ const PrivateChannels = () => {
             },
         });
     };
-
 
     const updatePricing = () => {
         axios.post(`${BaseURL}/user/UpdatePricings`, {
@@ -278,23 +278,23 @@ const PrivateChannels = () => {
                                                 </a>
                                             )}
                                             <div>
-                                           {userInformation.username !== username? <div className="live-header">Request a Virtual Experience</div>:null}   
+                                                {userInformation.username !== username ? <div className="live-header">Request a Virtual Experience</div> : null}
                                                 {userInformation.username == username ? (
                                                     <div className="control btns">
                                                         <button
                                                             onClick={() => {
-                                                                const Id=uuidv4()
+                                                                const Id = uuidv4()
                                                                 history.push({
-                                                                    pathname: `/${uuidv4()}/SoapboxHall/${uuidv4()}` ,
-                                                                     state:{
-                                                                         host:true,
-                                                                         userName:userInformation.username,
-                                                                         hallId:Id,
-                                                                         hostUserName:username
-                                                                     }
+                                                                    pathname: `/${uuidv4()}/SoapboxHall/${uuidv4()}`,
+                                                                    state: {
+                                                                        host: true,
+                                                                        userName: userInformation.username,
+                                                                        hallId: Id,
+                                                                        hostUserName: username
+                                                                    }
 
-                                                                   
-                                                                 });
+
+                                                                });
                                                             }}
                                                         >
                                                             <div className="channel-btn-icon">
@@ -534,12 +534,12 @@ const PrivateChannels = () => {
                                 <FiSearch className="search-channel-content" />
                             </div>
                             {oneOnOnecall ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                           
+
                                 <img src={oneonone} width="400px" />
                                 <Form className="login-form mx-auto p-4 pb-0">
-                <h5 className="text-center mb-1 signup-head">Request 1 on 1 call</h5>
-                {/* <Form.Label className="text-color-auth">This Message is for</Form.Label> */}
-                {/* <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                                    <h5 className="text-center mb-1 signup-head">Request 1 on 1 call</h5>
+                                    {/* <Form.Label className="text-color-auth">This Message is for</Form.Label> */}
+                                    {/* <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
                 <Form.Group className="mb-1" controlId="formBasicText" >
                    
                     <Form.Check 
@@ -571,7 +571,7 @@ const PrivateChannels = () => {
                   
                </Form.Group>
 </div> */}
-                {/* <Form.Group className="mb-1" controlId="formBasicText">
+                                    {/* <Form.Group className="mb-1" controlId="formBasicText">
                     <Form.Label className="text-color-auth">My email is:</Form.Label>
                     <Form.Control
                         type="email"
@@ -582,21 +582,21 @@ const PrivateChannels = () => {
                     />
                 </Form.Group> */}
 
-                
-               
-               
-                <button
-                    disabled={oneOnOnecallPrice==0?true:false}
-                    className="d-grid col-12 btn-main login-form-button"
-                    variant="primary"
-                    type="submit"
-                   
-                   
-                >
-                   Request Now for {oneOnOnecallPrice} XMG
-                </button>
 
-            </Form>
+
+
+                                    <button
+                                        disabled={oneOnOnecallPrice == 0 ? true : false}
+                                        className="d-grid col-12 btn-main login-form-button"
+                                        variant="primary"
+                                        type="submit"
+
+
+                                    >
+                                        Request Now for {oneOnOnecallPrice} XMG
+                                    </button>
+
+                                </Form>
                                 {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
 
                                 <div className="btns"> <button>Request</button></div> */}
@@ -604,23 +604,23 @@ const PrivateChannels = () => {
 
 
                             {groupCall ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                            <img src={groupcall} width="400px" />
-                            <Form className="login-form mx-auto p-4 pb-0">
-                              
-                            <h5 className="text-center mb-1 signup-head">Request Group call</h5>
-                               
-                                {/* <p>Cost: {groupCallPrice} XMG</p> */}
-                                <button
-                    disabled={groupCallPrice==0?true:false}
-                    className="d-grid col-12 btn-main login-form-button"
-                    variant="primary"
-                    type="submit"
-                   
-                   
-                >
-                   Request Now for {groupCallPrice} XMG
-                </button>
-                           </Form>     {/* <div className="btns"> <button>Request</button></div> */}
+                                <img src={groupcall} width="400px" />
+                                <Form className="login-form mx-auto p-4 pb-0">
+
+                                    <h5 className="text-center mb-1 signup-head">Request Group call</h5>
+
+                                    {/* <p>Cost: {groupCallPrice} XMG</p> */}
+                                    <button
+                                        disabled={groupCallPrice == 0 ? true : false}
+                                        className="d-grid col-12 btn-main login-form-button"
+                                        variant="primary"
+                                        type="submit"
+
+
+                                    >
+                                        Request Now for {groupCallPrice} XMG
+                                    </button>
+                                </Form>     {/* <div className="btns"> <button>Request</button></div> */}
                             </div> : null}
 
                             {requestMessage ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
@@ -630,44 +630,44 @@ const PrivateChannels = () => {
                                 <p>Cost: {requestMessagePrice} XMG</p>
                                 <input placeholder="Type Message" /> */}
                                 {/* <div className="btns"> <button>Request</button></div> */}
-                              <img src={personalmessage} width="400px" />
+                                <img src={personalmessage} width="400px" />
                                 <Form className="login-form mx-auto p-4 pb-0">
-                                <h5 className="text-center mb-1 signup-head">Request Personal Message</h5>
-                              
-                                {/* <p>Cost: {groupCallPrice} XMG</p> */}
-                                <button
-                    disabled={requestMessagePrice==0?true:false}
-                    className="d-grid col-12 btn-main login-form-button"
-                    variant="primary"
-                    type="submit"
-                   
-                   
-                >
-                   Request Now for {requestMessagePrice} XMG
-                </button></Form>
+                                    <h5 className="text-center mb-1 signup-head">Request Personal Message</h5>
+
+                                    {/* <p>Cost: {groupCallPrice} XMG</p> */}
+                                    <button
+                                        disabled={requestMessagePrice == 0 ? true : false}
+                                        className="d-grid col-12 btn-main login-form-button"
+                                        variant="primary"
+                                        type="submit"
+
+
+                                    >
+                                        Request Now for {requestMessagePrice} XMG
+                                    </button></Form>
                             </div> : null}
 
                             {verifiedAutograph ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 {/* <h5>Verified Autograph</h5>
                                 <p>Cost: {verifiedAutographPrice} XMG</p>
 
-                                <div className="btns"> <button>Request</button></div> */} 
-                                 <img src={groupcall} width="400px" />
- <Form className="login-form mx-auto p-4 pb-0"> 
+                                <div className="btns"> <button>Request</button></div> */}
+                                <img src={groupcall} width="400px" />
+                                <Form className="login-form mx-auto p-4 pb-0">
 
-<h5 className="text-center mb-1 signup-head">Request Verified Autograph</h5>
-                              
-                                {/* <p>Cost: {groupCallPrice} XMG</p> */}
-                                <button
-                    disabled={verifiedAutographPrice==0?true:false}
-                    className="d-grid col-12 btn-main login-form-button"
-                    variant="primary"
-                    type="submit"
-                   
-                   
-                >
-                   Request Now for {verifiedAutographPrice} XMG
-                </button></Form>
+                                    <h5 className="text-center mb-1 signup-head">Request Verified Autograph</h5>
+
+                                    {/* <p>Cost: {groupCallPrice} XMG</p> */}
+                                    <button
+                                        disabled={verifiedAutographPrice == 0 ? true : false}
+                                        className="d-grid col-12 btn-main login-form-button"
+                                        variant="primary"
+                                        type="submit"
+
+
+                                    >
+                                        Request Now for {verifiedAutographPrice} XMG
+                                    </button></Form>
                             </div> : null}
 
                             <div className="channel-media" id="feed">
@@ -681,26 +681,24 @@ const PrivateChannels = () => {
                                         {uploads.map((upload) => {
                                             return (
                                                 <div key={upload}>
-                                                    {upload.private === 1 ? (
-                                                        <Post
-                                                            hootId={upload.id}
-                                                            username={upload.authorUsername}
-                                                            mimeType={upload.mimeType}
-                                                            hootImgId={upload.image}
-                                                            likes={upload.likes}
-                                                            views={upload.views}
-                                                            followers={upload.followers}
-                                                            caption={upload.caption}
-                                                            link={upload.link}
-                                                            ephemeral={upload.ephemeral}
-                                                            privateHoot={upload.private}
-                                                            expiryDate={upload.expiryDate}
-                                                            timeStamp={upload.timeStamp}
-                                                            edited={upload.edited}
-                                                            editedTimeStamp={upload.editedTimeStamp}
-                                                        // privateProtected={privateProtected}
-                                                        />
-                                                    ) : null}
+                                                    <Post
+                                                        hootId={upload.id}
+                                                        username={upload.authorUsername}
+                                                        mimeType={upload.mimeType}
+                                                        hootImgId={upload.image}
+                                                        likes={upload.likes}
+                                                        views={upload.views}
+                                                        followers={upload.followers}
+                                                        caption={upload.caption}
+                                                        link={upload.link}
+                                                        ephemeral={upload.ephemeral}
+                                                        privateHoot={upload.private}
+                                                        expiryDate={upload.expiryDate}
+                                                        timeStamp={upload.timeStamp}
+                                                        edited={upload.edited}
+                                                        editedTimeStamp={upload.editedTimeStamp}
+                                                    // privateProtected={privateProtected}
+                                                    />
                                                 </div>
                                             );
                                         })}
@@ -786,30 +784,27 @@ const PrivateChannels = () => {
                                         hasMore={hasMore}
                                         loader={<InfiniteScrollLoader />}
                                     >
-                                        {uploads.map((upload,index) => { 
+                                        {uploads.map((upload, index) => {
                                             return (
-                                        
                                                 <div key={upload}>
-                                                    {upload.private === 1 ? (
-                                                        <Post
-                                                            hootId={upload.id}
-                                                            username={upload.authorUsername}
-                                                            mimeType={upload.mimeType}
-                                                            hootImgId={upload.image}
-                                                            likes={upload.likes}
-                                                            views={upload.views}
-                                                            followers={upload.followers}
-                                                            caption={upload.caption}
-                                                            link={upload.link}
-                                                            ephemeral={upload.ephemeral}
-                                                            privateHoot={upload.private}
-                                                            expiryDate={upload.expiryDate}
-                                                            timeStamp={upload.timeStamp}
-                                                            edited={upload.edited}
-                                                            editedTimeStamp={upload.editedTimeStamp}
-                                                        // privateProtected={privateProtected}
-                                                        />
-                                                    ) : null}
+                                                    <Post
+                                                        hootId={upload.id}
+                                                        username={upload.authorUsername}
+                                                        mimeType={upload.mimeType}
+                                                        hootImgId={upload.image}
+                                                        likes={upload.likes}
+                                                        views={upload.views}
+                                                        followers={upload.followers}
+                                                        caption={upload.caption}
+                                                        link={upload.link}
+                                                        ephemeral={upload.ephemeral}
+                                                        privateHoot={upload.private}
+                                                        expiryDate={upload.expiryDate}
+                                                        timeStamp={upload.timeStamp}
+                                                        edited={upload.edited}
+                                                        editedTimeStamp={upload.editedTimeStamp}
+                                                    // privateProtected={privateProtected}
+                                                    />
                                                 </div>
                                             );
                                         })}

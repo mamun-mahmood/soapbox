@@ -164,7 +164,7 @@ const PublicProfile = ({
     useEffect(() => {
         const getUserUploadData = async () => {
             await axios.all[(
-                axios.get(`${BaseURL}/upload/user/p/${username}?page=1&limit=${LIMIT}`)
+                axios.get(`${BaseURL}/upload/user/public/p/${username}?page=1&limit=${LIMIT}`)
                     .then((response) => {
                         setUsers(response.data.results);
                     }),
@@ -180,7 +180,7 @@ const PublicProfile = ({
     }, [username])
 
     const fetchProfileHoots = async () => {
-        await axios.get(`${BaseURL}/upload/user/p/${username}?page=${page}&limit=${LIMIT}`)
+        await axios.get(`${BaseURL}/upload/user/public/p/${username}?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const hootsFromServer = response.data.results;
 
@@ -404,16 +404,13 @@ const PublicProfile = ({
                                     {users.map((user) => {
                                         return (
                                             <div key={user.id}>
-                                                {user.private === 0
-                                                    ? (<HootOutside
-                                                        hootId={user.id}
-                                                        username={user.authorUsername}
-                                                        mimeType={user.mimeType}
-                                                        hootImgId={user.image}
-                                                        profilePicPath={profilePicPath}
-                                                    />
-                                                    ) : null
-                                                }
+                                                <HootOutside
+                                                    hootId={user.id}
+                                                    username={user.authorUsername}
+                                                    mimeType={user.mimeType}
+                                                    hootImgId={user.image}
+                                                    profilePicPath={profilePicPath}
+                                                />
                                             </div>
                                         )
                                     })}

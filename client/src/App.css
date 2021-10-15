@@ -335,6 +335,7 @@ hr {
 .user-bio-hover {
   padding: 0.2rem;
   font-size: small;
+  font-weight: 500;
 }
 
 .hoot-user-info {

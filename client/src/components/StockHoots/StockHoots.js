@@ -24,7 +24,7 @@ const stockHoots = () => {
     useEffect(() => {
         const getAllUploadData = async () => {
             await axios.all[(
-                axios.get(`${BaseURL}/upload/p?page=1&limit=${LIMIT}`).then((response) => {
+                axios.get(`${BaseURL}/upload/public/p?page=1&limit=${LIMIT}`).then((response) => {
                     setUploads(response.data.results);
                 }),
                 axios.get(`${BaseURL}/upload`).then((response) => {
@@ -36,7 +36,7 @@ const stockHoots = () => {
     }, [])
 
     const fetchMoreHoots = async () => {
-        await axios.get(`${BaseURL}/upload/p?page=${page}&limit=${LIMIT}`)
+        await axios.get(`${BaseURL}/upload/public/p?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const hootsFromServer = response.data.results;
 
@@ -116,28 +116,25 @@ const stockHoots = () => {
                     > */}
                 {allUploads.map((upload) => {
                     return (<div key={upload.id}>
-                        {upload.private === 0
-                            ? ((upload.caption).includes(finalStock)
-                                ? <Post
-                                    hootId={upload.id}
-                                    username={upload.authorUsername}
-                                    mimeType={upload.mimeType}
-                                    hootImgId={upload.image}
-                                    likes={upload.likes}
-                                    views={upload.views}
-                                    followers={upload.followers}
-                                    caption={upload.caption}
-                                    link={upload.link}
-                                    ephemeral={upload.ephemeral}
-                                    privateHoot={upload.private}
-                                    expiryDate={upload.expiryDate}
-                                    timeStamp={upload.timeStamp}
-                                    edited={upload.edited}
-                                    editedTimeStamp={upload.editedTimeStamp}
-                                />
-                                : null
-                            ) : null
-                        }
+                        {(upload.caption).includes(finalStock)
+                            ? <Post
+                                hootId={upload.id}
+                                username={upload.authorUsername}
+                                mimeType={upload.mimeType}
+                                hootImgId={upload.image}
+                                likes={upload.likes}
+                                views={upload.views}
+                                followers={upload.followers}
+                                caption={upload.caption}
+                                link={upload.link}
+                                ephemeral={upload.ephemeral}
+                                privateHoot={upload.private}
+                                expiryDate={upload.expiryDate}
+                                timeStamp={upload.timeStamp}
+                                edited={upload.edited}
+                                editedTimeStamp={upload.editedTimeStamp}
+                            />
+                            : null}
                     </div>)
                 })}
                 {/* </InfiniteScroll>

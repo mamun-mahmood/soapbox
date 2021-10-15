@@ -16,7 +16,7 @@ const Feed = () => {
 
     useEffect(() => {
         const getAllUploadData = async () => {
-            await axios.get(`${BaseURL}/upload/p?page=1&limit=${LIMIT}`).then((response) => {
+            await axios.get(`${BaseURL}/upload/public/p?page=1&limit=${LIMIT}`).then((response) => {
                 setUploads(response.data.results);
             });
         }
@@ -24,7 +24,7 @@ const Feed = () => {
     }, [])
 
     const fetchMoreHoots = async () => {
-        await axios.get(`${BaseURL}/upload/p?page=${page}&limit=${LIMIT}`)
+        await axios.get(`${BaseURL}/upload/public/p?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const hootsFromServer = response.data.results;
 
@@ -51,25 +51,23 @@ const Feed = () => {
                 >
                     {uploads.map((upload) => {
                         return (<div key={upload.id}>
-                            {upload.private === 0 ? (
-                                <Post
-                                    hootId={upload.id}
-                                    username={upload.authorUsername}
-                                    mimeType={upload.mimeType}
-                                    hootImgId={upload.image}
-                                    likes={upload.likes}
-                                    views={upload.views}
-                                    followers={upload.followers}
-                                    caption={upload.caption}
-                                    link={upload.link}
-                                    ephemeral={upload.ephemeral}
-                                    privateHoot={upload.private}
-                                    expiryDate={upload.expiryDate}
-                                    timeStamp={upload.timeStamp}
-                                    edited={upload.edited}
-                                    editedTimeStamp={upload.editedTimeStamp}
-                                />
-                            ) : null}
+                            <Post
+                                hootId={upload.id}
+                                username={upload.authorUsername}
+                                mimeType={upload.mimeType}
+                                hootImgId={upload.image}
+                                likes={upload.likes}
+                                views={upload.views}
+                                followers={upload.followers}
+                                caption={upload.caption}
+                                link={upload.link}
+                                ephemeral={upload.ephemeral}
+                                privateHoot={upload.private}
+                                expiryDate={upload.expiryDate}
+                                timeStamp={upload.timeStamp}
+                                edited={upload.edited}
+                                editedTimeStamp={upload.editedTimeStamp}
+                            />
                         </div>)
                     })}
                 </InfiniteScroll>

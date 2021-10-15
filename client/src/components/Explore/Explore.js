@@ -23,7 +23,7 @@ const Explore = () => {
 
     useEffect(() => {
         const getTrendingHoots = async () => {
-            await axios.get(`${BaseURL}/upload/trending/p?page=1&limit=${LIMIT}`)
+            await axios.get(`${BaseURL}/upload/trending/public/p?page=1&limit=${LIMIT}`)
                 .then((response) => {
                     setTrendingHoots(response.data.results);
                 });
@@ -40,7 +40,7 @@ const Explore = () => {
     }, [searchKeyword])
 
     const fetchMoreTrendingHoots = async () => {
-        await axios.get(`${BaseURL}/upload/trending/p?page=${page}&limit=${LIMIT}`)
+        await axios.get(`${BaseURL}/upload/trending/public/p?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const trendingHootsFromServer = response.data.results;
 
@@ -56,17 +56,15 @@ const Explore = () => {
 
     const searchFromDb = async () => {
         setByDefault(false);
-        await axios.get(`${BaseURL}/upload/search/p?page=1&limit=${LIMIT}&keyword=${searchKeyword}`)
+        await axios.get(`${BaseURL}/upload/search/public/p?page=1&limit=${LIMIT}&keyword=${searchKeyword}`)
             .then((response) => {
                 setSearchResults(response.data.results);
             });
         searchRef.current.focus();
     }
 
-    console.log("searchResults: ", searchResults);
-
     const fetchMoreSearchResults = async () => {
-        await axios.get(`${BaseURL}/upload/search/p?page=${searchPage}&limit=${LIMIT}&keyword=${searchKeyword}`)
+        await axios.get(`${BaseURL}/upload/search/public/p?page=${searchPage}&limit=${LIMIT}&keyword=${searchKeyword}`)
             .then((response) => {
                 const searchResultsFromServer = response.data.results;
 
@@ -112,21 +110,19 @@ const Explore = () => {
                         {trendingHoots.map((hoot) => {
                             return (
                                 <div key={hoot.id}>
-                                    {hoot.private === 0
-                                        ? (hoot.mimeType.substr(0, 5) == "audio"
-                                            ? <ExploreHoot
-                                                hootId={hoot.id}
-                                                username={hoot.authorUsername}
-                                                mimeType={hoot.mimeType}
-                                                hootImgId={hoot.image}
-                                            />
-                                            : <HootOutside
-                                                hootId={hoot.id}
-                                                username={hoot.authorUsername}
-                                                mimeType={hoot.mimeType}
-                                                hootImgId={hoot.image}
-                                            />
-                                        ) : null
+                                    {hoot.mimeType.substr(0, 5) == "audio"
+                                        ? <ExploreHoot
+                                            hootId={hoot.id}
+                                            username={hoot.authorUsername}
+                                            mimeType={hoot.mimeType}
+                                            hootImgId={hoot.image}
+                                        />
+                                        : <HootOutside
+                                            hootId={hoot.id}
+                                            username={hoot.authorUsername}
+                                            mimeType={hoot.mimeType}
+                                            hootImgId={hoot.image}
+                                        />
                                     }
                                 </div>)
                         })}
@@ -144,21 +140,19 @@ const Explore = () => {
                             {searchResults.map((hoot) => {
                                 return (
                                     <div key={hoot.id}>
-                                        {hoot.private === 0
-                                            ? (hoot.mimeType.substr(0, 5) == "audio"
-                                                ? <ExploreHoot
-                                                    hootId={hoot.id}
-                                                    username={hoot.authorUsername}
-                                                    mimeType={hoot.mimeType}
-                                                    hootImgId={hoot.image}
-                                                />
-                                                : <HootOutside
-                                                    hootId={hoot.id}
-                                                    username={hoot.authorUsername}
-                                                    mimeType={hoot.mimeType}
-                                                    hootImgId={hoot.image}
-                                                />
-                                            ) : null
+                                        {hoot.mimeType.substr(0, 5) == "audio"
+                                            ? <ExploreHoot
+                                                hootId={hoot.id}
+                                                username={hoot.authorUsername}
+                                                mimeType={hoot.mimeType}
+                                                hootImgId={hoot.image}
+                                            />
+                                            : <HootOutside
+                                                hootId={hoot.id}
+                                                username={hoot.authorUsername}
+                                                mimeType={hoot.mimeType}
+                                                hootImgId={hoot.image}
+                                            />
                                         }
                                     </div>)
                             })}

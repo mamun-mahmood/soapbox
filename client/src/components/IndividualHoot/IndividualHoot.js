@@ -25,7 +25,7 @@ const IndividualHoot = () => {
     useEffect(() => {
         // here id is hootId
         const getHootById = async () => {
-            await axios.get(`${BaseURL}/hoot/${id}`)
+            await axios.get(`${BaseURL}/hoot/public/${id}`)
                 .then((response) => {
                     setHoot(response.data);
                 });
@@ -56,26 +56,23 @@ const IndividualHoot = () => {
 
                         return (
                             <div className="top-margin" key={hoot.id}>
-                                {hoot.private === 0
-                                    ? (<Post
-                                        hootId={hoot.id}
-                                        username={hoot.authorUsername}
-                                        mimeType={hoot.mimeType}
-                                        hootImgId={hoot.image}
-                                        likes={hoot.likes}
-                                        views={hoot.views}
-                                        followers={hoot.followers}
-                                        caption={hoot.caption}
-                                        link={hoot.link}
-                                        ephemeral={hoot.ephemeral}
-                                        privateHoot={hoot.private}
-                                        expiryDate={hoot.expiryDate}
-                                        timeStamp={hoot.timeStamp}
-                                        edited={hoot.edited}
-                                        editedTimeStamp={hoot.editedTimeStamp}
-                                    />
-                                    ) : null
-                                }
+                                <Post
+                                    hootId={hoot.id}
+                                    username={hoot.authorUsername}
+                                    mimeType={hoot.mimeType}
+                                    hootImgId={hoot.image}
+                                    likes={hoot.likes}
+                                    views={hoot.views}
+                                    followers={hoot.followers}
+                                    caption={hoot.caption}
+                                    link={hoot.link}
+                                    ephemeral={hoot.ephemeral}
+                                    privateHoot={hoot.private}
+                                    expiryDate={hoot.expiryDate}
+                                    timeStamp={hoot.timeStamp}
+                                    edited={hoot.edited}
+                                    editedTimeStamp={hoot.editedTimeStamp}
+                                />
 
                                 <Helmet>
                                     <title>{title}</title>

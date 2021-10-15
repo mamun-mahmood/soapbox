@@ -23,7 +23,7 @@ const HashtagHoots = () => {
     useEffect(() => {
         const getAllUploadData = async () => {
             await axios.all[(
-                axios.get(`${BaseURL}/upload/p?page=1&limit=${LIMIT}`).then((response) => {
+                axios.get(`${BaseURL}/upload/public/p?page=1&limit=${LIMIT}`).then((response) => {
                     setUploads(response.data.results);
                 }),
                 axios.get(`${BaseURL}/upload`).then((response) => {
@@ -35,7 +35,7 @@ const HashtagHoots = () => {
     }, [])
 
     const fetchMoreHoots = async () => {
-        await axios.get(`${BaseURL}/upload/p?page=${page}&limit=${LIMIT}`)
+        await axios.get(`${BaseURL}/upload/public/p?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const hootsFromServer = response.data.results;
 
@@ -127,8 +127,8 @@ const HashtagHoots = () => {
                     > */}
                 {allUploads.map((upload) => {
                     return (<div key={upload.id}>
-                        {upload.private === 0
-                            ? ((upload.caption).includes(finalHashtag)
+                        {
+                            (upload.caption).includes(finalHashtag)
                                 ? <Post
                                     hootId={upload.id}
                                     username={upload.authorUsername}
@@ -147,7 +147,6 @@ const HashtagHoots = () => {
                                     editedTimeStamp={upload.editedTimeStamp}
                                 />
                                 : null
-                            ) : null
                         }
                     </div>)
                 })}

@@ -65,7 +65,7 @@ const MyList = ({ username }) => {
     // getting related hoots
     useEffect(() => {
         const getkeywordRelatedHoots = async () => {
-            await axios.get(`${BaseURL}/mylist/related/${username}/p?page=1&limit=${LIMIT}`)
+            await axios.get(`${BaseURL}/mylist/related/public/${username}/p?page=1&limit=${LIMIT}`)
                 .then((response) => {
                     setRelatedHoots(response.data.results);
                 })
@@ -75,7 +75,7 @@ const MyList = ({ username }) => {
     }, [])
 
     const fetchMoreRelatedHoots = async () => {
-        await axios.get(`${BaseURL}/mylist/related/${username}/p?page=${page}&limit=${LIMIT}`)
+        await axios.get(`${BaseURL}/mylist/related/public/${username}/p?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const relatedHootsFromServer = response.data.results;
 
@@ -358,26 +358,23 @@ const MyList = ({ username }) => {
                     {relatedHoots.map((upload) => {
                         return (
                             <div key={upload.id}>
-                                {upload.private === 0
-                                    ? (<Post
-                                        hootId={upload.id}
-                                        username={upload.authorUsername}
-                                        mimeType={upload.mimeType}
-                                        hootImgId={upload.image}
-                                        likes={upload.likes}
-                                        views={upload.views}
-                                        followers={upload.followers}
-                                        caption={upload.caption}
-                                        link={upload.link}
-                                        ephemeral={upload.ephemeral}
-                                        privateHoot={upload.private}
-                                        expiryDate={upload.expiryDate}
-                                        timeStamp={upload.timeStamp}
-                                        edited={upload.edited}
-                                        editedTimeStamp={upload.editedTimeStamp}
-                                    />
-                                    ) : null
-                                }
+                                <Post
+                                    hootId={upload.id}
+                                    username={upload.authorUsername}
+                                    mimeType={upload.mimeType}
+                                    hootImgId={upload.image}
+                                    likes={upload.likes}
+                                    views={upload.views}
+                                    followers={upload.followers}
+                                    caption={upload.caption}
+                                    link={upload.link}
+                                    ephemeral={upload.ephemeral}
+                                    privateHoot={upload.private}
+                                    expiryDate={upload.expiryDate}
+                                    timeStamp={upload.timeStamp}
+                                    edited={upload.edited}
+                                    editedTimeStamp={upload.editedTimeStamp}
+                                />
                             </div>
                         )
                     })}
