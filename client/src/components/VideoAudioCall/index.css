@@ -102,4 +102,23 @@ color:white;
     color: red;
   }
   
-  
+  .wrapper-container{
+    position: absolute;
+    bottom: 0;
+  }
+
+.wrapper {
+ margin: 5px;
+  background-color: white;
+  color: rgb(116, 116, 116);
+  padding: 1rem;
+  box-shadow: 0 1.5rem 1rem -1rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.3rem;
+  text-align: left;
+  max-width: 150px;
+}
+
+.wrapper p{
+  width: 100%;
+  font-size: 1.9rem;
+}

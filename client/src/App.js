@@ -30,6 +30,7 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import MyListPage from './pages/MyListPage';
 import recordMessage from './components/VideoAudioCall/recordMessage';
+import Reception from './components/VideoAudioCall/reception';
 
 function App() {
   return (
@@ -59,6 +60,9 @@ function App() {
         </Route>
         <Route path="/:FakeData/RecordMessage/:hallId?/:userName?/:randomFakeKey?">
           <ProtectedRoute page={recordMessage} />
+        </Route>
+        <Route path="/:FakeData/Reception/:hallId?/:randomFakeKey?">
+          <ProtectedRoute page={Reception} />
         </Route>
 
         <Route path="/bedb02b7-1893-423a-a545-aea621d3d04b/Admin/bedb02b7-a545-aea621d3d04b-1893-423a">

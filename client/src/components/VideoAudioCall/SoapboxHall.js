@@ -7,10 +7,11 @@ import { Call, CallEnd, Camera, CameraEnhance, CameraFront, CameraRear, Chat, Co
 import './index.css'
 import { withRouter } from "react-router";
 import { v4 as uuidv4 } from "uuid";
+import axios from 'axios'
 class SoapboxHall extends Component {
     constructor(props) {
         super(props);
-        this.state = { chatBox: false, camMuted: false, showControlls: true,maxVideoStreamName:'' }
+        this.state = { chatBox: false, camMuted: false, showControlls: true,maxVideoStreamName:'' ,waiters:[]}
 
     }
     // getting dom elements
@@ -25,7 +26,7 @@ class SoapboxHall extends Component {
         var myarray = []
         // variables
         var roomName = this.props.location.state.hallId
-        var userName = this.props.location.state.hostName;
+        var userName = this.props.location.state.userName;
         var participants = {};
 
         // Let's do this
@@ -87,6 +88,25 @@ class SoapboxHall extends Component {
                     break;
                 case 'disconnectMe':
                     disconnectMe(message.id)
+                    break;
+                case 'imInWaitingRoom':
+                    if(this.props.location.state.host){
+                         var Message = {
+                        event: 'hostArrived',
+                        userid: message.userid,
+                        roomName: roomName,
+                    }
+                    sendMessage(Message);
+                    if (!this.state.waiters.includes(message)) {
+                        this.setState({
+                          waiters: [...this.state.waiters, message],
+                        
+                        });
+                  
+                    }
+                  
+                    }
+                   
 
             }
         });
@@ -473,7 +493,25 @@ class SoapboxHall extends Component {
 
     }
 
+    inviteHandler=()=>{
+        var email=prompt('email');
 
+        const BaseURL = process.env.REACT_APP_API_URL;
+        const sendEmail = async () => {
+            await axios.post(`${BaseURL}/nodemailer/inviteHandler`, {
+                body: JSON.stringify({
+                    To: email,
+                    subject: "Soapbox Virtual Experience Invite",
+                    text: "Please join the meeting ",
+                    link:`https://megahoot.net/${uuidv4()}/Reception/${this.props.location.state.hallId}/${uuidv4()}`   ,
+                }),
+            }).then((response) => {
+               alert(response.data.message);
+            }).catch((err) => { console.log(err) })
+        };
+
+        sendEmail();
+    }
 
     render() {
         return (
@@ -482,7 +520,18 @@ class SoapboxHall extends Component {
                 <div id="meetingRoomHeader" onMouseEnter={() => { this.setState({ showControlls: false }) }} ><h4>{`SOAPBOX VIRTUAL EXPERIENCE`}</h4><h5>{"POWERED BY VEROHIVE"}</h5></div>
                
                 <div style={{display:'flex',flexDirection:'row',position:'fixed',top:'48px',width:'100vw'}}>
-                 <div id="meetingRoom"    ></div>
+                 <div id="meetingRoom"    >
+                     <div className="wrapper-container">{this.state.waiters.map((waiter) => (
+            <div
+              key={waiter.userid}
+              className="wrapper"
+            
+            >
+              {waiter.username} is in reception area
+            </div>
+          ))}</div>
+                 
+                 </div>
                  <div  style={{flex:3,position:'relative',left:'-50px'}} > 
                  <video id="maxVideoStream" style={{zIndex:1,position:'absolute'}} width="100%"   controlls  ></video>
                    <img style={{width:'100%',height:"100%",zIndex:2,position:'absolute'}} src={frame} />
@@ -509,7 +558,7 @@ class SoapboxHall extends Component {
                     {/* <li><MicOff /></li> */}
                     {/* <li onClick={() => { this.setState({ chatBox: !this.state.chatBox }) }}><Chat /></li>
                     <li><Group /></li> */}
-                    <li><PersonAdd /></li>
+                    <li onClick={()=>{this.inviteHandler()}} ><PersonAdd /></li>
                     <li><MoreVert /></li>
                 </div>
 

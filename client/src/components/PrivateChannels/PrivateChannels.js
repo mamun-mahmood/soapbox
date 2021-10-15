@@ -288,7 +288,7 @@ const PrivateChannels = () => {
                                                                     pathname: `/${uuidv4()}/SoapboxHall/${uuidv4()}` ,
                                                                      state:{
                                                                          host:true,
-                                                                         hostName:userInfo[0].name,
+                                                                         userName:userInformation.username,
                                                                          hallId:Id,
                                                                          hostUserName:username
                                                                      }
