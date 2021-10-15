@@ -6,6 +6,7 @@ import bgRoom from '../../assets/roombg.png';
 import { Call, CallEnd, Camera, CameraEnhance, CameraFront, CameraRear, Chat, ControlCamera, Group, Mic, MicOff, MoreVert, PersonAdd, Settings, VideoCall, Videocam, VideocamOff, VolumeMute } from '@material-ui/icons';
 import './index.css'
 import { withRouter } from "react-router";
+import { v4 as uuidv4 } from "uuid";
 class SoapboxHall extends Component {
     constructor(props) {
         super(props);
@@ -23,8 +24,8 @@ class SoapboxHall extends Component {
         var btnRegister = document.getElementById('register');
         var myarray = []
         // variables
-        var roomName = this.props.match.params.hallId
-        var userName = this.props.match.params.userName;
+        var roomName = this.props.location.state.hallId
+        var userName = this.props.location.state.hostName;
         var participants = {};
 
         // Let's do this
@@ -339,6 +340,8 @@ class SoapboxHall extends Component {
             console.log('sending ' + message.event + ' message to server');
             socket.emit('message', message);
         }
+      
+       
 
         document.getElementById('hangup').onclick = () => {
             Stop()
@@ -359,7 +362,16 @@ class SoapboxHall extends Component {
             if (participants[id]&& participants[id].rtcPeer) {
                 participants[id].rtcPeer.dispose();
                 participants[id].rtcPeer = null;
+            if(this.props.location.state.host){
+                const { history } = this.props;
+                if(history) {
+                    history.push(`/${uuidv4()}/private/channels/${this.props.location.state.hostUserName}/${uuidv4()}`);
+                    window.location.reload()
+                }
+            }else{
                 window.location.href = "/";
+            }
+                
                 // this.props.history.goBack();
             }
            

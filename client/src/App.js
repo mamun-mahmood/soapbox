@@ -54,7 +54,7 @@ function App() {
           {/* <ProtectedRoute page={Home} /> */}
           <Home />
         </Route>
-        <Route path="/:FakeData/SoapboxHall/:hallId?/:userName?/:randomFakeKey?">
+        <Route path="/:FakeData/SoapboxHall/:randomFakeKey?">
           <ProtectedRoute page={SoapboxHall} />
         </Route>
         <Route path="/:FakeData/RecordMessage/:hallId?/:userName?/:randomFakeKey?">

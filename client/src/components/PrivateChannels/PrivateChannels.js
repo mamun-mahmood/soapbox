@@ -278,15 +278,23 @@ const PrivateChannels = () => {
                                                 </a>
                                             )}
                                             <div>
-                                                <div className="live-header">Virtual Experiences</div>
+                                           {userInformation.username !== username? <div className="live-header">Request a Virtual Experience</div>:null}   
                                                 {userInformation.username == username ? (
                                                     <div className="control btns">
                                                         <button
                                                             onClick={() => {
-                                                                history.push(
-                                                                    `/${uuidv4()}/SoapboxHall/${uuidv4()}/${userInfo[0].name
-                                                                    }/${uuidv4()}/${uuidv4()}`
-                                                                );
+                                                                const Id=uuidv4()
+                                                                history.push({
+                                                                    pathname: `/${uuidv4()}/SoapboxHall/${uuidv4()}` ,
+                                                                     state:{
+                                                                         host:true,
+                                                                         hostName:userInfo[0].name,
+                                                                         hallId:Id,
+                                                                         hostUserName:username
+                                                                     }
+
+                                                                   
+                                                                 });
                                                             }}
                                                         >
                                                             <div className="channel-btn-icon">
@@ -517,9 +525,10 @@ const PrivateChannels = () => {
                                 }}
                             >
                                 <div className="tabs">
-                                    <span>Hoots</span>
-                                    <span>Photos</span>
-                                    <span>Videos</span>
+                                    <span>Timeline</span>
+                                    <span>On-demand Photos</span>
+                                    <span>On-demand Videos</span>
+                                    <span>Marketplace</span>
                                 </div>
 
                                 <FiSearch className="search-channel-content" />
@@ -529,8 +538,8 @@ const PrivateChannels = () => {
                                 <img src={oneonone} width="400px" />
                                 <Form className="login-form mx-auto p-4 pb-0">
                 <h5 className="text-center mb-1 signup-head">Request 1 on 1 call</h5>
-                <Form.Label className="text-color-auth">This Message is for</Form.Label>
-                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                {/* <Form.Label className="text-color-auth">This Message is for</Form.Label> */}
+                {/* <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
                 <Form.Group className="mb-1" controlId="formBasicText" >
                    
                     <Form.Check 
@@ -561,8 +570,8 @@ const PrivateChannels = () => {
                   
                   
                </Form.Group>
-</div>
-                <Form.Group className="mb-1" controlId="formBasicText">
+</div> */}
+                {/* <Form.Group className="mb-1" controlId="formBasicText">
                     <Form.Label className="text-color-auth">My email is:</Form.Label>
                     <Form.Control
                         type="email"
@@ -571,19 +580,20 @@ const PrivateChannels = () => {
                        
                      
                     />
-                </Form.Group>
+                </Form.Group> */}
 
                 
                
                
                 <button
+                    disabled={oneOnOnecallPrice==0?true:false}
                     className="d-grid col-12 btn-main login-form-button"
                     variant="primary"
                     type="submit"
                    
                    
                 >
-                   Request Now for {oneOnOnecallPrice}XMG
+                   Request Now for {oneOnOnecallPrice} XMG
                 </button>
 
             </Form>
@@ -594,27 +604,70 @@ const PrivateChannels = () => {
 
 
                             {groupCall ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Request Group call</h5>
-                                <img src={groupcall} width="400px" />
-                                <p>Cost: {groupCallPrice}XMG</p>
-
-                                <div className="btns"> <button>Request</button></div>
+                            <img src={groupcall} width="400px" />
+                            <Form className="login-form mx-auto p-4 pb-0">
+                              
+                            <h5 className="text-center mb-1 signup-head">Request Group call</h5>
+                               
+                                {/* <p>Cost: {groupCallPrice} XMG</p> */}
+                                <button
+                    disabled={groupCallPrice==0?true:false}
+                    className="d-grid col-12 btn-main login-form-button"
+                    variant="primary"
+                    type="submit"
+                   
+                   
+                >
+                   Request Now for {groupCallPrice} XMG
+                </button>
+                           </Form>     {/* <div className="btns"> <button>Request</button></div> */}
                             </div> : null}
 
                             {requestMessage ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Request Personal Message</h5>
+                                {/* <h5>Request Personal Message</h5>
                                 
                                 <img src={personalmessage} width="400px" />
-                                <p>Cost: {requestMessagePrice}XMG</p>
-                                <input placeholder="Type Message" />
-                                <div className="btns"> <button>Request</button></div>
+                                <p>Cost: {requestMessagePrice} XMG</p>
+                                <input placeholder="Type Message" /> */}
+                                {/* <div className="btns"> <button>Request</button></div> */}
+                              <img src={personalmessage} width="400px" />
+                                <Form className="login-form mx-auto p-4 pb-0">
+                                <h5 className="text-center mb-1 signup-head">Request Personal Message</h5>
+                              
+                                {/* <p>Cost: {groupCallPrice} XMG</p> */}
+                                <button
+                    disabled={requestMessagePrice==0?true:false}
+                    className="d-grid col-12 btn-main login-form-button"
+                    variant="primary"
+                    type="submit"
+                   
+                   
+                >
+                   Request Now for {requestMessagePrice} XMG
+                </button></Form>
                             </div> : null}
 
                             {verifiedAutograph ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Verified Autograph</h5>
-                                <p>Cost: {verifiedAutographPrice}XMG</p>
+                                {/* <h5>Verified Autograph</h5>
+                                <p>Cost: {verifiedAutographPrice} XMG</p>
 
-                                <div className="btns"> <button>Request</button></div>
+                                <div className="btns"> <button>Request</button></div> */} 
+                                 <img src={groupcall} width="400px" />
+ <Form className="login-form mx-auto p-4 pb-0"> 
+
+<h5 className="text-center mb-1 signup-head">Request Verified Autograph</h5>
+                              
+                                {/* <p>Cost: {groupCallPrice} XMG</p> */}
+                                <button
+                    disabled={verifiedAutographPrice==0?true:false}
+                    className="d-grid col-12 btn-main login-form-button"
+                    variant="primary"
+                    type="submit"
+                   
+                   
+                >
+                   Request Now for {verifiedAutographPrice} XMG
+                </button></Form>
                             </div> : null}
 
                             <div className="channel-media" id="feed">
@@ -733,8 +786,9 @@ const PrivateChannels = () => {
                                         hasMore={hasMore}
                                         loader={<InfiniteScrollLoader />}
                                     >
-                                        {uploads.map((upload) => {
+                                        {uploads.map((upload,index) => { 
                                             return (
+                                        
                                                 <div key={upload}>
                                                     {upload.private === 1 ? (
                                                         <Post
