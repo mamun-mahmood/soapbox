@@ -13,7 +13,7 @@ const RamdomSuggestedHoots = () => {
 
     useEffect(() => {
         const getAllUploadData = async () => {
-            await axios.get(`${BaseURL}/upload/p?page=1&limit=${LIMIT}`).then((response) => {
+            await axios.get(`${BaseURL}/upload/public/p?page=1&limit=${LIMIT}`).then((response) => {
                 setUploads(response.data.results);
             });
         }
@@ -21,7 +21,7 @@ const RamdomSuggestedHoots = () => {
     }, [])
 
     const fetchMoreSuggestedHoots = async () => {
-        await axios.get(`${BaseURL}/upload/p?page=${page}&limit=${LIMIT}`)
+        await axios.get(`${BaseURL}/upload/public/p?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const hootsFromServer = response.data.results;
 
