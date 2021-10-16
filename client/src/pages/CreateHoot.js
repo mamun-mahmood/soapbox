@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import axios from 'axios'
 import Avatar from 'react-avatar';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 import { format } from 'date-fns'
 import addDays from 'date-fns/addDays'
 import getTime from 'date-fns/getTime'
@@ -19,6 +19,7 @@ import { FiArrowLeft, FiLink2 } from "react-icons/fi";
 import BeatLoader from "react-spinners/BeatLoader";
 import NavBar from '../components/NavBar/NavBar'
 import { AiFillMinusCircle } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 
 const CreatePost = () => {
     const [caption, setCaption] = useState("");
@@ -89,19 +90,21 @@ const CreatePost = () => {
 
         const uploadDataToast = uploadData();
         toast.promise(uploadDataToast, {
-            loading: 'Sending Hoot...',
+            pending: 'Sending Hoot...',
             success: 'Hoot Successful',
             error: 'Please try again',
-        }, {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        });
+        }
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        );
 
         setTimeout(() => {
             // history.push("/home");
@@ -196,16 +199,19 @@ const CreatePost = () => {
 
     const insertLink = (event) => {
         // handleSubmit()
-        toast.success('Link inserted', {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        })
+        toast.success('Link inserted'
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        )
+
         setLinkModalOpen(false);
         event.preventDefault();
         // alert(JSON.stringify(formValues));
@@ -289,7 +295,7 @@ const CreatePost = () => {
 
                             <div className="d-flex justify-content-between m-1 btn-caption-top">
                                 <form action="">
-                                    <div className="d-flex justify-content-end my-2 align-items-center">
+                                    <div className="d-flex justify-content-end my-2 align-items-center" style={{ position: "relative" }}>
 
                                         {/* Photo */}
                                         <label htmlFor="post-image" className="btn-label">
@@ -495,7 +501,6 @@ const CreatePost = () => {
                     </div>
                 </div>
             }
-
 
             <Helmet>
                 {/* General tags */}

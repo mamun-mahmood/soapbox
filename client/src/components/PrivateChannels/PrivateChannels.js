@@ -25,7 +25,8 @@ import EndMsg from "../Feed/EndMsg";
 import banner from "../../assets/banner-3.jfif";
 import live from "../../assets/banner-3.jfif";
 import "./privateChannels.css";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
 import { IoRecording } from "react-icons/io5";
 import { BiVideoRecording } from "react-icons/bi";
 import { Event, LiveTvRounded } from "@material-ui/icons";
@@ -140,61 +141,69 @@ const PrivateChannels = () => {
     const subscribeUser = () => {
         setSubscribe(!subscribe);
 
-        toast.success(`Subscribed to ${username}`, {
-            style: {
-                border: "2px solid #8249A0",
-                color: "#8249A0",
-            },
-            iconTheme: {
-                primary: "#8249A0",
-                secondary: "#FFFAEE",
-            },
-        });
+        toast.success(`Subscribed to ${username}`
+            // , {
+            //     style: {
+            //         border: "2px solid #8249A0",
+            //         color: "#8249A0",
+            //     },
+            //     iconTheme: {
+            //         primary: "#8249A0",
+            //         secondary: "#FFFAEE",
+            //     },
+            // }
+        );
     };
 
     const unSubscribeUser = () => {
         setSubscribe(!subscribe);
 
-        toast.success(`Unsubscribed to ${username}`, {
-            style: {
-                border: "2px solid #8249A0",
-                color: "#8249A0",
-            },
-            iconTheme: {
-                primary: "#8249A0",
-                secondary: "#FFFAEE",
-            },
-        });
+        toast.success(`Unsubscribed to ${username}`
+            // , {
+            //     style: {
+            //         border: "2px solid #8249A0",
+            //         color: "#8249A0",
+            //     },
+            //     iconTheme: {
+            //         primary: "#8249A0",
+            //         secondary: "#FFFAEE",
+            //     },
+            // }
+        );
     };
 
     const callRequestUser = () => {
         setCallRequest(!callRequest);
 
-        toast.success(`Requested call to ${username}`, {
-            style: {
-                border: "2px solid #8249A0",
-                color: "#8249A0",
-            },
-            iconTheme: {
-                primary: "#8249A0",
-                secondary: "#FFFAEE",
-            },
-        });
+        toast.success(`Requested call to ${username}`
+            // , {
+            //     style: {
+            //         border: "2px solid #8249A0",
+            //         color: "#8249A0",
+            //     },
+            //     iconTheme: {
+            //         primary: "#8249A0",
+            //         secondary: "#FFFAEE",
+            //     },
+            // }
+        );
     };
 
     const cancelCallRequestUser = () => {
         setCallRequest(!callRequest);
 
-        toast.success(`Cancelled call request to ${username}`, {
-            style: {
-                border: "2px solid #8249A0",
-                color: "#8249A0",
-            },
-            iconTheme: {
-                primary: "#8249A0",
-                secondary: "#FFFAEE",
-            },
-        });
+        toast.success(`Cancelled call request to ${username}`
+            // , {
+            //     style: {
+            //         border: "2px solid #8249A0",
+            //         color: "#8249A0",
+            //     },
+            //     iconTheme: {
+            //         primary: "#8249A0",
+            //         secondary: "#FFFAEE",
+            //     },
+            // }
+        );
     };
 
     const updatePricing = () => {

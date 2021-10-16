@@ -14,8 +14,10 @@ import HootOutside from './HootOutside/HootOutside';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 import ReactTooltip from 'react-tooltip';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
+
+import { toast } from 'react-toastify';
 
 const Profile = ({
     verified,
@@ -103,19 +105,21 @@ const Profile = ({
 
             const privateChannelToast = privateChannel();
             toast.promise(privateChannelToast, {
-                loading: 'Adding your Private Club...',
+                pending: 'Adding your Private Club...',
                 success: 'Private Club added Successfully',
                 error: 'Please try again',
-            }, {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                },
-                iconTheme: {
-                    primary: '#8249A0',
-                    secondary: '#FFFAEE',
-                },
-            });
+            }
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     },
+                //     iconTheme: {
+                //         primary: '#8249A0',
+                //         secondary: '#FFFAEE',
+                //     },
+                // }
+            );
         } else {
             setPrivateC(0);
             toast(() => (
@@ -124,12 +128,14 @@ const Profile = ({
                     <HiBadgeCheck className="verification-badge" />
                     Creators
                 </div>
-            ), {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                }
-            })
+            )
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     }
+                // }
+            )
         }
     }
 

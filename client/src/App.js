@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useContext, useEffect } from 'react'
-import { Toaster } from 'react-hot-toast';
+// import { Toaster } from 'react-hot-toast';
 import PageNotFound from './pages/PageNotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import LandingPage from './pages/LandingPage/LandingPage'
@@ -32,12 +32,27 @@ import MyListPage from './pages/MyListPage';
 import recordMessage from './components/VideoAudioCall/recordMessage';
 import Reception from './components/VideoAudioCall/reception';
 
+import { ToastContainer, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
     <Router>
-      <Toaster
+      {/* <Toaster
         position="bottom-center"
         reverseOrder={false}
+      /> */}
+
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        transition={Zoom}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
 
       <Switch>
