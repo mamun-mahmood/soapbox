@@ -112,6 +112,7 @@ const PrivateChannels = () => {
                 .get(`${BaseURL}/upload/user/private/p/${username}?page=1&limit=${LIMIT}`)
                 .then((response) => {
                     setUploads(response.data.results);
+                   
                 });
         };
         getAllUploadData();
@@ -529,6 +530,8 @@ const PrivateChannels = () => {
                                     <span>On-demand Photos</span>
                                     <span>On-demand Videos</span>
                                     <span>Marketplace</span>
+                                    <span>Live Chat</span>
+                                    
                                 </div>
 
                                 <FiSearch className="search-channel-content" />

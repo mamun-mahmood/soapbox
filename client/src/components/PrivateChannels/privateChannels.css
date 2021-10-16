@@ -97,7 +97,7 @@
     padding: 0.5rem 1rem;
 }
 
-.user-information .btns,.control .btns {
+.user-information .btns,.control  {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -160,7 +160,7 @@
 
 .live-header {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: var(--text-color);
     background-color: #DCD5FA;
     margin: 0.5rem;

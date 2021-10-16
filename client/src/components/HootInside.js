@@ -545,6 +545,8 @@ const HootInside = ({
                                         onMouseLeave={() => setHoverInfo(false)}
                                         className="hover-info"
                                     >
+
+                                       
                                         <div className="hover-user-follow">
                                             <Link to={path}>
                                                 <div className="avatar-hover-wraper">
@@ -642,6 +644,8 @@ const HootInside = ({
                                     </div>
                                 }
 
+                                
+
                                 <div className="user-actions">
                                     {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
                                     {userInfo
@@ -691,6 +695,7 @@ const HootInside = ({
                                             Follow
                                         </button>
                                     }
+                                    
                                     <div
                                         className="more"
                                         onMouseEnter={() => setIsMoreModalOpen(true)}
@@ -1357,6 +1362,7 @@ const HootInside = ({
                                 </div>
                             }
 
+{privateHoot!==1?
                             <div className="user-actions">
                                 {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
                                 {userInfo
@@ -1365,7 +1371,7 @@ const HootInside = ({
                                         ?
                                         null
                                         :
-                                        userFollowers.length === 0
+                                        userFollowers.length === 0 
                                             ?
                                             <button
                                                 className="btn-hoot-follow"
@@ -1415,7 +1421,8 @@ const HootInside = ({
                                         className="more-icon"
                                     />
                                 </div>
-                            </div>
+                            </div>:null}
+                           
 
                             {/* More Option Modal */}
                             {isMoreModalOpen &&
@@ -1695,7 +1702,7 @@ const HootInside = ({
                             {/* </div> */}
                             <div className="post-icons">
                                 {/* <div className="grp-1"> */}
-                                <div className="like-count">
+                                {privateHoot!==1? <div className="like-count">
                                     <div className="like">
                                         {liked
                                             ? <FaHeart
@@ -1718,8 +1725,8 @@ const HootInside = ({
 
                                     {/* artificially increased like counts */}
                                     <div className="like-count">{likes === 0 ? likesCount : formatCount(likesCount) + formatSi(likesCount)}</div>
-                                </div>
-                                <div className="comment-count">
+                                </div>:null}
+                             {privateHoot!==1?  <div className="comment-count">
                                     <div className="comment">
                                         <FiMessageSquare
                                             className="cursor-pointer"
@@ -1727,21 +1734,22 @@ const HootInside = ({
                                         />
                                     </div>
                                     <div className="comment-count">{comments.length}</div>
-                                </div>
+                                </div>:null}
+                              
                                 <div className="view-count">
                                     <div className="view">
                                         <FiEye className="cursor-pointer" />
                                     </div>
                                     <div className="view-count">{formatCount(views) + formatSi(views)}</div>
                                 </div>
-
-                                <div className="share">
+{privateHoot!==1? <div className="share">
                                     <FiShare2
                                         onMouseEnter={() => setIsShareModalOpen(true)}
                                         onClick={() => setIsShareModalOpen(!isShareModalOpen)}
                                         className="cursor-pointer"
                                     />
-                                </div>
+                                </div>:null}
+                               
 
                                 {/* Share Modal with Social Media Icons */}
                                 {isShareModalOpen &&
