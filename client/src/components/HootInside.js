@@ -5,7 +5,8 @@ import ClickAwayListener from 'react-click-away-listener';
 import MediaContent from './MediaContent';
 import HootComments from './Comment/HootComments';
 import ReactTooltip from 'react-tooltip';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import Avatar from 'react-avatar';
 import { formatCount, formatSi } from '../Helpers/formatNumbers';
 import { Link, useHistory } from 'react-router-dom'
@@ -223,16 +224,18 @@ const HootInside = ({
 
     const addComment = () => {
         if (!userInfo) {
-            toast.error('Please Login to Continue', {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                },
-                iconTheme: {
-                    primary: '#8249A0',
-                    secondary: '#FFFAEE',
-                },
-            })
+            toast.error('Please Login to Continue'
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     },
+                //     iconTheme: {
+                //         primary: '#8249A0',
+                //         secondary: '#FFFAEE',
+                //     },
+                // }
+            )
         } else {
             axios.post(`${BaseURL}/comment/`, {
                 name: commentName,
@@ -263,16 +266,18 @@ const HootInside = ({
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
         }, 100);
-        toast.success('Link to hoot copied to clipboard', {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        });
+        toast.success('Link to hoot copied to clipboard'
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        );
     }
 
     const copyTextToClipboard = () => {
@@ -281,16 +286,18 @@ const HootInside = ({
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
         }, 100);
-        toast.success('Text copied to clipboard', {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        });
+        toast.success('Text copied to clipboard'
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        );
     }
 
     const shareVia = async () => {
@@ -347,16 +354,18 @@ const HootInside = ({
         if (userInfo) {
             null
         } else {
-            toast.error('Please login to continue', {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                },
-                iconTheme: {
-                    primary: '#8249A0',
-                    secondary: '#FFFAEE',
-                },
-            });
+            toast.error('Please login to continue'
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     },
+                //     iconTheme: {
+                //         primary: '#8249A0',
+                //         secondary: '#FFFAEE',
+                //     },
+                // }
+            );
         }
     }
     // const jsonLink = JSON.parse(JSON.stringify(link));
@@ -413,16 +422,18 @@ const HootInside = ({
         setTimeout(() => {
             setIsEmbedModalOpen(false)
         }, 100);
-        toast.success('Embed Code copied to clipboard', {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        });
+        toast.success('Embed Code copied to clipboard'
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        );
     }
 
     // converting array of object to normal array
@@ -446,27 +457,31 @@ const HootInside = ({
         }
 
         if (userInfo) {
-            toast.success(`Followed ${username}`, {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                },
-                iconTheme: {
-                    primary: '#8249A0',
-                    secondary: '#FFFAEE',
-                },
-            });
+            toast.success(`Followed ${username}`
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     },
+                //     iconTheme: {
+                //         primary: '#8249A0',
+                //         secondary: '#FFFAEE',
+                //     },
+                // }
+            );
         } else {
-            toast.error('Please login to continue', {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                },
-                iconTheme: {
-                    primary: '#8249A0',
-                    secondary: '#FFFAEE',
-                },
-            });
+            toast.error('Please login to continue'
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     },
+                //     iconTheme: {
+                //         primary: '#8249A0',
+                //         secondary: '#FFFAEE',
+                //     },
+                // }
+            );
         }
     }
 
@@ -483,16 +498,18 @@ const HootInside = ({
             })
         }
 
-        toast.success(`Unfollowed ${username}`, {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        });
+        toast.success(`Unfollowed ${username}`
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        );
     }
 
     return (

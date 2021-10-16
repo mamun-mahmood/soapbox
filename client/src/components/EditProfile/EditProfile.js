@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import Avatar from 'react-avatar'
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { useParams, useHistory } from 'react-router-dom'
 import { HiBadgeCheck } from 'react-icons/hi'
 import './editProfile.css'
@@ -111,19 +112,21 @@ const EditProfile = ({
 
         const saveProfileToast = saveProfileData();
         toast.promise(saveProfileToast, {
-            loading: 'Saving...',
+            pending: 'Saving...',
             success: 'Profile saved',
             error: 'Could not save',
-        }, {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        });
+        }
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        );
 
         setTimeout(() => {
             setSaveLoading(false);

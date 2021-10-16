@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import Avatar from 'react-avatar'
-import toast from 'react-hot-toast'
+// import toast from 'react-hot-toast'
+import { toast } from 'react-toastify';
 import { HiBadgeCheck } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 import { formatCount, formatSi } from '../../Helpers/formatNumbers'
@@ -62,27 +63,31 @@ const SuggestedFollow = ({ verifiedUser }) => {
         }
 
         if (userInfo) {
-            toast.success(`Followed ${verifiedUser.username}`, {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                },
-                iconTheme: {
-                    primary: '#8249A0',
-                    secondary: '#FFFAEE',
-                },
-            });
+            toast.success(`Followed ${verifiedUser.username}`
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     },
+                //     iconTheme: {
+                //         primary: '#8249A0',
+                //         secondary: '#FFFAEE',
+                //     },
+                // }
+            );
         } else {
-            toast.error('Please login to continue', {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                },
-                iconTheme: {
-                    primary: '#8249A0',
-                    secondary: '#FFFAEE',
-                },
-            });
+            toast.error('Please login to continue'
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     },
+                //     iconTheme: {
+                //         primary: '#8249A0',
+                //         secondary: '#FFFAEE',
+                //     },
+                // }
+            );
         }
     }
 
@@ -98,16 +103,18 @@ const SuggestedFollow = ({ verifiedUser }) => {
             })
         }
 
-        toast.success(`Unfollowed ${verifiedUser.username}`, {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        });
+        toast.success(`Unfollowed ${verifiedUser.username}`
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        );
     }
 
     // converting array of object to normal array
@@ -121,16 +128,18 @@ const SuggestedFollow = ({ verifiedUser }) => {
         if (userInfo) {
             null
         } else {
-            toast.error('Please login to continue', {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                },
-                iconTheme: {
-                    primary: '#8249A0',
-                    secondary: '#FFFAEE',
-                },
-            });
+            toast.error('Please login to continue'
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     },
+                //     iconTheme: {
+                //         primary: '#8249A0',
+                //         secondary: '#FFFAEE',
+                //     },
+                // }
+            );
         }
     }
 

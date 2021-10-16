@@ -13,7 +13,8 @@ import UserFollowHoots from './UserFollowHoots';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { IoCloseCircle } from 'react-icons/io5';
 import { MdSync } from 'react-icons/md';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 const MyList = ({ username }) => {
     const [isCreateMyListModalOpen, setIsCreateMyListModalOpen] = useState(false);
@@ -157,16 +158,18 @@ const MyList = ({ username }) => {
         const finalArr = [...keywordsFromDb, ...arrList.filter(n => n)];
         navigator.clipboard.writeText(finalArr.join(', '));
 
-        toast.success("My Keywords Copied to Clipboard", {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        });
+        toast.success("My Keywords Copied to Clipboard"
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        );
     }
 
     const updateKeywords = (finalArr) => {

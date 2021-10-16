@@ -13,7 +13,8 @@ import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from './HootOutside/HootOutside';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { v4 as uuidv4 } from 'uuid';
 const PublicProfile = ({
@@ -93,27 +94,31 @@ const PublicProfile = ({
         }
 
         if (userInformation) {
-            toast.success(`Followed ${userName}`, {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                },
-                iconTheme: {
-                    primary: '#8249A0',
-                    secondary: '#FFFAEE',
-                },
-            });
+            toast.success(`Followed ${userName}`
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     },
+                //     iconTheme: {
+                //         primary: '#8249A0',
+                //         secondary: '#FFFAEE',
+                //     },
+                // }
+            );
         } else {
-            toast.error('Please login to continue', {
-                style: {
-                    border: '2px solid #8249A0',
-                    color: '#8249A0',
-                },
-                iconTheme: {
-                    primary: '#8249A0',
-                    secondary: '#FFFAEE',
-                },
-            });
+            toast.error('Please login to continue'
+                // , {
+                //     style: {
+                //         border: '2px solid #8249A0',
+                //         color: '#8249A0',
+                //     },
+                //     iconTheme: {
+                //         primary: '#8249A0',
+                //         secondary: '#FFFAEE',
+                //     },
+                // }
+            );
         }
     }
 
@@ -129,16 +134,18 @@ const PublicProfile = ({
             })
         }
 
-        toast.success(`Unfollowed ${userName}`, {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        });
+        toast.success(`Unfollowed ${userName}`
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        );
     }
 
     const random = (min = 10, max = 50) => {

@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom'
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { IoCloseOutline } from 'react-icons/io5';
 import { FiMenu } from 'react-icons/fi';
 import './navbar.css';
@@ -16,16 +17,18 @@ const NavBar = ({ width, header }) => {
     }
 
     const logout = () => {
-        toast.success('logout Successful', {
-            style: {
-                border: '2px solid #8249A0',
-                color: '#8249A0',
-            },
-            iconTheme: {
-                primary: '#8249A0',
-                secondary: '#FFFAEE',
-            },
-        });
+        toast.success('logout Successful'
+            // , {
+            //     style: {
+            //         border: '2px solid #8249A0',
+            //         color: '#8249A0',
+            //     },
+            //     iconTheme: {
+            //         primary: '#8249A0',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        );
 
         history.push("/login");
         localStorage.clear();
