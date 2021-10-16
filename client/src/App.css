@@ -2526,3 +2526,16 @@ padding: 6rem 1rem;
 .toastProgress {
   background: var(--primary-color) !important;
 }
+
+
+.toast-body {
+  color: var(--primary-color) !important;
+  --toastify-icon-color-info: var(--primary-color);
+  --toastify-icon-color-success: var(--primary-color);
+  --toastify-icon-color-warning: var(--primary-color);
+  --toastify-icon-color-error: var(--primary-color);
+}
+
+.react-toastify {
+  --toastify-toast-min-height: 0px;
+}
