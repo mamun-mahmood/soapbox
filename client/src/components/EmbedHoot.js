@@ -43,9 +43,11 @@ const EmbedHoot = ({
 
     useEffect(() => {
         axios.all[(
-            axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
-                setUsers(response.data);
-            }), axios.get(`${BaseURL}/comment/${hootId}`)
+            axios.get(`${BaseURL}/upload/user/${username}`)
+                .then((response) => {
+                    setUsers(response.data);
+                }),
+            axios.get(`${BaseURL}/comment/${hootId}`)
                 .then((response) => {
                     setComments(response.data);
                 })
@@ -227,6 +229,7 @@ const EmbedHoot = ({
                                     </div>
                                     <div className="right-icons">
                                         <MediaContent
+                                            hootId={hootId}
                                             mimeType={mimeType}
                                             filePath={filePath}
                                             views={views}
