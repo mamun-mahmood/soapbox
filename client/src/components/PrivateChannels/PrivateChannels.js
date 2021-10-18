@@ -41,6 +41,7 @@ const PrivateChannels = () => {
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
     const [subscribe, setSubscribe] = useState(false);
+    const [showSubscribeButton, setShowSubscribeButton] = useState(false)
     const [callRequest, setCallRequest] = useState(false);
     const [oneOnOnecall, setOneOnOneCall] = useState(false)
     const [groupCall, setGroupCall] = useState(false)
@@ -51,7 +52,8 @@ const PrivateChannels = () => {
     const [groupCallPrice, setGroupCallPrice] = useState(0)
     const [requestMessagePrice, setRequestMessagePrice] = useState(0)
     const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0)
-
+    
+    const [showFeed, setShowFeed] = useState(true)
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
     const [showRequest, setShowRequest] = useState(false)
     const [showSubscribers, setShowSubscribers] = useState(false)
@@ -140,37 +142,19 @@ const PrivateChannels = () => {
     };
 
     const subscribeUser = () => {
-        setSubscribe(!subscribe);
-
-        toast.success(`Subscribed to ${username}`
-            // , {
-            //     style: {
-            //         border: "2px solid #8249A0",
-            //         color: "#8249A0",
-            //     },
-            //     iconTheme: {
-            //         primary: "#8249A0",
-            //         secondary: "#FFFAEE",
-            //     },
-            // }
-        );
+      
+        setShowSubscribeButton(!showSubscribeButton)
+        setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(false)
+    
+        
     };
 
     const unSubscribeUser = () => {
-        setSubscribe(!subscribe);
-
-        toast.success(`Unsubscribed to ${username}`
-            // , {
-            //     style: {
-            //         border: "2px solid #8249A0",
-            //         color: "#8249A0",
-            //     },
-            //     iconTheme: {
-            //         primary: "#8249A0",
-            //         secondary: "#FFFAEE",
-            //     },
-            // }
-        );
+       
+        setShowSubscribeButton(!showSubscribeButton)
+        setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(false)
+     
+       
     };
 
     const callRequestUser = () => {
@@ -245,6 +229,7 @@ const PrivateChannels = () => {
                                                 alt="profile"
                                             />
                                         </div>
+                                        <div style={{maxHeight:'60vh',overflowY:'scroll'}} >
                                         <div className="user-information">
                                             <div className="name">{user.name}</div>
                                             <div className="username">@{user.username}</div>
@@ -328,23 +313,24 @@ const PrivateChannels = () => {
                                 ? "Virtual Experiences"
                                 : "Virtual Experiences"}
                             </button> */}
-                                                        <button onClick={() => { setOneOnOneCall(!oneOnOnecall); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false) }}>
+                                                        <button onClick={() => { setOneOnOneCall(!oneOnOnecall); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(false);setShowSubscribeButton(false) }}>
                                                             1 on 1 call
                                                         </button>
-                                                        <button onClick={() => { setOneOnOneCall(false); setGroupCall(!groupCall); setRequestMessage(false); setVerifiedAutograph(false) }} >
+                                                        <button onClick={() => { setOneOnOneCall(false); setGroupCall(!groupCall); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(false);setShowSubscribeButton(false) }} >
                                                             {callRequest ? "Group call" : "Group call"}
                                                         </button>
-                                                        <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(!requestMessage); setVerifiedAutograph(false) }} >
+                                                        <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(!requestMessage); setVerifiedAutograph(false);setShowFeed(false) ;setShowSubscribeButton(false)}} >
                                                             Message
                                                         </button>
-                                                        <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(!verifiedAutograph) }} >
+                                                        <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(!verifiedAutograph);setShowFeed(false);setShowSubscribeButton(false) }} >
                                                             Autograph
                                                         </button>
                                                         <button>
                                                             Marketplace
                                                         </button>
-                                                        <button >
-                                                            {subscribe ? "Membership" : "Membership"}
+                                                        <button onClick={() => {subscribe?unSubscribeUser():subscribeUser()}} >
+                                                        
+                                                            {subscribe ? "Membership" : "Get Membership"}
                                                         </button>
                                                     </div>
                                                 )}
@@ -504,6 +490,7 @@ const PrivateChannels = () => {
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </Fragment>
@@ -535,7 +522,7 @@ const PrivateChannels = () => {
                                 }}
                             >
                                 <div className="tabs">
-                                    <span>Timeline</span>
+                                    <span  onClick={()=>{setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(true);setShowSubscribeButton(false)}} >Timeline</span>
                                     <span>On-demand Photos</span>
                                     <span>On-demand Videos</span>
                                     <span>Marketplace</span>
@@ -613,8 +600,36 @@ const PrivateChannels = () => {
 
                                 <div className="btns"> <button>Request</button></div> */}
                             </div> : null}
+                             
+                         {showSubscribeButton?
+                          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                          <img src={groupcall} width="400px" />
+                          <Form className="login-form mx-auto p-4 pb-0" onSubmit={(e)=>e.preventDefault()}>
+
+                              <h5 className="text-center mb-1 signup-head">
+                              {!subscribe?`Request Membership`:`Already a Member`}
+                                  </h5>
+
+                              {/* <p>Cost: {groupCallPrice} XMG</p> */}
+                              <button
+                                 onClick={()=>{
+                                    setSubscribe(true);
+                                    toast.success(`Subscribed to ${username}`)
+                                    setShowSubscribeButton(false);
+                                    setShowFeed(true)
+                         
+                                 }}
+                                  className="d-grid col-12 btn-main login-form-button"
+                                  variant="primary"
+                                  type="submit"
 
 
+                              >
+                                {!subscribe?`Get Membership Now for ${subscribePrice} XMG`:`Already a Member`}
+                              </button>
+                          </Form>     {/* <div className="btns"> <button>Request</button></div> */}
+                      </div> 
+                         :null}
                             {groupCall ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <img src={groupcall} width="400px" />
                                 <Form className="login-form mx-auto p-4 pb-0">
@@ -681,8 +696,8 @@ const PrivateChannels = () => {
                                         Request Now for {verifiedAutographPrice} XMG
                                     </button></Form>
                             </div> : null}
-
-                            <div className="channel-media" id="feed">
+{(showFeed && subscribe) ?
+<div className="channel-media" id="feed">
                                 {uploads && (
                                     <InfiniteScroll
                                         dataLength={uploads.length}
@@ -717,16 +732,17 @@ const PrivateChannels = () => {
                                     </InfiniteScroll>
                                 )}
 
-                                {subscribe ? null : (
+                                
+
+
+
+                            </div>: null}
+                           
+                            {subscribe ? null : (
                                     <div className="subscribe-to-see-more">
-                                        <button>Be a member to see more</button>
+                                        <button>Be a Member to get access</button>
                                     </div>
                                 )}
-
-
-
-                            </div>
-
                         </div>
                     ) : null}
 
@@ -781,6 +797,7 @@ const PrivateChannels = () => {
                             </div> : null}
                             {showSubscribers ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Memberships</h5>
+                                {subscribePrice} XMG
                                 <p>No Members</p>
                             </div> : null}
                             {showNotification ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
