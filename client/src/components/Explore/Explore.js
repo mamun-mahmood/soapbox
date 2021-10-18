@@ -7,6 +7,7 @@ import InfiniteScrollLoader from '../Feed/InfiniteScrollLoader';
 import HootOutside from '../HootOutside/HootOutside';
 import ExploreHoot from './ExploreHoot';
 import './explore.css'
+import { toast } from 'react-toastify';
 
 const Explore = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
@@ -80,7 +81,7 @@ const Explore = () => {
 
     const onEnterKey = (event) => {
         if (event.keyCode === 13) {
-            searchFromDb();
+            searchKeyword ? searchFromDb() : toast.info(`Search field can not be empty.`);
         }
         searchRef.current.focus();
     }

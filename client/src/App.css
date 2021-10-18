@@ -2527,7 +2527,6 @@ padding: 6rem 1rem;
   background: var(--primary-color) !important;
 }
 
-
 .toast-body {
   color: var(--primary-color) !important;
   --toastify-icon-color-info: var(--primary-color);

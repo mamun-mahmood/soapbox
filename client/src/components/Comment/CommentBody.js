@@ -187,8 +187,8 @@ const CommentBody = ({ username, commentBody, name, commentProfilePic, verified 
                                     size={20}
                                     round={true}
                                     name={name}
-                                    // src={commentProfilePicPath}
-                                    src={commentProfilePic.toString().match(/fakercloud/gi) == "fakercloud" ? commentProfilePic : `${BaseURL}/profile-pictures/${commentProfilePic}`}
+                                // src={commentProfilePicPath}
+                                // src={commentProfilePic.toString().match(/fakercloud/gi) == "fakercloud" ? commentProfilePic : `${BaseURL}/profile-pictures/${commentProfilePic}`}
                                 />
                             </div>
                         </div>

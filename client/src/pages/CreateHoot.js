@@ -19,6 +19,7 @@ import { FiArrowLeft, FiLink2 } from "react-icons/fi";
 import BeatLoader from "react-spinners/BeatLoader";
 import NavBar from '../components/NavBar/NavBar'
 import { AiFillMinusCircle } from 'react-icons/ai';
+import Picker from 'emoji-picker-react';
 import { toast } from 'react-toastify';
 
 const CreatePost = () => {
@@ -229,6 +230,11 @@ const CreatePost = () => {
         // console.log("parse1: ", parse1);
     }
 
+    const [emojiPicker, setEmojiPicker] = useState(false);
+
+    const emojis = ["😍", "🦉", "😂", "👏🏻", "💖", "😜", "🤯", "🤓", "🥰", "😎", "😋"];
+    const [defaultEmoji, setDefaultEmoji] = useState("😄");
+
     return (
         <Fragment>
             <NavBar />
@@ -335,6 +341,31 @@ const CreatePost = () => {
                                             onChange={handleFile}
                                             hidden
                                         />
+
+                                        <div
+                                            className="emoji-hover"
+                                            onClick={() => { setEmojiPicker(!emojiPicker) }}
+                                        >
+                                            <span
+                                                onMouseEnter={() => { emojiPicker || setDefaultEmoji(emojis[Math.floor(Math.random() * emojis.length)]) }}
+                                            >
+                                                {defaultEmoji}
+                                            </span>
+                                        </div>
+
+                                        {emojiPicker && (
+                                            <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                <div>
+                                                    <Picker
+                                                        native
+                                                        onEmojiClick={(event, emojiObject) => {
+                                                            setCaption(caption + emojiObject.emoji);
+                                                        }}
+                                                        pickerStyle={{ position: "absolute", top: "2.5rem", left: "0.2rem", zIndex: "1111" }}
+                                                    />
+                                                </div>
+                                            </ClickAwayListener>
+                                        )}
 
                                         <FiLink2
                                             className="insert-link"

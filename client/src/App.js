@@ -34,6 +34,7 @@ import Reception from './components/VideoAudioCall/reception';
 
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CommentsPanel from './pages/CommentsPanel/CommentsPanel';
 
 function App() {
   return (
@@ -53,7 +54,6 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-
         closeButton={false}
 
         className="react-toastify"
@@ -88,6 +88,11 @@ function App() {
         <Route path="/bedb02b7-1893-423a-a545-aea621d3d04b/Admin/bedb02b7-a545-aea621d3d04b-1893-423a">
           <ProtectedRoute page={Admin} />
         </Route>
+
+        <Route path="/d5144033-9806-4e4f-b160-d272935e9c43/CommentsPanel/158ca050-f0b9-4955-a93e-f18d1a6c591d">
+          <ProtectedRoute page={CommentsPanel} />
+        </Route>
+
         <Route path="/embed/hoot/:hootId">
           {/* <ProtectedRoute page={EmbedHootPage} /> */}
           <EmbedHootPage />
