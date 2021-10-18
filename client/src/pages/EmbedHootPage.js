@@ -11,7 +11,7 @@ const EmbedHootPage = () => {
 
     useEffect(() => {
         const getHootById = async () => {
-            await axios.get(`${BaseURL}/hoot/${hootId}`)
+            await axios.get(`${BaseURL}/hoot/public/${hootId}`)
                 .then((response) => {
                     console.log("response: ", response);
                     setHoot(response.data);
@@ -24,10 +24,6 @@ const EmbedHootPage = () => {
             console.log("error fetching...", error);
         }
     }, [])
-
-    console.log(hootId);
-
-    console.log("hoot", hoot);
 
     return (
         <Fragment>

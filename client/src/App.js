@@ -53,6 +53,11 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
+
+        closeButton={false}
+
+        className="react-toastify"
+        bodyClassName="toast-body"
       />
 
       <Switch>
