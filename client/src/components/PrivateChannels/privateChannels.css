@@ -362,11 +362,12 @@ width: 100%;
 display: flex;
 justify-content: left;
 align-items: center;
+position: fixed;
 
 }
 
 #messageInp{
-width: 70%;
+width: 50%;
 background-color:#a09ba356;
 border: none;
 border-radius: 6px;
@@ -374,6 +375,7 @@ height: 34px;
 min-width: 300px;
 outline: none;
 padding: 5px;
+
 }
 
 .icon-text{
