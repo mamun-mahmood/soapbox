@@ -5,9 +5,9 @@ import Post from "../Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import InfiniteScrollLoader from "../Feed/InfiniteScrollLoader";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
-import { FaTumblr } from "react-icons/fa";
+import { FaTumblr ,IoSend} from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
-import { FiTwitter, FiSearch } from "react-icons/fi";
+import { FiTwitter, FiSearch ,FiSend,FiFolder,FiImage,FiVideo,FiSmile} from "react-icons/fi";
 import {
     RiFacebookCircleLine,
     RiLiveFill,
@@ -54,6 +54,9 @@ const PrivateChannels = () => {
     const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0)
     
     const [showFeed, setShowFeed] = useState(true)
+      
+    const [showChatRoom, setShowChatRoom] = useState(false)
+    
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
     const [showRequest, setShowRequest] = useState(false)
     const [showSubscribers, setShowSubscribers] = useState(false)
@@ -71,12 +74,31 @@ const PrivateChannels = () => {
     const [likes, setLikes] = useState(0);
     const [views, setViews] = useState(0);
     const [loading, setLoading] = useState(true);
-
+    const [messageInboxValue, setMessageInboxValue] = useState("");
+    
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
-
+    const form = document.getElementById('send-container');
+    const messageInput = document.getElementById('messageInp');
+    const messageContainer = document.querySelector('.container')
     var totalViews = 0;
     var totalLikes = 0;
-
+    const append = (message, position) => {
+        const messageElement = document.createElement('div');
+        messageElement.innerText = message;
+        messageElement.classList.add('message');
+        messageElement.classList.add(position);
+        messageContainer.append(messageElement);
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+       
+    }
+    const messagesubmit=(e)=>{
+        e.preventDefault();
+        const message = messageInboxValue;
+        append(`You:${message}`,'right')
+        // socket.emit('send',message);
+      setMessageInboxValue('')
+       
+        }
     useEffect(() => {
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`).then((response) => {
@@ -207,8 +229,9 @@ const PrivateChannels = () => {
     return (
         <Fragment>
             <div className="private-channels" style={{ userSelect: "none" }}>
-                <div className="channel-banner">
+                <div className="channel-banner" style={{position:'relative' }}>
                     <img src={banner} alt="banner" />
+                    <div style={{position:'absolute',bottom:'50px',left:'120px',zIndex:5 }} className="clubOwner">Club Owner</div>
                 </div>
                 <div className="channel-content">
                     {userInfo.map((user) => {
@@ -223,13 +246,15 @@ const PrivateChannels = () => {
                                             padding: "1rem",
                                         }}
                                     >
+                                        
                                         <div className="profile-pic">
+                                           
                                             <img
                                                 src={`${BaseURL}/profile-pictures/${user.profilePic}`}
                                                 alt="profile"
                                             />
                                         </div>
-                                        <div style={{maxHeight:'60vh',overflowY:'scroll'}} >
+                                        <div style={{maxHeight:'70vh',overflowY:'scroll'}} >
                                         <div className="user-information">
                                             <div className="name">{user.name}</div>
                                             <div className="username">@{user.username}</div>
@@ -275,8 +300,8 @@ const PrivateChannels = () => {
                                             <div>
                                                 {userInformation.username !== username ? <div className="live-header">Request a Virtual Experience</div> : null}
                                                 {userInformation.username == username ? (
-                                                    <div className="control btns">
-                                                        <button
+                                                    <div>
+                                                        {/* <button
                                                             onClick={() => {
                                                                 const Id = uuidv4()
                                                                 history.push({
@@ -291,20 +316,36 @@ const PrivateChannels = () => {
 
                                                                 });
                                                             }}
-                                                        >
-                                                            <div className="channel-btn-icon">
+                                                        > </button> */}
+                                                 
+                                                            <div className="live-header">Schedule Virtual Experience</div>
+                                                            <div className="control">
+
+<button>Schedule Vero Call or PPV</button>
+
+</div>
+<br></br>
+<br></br>
+<div className="live-header">Create Pay Per View Event</div>
+<div className="control">
+
+<button>Brodcast Vero Live PPV</button>
+<button>Brodcast Vero Pre-recorded PPV</button>
+
+</div>
+                                                            {/* <div className="channel-btn-icon">
                                                                 Go Live
                                                                 <BiVideoRecording
                                                                     style={{ fontSize: "1.55rem" }}
                                                                 />
                                                             </div>
-                                                        </button>
+                                                       
                                                         <button>
                                                             <div className="channel-btn-icon">
                                                                 Create Event
                                                                 <Event />
                                                             </div>
-                                                        </button>
+                                                        </button> */}
                                                     </div>
                                                 ) : (
                                                     <div className="control">
@@ -526,7 +567,7 @@ const PrivateChannels = () => {
                                     <span>On-demand Photos</span>
                                     <span>On-demand Videos</span>
                                     <span>Marketplace</span>
-                                    <span>Live Chat</span>
+                                    <span onClick={()=>{setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(!showFeed);setShowSubscribeButton(false);setShowChatRoom(!showChatRoom)}} >Club Chat</span>
                                     
                                 </div>
 
@@ -696,6 +737,9 @@ const PrivateChannels = () => {
                                         Request Now for {verifiedAutographPrice} XMG
                                     </button></Form>
                             </div> : null}
+                            
+
+
 {(showFeed && subscribe) ?
 <div className="channel-media" id="feed">
                                 {uploads && (
@@ -746,6 +790,10 @@ const PrivateChannels = () => {
                         </div>
                     ) : null}
 
+                    
+
+                   
+
                     {userInformation.username == username ? (
                         <div className="channel-user-content">
                             <div
@@ -760,7 +808,12 @@ const PrivateChannels = () => {
                                     <span onClick={() => { setShowRequest(!showRequest); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false) }} >Requests</span>
                                     <span onClick={() => { setShowRequest(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false) }} >Memberships</span>
                                     <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span>
-                                    <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(!showPricingSetting); setShowNotification(false) }} >Price Settings</span>
+                                    <span 
+                                    onClick={() => {
+                                         setShowRequest(false);
+                                          setShowSubscribers(false);
+                                           setShowPricingSetting(!showPricingSetting);
+                                            setShowNotification(false) }} >Price Settings</span>
                                     <span
                                         onClick={() => {
                                             history.push(
@@ -773,7 +826,9 @@ const PrivateChannels = () => {
                                             Record Message
                                             <LiveTvRounded />
                                         </div>
+                                       
                                     </span>
+                                    <span  onClick={()=>{setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(!showFeed);setShowSubscribeButton(false);setShowChatRoom(!showChatRoom)}}  >Club Chat</span>
                                 </div>
 
                                 <FiSearch className="search-channel-content" />
@@ -804,8 +859,7 @@ const PrivateChannels = () => {
                                 <h5>Notification</h5>
                                 <p>No Notification</p>
                             </div> : null}
-
-                            <div className="channel-media" id="feed">
+{showFeed? <div className="channel-media" id="feed">
                                 {uploads && (
                                     <InfiniteScroll
                                         dataLength={uploads.length}
@@ -839,7 +893,23 @@ const PrivateChannels = () => {
                                         })}
                                     </InfiniteScroll>
                                 )}
-                            </div>
+                            </div>:null}
+                            {showChatRoom?<div >
+                    <div className="container">
+  
+  </div>
+  
+  <div className="send">
+      <form action="#" id="send-container" onSubmit={(e)=>messagesubmit(e)}>
+   <FiVideo className="icon-text" /> <FiImage  className="icon-text" />   <FiFolder  className="icon-text" />  
+   <FiSmile className="icon-text" /> 
+    <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e)=>{setMessageInboxValue(e.target.value)}} />
+        <div className="btns"> <button  type="submit"><FiSend   /></button></div>
+  
+      </form>
+  </div>
+                    </div>:null}
+                           
                         </div>
                     ) : null}
                 </div>

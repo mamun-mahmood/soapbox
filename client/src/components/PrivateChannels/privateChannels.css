@@ -87,6 +87,12 @@
     font-weight: 500;
 }
 
+.clubOwner {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+
 .user-information span {
     font-weight: 500;
 }
@@ -310,4 +316,72 @@
     .channel-user-info {
         display: none;
     }
+}
+
+
+.container{
+  width: 100%;
+   border: 1px solid #e1b8f886;
+   padding: 33px;
+  
+    height:80%;
+    min-height: 300px;
+    max-height: 300px;
+   overflow-y: auto;
+  
+   margin-bottom: 23px;
+}
+
+.message{
+background-color: #8149a09c;
+width: 70%;
+padding: 10px;
+margin: 17px 2px ;
+border: 2px solid #E1B8F8;
+border-radius: 14px;
+overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.left{
+float: left;
+clear: both;
+}
+
+.right{
+float: right;
+clear: both;
+}
+
+#send-container{
+display: block;
+margin: auto;
+text-align: center;
+width: 100%;
+display: flex;
+justify-content: left;
+align-items: center;
+
+}
+
+#messageInp{
+width: 70%;
+background-color:#a09ba356;
+border: none;
+border-radius: 6px;
+height: 34px;
+min-width: 300px;
+outline: none;
+padding: 5px;
+}
+
+.icon-text{
+    font-size: 30px;
+    background-color: #e1b8f886;
+    margin: 5px;
+    color: #8149a09c;
+    border-radius: 15px;
+    padding: 5px;
+    cursor: pointer;
 }
