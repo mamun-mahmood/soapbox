@@ -221,7 +221,7 @@
     justify-content: space-between;
     align-items: center;
     /* position: fixed; */
-    height: 40px;
+    height: 60px;
 
     width: 100%;
     background-color: #F7F6FF;
@@ -320,7 +320,7 @@
 
 
 .container{
-  width: 100%;
+  width: 60%;
    border: 1px solid #e1b8f886;
    padding: 33px;
   position: relative;
@@ -328,11 +328,12 @@
     min-height: 300px;
     max-height: 300px;
    overflow-y: auto;
+   min-width: 300px;
   
    margin-bottom: 23px;
 }
 
-.message{
+/* .message{
 background-color: #8149a0d5;
 
 padding: 10px;
@@ -344,27 +345,59 @@ border-radius: 14px;
 overflow-wrap: break-word;
   word-wrap: break-word;
   hyphens: auto;
+} */
+
+.ProfileBox{
+    display: flex;
+    flex-direction: row;
+  
+}
+
+.ProfileBox p{
+    margin-left: 1px;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.438)
+}
+
+
+
+.messageBox{
+    background-color: #8149a013;
+
+padding: 10px;
+
+border:none;
+color: #374151;;
+border-radius: 14px;
+display: flex;
+flex-direction: column;
+
+margin: 17px 2px ;
+
+}
+.message{
+  
+border:none;
+color: #374151;;
+overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 .message-emoji{
     font-size: 50px;
 }
-.chat-profile-right{
+.chat-profile{
     max-width: 30px;
     min-width: 30px;
     min-height: 30px;
     max-height: 30px;
     border-radius: 15px;
+    margin-right: 5px;
+   
 
 }
-.chat-profile-left{
-    max-width: 30px;
-    min-width: 30px;
-    min-height: 30px;
-    max-height: 30px;
-    border-radius: 15px;
-    float: left;
 
-}
 .left{
 float: left;
 clear: both;
@@ -384,6 +417,7 @@ display: flex;
 justify-content: left;
 align-items: center;
 position: fixed;
+bottom: 1px;
 
 }
 

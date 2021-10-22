@@ -10,6 +10,7 @@ import { SiTiktok } from "react-icons/si";
 import { FiTwitter, FiSearch, FiSend, FiFolder, FiImage, FiVideo, FiSmile } from "react-icons/fi";
 import socket, { startSocket } from '../../socketChat';
 import Picker from 'emoji-picker-react';
+import Linkify from 'react-linkify';
 import {
     RiFacebookCircleLine,
     RiLiveFill,
@@ -88,39 +89,56 @@ const PrivateChannels = () => {
 
     var totalViews = 0;
     var totalLikes = 0;
-    const append = (message, position, imgSrc, isEmoji) => {
+    const append = (chatname,message, position, imgSrc, isEmoji) => {
 
         var messageContainer = document.querySelector('.container')
+        const messageBox = document.createElement('div'); 
+        const ProfileBox = document.createElement('div'); 
         const messageElement = document.createElement('div');
+        const image = document.createElement('img')
+        const name = document.createElement('p')
 
+        messageContainer.append(messageBox);
+        messageBox.append(ProfileBox);
+        messageBox.append(messageElement);
+
+
+       ProfileBox.append(image)
+       ProfileBox.append(name)
+
+       messageBox.classList.add('messageBox');
+       ProfileBox.classList.add('ProfileBox')
 
         messageElement.innerText = message;
+        name.innerText = chatname;
         messageElement.classList.add('message');
         if (isEmoji) {
             messageElement.classList.add('message-emoji');
         }
-        messageElement.classList.add(position);
+      
+
+
         if (imgSrc) {
-            const image = document.createElement('img');
+           
             image.src = imgSrc;
             if (position == "right") {
-                image.classList.add('chat-profile-right');
+                image.classList.add('chat-profile');
             } else {
-                image.classList.add('chat-profile-left');
+                image.classList.add('chat-profile');
             }
 
 
-            messageElement.append(image);
+          
         }
 
-        messageContainer.append(messageElement);
+        // messageContainer.append(messageElement);
         messageContainer.scrollTop = messageContainer.scrollHeight;
 
     }
     const messagesubmit = (e) => {
         e.preventDefault();
         const message = messageInboxValue;
-        append(`${message}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`)
+        append(userFullName,`${message}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`)
         // socket.emit('send',message);
         socket.emit('send', {
             name: userFullName,
@@ -135,21 +153,21 @@ const PrivateChannels = () => {
     useEffect(() => {
         socket.on('user-joined', name => {
 
-            append(`${name.name} Joined the chat`, 'right', `${BaseURL}/profile-pictures/${name.profilePic}`)
+            append(`${name.name} Joined the chat`, '',"", `${BaseURL}/profile-pictures/${name.profilePic}`)
         })
 
         socket.on('receive', data => {
             console.log(data, "data")
             if (data.isEmoji) {
-                append(`${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
+                append(data.name,`${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
 
             } else {
-                append(`${data.name}:${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
+                append(data.name,`${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
             }
         })
 
         socket.on('left', name => {
-            append(`${name} left the chat`, 'right')
+            append(name,`${name} left the chat`)
         })
     }, [])
 
@@ -823,7 +841,8 @@ const PrivateChannels = () => {
                                 </div>
                             )}
 
-                            {showChatRoom ? <div >
+                            {showChatRoom ?  <div >
+                                <Linkify >
                                 <div className="container">
                                     {emojiPicker && (
                                         <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
@@ -848,6 +867,8 @@ const PrivateChannels = () => {
                                         </ClickAwayListener>
                                     )}
                                 </div>
+                                </Linkify>
+
 
                                 <div className="send">
                                     <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
@@ -860,7 +881,7 @@ const PrivateChannels = () => {
 
                                     </form>
                                 </div>
-                            </div> : null}
+                            </div>   : null}
                         </div>
                     ) : null}
 
@@ -882,7 +903,7 @@ const PrivateChannels = () => {
                                 <span  onClick={()=>{setShowRequest(false);setShowFeed(!showFeed); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false)}} >Timeline</span>
                                     <span onClick={() => { setShowRequest(!showRequest); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false) }} >Requests</span>
                                     <span onClick={() => { setShowRequest(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false) }} >Memberships</span>
-                                    <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span>
+                                    {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
                                     <span
                                         onClick={() => {
                                             setShowRequest(false);
@@ -900,7 +921,7 @@ const PrivateChannels = () => {
                                     >
                                         <div className="channel-btn-icon">
                                             Record Message
-                                            <LiveTvRounded />
+                                          
                                         </div>
 
                                     </span>
@@ -911,7 +932,7 @@ const PrivateChannels = () => {
                                     }}  >Club Chat</span>
                                 </div>
 
-                                <FiSearch className="search-channel-content" />
+                                {/* <FiSearch className="search-channel-content" /> */}
                             </div>
                             {showRequest ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Requests</h5>
