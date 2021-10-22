@@ -377,19 +377,19 @@ const PrivateChannels = () => {
                                                             }}
                                                         > </button> */}
                                                  
-                                                            <div className="live-header">Schedule Virtual Experience</div>
+                                                            <div className="live-header" style={{backgroundColor:'#8149a06c',color:'white',borderRadius:'3px'}} >Schedule Virtual Experience</div>
                                                             <div className="control">
 
-<button>Schedule Vero Call or PPV</button>
+<button style={{minWidth:'208px'}} >Schedule Vero Call or PPV</button>
 
 </div>
 <br></br>
 <br></br>
-<div className="live-header">Create Pay Per View Event</div>
+<div className="live-header" style={{backgroundColor:'#8149a06c',color:'white',borderRadius:'3px'}}>Create Pay Per View Event</div>
 <div className="control">
 
-<button>Brodcast Vero Live PPV</button>
-<button>Brodcast Vero Pre-recorded PPV</button>
+<button style={{minWidth:'208px'}}>Broadcast Vero Live PPV</button>
+<button style={{minWidth:'208px'}} >Broadcast Vero Pre-recorded PPV</button>
 
 </div>
                                                             {/* <div className="channel-btn-icon">
@@ -906,6 +906,7 @@ const PrivateChannels = () => {
                                 }}
                             >
                                 <div className="tabs">
+                                <span  onClick={()=>{setShowRequest(false);setShowFeed(!showFeed); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false)}} >Timeline</span>
                                     <span onClick={() => { setShowRequest(!showRequest); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false) }} >Requests</span>
                                     <span onClick={() => { setShowRequest(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false) }} >Memberships</span>
                                     <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span>
