@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect, useRef, useCallback } from 'react'
 import { Helmet } from 'react-helmet';
 import axios from 'axios'
 import Avatar from 'react-avatar';
@@ -13,14 +13,23 @@ import ClickAwayListener from 'react-click-away-listener';
 import ReactTooltip from 'react-tooltip';
 import { Button } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-import { IoCloseOutline } from 'react-icons/io5'
+import { IoCloseOutline, IoRadioButtonOn } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
-import { FiArrowLeft, FiLink2 } from "react-icons/fi";
+import { FiArrowLeft, FiCamera, FiDownload, FiLink2, FiVideo } from "react-icons/fi";
 import BeatLoader from "react-spinners/BeatLoader";
 import NavBar from '../components/NavBar/NavBar'
-import { AiFillMinusCircle } from 'react-icons/ai';
+import { AiFillMinusCircle, AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai';
+import { VscDebugRestart } from 'react-icons/vsc';
+// import { BsStopCircle } from 'react-icons/bs';
+import { FaStopCircle } from 'react-icons/fa';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Picker from 'emoji-picker-react';
 import { toast } from 'react-toastify';
+import { SoapboxTooltip } from '../components/SoapboxTooltip';
+import Click from '../assets/click.wav';
+import hardClick from '../assets/hard-click.wav';
+import shutterClick from '../assets/shutter-click.wav';
+import useRecorder from "react-hook-recorder";
 
 const CreatePost = () => {
     const [caption, setCaption] = useState("");
@@ -235,10 +244,232 @@ const CreatePost = () => {
     const emojis = ["😍", "🦉", "😂", "👏🏻", "💖", "😜", "🤯", "🤓", "🥰", "😎", "😋"];
     const [defaultEmoji, setDefaultEmoji] = useState("😄");
 
+    const videoRef = useRef(null);
+    const canvasRef = useRef(null);
+    const downloadRef = useRef(null);
+    const videoDownloadRef = useRef(null);
+
+    const [hasPhoto, setHasPhoto] = useState(false);
+    const [extraFeatures, setExtraFeatures] = useState(false);
+    const [showRecordBtn, setShowRecordBtn] = useState(true);
+
+    const [liveStream, setLiveStream] = useState(false);
+    const [livePhoto, setLivePhoto] = useState(false);
+    const [liveVideo, setLiveVideo] = useState(false);
+    const [liveAudio, setLiveAudio] = useState(false);
+
+    const [recordedVideoUrl, setRecordedVideoUrl] = useState(null);
+
+    const { startRecording, stopRecording, register, status } = useRecorder();
+
+    const onDemandPhoto = () => {
+        setLiveVideo(false);
+        setLiveAudio(false);
+        if (userPrivateChannel) {
+            setPrivateCheck(true);
+            setLivePhoto(true);
+
+            setRecordedVideoUrl(null);
+
+            setLiveVideo(false);
+            setLiveAudio(false);
+
+            getVideo();
+            setTimeout(() => {
+                window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+            }, 1000);
+        } else {
+            toast.info("Requires Private Club")
+        }
+    }
+
+    const onDemandVideo = () => {
+        setLivePhoto(false);
+        setLiveAudio(false);
+        if (userPrivateChannel) {
+            setPrivateCheck(true);
+            setLiveVideo(true);
+            setExtraFeatures(true);
+
+            setRecordedVideoUrl(null);
+            setShowRecordBtn(true);
+
+            setLivePhoto(false);
+            setLiveAudio(false);
+
+            setTimeout(() => {
+                window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+            }, 1000);
+        } else {
+            toast.info("Requires Private Club")
+        }
+    }
+
+    const onDemandAudio = () => {
+        setLivePhoto(false);
+        setLiveVideo(false);
+        if (userPrivateChannel) {
+            setLivePhoto(false);
+            setLiveVideo(false);
+        } else {
+            toast.info("Requires Private Club")
+        }
+    }
+
+    const getVideo = () => {
+        setExtraFeatures(true);
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                width: 1920,
+                height: 1080
+            },
+            audio: false
+        }).then(stream => {
+            const video = videoRef.current;
+            video.srcObject = stream;
+
+            video.play();
+        }).catch(err => console.log(err))
+    }
+
+    const onVideoRecordingStop = useCallback((blob, blobUrl) => {
+        setRecordedVideoUrl(blobUrl);
+        const videoFile = new File([blob], `On Demand Video on MegaHoot Soapbox`, {
+            type: blob.type,
+        });
+        setFile(videoFile);
+
+        videoDownloadRef.current.href = blobUrl;
+        videoDownloadRef.current.download = `On Demand Video on MegaHoot Soapbox`;
+
+        setLiveStream(false);
+    }, []);
+
+    const takePhoto = () => {
+        const clickAudio = new Audio(shutterClick);
+        clickAudio.play();
+
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+
+        // Get the exact size of the video element.
+        const videoWidth = video.videoWidth;
+        const videoHeight = video.videoHeight;
+
+        // Set the canvas to the same dimensions as the video.
+        canvas.width = videoWidth;
+        canvas.height = videoHeight;
+
+        // get the context object of canvas
+        const ctx = canvas.getContext('2d');
+
+        // Draw the current frame from the video on the canvas.
+        ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+
+        canvas.toBlob(function (blob) {
+            const photoFile = new File([blob], `${userName}'s On Demand Photo on MegaHoot Soapbox.jpeg`, {
+                type: blob.type,
+            });
+
+            downloadRef.current.href = URL.createObjectURL(blob);
+            downloadRef.current.download = `${userName}'s On Demand Photo on MegaHoot Soapbox.jpeg`;
+
+            setFile(photoFile);
+        }, 'image/jpeg')
+
+        setHasPhoto(true);
+        setLiveStream(false);
+
+        setTimeout(() => {
+            const stream = video.srcObject;
+            const tracks = stream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }, 1000);
+    }
+
+    const closePhoto = () => {
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 0);
+
+        const video = videoRef.current;
+
+        if (video) {
+            const stream = video.srcObject;
+            const tracks = stream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
+
+        if (hasPhoto) {
+            const canvas = canvasRef.current;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        setFile([]);
+        setPrivateCheck(false);
+        setExtraFeatures(false);
+        setHasPhoto(false);
+        setLiveStream(false);
+        setLivePhoto(false);
+        setLiveVideo(false);
+        setLiveAudio(false);
+    }
+
+    const closeVideo = () => {
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 0);
+
+        setFile([]);
+        setRecordedVideoUrl(null);
+        setShowRecordBtn(true);
+        setPrivateCheck(false);
+        setExtraFeatures(false);
+        setHasPhoto(false);
+        setLiveStream(false);
+        setLivePhoto(false);
+        setLiveVideo(false);
+        setLiveAudio(false);
+    }
+
+    const reTakePhoto = () => {
+        setRecordedVideoUrl(null);
+        setExtraFeatures(true);
+        setHasPhoto(false);
+        getVideo();
+    }
+
+    const reTakeVideo = () => {
+        setRecordedVideoUrl(null);
+        setExtraFeatures(true);
+        setShowRecordBtn(true);
+        setLiveStream(false);
+        stopRecording();
+    }
+
+    const closePreview = () => {
+        setMimeType("");
+        setSrc(null);
+        setFile([]);
+    }
+
+    const recordVideo = () => {
+        setLiveStream(true);
+        setRecordedVideoUrl(null);
+        if (status !== "recording") {
+            startRecording();
+        }
+        setShowRecordBtn(false);
+    }
+
     return (
         <Fragment>
             <NavBar />
-
             {loading &&
                 <div className="loading">
                     <BeatLoader color={"#8249A0"} size={20} />
@@ -268,14 +499,12 @@ const CreatePost = () => {
                         {/* <img className="avatar" src="/images/default_user_profile.svg" alt="avatar" /> */}
                         <div className="name avatar_name">{userName}</div>
 
-                        <ReactTooltip />
-
                         <div className="post-content">
                             <textarea
                                 autoFocus
                                 maxLength="300"
                                 className="textarea-style"
-                                placeholder="What's on your mind?"
+                                placeholder="What's on your mind? (optional)"
                                 value={caption}
                                 onChange={(event) => {
                                     const value = event.target.value;
@@ -304,7 +533,11 @@ const CreatePost = () => {
                                     <div className="d-flex justify-content-end my-2 align-items-center" style={{ position: "relative" }}>
 
                                         {/* Photo */}
-                                        <label htmlFor="post-image" className="btn-label">
+                                        <label
+                                            htmlFor="post-image"
+                                            className="btn-label"
+                                            onClick={closePhoto}
+                                        >
                                             Photo
                                         </label>
                                         <input
@@ -317,7 +550,11 @@ const CreatePost = () => {
                                         />
 
                                         {/* Video */}
-                                        <label htmlFor="post-video" className="btn-label">
+                                        <label
+                                            htmlFor="post-video"
+                                            className="btn-label"
+                                            onClick={closePhoto}
+                                        >
                                             Video
                                         </label>
                                         <input
@@ -330,7 +567,11 @@ const CreatePost = () => {
                                         />
 
                                         {/* Audio */}
-                                        <label htmlFor="post-audio" className="btn-label">
+                                        <label
+                                            htmlFor="post-audio"
+                                            className="btn-label"
+                                            onClick={closePhoto}
+                                        >
                                             Audio
                                         </label>
                                         <input
@@ -367,11 +608,12 @@ const CreatePost = () => {
                                             </ClickAwayListener>
                                         )}
 
-                                        <FiLink2
-                                            className="insert-link"
-                                            data-tip="Insert Link" data-text-color="#8249A0" data-background-color="#D9D2FA"
-                                            onClick={() => { setLinkModalOpen(true) }}
-                                        />
+                                        {/* data-tip="Insert Link" data-text-color="#8249A0" data-background-color="#D9D2FA" */}
+                                        <SoapboxTooltip title="Insert Link" placement="right">
+                                            <div>
+                                                <FiLink2 className="insert-link" onClick={() => { setLinkModalOpen(true) }} />
+                                            </div>
+                                        </SoapboxTooltip>
                                     </div>
                                 </form>
 
@@ -434,7 +676,7 @@ const CreatePost = () => {
                                         variant="primary mx-1"
                                         className="btn-create-hoot"
                                         onClick={upload}
-                                        disabled={!caption || !src}
+                                        disabled={file.length === 0}
                                     >
                                         Hoot
                                     </Button>{' '}
@@ -459,77 +701,223 @@ const CreatePost = () => {
                                     className="ephemeral-toggle"
                                     checked={privateCheck}
                                     onChange={makePrivate}
-                                    disabled={userPrivateChannel === 0}
+                                    disabled={userPrivateChannel === 0 || extraFeatures}
                                 />
-                                <span>
-                                    Private{" "}
-                                </span>
-                                <small>{userPrivateChannel === 0 ? "(*requires Private Club, Please go to profile and add Private Club)" : null}</small>
+                                <span>Private{" "}</span>
+                                <small>
+                                    {userPrivateChannel === 0 ? "(Requires Private Club, Please go to Profile and add Private Club)" : null}
+                                </small>
                             </div>
                         </div>
                     </div>
 
-                    <div className="media-preview">
-                        {mimeType === "" && <p>Upload Preview</p>}
-                        {mimeType !== "" &&
-                            <IoCloseOutline
-                                className="close-preview"
-                                onClick={() => {
-                                    setMimeType("");
-                                    setSrc(null);
-                                }}
-                            />
+                    <div className="record-on-create-hoot">
+                        {extraFeatures
+                            ?
+                            <div className="extra-media-preview">
+                                {/* for on demand photo  */}
+                                <canvas
+                                    onContextMenu={(e) => e.preventDefault()}
+                                    className="hoot-extra-features"
+                                    ref={canvasRef}
+                                    style={{ display: hasPhoto ? "" : "none" }}
+                                ></canvas>
+
+                                {/* for on demand photo  */}
+                                <div
+                                    onContextMenu={(e) => e.preventDefault()}
+                                    className="click-on-demand-photo"
+                                    style={{ display: hasPhoto ? "" : "none" }}
+                                >
+                                    Clicked
+                                </div>
+
+                                {/* for on demand photo  */}
+                                <video
+                                    ref={videoRef}
+                                    className="hoot-extra-features"
+                                    style={{ display: hasPhoto || liveVideo ? "none" : "" }}
+                                ></video>
+
+                                {/* for on demand video */}
+                                <video
+                                    ref={liveVideo ? register : null}
+                                    autoPlay
+                                    muted
+                                    playsInline
+                                    className="hoot-extra-features"
+                                    style={{ display: liveVideo && recordedVideoUrl === null ? "" : "none" }}
+                                ></video>
+
+                                {/* recorded vedio  */}
+                                <video
+                                    src={recordedVideoUrl}
+                                    controls
+                                    className="hoot-extra-features"
+                                    style={{ display: liveVideo && recordedVideoUrl !== null ? "" : "none" }}
+                                ></video>
+
+                                {/* if stream is on */}
+                                {liveStream &&
+                                    <IoRadioButtonOn
+                                        onContextMenu={(e) => e.preventDefault()}
+                                        className="live-on-demand-video"
+                                        style={{ display: status === "recording" ? "" : "none" }}
+                                    />
+                                }
+                            </div>
+                            :
+                            <div className="media-preview">
+                                {mimeType === "" && <p>Upload Preview</p>}
+                                {mimeType !== "" &&
+                                    <IoCloseOutline className="close-preview" onClick={closePreview} />
+                                }
+
+                                {mimeType.match(/image/gi) == "image" &&
+                                    <img
+                                        src={src}
+                                        alt="soapbox-img"
+                                        className="hoot-img"
+                                    />
+                                }
+
+                                {mimeType.match(/video/gi) == "video" &&
+                                    <video
+                                        width="400"
+                                        className="hoot-img"
+                                        controls
+                                    >
+                                        <source src={src} />
+                                        Your browser does not support HTML video.
+                                    </video>
+                                }
+
+                                {mimeType.match(/audio/gi) == "audio" &&
+                                    <video
+                                        poster={profilePicPath}
+                                        className="hoot-ado"
+                                        controls
+                                    >
+                                        <source src={src} />
+                                        Your browser does not support the audio element.
+                                    </video>
+                                }
+                            </div>
                         }
 
-                        {mimeType.match(/image/gi) == "image" &&
-                            <img
-                                src={src}
-                                alt="soapbox-img"
-                                className="hoot-img"
-                            />
-                        }
+                        <div className="extra-features">
+                            <SoapboxTooltip title="Photo" placement="right">
+                                <div className="extra-outer" onClick={onDemandPhoto}>
+                                    <FiCamera className="extra-fi" />
+                                </div>
+                            </SoapboxTooltip>
 
-                        {mimeType.match(/video/gi) == "video" &&
-                            <video
-                                width="400"
-                                className="hoot-img"
-                                controls
-                            >
-                                <source
-                                    src={src}
-                                // type={mimeType}
-                                />
-                                Your browser does not support HTML video.
-                            </video>
-                        }
+                            <SoapboxTooltip title="Video" placement="right">
+                                <div className="extra-outer" onClick={onDemandVideo}>
+                                    <FiVideo className="extra-fi" />
+                                </div>
+                            </SoapboxTooltip>
 
-                        {mimeType.match(/audio/gi) == "audio" &&
-                            <video
-                                poster={profilePicPath}
-                                className="hoot-ado"
-                                controls
-                            >
-                                <source
-                                    src={src}
-                                // type={mimeType}
-                                />
-                                Your browser does not support the audio element.
-                            </video>
-                        }
-
-                        {/* {mimeType.match(/audio/gi) == "audio" &&
-                            <audio
-                                className="hoot-ado"
-                                controls
-                            >
-                                <source
-                                    src={src}
-                                // type={mimeType}
-                                />
-                                Your browser does not support the audio element.
-                            </audio>
-                        } */}
+                            <SoapboxTooltip title="Audio" placement="right">
+                                <div className="extra-outer" onClick={onDemandAudio}>
+                                    <AiOutlineAudio className="extra-fi" />
+                                </div>
+                            </SoapboxTooltip>
+                        </div>
                     </div>
+
+                    {extraFeatures ?
+                        <div className="extra-features-options">
+                            {/* photo re take */}
+                            {livePhoto && hasPhoto &&
+                                <SoapboxTooltip title="Re take" placement="bottom">
+                                    <button onClick={reTakePhoto} className="extra-outer">
+                                        <VscDebugRestart className="extra-fi" />
+                                    </button>
+                                </SoapboxTooltip>
+                            }
+
+                            {/* photo re take */}
+                            {liveVideo && !showRecordBtn &&
+                                <SoapboxTooltip title="Re take" placement="bottom">
+                                    <button onClick={reTakeVideo} className="extra-outer">
+                                        <VscDebugRestart className="extra-fi" />
+                                    </button>
+                                </SoapboxTooltip>
+                            }
+
+                            {/* photo capture */}
+                            {livePhoto && !hasPhoto &&
+                                <SoapboxTooltip title="Capture" placement="bottom">
+                                    <button onClick={takePhoto} className="extra-outer">
+                                        <IoRadioButtonOn className="extra-fi" />
+                                    </button>
+                                </SoapboxTooltip>
+                            }
+
+                            {/* start video recording */}
+                            {liveVideo && showRecordBtn &&
+                                <SoapboxTooltip title="Start Recording" placement="bottom">
+                                    <button
+                                        onClick={recordVideo}
+                                        className="extra-outer"
+                                    >
+                                        <IoRadioButtonOn className="extra-fi" />
+                                    </button>
+                                </SoapboxTooltip>
+                            }
+
+                            {/* stop video recording */}
+                            {liveVideo && !showRecordBtn && !recordedVideoUrl &&
+                                <SoapboxTooltip title="Stop Recording" placement="bottom">
+                                    <button
+                                        onClick={stopRecording(onVideoRecordingStop)}
+                                        className="extra-outer"
+                                    >
+                                        <FaStopCircle className="extra-fi" />
+                                    </button>
+                                </SoapboxTooltip>
+                            }
+
+                            {/* download photo */}
+                            <a download ref={downloadRef} style={{ display: hasPhoto ? "" : "none" }}>
+                                <SoapboxTooltip title="Download" placement="bottom">
+                                    <button className="extra-outer">
+                                        <FiDownload className="extra-fi" />
+                                    </button>
+                                </SoapboxTooltip>
+                            </a>
+
+                            {/* download video  */}
+                            <a download ref={videoDownloadRef} style={{ display: recordedVideoUrl !== null ? "" : "none" }}>
+                                <SoapboxTooltip title="Download" placement="bottom">
+                                    <button className="extra-outer">
+                                        <FiDownload className="extra-fi" />
+                                    </button>
+                                </SoapboxTooltip>
+                            </a>
+
+                            {/* close photo live stream */}
+                            {livePhoto &&
+                                <SoapboxTooltip title="Close" placement="bottom">
+                                    <button onClick={closePhoto} className="extra-outer">
+                                        <IoMdCloseCircleOutline className="extra-fi" />
+                                    </button>
+                                </SoapboxTooltip>
+                            }
+
+                            {/* close video live stream */}
+                            {liveVideo &&
+                                <SoapboxTooltip title="Close" placement="bottom">
+                                    <button onClick={closeVideo} className="extra-outer">
+                                        <IoMdCloseCircleOutline className="extra-fi" />
+                                    </button>
+                                </SoapboxTooltip>
+                            }
+
+                        </div>
+                        : null
+                    }
                 </div>
             }
 

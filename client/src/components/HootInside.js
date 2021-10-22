@@ -962,20 +962,21 @@ const HootInside = ({
                                 }
                             </div>
 
-                            <div className="post-comment">
-                                {" "}<span className="hoot-comment">
-                                    <Highlighter
-                                        highlightClassName="highlighterClass"
-                                        searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
-                                        autoEscape={true}
-                                        textToHighlight={caption}
-                                    />
-                                </span>
-                                <br />
-                                {" "}<span className="hoot-link">
-                                    <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
-                                </span>
-                                {/* {dbLink ?
+                            {caption &&
+                                <div className="post-comment">
+                                    {" "}<span className="hoot-comment">
+                                        <Highlighter
+                                            highlightClassName="highlighterClass"
+                                            searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
+                                            autoEscape={true}
+                                            textToHighlight={caption}
+                                        />
+                                    </span>
+                                    <br />
+                                    {" "}<span className="hoot-link">
+                                        <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                    </span>
+                                    {/* {dbLink ?
                                     dbLink.map((link, index) => {
                                         return (
                                             <div key={index} style={{ padding: "0rem 0.5rem 0rem 0rem", wordBreak: "break-all" }}>
@@ -985,7 +986,8 @@ const HootInside = ({
                                     })
                                     : null
                                 } */}
-                            </div>
+                                </div>
+                            }
                             {/* <hr className="mx-1" /> */}
                             <div className="right-icons">
                                 {/* <div className="post-media"> */}
@@ -1681,20 +1683,21 @@ const HootInside = ({
                             }
                         </div>
 
-                        <div className="post-comment">
-                            {" "}<span className="hoot-comment">
-                                <Highlighter
-                                    highlightClassName="highlighterClass"
-                                    searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
-                                    autoEscape={true}
-                                    textToHighlight={caption}
-                                />
-                            </span>
-                            <br />
-                            {" "}<span className="hoot-link">
-                                <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
-                            </span>
-                            {/* {dbLink ?
+                        {caption &&
+                            <div className="post-comment">
+                                {" "}<span className="hoot-comment">
+                                    <Highlighter
+                                        highlightClassName="highlighterClass"
+                                        searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
+                                        autoEscape={true}
+                                        textToHighlight={caption}
+                                    />
+                                </span>
+                                <br />
+                                {" "}<span className="hoot-link">
+                                    <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                </span>
+                                {/* {dbLink ?
                                 dbLink.map((link, index) => {
                                     return (
                                         <div key={index} style={{ padding: "0rem 0.5rem 0rem 0rem", wordBreak: "break-all" }}>
@@ -1704,7 +1707,8 @@ const HootInside = ({
                                 })
                                 : null
                             } */}
-                        </div>
+                            </div>
+                        }
                         {/* <hr className="mx-1" /> */}
                         <div className="right-icons">
                             {/* <div className="post-media"> */}
