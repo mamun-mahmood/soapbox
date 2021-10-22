@@ -8,6 +8,8 @@ import { formatCount, formatSi } from "../../Helpers/formatNumbers";
 import { FaTumblr ,IoSend} from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
 import { FiTwitter, FiSearch ,FiSend,FiFolder,FiImage,FiVideo,FiSmile} from "react-icons/fi";
+import socket, { startSocket } from '../../socketChat';
+import Picker from 'emoji-picker-react';
 import {
     RiFacebookCircleLine,
     RiLiveFill,
@@ -35,8 +37,12 @@ import oneonone from '../../assets/oneonone.png';
 import groupcall from '../../assets/groupcall.png';
 import personalmessage from '../../assets/personalmessage.png';
 import { Form } from "react-bootstrap";
+import ClickAwayListener from "react-click-away-listener";
 
 const PrivateChannels = () => {
+    
+    const [userProfilePic, setUserProfilePic] = useState('');
+    const [userFullName, setUserFullName] = useState('');
     const [uploads, setUploads] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
@@ -52,7 +58,7 @@ const PrivateChannels = () => {
     const [groupCallPrice, setGroupCallPrice] = useState(0)
     const [requestMessagePrice, setRequestMessagePrice] = useState(0)
     const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0)
-    
+    const [emojiPicker, setEmojiPicker] = useState(false);
     const [showFeed, setShowFeed] = useState(true)
       
     const [showChatRoom, setShowChatRoom] = useState(false)
@@ -79,14 +85,34 @@ const PrivateChannels = () => {
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const form = document.getElementById('send-container');
     const messageInput = document.getElementById('messageInp');
-    const messageContainer = document.querySelector('.container')
+   
     var totalViews = 0;
     var totalLikes = 0;
-    const append = (message, position) => {
+    const append = (message, position,imgSrc,isEmoji) => {
+      
+        var messageContainer = document.querySelector('.container')
         const messageElement = document.createElement('div');
+      
+      
         messageElement.innerText = message;
         messageElement.classList.add('message');
+       if(isEmoji){
+        messageElement.classList.add('message-emoji');
+       }
         messageElement.classList.add(position);
+        if(imgSrc){
+            const image = document.createElement('img');
+      image.src=imgSrc; 
+      if(position=="right"){
+           image.classList.add('chat-profile-right');
+      }else{
+           image.classList.add('chat-profile-left');
+      }
+     
+     
+      messageElement.append(image);
+      }
+       
         messageContainer.append(messageElement);
         messageContainer.scrollTop = messageContainer.scrollHeight;
        
@@ -94,11 +120,39 @@ const PrivateChannels = () => {
     const messagesubmit=(e)=>{
         e.preventDefault();
         const message = messageInboxValue;
-        append(`You:${message}`,'right')
+        append(`${message}`,'right',`${BaseURL}/profile-pictures/${userProfilePic}`)
         // socket.emit('send',message);
+        socket.emit('send',{
+            name:userFullName,
+            message:message,
+            profilePic:userProfilePic,
+            isEmoji:false
+        });
       setMessageInboxValue('')
        
         }
+
+       useEffect(() => {
+        socket.on('user-joined', name => {
+           
+            append(`${name.name} Joined the chat`, 'right',`${BaseURL}/profile-pictures/${name.profilePic}`)
+        })
+        
+        socket.on('receive', data => {
+           console.log(data,"data")
+           if(data.isEmoji){
+            append(`${data.message}`,'left',`${BaseURL}/profile-pictures/${data.profilePic}`,data.isEmoji)
+     
+           }else{
+            append(`${data.name}:${data.message}`,'left',`${BaseURL}/profile-pictures/${data.profilePic}`,data.isEmoji)
+           }
+               })
+        
+        socket.on('left', name => {
+            append(`${name} left the chat`, 'right')
+        })
+       }, [])
+        
     useEffect(() => {
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`).then((response) => {
@@ -129,6 +183,11 @@ const PrivateChannels = () => {
             setLoading(false);
         };
         getUserData();
+       axios.get(`${BaseURL}/user/${userInformation.username}`).then((res)=>{
+           setUserProfilePic(res.data[0].profilePic);
+           setUserFullName(res.data[0].name)
+        })
+       .catch(err=>{console.log(err)})
     }, []);
 
     useEffect(() => {
@@ -567,7 +626,10 @@ const PrivateChannels = () => {
                                     <span>On-demand Photos</span>
                                     <span>On-demand Videos</span>
                                     <span>Marketplace</span>
-                                    <span onClick={()=>{setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(!showFeed);setShowSubscribeButton(false);setShowChatRoom(!showChatRoom)}} >Club Chat</span>
+                                    <span onClick={()=>{setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(!showFeed);setShowSubscribeButton(false);setShowChatRoom(!showChatRoom);
+                                     socket.emit('room', userInfo[0].username);
+                                     socket.emit('new-user-joined', {name:userFullName,profilePic:userProfilePic});
+                                    }} >Club Chat</span>
                                     
                                 </div>
 
@@ -787,9 +849,48 @@ const PrivateChannels = () => {
                                         <button>Be a Member to get access</button>
                                     </div>
                                 )}
+
+{showChatRoom?<div >
+                    <div className="container">
+                    {emojiPicker && (
+                                            <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                <div>
+                                                    <Picker
+                                                        native
+                                                        onEmojiClick={(event, emojiObject) => {
+                                                           
+                                                            append(`${emojiObject.emoji}`,'right',`${BaseURL}/profile-pictures/${userProfilePic}`,true)
+                                                            // socket.emit('send',message);
+                                                            socket.emit('send',{
+                                                                name:userFullName,
+                                                                message:emojiObject.emoji,
+                                                                profilePic:userProfilePic,
+                                                                isEmoji:true
+                                                            });
+                                                         
+                                                        }}
+                                                        pickerStyle={{ position: "absolute", bottom: "0px", left: "0.2rem", zIndex: "1111",width:'50v'}}
+                                                    />
+                                                </div>
+                                            </ClickAwayListener>
+                                        )}
+  </div>
+  
+  <div className="send">
+      <form action="#" id="send-container" onSubmit={(e)=>messagesubmit(e)}>
+   <FiVideo className="icon-text" /> <FiImage  className="icon-text" />   <FiFolder  className="icon-text" />  
+   <FiSmile className="icon-text" 
+   onClick={() => { setEmojiPicker(!emojiPicker) }}
+   /> 
+    <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e)=>{setMessageInboxValue(e.target.value)}} />
+        <div className="btns"> <button  type="submit"><FiSend   /></button></div>
+  
+      </form>
+  </div>
+                    </div>:null}
                         </div>
                     ) : null}
-
+ 
                     
 
                    
@@ -828,7 +929,10 @@ const PrivateChannels = () => {
                                         </div>
                                        
                                     </span>
-                                    <span  onClick={()=>{setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(!showFeed);setShowSubscribeButton(false);setShowChatRoom(!showChatRoom)}}  >Club Chat</span>
+                                    <span  onClick={()=>{setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false);setShowFeed(!showFeed);setShowSubscribeButton(false);setShowChatRoom(!showChatRoom);
+                                    socket.emit('room', userInfo[0].username);
+                                    socket.emit('new-user-joined', {name:userFullName,profilePic:userProfilePic});
+                                    }}  >Club Chat</span>
                                 </div>
 
                                 <FiSearch className="search-channel-content" />
@@ -896,13 +1000,34 @@ const PrivateChannels = () => {
                             </div>:null}
                             {showChatRoom?<div >
                     <div className="container">
-  
+                    {emojiPicker && (
+                                            <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                <div>
+                                                    <Picker
+                                                        native
+                                                        onEmojiClick={(event, emojiObject) => {
+                                                            append(`${emojiObject.emoji}`,'right',`${BaseURL}/profile-pictures/${userProfilePic}`,true)
+                                                            // socket.emit('send',message);
+                                                            socket.emit('send',{
+                                                                name:userFullName,
+                                                                message:emojiObject.emoji,
+                                                                profilePic:userProfilePic,
+                                                                isEmoji:true
+                                                            });
+                                                        }}
+                                                        pickerStyle={{ position: "absolute",bottom:'0px', left: "0.2rem", zIndex: "1111" }}
+                                                    />
+                                                </div>
+                                            </ClickAwayListener>
+                                        )}
   </div>
   
   <div className="send">
       <form action="#" id="send-container" onSubmit={(e)=>messagesubmit(e)}>
    <FiVideo className="icon-text" /> <FiImage  className="icon-text" />   <FiFolder  className="icon-text" />  
-   <FiSmile className="icon-text" /> 
+   <FiSmile className="icon-text"
+   onClick={() => { setEmojiPicker(!emojiPicker) }}
+   /> 
     <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e)=>{setMessageInboxValue(e.target.value)}} />
         <div className="btns"> <button  type="submit"><FiSend   /></button></div>
   
