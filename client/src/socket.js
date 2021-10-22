@@ -3,8 +3,8 @@ const io = require('socket.io-client');
 // const ss =  require('socket.io-stream');
 // const fs = require('fs');
 // const SOCKET_URI = "https://api.fortisab.com/"
- //const SOCKET_URI = "http://192.168.29.82:4000"
- const SOCKET_URI="http://socketsignalapi001.amaprods.com/"
+//const SOCKET_URI = "http://192.168.29.82:4000"
+const SOCKET_URI = "http://socketsignalapi001.amaprods.com/"
 const socket = io(SOCKET_URI);
 
 export function startSocket() {
@@ -26,4 +26,3 @@ export function stopSocket() {
 }
 
 export default socket;
-
