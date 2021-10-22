@@ -805,25 +805,29 @@ const CreatePost = () => {
                             </div>
                         }
 
-                        <div className="extra-features">
-                            <SoapboxTooltip title="Photo" placement="right">
-                                <div className="extra-outer" onClick={onDemandPhoto}>
-                                    <FiCamera className="extra-fi" />
-                                </div>
-                            </SoapboxTooltip>
+                        {userPrivateChannel
+                            ?
+                            <div className="extra-features">
+                                <SoapboxTooltip title="Photo" placement="right">
+                                    <div className="extra-outer" onClick={onDemandPhoto}>
+                                        <FiCamera className="extra-fi" />
+                                    </div>
+                                </SoapboxTooltip>
 
-                            <SoapboxTooltip title="Video" placement="right">
-                                <div className="extra-outer" onClick={onDemandVideo}>
-                                    <FiVideo className="extra-fi" />
-                                </div>
-                            </SoapboxTooltip>
+                                <SoapboxTooltip title="Video" placement="right">
+                                    <div className="extra-outer" onClick={onDemandVideo}>
+                                        <FiVideo className="extra-fi" />
+                                    </div>
+                                </SoapboxTooltip>
 
-                            <SoapboxTooltip title="Audio" placement="right">
-                                <div className="extra-outer" onClick={onDemandAudio}>
-                                    <AiOutlineAudio className="extra-fi" />
-                                </div>
-                            </SoapboxTooltip>
-                        </div>
+                                <SoapboxTooltip title="Audio" placement="right">
+                                    <div className="extra-outer" onClick={onDemandAudio}>
+                                        <AiOutlineAudio className="extra-fi" />
+                                    </div>
+                                </SoapboxTooltip>
+                            </div>
+                            : null
+                        }
                     </div>
 
                     {extraFeatures ?
