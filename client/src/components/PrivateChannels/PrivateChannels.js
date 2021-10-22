@@ -39,6 +39,7 @@ import groupcall from '../../assets/groupcall.png';
 import personalmessage from '../../assets/personalmessage.png';
 import { Form } from "react-bootstrap";
 import ClickAwayListener from "react-click-away-listener";
+import Autolinker from 'autolinker';
 
 const PrivateChannels = () => {
 
@@ -89,11 +90,35 @@ const PrivateChannels = () => {
 
     var totalViews = 0;
     var totalLikes = 0;
-    const append = (chatname,message, position, imgSrc, isEmoji) => {
+
+    var autolinker = new Autolinker({
+        urls: {
+            schemeMatches: true,
+            wwwMatches: true,
+            tldMatches: true
+        },
+        email: true,
+        phone: true,
+        mention: false,
+        hashtag: false,
+
+        stripPrefix: true,
+        stripTrailingSlash: true,
+        newWindow: true,
+
+        truncate: {
+            length: 0,
+            location: 'end'
+        },
+
+        className: 'link-content'
+    });
+
+    const append = (chatname, message, position, imgSrc, isEmoji) => {
 
         var messageContainer = document.querySelector('.container')
-        const messageBox = document.createElement('div'); 
-        const ProfileBox = document.createElement('div'); 
+        const messageBox = document.createElement('div');
+        const ProfileBox = document.createElement('div');
         const messageElement = document.createElement('div');
         const image = document.createElement('img')
         const name = document.createElement('p')
@@ -103,23 +128,24 @@ const PrivateChannels = () => {
         messageBox.append(messageElement);
 
 
-       ProfileBox.append(image)
-       ProfileBox.append(name)
+        ProfileBox.append(image)
+        ProfileBox.append(name)
 
-       messageBox.classList.add('messageBox');
-       ProfileBox.classList.add('ProfileBox')
+        messageBox.classList.add('messageBox');
+        ProfileBox.classList.add('ProfileBox')
 
-        messageElement.innerText = message;
+        var myLinkedMessage = autolinker.link(message);
+        messageElement.innerHTML += myLinkedMessage;
         name.innerText = chatname;
         messageElement.classList.add('message');
         if (isEmoji) {
             messageElement.classList.add('message-emoji');
         }
-      
+
 
 
         if (imgSrc) {
-           
+
             image.src = imgSrc;
             if (position == "right") {
                 image.classList.add('chat-profile');
@@ -128,7 +154,7 @@ const PrivateChannels = () => {
             }
 
 
-          
+
         }
 
         // messageContainer.append(messageElement);
@@ -138,7 +164,7 @@ const PrivateChannels = () => {
     const messagesubmit = (e) => {
         e.preventDefault();
         const message = messageInboxValue;
-        append(userFullName,`${message}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`)
+        append(userFullName, `${message}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`)
         // socket.emit('send',message);
         socket.emit('send', {
             name: userFullName,
@@ -153,21 +179,21 @@ const PrivateChannels = () => {
     useEffect(() => {
         socket.on('user-joined', name => {
 
-            append(`${name.name} Joined the chat`, '',"", `${BaseURL}/profile-pictures/${name.profilePic}`)
+            append(`${name.name} Joined the chat`, '', "", `${BaseURL}/profile-pictures/${name.profilePic}`)
         })
 
         socket.on('receive', data => {
             console.log(data, "data")
             if (data.isEmoji) {
-                append(data.name,`${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
+                append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
 
             } else {
-                append(data.name,`${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
+                append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
             }
         })
 
         socket.on('left', name => {
-            append(name,`${name} left the chat`)
+            append(name, `${name} left the chat`)
         })
     }, [])
 
@@ -378,24 +404,24 @@ const PrivateChannels = () => {
                                                     {userInformation.username !== username ? <div className="live-header">Request a Virtual Experience</div> : null}
                                                     {userInformation.username == username ? (
                                                         <div>
-                                                        
-                                                 
-                                                            <div className="live-header" style={{backgroundColor:'#8149a06c',color:'white',borderRadius:'3px'}} >Schedule Virtual Experience</div>
+
+
+                                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Schedule Virtual Experience</div>
                                                             <div className="control">
 
-<button style={{minWidth:'208px'}} >Schedule Vero Call or PPV</button>
+                                                                <button style={{ minWidth: '208px' }} >Schedule Vero Call or PPV</button>
 
-</div>
-<br></br>
-<br></br>
-<div className="live-header" style={{backgroundColor:'#8149a06c',color:'white',borderRadius:'3px'}}>Create Pay Per View Event</div>
-<div className="control">
+                                                            </div>
+                                                            <br></br>
+                                                            <br></br>
+                                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }}>Create Pay Per View Event</div>
+                                                            <div className="control">
 
-<button style={{minWidth:'208px'}}>Broadcast Vero Live PPV</button>
-<button style={{minWidth:'208px'}} >Broadcast Vero Pre-recorded PPV</button>
+                                                                <button style={{ minWidth: '208px' }}>Broadcast Vero Live PPV</button>
+                                                                <button style={{ minWidth: '208px' }} >Broadcast Vero Pre-recorded PPV</button>
 
-</div>
-</div>
+                                                            </div>
+                                                        </div>
                                                     ) : (
                                                         <div className="control">
                                                             {/* <button>
@@ -564,7 +590,7 @@ const PrivateChannels = () => {
                                             </div>
 
                                             <div className="channel-live-events">
-                                                <div className="live-header" style={{backgroundColor:'#8149a06c',color:'white',borderRadius:'3px'}} >Live Events</div>
+                                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Live Events</div>
                                                 <div className="live-events">
                                                     <div className="live-cards">
                                                         <img src={live} alt="live" />
@@ -841,32 +867,32 @@ const PrivateChannels = () => {
                                 </div>
                             )}
 
-                            {showChatRoom ?  <div >
+                            {showChatRoom ? <div >
                                 <Linkify >
-                                <div className="container">
-                                    {emojiPicker && (
-                                        <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
-                                            <div>
-                                                <Picker
-                                                    native
-                                                    onEmojiClick={(event, emojiObject) => {
+                                    <div className="container">
+                                        {emojiPicker && (
+                                            <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                <div>
+                                                    <Picker
+                                                        native
+                                                        onEmojiClick={(event, emojiObject) => {
 
-                                                        append(`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
-                                                        // socket.emit('send',message);
-                                                        socket.emit('send', {
-                                                            name: userFullName,
-                                                            message: emojiObject.emoji,
-                                                            profilePic: userProfilePic,
-                                                            isEmoji: true
-                                                        });
+                                                            append(`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                                            // socket.emit('send',message);
+                                                            socket.emit('send', {
+                                                                name: userFullName,
+                                                                message: emojiObject.emoji,
+                                                                profilePic: userProfilePic,
+                                                                isEmoji: true
+                                                            });
 
-                                                    }}
-                                                    pickerStyle={{ position: "absolute", bottom: "0px", left: "0.2rem", zIndex: "1111", width: '50v' }}
-                                                />
-                                            </div>
-                                        </ClickAwayListener>
-                                    )}
-                                </div>
+                                                        }}
+                                                        pickerStyle={{ position: "absolute", bottom: "0px", left: "0.2rem", zIndex: "1111", width: '50v' }}
+                                                    />
+                                                </div>
+                                            </ClickAwayListener>
+                                        )}
+                                    </div>
                                 </Linkify>
 
 
@@ -881,7 +907,7 @@ const PrivateChannels = () => {
 
                                     </form>
                                 </div>
-                            </div>   : null}
+                            </div> : null}
                         </div>
                     ) : null}
 
@@ -900,7 +926,7 @@ const PrivateChannels = () => {
                                 }}
                             >
                                 <div className="tabs">
-                                <span  onClick={()=>{setShowRequest(false);setShowFeed(!showFeed); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false)}} >Timeline</span>
+                                    <span onClick={() => { setShowRequest(false); setShowFeed(!showFeed); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false) }} >Timeline</span>
                                     <span onClick={() => { setShowRequest(!showRequest); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false) }} >Requests</span>
                                     <span onClick={() => { setShowRequest(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false) }} >Memberships</span>
                                     {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
@@ -921,7 +947,7 @@ const PrivateChannels = () => {
                                     >
                                         <div className="channel-btn-icon">
                                             Record Message
-                                          
+
                                         </div>
 
                                     </span>
