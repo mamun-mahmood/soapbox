@@ -808,6 +808,7 @@ const CreatePost = () => {
                         {userPrivateChannel
                             ?
                             <div className="extra-features">
+
                                 <SoapboxTooltip title="Photo" placement="right">
                                     <div className="extra-outer" onClick={onDemandPhoto}>
                                         <FiCamera className="extra-fi" />
