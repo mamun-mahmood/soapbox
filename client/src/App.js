@@ -31,6 +31,7 @@ import ResetPassword from './pages/ResetPassword/ResetPassword';
 import MyListPage from './pages/MyListPage';
 import recordMessage from './components/VideoAudioCall/recordMessage';
 import Reception from './components/VideoAudioCall/reception';
+import CreatePrivateHoot from './pages/CreatePrivateHoot'
 
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -96,6 +97,10 @@ function App() {
         <Route path="/embed/hoot/:hootId">
           {/* <ProtectedRoute page={EmbedHootPage} /> */}
           <EmbedHootPage />
+        </Route>
+
+        <Route path="/create-private">
+          <ProtectedRoute page={CreatePrivateHoot} />
         </Route>
 
         <Route path="/create">
