@@ -1,13 +1,18 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom'
 // import toast from 'react-hot-toast';
 import { toast } from 'react-toastify';
 import { IoCloseOutline } from 'react-icons/io5';
 import { FiMenu } from 'react-icons/fi';
 import './navbar.css';
+import axios from 'axios';
 
 const NavBar = ({ width, header }) => {
     const history = useHistory();
+    const [showLinks, setShowLinks] = useState(false);
+    const [userData, setUserData] = useState([]);
+
+    const BaseURL = process.env.REACT_APP_API_URL;
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
     var username = "";
@@ -16,121 +21,31 @@ const NavBar = ({ width, header }) => {
         username = userInfo.username;
     }
 
-    const logout = () => {
-        toast.success('logout Successful'
-            // , {
-            //     style: {
-            //         border: '2px solid #8249A0',
-            //         color: '#8249A0',
-            //     },
-            //     iconTheme: {
-            //         primary: '#8249A0',
-            //         secondary: '#FFFAEE',
-            //     },
-            // }
-        );
+    //getting user data
+    useEffect(() => {
+        const getUserData = async () => {
+            await axios.get(`${BaseURL}/user/${userInfo && userInfo.username}`)
+                .then((response) => {
+                    setUserData(response.data[0]);
+                });
+        }
 
+        try {
+            getUserData();
+        } catch (error) {
+            console.log(error);
+        }
+    }, [userInfo && userInfo.username])
+
+    const logout = () => {
+        toast.success('logout Successful');
         history.push("/login");
         localStorage.clear();
     }
 
-    const scrollToTop = () => {
-        window.scrollTo(0, 0);
-    }
-
-    const locattion = useLocation();
-    const [showLinks, setShowLinks] = useState(false);
+    const scrollToTop = () => window.scrollTo(0, 0);
 
     return (
-        // <div>
-        //     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top"
-        //         onContextMenu={(e) => e.preventDefault()}
-        //     >
-        //         <div className="container">
-        //             <Link to="/home" className="navbar-brand cursor-pointer">
-        //                 {/* {window.location.pathname} */}
-        //                 <img
-        //                     src="/images/MegaHoot_Owl3_app.png"
-        //                     alt="Megahoot Soapbox"
-        //                     width="50"
-        //                     height="50"
-        //                     className="d-inline-block align-text-top"
-        //                     onContextMenu={(e) => e.preventDefault()}
-        //                     onClick={scrollToTop}
-        //                 />
-        //             </Link>
-
-        //             <button
-        //                 className="navbar-toggler"
-        //                 type="button"
-        //                 data-bs-toggle="collapse"
-        //                 data-bs-target="#navbarTogglerDemo02"
-        //                 aria-controls="navbarTogglerDemo02"
-        //                 aria-expanded="false"
-        //                 aria-label="Toggle navigation"
-        //             >
-        //                 <span className="navbar-toggler-icon"></span>
-        //             </button>
-
-        //             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-        //                 <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-        //                 {localStorage.getItem("loggedIn") ?
-        //                     <Fragment>
-        //                         <NavLink
-        //                             activeClassName="nav-link-active"
-        //                             className="nav-link"
-        //                             to="/home"
-        //                         >
-        //                             Home
-        //                         </NavLink>
-        //                         <NavLink
-        //                             activeClassName="nav-link-active"
-        //                             className="nav-link"
-        //                             to="/create"
-        //                         >
-        //                             Create Hoot
-        //                         </NavLink>
-        //                         <NavLink
-        //                             activeClassName="nav-link-active"
-        //                             className="nav-link"
-        //                             to={`/profile/${username}`}
-        //                         >
-        //                             {userInfo && userInfo.username}
-        //                         </NavLink>
-        //                         <NavLink
-        //                             exact
-        //                             activeClassName="nav-link-active"
-        //                             className="nav-link"
-        //                             to="/"
-        //                             onClick={logout}
-        //                         >
-        //                             Logout
-        //                         </NavLink>
-        //                     </Fragment>
-        //                     :
-        //                     <Fragment>
-        //                         <NavLink
-        //                             exact
-        //                             activeClassName="nav-link-active"
-        //                             className="nav-link"
-        //                             to="/"
-        //                         >
-        //                             Login
-        //                         </NavLink>
-        //                         <NavLink
-        //                             exact
-        //                             activeClassName="nav-link-active"
-        //                             className="nav-link"
-        //                             to="/"
-        //                         >
-        //                             Sign Up
-        //                         </NavLink>
-        //                     </Fragment>
-        //                 }
-        //             </div>
-        //         </div>
-        //     </nav>
-        // </div>
         <nav className="main-nav shadow-sm" style={{ zIndex: "11111" }}>
             <div className="max-width-nav" style={{ maxWidth: width }}>
                 <div className="main-brand">
@@ -150,7 +65,8 @@ const NavBar = ({ width, header }) => {
                 </div>
 
                 <ul className="main-list-inline" id={showLinks ? "main-hidden" : ""}>
-                    {localStorage.getItem("loggedIn") ?
+                    {localStorage.getItem("loggedIn")
+                        ?
                         <Fragment>
                             <NavLink
                                 // activeClassName="nav-link-active"
@@ -161,6 +77,7 @@ const NavBar = ({ width, header }) => {
                             >
                                 Home
                             </NavLink>
+
                             <a
                                 // activeClassName="nav-link-active"
                                 activeClassName="nav-link-active"
@@ -171,13 +88,26 @@ const NavBar = ({ width, header }) => {
                             >
                                 Tutorial
                             </a>
+
                             <NavLink
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
-                                to="/create"
+                                to={window.location.pathname === "/create-private"
+                                    ? "/create-private"
+                                    : userData.privateChannel && header
+                                        ? "/create-private"
+                                        : "/create"
+                                }
+                            // to={"/create"}
                             >
-                                Create Hoot
+                                {window.location.pathname === "/create-private"
+                                    ? "Create Private Hoot"
+                                    : userData.privateChannel && header
+                                        ? "Create Private Hoot"
+                                        : "Create Hoot"
+                                }
                             </NavLink>
+
                             <NavLink
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
@@ -185,18 +115,18 @@ const NavBar = ({ width, header }) => {
                             >
                                 {userInfo && userInfo.username}
                             </NavLink>
+
                             {showLinks &&
-                                <Fragment>
-                                    <NavLink
-                                        exact
-                                        activeClassName="nav-link-active"
-                                        className="nav-link main-title"
-                                        to="/explore"
-                                    >
-                                        Explore
-                                    </NavLink>
-                                </Fragment>
+                                <NavLink
+                                    exact
+                                    activeClassName="nav-link-active"
+                                    className="nav-link main-title"
+                                    to="/explore"
+                                >
+                                    Explore
+                                </NavLink>
                             }
+
                             <NavLink
                                 exact
                                 activeClassName="nav-link-active"
@@ -235,18 +165,15 @@ const NavBar = ({ width, header }) => {
                             >
                                 Sign Up
                             </NavLink>
-
-
                         </Fragment>
                     }
-
                 </ul>
-                {
-                    showLinks
-                        ?
-                        <IoCloseOutline className="main-nav-menu" onClick={() => setShowLinks(!showLinks)} />
-                        :
-                        <FiMenu className="main-nav-menu" onClick={() => setShowLinks(!showLinks)} />
+
+                {showLinks
+                    ?
+                    <IoCloseOutline className="main-nav-menu" onClick={() => setShowLinks(!showLinks)} />
+                    :
+                    <FiMenu className="main-nav-menu" onClick={() => setShowLinks(!showLinks)} />
                 }
             </div>
         </nav>

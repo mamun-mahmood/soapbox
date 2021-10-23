@@ -174,8 +174,8 @@ const PrivateChannels = () => {
     const messagesubmit = (e) => {
         e.preventDefault();
         const message = messageInboxValue;
-        let emojiValidator=isEmoji(message)
-        append(userFullName, `${message}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`,emojiValidator)
+        let emojiValidator = isEmoji(message)
+        append(userFullName, `${message}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, emojiValidator)
         // socket.emit('send',message);
         socket.emit('send', {
             name: userFullName,
