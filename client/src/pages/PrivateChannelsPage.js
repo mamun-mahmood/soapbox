@@ -1,12 +1,29 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import NavBar from '../components/NavBar/NavBar'
 import PrivateChannels from '../components/PrivateChannels/PrivateChannels'
 import { Helmet } from "react-helmet";
 import { useParams } from 'react-router';
 import PrivateFloatingButton from '../components/FloatingButton/PrivateFloatingButton';
+import { MyStream } from '../context/MyStreamContext';
 
 const PrivateChannelsPage = () => {
     const { username } = useParams();
+    const { myStream, hookStream } = useContext(MyStream);
+
+    useEffect(() => {
+        if (myStream) {
+            const tracks = myStream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
+        if (hookStream) {
+            const tracks = hookStream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
+    }, [])
 
     return (
         <div onContextMenu={(e) => e.preventDefault()}>

@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import { Helmet } from 'react-helmet'
-import { useParams } from 'react-router'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
 import MyList from '../components/MyList/MyList'
 import NavBar from '../components/NavBar/NavBar'

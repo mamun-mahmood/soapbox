@@ -207,7 +207,11 @@ const SuggestedFollow = ({ verifiedUser }) => {
                                 ?
                                 userInfo.username === verifiedUser.username
                                     ?
-                                    null
+                                    <button
+                                        className="btn-hoot-follow"
+                                    >
+                                        Following
+                                    </button>
                                     :
                                     userFollowers.length === 0
                                         ?

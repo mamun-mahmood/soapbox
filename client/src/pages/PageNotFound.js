@@ -1,9 +1,27 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import NavBar from '../components/NavBar/NavBar'
+import { MyStream } from '../context/MyStreamContext'
 
 const PageNotFound = () => {
+    const { myStream, hookStream } = useContext(MyStream);
+
+    useEffect(() => {
+        if (myStream) {
+            const tracks = myStream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
+        if (hookStream) {
+            const tracks = hookStream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
+    }, [])
+
     return (
         <Fragment>
             <NavBar />

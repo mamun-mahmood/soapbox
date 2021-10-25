@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Helmet } from "react-helmet";
 import { Link, useLocation } from 'react-router-dom'
 import Loadable from 'react-loadable';
 import LandingNav from './LandingNav';
 import FormLoading from '../../components/Loading/FormLoading';
 import './landingPage.css'
+import { MyStream } from '../../context/MyStreamContext';
 
 const LoginComp = Loadable({
     loader: () => import('../../components/LoginComp' /* webpackChunkName: "LoginComp" */),
@@ -22,6 +23,23 @@ const SignupComp = Loadable({
 const LandingPage = () => {
     const [toggle, setToggle] = useState(true);
     const locattion = useLocation();
+
+    const { myStream, hookStream } = useContext(MyStream);
+
+    useEffect(() => {
+        if (myStream) {
+            const tracks = myStream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
+        if (hookStream) {
+            const tracks = hookStream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
+    }, [])
 
     const handleChange = (value) => {
         setToggle(value);
