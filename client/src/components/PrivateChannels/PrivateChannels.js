@@ -63,7 +63,7 @@ const PrivateChannels = () => {
     const [emojiPicker, setEmojiPicker] = useState(false);
     const [showFeed, setShowFeed] = useState(true);
     const [privateChat, setPrivateChat] = useState(false)
-    
+
     const [showChatRoom, setShowChatRoom] = useState(false)
 
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
@@ -116,58 +116,58 @@ const PrivateChannels = () => {
     });
 
     const append = (chatname, message, position, imgSrc, isEmoji) => {
-if(message){
-    var messageContainer = document.querySelector('.container')
-    const messageBox = document.createElement('div');
-    const ProfileBox = document.createElement('div');
-    const messageElement = document.createElement('div');
-    const image = document.createElement('img')
-    const name = document.createElement('p')
+        if (message) {
+            var messageContainer = document.querySelector('.container')
+            const messageBox = document.createElement('div');
+            const ProfileBox = document.createElement('div');
+            const messageElement = document.createElement('div');
+            const image = document.createElement('img')
+            const name = document.createElement('p')
 
-    messageContainer.append(messageBox);
-    messageBox.append(ProfileBox);
-    messageBox.append(messageElement);
-    ProfileBox.onclick=function() {
-       if(window.confirm(`Do You Want to request ${chatname} for private chat`)){
-        // socket.emit('room',chatname);
-        // socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
-        setPrivateChat(true)
-       }
-    }
+            messageContainer.append(messageBox);
+            messageBox.append(ProfileBox);
+            messageBox.append(messageElement);
+            ProfileBox.onclick = function () {
+                if (window.confirm(`Do You Want to request ${chatname} for private chat`)) {
+                    // socket.emit('room',chatname);
+                    // socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
+                    setPrivateChat(true)
+                }
+            }
 
-    ProfileBox.append(image)
-    ProfileBox.append(name)
+            ProfileBox.append(image)
+            ProfileBox.append(name)
 
-    messageBox.classList.add('messageBox');
-    ProfileBox.classList.add('ProfileBox')
+            messageBox.classList.add('messageBox');
+            ProfileBox.classList.add('ProfileBox')
 
-    var myLinkedMessage = autolinker.link(message);
-    messageElement.innerHTML += myLinkedMessage;
-    name.innerText = chatname;
-    messageElement.classList.add('message');
-    if (isEmoji) {
-        messageElement.classList.add('message-emoji');
-    }
+            var myLinkedMessage = autolinker.link(message);
+            messageElement.innerHTML += myLinkedMessage;
+            name.innerText = chatname;
+            messageElement.classList.add('message');
+            if (isEmoji) {
+                messageElement.classList.add('message-emoji');
+            }
 
 
 
-    if (imgSrc) {
+            if (imgSrc) {
 
-        image.src = imgSrc;
-        if (position == "right") {
-            image.classList.add('chat-profile');
-        } else {
-            image.classList.add('chat-profile');
+                image.src = imgSrc;
+                if (position == "right") {
+                    image.classList.add('chat-profile');
+                } else {
+                    image.classList.add('chat-profile');
+                }
+
+
+
+            }
+
+            // messageContainer.append(messageElement);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
         }
 
-
-
-    }
-
-    // messageContainer.append(messageElement);
-    messageContainer.scrollTop = messageContainer.scrollHeight;
-}
-       
 
     }
     function isEmoji(str) {
@@ -421,7 +421,7 @@ if(message){
                                                             : user.website}
                                                     </a>
                                                 )}
-                                                 <div
+                                                <div
                                                     className="social-profile-icon-links"
                                                     style={{ flexWrap: "wrap" }}
                                                 >
@@ -608,7 +608,7 @@ if(message){
                                                     )}
                                                 </div>
 
-                                               
+
                                             </div>
 
                                             <div className="channel-live-events">
@@ -659,8 +659,8 @@ if(message){
                                     alignSelf: "flex-start",
                                 }}
                             >
-                                <div className="tabs">
-                                    <span onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(true); setShowSubscribeButton(false);setShowChatRoom(false) }} >Timeline</span>
+                                <div className="tabs" style={{ margin: "0 0.5rem" }}>
+                                    <span onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(true); setShowSubscribeButton(false); setShowChatRoom(false) }} >Timeline</span>
                                     <span>On-demand Photos</span>
                                     <span>On-demand Videos</span>
                                     <span>Marketplace</span>
@@ -889,46 +889,46 @@ if(message){
                                 </div>
                             )}
 
-                            {showChatRoom ? <div style={{position:'relative'}} >
+                            {showChatRoom ? <div style={{ position: 'relative' }} >
                                 <Linkify >
-                                {privateChat? <div className="privateChat-club">
-                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',maxWidth:'300px' }} >Private Chat <FaWindowClose className="icon-text"
+                                    {privateChat ? <div className="privateChat-club">
+                                        <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', maxWidth: '300px' }} >Private Chat <FaWindowClose className="icon-text"
                                             onClick={() => {
-                                               setPrivateChat(false);
+                                                setPrivateChat(false);
                                             }}
                                         /></div>
-                                                          
-                                    </div>:null}
-                               
-                                <div className="container" style={{left:privateChat?"90px":'0'}}>
-                                    {emojiPicker && (
-                                        <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
-                                            <div>
-                                                <Picker
-                                                    native
-                                                    onEmojiClick={(event, emojiObject) => {
-                                                        setMessageInboxValue(emojiObject.emoji)
-                                                        // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
-                                                        //  // socket.emit('send',message);
-                                                        socket.emit('send', {
-                                                            name: userFullName,
-                                                            message: emojiObject.emoji,
-                                                            profilePic: userProfilePic,
-                                                            isEmoji: true
-                                                        });
-                                                    }}
-                                                    pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
-                                                />
-                                            </div>
-                                        </ClickAwayListener>
-                                    )}
-                                </div>
-                                <div className="community-club">
-                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
-                                                          
-                                    </div>  
+
+                                    </div> : null}
+
+                                    <div className="container" style={{ left: privateChat ? "90px" : '0' }}>
+                                        {emojiPicker && (
+                                            <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                <div>
+                                                    <Picker
+                                                        native
+                                                        onEmojiClick={(event, emojiObject) => {
+                                                            setMessageInboxValue(emojiObject.emoji)
+                                                            // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                                            //  // socket.emit('send',message);
+                                                            socket.emit('send', {
+                                                                name: userFullName,
+                                                                message: emojiObject.emoji,
+                                                                profilePic: userProfilePic,
+                                                                isEmoji: true
+                                                            });
+                                                        }}
+                                                        pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
+                                                    />
+                                                </div>
+                                            </ClickAwayListener>
+                                        )}
+                                    </div>
+                                    <div className="community-club">
+                                        <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
+
+                                    </div>
                                 </Linkify>
-                            
+
 
                                 <div className="send">
                                     <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
@@ -967,18 +967,18 @@ if(message){
                                     alignSelf: "flex-start",
                                 }}
                             >
-                                <div className="tabs">
-                                    <span 
-                                    style={{backgroundColor:showFeed?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}
-                                    onClick={() => { setShowRequest(false); setShowFeed(!showFeed); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false);setShowChatRoom(false) }} >Timeline</span>
+                                <div className="tabs" style={{ margin: "0 0.5rem" }}>
                                     <span
-                                    style={{backgroundColor:showRequest?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}
-                                    onClick={() => { setShowRequest(!showRequest);setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false);setShowChatRoom(false) }} >Requests</span>
-                                    <span 
-                                    style={{backgroundColor:showSubscribers?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}
-                                    onClick={() => { setShowRequest(false); setShowFeed(false);setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false) ;setShowChatRoom(false)}} >Memberships</span>
+                                        style={{ backgroundColor: showFeed ? "#a09ba356" : '#F7F6FF', borderRadius: '8px' }}
+                                        onClick={() => { setShowRequest(false); setShowFeed(!showFeed); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Timeline</span>
+                                    <span
+                                        style={{ backgroundColor: showRequest ? "#a09ba356" : '#F7F6FF', borderRadius: '8px' }}
+                                        onClick={() => { setShowRequest(!showRequest); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Requests</span>
+                                    <span
+                                        style={{ backgroundColor: showSubscribers ? "#a09ba356" : '#F7F6FF', borderRadius: '8px' }}
+                                        onClick={() => { setShowRequest(false); setShowFeed(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Memberships</span>
                                     {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
-                                    <span style={{backgroundColor:showPricingSetting?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}
+                                    <span style={{ backgroundColor: showPricingSetting ? "#a09ba356" : '#F7F6FF', borderRadius: '8px' }}
                                         onClick={() => {
                                             setShowRequest(false);
                                             setShowSubscribers(false);
@@ -987,7 +987,7 @@ if(message){
                                             setShowFeed(false);
                                             setShowChatRoom(false);
                                         }} >Price Settings</span>
-                                    <span 
+                                    <span
                                         onClick={() => {
                                             history.push(
                                                 `/${uuidv4()}/RecordMessage/${uuidv4()}/${userInfo[0].name
@@ -1001,14 +1001,14 @@ if(message){
                                         </div>
 
                                     </span>
-                                    <span style={{backgroundColor:showChatRoom?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}  onClick={() => {
-                  setShowRequest(false);
-                  setShowSubscribers(false);
-                  setShowPricingSetting(false);
-                  setShowNotification(false);
-                  setShowFeed(false);
-                  setShowChatRoom(false);
-                                       setShowChatRoom(!showChatRoom);
+                                    <span style={{ backgroundColor: showChatRoom ? "#a09ba356" : '#F7F6FF', borderRadius: '8px' }} onClick={() => {
+                                        setShowRequest(false);
+                                        setShowSubscribers(false);
+                                        setShowPricingSetting(false);
+                                        setShowNotification(false);
+                                        setShowFeed(false);
+                                        setShowChatRoom(false);
+                                        setShowChatRoom(!showChatRoom);
                                         socket.emit('room', userInfo[0].username);
                                         socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
                                     }}  >Club Chat</span>
@@ -1077,18 +1077,18 @@ if(message){
                                     </InfiniteScroll>
                                 )}
                             </div> : null}
-                            {showChatRoom ? <div style={{position:'relative'}} >
-                          
-                          {privateChat? <div className="privateChat-club">
-                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',maxWidth:'300px' }} >Private Chat<FaWindowClose className="icon-text"
-                                            onClick={() => {
-                                               setPrivateChat(false);
-                                            }}
-                                        /></div>
-                                                          
-                                    </div>:null}
-                           
-                                <div className="container"  style={{left:privateChat?"90px":'0'}} >
+                            {showChatRoom ? <div style={{ position: 'relative' }} >
+
+                                {privateChat ? <div className="privateChat-club">
+                                    <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', maxWidth: '300px' }} >Private Chat<FaWindowClose className="icon-text"
+                                        onClick={() => {
+                                            setPrivateChat(false);
+                                        }}
+                                    /></div>
+
+                                </div> : null}
+
+                                <div className="container" style={{ left: privateChat ? "90px" : '0' }} >
                                     {emojiPicker && (
                                         <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
                                             <div>
@@ -1112,9 +1112,9 @@ if(message){
                                     )}
                                 </div>
                                 <div className="community-club">
-                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
-                                                          
-                                    </div>
+                                    <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
+
+                                </div>
                                 <div className="send">
                                     <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
                                         <FaWindowClose className="icon-text"
