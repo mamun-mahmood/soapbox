@@ -226,7 +226,7 @@ const HootInside = ({
 
     const addComment = () => {
         if (!userInfo) {
-            toast.error('Please Login to Continue')
+            toast.error('Please Login to Comment')
         } else {
             axios.post(`${BaseURL}/comment/`, {
                 name: commentName,
@@ -323,7 +323,7 @@ const HootInside = ({
         if (userInfo) {
             null
         } else {
-            toast.error('Please login to continue');
+            toast.error('Please login to Follow');
         }
     }
 
@@ -407,7 +407,7 @@ const HootInside = ({
         if (userInfo) {
             toast.success(`Followed ${username}`);
         } else {
-            toast.error('Please login to continue');
+            toast.error('Please login to Follow');
         }
     }
 
@@ -428,14 +428,18 @@ const HootInside = ({
     }
 
     const joinMyClub = () => {
-        if (userData.privateChannel) {
-            if (userInfo && userInfo.username === username) {
-                window.location.pathname.includes(username) || history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`)
+        if (userInfo) {
+            if (userData.privateChannel) {
+                if (userInfo && userInfo.username === username) {
+                    window.location.pathname.includes(username) || history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`)
+                } else {
+                    history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`);
+                }
             } else {
-                history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`);
+                toast.info("Private Club not available!")
             }
         } else {
-            toast.info("Private Club not available!")
+            toast.info("Please Login to Join Club")
         }
     }
 
@@ -663,7 +667,13 @@ const HootInside = ({
                                             >
                                                 Join My Club
                                             </button>
-                                        : null
+                                        :
+                                        <button
+                                            className="btn-hoot-follow join-my-club-margin"
+                                            onClick={joinMyClub}
+                                        >
+                                            Join My Club
+                                        </button>
                                     }
 
                                     <div
@@ -902,9 +912,9 @@ const HootInside = ({
                                                                     sliceValue={0}
                                                                 />
                                                                 :
-                                                                <div className="login-to-comment">Be the first one to comment on this hoot</div>
+                                                                <div className="login-to-comment">Be the first one to Comment on this hoot</div>
                                                             :
-                                                            <div className="login-to-comment">Please Login to Continue</div>
+                                                            <div className="login-to-comment">Please Login to Comment</div>
                                                         }
                                                     </div>
                                                 </div>
@@ -1409,7 +1419,13 @@ const HootInside = ({
                                         >
                                             Join My Club
                                         </button>
-                                    : null
+                                    :
+                                    <button
+                                        className="btn-hoot-follow join-my-club-margin"
+                                        onClick={joinMyClub}
+                                    >
+                                        Join My Club
+                                    </button>
                                 }
 
                                 <div
@@ -1650,9 +1666,9 @@ const HootInside = ({
                                                                 sliceValue={0}
                                                             />
                                                             :
-                                                            <div className="login-to-comment">Be the first one to comment on this hoot</div>
+                                                            <div className="login-to-comment">Be the first one to Comment on this hoot</div>
                                                         :
-                                                        <div className="login-to-comment">Please Login to Continue</div>
+                                                        <div className="login-to-comment">Please Login to Comment</div>
                                                     }
                                                 </div>
                                             </div>
