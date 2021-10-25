@@ -9,6 +9,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import BeatLoader from "react-spinners/BeatLoader";
 import { MyLists } from '../context/MyListContext'
+import { MyStream } from '../context/MyStreamContext'
 
 const ProfilePage = () => {
     const history = useHistory();
@@ -19,10 +20,22 @@ const ProfilePage = () => {
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const BaseURL = process.env.REACT_APP_API_URL;
 
-    const { myList, setMyList } = useContext(MyLists);
+    const { myStream, hookStream } = useContext(MyStream);
 
     useEffect(() => {
-        // setMyList(false);
+        if (myStream) {
+            const tracks = myStream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
+
+        if (hookStream) {
+            const tracks = hookStream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
 
         if (username !== userInformation.username) {
             const profilePath = `/user/${username}`;

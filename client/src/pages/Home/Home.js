@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useContext, useEffect } from 'react'
 import { Helmet } from "react-helmet";
 import NavBar from '../../components/NavBar/NavBar'
 import SideBar from '../../components/SideBar/SideBar'
@@ -7,6 +7,7 @@ import './home.css'
 
 import Loadable from 'react-loadable';
 import Loading from '../../components/Loading/Loading';
+import { MyStream } from '../../context/MyStreamContext';
 
 const Feed = Loadable({
     loader: () => import('../../components/Feed/Feed' /* webpackChunkName: "Feed" */),
@@ -16,8 +17,21 @@ const Feed = Loadable({
 })
 
 const Home = () => {
+    const { myStream, hookStream } = useContext(MyStream);
+
     useEffect(() => {
-        // window.location.reload();
+        if (myStream) {
+            const tracks = myStream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
+        if (hookStream) {
+            const tracks = hookStream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
     }, [])
     return (
         <Fragment>

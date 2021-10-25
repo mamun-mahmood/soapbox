@@ -501,4 +501,6 @@ padding: 5px;
     border-radius: 15px;
     padding: 5px;
     cursor: pointer;
+    width: 35px;
+    height: 30px;
 }

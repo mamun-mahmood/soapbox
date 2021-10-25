@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef, useCallback } from 'react'
+import React, { Fragment, useState, useEffect, useRef, useCallback, useContext } from 'react'
 import { Helmet } from 'react-helmet';
 import axios from 'axios'
 import Avatar from 'react-avatar';
@@ -12,7 +12,7 @@ import differenceInMilliseconds from 'date-fns/differenceInMilliseconds'
 import ClickAwayListener from 'react-click-away-listener';
 import ReactTooltip from 'react-tooltip';
 import { Button } from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { IoCloseOutline, IoRadioButtonOn } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft, FiCamera, FiDownload, FiLink2, FiVideo } from "react-icons/fi";
@@ -29,8 +29,9 @@ import { SoapboxTooltip } from '../components/SoapboxTooltip';
 import shutterClick from '../assets/shutter-click.wav';
 import useRecorder from "react-hook-recorder";
 import { v4 as uuidv4 } from 'uuid';
+import { MyStream } from '../context/MyStreamContext';
 
-const CreatePost = () => {
+const CreatePrivateHoot = () => {
     const [caption, setCaption] = useState("");
     const [file, setFile] = useState([]);
     const [src, setSrc] = useState(null);
@@ -161,6 +162,8 @@ const CreatePost = () => {
         } catch (error) {
             console.log(error);
         }
+
+        return () => { setPrivateCheck(false) }
     }, [userInfo && userInfo.username])
 
     const profilePicPath = `${BaseURL}/profile-pictures/${userData.profilePic}`;
@@ -269,8 +272,8 @@ const CreatePost = () => {
     const [liveAudio, setLiveAudio] = useState(false);
 
     const [recordedVideoUrl, setRecordedVideoUrl] = useState(null);
-
     const { startRecording, stopRecording, register, status } = useRecorder();
+    const { setMyStream, setHookStream } = useContext(MyStream);
 
     const onDemandPhoto = () => {
         setLiveVideo(false);
@@ -307,11 +310,25 @@ const CreatePost = () => {
             setLivePhoto(false);
             setLiveAudio(false);
 
+            // if (liveVideo) {
+            //     const hookVideo = document.getElementById('hookVideo');
+            //     if (hookVideo.srcObject !== null) {
+            //         setHookStream(hookVideo.srcObject);
+            //     }
+            // }
+
             setTimeout(() => {
                 window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
             }, 1000);
         } else {
             toast.info("Requires Private Club")
+        }
+    }
+
+    if (liveVideo) {
+        const hookVideo = document.getElementById('hookVideo');
+        if (hookVideo !== null) {
+            setHookStream(hookVideo.srcObject);
         }
     }
 
@@ -335,25 +352,14 @@ const CreatePost = () => {
             },
             audio: false
         }).then(stream => {
+            setMyStream(stream);
+
             const video = videoRef.current;
             video.srcObject = stream;
 
             video.play();
         }).catch(err => console.log(err))
     }
-
-    const onVideoRecordingStop = useCallback((blob, blobUrl) => {
-        setRecordedVideoUrl(blobUrl);
-        const videoFile = new File([blob], `On Demand Video on MegaHoot Soapbox`, {
-            type: blob.type,
-        });
-        setFile(videoFile);
-
-        videoDownloadRef.current.href = blobUrl;
-        videoDownloadRef.current.download = `On Demand Video on MegaHoot Soapbox`;
-
-        setLiveStream(false);
-    }, []);
 
     const takePhoto = () => {
         const clickAudio = new Audio(shutterClick);
@@ -396,6 +402,7 @@ const CreatePost = () => {
             tracks.forEach((track) => {
                 track.stop();
             });
+            setMyStream(null);
         }, 1000);
     }
 
@@ -428,9 +435,110 @@ const CreatePost = () => {
         setLivePhoto(false);
         setLiveVideo(false);
         setLiveAudio(false);
+        setMyStream(null);
     }
 
-    const closeVideo = () => {
+    const closeOnDemand = () => {
+        // closePhoto();
+
+        // setFile([]);
+        // setRecordedVideoUrl(null);
+        // setShowRecordBtn(true);
+        // setHasPhoto(false);
+        // setLiveStream(false);
+        // setLivePhoto(false);
+        // setLiveVideo(false);
+        // setLiveAudio(false);
+
+        if (livePhoto) {
+            if (videoRef !== null) {
+                const video = videoRef.current;
+                const stream = video.srcObject;
+                const tracks = stream.getTracks();
+                tracks.forEach((track) => {
+                    track.stop();
+                });
+            }
+        }
+
+        if (liveVideo) {
+            const hookVideo = document.getElementById('hookVideo');
+            if (hookVideo !== null) {
+                const hookStream = hookVideo.srcObject;
+                const tracks = hookStream.getTracks();
+                tracks.forEach((track) => {
+                    track.stop();
+                });
+            }
+            window.location.reload();
+        }
+
+
+        // setTimeout(() => {
+        setExtraFeatures(false);
+        // }, 1000);
+    }
+
+    const reTakePhoto = () => {
+        setRecordedVideoUrl(null);
+        setExtraFeatures(true);
+        setHasPhoto(false);
+
+        getVideo();
+    }
+
+    const onVideoRecordingStart = () => {
+        setLiveStream(true);
+        setRecordedVideoUrl(null);
+        if (status !== "recording") {
+            startRecording();
+        }
+        setShowRecordBtn(false);
+    }
+
+    const onVideoRecordingStop = useCallback((blob, blobUrl) => {
+        setRecordedVideoUrl(blobUrl);
+        const videoFile = new File([blob], `On Demand Video on MegaHoot Soapbox`, {
+            type: blob.type,
+        });
+        setFile(videoFile);
+
+        videoDownloadRef.current.href = blobUrl;
+        videoDownloadRef.current.download = `On Demand Video on MegaHoot Soapbox`;
+
+        setLiveStream(false);
+
+        const hookVideo = document.getElementById('hookVideo');
+        const hookStream = hookVideo.srcObject;
+        const tracks = hookStream.getTracks();
+        tracks.forEach((track) => {
+            track.stop();
+        });
+    }, []);
+
+    const reTakeVideo = () => {
+        setFile([]);
+        setRecordedVideoUrl(null);
+        setExtraFeatures(true);
+        setShowRecordBtn(true);
+        setLiveStream(false);
+
+        stopRecording();
+    }
+
+    // const stopVideoStream = () => {
+    //     return new Promise(resolve => {
+    //         const hookVideo = document.getElementById('hookVideo');
+    //         const hookStream = hookVideo.srcObject;
+    //         const tracks = hookStream.getTracks();
+    //         tracks.forEach((track) => {
+    //             track.stop();
+    //         });
+    //         resolve("hook stream cleared");
+    //     });
+    // }
+
+    const closeVideo = async () => {
         setTimeout(() => {
             window.scrollTo({ top: 0, behavior: "smooth" });
         }, 0);
@@ -438,43 +546,26 @@ const CreatePost = () => {
         setFile([]);
         setRecordedVideoUrl(null);
         setShowRecordBtn(true);
-        // setPrivateCheck(false);
-        setExtraFeatures(false);
         setHasPhoto(false);
         setLiveStream(false);
         setLivePhoto(false);
-        setLiveVideo(false);
         setLiveAudio(false);
-    }
+        setExtraFeatures(false);
 
-    const reTakePhoto = () => {
-        setRecordedVideoUrl(null);
-        setExtraFeatures(true);
-        setHasPhoto(false);
-        getVideo();
-    }
+        // const result = await stopVideoStream();
+        // if (result) {
+        //     setExtraFeatures(false);
+        // }
 
-    const reTakeVideo = () => {
-        setRecordedVideoUrl(null);
-        setExtraFeatures(true);
-        setShowRecordBtn(true);
-        setLiveStream(false);
-        stopRecording();
+        setTimeout(() => {
+            window.location.reload();
+        }, 0);
     }
 
     const closePreview = () => {
         setMimeType("");
         setSrc(null);
         setFile([]);
-    }
-
-    const recordVideo = () => {
-        setLiveStream(true);
-        setRecordedVideoUrl(null);
-        if (status !== "recording") {
-            startRecording();
-        }
-        setShowRecordBtn(false);
     }
 
     return (
@@ -546,7 +637,7 @@ const CreatePost = () => {
                                         <label
                                             htmlFor="post-image"
                                             className="btn-label"
-                                            onClick={closePhoto}
+                                            onClick={closeOnDemand}
                                         >
                                             Photo
                                         </label>
@@ -563,7 +654,7 @@ const CreatePost = () => {
                                         <label
                                             htmlFor="post-video"
                                             className="btn-label"
-                                            onClick={closePhoto}
+                                            onClick={closeOnDemand}
                                         >
                                             Video
                                         </label>
@@ -580,7 +671,7 @@ const CreatePost = () => {
                                         <label
                                             htmlFor="post-audio"
                                             className="btn-label"
-                                            onClick={closePhoto}
+                                            onClick={closeOnDemand}
                                         >
                                             Audio
                                         </label>
@@ -752,6 +843,7 @@ const CreatePost = () => {
                                 {/* for on demand video */}
                                 <video
                                     ref={liveVideo ? register : null}
+                                    id="hookVideo"
                                     autoPlay
                                     muted
                                     playsInline
@@ -873,7 +965,7 @@ const CreatePost = () => {
                             {liveVideo && showRecordBtn &&
                                 <SoapboxTooltip title="Start Recording" placement="bottom">
                                     <button
-                                        onClick={recordVideo}
+                                        onClick={onVideoRecordingStart}
                                         className="extra-outer"
                                     >
                                         <IoRadioButtonOn className="extra-fi" />
@@ -944,16 +1036,16 @@ const CreatePost = () => {
                 <meta name="twitter:card" content="summary" />
                 <meta name="twitter:title" content="Create Private Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta name="twitter:description" content="Create Private Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta name="twitter:image" content="/images/MegaHoot_Owl3_app.png" />
+                <meta name="twitter:image" content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png" />
 
                 {/* OpenGraph tags */}
                 <meta property="og:url" content="https://www.megahoot.net/create" />
                 <meta property="og:title" content="Create Private Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:description" content="Create Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta property="og:image" content="/images/MegaHoot_Owl3_app.png" />
+                <meta property="og:image" content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png" />
             </Helmet>
         </Fragment>
     )
 }
 
-export default CreatePost
+export default CreatePrivateHoot

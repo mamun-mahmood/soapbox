@@ -1,5 +1,4 @@
-import React, { lazy, Suspense, useContext, useEffect } from 'react'
-// import { Toaster } from 'react-hot-toast';
+import React from 'react'
 import PageNotFound from './pages/PageNotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import LandingPage from './pages/LandingPage/LandingPage'
@@ -40,11 +39,6 @@ import CommentsPanel from './pages/CommentsPanel/CommentsPanel';
 function App() {
   return (
     <Router>
-      {/* <Toaster
-        position="bottom-center"
-        reverseOrder={false}
-      /> */}
-
       <ToastContainer
         position="bottom-center"
         autoClose={5000}
@@ -56,7 +50,6 @@ function App() {
         draggable
         pauseOnHover
         closeButton={false}
-
         className="react-toastify"
         bodyClassName="toast-body"
       />

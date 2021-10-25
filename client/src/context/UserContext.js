@@ -1,20 +1,20 @@
-// import React, { createContext, useState } from 'react'
+import React, { createContext, useState } from 'react'
 
-// const initialState = {
-//     views: "total views",
-//     likes: "total likes"
-// }
+export const UserContext = createContext();
 
-// export const UserContext = createContext();
+const initialState = {
+    views: "total views",
+    likes: "total likes"
+}
 
-// const User = ({ children }) => {
-//     const [user, setUser] = useState(initialState);
+const User = ({ children }) => {
+    const [user, setUser] = useState(initialState);
 
-//     return (
-//         <UserContext.Provider value={[user, setUser]}>
-//             {children}
-//         </UserContext.Provider>
-//     )
-// }
+    return (
+        <UserContext.Provider value={[user, setUser]}>
+            {children}
+        </UserContext.Provider>
+    )
+}
 
-// export default User;
+export default User;

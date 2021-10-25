@@ -2670,3 +2670,13 @@ padding: 6rem 1rem;
   color: var(--primary-color);
   background-color: yellowgreen;
 }
+
+.join-my-club-margin {
+  margin-left: 0.5rem;
+}
+
+@media only screen and (max-width: 470px) { 
+  .join-my-club-margin {
+    display: none;
+  }
+}

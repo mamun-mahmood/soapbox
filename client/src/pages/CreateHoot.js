@@ -1,8 +1,7 @@
-import React, { Fragment, useState, useEffect, useRef, useCallback } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import axios from 'axios'
 import Avatar from 'react-avatar';
-// import toast from 'react-hot-toast';
 import { format } from 'date-fns'
 import addDays from 'date-fns/addDays'
 import getTime from 'date-fns/getTime'
@@ -10,26 +9,18 @@ import addSeconds from 'date-fns/addSeconds'
 import addMinutes from 'date-fns/addMinutes'
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds'
 import ClickAwayListener from 'react-click-away-listener';
-import ReactTooltip from 'react-tooltip';
 import { Button } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { IoCloseOutline, IoRadioButtonOn } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
-import { FiArrowLeft, FiCamera, FiDownload, FiLink2, FiVideo } from "react-icons/fi";
+import { FiArrowLeft, FiLink2 } from "react-icons/fi";
 import BeatLoader from "react-spinners/BeatLoader";
 import NavBar from '../components/NavBar/NavBar'
-import { AiFillMinusCircle, AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai';
-import { VscDebugRestart } from 'react-icons/vsc';
-// import { BsStopCircle } from 'react-icons/bs';
-import { FaStopCircle } from 'react-icons/fa';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Picker from 'emoji-picker-react';
 import { toast } from 'react-toastify';
 import { SoapboxTooltip } from '../components/SoapboxTooltip';
-import shutterClick from '../assets/shutter-click.wav';
-import useRecorder from "react-hook-recorder";
 
-const CreatePost = () => {
+const CreateHoot = () => {
     const [caption, setCaption] = useState("");
     const [file, setFile] = useState([]);
     const [src, setSrc] = useState(null);
@@ -560,4 +551,4 @@ const CreatePost = () => {
     )
 }
 
-export default CreatePost
+export default CreateHoot
