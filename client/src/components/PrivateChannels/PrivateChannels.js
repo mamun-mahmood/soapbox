@@ -61,8 +61,9 @@ const PrivateChannels = () => {
     const [requestMessagePrice, setRequestMessagePrice] = useState(0)
     const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0)
     const [emojiPicker, setEmojiPicker] = useState(false);
-    const [showFeed, setShowFeed] = useState(true)
-
+    const [showFeed, setShowFeed] = useState(true);
+    const [privateChat, setPrivateChat] = useState(false)
+    
     const [showChatRoom, setShowChatRoom] = useState(false)
 
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
@@ -130,7 +131,7 @@ if(message){
        if(window.confirm(`Do You Want to request ${chatname} for private chat`)){
         // socket.emit('room',chatname);
         // socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
-
+        setPrivateChat(true)
        }
     }
 
@@ -354,7 +355,7 @@ if(message){
                 <div className="channel-banner" style={{ position: 'relative' }}>
                     <img src={banner} alt="banner" />
                     <div style={{ position: 'absolute', bottom: '68px', left: '120px', zIndex: 5 }} className="clubOwner">Club Owner</div>
-                    <div style={{ position: 'absolute', bottom: '48px', left: '170px', zIndex: 5 }} className="arrow-down"></div>
+                    <div style={{ position: 'absolute', bottom: '52px', left: '170px', zIndex: 5 }} className="arrow-down"></div>
                 </div>
                 <div className="channel-content">
                     {userInfo.map((user) => {
@@ -890,11 +891,16 @@ if(message){
 
                             {showChatRoom ? <div style={{position:'relative'}} >
                                 <Linkify >
-                                <div className="privateChat-club">
-                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Private Chat</div>
+                                {privateChat? <div className="privateChat-club">
+                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',maxWidth:'300px' }} >Private Chat <FaWindowClose className="icon-text"
+                                            onClick={() => {
+                                               setPrivateChat(false);
+                                            }}
+                                        /></div>
                                                           
-                                    </div>
-                                <div className="container">
+                                    </div>:null}
+                               
+                                <div className="container" style={{left:privateChat?"90px":'0'}}>
                                     {emojiPicker && (
                                         <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
                                             <div>
@@ -1072,11 +1078,17 @@ if(message){
                                 )}
                             </div> : null}
                             {showChatRoom ? <div style={{position:'relative'}} >
-                            <div className="privateChat-club">
-                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Private Chat</div>
+                          
+                          {privateChat? <div className="privateChat-club">
+                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',maxWidth:'300px' }} >Private Chat<FaWindowClose className="icon-text"
+                                            onClick={() => {
+                                               setPrivateChat(false);
+                                            }}
+                                        /></div>
                                                           
-                                    </div>
-                                <div className="container">
+                                    </div>:null}
+                           
+                                <div className="container"  style={{left:privateChat?"90px":'0'}} >
                                     {emojiPicker && (
                                         <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
                                             <div>

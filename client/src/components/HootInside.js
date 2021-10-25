@@ -1381,8 +1381,9 @@ const HootInside = ({
                                 </div>
                             }
 
-                            {privateHoot !== 1 ?
+                          
                                 <div className="user-actions">
+                                    
                                     {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
                                     {userInfo
                                         ?
@@ -1440,7 +1441,7 @@ const HootInside = ({
                                             className="more-icon"
                                         />
                                     </div>
-                                </div> : null}
+                                </div>
 
 
                             {/* More Option Modal */}
@@ -1763,13 +1764,13 @@ const HootInside = ({
                                     </div>
                                     <div className="view-count">{formatCount(views) + formatSi(views)}</div>
                                 </div>
-                                {privateHoot !== 1 ? <div className="share">
+                                <div className="share">
                                     <FiShare2
                                         onMouseEnter={() => setIsShareModalOpen(true)}
                                         onClick={() => setIsShareModalOpen(!isShareModalOpen)}
                                         className="cursor-pointer"
                                     />
-                                </div> : null}
+                                </div>
 
 
                                 {/* Share Modal with Social Media Icons */}
