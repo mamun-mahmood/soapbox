@@ -126,7 +126,7 @@ if(message){
     messageContainer.append(messageBox);
     messageBox.append(ProfileBox);
     messageBox.append(messageElement);
-    messageBox.onclick=function() {
+    ProfileBox.onclick=function() {
        if(window.confirm(`Do You Want to request ${chatname} for private chat`)){
         // socket.emit('room',chatname);
         // socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
