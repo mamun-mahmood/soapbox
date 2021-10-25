@@ -94,31 +94,9 @@ const PublicProfile = ({
         }
 
         if (userInformation) {
-            toast.success(`Followed ${userName}`
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     },
-                //     iconTheme: {
-                //         primary: '#8249A0',
-                //         secondary: '#FFFAEE',
-                //     },
-                // }
-            );
+            toast.success(`Followed ${userName}`);
         } else {
-            toast.error('Please login to continue'
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     },
-                //     iconTheme: {
-                //         primary: '#8249A0',
-                //         secondary: '#FFFAEE',
-                //     },
-                // }
-            );
+            toast.error('Please login to Follow');
         }
     }
 
@@ -134,18 +112,7 @@ const PublicProfile = ({
             })
         }
 
-        toast.success(`Unfollowed ${userName}`
-            // , {
-            //     style: {
-            //         border: '2px solid #8249A0',
-            //         color: '#8249A0',
-            //     },
-            //     iconTheme: {
-            //         primary: '#8249A0',
-            //         secondary: '#FFFAEE',
-            //     },
-            // }
-        );
+        toast.success(`Unfollowed ${userName}`);
     }
 
     const random = (min = 10, max = 50) => {

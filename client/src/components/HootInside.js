@@ -1,11 +1,10 @@
-import React, { useEffect, useState, Fragment, useContext, useCallback, useRef, useLayoutEffect } from 'react'
+import React, { useEffect, useState, Fragment, useRef } from 'react'
 import axios from 'axios'
 import format from "date-fns/format"
 import ClickAwayListener from 'react-click-away-listener';
 import MediaContent from './MediaContent';
 import HootComments from './Comment/HootComments';
 import ReactTooltip from 'react-tooltip';
-// import toast from 'react-hot-toast';
 import { toast } from 'react-toastify';
 import Avatar from 'react-avatar';
 import { formatCount, formatSi } from '../Helpers/formatNumbers';
@@ -20,7 +19,7 @@ import { ImReddit, ImPinterest2 } from 'react-icons/im'
 import { AiOutlineLinkedin } from 'react-icons/ai'
 import { HiBadgeCheck, HiOutlineCode } from 'react-icons/hi'
 import Highlighter from "react-highlight-words"
-import faker from 'faker';
+import { v4 as uuidv4 } from 'uuid';
 import './IndividualHoot/individualHoot.css'
 import Expire from './Expire';
 
@@ -118,6 +117,24 @@ const HootInside = ({
     // const fromDBLinks = JSON.parse(linkData)
     // const [dbLink, setDbLink] = useState([]);
 
+    const [userData, setUserData] = useState([]);
+
+    //getting user data
+    useEffect(() => {
+        const getUserData = async () => {
+            await axios.get(`${BaseURL}/user/${username}`)
+                .then((response) => {
+                    setUserData(response.data[0]);
+                });
+        }
+
+        try {
+            getUserData();
+        } catch (error) {
+            console.log(error);
+        }
+    }, [username])
+
     // getting all uploads(hoots) of particuler user 
     useEffect(() => {
         axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
@@ -207,35 +224,9 @@ const HootInside = ({
         window.location.reload();
     }
 
-    // // auto commenting  
-    // const autoComments = async () => {
-    //     await axios.post(`${BaseURL}/comment/`, {
-    //         name: faker.name.firstName(),
-    //         username: faker.name.firstName().toLowerCase(),
-    //         commentBody: faker.lorem.sentence(),
-    //         profilePic: commentProfilePic,
-    //         hootId: hootId
-    //     })
-    // }
-
-    // setInterval(() => {
-    //     autoComments();
-    // }, 2000);
-
     const addComment = () => {
         if (!userInfo) {
-            toast.error('Please Login to Continue'
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     },
-                //     iconTheme: {
-                //         primary: '#8249A0',
-                //         secondary: '#FFFAEE',
-                //     },
-                // }
-            )
+            toast.error('Please Login to Comment')
         } else {
             axios.post(`${BaseURL}/comment/`, {
                 name: commentName,
@@ -266,18 +257,7 @@ const HootInside = ({
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
         }, 100);
-        toast.success('Link to hoot copied to clipboard'
-            // , {
-            //     style: {
-            //         border: '2px solid #8249A0',
-            //         color: '#8249A0',
-            //     },
-            //     iconTheme: {
-            //         primary: '#8249A0',
-            //         secondary: '#FFFAEE',
-            //     },
-            // }
-        );
+        toast.success('Link to hoot copied to clipboard');
     }
 
     const copyTextToClipboard = () => {
@@ -286,18 +266,7 @@ const HootInside = ({
             setIsMoreModalOpen(false)
             setIsShareModalOpen(false);
         }, 100);
-        toast.success('Text copied to clipboard'
-            // , {
-            //     style: {
-            //         border: '2px solid #8249A0',
-            //         color: '#8249A0',
-            //     },
-            //     iconTheme: {
-            //         primary: '#8249A0',
-            //         secondary: '#FFFAEE',
-            //     },
-            // }
-        );
+        toast.success('Text copied to clipboard');
     }
 
     const shareVia = async () => {
@@ -354,20 +323,10 @@ const HootInside = ({
         if (userInfo) {
             null
         } else {
-            toast.error('Please login to continue'
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     },
-                //     iconTheme: {
-                //         primary: '#8249A0',
-                //         secondary: '#FFFAEE',
-                //     },
-                // }
-            );
+            toast.error('Please login to Follow');
         }
     }
+
     // const jsonLink = JSON.parse(JSON.stringify(link));
     // console.log("link", jsonLink);
     // console.log("stringify link", JSON.stringify(link));
@@ -422,18 +381,7 @@ const HootInside = ({
         setTimeout(() => {
             setIsEmbedModalOpen(false)
         }, 100);
-        toast.success('Embed Code copied to clipboard'
-            // , {
-            //     style: {
-            //         border: '2px solid #8249A0',
-            //         color: '#8249A0',
-            //     },
-            //     iconTheme: {
-            //         primary: '#8249A0',
-            //         secondary: '#FFFAEE',
-            //     },
-            // }
-        );
+        toast.success('Embed Code copied to clipboard');
     }
 
     // converting array of object to normal array
@@ -457,31 +405,9 @@ const HootInside = ({
         }
 
         if (userInfo) {
-            toast.success(`Followed ${username}`
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     },
-                //     iconTheme: {
-                //         primary: '#8249A0',
-                //         secondary: '#FFFAEE',
-                //     },
-                // }
-            );
+            toast.success(`Followed ${username}`);
         } else {
-            toast.error('Please login to continue'
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     },
-                //     iconTheme: {
-                //         primary: '#8249A0',
-                //         secondary: '#FFFAEE',
-                //     },
-                // }
-            );
+            toast.error('Please login to Follow');
         }
     }
 
@@ -498,18 +424,23 @@ const HootInside = ({
             })
         }
 
-        toast.success(`Unfollowed ${username}`
-            // , {
-            //     style: {
-            //         border: '2px solid #8249A0',
-            //         color: '#8249A0',
-            //     },
-            //     iconTheme: {
-            //         primary: '#8249A0',
-            //         secondary: '#FFFAEE',
-            //     },
-            // }
-        );
+        toast.success(`Unfollowed ${username}`);
+    }
+
+    const joinMyClub = () => {
+        if (userInfo) {
+            if (userData.privateChannel) {
+                if (userInfo && userInfo.username === username) {
+                    window.location.pathname.includes(username) || history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`)
+                } else {
+                    history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`);
+                }
+            } else {
+                toast.info("Private Club not available!")
+            }
+        } else {
+            toast.info("Please Login to Join Club")
+        }
     }
 
     return (
@@ -582,7 +513,11 @@ const HootInside = ({
                                                 ?
                                                 userInfo.username === username
                                                     ?
-                                                    null
+                                                    <button
+                                                        className="btn-hoot-follow"
+                                                    >
+                                                        Following
+                                                    </button>
                                                     :
                                                     userFollowers.length === 0
                                                         ?
@@ -661,15 +596,17 @@ const HootInside = ({
                                     </div>
                                 }
 
-
-
                                 <div className="user-actions">
                                     {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
                                     {userInfo
                                         ?
                                         userInfo.username === username
                                             ?
-                                            null
+                                            <button
+                                                className="btn-hoot-follow"
+                                            >
+                                                Following
+                                            </button>
                                             :
                                             userFollowers.length === 0
                                                 ?
@@ -710,6 +647,32 @@ const HootInside = ({
                                             onClick={followAction}
                                         >
                                             Follow
+                                        </button>
+                                    }
+
+                                    {userInfo
+                                        ?
+                                        userInfo.username !== username
+                                            ?
+                                            <button
+                                                className="btn-hoot-follow join-my-club-margin"
+                                                onClick={joinMyClub}
+                                            >
+                                                Join My Club
+                                            </button>
+                                            :
+                                            <button
+                                                className="btn-hoot-follow join-my-club-margin"
+                                                onClick={joinMyClub}
+                                            >
+                                                Join My Club
+                                            </button>
+                                        :
+                                        <button
+                                            className="btn-hoot-follow join-my-club-margin"
+                                            onClick={joinMyClub}
+                                        >
+                                            Join My Club
                                         </button>
                                     }
 
@@ -949,9 +912,9 @@ const HootInside = ({
                                                                     sliceValue={0}
                                                                 />
                                                                 :
-                                                                <div className="login-to-comment">Be the first one to comment on this hoot</div>
+                                                                <div className="login-to-comment">Be the first one to Comment on this hoot</div>
                                                             :
-                                                            <div className="login-to-comment">Please Login to Continue</div>
+                                                            <div className="login-to-comment">Please Login to Comment</div>
                                                         }
                                                     </div>
                                                 </div>
@@ -1291,7 +1254,11 @@ const HootInside = ({
                                             ?
                                             userInfo.username === username
                                                 ?
-                                                null
+                                                <button
+                                                    className="btn-hoot-follow"
+                                                >
+                                                    Following
+                                                </button>
                                                 :
                                                 userFollowers.length === 0
                                                     ?
@@ -1381,68 +1348,96 @@ const HootInside = ({
                                 </div>
                             }
 
-                          
-                                <div className="user-actions">
-                                    
-                                    {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
-                                    {userInfo
+                            <div className="user-actions">
+                                {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
+                                {userInfo
+                                    ?
+                                    userInfo.username === username
                                         ?
-                                        userInfo.username === username
+                                        <button
+                                            className="btn-hoot-follow"
+                                        >
+                                            Following
+                                        </button>
+                                        :
+                                        userFollowers.length === 0
                                             ?
-                                            null
+                                            <button
+                                                className="btn-hoot-follow"
+                                                onClick={addFollower}
+                                            >
+                                                {followed
+                                                    ? "Following"
+                                                    : "Follow"
+                                                }
+                                            </button>
                                             :
-                                            userFollowers.length === 0
+                                            userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
                                                 ?
                                                 <button
                                                     className="btn-hoot-follow"
-                                                    onClick={addFollower}
+                                                    onClick={followedAlready ? removeFollower : addFollower}
+                                                >
+                                                    {followedAlready
+                                                        ? "Following"
+                                                        : "Follow"
+                                                    }
+                                                </button>
+                                                :
+                                                <button
+                                                    className="btn-hoot-follow"
+                                                    onClick={followed ? removeFollower : addFollower}
                                                 >
                                                     {followed
                                                         ? "Following"
                                                         : "Follow"
                                                     }
                                                 </button>
-                                                :
-                                                userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
-                                                    ?
-                                                    <button
-                                                        className="btn-hoot-follow"
-                                                        onClick={followedAlready ? removeFollower : addFollower}
-                                                    >
-                                                        {followedAlready
-                                                            ? "Following"
-                                                            : "Follow"
-                                                        }
-                                                    </button>
-                                                    :
-                                                    <button
-                                                        className="btn-hoot-follow"
-                                                        onClick={followed ? removeFollower : addFollower}
-                                                    >
-                                                        {followed
-                                                            ? "Following"
-                                                            : "Follow"
-                                                        }
-                                                    </button>
+                                    :
+                                    <button
+                                        className="btn-hoot-follow"
+                                        onClick={followAction}
+                                    >
+                                        Follow
+                                    </button>
+                                }
+
+                                {userInfo
+                                    ?
+                                    userInfo.username !== username
+                                        ?
+                                        <button
+                                            className="btn-hoot-follow join-my-club-margin"
+                                            onClick={joinMyClub}
+                                        >
+                                            Join My Club
+                                        </button>
                                         :
                                         <button
-                                            className="btn-hoot-follow"
-                                            onClick={followAction}
+                                            className="btn-hoot-follow join-my-club-margin"
+                                            onClick={joinMyClub}
                                         >
-                                            Follow
+                                            Join My Club
                                         </button>
-                                    }
-                                    <div
-                                        className="more"
-                                        onMouseEnter={() => setIsMoreModalOpen(true)}
-                                        onMouseLeave={() => setIsMoreModalOpen(false)}
+                                    :
+                                    <button
+                                        className="btn-hoot-follow join-my-club-margin"
+                                        onClick={joinMyClub}
                                     >
-                                        <BiDotsHorizontalRounded
-                                            className="more-icon"
-                                        />
-                                    </div>
-                                </div>
+                                        Join My Club
+                                    </button>
+                                }
 
+                                <div
+                                    className="more"
+                                    onMouseEnter={() => setIsMoreModalOpen(true)}
+                                    onMouseLeave={() => setIsMoreModalOpen(false)}
+                                >
+                                    <BiDotsHorizontalRounded
+                                        className="more-icon"
+                                    />
+                                </div>
+                            </div>
 
                             {/* More Option Modal */}
                             {isMoreModalOpen &&
@@ -1671,9 +1666,9 @@ const HootInside = ({
                                                                 sliceValue={0}
                                                             />
                                                             :
-                                                            <div className="login-to-comment">Be the first one to comment on this hoot</div>
+                                                            <div className="login-to-comment">Be the first one to Comment on this hoot</div>
                                                         :
-                                                        <div className="login-to-comment">Please Login to Continue</div>
+                                                        <div className="login-to-comment">Please Login to Comment</div>
                                                     }
                                                 </div>
                                             </div>
@@ -1764,13 +1759,13 @@ const HootInside = ({
                                     </div>
                                     <div className="view-count">{formatCount(views) + formatSi(views)}</div>
                                 </div>
-                                <div className="share">
+                                {privateHoot !== 1 ? <div className="share">
                                     <FiShare2
                                         onMouseEnter={() => setIsShareModalOpen(true)}
                                         onClick={() => setIsShareModalOpen(!isShareModalOpen)}
                                         className="cursor-pointer"
                                     />
-                                </div>
+                                </div> : null}
 
 
                                 {/* Share Modal with Social Media Icons */}

@@ -63,31 +63,9 @@ const SuggestedFollow = ({ verifiedUser }) => {
         }
 
         if (userInfo) {
-            toast.success(`Followed ${verifiedUser.username}`
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     },
-                //     iconTheme: {
-                //         primary: '#8249A0',
-                //         secondary: '#FFFAEE',
-                //     },
-                // }
-            );
+            toast.success(`Followed ${verifiedUser.username}`);
         } else {
-            toast.error('Please login to continue'
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     },
-                //     iconTheme: {
-                //         primary: '#8249A0',
-                //         secondary: '#FFFAEE',
-                //     },
-                // }
-            );
+            toast.error('Please login to Follow');
         }
     }
 
@@ -103,18 +81,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
             })
         }
 
-        toast.success(`Unfollowed ${verifiedUser.username}`
-            // , {
-            //     style: {
-            //         border: '2px solid #8249A0',
-            //         color: '#8249A0',
-            //     },
-            //     iconTheme: {
-            //         primary: '#8249A0',
-            //         secondary: '#FFFAEE',
-            //     },
-            // }
-        );
+        toast.success(`Unfollowed ${verifiedUser.username}`);
     }
 
     // converting array of object to normal array
@@ -128,18 +95,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
         if (userInfo) {
             null
         } else {
-            toast.error('Please login to continue'
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     },
-                //     iconTheme: {
-                //         primary: '#8249A0',
-                //         secondary: '#FFFAEE',
-                //     },
-                // }
-            );
+            toast.error('Please login to Follow');
         }
     }
 
