@@ -6,10 +6,6 @@ import './floatingButton.css'
 const FloatingButton = () => {
     return (
         <div className="float">
-            {/* <button>
-                <FiPlus />
-            </button> */}
-
             <Link to="/create">
                 <FiPlus className="plus" />
             </Link>

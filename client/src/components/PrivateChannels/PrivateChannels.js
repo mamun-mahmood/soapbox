@@ -5,9 +5,9 @@ import Post from "../Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import InfiniteScrollLoader from "../Feed/InfiniteScrollLoader";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
-import { FaTumblr, IoSend,FaWindowClose } from "react-icons/fa";
+import { FaTumblr, IoSend, FaWindowClose } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
-import { FiTwitter, FiSearch, FiSend, FiFolder, FiImage, FiVideo, FiSmile,FiStopCircle,FiSkipBack } from "react-icons/fi";
+import { FiTwitter, FiSearch, FiSend, FiFolder, FiImage, FiVideo, FiSmile, FiStopCircle, FiSkipBack } from "react-icons/fi";
 import socket, { startSocket } from '../../socketChat';
 import Picker from 'emoji-picker-react';
 import Linkify from 'react-linkify';
@@ -847,7 +847,7 @@ if(message){
                                             dataLength={uploads.length}
                                             next={fetchMoreHoots}
                                             hasMore={hasMore}
-                                            loader={<InfiniteScrollLoader />}
+                                        // loader={<InfiniteScrollLoader />}
                                         >
                                             {uploads.map((upload) => {
                                                 return (
@@ -927,19 +927,19 @@ if(message){
                                 <div className="send">
                                     <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
                                         <FaWindowClose className="icon-text"
-                                        onClick={()=>{
-                                            setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
-                                        }}
-                                        /> 
-                                         <FiVideo className="icon-text" /> <FiImage className="icon-text" />   <FiFolder className="icon-text" />
+                                            onClick={() => {
+                                                setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                            }}
+                                        />
+                                        <FiVideo className="icon-text" /> <FiImage className="icon-text" />   <FiFolder className="icon-text" />
                                         <FiSmile className="icon-text"
                                             onClick={() => { setEmojiPicker(!emojiPicker) }}
                                         />
                                         <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
                                         <div className="btns"> <button type="submit"><FiSend /></button>
-                                      
+
                                         </div>
-                                    
+
 
                                     </form>
                                 </div>
@@ -1042,7 +1042,7 @@ if(message){
                                         dataLength={uploads.length}
                                         next={fetchMoreHoots}
                                         hasMore={hasMore}
-                                        loader={<InfiniteScrollLoader />}
+                                    // loader={<InfiniteScrollLoader />}
                                     >
                                         {uploads.map((upload, index) => {
                                             return (
@@ -1105,20 +1105,20 @@ if(message){
                                     </div>
                                 <div className="send">
                                     <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
-                                    <FaWindowClose className="icon-text"
-                                    onClick={()=>{
-                                        setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
-                                    }}
-                                   
-                                   />
-                                  
+                                        <FaWindowClose className="icon-text"
+                                            onClick={() => {
+                                                setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                            }}
+
+                                        />
+
                                         <FiVideo className="icon-text" /> <FiImage className="icon-text" />   <FiFolder className="icon-text" />
                                         <FiSmile className="icon-text"
                                             onClick={() => { setEmojiPicker(!emojiPicker) }}
                                         />
                                         <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
                                         <div className="btns"> <button type="submit"><FiSend /></button></div>
-                                      
+
                                     </form>
                                 </div>
                             </div> : null}

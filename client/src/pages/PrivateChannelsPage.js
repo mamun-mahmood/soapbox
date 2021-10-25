@@ -1,9 +1,9 @@
 import React from 'react'
-import FloatingButton from '../components/FloatingButton/FloatingButton'
 import NavBar from '../components/NavBar/NavBar'
 import PrivateChannels from '../components/PrivateChannels/PrivateChannels'
 import { Helmet } from "react-helmet";
 import { useParams } from 'react-router';
+import PrivateFloatingButton from '../components/FloatingButton/PrivateFloatingButton';
 
 const PrivateChannelsPage = () => {
     const { username } = useParams();
@@ -12,7 +12,7 @@ const PrivateChannelsPage = () => {
         <div onContextMenu={(e) => e.preventDefault()}>
             <NavBar width={"none"} header={"Soapbox Private Club"} />
             <PrivateChannels />
-            <FloatingButton />
+            <PrivateFloatingButton />
 
             <Helmet>
                 <title>{username}'s Private Club on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>

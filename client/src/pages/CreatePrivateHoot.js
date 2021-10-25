@@ -489,7 +489,7 @@ const CreatePost = () => {
                 <div className="upload-post">
                     <div className="back-to-home">
                         {/* <Link to="/home"> */}
-                        <Link to="/">
+                        <Link to={`/${uuidv4()}/private/channels/${username}/${uuidv4()}`}>
                             <FiArrowLeft className="left-arrow" />
                         </Link>
                         <span>

@@ -72,16 +72,15 @@ function App() {
           {/* <ProtectedRoute page={Home} /> */}
           <Home />
         </Route>
-        <Route exact path="/">
-          {/* <ProtectedRoute page={Home} /> */}
-          <Home />
-        </Route>
+
         <Route path="/:FakeData/SoapboxHall/:randomFakeKey?">
           <ProtectedRoute page={SoapboxHall} />
         </Route>
+
         <Route path="/:FakeData/RecordMessage/:hallId?/:userName?/:randomFakeKey?">
           <ProtectedRoute page={recordMessage} />
         </Route>
+
         <Route path="/:FakeData/Reception/:hallId?/:randomFakeKey?">
           <ProtectedRoute page={Reception} />
         </Route>
@@ -103,7 +102,7 @@ function App() {
           <ProtectedRoute page={CreatePrivateHoot} />
         </Route>
 
-        <Route path="/create">
+        <Route exact path="/create">
           <ProtectedRoute page={CreateHoot} />
         </Route>
 
