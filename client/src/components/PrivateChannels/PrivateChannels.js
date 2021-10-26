@@ -40,6 +40,7 @@ import personalmessage from '../../assets/personalmessage.png';
 import { Form } from "react-bootstrap";
 import ClickAwayListener from "react-click-away-listener";
 import Autolinker from 'autolinker';
+import RandomSuggestedFollows from '../SideBar/RandomSuggestedFollows'
 
 const PrivateChannels = () => {
 
@@ -353,7 +354,7 @@ if(message){
         <Fragment>
             <div className="private-channels" style={{ userSelect: "none" }}>
                 <div className="channel-banner" style={{ position: 'relative' }}>
-                    <img src={banner} alt="banner" />
+                    {/* <img src={banner} alt="banner" /> */}
                     <div style={{ position: 'absolute', bottom: '68px', left: '120px', zIndex: 5 }} className="clubOwner">Club Owner</div>
                     <div style={{ position: 'absolute', bottom: '52px', left: '170px', zIndex: 5 }} className="arrow-down"></div>
                 </div>
@@ -365,20 +366,21 @@ if(message){
                                     <ul
                                         style={{
                                             position: "sticky",
-                                            top: "9rem",
+                                            maxHeight:'90vh',
+                                            overflowY:'scroll',
                                             alignSelf: "flex-start",
-                                            padding: "1rem",
+                                           
                                         }}
                                     >
-
+                                      <div className="channel-banner" > <img src={banner} alt="banner" /></div>
                                         <div className="profile-pic">
-
+                                       
                                             <img
                                                 src={`${BaseURL}/profile-pictures/${user.profilePic}`}
                                                 alt="profile"
                                             />
                                         </div>
-                                        <div style={{ maxHeight: '70vh', overflowY: 'scroll' }} >
+                                        <div>
                                             <div className="user-information">
                                                 <div className="name">{user.name}</div>
                                                 <div className="username">@{user.username}</div>
@@ -889,18 +891,19 @@ if(message){
                                 </div>
                             )}
 
-                            {showChatRoom ? <div style={{position:'relative'}} >
-                                <Linkify >
-                                {privateChat? <div className="privateChat-club">
-                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',maxWidth:'300px' }} >Private Chat <FaWindowClose className="icon-text"
+{showChatRoom ? 
+                            <div style={{position:'relative'}} >
+                          <div style={{display:'flex',flexDirection:'row'}}>
+                          {privateChat? <div className="privateChat-club">
+                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',maxWidth:'300px' }} >Private Chat<FaWindowClose className="icon-text"
                                             onClick={() => {
                                                setPrivateChat(false);
                                             }}
                                         /></div>
                                                           
                                     </div>:null}
-                               
-                                <div className="container" style={{left:privateChat?"90px":'0'}}>
+                           
+                                <div className="container"  >
                                     {emojiPicker && (
                                         <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
                                             <div>
@@ -923,29 +926,29 @@ if(message){
                                         </ClickAwayListener>
                                     )}
                                 </div>
+                             
                                 <div className="community-club">
                                 <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
-                                                          
-                                    </div>  
-                                </Linkify>
-                            
+                                <RandomSuggestedFollows />               
+                                    </div>
 
+                          </div>
+                         
                                 <div className="send">
                                     <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
                                         <FaWindowClose className="icon-text"
                                             onClick={() => {
                                                 setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
                                             }}
+
                                         />
+
                                         <FiVideo className="icon-text" /> <FiImage className="icon-text" />   <FiFolder className="icon-text" />
                                         <FiSmile className="icon-text"
                                             onClick={() => { setEmojiPicker(!emojiPicker) }}
                                         />
                                         <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
-                                        <div className="btns"> <button type="submit"><FiSend /></button>
-
-                                        </div>
-
+                                        <div className="btns"> <button type="submit"><FiSend /></button></div>
 
                                     </form>
                                 </div>
@@ -987,7 +990,7 @@ if(message){
                                             setShowFeed(false);
                                             setShowChatRoom(false);
                                         }} >Price Settings</span>
-                                    <span 
+                                    {/* <span 
                                         onClick={() => {
                                             history.push(
                                                 `/${uuidv4()}/RecordMessage/${uuidv4()}/${userInfo[0].name
@@ -1000,7 +1003,7 @@ if(message){
 
                                         </div>
 
-                                    </span>
+                                    </span> */}
                                     <span style={{backgroundColor:showChatRoom?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}  onClick={() => {
                   setShowRequest(false);
                   setShowSubscribers(false);
@@ -1077,8 +1080,9 @@ if(message){
                                     </InfiniteScroll>
                                 )}
                             </div> : null}
-                            {showChatRoom ? <div style={{position:'relative'}} >
-                          
+                            {showChatRoom ? 
+                            <div style={{position:'relative'}} >
+                          <div style={{display:'flex',flexDirection:'row'}}>
                           {privateChat? <div className="privateChat-club">
                             <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',maxWidth:'300px' }} >Private Chat<FaWindowClose className="icon-text"
                                             onClick={() => {
@@ -1088,7 +1092,7 @@ if(message){
                                                           
                                     </div>:null}
                            
-                                <div className="container"  style={{left:privateChat?"90px":'0'}} >
+                                <div className="container"  >
                                     {emojiPicker && (
                                         <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
                                             <div>
@@ -1113,8 +1117,11 @@ if(message){
                                 </div>
                                 <div className="community-club">
                                 <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
-                                                          
+                                <RandomSuggestedFollows />               
                                     </div>
+
+                          </div>
+                         
                                 <div className="send">
                                     <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
                                         <FaWindowClose className="icon-text"

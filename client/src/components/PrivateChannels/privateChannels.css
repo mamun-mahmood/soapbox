@@ -5,7 +5,7 @@
 .channel-banner img {
     /* position: fixed; */
     width: 100%;
-    height: 10.5rem;
+    height: 8.5rem;
     object-fit: cover;
     cursor: pointer;
     z-index: 1;
@@ -36,6 +36,7 @@
     flex: 0 0 380px;
     background-color: #EDE9FF;
     transition: 0.3s;
+   
 }
 
 .channel-user-info ul {
@@ -55,6 +56,7 @@
     display: flex;
     justify-content: center;
     align-items: center;   
+   
 }
 
 .profile-pic img {
@@ -241,7 +243,8 @@
     align-items: center;
     /* position: fixed; */
     height: 60px;
-
+padding-left: 1rem;
+padding-right: 1rem;
     width: 100%;
     background-color: #F7F6FF;
     z-index: 1;
@@ -339,28 +342,29 @@
 
 
 .container{
-  width: 50%;
+  width: 40%;
    border: 1px solid #e1b8f886;
    padding: 33px;
   position: relative;
     height:80%;
-    min-height: 300px;
-    max-height: 300px;
+    min-height: 70vh;
+    max-height: 70vh;
    overflow-y: auto;
    min-width: 300px;
    border-radius: 10px;
    margin-bottom: 23px;
-  
+ 
    z-index: 5;
+
 
 }
 
 .privateChat-club{
     position: absolute;
     top: 0px;
-    left: 0;
+    right: 0;
     background-color: whitesmoke;
-    min-width: 335px;
+    min-width: 305px;
     height:80%;
     min-height: 300px;
     max-height: 300px;  
@@ -374,12 +378,10 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 .community-club{
     position: absolute;
     top: 0px;
-    right: 0;
+    left: 0;
     background-color: whitesmoke;
-    min-width: 165px;
-    height:80%;
-    min-height: 300px;
-    max-height: 300px;
+  
+  
     background: rgba( 255, 255, 255, 0.25 );
 box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
 backdrop-filter: blur( 4px );
@@ -427,7 +429,7 @@ color: #374151;;
 border-radius: 14px;
 display: flex;
 flex-direction: column;
-max-width: 390px;
+max-width: 350px;
 margin:17px 2px;
 background: rgba( 255, 255, 255, 0.25 );
 box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );

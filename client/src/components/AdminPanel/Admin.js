@@ -6,6 +6,7 @@ export default function Admin() {
   const BaseURL = process.env.REACT_APP_API_URL;
   const [users, setUsers] = useState([])
   const [user, setUser] = useState([])
+  
 
   const [showEdit, setShowEdit] = useState(false)
   useEffect(() => {
@@ -21,7 +22,8 @@ export default function Admin() {
       username: user.username,
       email: user.email,
       verified: user.verified,
-      followers: user.followers
+      followers: user.followers,
+      communityClub:user.communityClub
     }).then(() => {
       alert(`Updated details of ${user.username}`)
       setShowEdit(!showEdit)
@@ -48,7 +50,8 @@ export default function Admin() {
                 username: user.username,
                 followers: user.followers,
                 verify: user.verified,
-                email: e.target.value
+                email: e.target.value,
+                communityClub:user.communityClub
               })
             }}
           />
@@ -62,7 +65,8 @@ export default function Admin() {
                 username: user.username,
                 followers: e.target.value,
                 verified: user.verified,
-                email: user.email
+                email: user.email,
+                communityClub:user.communityClub
               })
             }}
           />
@@ -76,7 +80,8 @@ export default function Admin() {
                 username: user.username,
                 followers: user.followers,
                 verified: e.target.value,
-                email: user.email
+                email: user.email,
+                communityClub:user.communityClub
               })
             }}
           />
@@ -90,7 +95,22 @@ export default function Admin() {
                 username: e.target.value,
                 followers: user.followers,
                 verified: user.verified,
-                email: user.email
+                email: user.email,
+                communityClub:user.communityClub
+              })
+            }}
+          />
+           <label>Community Club</label>
+          <input
+            placeholder="Community Club"
+            value={user.communityClub}
+            onChange={(e) => {
+              setUser({
+                username: user.username,
+                followers: user.followers,
+                verified: user.verified,
+                email: user.email,
+                communityClub:e.target.value
               })
             }}
           />
