@@ -9,7 +9,7 @@ const RamdomSuggestedHoots = () => {
     const BaseURL = process.env.REACT_APP_API_URL;
     const history = useHistory();
 
-    const LIMIT = 4;
+    const LIMIT = 3;
 
     useEffect(() => {
         const getAllUploadData = async () => {

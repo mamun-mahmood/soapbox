@@ -1,10 +1,10 @@
 import axios from 'axios'
-import React, { Fragment, useEffect, useLayoutEffect, useState } from 'react'
+import React, { Fragment, useEffect, useEffectuseState, useState } from 'react'
 import Avatar from 'react-avatar'
-// import toast from 'react-hot-toast'
 import { toast } from 'react-toastify';
 import { HiBadgeCheck } from 'react-icons/hi'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid';
 import { formatCount, formatSi } from '../../Helpers/formatNumbers'
 
 const SuggestedFollow = ({ verifiedUser }) => {
@@ -13,6 +13,9 @@ const SuggestedFollow = ({ verifiedUser }) => {
     const [followed, setFollowed] = useState(false);
     const [followedAlready, setFollowedAlready] = useState(true);
     const [userFollowers, setUserFollowers] = useState([]);
+    const [userData, setUserData] = useState([]);
+
+    const history = useHistory();
 
     const getUserFollowData = async () => {
         await axios.get(`${BaseURL}/user/followers/${verifiedUser.username}`)
@@ -38,6 +41,21 @@ const SuggestedFollow = ({ verifiedUser }) => {
 
         getUserData();
     }, [])
+
+    useEffect(() => {
+        const getUserData = async () => {
+            await axios.get(`${BaseURL}/user/${verifiedUser.username}`)
+                .then((response) => {
+                    setUserData(response.data[0]);
+                });
+        }
+
+        try {
+            getUserData();
+        } catch (error) {
+            console.log(error);
+        }
+    }, [verifiedUser.username])
 
     var totalViews = 0;
     var totalLikes = 0;
@@ -96,6 +114,18 @@ const SuggestedFollow = ({ verifiedUser }) => {
             null
         } else {
             toast.error('Please login to Follow');
+        }
+    }
+
+    const joinMyClub = () => {
+        if (userInfo) {
+            if (userData.privateChannel) {
+                history.push(`/${uuidv4()}/private/channels/${verifiedUser.username}/${uuidv4()}`);
+            } else {
+                toast.info("Private Club not available!")
+            }
+        } else {
+            toast.info("Please Login to Join Club")
         }
     }
 
@@ -158,58 +188,84 @@ const SuggestedFollow = ({ verifiedUser }) => {
                                 </div>
                             </Link>
 
-                            {/* <button className="hover-btn-hoot-follow">Follow</button> */}
-                            {userInfo
-                                ?
-                                userInfo.username === verifiedUser.username
+                            <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem", fontSize: "small" }}>
+                                {userInfo
                                     ?
-                                    <button
-                                        className="btn-hoot-follow"
-                                    >
-                                        Following
-                                    </button>
-                                    :
-                                    userFollowers.length === 0
+                                    userInfo.username === verifiedUser.username
                                         ?
                                         <button
                                             className="btn-hoot-follow"
-                                            onClick={addFollower}
                                         >
-                                            {followed
-                                                ? "Following"
-                                                : "Follow"
-                                            }
+                                            Following
                                         </button>
                                         :
-                                        userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                        userFollowers.length === 0
                                             ?
                                             <button
                                                 className="btn-hoot-follow"
-                                                onClick={followedAlready ? removeFollower : addFollower}
-                                            >
-                                                {followedAlready
-                                                    ? "Following"
-                                                    : "Follow"
-                                                }
-                                            </button>
-                                            :
-                                            <button
-                                                className="btn-hoot-follow"
-                                                onClick={followed ? removeFollower : addFollower}
+                                                onClick={addFollower}
                                             >
                                                 {followed
                                                     ? "Following"
                                                     : "Follow"
                                                 }
                                             </button>
-                                :
-                                <button
-                                    className="btn-hoot-follow"
-                                    onClick={followAction}
-                                >
-                                    Follow
-                                </button>
-                            }
+                                            :
+                                            userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                                ?
+                                                <button
+                                                    className="btn-hoot-follow"
+                                                    onClick={followedAlready ? removeFollower : addFollower}
+                                                >
+                                                    {followedAlready
+                                                        ? "Following"
+                                                        : "Follow"
+                                                    }
+                                                </button>
+                                                :
+                                                <button
+                                                    className="btn-hoot-follow"
+                                                    onClick={followed ? removeFollower : addFollower}
+                                                >
+                                                    {followed
+                                                        ? "Following"
+                                                        : "Follow"
+                                                    }
+                                                </button>
+                                    :
+                                    <button
+                                        className="btn-hoot-follow"
+                                        onClick={followAction}
+                                    >
+                                        Follow
+                                    </button>
+                                }
+                                {userInfo
+                                    ?
+                                    userInfo.username !== verifiedUser.username
+                                        ?
+                                        <button
+                                            className="btn-hoot-follow"
+                                            onClick={joinMyClub}
+                                        >
+                                            Join My Club
+                                        </button>
+                                        :
+                                        <button
+                                            className="btn-hoot-follow"
+                                            onClick={joinMyClub}
+                                        >
+                                            Join My Club
+                                        </button>
+                                    :
+                                    <button
+                                        className="btn-hoot-follow"
+                                        onClick={joinMyClub}
+                                    >
+                                        Join My Club
+                                    </button>
+                                }
+                            </div>
                         </div>
 
                         <div className="hoot-user-info">
