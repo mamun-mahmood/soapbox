@@ -7,7 +7,7 @@ const RandomSuggestedFollows = () => {
     const [page, setpage] = useState(2);
     const BaseURL = process.env.REACT_APP_API_URL;
 
-    const LIMIT = 4;
+    const LIMIT = 3;
 
     // getting all verified users data
     useEffect(() => {

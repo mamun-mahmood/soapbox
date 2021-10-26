@@ -32,7 +32,7 @@ import "./privateChannels.css";
 import { toast } from 'react-toastify';
 import { IoRecording } from "react-icons/io5";
 import { BiVideoRecording } from "react-icons/bi";
-import { Event, LiveTvRounded } from "@material-ui/icons";
+import { Call, Event, LiveTvRounded, VideoCall } from "@material-ui/icons";
 import { v4 as uuidv4 } from "uuid";
 import oneonone from '../../assets/oneonone.png';
 import groupcall from '../../assets/groupcall.png';
@@ -41,6 +41,7 @@ import { Form } from "react-bootstrap";
 import ClickAwayListener from "react-click-away-listener";
 import Autolinker from 'autolinker';
 import RandomSuggestedFollows from '../SideBar/RandomSuggestedFollows'
+import RandomCommunitySuggestion from "../SideBar/RandomCommunitySuggestion";
 
 const PrivateChannels = () => {
 
@@ -64,7 +65,7 @@ const PrivateChannels = () => {
     const [emojiPicker, setEmojiPicker] = useState(false);
     const [showFeed, setShowFeed] = useState(true);
     const [privateChat, setPrivateChat] = useState(false)
-    
+
     const [showChatRoom, setShowChatRoom] = useState(false)
 
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
@@ -117,58 +118,78 @@ const PrivateChannels = () => {
     });
 
     const append = (chatname, message, position, imgSrc, isEmoji) => {
-if(message){
-    var messageContainer = document.querySelector('.container')
-    const messageBox = document.createElement('div');
-    const ProfileBox = document.createElement('div');
-    const messageElement = document.createElement('div');
-    const image = document.createElement('img')
-    const name = document.createElement('p')
+        if (message) {
+            var messageContainer = document.querySelector('.container')
+            const messageBox = document.createElement('div');
+            const ProfileBox = document.createElement('div');
+            const messageElement = document.createElement('div');
+            const image = document.createElement('img')
+            const name = document.createElement('p')
 
-    messageContainer.append(messageBox);
-    messageBox.append(ProfileBox);
-    messageBox.append(messageElement);
-    ProfileBox.onclick=function() {
-       if(window.confirm(`Do You Want to request ${chatname} for private chat`)){
-        // socket.emit('room',chatname);
-        // socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
-        setPrivateChat(true)
-       }
-    }
+            messageContainer.append(messageBox);
+            messageBox.append(ProfileBox);
+            messageBox.append(messageElement);
+            ProfileBox.onclick = function () {
+              
 
-    ProfileBox.append(image)
-    ProfileBox.append(name)
+            //     toast.success(`Requested Private Chat to ${chatname}`
+            //     // , {
+            //     //     style: {
+            //     //         border: "2px solid #A279BA",
+            //     //         color: "#A279BA",
+            //     //     },
+            //     //     iconTheme: {
+            //     //         primary: "#A279BA",
+            //     //         secondary: "#FFFAEE",
+            //     //     },
+            //     // }
+            // );
+            const resolveAfter3Sec = new Promise(resolve => setTimeout(resolve, 3000));
+            toast.promise(
+                resolveAfter3Sec,
+                {
+                  pending: `Requesting Private Chat to ${chatname}`,
+                  success: setPrivateChat(true),
+                  error: 'Request Rejected'
+                }
+            )
 
-    messageBox.classList.add('messageBox');
-    ProfileBox.classList.add('ProfileBox')
+          
+            }
 
-    var myLinkedMessage = autolinker.link(message);
-    messageElement.innerHTML += myLinkedMessage;
-    name.innerText = chatname;
-    messageElement.classList.add('message');
-    if (isEmoji) {
-        messageElement.classList.add('message-emoji');
-    }
+            ProfileBox.append(image)
+            ProfileBox.append(name)
+
+            messageBox.classList.add('messageBox');
+            ProfileBox.classList.add('ProfileBox')
+
+            var myLinkedMessage = autolinker.link(message);
+            messageElement.innerHTML += myLinkedMessage;
+            name.innerText = chatname;
+            messageElement.classList.add('message');
+            if (isEmoji) {
+                messageElement.classList.add('message-emoji');
+            }
 
 
 
-    if (imgSrc) {
+            if (imgSrc) {
 
-        image.src = imgSrc;
-        if (position == "right") {
-            image.classList.add('chat-profile');
-        } else {
-            image.classList.add('chat-profile');
+                image.src = imgSrc;
+                if (position == "right") {
+                    image.classList.add('chat-profile');
+                } else {
+                    image.classList.add('chat-profile');
+                }
+
+
+
+            }
+
+            // messageContainer.append(messageElement);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
         }
 
-
-
-    }
-
-    // messageContainer.append(messageElement);
-    messageContainer.scrollTop = messageContainer.scrollHeight;
-}
-       
 
     }
     function isEmoji(str) {
@@ -309,11 +330,11 @@ if(message){
         toast.success(`Requested call to ${username}`
             // , {
             //     style: {
-            //         border: "2px solid #8249A0",
-            //         color: "#8249A0",
+            //         border: "2px solid #A279BA",
+            //         color: "#A279BA",
             //     },
             //     iconTheme: {
-            //         primary: "#8249A0",
+            //         primary: "#A279BA",
             //         secondary: "#FFFAEE",
             //     },
             // }
@@ -326,11 +347,11 @@ if(message){
         toast.success(`Cancelled call request to ${username}`
             // , {
             //     style: {
-            //         border: "2px solid #8249A0",
-            //         color: "#8249A0",
+            //         border: "2px solid #A279BA",
+            //         color: "#A279BA",
             //     },
             //     iconTheme: {
-            //         primary: "#8249A0",
+            //         primary: "#A279BA",
             //         secondary: "#FFFAEE",
             //     },
             // }
@@ -353,11 +374,9 @@ if(message){
     return (
         <Fragment>
             <div className="private-channels" style={{ userSelect: "none" }}>
-                <div className="channel-banner" style={{ position: 'relative' }}>
+                <div className="channel-banner" >
                     {/* <img src={banner} alt="banner" /> */}
-                    <div style={{ position: 'absolute', bottom: '68px', left: '120px', zIndex: 5 }} className="clubOwner">Club Owner</div>
-                    <div style={{ position: 'absolute', bottom: '52px', left: '170px', zIndex: 5 }} className="arrow-down"></div>
-                </div>
+                   </div>
                 <div className="channel-content">
                     {userInfo.map((user) => {
                         return (
@@ -372,7 +391,12 @@ if(message){
                                            
                                         }}
                                     >
-                                      <div className="channel-banner" > <img src={banner} alt="banner" /></div>
+                                      <div className="channel-banner" style={{ position: 'relative' }} > 
+                                      <div style={{ position: 'absolute', bottom: '75px', left: '110px', zIndex: 5 }} className="clubOwner">Club Owner</div>
+                    <div style={{ position: 'absolute', bottom: '59px', left: '170px', zIndex: 5 }} className="arrow-down"></div>
+              
+                                      <img src={banner} alt="banner" /></div>
+                                      
                                         <div className="profile-pic">
                                        
                                             <img
@@ -423,7 +447,7 @@ if(message){
                                                             : user.website}
                                                     </a>
                                                 )}
-                                                 <div
+                                                <div
                                                     className="social-profile-icon-links"
                                                     style={{ flexWrap: "wrap" }}
                                                 >
@@ -564,15 +588,22 @@ if(message){
                                                         <div>
 
 
-                                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Schedule Virtual Experience</div>
+                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Schedule Virtual Experience</div>
                                                             <div className="control">
 
                                                                 <button style={{ minWidth: '208px' }} >Schedule Vero Call or PPV</button>
-
+                                                                         
                                                             </div>
+                                                            <div
+                                                    className="social-profile-icon-links"
+                                                    style={{ flexWrap: "wrap" }}
+                                                >
+                                                       <Call style={{color:'#A279BA'}} /><VideoCall  style={{color:'#A279BA'}} />
+                                                    </div>
+                                                         
+                                                          
                                                             <br></br>
-                                                            <br></br>
-                                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }}>Create Pay Per View Event</div>
+                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }}>Create Pay Per View Event</div>
                                                             <div className="control">
 
                                                                 <button style={{ minWidth: '208px' }}>Broadcast Vero Live PPV</button>
@@ -610,11 +641,11 @@ if(message){
                                                     )}
                                                 </div>
 
-                                               
+
                                             </div>
 
                                             <div className="channel-live-events">
-                                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Live Events</div>
+                                                <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Live Events</div>
                                                 <div className="live-events">
                                                     <div className="live-cards">
                                                         <img src={live} alt="live" />
@@ -661,10 +692,10 @@ if(message){
                                     alignSelf: "flex-start",
                                 }}
                             >
-                                <div className="tabs">
-                                    <span onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(true); setShowSubscribeButton(false);setShowChatRoom(false) }} >Timeline</span>
-                                    <span>On-demand Photos</span>
-                                    <span>On-demand Videos</span>
+                                <div className="tabs" style={{ margin: "0 0.5rem" }}>
+                                    <span onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(true); setShowSubscribeButton(false); setShowChatRoom(false) }} >Timeline</span>
+                                    <span>Podcasts</span>
+                                    <span>Club Rules</span>
                                     <span>Marketplace</span>
                                     <span onClick={() => {
                                         setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
@@ -897,13 +928,15 @@ if(message){
                           {privateChat? <div className="privateChat-club">
                             <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',maxWidth:'300px' }} >Private Chat<FaWindowClose className="icon-text"
                                             onClick={() => {
-                                               setPrivateChat(false);
+                                                setPrivateChat(false);
                                             }}
                                         /></div>
                                                           
                                     </div>:null}
                            
                                 <div className="container"  >
+                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',marginTop:'-30px' }} >Community Club Chat</div>
+                              
                                     {emojiPicker && (
                                         <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
                                             <div>
@@ -929,7 +962,7 @@ if(message){
                              
                                 <div className="community-club">
                                 <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
-                                <RandomSuggestedFollows />               
+                                <RandomCommunitySuggestion />               
                                     </div>
 
                           </div>
@@ -970,18 +1003,18 @@ if(message){
                                     alignSelf: "flex-start",
                                 }}
                             >
-                                <div className="tabs">
-                                    <span 
-                                    style={{backgroundColor:showFeed?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}
-                                    onClick={() => { setShowRequest(false); setShowFeed(!showFeed); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false);setShowChatRoom(false) }} >Timeline</span>
+                                <div className="tabs" style={{ margin: "0 0.5rem" }}>
                                     <span
-                                    style={{backgroundColor:showRequest?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}
-                                    onClick={() => { setShowRequest(!showRequest);setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false);setShowChatRoom(false) }} >Requests</span>
-                                    <span 
-                                    style={{backgroundColor:showSubscribers?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}
-                                    onClick={() => { setShowRequest(false); setShowFeed(false);setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false) ;setShowChatRoom(false)}} >Memberships</span>
+                                        style={{ backgroundColor: showFeed ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
+                                        onClick={() => { setShowRequest(false); setShowFeed(!showFeed); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Timeline</span>
+                                    <span
+                                        style={{ backgroundColor: showRequest ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
+                                        onClick={() => { setShowRequest(!showRequest); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Requests</span>
+                                    <span
+                                        style={{ backgroundColor: showSubscribers ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
+                                        onClick={() => { setShowRequest(false); setShowFeed(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Memberships</span>
                                     {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
-                                    <span style={{backgroundColor:showPricingSetting?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}
+                                    <span style={{ backgroundColor: showPricingSetting ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
                                         onClick={() => {
                                             setShowRequest(false);
                                             setShowSubscribers(false);
@@ -1004,7 +1037,7 @@ if(message){
                                         </div>
 
                                     </span> */}
-                                    <span style={{backgroundColor:showChatRoom?"#a09ba356":'#F7F6FF',borderRadius:'8px'}}  onClick={() => {
+                                    <span style={{backgroundColor:showChatRoom?"#8249A0":'#A279BA',borderRadius:'8px'}}  onClick={() => {
                   setShowRequest(false);
                   setShowSubscribers(false);
                   setShowPricingSetting(false);
@@ -1093,6 +1126,9 @@ if(message){
                                     </div>:null}
                            
                                 <div className="container"  >
+                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',marginTop:'-30px' }} >Community Club Chat</div>
+                              
+                               
                                     {emojiPicker && (
                                         <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
                                             <div>
@@ -1117,7 +1153,7 @@ if(message){
                                 </div>
                                 <div className="community-club">
                                 <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
-                                <RandomSuggestedFollows />               
+                                <RandomCommunitySuggestion />                   
                                     </div>
 
                           </div>

@@ -209,7 +209,7 @@ const HootInside = ({
 
         axios.delete(`${BaseURL}/upload/delete/${hootImgId}`)
 
-        history.push('/');
+        userInfo && window.location.pathname.includes(`private/channels/${userInfo.username}`) || history.push('/');
         window.location.reload();
     }
 
@@ -1759,13 +1759,13 @@ const HootInside = ({
                                     </div>
                                     <div className="view-count">{formatCount(views) + formatSi(views)}</div>
                                 </div>
-                                {privateHoot !== 1 ? <div className="share">
+                                <div className="share">
                                     <FiShare2
                                         onMouseEnter={() => setIsShareModalOpen(true)}
                                         onClick={() => setIsShareModalOpen(!isShareModalOpen)}
                                         className="cursor-pointer"
                                     />
-                                </div> : null}
+                                </div>
 
 
                                 {/* Share Modal with Social Media Icons */}

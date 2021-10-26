@@ -7,12 +7,12 @@ const RandomCommunitySuggestion = () => {
     const [page, setpage] = useState(2);
     const BaseURL = process.env.REACT_APP_API_URL;
 
-    const LIMIT = 4;
+    const LIMIT = 3;
 
     // getting all verified users data
     useEffect(() => {
         const getAllVerifiedUsersData = async () => {
-            await axios.get(`${BaseURL}/user/verified/p?page=1&limit=${LIMIT}`)
+            await axios.get(`${BaseURL}/user/communityClub/p?page=1&limit=${LIMIT}`)
                 .then((response) => {
                     setVerifiedUsers(response.data.results);
                 });
@@ -22,7 +22,7 @@ const RandomCommunitySuggestion = () => {
     }, [])
 
     const fetchMoreSuggestedFollows = async () => {
-        await axios.get(`${BaseURL}/user/verified/p?page=${page}&limit=${LIMIT}`)
+        await axios.get(`${BaseURL}/user/communityClub/p?page=${page}&limit=${LIMIT}`)
             .then((response) => {
                 const verifiedUsersFromServer = response.data.results;
 
@@ -40,7 +40,7 @@ const RandomCommunitySuggestion = () => {
         <Fragment>
             {verifiedUsers.map((verifiedUser) => {
                 return (
-                    <div key={verifiedUser.id}>
+                    <div key={verifiedUser.id} >
                         <SuggestedFollow verifiedUser={verifiedUser}  />
                     </div>
                 )

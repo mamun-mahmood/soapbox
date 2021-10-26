@@ -93,7 +93,7 @@
     padding: 3px;
     padding-left: 5px;
     padding-right: 5px;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 500;
     background-color: var(--primary-color);
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
@@ -102,6 +102,8 @@
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     color: whitesmoke;
+    min-width: 150px;
+    text-align: center;
 }
 
 .arrow-down {
@@ -110,7 +112,8 @@
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     
-    border-top: 20px solid  var(--primary-color);;
+    border-top: 20px solid  var(--primary-color);
+  
   }
   
 
@@ -246,7 +249,7 @@
 padding-left: 1rem;
 padding-right: 1rem;
     width: 100%;
-    background-color: #F7F6FF;
+    background-color:  #8149a0b9;
     z-index: 1;
 }
 
@@ -258,7 +261,7 @@ padding-right: 1rem;
 }
 
 .channel-tabs span {
-    color: var(--primary-color);
+    color:white;
     font-size: 1.2rem;
     font-weight: 400;
     padding: 0.5rem;
@@ -346,13 +349,14 @@ padding-right: 1rem;
    border: 1px solid #e1b8f886;
    padding: 33px;
   position: relative;
+  left:20px ;
     height:80%;
     min-height: 70vh;
     max-height: 70vh;
    overflow-y: auto;
    min-width: 300px;
    border-radius: 10px;
-   margin-bottom: 23px;
+ 
  
    z-index: 5;
 
@@ -362,12 +366,13 @@ padding-right: 1rem;
 .privateChat-club{
     position: absolute;
     top: 0px;
-    right: 0;
+    left: 0;
     background-color: whitesmoke;
     min-width: 305px;
     height:80%;
-    min-height: 300px;
-    max-height: 300px;  
+    min-height: 70vh;
+    max-height: 70vh;
+    overflow-y: scroll;
     background: rgba( 255, 255, 255, 0.25 );
 box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
 backdrop-filter: blur( 4px );
@@ -378,10 +383,14 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 .community-club{
     position: absolute;
     top: 0px;
-    left: 0;
+    right: 0;
     background-color: whitesmoke;
-  
-  
+  min-width: 280px;
+  max-width: 280px;
+  overflow-x: hidden;
+    min-height: 70vh;
+    max-height: 70vh;
+    overflow-y: scroll;
     background: rgba( 255, 255, 255, 0.25 );
 box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
 backdrop-filter: blur( 4px );
@@ -487,7 +496,7 @@ bottom: 1px;
 }
 
 #messageInp{
-width: 50%;
+width: 45%;
 background-color:#a09ba356;
 border: none;
 border-radius: 6px;

@@ -11,6 +11,7 @@ import './sidebar.css';
 import RandomSuggestedFollows from './RandomSuggestedFollows'
 import RamdomSuggestedHoots from './RandomSuggestedHoots'
 import { MyLists } from '../../context/MyListContext'
+import RandomCommunitySuggestion from './RandomCommunitySuggestion'
 
 const SideBar = () => {
     // const [mainActive, setMainActive] = useState("active");
@@ -370,9 +371,16 @@ const SideBar = () => {
                     </li> */}
 
                     {/* suggested Follows  */}
+                    
                     <div style={{ paddingLeft: "1rem" }}>
                         <li>
-                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Suggested Follows</small>{" "}
+                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Community Clubs</small>{" "}
+                        </li>
+                        <RandomCommunitySuggestion />
+                    </div>
+                    <div style={{ paddingLeft: "1rem" }}>
+                        <li>
+                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Suggested Follows & Clubs</small>{" "}
                         </li>
                         <RandomSuggestedFollows />
                     </div>
@@ -395,6 +403,16 @@ const SideBar = () => {
                         </NavLink>
                     </li>
 
+                    <li>
+                        <a
+                            style={{ padding: "0.1rem 0.5rem" }}
+                            activeClassName="sidebar-option-active"
+                            href="https://www.verohive.com/"
+                            target="_blank" rel="noopener noreferrer"
+                        >
+                            <span>VeroHive Video Call</span>
+                        </a>
+                    </li>
                     <li>
                         <a
                             style={{ padding: "0.1rem 0.5rem" }}
