@@ -431,7 +431,7 @@ const HootInside = ({
         if (userInfo) {
             if (userData.privateChannel) {
                 if (userInfo && userInfo.username === username) {
-                    window.location.pathname.includes(username) || history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`)
+                    window.location.pathname.includes(`private/channels/${username}`) || history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`)
                 } else {
                     history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`);
                 }
@@ -493,8 +493,6 @@ const HootInside = ({
                                         onMouseLeave={() => setHoverInfo(false)}
                                         className="hover-info"
                                     >
-
-
                                         <div className="hover-user-follow">
                                             <Link to={path}>
                                                 <div className="avatar-hover-wraper">
@@ -508,58 +506,88 @@ const HootInside = ({
                                                 </div>
                                                 {/* <img class="hover-avatar" src={avatar} alt="avatar" /> */}
                                             </Link>
-                                            {/* <button className="hover-btn-hoot-follow" onClick={followAction}>Follow</button> */}
-                                            {userInfo
-                                                ?
-                                                userInfo.username === username
+                                            <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem", fontSize: "small" }}>
+                                                {userInfo
                                                     ?
-                                                    <button
-                                                        className="btn-hoot-follow"
-                                                    >
-                                                        Following
-                                                    </button>
-                                                    :
-                                                    userFollowers.length === 0
+                                                    userInfo.username === username
                                                         ?
                                                         <button
                                                             className="btn-hoot-follow"
-                                                            onClick={addFollower}
                                                         >
-                                                            {followed
-                                                                ? "Following"
-                                                                : "Follow"
-                                                            }
+                                                            Following
                                                         </button>
                                                         :
-                                                        userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                                        userFollowers.length === 0
                                                             ?
                                                             <button
                                                                 className="btn-hoot-follow"
-                                                                onClick={followedAlready ? removeFollower : addFollower}
-                                                            >
-                                                                {followedAlready
-                                                                    ? "Following"
-                                                                    : "Follow"
-                                                                }
-                                                            </button>
-                                                            :
-                                                            <button
-                                                                className="btn-hoot-follow"
-                                                                onClick={followed ? removeFollower : addFollower}
+                                                                onClick={addFollower}
                                                             >
                                                                 {followed
                                                                     ? "Following"
                                                                     : "Follow"
                                                                 }
                                                             </button>
-                                                :
-                                                <button
-                                                    className="btn-hoot-follow"
-                                                    onClick={followAction}
-                                                >
-                                                    Follow
-                                                </button>
-                                            }
+                                                            :
+                                                            userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                                                ?
+                                                                <button
+                                                                    className="btn-hoot-follow"
+                                                                    onClick={followedAlready ? removeFollower : addFollower}
+                                                                >
+                                                                    {followedAlready
+                                                                        ? "Following"
+                                                                        : "Follow"
+                                                                    }
+                                                                </button>
+                                                                :
+                                                                <button
+                                                                    className="btn-hoot-follow"
+                                                                    onClick={followed ? removeFollower : addFollower}
+                                                                >
+                                                                    {followed
+                                                                        ? "Following"
+                                                                        : "Follow"
+                                                                    }
+                                                                </button>
+                                                    :
+                                                    <button
+                                                        className="btn-hoot-follow"
+                                                        onClick={followAction}
+                                                    >
+                                                        Follow
+                                                    </button>
+                                                }
+                                                {userInfo
+                                                    ?
+                                                    window.location.pathname.includes(`private/channels/${username}`)
+                                                        ?
+                                                        null
+                                                        :
+                                                        userInfo.username !== username
+                                                            ?
+                                                            <button
+                                                                className="btn-hoot-follow join-my-club-margin"
+                                                                onClick={joinMyClub}
+                                                            >
+                                                                Join My Club
+                                                            </button>
+                                                            :
+                                                            <button
+                                                                className="btn-hoot-follow join-my-club-margin"
+                                                                onClick={joinMyClub}
+                                                            >
+                                                                Join My Club
+                                                            </button>
+                                                    :
+                                                    <button
+                                                        className="btn-hoot-follow join-my-club-margin"
+                                                        onClick={joinMyClub}
+                                                    >
+                                                        Join My Club
+                                                    </button>
+                                                }
+                                            </div>
                                         </div>
 
                                         <div className="hoot-user-info">
@@ -652,21 +680,25 @@ const HootInside = ({
 
                                     {userInfo
                                         ?
-                                        userInfo.username !== username
+                                        window.location.pathname.includes(`private/channels/${username}`)
                                             ?
-                                            <button
-                                                className="btn-hoot-follow join-my-club-margin"
-                                                onClick={joinMyClub}
-                                            >
-                                                Join My Club
-                                            </button>
+                                            null
                                             :
-                                            <button
-                                                className="btn-hoot-follow join-my-club-margin"
-                                                onClick={joinMyClub}
-                                            >
-                                                Join My Club
-                                            </button>
+                                            userInfo.username !== username
+                                                ?
+                                                <button
+                                                    className="btn-hoot-follow join-my-club-margin"
+                                                    onClick={joinMyClub}
+                                                >
+                                                    Join My Club
+                                                </button>
+                                                :
+                                                <button
+                                                    className="btn-hoot-follow join-my-club-margin"
+                                                    onClick={joinMyClub}
+                                                >
+                                                    Join My Club
+                                                </button>
                                         :
                                         <button
                                             className="btn-hoot-follow join-my-club-margin"
@@ -1248,59 +1280,90 @@ const HootInside = ({
                                                 />
                                             </div>
                                             {/* <img class="hover-avatar" src={avatar} alt="avatar" /> */}
+
                                         </Link>
-                                        {/* <button className="hover-btn-hoot-follow" onClick={followAction}>Follow</button> */}
-                                        {userInfo
-                                            ?
-                                            userInfo.username === username
+                                        <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem", fontSize: "small" }}>
+                                            {userInfo
                                                 ?
-                                                <button
-                                                    className="btn-hoot-follow"
-                                                >
-                                                    Following
-                                                </button>
-                                                :
-                                                userFollowers.length === 0
+                                                userInfo.username === username
                                                     ?
                                                     <button
                                                         className="btn-hoot-follow"
-                                                        onClick={addFollower}
                                                     >
-                                                        {followed
-                                                            ? "Following"
-                                                            : "Follow"
-                                                        }
+                                                        Following
                                                     </button>
                                                     :
-                                                    userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                                    userFollowers.length === 0
                                                         ?
                                                         <button
                                                             className="btn-hoot-follow"
-                                                            onClick={followedAlready ? removeFollower : addFollower}
-                                                        >
-                                                            {followedAlready
-                                                                ? "Following"
-                                                                : "Follow"
-                                                            }
-                                                        </button>
-                                                        :
-                                                        <button
-                                                            className="btn-hoot-follow"
-                                                            onClick={followed ? removeFollower : addFollower}
+                                                            onClick={addFollower}
                                                         >
                                                             {followed
                                                                 ? "Following"
                                                                 : "Follow"
                                                             }
                                                         </button>
-                                            :
-                                            <button
-                                                className="btn-hoot-follow"
-                                                onClick={followAction}
-                                            >
-                                                Follow
-                                            </button>
-                                        }
+                                                        :
+                                                        userFollowersArr.some(user => (userInfo && userInfo.username).includes(user))
+                                                            ?
+                                                            <button
+                                                                className="btn-hoot-follow"
+                                                                onClick={followedAlready ? removeFollower : addFollower}
+                                                            >
+                                                                {followedAlready
+                                                                    ? "Following"
+                                                                    : "Follow"
+                                                                }
+                                                            </button>
+                                                            :
+                                                            <button
+                                                                className="btn-hoot-follow"
+                                                                onClick={followed ? removeFollower : addFollower}
+                                                            >
+                                                                {followed
+                                                                    ? "Following"
+                                                                    : "Follow"
+                                                                }
+                                                            </button>
+                                                :
+                                                <button
+                                                    className="btn-hoot-follow"
+                                                    onClick={followAction}
+                                                >
+                                                    Follow
+                                                </button>
+                                            }
+                                            {userInfo
+                                                ?
+                                                window.location.pathname.includes(`private/channels/${username}`)
+                                                    ?
+                                                    null
+                                                    :
+                                                    userInfo.username !== username
+                                                        ?
+                                                        <button
+                                                            className="btn-hoot-follow"
+                                                            onClick={joinMyClub}
+                                                        >
+                                                            Join My Club
+                                                        </button>
+                                                        :
+                                                        <button
+                                                            className="btn-hoot-follow"
+                                                            onClick={joinMyClub}
+                                                        >
+                                                            Join My Club
+                                                        </button>
+                                                :
+                                                <button
+                                                    className="btn-hoot-follow"
+                                                    onClick={joinMyClub}
+                                                >
+                                                    Join My Club
+                                                </button>
+                                            }
+                                        </div>
                                     </div>
 
                                     <div className="hoot-user-info">
@@ -1404,21 +1467,25 @@ const HootInside = ({
 
                                 {userInfo
                                     ?
-                                    userInfo.username !== username
+                                    window.location.pathname.includes(`private/channels/${username}`)
                                         ?
-                                        <button
-                                            className="btn-hoot-follow join-my-club-margin"
-                                            onClick={joinMyClub}
-                                        >
-                                            Join My Club
-                                        </button>
+                                        null
                                         :
-                                        <button
-                                            className="btn-hoot-follow join-my-club-margin"
-                                            onClick={joinMyClub}
-                                        >
-                                            Join My Club
-                                        </button>
+                                        userInfo.username !== username
+                                            ?
+                                            <button
+                                                className="btn-hoot-follow join-my-club-margin"
+                                                onClick={joinMyClub}
+                                            >
+                                                Join My Club
+                                            </button>
+                                            :
+                                            <button
+                                                className="btn-hoot-follow join-my-club-margin"
+                                                onClick={joinMyClub}
+                                            >
+                                                Join My Club
+                                            </button>
                                     :
                                     <button
                                         className="btn-hoot-follow join-my-club-margin"

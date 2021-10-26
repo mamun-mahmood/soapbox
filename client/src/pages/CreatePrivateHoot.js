@@ -605,7 +605,7 @@ const CreatePrivateHoot = () => {
                                 autoFocus
                                 maxLength="300"
                                 className="textarea-style"
-                                placeholder="What's on your mind? (optional)"
+                                placeholder="Share Your World. Hoot Hoot! (optional)"
                                 value={caption}
                                 onChange={(event) => {
                                     const value = event.target.value;
