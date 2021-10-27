@@ -923,6 +923,14 @@ hr {
   /* animation: skeleton-home-loading 1s linear infinite alternate; */
 }
 
+.external-vdo {
+  max-width: -webkit-fill-available;
+  object-fit: scale-down;
+  padding: 0.5rem;
+  padding-bottom: 0;
+  border-radius: 0.95rem;
+}
+
 .hoot-ado {
   /* width: 350px;
   height: 120px; */
@@ -2683,4 +2691,17 @@ padding: 6rem 1rem;
 
 .link-pr-sb {
   font-size: small;
+}
+
+.player-wrapper {
+    position: relative;
+    aspect-ratio: 12/4;
+    width: 100%;
+    background-color: #e1d2f3;
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

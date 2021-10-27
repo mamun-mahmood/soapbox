@@ -22,6 +22,7 @@ import Highlighter from "react-highlight-words"
 import { v4 as uuidv4 } from 'uuid';
 import './IndividualHoot/individualHoot.css'
 import Expire from './Expire';
+import ReactPlayer from 'react-player'
 
 const HootInside = ({
     userId,
@@ -118,6 +119,15 @@ const HootInside = ({
     // const [dbLink, setDbLink] = useState([]);
 
     const [userData, setUserData] = useState([]);
+    const [showReactPlayer, setShowReactPlayer] = useState(false);
+
+    useEffect(() => {
+        if (ReactPlayer.canPlay(link)) {
+            setShowReactPlayer(true);
+        } else {
+            setShowReactPlayer(false);
+        }
+    }, [link])
 
     //getting user data
     useEffect(() => {
@@ -209,7 +219,7 @@ const HootInside = ({
 
         axios.delete(`${BaseURL}/upload/delete/${hootImgId}`)
 
-        userInfo && window.location.pathname.includes(`private/channels/${userInfo.username}`) || history.push('/');
+        userInfo && window.location.pathname.includes(`private/Club/${userInfo.username}`) || history.push('/');
         window.location.reload();
     }
 
@@ -560,7 +570,7 @@ const HootInside = ({
                                                 }
                                                 {userInfo
                                                     ?
-                                                    window.location.pathname.includes(`private/channels/${username}`)
+                                                    window.location.pathname.includes(`private/Club/${username}`)
                                                         ?
                                                         null
                                                         :
@@ -680,7 +690,7 @@ const HootInside = ({
 
                                     {userInfo
                                         ?
-                                        window.location.pathname.includes(`private/channels/${username}`)
+                                        window.location.pathname.includes(`private/Club/${username}`)
                                             ?
                                             null
                                             :
@@ -984,6 +994,47 @@ const HootInside = ({
                                 </div>
                             }
                             {/* <hr className="mx-1" /> */}
+
+                            {link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                ?
+                                <video
+                                    muted controls
+                                    disablePictureInPicture
+                                    className="external-vdo"
+                                    controlsList="nodownload"
+                                >
+                                    <source
+                                        src={link}
+                                    />
+                                    Your browser does not support HTML video.
+                                </video>
+                                :
+                                link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                    ?
+                                    <video
+                                        muted controls
+                                        poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                        className="external-vdo"
+                                        controlsList="nodownload"
+                                    >
+                                        <source
+                                            src={link}
+                                        />
+                                        Your browser does not support HTML video.
+                                    </video>
+                                    :
+                                    ReactPlayer.canPlay(link) &&
+                                    <div className='player-wrapper'>
+                                        <ReactPlayer
+                                            url={link}
+                                            className='react-player'
+                                            controls="true"
+                                            width='100%'
+                                            height='100%'
+                                        />
+                                    </div>
+                            }
+
                             <div className="right-icons">
                                 {/* <div className="post-media"> */}
                                 <MediaContent
@@ -1336,7 +1387,7 @@ const HootInside = ({
                                             }
                                             {userInfo
                                                 ?
-                                                window.location.pathname.includes(`private/channels/${username}`)
+                                                window.location.pathname.includes(`private/Club/${username}`)
                                                     ?
                                                     null
                                                     :
@@ -1467,7 +1518,7 @@ const HootInside = ({
 
                                 {userInfo
                                     ?
-                                    window.location.pathname.includes(`private/channels/${username}`)
+                                    window.location.pathname.includes(`private/Club/${username}`)
                                         ?
                                         null
                                         :
@@ -1773,6 +1824,70 @@ const HootInside = ({
                             </div>
                         }
                         {/* <hr className="mx-1" /> */}
+
+                        {/* width: 100%;
+                            max-height: 500px;
+                            object-fit: scale-down;
+                            padding: 0.5rem;
+                            border-radius: 0.95rem; */}
+
+                        {/* <ReactPlayer
+                            url='https://www.youtube.com/watch?v=oM5lC7k9c-A'
+                            controls="true"
+                            // style={{
+                            //     width: "100%",
+                            //     maxHeight: "500px",
+                            //     objectFit: "scale-down",
+                            //     padding: "0.5rem",
+                            //     borderRadius: "0.5rem"
+                            // }}
+                            width='100%'
+                            height='100%'
+                            style={{
+                                borderRadius: "0.5rem",
+                            }}
+                        /> */}
+
+                        {link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                            ?
+                            <video
+                                muted controls
+                                disablePictureInPicture
+                                className="external-vdo"
+                                controlsList="nodownload"
+                            >
+                                <source
+                                    src={link}
+                                />
+                                Your browser does not support HTML video.
+                            </video>
+                            :
+                            link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                ?
+                                <video
+                                    muted controls
+                                    poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                    className="external-vdo"
+                                    controlsList="nodownload"
+                                >
+                                    <source
+                                        src={link}
+                                    />
+                                    Your browser does not support HTML video.
+                                </video>
+                                :
+                                ReactPlayer.canPlay(link) &&
+                                <div className='player-wrapper'>
+                                    <ReactPlayer
+                                        url={link}
+                                        className='react-player'
+                                        controls="true"
+                                        width='100%'
+                                        height='100%'
+                                    />
+                                </div>
+                        }
+
                         <div className="right-icons">
                             {/* <div className="post-media"> */}
                             <MediaContent

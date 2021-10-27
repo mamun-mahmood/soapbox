@@ -229,7 +229,7 @@ const SideBar = () => {
                     <SideBarOption
                         option="Private Clubs"
                         Icon={RiShieldFlashLine}
-                    // link={`/private/channels/${username}`}
+                    // link={`/private/Club/${username}`}
                     />
 
                     {userInfo
