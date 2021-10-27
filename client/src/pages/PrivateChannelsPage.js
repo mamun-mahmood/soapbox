@@ -40,7 +40,7 @@ const PrivateChannelsPage = () => {
                 <meta name="twitter:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox_Twittercar1.png" />
 
 
-                <meta property="og:url" content={`https://www.megahoot.net/private/channels/${username}`} />
+                <meta property="og:url" content={`https://www.megahoot.net/private/Club/${username}`} />
                 <meta property="og:title" content={`${username}'s Private Club on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels`} />
                 <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox_Twittercar1.png" />

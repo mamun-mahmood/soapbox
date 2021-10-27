@@ -385,7 +385,7 @@ class SoapboxHall extends Component {
             if(this.props.location.state.host){
                 const { history } = this.props;
                 if(history) {
-                    history.push(`/${uuidv4()}/private/channels/${this.props.location.state.hostUserName}/${uuidv4()}`);
+                    history.push(`/${uuidv4()}/private/Club/${this.props.location.state.hostUserName}/${uuidv4()}`);
                     window.location.reload()
                 }
             }else{

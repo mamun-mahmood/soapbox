@@ -98,7 +98,7 @@ const CreatePrivateHoot = () => {
             ]).then(axios.spread((res1, res2) => {
                 if (res1) {
                     setTimeout(() => {
-                        history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`);
+                        history.push(`/${uuidv4()}/private/Club/${username}/${uuidv4()}`);
                     }, 500);
                 }
             }))
@@ -580,7 +580,7 @@ const CreatePrivateHoot = () => {
                 <div className="upload-post">
                     <div className="back-to-home">
                         {/* <Link to="/home"> */}
-                        <Link to={`/${uuidv4()}/private/channels/${username}/${uuidv4()}`}>
+                        <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
                             <FiArrowLeft className="left-arrow" />
                         </Link>
                         <span>

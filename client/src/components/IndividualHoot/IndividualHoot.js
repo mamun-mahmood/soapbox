@@ -30,7 +30,7 @@ const IndividualHoot = () => {
             await axios.get(`${BaseURL}/hoot/public/${id}`)
                 .then((response) => {
                     if (response.data[0].private == 1) {
-                        history.push(`/${uuidv4()}/private/channels/${response.data[0].authorUsername}/${uuidv4()}`);
+                        history.push(`/${uuidv4()}/private/Club/${response.data[0].authorUsername}/${uuidv4()}`);
                     } else {
                         setHoot(response.data);
                     }

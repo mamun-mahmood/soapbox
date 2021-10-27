@@ -142,7 +142,7 @@ function App() {
           <PrivateMessagesPage />
         </Route>
 
-        <Route path="/:fakeKey/private/channels/:username/:randomKey">
+        <Route path="/:fakeKey/private/Club/:username/:randomKey">
           <ProtectedRoute page={PrivateChannelsPage} />
           {/* <PrivateChannelsPage /> */}
         </Route>

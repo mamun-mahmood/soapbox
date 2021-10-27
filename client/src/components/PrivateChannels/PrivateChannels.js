@@ -600,10 +600,12 @@ const PrivateChannels = () => {
 
                                                             <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Tools</div>
                                                             <div className="control">
-
-                                                                <button style={{ minWidth: '208px' }} >Schedule Vero Call</button>
-                                                                <button style={{ minWidth: '208px' }} >Schedule Vero Video Call</button>
-                                                                <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
+                                                            <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
+                                                            <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
+                                                               
+                                                                <button style={{ minWidth: '208px' }} >Make a Vero Audio Call</button>
+                                                                <button style={{ minWidth: '208px' }} >Make a Vero Video Call</button>
+                                                                
                                                             </div>
                                                           
                                                          
@@ -1046,7 +1048,14 @@ const PrivateChannels = () => {
                                         style={{ backgroundColor: showSubscribers ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
                                         onClick={() => { setShowRequest(false); setShowFeed(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Memberships</span>
                                     {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
-                                    <span style={{ backgroundColor: showPricingSetting ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
+                                 
+                                           <span
+                                        style={{ backgroundColor:'#A279BA', borderRadius: '8px' }}
+                                       >Audio</span>
+                                        <span
+                                        style={{ backgroundColor:'#A279BA', borderRadius: '8px' }}
+                                       >Video</span>
+                                          <span style={{ backgroundColor: showPricingSetting ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
                                         onClick={() => {
                                             setShowRequest(false);
                                             setShowSubscribers(false);
@@ -1081,7 +1090,12 @@ const PrivateChannels = () => {
                                         socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
                                     }}  >Club Chat</span>
                                 </div>
-
+                             
+                                        <span
+                                        style={{ backgroundColor:'#A279BA', borderRadius: '8px' }}
+                                       >Club Rules</span>
+                                    {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
+                                 
                                 {/* <FiSearch className="search-channel-content" /> */}
                             </div>
                             {showRequest ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>

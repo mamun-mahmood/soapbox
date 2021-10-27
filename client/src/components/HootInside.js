@@ -431,9 +431,9 @@ const HootInside = ({
         if (userInfo) {
             if (userData.privateChannel) {
                 if (userInfo && userInfo.username === username) {
-                    window.location.pathname.includes(`private/channels/${username}`) || history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`)
+                    window.location.pathname.includes(`private/Club/${username}`) || history.push(`/${uuidv4()}/private/Club/${username}/${uuidv4()}`)
                 } else {
-                    history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`);
+                    history.push(`/${uuidv4()}/private/Club/${username}/${uuidv4()}`);
                 }
             } else {
                 toast.info("Private Club not available!")

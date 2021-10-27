@@ -120,7 +120,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
     const joinMyClub = () => {
         if (userInfo) {
             if (userData.privateChannel) {
-                history.push(`/${uuidv4()}/private/channels/${verifiedUser.username}/${uuidv4()}`);
+                history.push(`/${uuidv4()}/private/Club/${verifiedUser.username}/${uuidv4()}`);
             } else {
                 toast.info("Private Club not available!")
             }

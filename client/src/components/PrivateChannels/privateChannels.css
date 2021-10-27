@@ -96,7 +96,7 @@
 .profile-verification-badge {
     padding-bottom: 0.6rem;
     padding-left: 0.3rem;
-    font-size: xx-large;
+    font-size: 20px;
     /* color: #542C5D; */
     /* color: #7933ae; */
     color: #a888bf;
@@ -259,7 +259,7 @@
     justify-content: space-between;
     align-items: center;
     /* position: fixed; */
-    height: 60px;
+    height: 80px;
 padding-left: 1rem;
 padding-right: 1rem;
     width: 100%;
