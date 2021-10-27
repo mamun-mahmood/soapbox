@@ -2,13 +2,14 @@ import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import { Helmet } from "react-helmet";
 import Post from '../../components/Post'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import './individualHoot.css'
 import '../../components/Feed/feed.css'
 
 import Loadable from 'react-loadable';
 import Loading from '../Loading/Loading';
 import EndHootMsg from './EndHootMsg';
+import { v4 as uuidv4 } from 'uuid';
 
 const BrowseMoreHoots = Loadable({
     loader: () => import('./BrowseMoreHoots' /* webpackChunkName: "BrowseMoreHoots" */),
@@ -21,13 +22,18 @@ const IndividualHoot = () => {
     const { id } = useParams();
     const [hoot, setHoot] = useState([]);
     const BaseURL = process.env.REACT_APP_API_URL;
+    const history = useHistory();
 
     useEffect(() => {
         // here id is hootId
         const getHootById = async () => {
             await axios.get(`${BaseURL}/hoot/public/${id}`)
                 .then((response) => {
-                    setHoot(response.data);
+                    if (response.data[0].private == 1) {
+                        history.push(`/${uuidv4()}/private/channels/${response.data[0].authorUsername}/${uuidv4()}`);
+                    } else {
+                        setHoot(response.data);
+                    }
                 });
         }
         getHootById();
