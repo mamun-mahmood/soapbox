@@ -87,7 +87,21 @@
 .user-information .name {
     font-size: 1.5rem;
     font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
+
+.profile-verification-badge {
+    padding-bottom: 0.6rem;
+    padding-left: 0.3rem;
+    font-size: xx-large;
+    /* color: #542C5D; */
+    /* color: #7933ae; */
+    color: #a888bf;
+  }
+
 
 .clubOwner {
     padding: 3px;

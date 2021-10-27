@@ -372,17 +372,18 @@ const SideBar = () => {
 
                     {/* suggested Follows  */}
                     
-                    <div style={{ paddingLeft: "1rem" }}>
-                        <li>
-                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Community Clubs</small>{" "}
-                        </li>
-                        <RandomCommunitySuggestion />
-                    </div>
+                  
                     <div style={{ paddingLeft: "1rem" }}>
                         <li>
                             <small style={{ marginLeft: "-0.5rem" }} className="info" >Suggested Follows & Clubs</small>{" "}
                         </li>
                         <RandomSuggestedFollows />
+                    </div>
+                    <div style={{ paddingLeft: "1rem" }}>
+                        <li>
+                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Community Clubs</small>{" "}
+                        </li>
+                        <RandomCommunitySuggestion />
                     </div>
 
                     {/* suggested Hoots  */}

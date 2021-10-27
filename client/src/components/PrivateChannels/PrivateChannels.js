@@ -42,6 +42,7 @@ import ClickAwayListener from "react-click-away-listener";
 import Autolinker from 'autolinker';
 import RandomSuggestedFollows from '../SideBar/RandomSuggestedFollows'
 import RandomCommunitySuggestion from "../SideBar/RandomCommunitySuggestion";
+import { HiBadgeCheck } from "react-icons/hi";
 
 const PrivateChannels = () => {
 
@@ -406,7 +407,16 @@ const PrivateChannels = () => {
                                         </div>
                                         <div>
                                             <div className="user-information">
-                                                <div className="name">{user.name}</div>
+                                                
+                                                <div className="name verificationBadgeContainer">{user.name} 
+                                                {user.verified === 1
+                                            ?
+                                            <div className="profile-verification-badge">
+                                                <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" />
+                                            </div>
+                                            : null
+                                        }
+                                                </div>
                                                 <div className="username">@{user.username}</div>
                                                 <div className="followers">
                                                     <b>
@@ -588,18 +598,14 @@ const PrivateChannels = () => {
                                                         <div>
 
 
-                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Schedule Virtual Experience</div>
+                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Tools</div>
                                                             <div className="control">
 
-                                                                <button style={{ minWidth: '208px' }} >Schedule Vero Call or PPV</button>
-                                                                         
+                                                                <button style={{ minWidth: '208px' }} >Schedule Vero Call</button>
+                                                                <button style={{ minWidth: '208px' }} >Schedule Vero Video Call</button>
+                                                                <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
                                                             </div>
-                                                            <div
-                                                    className="social-profile-icon-links"
-                                                    style={{ flexWrap: "wrap" }}
-                                                >
-                                                       <Call style={{color:'#A279BA'}} /><VideoCall  style={{color:'#A279BA'}} />
-                                                    </div>
+                                                          
                                                          
                                                           
                                                             <br></br>
@@ -694,6 +700,8 @@ const PrivateChannels = () => {
                             >
                                 <div className="tabs" style={{ margin: "0 0.5rem" }}>
                                     <span onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(true); setShowSubscribeButton(false); setShowChatRoom(false) }} >Timeline</span>
+                                    <span>Audio</span>
+                                    <span>Video</span>
                                     <span>Podcasts</span>
                                     <span>Club Rules</span>
                                     <span>Marketplace</span>
@@ -917,9 +925,33 @@ const PrivateChannels = () => {
                                 </div> : null}
 
                             {subscribe ? null : (
-                                <div className="subscribe-to-see-more">
-                                    <button>Be a Member to get access</button>
-                                </div>
+                                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                                 <img src={groupcall} width="400px" />
+                                 <Form className="login-form mx-auto p-4 pb-0" onSubmit={(e) => e.preventDefault()}>
+
+                                     <h5 className="text-center mb-1 signup-head">
+                                         {!subscribe ? `Request Membership` : `Already a Member`}
+                                     </h5>
+
+                                     {/* <p>Cost: {groupCallPrice} XMG</p> */}
+                                     <button
+                                         onClick={() => {
+                                             setSubscribe(true);
+                                             toast.success(`Subscribed to ${username}`)
+                                             setShowSubscribeButton(false);
+                                             setShowFeed(true)
+
+                                         }}
+                                         className="d-grid col-12 btn-main login-form-button"
+                                         variant="primary"
+                                         type="submit"
+
+
+                                     >
+                                         {!subscribe ? `Get Membership Now for ${subscribePrice} XMG` : `Already a Member`}
+                                     </button>
+                                 </Form>     {/* <div className="btns"> <button>Request</button></div> */}
+                             </div>
                             )}
 
 {showChatRoom ? 
