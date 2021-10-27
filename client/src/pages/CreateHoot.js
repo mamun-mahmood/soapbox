@@ -20,6 +20,7 @@ import Picker from 'emoji-picker-react';
 import { toast } from 'react-toastify';
 import { SoapboxTooltip } from '../components/SoapboxTooltip';
 import { LinkPreview } from '@dhaiwat10/react-link-preview';
+import ReactPlayer from 'react-player'
 
 const CreateHoot = () => {
     const [caption, setCaption] = useState("");
@@ -448,19 +449,59 @@ const CreateHoot = () => {
                                         variant="primary mx-1"
                                         className="btn-create-hoot"
                                         onClick={upload}
-                                        disabled={file.length === 0}
+                                        disabled={file.length === 0 || !caption}
                                     >
                                         Hoot
                                     </Button>{' '}
                                 </div>
                             </div>
 
-                            {showLinkPreview &&
-                                <LinkPreview
+                            {/* <LinkPreview
                                     margin="0 0.5rem"
                                     className="link-pr-sb"
                                     url={link}
-                                />
+                                /> */}
+
+                            {showLinkPreview ?
+                                link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                    ?
+                                    <video
+                                        muted controls
+                                        disablePictureInPicture
+                                        className="external-vdo"
+                                        controlsList="nodownload"
+                                    >
+                                        <source
+                                            src={link}
+                                        />
+                                        Your browser does not support HTML video.
+                                    </video>
+                                    :
+                                    link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                        ?
+                                        <video
+                                            muted controls
+                                            poster={`${BaseURL}/profile-pictures/${userData.profilePic}`}
+                                            className="external-vdo"
+                                            controlsList="nodownload"
+                                        >
+                                            <source
+                                                src={link}
+                                            />
+                                            Your browser does not support HTML video.
+                                        </video>
+                                        :
+                                        ReactPlayer.canPlay(link) &&
+                                        <div className='player-wrapper'>
+                                            <ReactPlayer
+                                                url={link}
+                                                className='react-player'
+                                                controls="true"
+                                                width='100%'
+                                                height='100%'
+                                            />
+                                        </div>
+                                : null
                             }
 
                             <div className="ephemeral">

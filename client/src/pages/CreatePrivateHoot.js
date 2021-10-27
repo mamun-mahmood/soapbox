@@ -31,6 +31,7 @@ import useRecorder from "react-hook-recorder";
 import { v4 as uuidv4 } from 'uuid';
 import { MyStream } from '../context/MyStreamContext';
 import { LinkPreview } from '@dhaiwat10/react-link-preview';
+import ReactPlayer from 'react-player'
 
 const CreatePrivateHoot = () => {
     const [caption, setCaption] = useState("");
@@ -100,7 +101,7 @@ const CreatePrivateHoot = () => {
             ]).then(axios.spread((res1, res2) => {
                 if (res1) {
                     setTimeout(() => {
-                        history.push(`/${uuidv4()}/private/Club/${username}/${uuidv4()}`);
+                        history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`);
                     }, 500);
                 }
             }))
@@ -572,7 +573,7 @@ const CreatePrivateHoot = () => {
                 <div className="upload-post">
                     <div className="back-to-home">
                         {/* <Link to="/home"> */}
-                        <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
+                        <Link to={`/${uuidv4()}/private/channels/${username}/${uuidv4()}`}>
                             <FiArrowLeft className="left-arrow" />
                         </Link>
                         <span>
@@ -778,12 +779,51 @@ const CreatePrivateHoot = () => {
                                 </div>
                             </div>
 
-                            {showLinkPreview &&
-                                <LinkPreview
+                            {/* <LinkPreview
                                     margin="0 0.5rem"
                                     className="link-pr-sb"
                                     url={link}
-                                />
+                                /> */}
+                            {showLinkPreview ?
+                                link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                    ?
+                                    <video
+                                        muted controls
+                                        disablePictureInPicture
+                                        className="external-vdo"
+                                        controlsList="nodownload"
+                                    >
+                                        <source
+                                            src={link}
+                                        />
+                                        Your browser does not support HTML video.
+                                    </video>
+                                    :
+                                    link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                        ?
+                                        <video
+                                            muted controls
+                                            poster={`${BaseURL}/profile-pictures/${userData.profilePic}`}
+                                            className="external-vdo"
+                                            controlsList="nodownload"
+                                        >
+                                            <source
+                                                src={link}
+                                            />
+                                            Your browser does not support HTML video.
+                                        </video>
+                                        :
+                                        ReactPlayer.canPlay(link) &&
+                                        <div className='player-wrapper'>
+                                            <ReactPlayer
+                                                url={link}
+                                                className='react-player'
+                                                controls="true"
+                                                width='100%'
+                                                height='100%'
+                                            />
+                                        </div>
+                                : null
                             }
 
                             <div className="ephemeral">
