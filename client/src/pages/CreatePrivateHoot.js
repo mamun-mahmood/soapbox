@@ -30,6 +30,7 @@ import shutterClick from '../assets/shutter-click.wav';
 import useRecorder from "react-hook-recorder";
 import { v4 as uuidv4 } from 'uuid';
 import { MyStream } from '../context/MyStreamContext';
+import { LinkPreview } from '@dhaiwat10/react-link-preview';
 
 const CreatePrivateHoot = () => {
     const [caption, setCaption] = useState("");
@@ -42,6 +43,7 @@ const CreatePrivateHoot = () => {
     const [ephemeralCheck, setEphemeralCheck] = useState(false);
     const [privateCheck, setPrivateCheck] = useState(false);
     const [link, setLink] = useState("");
+    const [showLinkPreview, setShowLinkPreview] = useState(false);
     // const [links, setLinks] = useState([{ link: "" }]);
     const [linkModalOpen, setLinkModalOpen] = useState(false);
 
@@ -222,21 +224,11 @@ const CreatePrivateHoot = () => {
 
     const insertLink = (event) => {
         // handleSubmit()
-        toast.success('Link inserted'
-            // , {
-            //     style: {
-            //         border: '2px solid #8249A0',
-            //         color: '#8249A0',
-            //     },
-            //     iconTheme: {
-            //         primary: '#8249A0',
-            //         secondary: '#FFFAEE',
-            //     },
-            // }
-        )
-
-        setLinkModalOpen(false);
         event.preventDefault();
+        toast.success('Link inserted');
+
+        setShowLinkPreview(true);
+        setLinkModalOpen(false);
         // alert(JSON.stringify(formValues));
 
         // let jsonObject = Object.assign(...formValues.map(key => Object.values(key)).map(value => { value[0] }));
@@ -614,11 +606,13 @@ const CreatePrivateHoot = () => {
                             ></textarea>
 
                             {/* inserted links  */}
-                            {link &&
+
+                            {/* {link &&
                                 <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all" }}>
                                     <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
                                 </div>
-                            }
+                            } */}
+
                             {/* <div style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>
                                 {formValues.map((link, index) => {
                                     return (
@@ -783,6 +777,14 @@ const CreatePrivateHoot = () => {
                                     </Button>{' '}
                                 </div>
                             </div>
+
+                            {showLinkPreview &&
+                                <LinkPreview
+                                    margin="0 0.5rem"
+                                    className="link-pr-sb"
+                                    url={link}
+                                />
+                            }
 
                             <div className="ephemeral">
                                 <input
@@ -1039,7 +1041,7 @@ const CreatePrivateHoot = () => {
                 <meta name="twitter:image" content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png" />
 
                 {/* OpenGraph tags */}
-                <meta property="og:url" content="https://www.megahoot.net/create" />
+                <meta property="og:url" content="https://www.megahoot.net/create-private" />
                 <meta property="og:title" content="Create Private Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:description" content="Create Hoot on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
                 <meta property="og:image" content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png" />

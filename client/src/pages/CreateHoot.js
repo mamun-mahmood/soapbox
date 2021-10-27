@@ -19,6 +19,7 @@ import NavBar from '../components/NavBar/NavBar'
 import Picker from 'emoji-picker-react';
 import { toast } from 'react-toastify';
 import { SoapboxTooltip } from '../components/SoapboxTooltip';
+import { LinkPreview } from '@dhaiwat10/react-link-preview';
 
 const CreateHoot = () => {
     const [caption, setCaption] = useState("");
@@ -31,6 +32,7 @@ const CreateHoot = () => {
     const [ephemeralCheck, setEphemeralCheck] = useState(false);
     const [privateCheck, setPrivateCheck] = useState(false);
     const [link, setLink] = useState("");
+    const [showLinkPreview, setShowLinkPreview] = useState(false);
     // const [links, setLinks] = useState([{ link: "" }]);
     const [linkModalOpen, setLinkModalOpen] = useState(false);
 
@@ -207,21 +209,11 @@ const CreateHoot = () => {
 
     const insertLink = (event) => {
         // handleSubmit()
-        toast.success('Link inserted'
-            // , {
-            //     style: {
-            //         border: '2px solid #8249A0',
-            //         color: '#8249A0',
-            //     },
-            //     iconTheme: {
-            //         primary: '#8249A0',
-            //         secondary: '#FFFAEE',
-            //     },
-            // }
-        )
-
-        setLinkModalOpen(false);
         event.preventDefault();
+        toast.success('Link inserted');
+
+        setShowLinkPreview(true);
+        setLinkModalOpen(false);
         // alert(JSON.stringify(formValues));
 
         // let jsonObject = Object.assign(...formValues.map(key => Object.values(key)).map(value => { value[0] }));
@@ -237,16 +229,16 @@ const CreateHoot = () => {
         // console.log("parse1: ", parse1);
     }
 
+    const [emojiPicker, setEmojiPicker] = useState(false);
+
+    const emojis = ["😍", "🦉", "😂", "👏🏻", "💖", "😜", "🤯", "🤓", "🥰", "😎", "😋"];
+    const [defaultEmoji, setDefaultEmoji] = useState("😄");
+
     const closePreview = () => {
         setMimeType("");
         setSrc(null);
         setFile([]);
     }
-
-    const [emojiPicker, setEmojiPicker] = useState(false);
-
-    const emojis = ["😍", "🦉", "😂", "👏🏻", "💖", "😜", "🤯", "🤓", "🥰", "😎", "😋"];
-    const [defaultEmoji, setDefaultEmoji] = useState("😄");
 
     return (
         <Fragment>
@@ -294,11 +286,13 @@ const CreateHoot = () => {
                             ></textarea>
 
                             {/* inserted links  */}
-                            {link &&
+
+                            {/* {link &&
                                 <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all" }}>
                                     <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
                                 </div>
-                            }
+                            } */}
+
                             {/* <div style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>
                                 {formValues.map((link, index) => {
                                     return (
@@ -460,6 +454,14 @@ const CreateHoot = () => {
                                     </Button>{' '}
                                 </div>
                             </div>
+
+                            {showLinkPreview &&
+                                <LinkPreview
+                                    margin="0 0.5rem"
+                                    className="link-pr-sb"
+                                    url={link}
+                                />
+                            }
 
                             <div className="ephemeral">
                                 <input
