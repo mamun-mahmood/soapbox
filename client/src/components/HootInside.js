@@ -584,21 +584,21 @@ const HootInside = ({
                                                                 className="btn-hoot-follow join-my-club-margin"
                                                                 onClick={joinMyClub}
                                                             >
-                                                                Join My Club
+                                                                Go To My Club
                                                             </button>
                                                             :
                                                             <button
                                                                 className="btn-hoot-follow join-my-club-margin"
                                                                 onClick={joinMyClub}
                                                             >
-                                                                Join My Club
+                                                                Go To My Club
                                                             </button>
                                                     :
                                                     <button
                                                         className="btn-hoot-follow join-my-club-margin"
                                                         onClick={joinMyClub}
                                                     >
-                                                        Join My Club
+                                                        Go To My Club
                                                     </button>
                                                 }
                                             </div>
@@ -704,21 +704,21 @@ const HootInside = ({
                                                     className="btn-hoot-follow join-my-club-margin"
                                                     onClick={joinMyClub}
                                                 >
-                                                    Join My Club
+                                                    Go To My Club
                                                 </button>
                                                 :
                                                 <button
                                                     className="btn-hoot-follow join-my-club-margin"
                                                     onClick={joinMyClub}
                                                 >
-                                                    Join My Club
+                                                    Go To My Club
                                                 </button>
                                         :
                                         <button
                                             className="btn-hoot-follow join-my-club-margin"
                                             onClick={joinMyClub}
                                         >
-                                            Join My Club
+                                            Go To My Club
                                         </button>
                                     }
 
@@ -1554,21 +1554,21 @@ const HootInside = ({
                                                             className="btn-hoot-follow"
                                                             onClick={joinMyClub}
                                                         >
-                                                            Join My Club
+                                                            Go To My Club
                                                         </button>
                                                         :
                                                         <button
                                                             className="btn-hoot-follow"
                                                             onClick={joinMyClub}
                                                         >
-                                                            Join My Club
+                                                            Go To My Club
                                                         </button>
                                                 :
                                                 <button
                                                     className="btn-hoot-follow"
                                                     onClick={joinMyClub}
                                                 >
-                                                    Join My Club
+                                                    Go To My Club
                                                 </button>
                                             }
                                         </div>
@@ -1685,21 +1685,21 @@ const HootInside = ({
                                                 className="btn-hoot-follow join-my-club-margin"
                                                 onClick={joinMyClub}
                                             >
-                                                Join My Club
+                                                Go To My Club
                                             </button>
                                             :
                                             <button
                                                 className="btn-hoot-follow join-my-club-margin"
                                                 onClick={joinMyClub}
                                             >
-                                                Join My Club
+                                                Go To My Club
                                             </button>
                                     :
                                     <button
                                         className="btn-hoot-follow join-my-club-margin"
                                         onClick={joinMyClub}
                                     >
-                                        Join My Club
+                                        Go To My Club
                                     </button>
                                 }
 
