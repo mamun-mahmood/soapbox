@@ -13,15 +13,13 @@ const HootOutside = ({
     const filePath = `${BaseURL}/images/${hootImgId}`;
 
     return (
-        <Fragment>
-            <MediaProfile
-                hootId={hootId}
-                username={username}
-                mimeType={mimeType}
-                filePath={filePath}
-                profilePicPath={profilePicPath}
-            />
-        </Fragment>
+        <MediaProfile
+            hootId={hootId}
+            username={username}
+            mimeType={mimeType}
+            filePath={filePath}
+            profilePicPath={profilePicPath}
+        />
     )
 }
 

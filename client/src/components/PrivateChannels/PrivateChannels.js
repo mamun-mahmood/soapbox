@@ -66,9 +66,7 @@ const PrivateChannels = () => {
     const [emojiPicker, setEmojiPicker] = useState(false);
     const [showFeed, setShowFeed] = useState(true);
     const [privateChat, setPrivateChat] = useState(false)
-    const [file, setFile] = useState([]);
-    const [src, setSrc] = useState(null);
-    const [mimeType, setMimeType] = useState("");
+
     const [showChatRoom, setShowChatRoom] = useState(false)
 
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
@@ -89,7 +87,9 @@ const PrivateChannels = () => {
     const [views, setViews] = useState(0);
     const [loading, setLoading] = useState(true);
     const [messageInboxValue, setMessageInboxValue] = useState("");
-
+    const [file, setFile] = useState([]);
+    const [src, setSrc] = useState(null);
+    const [mimeType, setMimeType] = useState("");
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const form = document.getElementById('send-container');
     const messageInput = document.getElementById('messageInp');
@@ -411,7 +411,6 @@ const PrivateChannels = () => {
             .catch((err) => { console.log(err) })
     }
 
-
     const handleFile = (event) => {
         const file = event.target.files[0];
         setFile(file);
@@ -468,7 +467,7 @@ const PrivateChannels = () => {
             <div className="private-channels" style={{ userSelect: "none" }}>
                 <div className="channel-banner" >
                     {/* <img src={banner} alt="banner" /> */}
-                   </div>
+                </div>
                 <div className="channel-content">
                     {userInfo.map((user) => {
                         return (
@@ -477,20 +476,20 @@ const PrivateChannels = () => {
                                     <ul
                                         style={{
                                             position: "sticky",
-                                            maxHeight:'90vh',
-                                            overflowY:'scroll',
+                                            maxHeight: '90vh',
+                                            overflowY: 'scroll',
                                             alignSelf: "flex-start",
-                                           
+
                                         }}
                                     >
-                                      <div className="channel-banner" style={{ position: 'relative' }} > 
-                                      <div style={{ position: 'absolute', bottom: '75px', left: '110px', zIndex: 5 }} className="clubOwner">Club Owner</div>
-                    <div style={{ position: 'absolute', bottom: '59px', left: '170px', zIndex: 5 }} className="arrow-down"></div>
-              
-                                      <img src={banner} alt="banner" /></div>
-                                      
+                                        <div className="channel-banner" style={{ position: 'relative' }} >
+                                            <div style={{ position: 'absolute', bottom: '75px', left: '110px', zIndex: 5 }} className="clubOwner">Club Owner</div>
+                                            <div style={{ position: 'absolute', bottom: '59px', left: '170px', zIndex: 5 }} className="arrow-down"></div>
+
+                                            <img src={banner} alt="banner" /></div>
+
                                         <div className="profile-pic">
-                                       
+
                                             <img
                                                 src={`${BaseURL}/profile-pictures/${user.profilePic}`}
                                                 alt="profile"
@@ -498,15 +497,15 @@ const PrivateChannels = () => {
                                         </div>
                                         <div>
                                             <div className="user-information">
-                                                
-                                                <div className="name verificationBadgeContainer">{user.name} 
-                                                {user.verified === 1
-                                            ?
-                                            <div className="profile-verification-badge">
-                                                <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" />
-                                            </div>
-                                            : null
-                                        }
+
+                                                <div className="name verificationBadgeContainer">{user.name}
+                                                    {user.verified === 1
+                                                        ?
+                                                        <div className="profile-verification-badge">
+                                                            <HiBadgeCheck data-tip="Verified account" data-text-color="#8249A0" data-background-color="#D9D2FA" />
+                                                        </div>
+                                                        : null
+                                                    }
                                                 </div>
                                                 <div className="username">@{user.username}</div>
                                                 <div className="followers">
@@ -516,7 +515,7 @@ const PrivateChannels = () => {
                                                     </b>
                                                     <span> Likes    </span>
                                                     <b>
-                                                        {  formatCount(views) +
+                                                        {formatCount(views) +
                                                             formatSi(views)}
                                                     </b>
                                                     <span> Views</span>
@@ -691,31 +690,31 @@ const PrivateChannels = () => {
 
                                                             <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Tools</div>
                                                             <div className="control">
-                                                            <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
-                                                            <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
-                                                               
+                                                                <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
+                                                                <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
+
                                                                 <button style={{ minWidth: '208px' }} >Make a Vero Audio Call</button>
                                                                 <button style={{ minWidth: '208px' }} >Make a Vero Video Call</button>
-                                                               
-                                                                <button style={{ minWidth: '208px' }} 
-                                                                  onClick={() => {
-                                                                    setShowRequest(false);
-                                                                    setShowSubscribers(false);
-                                                                    setShowPricingSetting(!showPricingSetting);
-                                                                    setShowNotification(false);
-                                                                    setShowFeed(false);
-                                                                    setShowChatRoom(false);
-                                                                }}
+
+                                                                <button style={{ minWidth: '208px' }}
+                                                                    onClick={() => {
+                                                                        setShowRequest(false);
+                                                                        setShowSubscribers(false);
+                                                                        setShowPricingSetting(!showPricingSetting);
+                                                                        setShowNotification(false);
+                                                                        setShowFeed(false);
+                                                                        setShowChatRoom(false);
+                                                                    }}
                                                                 >Price Settings</button>
-                                                                 <button style={{ minWidth: '208px' }} >Podcasts</button>
-                                                               <button style={{ minWidth: '208px' }} >Audio</button>
+                                                                <button style={{ minWidth: '208px' }} >Podcasts</button>
+                                                                <button style={{ minWidth: '208px' }} >Audio</button>
                                                                 <button style={{ minWidth: '208px' }} >Video</button>
                                                                 <button style={{ minWidth: '208px' }} >Photos</button>
-                                   
+
                                                             </div>
-                                                          
-                                                         
-                                                          
+
+
+
                                                             <br></br>
                                                             <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }}>Create Pay Per View Event</div>
                                                             <div className="control">
@@ -727,35 +726,35 @@ const PrivateChannels = () => {
                                                         </div>
                                                     ) : (
                                                         <div>
-                                                        <div className="control">
-                                                            {/* <button>
+                                                            <div className="control">
+                                                                {/* <button>
                               {callRequest
                                 ? "Virtual Experiences"
                                 : "Virtual Experiences"}
                             </button> */}
-                                                            <button onClick={() => { setOneOnOneCall(!oneOnOnecall); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(false); setShowSubscribeButton(false) }}>
-                                                                1 on 1 call
-                                                            </button>
-                                                            <button onClick={() => { setOneOnOneCall(false); setGroupCall(!groupCall); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(false); setShowSubscribeButton(false) }} >
-                                                                {callRequest ? "Group call" : "Group call"}
-                                                            </button>
-                                                            <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(!requestMessage); setVerifiedAutograph(false); setShowFeed(false); setShowSubscribeButton(false) }} >
-                                                                Message
-                                                            </button>
-                                                            <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(!verifiedAutograph); setShowFeed(false); setShowSubscribeButton(false) }} >
-                                                                Autograph
-                                                            </button>
-                                                            <button>
-                                                                Marketplace
-                                                            </button>
-                                                            <button onClick={() => { subscribe ? unSubscribeUser() : subscribeUser() }} >
+                                                                <button onClick={() => { setOneOnOneCall(!oneOnOnecall); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(false); setShowSubscribeButton(false) }}>
+                                                                    1 on 1 call
+                                                                </button>
+                                                                <button onClick={() => { setOneOnOneCall(false); setGroupCall(!groupCall); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(false); setShowSubscribeButton(false) }} >
+                                                                    {callRequest ? "Group call" : "Group call"}
+                                                                </button>
+                                                                <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(!requestMessage); setVerifiedAutograph(false); setShowFeed(false); setShowSubscribeButton(false) }} >
+                                                                    Message
+                                                                </button>
+                                                                <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(!verifiedAutograph); setShowFeed(false); setShowSubscribeButton(false) }} >
+                                                                    Autograph
+                                                                </button>
+                                                                <button>
+                                                                    Marketplace
+                                                                </button>
+                                                                <button onClick={() => { subscribe ? unSubscribeUser() : subscribeUser() }} >
 
-                                                                {subscribe ? "Membership" : "Get Membership"}
-                                                            </button>
-                                                        </div>
-                                                        <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Tools</div>
+                                                                    {subscribe ? "Membership" : "Get Membership"}
+                                                                </button>
+                                                            </div>
+                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Tools</div>
                                                             <div className="control">
-                                                            {/* <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
+                                                                {/* <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
                                                             <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
                                                                
                                                                 <button style={{ minWidth: '208px' }} >Make a Vero Audio Call</button>
@@ -771,11 +770,11 @@ const PrivateChannels = () => {
                                                                     setShowChatRoom(false);
                                                                 }}
                                                                 >Price Settings</button> */}
-                                                                 <button style={{ minWidth: '208px' }} >Podcasts</button>
-                                                               <button style={{ minWidth: '208px' }} >Audio</button>
+                                                                <button style={{ minWidth: '208px' }} >Podcasts</button>
+                                                                <button style={{ minWidth: '208px' }} >Audio</button>
                                                                 <button style={{ minWidth: '208px' }} >Video</button>
                                                                 <button style={{ minWidth: '208px' }} >Photos</button>
-                                   
+
                                                             </div>
                                                         </div>
                                                     )}
@@ -837,14 +836,14 @@ const PrivateChannels = () => {
                                     {/* <span>Audio</span>
                                     <span>Video</span>
                                     <span>Podcasts</span> */}
-                                  
+
                                     <span>Marketplace</span>
                                     <span onClick={() => {
                                         setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
                                         socket.emit('room', userInfo[0].username);
                                         socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
                                     }} >Club Chat</span>
-                                      <span>Club Rules</span>
+                                    <span>Club Rules</span>
 
                                 </div>
 
@@ -915,7 +914,6 @@ const PrivateChannels = () => {
 
                                 </Form>
                                 {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
-
                                 <div className="btns"> <button>Request</button></div> */}
                             </div> : null}
 
@@ -995,7 +993,6 @@ const PrivateChannels = () => {
                             {verifiedAutograph ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 {/* <h5>Verified Autograph</h5>
                                 <p>Cost: {verifiedAutographPrice} XMG</p>
-
                                 <div className="btns"> <button>Request</button></div> */}
                                 <img src={groupcall} width="400px" />
                                 <Form className="login-form mx-auto p-4 pb-0">
@@ -1059,91 +1056,62 @@ const PrivateChannels = () => {
 
                                 </div> : null}
 
-                          
 
-{showChatRoom ? 
-                            <div style={{position:'relative'}} >
-                          <div style={{display:'flex',flexDirection:'row'}}>
-                          {privateChat? <div className="privateChat-club">
-                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',maxWidth:'300px' }} >Private Chat<FaWindowClose className="icon-text"
-                                            onClick={() => {
-                                                setPrivateChat(false);
-                                            }}
-                                        /></div>
-                                                          
-                                    </div>:null}
-                           
-                                <div className="container" style={{left:privateChat?"20px":"-140px",width:privateChat?"40%":"60%"}}  >
-                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',marginTop:'-30px' }} >Community Club Chat</div>
-                              
-                                    {emojiPicker && (
-                                        <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
-                                            <div>
-                                                <Picker
-                                                    native
-                                                    onEmojiClick={(event, emojiObject) => {
-                                                        setMessageInboxValue(emojiObject.emoji)
-                                                        // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
-                                                        //  // socket.emit('send',message);
-                                                        socket.emit('send', {
-                                                            name: userFullName,
-                                                            message: emojiObject.emoji,
-                                                            profilePic: userProfilePic,
-                                                            isEmoji: true
-                                                        });
-                                                    }}
-                                                    pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
-                                                />
-                                            </div>
-                                        </ClickAwayListener>
-                                    )}
 
-                                    {src && mimeType.substr(0,5)=="image"?<div className="messageBox">
-                                        <img src={src} style={{width:'100%',height:'auto'}} />
-                                        <button onClick={()=>{
-                                               upload(file,file.type);
-                                               setFile([]);
-                                               setSrc(null)
-                                        }}>Confirm</button>
-                                                <button onClick={()=>{
-                                            
-                                               setFile([]);
-                                               setSrc(null)
-                                        }}>Cancel</button>
-                                        </div>:null}
-                                    {src && mimeType.substr(0,5)=="video"?
-                                    <div  className="messageBox">
-                                    <video src={src} style={{width:'100%',height:'auto'}} className="messageBox" />
-                                    <button onClick={()=>{
-                                               upload(file,file.type);
-                                               setFile([]);
-                                               setSrc(null)
-                                        }}>Confirm</button>
-                                         <button onClick={()=>{
-                                        
-                                               setFile([]);
-                                               setSrc(null)
-                                        }}>Cancel</button>
-                                    </div>
-                                    :null}
-                                </div>
-                             
-                                <div className="community-club">
-                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
-                                <RandomCommunitySuggestion />               
+                            {showChatRoom ?
+                                <div style={{ position: 'relative' }} >
+                                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                        {privateChat ? <div className="privateChat-club">
+                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', maxWidth: '300px' }} >Private Chat<FaWindowClose className="icon-text"
+                                                onClick={() => {
+                                                    setPrivateChat(false);
+                                                }}
+                                            /></div>
+
+                                        </div> : null}
+
+                                        <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }}  >
+                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px' }} >Community Club Chat</div>
+
+                                            {emojiPicker && (
+                                                <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                    <div>
+                                                        <Picker
+                                                            native
+                                                            onEmojiClick={(event, emojiObject) => {
+                                                                setMessageInboxValue(emojiObject.emoji)
+                                                                // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                                                //  // socket.emit('send',message);
+                                                                socket.emit('send', {
+                                                                    name: userFullName,
+                                                                    message: emojiObject.emoji,
+                                                                    profilePic: userProfilePic,
+                                                                    isEmoji: true
+                                                                });
+                                                            }}
+                                                            pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
+                                                        />
+                                                    </div>
+                                                </ClickAwayListener>
+                                            )}
+                                        </div>
+
+                                        <div className="community-club">
+                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
+                                            <RandomCommunitySuggestion />
+                                        </div>
+
                                     </div>
 
-                          </div>
-                         
-                                <div className="send">
-                                    <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
-                                        <FaWindowClose className="icon-text"
-                                            onClick={() => {
-                                                setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
-                                            }}
+                                    <div className="send">
+                                        <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
+                                            <FaWindowClose className="icon-text"
+                                                onClick={() => {
+                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                                }}
 
-                                        />
- <label
+                                            />
+   <label
                                             htmlFor="post-video"
                                            
                                         >
@@ -1171,16 +1139,16 @@ const PrivateChannels = () => {
                                             onChange={handleFile}
                                             hidden
                                         />
-                                        <FiFolder className="icon-text" />
-                                        <FiSmile className="icon-text"
-                                            onClick={() => { setEmojiPicker(!emojiPicker) }}
-                                        />
-                                        <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
-                                        <div className="btns"> <button type="submit"><FiSend /></button></div>
+                                             <FiFolder className="icon-text" />
+                                            <FiSmile className="icon-text"
+                                                onClick={() => { setEmojiPicker(!emojiPicker) }}
+                                            />
+                                            <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
+                                            <div className="btns"> <button type="submit"><FiSend /></button></div>
 
-                                    </form>
-                                </div>
-                            </div> : null}
+                                        </form>
+                                    </div>
+                                </div> : null}
                         </div>
                     ) : null}
 
@@ -1210,7 +1178,7 @@ const PrivateChannels = () => {
                                         onClick={() => { setShowRequest(false); setShowFeed(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Memberships</span>
                                     {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
                                     <span>Marketplace</span>
-                                        
+
                                     {/* <span 
                                         onClick={() => {
                                             history.push(
@@ -1221,29 +1189,27 @@ const PrivateChannels = () => {
                                     >
                                         <div className="channel-btn-icon">
                                             Record Message
-
                                         </div>
-
                                     </span> */}
-                                    <span style={{backgroundColor:showChatRoom?"#8249A0":'#A279BA',borderRadius:'8px'}}  onClick={() => {
-                  setShowRequest(false);
-                  setShowSubscribers(false);
-                  setShowPricingSetting(false);
-                  setShowNotification(false);
-                  setShowFeed(false);
-                  setShowChatRoom(false);
-                                       setShowChatRoom(!showChatRoom);
+                                    <span style={{ backgroundColor: showChatRoom ? "#8249A0" : '#A279BA', borderRadius: '8px' }} onClick={() => {
+                                        setShowRequest(false);
+                                        setShowSubscribers(false);
+                                        setShowPricingSetting(false);
+                                        setShowNotification(false);
+                                        setShowFeed(false);
+                                        setShowChatRoom(false);
+                                        setShowChatRoom(!showChatRoom);
                                         socket.emit('room', userInfo[0].username);
                                         socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
                                     }}  >Club Chat</span>
-                                     <span
-                                        style={{ backgroundColor:'#A279BA', borderRadius: '8px' }}
-                                       >Club Rules</span>
+                                    <span
+                                        style={{ backgroundColor: '#A279BA', borderRadius: '8px' }}
+                                    >Club Rules</span>
                                 </div>
-                             
-                                       
-                                    {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
-                                 
+
+
+                                {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
+
                                 {/* <FiSearch className="search-channel-content" /> */}
                             </div>
                             {showRequest ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
@@ -1307,70 +1273,131 @@ const PrivateChannels = () => {
                                     </InfiniteScroll>
                                 )}
                             </div> : null}
-                            {showChatRoom ? 
-                            <div style={{position:'relative'}} >
-                          <div style={{display:'flex',flexDirection:'row'}}>
-                          {privateChat? <div className="privateChat-club">
-                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',maxWidth:'300px' }} >Private Chat<FaWindowClose className="icon-text"
-                                            onClick={() => {
-                                               setPrivateChat(false);
-                                            }}
-                                        /></div>
-                                                          
-                                    </div>:null}
-                           
-                                <div className="container"  style={{left:privateChat?"20px":"-140px",width:privateChat?"40%":"60%"}} >
-                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',marginTop:'-30px' }} >Community Club Chat</div>
-                              
-                               
-                                    {emojiPicker && (
-                                        <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
-                                            <div>
-                                                <Picker
-                                                    native
-                                                    onEmojiClick={(event, emojiObject) => {
-                                                        setMessageInboxValue(emojiObject.emoji)
-                                                        // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
-                                                        //  // socket.emit('send',message);
-                                                        socket.emit('send', {
-                                                            name: userFullName,
-                                                            message: emojiObject.emoji,
-                                                            profilePic: userProfilePic,
-                                                            isEmoji: true
-                                                        });
-                                                    }}
-                                                    pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
-                                                />
-                                            </div>
-                                        </ClickAwayListener>
-                                    )}
-                                </div>
-                                <div className="community-club">
-                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
-                                <RandomCommunitySuggestion />                   
+                            {showChatRoom ?
+                                <div style={{ position: 'relative' }} >
+                                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                        {privateChat ? <div className="privateChat-club">
+                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', maxWidth: '300px' }} >Private Chat<FaWindowClose className="icon-text"
+                                                onClick={() => {
+                                                    setPrivateChat(false);
+                                                }}
+                                            /></div>
+
+                                        </div> : null}
+
+                                        <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }} >
+                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px' }} >Community Club Chat</div>
+
+
+                                            {emojiPicker && (
+                                                <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                    <div>
+                                                        <Picker
+                                                            native
+                                                            onEmojiClick={(event, emojiObject) => {
+                                                                setMessageInboxValue(emojiObject.emoji)
+                                                                // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                                                //  // socket.emit('send',message);
+                                                                socket.emit('send', {
+                                                                    name: userFullName,
+                                                                    message: emojiObject.emoji,
+                                                                    profilePic: userProfilePic,
+                                                                    isEmoji: true
+                                                                });
+                                                            }}
+                                                            pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
+                                                        />
+                                                    </div>
+                                                </ClickAwayListener>
+                                            )}
+                                             {src && mimeType.substr(0,5)=="image"?<div className="messageBox">
+                                        <img src={src} style={{width:'100%',height:'auto',marginTop:'-10px'}} />
+                                        <button onClick={()=>{
+                                               upload(file,file.type);
+                                               setFile([]);
+                                               setSrc(null);
+                                               setMimeType("")
+                                        }}>Confirm</button>
+                                                <button onClick={()=>{
+                                            
+                                               setFile([]);
+                                               setSrc(null);
+                                               setMimeType("")
+                                        }}>Cancel</button>
+                                        </div>:null}
+                                    {src && mimeType.substr(0,5)=="video"?
+                                    <div  className="messageBox">
+                                    <video src={src} style={{width:'100%',height:'auto',marginTop:'-10px'}} className="messageBox" />
+                                    <button onClick={()=>{
+                                               upload(file,file.type);
+                                               setFile([]);
+                                               setSrc(null);
+                                               setMimeType("")
+                                        }}>Confirm</button>
+                                         <button onClick={()=>{
+                                        
+                                               setFile([]);
+                                               setSrc(null);
+                                               setMimeType("")
+                                        }}>Cancel</button>
+                                    </div>
+                                    :null}
+                                        </div>
+                                        <div className="community-club">
+                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
+                                            <RandomCommunitySuggestion />
+                                        </div>
+
                                     </div>
 
-                          </div>
-                         
-                                <div className="send">
-                                    <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
-                                        <FaWindowClose className="icon-text"
-                                            onClick={() => {
-                                                setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
-                                            }}
+                                    <div className="send">
+                                        <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
+                                            <FaWindowClose className="icon-text"
+                                                onClick={() => {
+                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                                }}
 
+                                            />
+
+<label
+                                            htmlFor="post-video"
+                                           
+                                        >
+                                          <FiVideo className="icon-text"  /> 
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="post-video"
+                                            name="video"
+                                            accept="video/*"
+                                            onChange={handleFile}
+                                            hidden
                                         />
-
-                                        <FiVideo className="icon-text" /> <FiImage className="icon-text" />   <FiFolder className="icon-text" />
-                                        <FiSmile className="icon-text"
-                                            onClick={() => { setEmojiPicker(!emojiPicker) }}
+                                         <label
+                                            htmlFor="post-image"
+                                           
+                                        >
+                                           <FiImage className="icon-text" /> 
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="post-image"
+                                            name="image"
+                                            accept="image/*"
+                                            onChange={handleFile}
+                                            hidden
                                         />
-                                        <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
-                                        <div className="btns"> <button type="submit"><FiSend /></button></div>
+                                           
+                                             <FiFolder className="icon-text" />
+                                            <FiSmile className="icon-text"
+                                                onClick={() => { setEmojiPicker(!emojiPicker) }}
+                                            />
+                                            <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
+                                            <div className="btns"> <button type="submit"><FiSend /></button></div>
 
-                                    </form>
-                                </div>
-                            </div> : null}
+                                        </form>
+                                    </div>
+                                </div> : null}
 
                         </div>
                     ) : null}

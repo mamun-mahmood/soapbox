@@ -4,7 +4,7 @@ import SideBarOption from './SideBarOption'
 import { BsLightning } from 'react-icons/bs'
 import { Link, NavLink, useHistory } from 'react-router-dom'
 import { FiHome, FiHash, FiSearch, FiShield } from 'react-icons/fi'
-import { RiFileList3Line, RiShieldFlashLine,RiChatPrivateFill,RiGroup2Fill, RiGroup2Line, RiChatPrivateLine } from 'react-icons/ri'
+import { RiFileList3Line, RiShieldFlashLine, RiChatPrivateFill, RiGroup2Fill, RiGroup2Line, RiChatPrivateLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import './sidebar.css';
@@ -231,8 +231,8 @@ const SideBar = () => {
                         Icon={RiChatPrivateLine}
                     // link={`/private/Club/${username}`}
                     />
-                   
-                     <SideBarOption
+
+                    <SideBarOption
                         option="Community Clubs"
                         Icon={RiGroup2Line}
                     // link={`/private/Club/${username}`}
@@ -377,8 +377,8 @@ const SideBar = () => {
                     </li> */}
 
                     {/* suggested Follows  */}
-                    
-                  
+
+
                     <div style={{ paddingLeft: "1rem" }}>
                         <li>
                             <small style={{ marginLeft: "-0.5rem" }} className="info" >Suggested Follows & Clubs</small>{" "}

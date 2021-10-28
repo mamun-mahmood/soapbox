@@ -41,7 +41,7 @@ const RandomCommunitySuggestion = () => {
             {verifiedUsers.map((verifiedUser) => {
                 return (
                     <div key={verifiedUser.id} >
-                        <SuggestedFollow verifiedUser={verifiedUser}  />
+                        <SuggestedFollow verifiedUser={verifiedUser} />
                     </div>
                 )
             })}

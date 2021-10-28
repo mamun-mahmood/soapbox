@@ -217,7 +217,11 @@ const HootInside = ({
     const deleteHoot = async () => {
         setIsMoreModalOpen(false);
 
-        axios.delete(`${BaseURL}/upload/delete/${hootImgId}`)
+        if (mimeType) {
+            axios.delete(`${BaseURL}/upload/delete/${hootImgId}`)
+        } else {
+            axios.delete(`${BaseURL}/upload/delete/external-player/${hootId}`)
+        }
 
         userInfo && window.location.pathname.includes(`private/Club/${userInfo.username}`) || history.push('/');
         window.location.reload();
@@ -978,9 +982,12 @@ const HootInside = ({
                                         />
                                     </span>
                                     <br />
-                                    {" "}<span className="hoot-link">
-                                        <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
-                                    </span>
+                                    {" "}
+                                    {!ReactPlayer.canPlay(link) &&
+                                        <span className="hoot-link">
+                                            <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                        </span>
+                                    }
                                     {/* {dbLink ?
                                     dbLink.map((link, index) => {
                                         return (
@@ -995,7 +1002,7 @@ const HootInside = ({
                             }
                             {/* <hr className="mx-1" /> */}
 
-                            {link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                            {/* {link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
                                 ?
                                 <video
                                     muted controls
@@ -1033,18 +1040,97 @@ const HootInside = ({
                                             height='100%'
                                         />
                                     </div>
-                            }
+                            } */}
 
                             <div className="right-icons">
                                 {/* <div className="post-media"> */}
-                                <MediaContent
+                                <div style={{ display: "flex", flexDirection: "column", width: mimeType || "100%", paddingRight: mimeType || "0.5rem" }}>
+                                    {ReactPlayer.canPlay(link) &&
+                                        link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                        ?
+                                        <div>
+                                            <video
+                                                muted controls
+                                                disablePictureInPicture
+                                                className="hoot-vdo"
+                                                style={{ width: "" }}
+                                                controlsList="nodownload"
+                                                onLoadStart={() => {
+                                                    axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                        views: views + random(50, 400),
+                                                        id: hootId
+                                                    })
+                                                }}
+                                            >
+                                                <source
+                                                    src={link}
+                                                />
+                                                Your browser does not support HTML video.
+                                            </video>
+                                        </div>
+                                        :
+                                        link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                            ?
+                                            <div>
+                                                <video
+                                                    muted controls
+                                                    poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                    className="hoot-ado"
+                                                    controlsList="nodownload"
+                                                    onLoadStart={() => {
+                                                        axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                            views: views + random(50, 400),
+                                                            id: hootId
+                                                        })
+                                                    }}
+                                                >
+                                                    <source
+                                                        src={link}
+                                                    />
+                                                    Your browser does not support HTML video.
+                                                </video>
+                                            </div>
+                                            :
+                                            ReactPlayer.canPlay(link) &&
+                                            <div className='player-wrapper'>
+                                                <ReactPlayer
+                                                    url={link}
+                                                    className='react-player'
+                                                    controls="true"
+                                                    width={mimeType ? '97%' : '100%'}
+                                                    height='100%'
+                                                    onLoadStart={() => {
+                                                        axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                            views: views + random(50, 400),
+                                                            id: hootId
+                                                        })
+                                                    }}
+                                                />
+                                            </div>
+                                    }
+
+                                    {mimeType &&
+                                        <MediaContent
+                                            hootId={hootId}
+                                            mimeType={mimeType}
+                                            filePath={filePath}
+                                            views={views}
+                                            image={hootImgId}
+                                            profilePicPath={profilePicPath}
+                                        />
+                                    }
+                                </div>
+
+
+
+                                {/* <MediaContent
                                     hootId={hootId}
                                     mimeType={mimeType}
                                     filePath={filePath}
                                     views={views}
                                     image={hootImgId}
                                     profilePicPath={profilePicPath}
-                                />
+                                /> */}
                                 {/* </div> */}
                                 <div className="post-icons">
                                     {/* <div className="grp-1"> */}
@@ -1808,9 +1894,12 @@ const HootInside = ({
                                     />
                                 </span>
                                 <br />
-                                {" "}<span className="hoot-link">
-                                    <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
-                                </span>
+                                {" "}
+                                {!ReactPlayer.canPlay(link) &&
+                                    <span className="hoot-link">
+                                        <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                    </span>
+                                }
                                 {/* {dbLink ?
                                 dbLink.map((link, index) => {
                                     return (
@@ -1848,7 +1937,7 @@ const HootInside = ({
                             }}
                         /> */}
 
-                        {link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                        {/* {link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
                             ?
                             <video
                                 muted controls
@@ -1886,18 +1975,149 @@ const HootInside = ({
                                         height='100%'
                                     />
                                 </div>
-                        }
+                        } */}
 
                         <div className="right-icons">
                             {/* <div className="post-media"> */}
-                            <MediaContent
-                                hootId={hootId}
-                                mimeType={mimeType}
-                                filePath={filePath}
-                                views={views}
-                                image={hootImgId}
-                                profilePicPath={profilePicPath}
-                            />
+                            {/* {ReactPlayer.canPlay(link)
+                                ?
+                                link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                    ?
+                                    <div>
+                                        <video
+                                            muted controls
+                                            disablePictureInPicture
+                                            className="hoot-vdo"
+                                            controlsList="nodownload"
+                                        >
+                                            <source
+                                                src={link}
+                                            />
+                                            Your browser does not support HTML video.
+                                        </video>
+                                    </div>
+                                    :
+                                    link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                        ?
+                                        <div>
+                                            <video
+                                                muted controls
+                                                poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                className="hoot-vdo"
+                                                controlsList="nodownload"
+                                            >
+                                                <source
+                                                    src={link}
+                                                />
+                                                Your browser does not support HTML video.
+                                            </video>
+                                        </div>
+                                        :
+                                        ReactPlayer.canPlay(link) &&
+                                        <div className='player-wrapper'>
+                                            <ReactPlayer
+                                                url={link}
+                                                className='react-player'
+                                                controls="true"
+                                                width='100%'
+                                                height='100%'
+                                            />
+                                        </div>
+                                :
+                                <MediaContent
+                                    hootId={hootId}
+                                    mimeType={mimeType}
+                                    filePath={filePath}
+                                    views={views}
+                                    image={hootImgId}
+                                    profilePicPath={profilePicPath}
+                                />
+                            } */}
+                            <div style={{ display: "flex", flexDirection: "column", width: mimeType || "100%", paddingRight: mimeType || "0.5rem" }}>
+                                {ReactPlayer.canPlay(link) &&
+                                    link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                    ?
+                                    <div>
+                                        <video
+                                            muted controls
+                                            disablePictureInPicture
+                                            className="hoot-vdo"
+                                            style={{ width: "" }}
+                                            controlsList="nodownload"
+                                            onLoadStart={() => {
+                                                axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                    views: views + random(50, 400),
+                                                    id: hootId
+                                                })
+                                            }}
+                                        >
+                                            <source
+                                                src={link}
+                                            />
+                                            Your browser does not support HTML video.
+                                        </video>
+                                    </div>
+                                    :
+                                    link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                        ?
+                                        <div>
+                                            <video
+                                                muted controls
+                                                poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                className="hoot-ado"
+                                                controlsList="nodownload"
+                                                onLoadStart={() => {
+                                                    axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                        views: views + random(50, 400),
+                                                        id: hootId
+                                                    })
+                                                }}
+                                            >
+                                                <source
+                                                    src={link}
+                                                />
+                                                Your browser does not support HTML video.
+                                            </video>
+                                        </div>
+                                        :
+                                        ReactPlayer.canPlay(link) &&
+                                        <div className='player-wrapper'>
+                                            <ReactPlayer
+                                                url={link}
+                                                className='react-player'
+                                                controls="true"
+                                                width={mimeType ? '97%' : '100%'}
+                                                height='100%'
+                                                onReady={() => {
+                                                    axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                        views: views + random(50, 400),
+                                                        id: hootId
+                                                    })
+                                                }}
+                                            />
+                                        </div>
+                                }
+
+                                {mimeType &&
+                                    <MediaContent
+                                        hootId={hootId}
+                                        mimeType={mimeType}
+                                        filePath={filePath}
+                                        views={views}
+                                        image={hootImgId}
+                                        profilePicPath={profilePicPath}
+                                    />
+                                }
+                            </div>
+
+                            {/* <MediaContent
+                                    hootId={hootId}
+                                    mimeType={mimeType}
+                                    filePath={filePath}
+                                    views={views}
+                                    image={hootImgId}
+                                    profilePicPath={profilePicPath}
+                                /> */}
                             {/* </div> */}
                             <div className="post-icons">
                                 {/* <div className="grp-1"> */}

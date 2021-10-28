@@ -101,7 +101,7 @@ const CreatePrivateHoot = () => {
             ]).then(axios.spread((res1, res2) => {
                 if (res1) {
                     setTimeout(() => {
-                        history.push(`/${uuidv4()}/private/channels/${username}/${uuidv4()}`);
+                        history.push(`/${uuidv4()}/private/Club/${username}/${uuidv4()}`);
                     }, 500);
                 }
             }))
@@ -228,7 +228,7 @@ const CreatePrivateHoot = () => {
         event.preventDefault();
         toast.success('Link inserted');
 
-        setShowLinkPreview(true);
+        ReactPlayer.canPlay(link) && setShowLinkPreview(true);
         setLinkModalOpen(false);
         // alert(JSON.stringify(formValues));
 
@@ -573,7 +573,7 @@ const CreatePrivateHoot = () => {
                 <div className="upload-post">
                     <div className="back-to-home">
                         {/* <Link to="/home"> */}
-                        <Link to={`/${uuidv4()}/private/channels/${username}/${uuidv4()}`}>
+                        <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
                             <FiArrowLeft className="left-arrow" />
                         </Link>
                         <span>
@@ -613,6 +613,15 @@ const CreatePrivateHoot = () => {
                                     <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
                                 </div>
                             } */}
+
+                            {!showLinkPreview ?
+                                link ?
+                                    <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all" }}>
+                                        <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                    </div>
+                                    : null
+                                : null
+                            }
 
                             {/* <div style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>
                                 {formValues.map((link, index) => {
@@ -772,7 +781,7 @@ const CreatePrivateHoot = () => {
                                         variant="primary mx-1"
                                         className="btn-create-hoot"
                                         onClick={upload}
-                                        disabled={file.length === 0}
+                                        disabled={!ReactPlayer.canPlay(link) && file.length === 0}
                                     >
                                         Hoot
                                     </Button>{' '}
@@ -790,7 +799,8 @@ const CreatePrivateHoot = () => {
                                     <video
                                         muted controls
                                         disablePictureInPicture
-                                        className="external-vdo"
+                                        className="hoot-vdo"
+                                        style={{ width: "none" }}
                                         controlsList="nodownload"
                                     >
                                         <source
@@ -804,7 +814,7 @@ const CreatePrivateHoot = () => {
                                         <video
                                             muted controls
                                             poster={`${BaseURL}/profile-pictures/${userData.profilePic}`}
-                                            className="external-vdo"
+                                            className="hoot-vdo"
                                             controlsList="nodownload"
                                         >
                                             <source

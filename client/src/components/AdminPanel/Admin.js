@@ -6,7 +6,7 @@ export default function Admin() {
   const BaseURL = process.env.REACT_APP_API_URL;
   const [users, setUsers] = useState([])
   const [user, setUser] = useState([])
-  
+
 
   const [showEdit, setShowEdit] = useState(false)
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function Admin() {
       email: user.email,
       verified: user.verified,
       followers: user.followers,
-      communityClub:user.communityClub
+      communityClub: user.communityClub
     }).then(() => {
       alert(`Updated details of ${user.username}`)
       setShowEdit(!showEdit)
@@ -51,7 +51,7 @@ export default function Admin() {
                 followers: user.followers,
                 verify: user.verified,
                 email: e.target.value,
-                communityClub:user.communityClub
+                communityClub: user.communityClub
               })
             }}
           />
@@ -66,7 +66,7 @@ export default function Admin() {
                 followers: e.target.value,
                 verified: user.verified,
                 email: user.email,
-                communityClub:user.communityClub
+                communityClub: user.communityClub
               })
             }}
           />
@@ -81,7 +81,7 @@ export default function Admin() {
                 followers: user.followers,
                 verified: e.target.value,
                 email: user.email,
-                communityClub:user.communityClub
+                communityClub: user.communityClub
               })
             }}
           />
@@ -96,11 +96,11 @@ export default function Admin() {
                 followers: user.followers,
                 verified: user.verified,
                 email: user.email,
-                communityClub:user.communityClub
+                communityClub: user.communityClub
               })
             }}
           />
-           <label>Community Club</label>
+          <label>Community Club</label>
           <input
             placeholder="Community Club"
             value={user.communityClub}
@@ -110,7 +110,7 @@ export default function Admin() {
                 followers: user.followers,
                 verified: user.verified,
                 email: user.email,
-                communityClub:e.target.value
+                communityClub: e.target.value
               })
             }}
           />

@@ -44,7 +44,8 @@ const RamdomSuggestedHoots = () => {
 
                 return (
                     <div key={upload.id}>
-                        {upload.mimeType.match(/image/gi) == "image"
+                        {upload.mimeType &&
+                            upload.mimeType.match(/image/gi) == "image"
                             ?
                             <div className="suggested-hoots"
                                 onClick={() => { history.push(`/${upload.authorUsername}/hoot/${upload.id}`) }}
@@ -69,7 +70,8 @@ const RamdomSuggestedHoots = () => {
                             null
                         }
 
-                        {upload.mimeType.match(/video/gi) == "video"
+                        {upload.mimeType &&
+                            upload.mimeType.match(/video/gi) == "video"
                             ?
                             <div className="suggested-hoots"
                                 onClick={() => { history.push(`/${upload.authorUsername}/hoot/${upload.id}`) }}
