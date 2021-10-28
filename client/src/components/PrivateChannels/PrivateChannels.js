@@ -43,6 +43,7 @@ import Autolinker from 'autolinker';
 import RandomSuggestedFollows from '../SideBar/RandomSuggestedFollows'
 import RandomCommunitySuggestion from "../SideBar/RandomCommunitySuggestion";
 import { HiBadgeCheck } from "react-icons/hi";
+import ReactTooltip from "react-tooltip";
 
 const PrivateChannels = () => {
 
@@ -196,6 +197,8 @@ const PrivateChannels = () => {
                 messageElement.append(video);
                 video.style.maxWidth="100%";
                 video.style.maxHeight="auto";
+                video.style.marginTop="10px";
+                video.style.borderRadius="5px";
                 video.controls=true
                 // if (position == "right") {
                 //     image.classList.add('chat-profile');
@@ -213,7 +216,8 @@ const PrivateChannels = () => {
                 messageElement.append(img);
                 img.style.maxWidth="100%";
                 img.style.maxHeight="auto";
-               
+                img.style.marginTop="10px";
+                img.style.borderRadius="5px";
                 // if (position == "right") {
                 //     image.classList.add('chat-profile');
                 // } else {
@@ -264,12 +268,12 @@ const PrivateChannels = () => {
         })
 
         socket.on('receive', data => {
-            console.log(data, "data")
+            console.log("data")
             if (data.isEmoji) {
                 append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
 
             } else {
-                append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
+                append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji,data.isVideo,data.isImage)
             }
         })
 
@@ -282,7 +286,7 @@ const PrivateChannels = () => {
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`).then((response) => {
                 setUserInfo(response.data);
-                console.log(response, "dky");
+                console.log("dky");
                 axios.get(`${BaseURL}/upload/user/${username}`)
                     .then((response) => {
                         response.data.map((user) => {
@@ -295,7 +299,7 @@ const PrivateChannels = () => {
                         axios.post(`${BaseURL}/user/pricings`, {
                             username: username
                         }).then((res) => {
-                            console.log(res.data)
+                            console.log("res.data")
                             setOneOnOneCallPrice(res.data[0].oneOnOneCall);
                             setGroupCallPrice(res.data[0].groupCall);
                             setRequestMessagePrice(res.data[0].personalMessage);
@@ -440,17 +444,33 @@ const PrivateChannels = () => {
 
         const uploadData = async () => {
             await axios.all([
-                axios.post(`http://localhost:3001/upload/uploadMedia`, formData),
+                axios.post(`${BaseURL}/upload/uploadMedia`, formData),
             ]).then(axios.spread((res1, res2) => {
                 if (res1) {
                 
                   if(mimeType.substr(0,5)== ('video' || 'audio'))  {
-                    append(userFullName,`http://localhost:3001/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,true,false)
-                  
+                    append(userFullName,`${BaseURL}/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,true,false)
+                    socket.emit('send', {
+                        name: userFullName,
+                        message:`${BaseURL}/storageChat/${res1.data}` ,
+                        profilePic: userProfilePic,
+                        isEmoji: false,
+                        isVideo:true,
+                        isImage:false
+                    });
                   }else{
-                    append(userFullName,`http://localhost:3001/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,false,true)
-                  
+                    append(userFullName,`${BaseURL}/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,false,true)
+                    socket.emit('send', {
+                        name: userFullName,
+                        message:`${BaseURL}/storageChat/${res1.data}` ,
+                        profilePic: userProfilePic,
+                        isEmoji: false,
+                        isVideo:false,
+                        isImage:true
+                    });
                   }
+
+               
                             }
             }))
         }
@@ -747,12 +767,13 @@ const PrivateChannels = () => {
                                                                 <button>
                                                                     Marketplace
                                                                 </button>
+                                                              
                                                                 <button onClick={() => { subscribe ? unSubscribeUser() : subscribeUser() }} >
 
                                                                     {subscribe ? "Membership" : "Get Membership"}
                                                                 </button>
                                                             </div>
-                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Tools</div>
+                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >On-demand Media</div>
                                                             <div className="control">
                                                                 {/* <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
                                                             <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
@@ -770,7 +791,7 @@ const PrivateChannels = () => {
                                                                     setShowChatRoom(false);
                                                                 }}
                                                                 >Price Settings</button> */}
-                                                                <button style={{ minWidth: '208px' }} >Podcasts</button>
+                                                                {/* <button style={{ minWidth: '208px' }} >Podcasts</button> */}
                                                                 <button style={{ minWidth: '208px' }} >Audio</button>
                                                                 <button style={{ minWidth: '208px' }} >Video</button>
                                                                 <button style={{ minWidth: '208px' }} >Photos</button>
@@ -838,6 +859,8 @@ const PrivateChannels = () => {
                                     <span>Podcasts</span> */}
 
                                     <span>Marketplace</span>
+                                    <span>Podcasts</span>
+                                    
                                     <span onClick={() => {
                                         setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
                                         socket.emit('room', userInfo[0].username);
@@ -1079,7 +1102,7 @@ const PrivateChannels = () => {
                                                         <Picker
                                                             native
                                                             onEmojiClick={(event, emojiObject) => {
-                                                                setMessageInboxValue(emojiObject.emoji)
+                                                                setMessageInboxValue(messageInboxValue+emojiObject.emoji)
                                                                 // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
                                                                 //  // socket.emit('send',message);
                                                                 socket.emit('send', {
@@ -1094,6 +1117,38 @@ const PrivateChannels = () => {
                                                     </div>
                                                 </ClickAwayListener>
                                             )}
+                                              {src && mimeType.substr(0,5)=="image"?<div className="messageBox">
+                                        <img src={src} style={{width:'100%',height:'auto',marginTop:'-10px'}} />
+                                        <button onClick={()=>{
+                                               upload(file,file.type);
+                                               setFile([]);
+                                               setSrc(null);
+                                               setMimeType("")
+                                        }}>Confirm</button>
+                                                <button onClick={()=>{
+                                            
+                                               setFile([]);
+                                               setSrc(null);
+                                               setMimeType("")
+                                        }}>Cancel</button>
+                                        </div>:null}
+                                    {src && mimeType.substr(0,5)=="video"?
+                                    <div  className="messageBox">
+                                    <video src={src} style={{width:'100%',height:'auto',marginTop:'-10px'}} className="messageBox" />
+                                    <button onClick={()=>{
+                                               upload(file,file.type);
+                                               setFile([]);
+                                               setSrc(null);
+                                               setMimeType("")
+                                        }}>Confirm</button>
+                                         <button onClick={()=>{
+                                        
+                                               setFile([]);
+                                               setSrc(null);
+                                               setMimeType("")
+                                        }}>Cancel</button>
+                                    </div>
+                                    :null}
                                         </div>
 
                                         <div className="community-club">
@@ -1104,8 +1159,9 @@ const PrivateChannels = () => {
                                     </div>
 
                                     <div className="send">
+                                    <ReactTooltip />
                                         <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
-                                            <FaWindowClose className="icon-text"
+                                            <FaWindowClose data-tip="Close CharRoom" className="icon-text"
                                                 onClick={() => {
                                                     setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
                                                 }}
@@ -1115,7 +1171,7 @@ const PrivateChannels = () => {
                                             htmlFor="post-video"
                                            
                                         >
-                                          <FiVideo className="icon-text"  /> 
+                                          <FiVideo data-tip="Share Video" className="icon-text"  /> 
                                         </label>
                                         <input
                                             type="file"
@@ -1129,7 +1185,7 @@ const PrivateChannels = () => {
                                             htmlFor="post-image"
                                            
                                         >
-                                           <FiImage className="icon-text" /> 
+                                           <FiImage data-tip="Share Photos" className="icon-text" /> 
                                         </label>
                                         <input
                                             type="file"
@@ -1139,8 +1195,8 @@ const PrivateChannels = () => {
                                             onChange={handleFile}
                                             hidden
                                         />
-                                             <FiFolder className="icon-text" />
-                                            <FiSmile className="icon-text"
+                                             <FiFolder data-tip="Share File" className="icon-text" />
+                                            <FiSmile className="icon-text" data-tip="Emoji"
                                                 onClick={() => { setEmojiPicker(!emojiPicker) }}
                                             />
                                             <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
@@ -1295,7 +1351,7 @@ const PrivateChannels = () => {
                                                         <Picker
                                                             native
                                                             onEmojiClick={(event, emojiObject) => {
-                                                                setMessageInboxValue(emojiObject.emoji)
+                                                                setMessageInboxValue(messageInboxValue+emojiObject.emoji)
                                                                 // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
                                                                 //  // socket.emit('send',message);
                                                                 socket.emit('send', {
@@ -1351,8 +1407,9 @@ const PrivateChannels = () => {
                                     </div>
 
                                     <div className="send">
+                                    <ReactTooltip />
                                         <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
-                                            <FaWindowClose className="icon-text"
+                                            <FaWindowClose className="icon-text" data-tip="Close ChatRoom"
                                                 onClick={() => {
                                                     setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
                                                 }}
@@ -1363,7 +1420,7 @@ const PrivateChannels = () => {
                                             htmlFor="post-video"
                                            
                                         >
-                                          <FiVideo className="icon-text"  /> 
+                                          <FiVideo className="icon-text" data-tip="Share Video"  /> 
                                         </label>
                                         <input
                                             type="file"
@@ -1377,7 +1434,7 @@ const PrivateChannels = () => {
                                             htmlFor="post-image"
                                            
                                         >
-                                           <FiImage className="icon-text" /> 
+                                           <FiImage className="icon-text" data-tip="Share Photos" /> 
                                         </label>
                                         <input
                                             type="file"
@@ -1388,8 +1445,8 @@ const PrivateChannels = () => {
                                             hidden
                                         />
                                            
-                                             <FiFolder className="icon-text" />
-                                            <FiSmile className="icon-text"
+                                             <FiFolder className="icon-text" data-tip="Share File" />
+                                            <FiSmile className="icon-text" data-tip="Emoji"
                                                 onClick={() => { setEmojiPicker(!emojiPicker) }}
                                             />
                                             <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />

@@ -269,7 +269,7 @@ const PrivateChannels = () => {
                 append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
 
             } else {
-                append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
+                append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji,data.isVideo,data.isImage)
             }
         })
 
@@ -445,13 +445,21 @@ const PrivateChannels = () => {
             ]).then(axios.spread((res1, res2) => {
                 if (res1) {
                 
-                  if(mimeType.substr(0,5)== ('video' || 'audio'))  {
-                    append(userFullName,`http://localhost:3001/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,true,false)
+                //   if(mimeType.substr(0,5)== ('video' || 'audio'))  {
+                //     append(userFullName,`http://localhost:3001/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,true,false)
                   
-                  }else{
-                    append(userFullName,`http://localhost:3001/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,false,true)
+                //   }else{
+                //     append(userFullName,`http://localhost:3001/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,false,true)
                   
-                  }
+                //   }
+                socket.emit('send', {
+                    name: userFullName,
+                    message:`http://localhost:3001/storageChat/${res1.data}` ,
+                    profilePic: userProfilePic,
+                    isEmoji: false,
+                    isVideo:mimeType.substr(0,5)==("video" || "audio")?true:false,
+                    isImage:mimeType.substr(0,5)==("image")?true:false
+                });
                             }
             }))
         }

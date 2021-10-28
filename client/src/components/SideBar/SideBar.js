@@ -12,6 +12,7 @@ import RandomSuggestedFollows from './RandomSuggestedFollows'
 import RamdomSuggestedHoots from './RandomSuggestedHoots'
 import { MyLists } from '../../context/MyListContext'
 import RandomCommunitySuggestion from './RandomCommunitySuggestion'
+import { AiTwotoneLock } from 'react-icons/ai'
 
 const SideBar = () => {
     // const [mainActive, setMainActive] = useState("active");
@@ -228,7 +229,7 @@ const SideBar = () => {
 
                     <SideBarOption
                         option="Private Clubs"
-                        Icon={RiChatPrivateLine}
+                        Icon={AiTwotoneLock}
                     // link={`/private/Club/${username}`}
                     />
 
