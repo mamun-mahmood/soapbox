@@ -213,7 +213,7 @@ const CreateHoot = () => {
         event.preventDefault();
         toast.success('Link inserted');
 
-        setShowLinkPreview(true);
+        ReactPlayer.canPlay(link) && setShowLinkPreview(true);
         setLinkModalOpen(false);
         // alert(JSON.stringify(formValues));
 
@@ -293,6 +293,15 @@ const CreateHoot = () => {
                                     <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
                                 </div>
                             } */}
+
+                            {!showLinkPreview ?
+                                link ?
+                                    <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all" }}>
+                                        <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                    </div>
+                                    : null
+                                : null
+                            }
 
                             {/* <div style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>
                                 {formValues.map((link, index) => {
@@ -449,7 +458,7 @@ const CreateHoot = () => {
                                         variant="primary mx-1"
                                         className="btn-create-hoot"
                                         onClick={upload}
-                                        disabled={file.length === 0 || !caption}
+                                        disabled={(!ReactPlayer.canPlay(link) && file.length === 0) || !caption}
                                     >
                                         Hoot
                                     </Button>{' '}

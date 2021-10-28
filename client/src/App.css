@@ -927,7 +927,6 @@ hr {
   max-width: -webkit-fill-available;
   object-fit: scale-down;
   padding: 0.5rem;
-  padding-bottom: 0;
   border-radius: 0.95rem;
 }
 
@@ -2695,13 +2694,24 @@ padding: 6rem 1rem;
 
 .player-wrapper {
     position: relative;
-    aspect-ratio: 12/4;
+    aspect-ratio: 8/4;
     width: 100%;
-    background-color: #e1d2f3;
+    margin: 0.5rem;
+    /* background-color: #e1d2f3; */
+}
+
+.player-profile-wrapper {
+    position: relative;
+    aspect-ratio: 4/5.2;
+    width: 100%;
 }
 
 .react-player {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.react-player__preview {
+  border-radius: 0.5rem !important;
 }

@@ -1,13 +1,14 @@
 import React, { useState, useEffect, Fragment, useContext, useCallback } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useHistory } from 'react-router-dom'
 import axios from 'axios'
 import Avatar from 'react-avatar';
 import { formatCount, formatSi } from '../Helpers/formatNumbers'
 import { HiBadgeCheck } from 'react-icons/hi'
-import { FiTwitter } from 'react-icons/fi'
+import { FiPlayCircle, FiTwitter } from 'react-icons/fi'
 import { RiFacebookCircleLine, RiSnapchatLine, RiPinterestLine } from 'react-icons/ri'
 import { SiTiktok } from 'react-icons/si'
 import { FaTumblr } from 'react-icons/fa'
+import { BsExclude } from 'react-icons/bs'
 import { AiOutlineInstagram, AiOutlineLinkedin, AiOutlineReddit, AiOutlineMedium } from 'react-icons/ai'
 import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from './HootOutside/HootOutside';
@@ -18,6 +19,7 @@ import ReactTooltip from 'react-tooltip';
 import { v4 as uuidv4 } from 'uuid';
 
 import { toast } from 'react-toastify';
+import ReactPlayer from 'react-player';
 
 const Profile = ({
     verified,
@@ -44,9 +46,10 @@ const Profile = ({
     const [allUploads, setAllUploads] = useState([]);
     const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
-    const [followersCount, setFollowersCount] = useState(followers)
+    const [followersCount, setFollowersCount] = useState(followers);
     const [page, setpage] = useState(2);
-    const [privateC, setPrivateC] = useState(privateChannel)
+    const [privateC, setPrivateC] = useState(privateChannel);
+    const history = useHistory();
 
     const LIMIT = 9;
 
@@ -316,13 +319,78 @@ const Profile = ({
                                     {myUploads.map((upload) => {
                                         return (
                                             <div key={upload.id}>
-                                                <HootOutside
-                                                    hootId={upload.id}
-                                                    username={upload.authorUsername}
-                                                    mimeType={upload.mimeType}
-                                                    hootImgId={upload.image}
-                                                    profilePicPath={profilePicPath}
-                                                />
+                                                {!upload.mimeType
+                                                    ?
+                                                    <div className="img-container">
+                                                        <div
+                                                            className="hoot-img-vertical-profile"
+                                                            style={{ animation: "none", backgroundColor: "#d9d1f8" }}
+                                                            onContextMenu={(e) => e.preventDefault()}
+                                                            onClick={() => { history.push(`/${username}/hoot/${upload.id}`) }}
+                                                        >
+                                                            {ReactPlayer.canPlay(upload.link) &&
+                                                                upload.link.endsWith('.mp4') || upload.link.endsWith('.mkv') || upload.link.endsWith('.mov') || upload.link.endsWith('.ogv') || upload.link.endsWith('webm') || upload.link.endsWith('.mpg')
+                                                                ?
+                                                                <div className="vdo-container">
+                                                                    <video
+                                                                        muted
+                                                                        disablePictureInPicture
+                                                                        className="hoot-vdo-profile"
+                                                                        style={{ margin: "0" }}
+                                                                        onMouseOver={event => event.target.play()}
+                                                                        onMouseOut={event => event.target.pause()}
+                                                                    >
+                                                                        <source
+                                                                            src={upload.link}
+                                                                        />
+                                                                        Your browser does not support HTML video.
+                                                                    </video>
+                                                                </div>
+                                                                :
+                                                                upload.link.endsWith('.mp3') || upload.link.endsWith('.ogg') || upload.link.endsWith('.wav') || upload.link.endsWith('.flac') || upload.link.endsWith('.aac') || upload.link.endsWith('.alac') || upload.link.endsWith('.dsd')
+                                                                    ?
+                                                                    <div className="vdo-container">
+                                                                        <video
+                                                                            muted
+                                                                            poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                                            className="hoot-vdo-profile"
+                                                                            style={{ margin: "0" }}
+                                                                        >
+                                                                            <source
+                                                                                src={upload.link}
+                                                                            />
+                                                                            Your browser does not support HTML video.
+                                                                        </video>
+                                                                    </div>
+                                                                    :
+                                                                    ReactPlayer.canPlay(upload.link) &&
+                                                                    <div className='player-profile-wrapper'>
+                                                                        <ReactPlayer
+                                                                            url={upload.link}
+                                                                            className='react-player'
+                                                                            controls="true"
+                                                                            width={upload.mimeType ? '97%' : '100%'}
+                                                                            height='100%'
+                                                                            light={true}
+                                                                        />
+                                                                    </div>
+                                                            }
+                                                        </div>
+                                                        <FiPlayCircle
+                                                            className="GIF-overlay"
+                                                            style={{ borderRadius: "50%" }}
+                                                            onClick={() => { history.push(`/${username}/hoot/${upload.id}`) }}
+                                                        />
+                                                    </div>
+                                                    :
+                                                    <HootOutside
+                                                        hootId={upload.id}
+                                                        username={upload.authorUsername}
+                                                        mimeType={upload.mimeType}
+                                                        hootImgId={upload.image}
+                                                        profilePicPath={profilePicPath}
+                                                    />
+                                                }
                                             </div>
                                         )
                                     })}

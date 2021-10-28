@@ -2,9 +2,9 @@ import React, { Fragment, useState, useEffect } from 'react'
 import axios from 'axios'
 import Avatar from 'react-avatar';
 import { formatCount, formatSi } from '../Helpers/formatNumbers'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useHistory } from 'react-router-dom'
 import { HiBadgeCheck } from 'react-icons/hi'
-import { FiTwitter } from 'react-icons/fi'
+import { FiPlayCircle, FiTwitter } from 'react-icons/fi'
 import { RiFacebookCircleLine, RiSnapchatLine, RiPinterestLine } from 'react-icons/ri'
 import { SiTiktok } from 'react-icons/si'
 import { FaTumblr } from 'react-icons/fa'
@@ -17,6 +17,7 @@ import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { v4 as uuidv4 } from 'uuid';
+import ReactPlayer from 'react-player';
 const PublicProfile = ({
     verified,
     privateChannel,
@@ -44,7 +45,9 @@ const PublicProfile = ({
     const [page, setpage] = useState(2);
     const [followed, setFollowed] = useState(false);
     const [userFollowers, setUserFollowers] = useState([]);
-    const [followersCount, setFollowersCount] = useState(followers)
+    const [followersCount, setFollowersCount] = useState(followers);
+    const history = useHistory();
+
 
     const LIMIT = 9;
 
@@ -378,13 +381,78 @@ const PublicProfile = ({
                                     {users.map((user) => {
                                         return (
                                             <div key={user.id}>
-                                                <HootOutside
-                                                    hootId={user.id}
-                                                    username={user.authorUsername}
-                                                    mimeType={user.mimeType}
-                                                    hootImgId={user.image}
-                                                    profilePicPath={profilePicPath}
-                                                />
+                                                {!user.mimeType
+                                                    ?
+                                                    <div className="img-container">
+                                                        <div
+                                                            className="hoot-img-vertical-profile"
+                                                            style={{ animation: "none", backgroundColor: "#d9d1f8" }}
+                                                            onContextMenu={(e) => e.preventDefault()}
+                                                            onClick={() => { history.push(`/${username}/hoot/${user.id}`) }}
+                                                        >
+                                                            {ReactPlayer.canPlay(user.link) &&
+                                                                user.link.endsWith('.mp4') || user.link.endsWith('.mkv') || user.link.endsWith('.mov') || user.link.endsWith('.ogv') || user.link.endsWith('webm') || user.link.endsWith('.mpg')
+                                                                ?
+                                                                <div className="vdo-container">
+                                                                    <video
+                                                                        muted
+                                                                        disablePictureInPicture
+                                                                        className="hoot-vdo-profile"
+                                                                        style={{ margin: "0" }}
+                                                                        onMouseOver={event => event.target.play()}
+                                                                        onMouseOut={event => event.target.pause()}
+                                                                    >
+                                                                        <source
+                                                                            src={user.link}
+                                                                        />
+                                                                        Your browser does not support HTML video.
+                                                                    </video>
+                                                                </div>
+                                                                :
+                                                                user.link.endsWith('.mp3') || user.link.endsWith('.ogg') || user.link.endsWith('.wav') || user.link.endsWith('.flac') || user.link.endsWith('.aac') || user.link.endsWith('.alac') || user.link.endsWith('.dsd')
+                                                                    ?
+                                                                    <div className="vdo-container">
+                                                                        <video
+                                                                            muted
+                                                                            poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                                            className="hoot-vdo-profile"
+                                                                            style={{ margin: "0" }}
+                                                                        >
+                                                                            <source
+                                                                                src={user.link}
+                                                                            />
+                                                                            Your browser does not support HTML video.
+                                                                        </video>
+                                                                    </div>
+                                                                    :
+                                                                    ReactPlayer.canPlay(user.link) &&
+                                                                    <div className='player-profile-wrapper'>
+                                                                        <ReactPlayer
+                                                                            url={user.link}
+                                                                            className='react-player'
+                                                                            controls="true"
+                                                                            width={user.mimeType ? '97%' : '100%'}
+                                                                            height='100%'
+                                                                            light={true}
+                                                                        />
+                                                                    </div>
+                                                            }
+                                                        </div>
+                                                        <FiPlayCircle
+                                                            className="GIF-overlay"
+                                                            style={{ borderRadius: "50%" }}
+                                                            onClick={() => { history.push(`/${username}/hoot/${user.id}`) }}
+                                                        />
+                                                    </div>
+                                                    :
+                                                    <HootOutside
+                                                        hootId={user.id}
+                                                        username={user.authorUsername}
+                                                        mimeType={user.mimeType}
+                                                        hootImgId={user.image}
+                                                        profilePicPath={profilePicPath}
+                                                    />
+                                                }
                                             </div>
                                         )
                                     })}
