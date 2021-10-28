@@ -596,7 +596,7 @@ const CreatePrivateHoot = () => {
                         <div className="post-content">
                             <textarea
                                 autoFocus
-                                maxLength="300"
+                                maxLength="2200"
                                 className="textarea-style"
                                 placeholder="Share Your World. Hoot Hoot! (optional)"
                                 value={caption}
@@ -770,9 +770,9 @@ const CreatePrivateHoot = () => {
                                 }
 
                                 <div className="caption-count">
-                                    <h6 className={caption.length > 280 && "text-danger"}>
+                                    <h6 className={caption.length > 2120 && "text-danger"}>
                                         {" "}
-                                        {caption.length}/300
+                                        {caption.length}/2200
                                     </h6>
                                 </div>
 
@@ -813,8 +813,9 @@ const CreatePrivateHoot = () => {
                                         ?
                                         <video
                                             muted controls
-                                            poster={`${BaseURL}/profile-pictures/${userData.profilePic}`}
+                                            poster={src ? src : `${BaseURL}/profile-pictures/${userData.profilePic}`}
                                             className="hoot-vdo"
+                                            style={{ width: "auto" }}
                                             controlsList="nodownload"
                                         >
                                             <source
@@ -833,6 +834,15 @@ const CreatePrivateHoot = () => {
                                                 height='100%'
                                             />
                                         </div>
+                                : null
+                            }
+
+                            {showLinkPreview &&
+                                link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                ?
+                                <small style={{ margin: "0 0.5rem", color: "#6B7280", display: "block", fontWeight: "500" }}>
+                                    (By Default <b>Profile Picture</b> will be taken as <b>Audio Poster</b> and it can be changed by <b>Selecting Photo</b>)
+                                </small>
                                 : null
                             }
 

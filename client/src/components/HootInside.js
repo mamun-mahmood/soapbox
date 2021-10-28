@@ -863,7 +863,7 @@ const HootInside = ({
                                                                         <div>
                                                                             <video
                                                                                 muted controls
-                                                                                poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                                                poster={hootImgId ? filePath : `${BaseURL}/profile-pictures/${profilePic}`}
                                                                                 className="hoot-ado"
                                                                                 controlsList="nodownload"
                                                                                 onLoadStart={() => {
@@ -897,13 +897,18 @@ const HootInside = ({
                                                                             />
                                                                         </div>
                                                                 :
-                                                                <MediaContent
-                                                                    hootId={hootId}
-                                                                    mimeType={mimeType}
-                                                                    filePath={filePath}
-                                                                    editOpen={isEditModalOpen}
-                                                                    profilePicPath={profilePicPath}
-                                                                />
+                                                                (link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                                                    ?
+                                                                    null
+                                                                    :
+                                                                    <MediaContent
+                                                                        hootId={hootId}
+                                                                        mimeType={mimeType}
+                                                                        filePath={filePath}
+                                                                        editOpen={isEditModalOpen}
+                                                                        profilePicPath={profilePicPath}
+                                                                    />
+                                                                )
                                                             }
 
                                                         </div>
@@ -924,7 +929,7 @@ const HootInside = ({
                                                             <div className="post-content">
                                                                 <textarea
                                                                     autoFocus
-                                                                    maxLength="300"
+                                                                    maxLength={privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2200 : 300}
                                                                     className="editarea-style"
                                                                     placeholder="What to edit?"
                                                                     value={editCaption}
@@ -934,9 +939,9 @@ const HootInside = ({
                                                                 ></textarea>
                                                                 <div className="d-flex justify-content-between m-1 btn-caption-top">
                                                                     <div className="caption-count">
-                                                                        <h6 className={editCaption.length > 220 && "text-danger"}>
+                                                                        <h6 className={editCaption.length > (privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2120 : 280) && "text-danger"}>
                                                                             {" "}
-                                                                            {editCaption.length}/300
+                                                                            {editCaption.length}/{privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2200 : 300}
                                                                         </h6>
                                                                     </div>
                                                                     <div className="btn-post my-2">
@@ -1140,7 +1145,7 @@ const HootInside = ({
                                             <div>
                                                 <video
                                                     muted controls
-                                                    poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                    poster={hootImgId ? filePath : `${BaseURL}/profile-pictures/${profilePic}`}
                                                     className="hoot-ado"
                                                     controlsList="nodownload"
                                                     onLoadStart={() => {
@@ -1841,7 +1846,7 @@ const HootInside = ({
                                                                     <div>
                                                                         <video
                                                                             muted controls
-                                                                            poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                                            poster={hootImgId ? filePath : `${BaseURL}/profile-pictures/${profilePic}`}
                                                                             className="hoot-ado"
                                                                             controlsList="nodownload"
                                                                             onLoadStart={() => {
@@ -1901,7 +1906,7 @@ const HootInside = ({
                                                         <div className="post-content">
                                                             <textarea
                                                                 autoFocus
-                                                                maxLength="300"
+                                                                maxLength={privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2200 : 300}
                                                                 className="editarea-style"
                                                                 placeholder="What to edit?"
                                                                 value={editCaption}
@@ -1911,9 +1916,9 @@ const HootInside = ({
                                                             ></textarea>
                                                             <div className="d-flex justify-content-between m-1 btn-caption-top">
                                                                 <div className="caption-count">
-                                                                    <h6 className={editCaption.length > 220 && "text-danger"}>
+                                                                    <h6 className={editCaption.length > (privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2120 : 280) && "text-danger"}>
                                                                         {" "}
-                                                                        {editCaption.length}/300
+                                                                        {editCaption.length}/{privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2200 : 300}
                                                                     </h6>
                                                                 </div>
                                                                 <div className="btn-post my-2">
@@ -2194,7 +2199,7 @@ const HootInside = ({
                                         <div>
                                             <video
                                                 muted controls
-                                                poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                poster={hootImgId ? filePath : `${BaseURL}/profile-pictures/${profilePic}`}
                                                 className="hoot-ado"
                                                 controlsList="nodownload"
                                                 onLoadStart={() => {
@@ -2230,14 +2235,18 @@ const HootInside = ({
                                 }
 
                                 {mimeType &&
-                                    <MediaContent
-                                        hootId={hootId}
-                                        mimeType={mimeType}
-                                        filePath={filePath}
-                                        views={views}
-                                        image={hootImgId}
-                                        profilePicPath={profilePicPath}
-                                    />
+                                    (link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                        ?
+                                        null
+                                        :
+                                        <MediaContent
+                                            hootId={hootId}
+                                            mimeType={mimeType}
+                                            filePath={filePath}
+                                            editOpen={isEditModalOpen}
+                                            profilePicPath={profilePicPath}
+                                        />
+                                    )
                                 }
                             </div>
 

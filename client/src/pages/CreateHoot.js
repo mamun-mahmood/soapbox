@@ -477,7 +477,7 @@ const CreateHoot = () => {
                                     <video
                                         muted controls
                                         disablePictureInPicture
-                                        className="external-vdo"
+                                        className="hoot-vdo"
                                         controlsList="nodownload"
                                     >
                                         <source
@@ -490,8 +490,9 @@ const CreateHoot = () => {
                                         ?
                                         <video
                                             muted controls
-                                            poster={`${BaseURL}/profile-pictures/${userData.profilePic}`}
-                                            className="external-vdo"
+                                            poster={src ? src : `${BaseURL}/profile-pictures/${userData.profilePic}`}
+                                            className="hoot-vdo"
+                                            style={{ width: "auto" }}
                                             controlsList="nodownload"
                                         >
                                             <source
@@ -510,6 +511,15 @@ const CreateHoot = () => {
                                                 height='100%'
                                             />
                                         </div>
+                                : null
+                            }
+
+                            {showLinkPreview &&
+                                link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                ?
+                                <small style={{ margin: "0 0.5rem", color: "#6B7280", display: "block", fontWeight: "500" }}>
+                                    (By Default <b>Profile Picture</b> will be taken as <b>Audio Poster</b> and it can be changed by <b>Selecting Photo</b>)
+                                </small>
                                 : null
                             }
 
