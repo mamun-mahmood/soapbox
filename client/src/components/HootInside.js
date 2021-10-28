@@ -230,7 +230,7 @@ const HootInside = ({
     const editHoot = () => {
         axios.put(`${BaseURL}/upload/edit`, {
             editCaption: editCaption,
-            hootImgId: hootImgId,
+            hootId: hootId,
             edited: 1,
             editedTimeStamp: eTimeStamp,
         });
@@ -832,14 +832,80 @@ const HootInside = ({
                                                     </h5>
                                                     <div className="edit-content">
                                                         {/* left side image */}
-                                                        <div className="post-media">
-                                                            <MediaContent
-                                                                hootId={hootId}
-                                                                mimeType={mimeType}
-                                                                filePath={filePath}
-                                                                editOpen={isEditModalOpen}
-                                                                profilePicPath={profilePicPath}
-                                                            />
+                                                        <div className="post-media" style={{ width: !mimeType && "100%", margin: !mimeType && "0.5rem", marginLeft: !mimeType && "0" }}>
+                                                            {!mimeType ?
+                                                                ReactPlayer.canPlay(link) &&
+                                                                    link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                                                    ?
+                                                                    <div>
+                                                                        <video
+                                                                            muted controls
+                                                                            disablePictureInPicture
+                                                                            className="hoot-vdo"
+                                                                            style={{ width: "" }}
+                                                                            controlsList="nodownload"
+                                                                            onLoadStart={() => {
+                                                                                axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                                                    views: views + random(50, 400),
+                                                                                    id: hootId
+                                                                                })
+                                                                            }}
+                                                                        >
+                                                                            <source
+                                                                                src={link}
+                                                                            />
+                                                                            Your browser does not support HTML video.
+                                                                        </video>
+                                                                    </div>
+                                                                    :
+                                                                    link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                                                        ?
+                                                                        <div>
+                                                                            <video
+                                                                                muted controls
+                                                                                poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                                                className="hoot-ado"
+                                                                                controlsList="nodownload"
+                                                                                onLoadStart={() => {
+                                                                                    axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                                                        views: views + random(50, 400),
+                                                                                        id: hootId
+                                                                                    })
+                                                                                }}
+                                                                            >
+                                                                                <source
+                                                                                    src={link}
+                                                                                />
+                                                                                Your browser does not support HTML video.
+                                                                            </video>
+                                                                        </div>
+                                                                        :
+                                                                        ReactPlayer.canPlay(link) &&
+                                                                        <div className='player-wrapper'>
+                                                                            <ReactPlayer
+                                                                                url={link}
+                                                                                className='react-player'
+                                                                                controls="true"
+                                                                                width={mimeType ? '97%' : '100%'}
+                                                                                height='100%'
+                                                                                onLoadStart={() => {
+                                                                                    axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                                                        views: views + random(50, 400),
+                                                                                        id: hootId
+                                                                                    })
+                                                                                }}
+                                                                            />
+                                                                        </div>
+                                                                :
+                                                                <MediaContent
+                                                                    hootId={hootId}
+                                                                    mimeType={mimeType}
+                                                                    filePath={filePath}
+                                                                    editOpen={isEditModalOpen}
+                                                                    profilePicPath={profilePicPath}
+                                                                />
+                                                            }
+
                                                         </div>
                                                         {/* right side edit box */}
                                                         <div className="edit-caption d-flex flex-wrap">
@@ -1744,14 +1810,79 @@ const HootInside = ({
                                                 </h5>
                                                 <div className="edit-content">
                                                     {/* left side image */}
-                                                    <div className="post-media">
-                                                        <MediaContent
-                                                            hootId={hootId}
-                                                            mimeType={mimeType}
-                                                            filePath={filePath}
-                                                            editOpen={isEditModalOpen}
-                                                            profilePicPath={profilePicPath}
-                                                        />
+                                                    <div className="post-media" style={{ width: !mimeType && "100%", margin: !mimeType && "0.5rem", marginLeft: !mimeType && "0" }}>
+                                                        {!mimeType ?
+                                                            ReactPlayer.canPlay(link) &&
+                                                                link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                                                ?
+                                                                <div>
+                                                                    <video
+                                                                        muted controls
+                                                                        disablePictureInPicture
+                                                                        className="hoot-vdo"
+                                                                        style={{ width: "" }}
+                                                                        controlsList="nodownload"
+                                                                        onLoadStart={() => {
+                                                                            axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                                                views: views + random(50, 400),
+                                                                                id: hootId
+                                                                            })
+                                                                        }}
+                                                                    >
+                                                                        <source
+                                                                            src={link}
+                                                                        />
+                                                                        Your browser does not support HTML video.
+                                                                    </video>
+                                                                </div>
+                                                                :
+                                                                link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                                                    ?
+                                                                    <div>
+                                                                        <video
+                                                                            muted controls
+                                                                            poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                                            className="hoot-ado"
+                                                                            controlsList="nodownload"
+                                                                            onLoadStart={() => {
+                                                                                axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                                                    views: views + random(50, 400),
+                                                                                    id: hootId
+                                                                                })
+                                                                            }}
+                                                                        >
+                                                                            <source
+                                                                                src={link}
+                                                                            />
+                                                                            Your browser does not support HTML video.
+                                                                        </video>
+                                                                    </div>
+                                                                    :
+                                                                    ReactPlayer.canPlay(link) &&
+                                                                    <div className='player-wrapper'>
+                                                                        <ReactPlayer
+                                                                            url={link}
+                                                                            className='react-player'
+                                                                            controls="true"
+                                                                            width={mimeType ? '97%' : '100%'}
+                                                                            height='100%'
+                                                                            onLoadStart={() => {
+                                                                                axios.put(`${BaseURL}/upload/views/external-player`, {
+                                                                                    views: views + random(50, 400),
+                                                                                    id: hootId
+                                                                                })
+                                                                            }}
+                                                                        />
+                                                                    </div>
+                                                            :
+                                                            <MediaContent
+                                                                hootId={hootId}
+                                                                mimeType={mimeType}
+                                                                filePath={filePath}
+                                                                editOpen={isEditModalOpen}
+                                                                profilePicPath={profilePicPath}
+                                                            />
+                                                        }
                                                     </div>
                                                     {/* right side edit box */}
                                                     <div className="edit-caption d-flex flex-wrap">
