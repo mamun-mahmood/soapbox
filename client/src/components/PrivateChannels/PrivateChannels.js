@@ -52,7 +52,7 @@ const PrivateChannels = () => {
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
     const [subscribe, setSubscribe] = useState(false);
-    const [showSubscribeButton, setShowSubscribeButton] = useState(false)
+    const [showSubscribeButton, setShowSubscribeButton] = useState(true)
     const [callRequest, setCallRequest] = useState(false);
     const [oneOnOnecall, setOneOnOneCall] = useState(false)
     const [groupCall, setGroupCall] = useState(false)
@@ -423,9 +423,9 @@ const PrivateChannels = () => {
                                                         {formatCount(likes) +
                                                             formatSi(likes)}
                                                     </b>
-                                                    <span> Likes  </span>
+                                                    <span> Likes    </span>
                                                     <b>
-                                                        {formatCount(views) +
+                                                        {  formatCount(views) +
                                                             formatSi(views)}
                                                     </b>
                                                     <span> Views</span>
@@ -593,7 +593,7 @@ const PrivateChannels = () => {
                                                     )}
                                                 </div>
                                                 <div>
-                                                    {userInformation.username !== username ? <div className="live-header">Request a Virtual Experience</div> : null}
+                                                    {userInformation.username !== username ? <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Request a Virtual Experience</div> : null}
                                                     {userInformation.username == username ? (
                                                         <div>
 
@@ -605,7 +605,22 @@ const PrivateChannels = () => {
                                                                
                                                                 <button style={{ minWidth: '208px' }} >Make a Vero Audio Call</button>
                                                                 <button style={{ minWidth: '208px' }} >Make a Vero Video Call</button>
-                                                                
+                                                               
+                                                                <button style={{ minWidth: '208px' }} 
+                                                                  onClick={() => {
+                                                                    setShowRequest(false);
+                                                                    setShowSubscribers(false);
+                                                                    setShowPricingSetting(!showPricingSetting);
+                                                                    setShowNotification(false);
+                                                                    setShowFeed(false);
+                                                                    setShowChatRoom(false);
+                                                                }}
+                                                                >Price Settings</button>
+                                                                 <button style={{ minWidth: '208px' }} >Podcasts</button>
+                                                               <button style={{ minWidth: '208px' }} >Audio</button>
+                                                                <button style={{ minWidth: '208px' }} >Video</button>
+                                                                <button style={{ minWidth: '208px' }} >Photos</button>
+                                   
                                                             </div>
                                                           
                                                          
@@ -620,6 +635,7 @@ const PrivateChannels = () => {
                                                             </div>
                                                         </div>
                                                     ) : (
+                                                        <div>
                                                         <div className="control">
                                                             {/* <button>
                               {callRequest
@@ -645,6 +661,31 @@ const PrivateChannels = () => {
 
                                                                 {subscribe ? "Membership" : "Get Membership"}
                                                             </button>
+                                                        </div>
+                                                        <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Tools</div>
+                                                            <div className="control">
+                                                            {/* <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
+                                                            <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
+                                                               
+                                                                <button style={{ minWidth: '208px' }} >Make a Vero Audio Call</button>
+                                                                <button style={{ minWidth: '208px' }} >Make a Vero Video Call</button>
+                                                               
+                                                                <button style={{ minWidth: '208px' }} 
+                                                                  onClick={() => {
+                                                                    setShowRequest(false);
+                                                                    setShowSubscribers(false);
+                                                                    setShowPricingSetting(!showPricingSetting);
+                                                                    setShowNotification(false);
+                                                                    setShowFeed(false);
+                                                                    setShowChatRoom(false);
+                                                                }}
+                                                                >Price Settings</button> */}
+                                                                 <button style={{ minWidth: '208px' }} >Podcasts</button>
+                                                               <button style={{ minWidth: '208px' }} >Audio</button>
+                                                                <button style={{ minWidth: '208px' }} >Video</button>
+                                                                <button style={{ minWidth: '208px' }} >Photos</button>
+                                   
+                                                            </div>
                                                         </div>
                                                     )}
                                                 </div>
@@ -702,16 +743,17 @@ const PrivateChannels = () => {
                             >
                                 <div className="tabs" style={{ margin: "0 0.5rem" }}>
                                     <span onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(true); setShowSubscribeButton(false); setShowChatRoom(false) }} >Timeline</span>
-                                    <span>Audio</span>
+                                    {/* <span>Audio</span>
                                     <span>Video</span>
-                                    <span>Podcasts</span>
-                                    <span>Club Rules</span>
+                                    <span>Podcasts</span> */}
+                                  
                                     <span>Marketplace</span>
                                     <span onClick={() => {
                                         setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
                                         socket.emit('room', userInfo[0].username);
                                         socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
                                     }} >Club Chat</span>
+                                      <span>Club Rules</span>
 
                                 </div>
 
@@ -926,35 +968,7 @@ const PrivateChannels = () => {
 
                                 </div> : null}
 
-                            {subscribe ? null : (
-                                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                 <img src={groupcall} width="400px" />
-                                 <Form className="login-form mx-auto p-4 pb-0" onSubmit={(e) => e.preventDefault()}>
-
-                                     <h5 className="text-center mb-1 signup-head">
-                                         {!subscribe ? `Request Membership` : `Already a Member`}
-                                     </h5>
-
-                                     {/* <p>Cost: {groupCallPrice} XMG</p> */}
-                                     <button
-                                         onClick={() => {
-                                             setSubscribe(true);
-                                             toast.success(`Subscribed to ${username}`)
-                                             setShowSubscribeButton(false);
-                                             setShowFeed(true)
-
-                                         }}
-                                         className="d-grid col-12 btn-main login-form-button"
-                                         variant="primary"
-                                         type="submit"
-
-
-                                     >
-                                         {!subscribe ? `Get Membership Now for ${subscribePrice} XMG` : `Already a Member`}
-                                     </button>
-                                 </Form>     {/* <div className="btns"> <button>Request</button></div> */}
-                             </div>
-                            )}
+                          
 
 {showChatRoom ? 
                             <div style={{position:'relative'}} >
@@ -968,7 +982,7 @@ const PrivateChannels = () => {
                                                           
                                     </div>:null}
                            
-                                <div className="container"  >
+                                <div className="container" style={{left:privateChat?"20px":"-140px",width:privateChat?"40%":"60%"}}  >
                                 <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',marginTop:'-30px' }} >Community Club Chat</div>
                               
                                     {emojiPicker && (
@@ -1048,22 +1062,8 @@ const PrivateChannels = () => {
                                         style={{ backgroundColor: showSubscribers ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
                                         onClick={() => { setShowRequest(false); setShowFeed(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Memberships</span>
                                     {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
-                                 
-                                           <span
-                                        style={{ backgroundColor:'#A279BA', borderRadius: '8px' }}
-                                       >Audio</span>
-                                        <span
-                                        style={{ backgroundColor:'#A279BA', borderRadius: '8px' }}
-                                       >Video</span>
-                                          <span style={{ backgroundColor: showPricingSetting ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
-                                        onClick={() => {
-                                            setShowRequest(false);
-                                            setShowSubscribers(false);
-                                            setShowPricingSetting(!showPricingSetting);
-                                            setShowNotification(false);
-                                            setShowFeed(false);
-                                            setShowChatRoom(false);
-                                        }} >Price Settings</span>
+                                    <span>Marketplace</span>
+                                        
                                     {/* <span 
                                         onClick={() => {
                                             history.push(
@@ -1089,11 +1089,12 @@ const PrivateChannels = () => {
                                         socket.emit('room', userInfo[0].username);
                                         socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
                                     }}  >Club Chat</span>
-                                </div>
-                             
-                                        <span
+                                     <span
                                         style={{ backgroundColor:'#A279BA', borderRadius: '8px' }}
                                        >Club Rules</span>
+                                </div>
+                             
+                                       
                                     {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
                                  
                                 {/* <FiSearch className="search-channel-content" /> */}
@@ -1171,7 +1172,7 @@ const PrivateChannels = () => {
                                                           
                                     </div>:null}
                            
-                                <div className="container"  >
+                                <div className="container"  style={{left:privateChat?"20px":"-140px",width:privateChat?"40%":"60%"}} >
                                 <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px',marginTop:'-30px' }} >Community Club Chat</div>
                               
                                

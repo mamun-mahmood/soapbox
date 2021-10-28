@@ -259,7 +259,7 @@
     justify-content: space-between;
     align-items: center;
     /* position: fixed; */
-    height: 80px;
+    height: 50px;
 padding-left: 1rem;
 padding-right: 1rem;
     width: 100%;
@@ -452,7 +452,7 @@ color: #374151;;
 border-radius: 14px;
 display: flex;
 flex-direction: column;
-max-width: 350px;
+max-width: 100%;
 margin:17px 2px;
 background: rgba( 255, 255, 255, 0.25 );
 box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );

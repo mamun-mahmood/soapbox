@@ -4,7 +4,7 @@ import SideBarOption from './SideBarOption'
 import { BsLightning } from 'react-icons/bs'
 import { Link, NavLink, useHistory } from 'react-router-dom'
 import { FiHome, FiHash, FiSearch, FiShield } from 'react-icons/fi'
-import { RiFileList3Line, RiShieldFlashLine } from 'react-icons/ri'
+import { RiFileList3Line, RiShieldFlashLine,RiChatPrivateFill,RiGroup2Fill, RiGroup2Line, RiChatPrivateLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import './sidebar.css';
@@ -228,7 +228,13 @@ const SideBar = () => {
 
                     <SideBarOption
                         option="Private Clubs"
-                        Icon={RiShieldFlashLine}
+                        Icon={RiChatPrivateLine}
+                    // link={`/private/Club/${username}`}
+                    />
+                   
+                     <SideBarOption
+                        option="Community Clubs"
+                        Icon={RiGroup2Line}
                     // link={`/private/Club/${username}`}
                     />
 
@@ -411,7 +417,7 @@ const SideBar = () => {
                             href="https://www.verohive.com/"
                             target="_blank" rel="noopener noreferrer"
                         >
-                            <span>VeroHive Video Call</span>
+                            <span>VeroHive Video Conferencing</span>
                         </a>
                     </li>
                     <li>
