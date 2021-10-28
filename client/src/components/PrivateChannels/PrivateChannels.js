@@ -66,7 +66,9 @@ const PrivateChannels = () => {
     const [emojiPicker, setEmojiPicker] = useState(false);
     const [showFeed, setShowFeed] = useState(true);
     const [privateChat, setPrivateChat] = useState(false)
-
+    const [file, setFile] = useState([]);
+    const [src, setSrc] = useState(null);
+    const [mimeType, setMimeType] = useState("");
     const [showChatRoom, setShowChatRoom] = useState(false)
 
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
@@ -118,7 +120,7 @@ const PrivateChannels = () => {
         className: 'link-content'
     });
 
-    const append = (chatname, message, position, imgSrc, isEmoji) => {
+    const append = (chatname, message, position, imgSrc, isEmoji,isVideo,isImage) => {
         if (message) {
             var messageContainer = document.querySelector('.container')
             const messageBox = document.createElement('div');
@@ -165,7 +167,8 @@ const PrivateChannels = () => {
             ProfileBox.classList.add('ProfileBox')
 
             var myLinkedMessage = autolinker.link(message);
-            messageElement.innerHTML += myLinkedMessage;
+            if(!isVideo && !isImage){ messageElement.innerHTML += myLinkedMessage;}
+           
             name.innerText = chatname;
             messageElement.classList.add('message');
             if (isEmoji) {
@@ -186,6 +189,41 @@ const PrivateChannels = () => {
 
 
             }
+            if (isVideo) {
+              
+                const video = document.createElement('video')
+                video.src = message;
+                messageElement.append(video);
+                video.style.maxWidth="100%";
+                video.style.maxHeight="auto";
+                video.controls=true
+                // if (position == "right") {
+                //     image.classList.add('chat-profile');
+                // } else {
+                //     image.classList.add('chat-profile');
+                // }
+
+
+
+            }
+            if (isImage) {
+              
+                const img = document.createElement('img')
+                img.src = message;
+                messageElement.append(img);
+                img.style.maxWidth="100%";
+                img.style.maxHeight="auto";
+               
+                // if (position == "right") {
+                //     image.classList.add('chat-profile');
+                // } else {
+                //     image.classList.add('chat-profile');
+                // }
+
+
+
+            }
+            
 
             // messageContainer.append(messageElement);
             messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -371,6 +409,59 @@ const PrivateChannels = () => {
         })
             .then((res) => { alert('Updated successfully') })
             .catch((err) => { console.log(err) })
+    }
+
+
+    const handleFile = (event) => {
+        const file = event.target.files[0];
+        setFile(file);
+        (file && setMimeType(file.type));
+        setSrc(URL.createObjectURL(file));
+        // setMessageInboxValue(file.name);
+     
+
+    
+    }
+
+
+    const upload = (file,mimeType) => {
+      
+        // setSaveLoading(true);
+
+        const formData = new FormData();
+        // formData.append("timeStamp", timeStamp)
+        // formData.append("caption", caption)
+        // // formData.append("link", JSON.stringify(formValues))
+        // formData.append("link", link)
+        // formData.append("ephemeral", ephemeralCheck ? 1 : 0)
+        // formData.append("private", privateCheck ? 1 : 0)
+        // formData.append("expiryDate", ephemeralCheck ? expiryDate : 0)
+        // formData.append("authorEmail", email)
+        formData.append("file", file);
+
+        const uploadData = async () => {
+            await axios.all([
+                axios.post(`http://localhost:3001/upload/uploadMedia`, formData),
+            ]).then(axios.spread((res1, res2) => {
+                if (res1) {
+                
+                  if(mimeType.substr(0,5)== ('video' || 'audio'))  {
+                    append(userFullName,`http://localhost:3001/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,true,false)
+                  
+                  }else{
+                    append(userFullName,`http://localhost:3001/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,false,true)
+                  
+                  }
+                            }
+            }))
+        }
+
+      uploadData();
+        // toast.promise(uploadDataToast, {
+        //     pending: 'Sending Hoot...',
+        //     success: 'Hoot Successful',
+        //     error: 'Please try again',
+        // });
     }
     return (
         <Fragment>
@@ -1006,6 +1097,35 @@ const PrivateChannels = () => {
                                             </div>
                                         </ClickAwayListener>
                                     )}
+
+                                    {src && mimeType.substr(0,5)=="image"?<div className="messageBox">
+                                        <img src={src} style={{width:'100%',height:'auto'}} />
+                                        <button onClick={()=>{
+                                               upload(file,file.type);
+                                               setFile([]);
+                                               setSrc(null)
+                                        }}>Confirm</button>
+                                                <button onClick={()=>{
+                                            
+                                               setFile([]);
+                                               setSrc(null)
+                                        }}>Cancel</button>
+                                        </div>:null}
+                                    {src && mimeType.substr(0,5)=="video"?
+                                    <div  className="messageBox">
+                                    <video src={src} style={{width:'100%',height:'auto'}} className="messageBox" />
+                                    <button onClick={()=>{
+                                               upload(file,file.type);
+                                               setFile([]);
+                                               setSrc(null)
+                                        }}>Confirm</button>
+                                         <button onClick={()=>{
+                                        
+                                               setFile([]);
+                                               setSrc(null)
+                                        }}>Cancel</button>
+                                    </div>
+                                    :null}
                                 </div>
                              
                                 <div className="community-club">
@@ -1023,8 +1143,35 @@ const PrivateChannels = () => {
                                             }}
 
                                         />
-
-                                        <FiVideo className="icon-text" /> <FiImage className="icon-text" />   <FiFolder className="icon-text" />
+ <label
+                                            htmlFor="post-video"
+                                           
+                                        >
+                                          <FiVideo className="icon-text"  /> 
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="post-video"
+                                            name="video"
+                                            accept="video/*"
+                                            onChange={handleFile}
+                                            hidden
+                                        />
+                                         <label
+                                            htmlFor="post-image"
+                                           
+                                        >
+                                           <FiImage className="icon-text" /> 
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="post-image"
+                                            name="image"
+                                            accept="image/*"
+                                            onChange={handleFile}
+                                            hidden
+                                        />
+                                        <FiFolder className="icon-text" />
                                         <FiSmile className="icon-text"
                                             onClick={() => { setEmojiPicker(!emojiPicker) }}
                                         />
