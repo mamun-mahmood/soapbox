@@ -3,18 +3,22 @@ import LazyLoad from 'react-lazyload';
 import { useHistory } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa'
 import { MdGif, MdMusicNote } from 'react-icons/md'
-import { AiFillAudio } from 'react-icons/ai'
 
 const MediaProfile = ({
     mimeType,
     filePath,
+    audioPoster,
     username,
     hootId,
     profilePicPath
 }) => {
+    const BaseURL = process.env.REACT_APP_API_URL;
+
     const history = useHistory();
     const [isVertical, setIsVertical] = useState("hoot-img-vertical-profile");
     const ref = useRef(null);
+
+    const audioPosterPath = `${BaseURL}/audio-posters/${audioPoster}`; // media url from server
 
     const imgRef = () => {
         const width = ref.current.clientWidth;
@@ -89,7 +93,7 @@ const MediaProfile = ({
                 >
                     <video
                         className="hoot-vdo-profile"
-                        poster={profilePicPath}
+                        poster={audioPoster !== null ? audioPosterPath : profilePicPath}
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
                         onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}

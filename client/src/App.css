@@ -155,6 +155,9 @@ code {
   border-radius: 0.4rem !important;
   padding: .2rem .4rem !important;
 }
+.btn-create-hoot:hover {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
 .btn-edit-hoot {
   border-radius: 0.5rem !important;
   text-align: right;
@@ -1691,6 +1694,7 @@ hr {
 } */
 
 .hoot-comment {
+  white-space: pre-wrap !important;
   font-size: medium;
   font-weight: 400;
   color: #374151;
@@ -2042,13 +2046,12 @@ hr {
   user-select: none;
   background-color: transparent;
   border: 1px solid var(--primary-color);
-  border-radius: 0.5rem !important;
+  border-radius: 0.4rem !important;
   /* padding: .375rem .75rem; */
   padding: .2rem .4rem;
   margin-right: 0.5rem;
   margin-left: 0.25rem;
   font-size: 1rem;
-  border-radius: .2rem;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .btn-add-link {
@@ -2121,6 +2124,7 @@ hr {
   color: #fff;
   background-color: var(--primary-color);
   border-color: var(--primary-color);
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 .btn-label:active {
@@ -2722,3 +2726,29 @@ padding: 6rem 1rem;
   cursor: pointer;
   font-style: bold;
 }
+
+.change-audio-poster {
+  /* position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem; */
+
+  font-size: medium;
+  font-weight: 500;
+
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border: none;
+  border-radius: 0.4rem;
+  background-color: #D9D2FA;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 1111;
+}
+
+.change-audio-poster:hover {
+  background-color: var(--on-hover);
+  color: #fff;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+

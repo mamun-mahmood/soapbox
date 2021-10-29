@@ -9,6 +9,7 @@ const MediaContent = ({
     hootId,
     mimeType,
     filePath,
+    audioPoster,
     views,
     image,
     editOpen,
@@ -19,6 +20,8 @@ const MediaContent = ({
     const [viewCount, setViewCount] = useState(views);
     const [isVertical, setIsVertical] = useState("hoot-img-vertical");
     const ref = useRef(null);
+
+    const audioPosterPath = `${BaseURL}/audio-posters/${audioPoster}`; // media url from server
 
     const random = (min = 10, max = 50) => {
         let num = Math.random() * (max - min) + min;
@@ -128,9 +131,9 @@ const MediaContent = ({
                 // placeholder={<PlaceholderComponent />}
                 >
                     <video
-                        className={editOpen ? "hoot-ado-fix" : "hoot-ado"}
+                        className={editOpen ? "hoot-ado-fix" : "hoot-vdo"}
                         controls
-                        poster={profilePicPath}
+                        poster={audioPoster !== null ? audioPosterPath : profilePicPath}
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
                         onLoadStart={(e) => setViewCount(viewCount + 1), autoComments}

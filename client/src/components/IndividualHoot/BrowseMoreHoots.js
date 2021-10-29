@@ -55,6 +55,7 @@ const BrowseMoreHoots = ({ hashtagsFound, iHootId }) => {
                                     username={upload.authorUsername}
                                     mimeType={upload.mimeType}
                                     hootImgId={upload.image}
+                                    audioPoster={upload.audioPoster}
                                     likes={upload.likes}
                                     views={upload.views}
                                     followers={upload.followers}

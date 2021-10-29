@@ -67,6 +67,7 @@ const IndividualHoot = () => {
                                     username={hoot.authorUsername}
                                     mimeType={hoot.mimeType}
                                     hootImgId={hoot.image}
+                                    audioPoster={hoot.audioPoster}
                                     likes={hoot.likes}
                                     views={hoot.views}
                                     followers={hoot.followers}

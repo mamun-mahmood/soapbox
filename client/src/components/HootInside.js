@@ -35,6 +35,7 @@ const HootInside = ({
     username,
     mimeType,
     hootImgId,
+    audioPoster,
     likes,
     views,
     followers,
@@ -906,6 +907,7 @@ const HootInside = ({
                                                                         hootId={hootId}
                                                                         mimeType={mimeType}
                                                                         filePath={filePath}
+                                                                        audioPoster={audioPoster}
                                                                         editOpen={isEditModalOpen}
                                                                         profilePicPath={profilePicPath}
                                                                     />
@@ -1202,6 +1204,7 @@ const HootInside = ({
                                             hootId={hootId}
                                             mimeType={mimeType}
                                             filePath={filePath}
+                                            audioPoster={audioPoster}
                                             views={views}
                                             image={hootImgId}
                                             profilePicPath={profilePicPath}
@@ -1901,6 +1904,7 @@ const HootInside = ({
                                                                 hootId={hootId}
                                                                 mimeType={mimeType}
                                                                 filePath={filePath}
+                                                                audioPoster={audioPoster}
                                                                 editOpen={isEditModalOpen}
                                                                 profilePicPath={profilePicPath}
                                                             />
@@ -2276,6 +2280,7 @@ const HootInside = ({
                                             hootId={hootId}
                                             mimeType={mimeType}
                                             filePath={filePath}
+                                            audioPoster={audioPoster}
                                             views={views}
                                             image={hootImgId}
                                             profilePicPath={profilePicPath}

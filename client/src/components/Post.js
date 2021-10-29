@@ -7,6 +7,7 @@ const Post = ({
     username,
     mimeType,
     hootImgId,
+    audioPoster,
     likes,
     views,
     followers,
@@ -48,6 +49,7 @@ const Post = ({
                             username={username}
                             mimeType={mimeType}
                             hootImgId={hootImgId}
+                            audioPoster={audioPoster}
                             likes={likes}
                             views={views}
                             followers={followers}
