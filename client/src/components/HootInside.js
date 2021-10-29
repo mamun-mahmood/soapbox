@@ -12,7 +12,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { FiTwitter, FiShare2, FiRepeat, FiMail, FiMessageSquare, FiEye, FiLink, FiShare, FiCopy } from 'react-icons/fi'
-import { FaHeart, FaRegHeart, FaTumblr } from 'react-icons/fa'
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaHeart, FaRegHeart, FaTumblr } from 'react-icons/fa'
 import { RiFacebookCircleLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { ImReddit, ImPinterest2 } from 'react-icons/im'
@@ -84,7 +84,8 @@ const HootInside = ({
     const [followed, setFollowed] = useState(false);
     const [followedAlready, setFollowedAlready] = useState(true);
     const [userFollowers, setUserFollowers] = useState([]);
-    const [followersCount, setFollowersCount] = useState(followers)
+    const [followersCount, setFollowersCount] = useState(followers);
+    const [isReadMore, setIsReadMore] = useState(true);
 
     const getUserFollowData = async () => {
         await axios.get(`${BaseURL}/user/followers/${username}`)
@@ -1049,8 +1050,24 @@ const HootInside = ({
                                             highlightClassName="highlighterClass"
                                             searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
                                             autoEscape={true}
-                                            textToHighlight={caption}
+                                            textToHighlight={
+                                                (caption.length > 300
+                                                    ? (isReadMore
+                                                        ? caption.slice(0, 320)
+                                                        : caption)
+                                                    : caption)
+                                            }
                                         />
+                                    </span>
+                                    {" "}<span
+                                        className="read-more-caption"
+                                        onClick={() => { setIsReadMore(!isReadMore) }}
+                                    >
+                                        {caption.length > 300 &&
+                                            (isReadMore
+                                                ? <Fragment>Read More<FaAngleDoubleRight style={{ marginBottom: "0.1rem", marginLeft: "0.1rem" }} /></Fragment>
+                                                : <Fragment>Read Less<FaAngleDoubleLeft style={{ marginBottom: "0.1rem", marginLeft: "0.1rem" }} /></Fragment>
+                                            )}
                                     </span>
                                     <br />
                                     {" "}
@@ -2026,8 +2043,24 @@ const HootInside = ({
                                         highlightClassName="highlighterClass"
                                         searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
                                         autoEscape={true}
-                                        textToHighlight={caption}
+                                        textToHighlight={
+                                            (caption.length > 300
+                                                ? (isReadMore
+                                                    ? caption.slice(0, 320)
+                                                    : caption)
+                                                : caption)
+                                        }
                                     />
+                                </span>
+                                {" "}<span
+                                    className="read-more-caption"
+                                    onClick={() => { setIsReadMore(!isReadMore) }}
+                                >
+                                    {caption.length > 300 &&
+                                        (isReadMore
+                                            ? <Fragment>Read More<FaAngleDoubleRight style={{ marginBottom: "0.1rem", marginLeft: "0.1rem" }} /></Fragment>
+                                            : <Fragment>Read Less<FaAngleDoubleLeft style={{ marginBottom: "0.1rem", marginLeft: "0.1rem" }} /></Fragment>
+                                        )}
                                 </span>
                                 <br />
                                 {" "}
@@ -2243,7 +2276,8 @@ const HootInside = ({
                                             hootId={hootId}
                                             mimeType={mimeType}
                                             filePath={filePath}
-                                            editOpen={isEditModalOpen}
+                                            views={views}
+                                            image={hootImgId}
                                             profilePicPath={profilePicPath}
                                         />
                                     )

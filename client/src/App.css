@@ -2715,3 +2715,10 @@ padding: 6rem 1rem;
 .react-player__preview {
   border-radius: 0.5rem !important;
 }
+
+.read-more-caption {
+  font-weight: 500;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-style: bold;
+}
