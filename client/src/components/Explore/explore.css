@@ -63,3 +63,20 @@
     font-size: 1.5rem;
     color: var(--text-color);
 }
+
+.search-users-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 5rem;
+    padding-bottom: 1rem;
+}
+
+.found-user {
+    width: 250px;
+}
+.found-user:hover {
+    cursor: pointer;
+    background-color: #EDE9FF;
+    border-radius: 0.5rem;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(212, 211, 213, 0.32) 0px 2px 16px 0px;
+}

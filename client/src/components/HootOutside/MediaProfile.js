@@ -33,7 +33,8 @@ const MediaProfile = ({
 
     return (
         <div className="media-center">
-            {mimeType.match(/image/gi) == "image" &&
+            {mimeType &&
+                mimeType.match(/image/gi) == "image" &&
                 <LazyLoad
                     offset={0}
                     className="img-container"

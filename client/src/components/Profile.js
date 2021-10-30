@@ -111,18 +111,7 @@ const Profile = ({
                 pending: 'Adding your Private Club...',
                 success: 'Private Club added Successfully',
                 error: 'Please try again',
-            }
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     },
-                //     iconTheme: {
-                //         primary: '#8249A0',
-                //         secondary: '#FFFAEE',
-                //     },
-                // }
-            );
+            });
         } else {
             setPrivateC(0);
             toast(() => (
@@ -131,14 +120,7 @@ const Profile = ({
                     <HiBadgeCheck className="verification-badge" />
                     Creators
                 </div>
-            )
-                // , {
-                //     style: {
-                //         border: '2px solid #8249A0',
-                //         color: '#8249A0',
-                //     }
-                // }
-            )
+            ));
         }
     }
 
@@ -329,7 +311,7 @@ const Profile = ({
                                                             onClick={() => { history.push(`/${username}/hoot/${upload.id}`) }}
                                                         >
                                                             {ReactPlayer.canPlay(upload.link) &&
-                                                                upload.link.endsWith('.mp4') || upload.link.endsWith('.mkv') || upload.link.endsWith('.mov') || upload.link.endsWith('.ogv') || upload.link.endsWith('webm') || upload.link.endsWith('.mpg')
+                                                                upload.link.endsWith('.mp4') || upload.link.endsWith('.mkv') || upload.link.endsWith('.mov') || upload.link.endsWith('.ogv') || upload.link.endsWith('.webm') || upload.link.endsWith('.mpg')
                                                                 ?
                                                                 <div className="vdo-container">
                                                                     <video
