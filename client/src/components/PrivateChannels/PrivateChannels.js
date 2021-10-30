@@ -714,7 +714,20 @@ const PrivateChannels = () => {
                                                                 <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
 
                                                                 <button style={{ minWidth: '208px' }} >Make a Vero Audio Call</button>
-                                                                <button style={{ minWidth: '208px' }} >Make a Vero Video Call</button>
+                                                                <button style={{ minWidth: '208px' }} onClick={() => {
+                                                                const Id=uuidv4()
+                                                                history.push({
+                                                                    pathname: `/${uuidv4()}/SoapboxHall/${uuidv4()}` ,
+                                                                     state:{
+                                                                         host:true,
+                                                                         userName:userInformation.username,
+                                                                         hallId:Id,
+                                                                         hostUserName:username
+                                                                     }
+
+                                                                   
+                                                                 });
+                                                            }} >Make a Vero Video Call</button>
 
                                                                 <button style={{ minWidth: '208px' }}
                                                                     onClick={() => {
