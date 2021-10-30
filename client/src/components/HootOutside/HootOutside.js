@@ -7,6 +7,7 @@ const HootOutside = ({
     username,
     mimeType,
     hootImgId,
+    audioPoster,
     profilePicPath
 }) => {
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -18,6 +19,7 @@ const HootOutside = ({
             username={username}
             mimeType={mimeType}
             filePath={filePath}
+            audioPoster={audioPoster}
             profilePicPath={profilePicPath}
         />
     )

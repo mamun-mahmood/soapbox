@@ -25,6 +25,7 @@ import ReactPlayer from 'react-player'
 const CreateHoot = () => {
     const [caption, setCaption] = useState("");
     const [file, setFile] = useState([]);
+    const [audioPoster, setAudioPoster] = useState([]);
     const [src, setSrc] = useState(null);
     const [mimeType, setMimeType] = useState("");
     const history = useHistory();
@@ -73,6 +74,7 @@ const CreateHoot = () => {
         formData.append("expiryDate", ephemeralCheck ? expiryDate : 0)
         formData.append("authorEmail", email)
         formData.append("file", file);
+        formData.append("audioPoster", audioPoster);
 
         const uploadData = async () => {
             await axios.all([
@@ -239,6 +241,7 @@ const CreateHoot = () => {
         setMimeType("");
         setSrc(null);
         setFile([]);
+        setAudioPoster([]);
     }
 
     return (
@@ -296,7 +299,7 @@ const CreateHoot = () => {
 
                             {!showLinkPreview ?
                                 link ?
-                                    <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all" }}>
+                                    <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all", marginTop: "-0.5rem" }}>
                                         <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
                                     </div>
                                     : null
@@ -477,7 +480,7 @@ const CreateHoot = () => {
                                     <video
                                         muted controls
                                         disablePictureInPicture
-                                        className="external-vdo"
+                                        className="hoot-vdo"
                                         controlsList="nodownload"
                                     >
                                         <source
@@ -490,8 +493,9 @@ const CreateHoot = () => {
                                         ?
                                         <video
                                             muted controls
-                                            poster={`${BaseURL}/profile-pictures/${userData.profilePic}`}
-                                            className="external-vdo"
+                                            poster={src ? src : `${BaseURL}/profile-pictures/${userData.profilePic}`}
+                                            className="hoot-vdo"
+                                            style={{ width: "auto" }}
                                             controlsList="nodownload"
                                         >
                                             <source
@@ -506,10 +510,19 @@ const CreateHoot = () => {
                                                 url={link}
                                                 className='react-player'
                                                 controls="true"
-                                                width='100%'
+                                                width='97%'
                                                 height='100%'
                                             />
                                         </div>
+                                : null
+                            }
+
+                            {showLinkPreview &&
+                                link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                ?
+                                <small style={{ margin: "0 0.5rem", color: "#6B7280", display: "block", fontWeight: "500" }}>
+                                    (By Default <b>Profile Picture</b> will be taken as <b>Audio Poster</b> and it can be changed by <b>Selecting Photo</b>)
+                                </small>
                                 : null
                             }
 
@@ -541,6 +554,39 @@ const CreateHoot = () => {
                         </div>
                     </div>
 
+                    {file.length !== 0 &&
+                        file.type.match(/audio/gi) == "audio"
+                        ?
+                        <Fragment>
+                            <label
+                                htmlFor="change-audio-poster"
+                                className="change-audio-poster"
+                            >
+                                Change Audio Poster
+                            </label>
+                            <input
+                                type="file"
+                                name="audio"
+                                id="change-audio-poster"
+                                accept="image/*"
+                                onChange={(event) => {
+                                    const poster = event.target.files[0];
+                                    setAudioPoster(poster);
+                                }}
+                                hidden
+                            />
+                        </Fragment>
+                        : null
+                    }
+
+                    {file.length !== 0 &&
+                        file.type.match(/audio/gi) == "audio"
+                        ? <small style={{ margin: "0 0.5rem", color: "#6B7280", display: "block", fontWeight: "500" }}>
+                            (By Default <b>Profile Picture</b> will be taken as <b>Audio Poster</b> and it can be changed by <b>Selecting Audio Poster</b>)
+                        </small>
+                        : null
+                    }
+
                     <div className="record-on-create-hoot">
                         <div className="media-preview">
                             {mimeType === "" && <p>Upload Preview</p>}
@@ -569,8 +615,8 @@ const CreateHoot = () => {
 
                             {mimeType.match(/audio/gi) == "audio" &&
                                 <video
-                                    poster={profilePicPath}
-                                    className="hoot-ado"
+                                    poster={audioPoster.length !== 0 ? URL.createObjectURL(audioPoster) : profilePicPath}
+                                    className="hoot-vdo"
                                     controls
                                 >
                                     <source src={src} />

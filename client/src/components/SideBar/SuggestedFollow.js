@@ -248,21 +248,21 @@ const SuggestedFollow = ({ verifiedUser }) => {
                                             className="btn-hoot-follow"
                                             onClick={joinMyClub}
                                         >
-                                            Join My Club
+                                            Go To My Club
                                         </button>
                                         :
                                         <button
                                             className="btn-hoot-follow"
                                             onClick={joinMyClub}
                                         >
-                                            Join My Club
+                                            Go To My Club
                                         </button>
                                     :
                                     <button
                                         className="btn-hoot-follow"
                                         onClick={joinMyClub}
                                     >
-                                        Join My Club
+                                        Go To My Club
                                     </button>
                                 }
                             </div>

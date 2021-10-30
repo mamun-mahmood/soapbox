@@ -450,6 +450,7 @@ const PublicProfile = ({
                                                         username={user.authorUsername}
                                                         mimeType={user.mimeType}
                                                         hootImgId={user.image}
+                                                        audioPoster={user.audioPoster}
                                                         profilePicPath={profilePicPath}
                                                     />
                                                 }

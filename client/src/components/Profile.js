@@ -388,6 +388,7 @@ const Profile = ({
                                                         username={upload.authorUsername}
                                                         mimeType={upload.mimeType}
                                                         hootImgId={upload.image}
+                                                        audioPoster={upload.audioPoster}
                                                         profilePicPath={profilePicPath}
                                                     />
                                                 }

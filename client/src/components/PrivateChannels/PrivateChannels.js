@@ -121,7 +121,7 @@ const PrivateChannels = () => {
         className: 'link-content'
     });
 
-    const append = (chatname, message, position, imgSrc, isEmoji,isVideo,isImage) => {
+    const append = (chatname, message, position, imgSrc, isEmoji, isVideo, isImage) => {
         if (message) {
             var messageContainer = document.querySelector('.container')
             const messageBox = document.createElement('div');
@@ -134,31 +134,31 @@ const PrivateChannels = () => {
             messageBox.append(ProfileBox);
             messageBox.append(messageElement);
             ProfileBox.onclick = function () {
-              
 
-            //     toast.success(`Requested Private Chat to ${chatname}`
-            //     // , {
-            //     //     style: {
-            //     //         border: "2px solid #A279BA",
-            //     //         color: "#A279BA",
-            //     //     },
-            //     //     iconTheme: {
-            //     //         primary: "#A279BA",
-            //     //         secondary: "#FFFAEE",
-            //     //     },
-            //     // }
-            // );
-            const resolveAfter3Sec = new Promise(resolve => setTimeout(resolve, 3000));
-            toast.promise(
-                resolveAfter3Sec,
-                {
-                  pending: `Requesting Private Chat to ${chatname}`,
-                  success: setPrivateChat(true),
-                  error: 'Request Rejected'
-                }
-            )
 
-          
+                //     toast.success(`Requested Private Chat to ${chatname}`
+                //     // , {
+                //     //     style: {
+                //     //         border: "2px solid #A279BA",
+                //     //         color: "#A279BA",
+                //     //     },
+                //     //     iconTheme: {
+                //     //         primary: "#A279BA",
+                //     //         secondary: "#FFFAEE",
+                //     //     },
+                //     // }
+                // );
+                const resolveAfter3Sec = new Promise(resolve => setTimeout(resolve, 3000));
+                toast.promise(
+                    resolveAfter3Sec,
+                    {
+                        pending: `Requesting Private Chat to ${chatname}`,
+                        success: setPrivateChat(true),
+                        error: 'Request Rejected'
+                    }
+                )
+
+
             }
 
             ProfileBox.append(image)
@@ -168,8 +168,8 @@ const PrivateChannels = () => {
             ProfileBox.classList.add('ProfileBox')
 
             var myLinkedMessage = autolinker.link(message);
-            if(!isVideo && !isImage){ messageElement.innerHTML += myLinkedMessage;}
-           
+            if (!isVideo && !isImage) { messageElement.innerHTML += myLinkedMessage; }
+
             name.innerText = chatname;
             messageElement.classList.add('message');
             if (isEmoji) {
@@ -191,15 +191,15 @@ const PrivateChannels = () => {
 
             }
             if (isVideo) {
-              
+
                 const video = document.createElement('video')
                 video.src = message;
                 messageElement.append(video);
-                video.style.maxWidth="100%";
-                video.style.maxHeight="auto";
-                video.style.marginTop="10px";
-                video.style.borderRadius="5px";
-                video.controls=true
+                video.style.maxWidth = "100%";
+                video.style.maxHeight = "auto";
+                video.style.marginTop = "10px";
+                video.style.borderRadius = "5px";
+                video.controls = true
                 // if (position == "right") {
                 //     image.classList.add('chat-profile');
                 // } else {
@@ -210,14 +210,14 @@ const PrivateChannels = () => {
 
             }
             if (isImage) {
-              
+
                 const img = document.createElement('img')
                 img.src = message;
                 messageElement.append(img);
-                img.style.maxWidth="100%";
-                img.style.maxHeight="auto";
-                img.style.marginTop="10px";
-                img.style.borderRadius="5px";
+                img.style.maxWidth = "100%";
+                img.style.maxHeight = "auto";
+                img.style.marginTop = "10px";
+                img.style.borderRadius = "5px";
                 // if (position == "right") {
                 //     image.classList.add('chat-profile');
                 // } else {
@@ -227,7 +227,7 @@ const PrivateChannels = () => {
 
 
             }
-            
+
 
             // messageContainer.append(messageElement);
             messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -273,7 +273,7 @@ const PrivateChannels = () => {
                 append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
 
             } else {
-                append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji,data.isVideo,data.isImage)
+                append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji, data.isVideo, data.isImage)
             }
         })
 
@@ -421,14 +421,14 @@ const PrivateChannels = () => {
         (file && setMimeType(file.type));
         setSrc(URL.createObjectURL(file));
         // setMessageInboxValue(file.name);
-     
 
-    
+
+
     }
 
 
-    const upload = (file,mimeType) => {
-      
+    const upload = (file, mimeType) => {
+
         // setSaveLoading(true);
 
         const formData = new FormData();
@@ -447,35 +447,35 @@ const PrivateChannels = () => {
                 axios.post(`${BaseURL}/upload/uploadMedia`, formData),
             ]).then(axios.spread((res1, res2) => {
                 if (res1) {
-                
-                  if(mimeType.substr(0,5)== ('video' || 'audio'))  {
-                    append(userFullName,`${BaseURL}/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,true,false)
-                    socket.emit('send', {
-                        name: userFullName,
-                        message:`${BaseURL}/storageChat/${res1.data}` ,
-                        profilePic: userProfilePic,
-                        isEmoji: false,
-                        isVideo:true,
-                        isImage:false
-                    });
-                  }else{
-                    append(userFullName,`${BaseURL}/storageChat/${res1.data}`, "left",`${BaseURL}/profile-pictures/${userProfilePic}`,false,false,true)
-                    socket.emit('send', {
-                        name: userFullName,
-                        message:`${BaseURL}/storageChat/${res1.data}` ,
-                        profilePic: userProfilePic,
-                        isEmoji: false,
-                        isVideo:false,
-                        isImage:true
-                    });
-                  }
 
-               
-                            }
+                    if (mimeType.substr(0, 5) == ('video' || 'audio')) {
+                        append(userFullName, `${BaseURL}/storageChat/${res1.data}`, "left", `${BaseURL}/profile-pictures/${userProfilePic}`, false, true, false)
+                        socket.emit('send', {
+                            name: userFullName,
+                            message: `${BaseURL}/storageChat/${res1.data}`,
+                            profilePic: userProfilePic,
+                            isEmoji: false,
+                            isVideo: true,
+                            isImage: false
+                        });
+                    } else {
+                        append(userFullName, `${BaseURL}/storageChat/${res1.data}`, "left", `${BaseURL}/profile-pictures/${userProfilePic}`, false, false, true)
+                        socket.emit('send', {
+                            name: userFullName,
+                            message: `${BaseURL}/storageChat/${res1.data}`,
+                            profilePic: userProfilePic,
+                            isEmoji: false,
+                            isVideo: false,
+                            isImage: true
+                        });
+                    }
+
+
+                }
             }))
         }
 
-      uploadData();
+        uploadData();
         // toast.promise(uploadDataToast, {
         //     pending: 'Sending Hoot...',
         //     success: 'Hoot Successful',
@@ -780,7 +780,7 @@ const PrivateChannels = () => {
                                                                 <button>
                                                                     Marketplace
                                                                 </button>
-                                                              
+
                                                                 <button onClick={() => { subscribe ? unSubscribeUser() : subscribeUser() }} >
 
                                                                     {subscribe ? "Membership" : "Get Membership"}
@@ -873,7 +873,7 @@ const PrivateChannels = () => {
 
                                     <span>Marketplace</span>
                                     <span>Podcasts</span>
-                                    
+
                                     <span onClick={() => {
                                         setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
                                         socket.emit('room', userInfo[0].username);
@@ -1067,6 +1067,7 @@ const PrivateChannels = () => {
                                                             username={upload.authorUsername}
                                                             mimeType={upload.mimeType}
                                                             hootImgId={upload.image}
+                                                            audioPoster={upload.audioPoster}
                                                             likes={upload.likes}
                                                             views={upload.views}
                                                             followers={upload.followers}
@@ -1115,7 +1116,7 @@ const PrivateChannels = () => {
                                                         <Picker
                                                             native
                                                             onEmojiClick={(event, emojiObject) => {
-                                                                setMessageInboxValue(messageInboxValue+emojiObject.emoji)
+                                                                setMessageInboxValue(messageInboxValue + emojiObject.emoji)
                                                                 // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
                                                                 //  // socket.emit('send',message);
                                                                 socket.emit('send', {
@@ -1130,38 +1131,38 @@ const PrivateChannels = () => {
                                                     </div>
                                                 </ClickAwayListener>
                                             )}
-                                              {src && mimeType.substr(0,5)=="image"?<div className="messageBox">
-                                        <img src={src} style={{width:'100%',height:'auto',marginTop:'-10px'}} />
-                                        <button onClick={()=>{
-                                               upload(file,file.type);
-                                               setFile([]);
-                                               setSrc(null);
-                                               setMimeType("")
-                                        }}>Confirm</button>
-                                                <button onClick={()=>{
-                                            
-                                               setFile([]);
-                                               setSrc(null);
-                                               setMimeType("")
-                                        }}>Cancel</button>
-                                        </div>:null}
-                                    {src && mimeType.substr(0,5)=="video"?
-                                    <div  className="messageBox">
-                                    <video src={src} style={{width:'100%',height:'auto',marginTop:'-10px'}} className="messageBox" />
-                                    <button onClick={()=>{
-                                               upload(file,file.type);
-                                               setFile([]);
-                                               setSrc(null);
-                                               setMimeType("")
-                                        }}>Confirm</button>
-                                         <button onClick={()=>{
-                                        
-                                               setFile([]);
-                                               setSrc(null);
-                                               setMimeType("")
-                                        }}>Cancel</button>
-                                    </div>
-                                    :null}
+                                            {src && mimeType.substr(0, 5) == "image" ? <div className="messageBox">
+                                                <img src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} />
+                                                <button onClick={() => {
+                                                    upload(file, file.type);
+                                                    setFile([]);
+                                                    setSrc(null);
+                                                    setMimeType("")
+                                                }}>Confirm</button>
+                                                <button onClick={() => {
+
+                                                    setFile([]);
+                                                    setSrc(null);
+                                                    setMimeType("")
+                                                }}>Cancel</button>
+                                            </div> : null}
+                                            {src && mimeType.substr(0, 5) == "video" ?
+                                                <div className="messageBox">
+                                                    <video src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} className="messageBox" />
+                                                    <button onClick={() => {
+                                                        upload(file, file.type);
+                                                        setFile([]);
+                                                        setSrc(null);
+                                                        setMimeType("")
+                                                    }}>Confirm</button>
+                                                    <button onClick={() => {
+
+                                                        setFile([]);
+                                                        setSrc(null);
+                                                        setMimeType("")
+                                                    }}>Cancel</button>
+                                                </div>
+                                                : null}
                                         </div>
 
                                         <div className="community-club">
@@ -1172,7 +1173,7 @@ const PrivateChannels = () => {
                                     </div>
 
                                     <div className="send">
-                                    <ReactTooltip />
+                                        <ReactTooltip />
                                         <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
                                             <FaWindowClose data-tip="Close CharRoom" className="icon-text"
                                                 onClick={() => {
@@ -1180,35 +1181,35 @@ const PrivateChannels = () => {
                                                 }}
 
                                             />
-   <label
-                                            htmlFor="post-video"
-                                           
-                                        >
-                                          <FiVideo data-tip="Share Video" className="icon-text"  /> 
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id="post-video"
-                                            name="video"
-                                            accept="video/*"
-                                            onChange={handleFile}
-                                            hidden
-                                        />
-                                         <label
-                                            htmlFor="post-image"
-                                           
-                                        >
-                                           <FiImage data-tip="Share Photos" className="icon-text" /> 
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id="post-image"
-                                            name="image"
-                                            accept="image/*"
-                                            onChange={handleFile}
-                                            hidden
-                                        />
-                                             <FiFolder data-tip="Share File" className="icon-text" />
+                                            <label
+                                                htmlFor="post-video"
+
+                                            >
+                                                <FiVideo data-tip="Share Video" className="icon-text" />
+                                            </label>
+                                            <input
+                                                type="file"
+                                                id="post-video"
+                                                name="video"
+                                                accept="video/*"
+                                                onChange={handleFile}
+                                                hidden
+                                            />
+                                            <label
+                                                htmlFor="post-image"
+
+                                            >
+                                                <FiImage data-tip="Share Photos" className="icon-text" />
+                                            </label>
+                                            <input
+                                                type="file"
+                                                id="post-image"
+                                                name="image"
+                                                accept="image/*"
+                                                onChange={handleFile}
+                                                hidden
+                                            />
+                                            <FiFolder data-tip="Share File" className="icon-text" />
                                             <FiSmile className="icon-text" data-tip="Emoji"
                                                 onClick={() => { setEmojiPicker(!emojiPicker) }}
                                             />
@@ -1323,6 +1324,7 @@ const PrivateChannels = () => {
                                                         username={upload.authorUsername}
                                                         mimeType={upload.mimeType}
                                                         hootImgId={upload.image}
+                                                        audioPoster={upload.audioPoster}
                                                         likes={upload.likes}
                                                         views={upload.views}
                                                         followers={upload.followers}
@@ -1364,7 +1366,7 @@ const PrivateChannels = () => {
                                                         <Picker
                                                             native
                                                             onEmojiClick={(event, emojiObject) => {
-                                                                setMessageInboxValue(messageInboxValue+emojiObject.emoji)
+                                                                setMessageInboxValue(messageInboxValue + emojiObject.emoji)
                                                                 // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
                                                                 //  // socket.emit('send',message);
                                                                 socket.emit('send', {
@@ -1379,38 +1381,38 @@ const PrivateChannels = () => {
                                                     </div>
                                                 </ClickAwayListener>
                                             )}
-                                             {src && mimeType.substr(0,5)=="image"?<div className="messageBox">
-                                        <img src={src} style={{width:'100%',height:'auto',marginTop:'-10px'}} />
-                                        <button onClick={()=>{
-                                               upload(file,file.type);
-                                               setFile([]);
-                                               setSrc(null);
-                                               setMimeType("")
-                                        }}>Confirm</button>
-                                                <button onClick={()=>{
-                                            
-                                               setFile([]);
-                                               setSrc(null);
-                                               setMimeType("")
-                                        }}>Cancel</button>
-                                        </div>:null}
-                                    {src && mimeType.substr(0,5)=="video"?
-                                    <div  className="messageBox">
-                                    <video src={src} style={{width:'100%',height:'auto',marginTop:'-10px'}} className="messageBox" />
-                                    <button onClick={()=>{
-                                               upload(file,file.type);
-                                               setFile([]);
-                                               setSrc(null);
-                                               setMimeType("")
-                                        }}>Confirm</button>
-                                         <button onClick={()=>{
-                                        
-                                               setFile([]);
-                                               setSrc(null);
-                                               setMimeType("")
-                                        }}>Cancel</button>
-                                    </div>
-                                    :null}
+                                            {src && mimeType.substr(0, 5) == "image" ? <div className="messageBox">
+                                                <img src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} />
+                                                <button onClick={() => {
+                                                    upload(file, file.type);
+                                                    setFile([]);
+                                                    setSrc(null);
+                                                    setMimeType("")
+                                                }}>Confirm</button>
+                                                <button onClick={() => {
+
+                                                    setFile([]);
+                                                    setSrc(null);
+                                                    setMimeType("")
+                                                }}>Cancel</button>
+                                            </div> : null}
+                                            {src && mimeType.substr(0, 5) == "video" ?
+                                                <div className="messageBox">
+                                                    <video src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} className="messageBox" />
+                                                    <button onClick={() => {
+                                                        upload(file, file.type);
+                                                        setFile([]);
+                                                        setSrc(null);
+                                                        setMimeType("")
+                                                    }}>Confirm</button>
+                                                    <button onClick={() => {
+
+                                                        setFile([]);
+                                                        setSrc(null);
+                                                        setMimeType("")
+                                                    }}>Cancel</button>
+                                                </div>
+                                                : null}
                                         </div>
                                         <div className="community-club">
                                             <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
@@ -1420,7 +1422,7 @@ const PrivateChannels = () => {
                                     </div>
 
                                     <div className="send">
-                                    <ReactTooltip />
+                                        <ReactTooltip />
                                         <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
                                             <FaWindowClose className="icon-text" data-tip="Close ChatRoom"
                                                 onClick={() => {
@@ -1429,36 +1431,36 @@ const PrivateChannels = () => {
 
                                             />
 
-<label
-                                            htmlFor="post-video"
-                                           
-                                        >
-                                          <FiVideo className="icon-text" data-tip="Share Video"  /> 
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id="post-video"
-                                            name="video"
-                                            accept="video/*"
-                                            onChange={handleFile}
-                                            hidden
-                                        />
-                                         <label
-                                            htmlFor="post-image"
-                                           
-                                        >
-                                           <FiImage className="icon-text" data-tip="Share Photos" /> 
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id="post-image"
-                                            name="image"
-                                            accept="image/*"
-                                            onChange={handleFile}
-                                            hidden
-                                        />
-                                           
-                                             <FiFolder className="icon-text" data-tip="Share File" />
+                                            <label
+                                                htmlFor="post-video"
+
+                                            >
+                                                <FiVideo className="icon-text" data-tip="Share Video" />
+                                            </label>
+                                            <input
+                                                type="file"
+                                                id="post-video"
+                                                name="video"
+                                                accept="video/*"
+                                                onChange={handleFile}
+                                                hidden
+                                            />
+                                            <label
+                                                htmlFor="post-image"
+
+                                            >
+                                                <FiImage className="icon-text" data-tip="Share Photos" />
+                                            </label>
+                                            <input
+                                                type="file"
+                                                id="post-image"
+                                                name="image"
+                                                accept="image/*"
+                                                onChange={handleFile}
+                                                hidden
+                                            />
+
+                                            <FiFolder className="icon-text" data-tip="Share File" />
                                             <FiSmile className="icon-text" data-tip="Emoji"
                                                 onClick={() => { setEmojiPicker(!emojiPicker) }}
                                             />

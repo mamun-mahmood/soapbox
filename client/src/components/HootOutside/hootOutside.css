@@ -62,7 +62,7 @@
     border-radius: 0.5rem;
     cursor: pointer;
 
-    animation: skeleton-loading 0.7s linear infinite alternate;
+    /* animation: skeleton-loading 0.7s linear infinite alternate; */
 }
 .hoot-img-vertical-profile:hover {
     filter: drop-shadow(1px 7px 5px rgba(0, 0, 0, 0.35));
@@ -83,7 +83,7 @@
     border-radius: 0.5rem;
     cursor: pointer;
 
-    animation: skeleton-loading 0.7s linear infinite alternate;
+    /* animation: skeleton-loading 0.7s linear infinite alternate; */
 }
 .hoot-img-horizontal-profile:hover {
     filter: drop-shadow(1px 7px 5px rgba(0, 0, 0, 0.35));
@@ -104,7 +104,7 @@
     border-radius: 0.5rem;
     cursor: pointer;
 
-    animation: skeleton-loading 0.7s linear infinite alternate;
+    /* animation: skeleton-loading 0.7s linear infinite alternate; */
 }
 
 /* shine effect  */
@@ -177,7 +177,7 @@
     border-radius: 0.5rem;
     cursor: pointer;
 
-    animation: skeleton-loading 0.7s linear infinite alternate;
+    /* animation: skeleton-loading 0.7s linear infinite alternate; */
 }
 .hoot-ado-profile:hover {
     transition: 1s;

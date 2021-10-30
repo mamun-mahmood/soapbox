@@ -12,7 +12,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { FiTwitter, FiShare2, FiRepeat, FiMail, FiMessageSquare, FiEye, FiLink, FiShare, FiCopy } from 'react-icons/fi'
-import { FaHeart, FaRegHeart, FaTumblr } from 'react-icons/fa'
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaHeart, FaRegHeart, FaTumblr } from 'react-icons/fa'
 import { RiFacebookCircleLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { ImReddit, ImPinterest2 } from 'react-icons/im'
@@ -35,6 +35,7 @@ const HootInside = ({
     username,
     mimeType,
     hootImgId,
+    audioPoster,
     likes,
     views,
     followers,
@@ -84,7 +85,8 @@ const HootInside = ({
     const [followed, setFollowed] = useState(false);
     const [followedAlready, setFollowedAlready] = useState(true);
     const [userFollowers, setUserFollowers] = useState([]);
-    const [followersCount, setFollowersCount] = useState(followers)
+    const [followersCount, setFollowersCount] = useState(followers);
+    const [isReadMore, setIsReadMore] = useState(true);
 
     const getUserFollowData = async () => {
         await axios.get(`${BaseURL}/user/followers/${username}`)
@@ -584,21 +586,21 @@ const HootInside = ({
                                                                 className="btn-hoot-follow join-my-club-margin"
                                                                 onClick={joinMyClub}
                                                             >
-                                                                Join My Club
+                                                                Go To My Club
                                                             </button>
                                                             :
                                                             <button
                                                                 className="btn-hoot-follow join-my-club-margin"
                                                                 onClick={joinMyClub}
                                                             >
-                                                                Join My Club
+                                                                Go To My Club
                                                             </button>
                                                     :
                                                     <button
                                                         className="btn-hoot-follow join-my-club-margin"
                                                         onClick={joinMyClub}
                                                     >
-                                                        Join My Club
+                                                        Go To My Club
                                                     </button>
                                                 }
                                             </div>
@@ -704,21 +706,21 @@ const HootInside = ({
                                                     className="btn-hoot-follow join-my-club-margin"
                                                     onClick={joinMyClub}
                                                 >
-                                                    Join My Club
+                                                    Go To My Club
                                                 </button>
                                                 :
                                                 <button
                                                     className="btn-hoot-follow join-my-club-margin"
                                                     onClick={joinMyClub}
                                                 >
-                                                    Join My Club
+                                                    Go To My Club
                                                 </button>
                                         :
                                         <button
                                             className="btn-hoot-follow join-my-club-margin"
                                             onClick={joinMyClub}
                                         >
-                                            Join My Club
+                                            Go To My Club
                                         </button>
                                     }
 
@@ -863,7 +865,7 @@ const HootInside = ({
                                                                         <div>
                                                                             <video
                                                                                 muted controls
-                                                                                poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                                                poster={hootImgId ? filePath : `${BaseURL}/profile-pictures/${profilePic}`}
                                                                                 className="hoot-ado"
                                                                                 controlsList="nodownload"
                                                                                 onLoadStart={() => {
@@ -897,13 +899,19 @@ const HootInside = ({
                                                                             />
                                                                         </div>
                                                                 :
-                                                                <MediaContent
-                                                                    hootId={hootId}
-                                                                    mimeType={mimeType}
-                                                                    filePath={filePath}
-                                                                    editOpen={isEditModalOpen}
-                                                                    profilePicPath={profilePicPath}
-                                                                />
+                                                                (link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                                                    ?
+                                                                    null
+                                                                    :
+                                                                    <MediaContent
+                                                                        hootId={hootId}
+                                                                        mimeType={mimeType}
+                                                                        filePath={filePath}
+                                                                        audioPoster={audioPoster}
+                                                                        editOpen={isEditModalOpen}
+                                                                        profilePicPath={profilePicPath}
+                                                                    />
+                                                                )
                                                             }
 
                                                         </div>
@@ -924,7 +932,7 @@ const HootInside = ({
                                                             <div className="post-content">
                                                                 <textarea
                                                                     autoFocus
-                                                                    maxLength="300"
+                                                                    maxLength={privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2200 : 300}
                                                                     className="editarea-style"
                                                                     placeholder="What to edit?"
                                                                     value={editCaption}
@@ -934,9 +942,9 @@ const HootInside = ({
                                                                 ></textarea>
                                                                 <div className="d-flex justify-content-between m-1 btn-caption-top">
                                                                     <div className="caption-count">
-                                                                        <h6 className={editCaption.length > 220 && "text-danger"}>
+                                                                        <h6 className={editCaption.length > (privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2120 : 280) && "text-danger"}>
                                                                             {" "}
-                                                                            {editCaption.length}/300
+                                                                            {editCaption.length}/{privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2200 : 300}
                                                                         </h6>
                                                                     </div>
                                                                     <div className="btn-post my-2">
@@ -1044,8 +1052,24 @@ const HootInside = ({
                                             highlightClassName="highlighterClass"
                                             searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
                                             autoEscape={true}
-                                            textToHighlight={caption}
+                                            textToHighlight={
+                                                (caption.length > 300
+                                                    ? (isReadMore
+                                                        ? caption.slice(0, 320)
+                                                        : caption)
+                                                    : caption)
+                                            }
                                         />
+                                    </span>
+                                    {" "}<span
+                                        className="read-more-caption"
+                                        onClick={() => { setIsReadMore(!isReadMore) }}
+                                    >
+                                        {caption.length > 300 &&
+                                            (isReadMore
+                                                ? <Fragment>Read More<FaAngleDoubleRight style={{ marginBottom: "0.1rem", marginLeft: "0.1rem" }} /></Fragment>
+                                                : <Fragment>Read Less<FaAngleDoubleLeft style={{ marginBottom: "0.1rem", marginLeft: "0.1rem" }} /></Fragment>
+                                            )}
                                     </span>
                                     <br />
                                     {" "}
@@ -1140,7 +1164,7 @@ const HootInside = ({
                                             <div>
                                                 <video
                                                     muted controls
-                                                    poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                    poster={hootImgId ? filePath : `${BaseURL}/profile-pictures/${profilePic}`}
                                                     className="hoot-ado"
                                                     controlsList="nodownload"
                                                     onLoadStart={() => {
@@ -1180,6 +1204,7 @@ const HootInside = ({
                                             hootId={hootId}
                                             mimeType={mimeType}
                                             filePath={filePath}
+                                            audioPoster={audioPoster}
                                             views={views}
                                             image={hootImgId}
                                             profilePicPath={profilePicPath}
@@ -1549,21 +1574,21 @@ const HootInside = ({
                                                             className="btn-hoot-follow"
                                                             onClick={joinMyClub}
                                                         >
-                                                            Join My Club
+                                                            Go To My Club
                                                         </button>
                                                         :
                                                         <button
                                                             className="btn-hoot-follow"
                                                             onClick={joinMyClub}
                                                         >
-                                                            Join My Club
+                                                            Go To My Club
                                                         </button>
                                                 :
                                                 <button
                                                     className="btn-hoot-follow"
                                                     onClick={joinMyClub}
                                                 >
-                                                    Join My Club
+                                                    Go To My Club
                                                 </button>
                                             }
                                         </div>
@@ -1680,21 +1705,21 @@ const HootInside = ({
                                                 className="btn-hoot-follow join-my-club-margin"
                                                 onClick={joinMyClub}
                                             >
-                                                Join My Club
+                                                Go To My Club
                                             </button>
                                             :
                                             <button
                                                 className="btn-hoot-follow join-my-club-margin"
                                                 onClick={joinMyClub}
                                             >
-                                                Join My Club
+                                                Go To My Club
                                             </button>
                                     :
                                     <button
                                         className="btn-hoot-follow join-my-club-margin"
                                         onClick={joinMyClub}
                                     >
-                                        Join My Club
+                                        Go To My Club
                                     </button>
                                 }
 
@@ -1841,7 +1866,7 @@ const HootInside = ({
                                                                     <div>
                                                                         <video
                                                                             muted controls
-                                                                            poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                                            poster={hootImgId ? filePath : `${BaseURL}/profile-pictures/${profilePic}`}
                                                                             className="hoot-ado"
                                                                             controlsList="nodownload"
                                                                             onLoadStart={() => {
@@ -1879,6 +1904,7 @@ const HootInside = ({
                                                                 hootId={hootId}
                                                                 mimeType={mimeType}
                                                                 filePath={filePath}
+                                                                audioPoster={audioPoster}
                                                                 editOpen={isEditModalOpen}
                                                                 profilePicPath={profilePicPath}
                                                             />
@@ -1901,7 +1927,7 @@ const HootInside = ({
                                                         <div className="post-content">
                                                             <textarea
                                                                 autoFocus
-                                                                maxLength="300"
+                                                                maxLength={privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2200 : 300}
                                                                 className="editarea-style"
                                                                 placeholder="What to edit?"
                                                                 value={editCaption}
@@ -1911,9 +1937,9 @@ const HootInside = ({
                                                             ></textarea>
                                                             <div className="d-flex justify-content-between m-1 btn-caption-top">
                                                                 <div className="caption-count">
-                                                                    <h6 className={editCaption.length > 220 && "text-danger"}>
+                                                                    <h6 className={editCaption.length > (privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2120 : 280) && "text-danger"}>
                                                                         {" "}
-                                                                        {editCaption.length}/300
+                                                                        {editCaption.length}/{privateHoot && window.location.pathname.includes(`private/Club/${username}`) ? 2200 : 300}
                                                                     </h6>
                                                                 </div>
                                                                 <div className="btn-post my-2">
@@ -2021,8 +2047,24 @@ const HootInside = ({
                                         highlightClassName="highlighterClass"
                                         searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
                                         autoEscape={true}
-                                        textToHighlight={caption}
+                                        textToHighlight={
+                                            (caption.length > 300
+                                                ? (isReadMore
+                                                    ? caption.slice(0, 320)
+                                                    : caption)
+                                                : caption)
+                                        }
                                     />
+                                </span>
+                                {" "}<span
+                                    className="read-more-caption"
+                                    onClick={() => { setIsReadMore(!isReadMore) }}
+                                >
+                                    {caption.length > 300 &&
+                                        (isReadMore
+                                            ? <Fragment>Read More<FaAngleDoubleRight style={{ marginBottom: "0.1rem", marginLeft: "0.1rem" }} /></Fragment>
+                                            : <Fragment>Read Less<FaAngleDoubleLeft style={{ marginBottom: "0.1rem", marginLeft: "0.1rem" }} /></Fragment>
+                                        )}
                                 </span>
                                 <br />
                                 {" "}
@@ -2194,7 +2236,7 @@ const HootInside = ({
                                         <div>
                                             <video
                                                 muted controls
-                                                poster={`${BaseURL}/profile-pictures/${profilePic}`}
+                                                poster={hootImgId ? filePath : `${BaseURL}/profile-pictures/${profilePic}`}
                                                 className="hoot-ado"
                                                 controlsList="nodownload"
                                                 onLoadStart={() => {
@@ -2230,14 +2272,20 @@ const HootInside = ({
                                 }
 
                                 {mimeType &&
-                                    <MediaContent
-                                        hootId={hootId}
-                                        mimeType={mimeType}
-                                        filePath={filePath}
-                                        views={views}
-                                        image={hootImgId}
-                                        profilePicPath={profilePicPath}
-                                    />
+                                    (link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                        ?
+                                        null
+                                        :
+                                        <MediaContent
+                                            hootId={hootId}
+                                            mimeType={mimeType}
+                                            filePath={filePath}
+                                            audioPoster={audioPoster}
+                                            views={views}
+                                            image={hootImgId}
+                                            profilePicPath={profilePicPath}
+                                        />
+                                    )
                                 }
                             </div>
 
