@@ -336,7 +336,12 @@ class VideoChat extends Component {
             if (participants[id]&& participants[id].rtcPeer) {
                 participants[id].rtcPeer.dispose();
                 participants[id].rtcPeer = null;
-                window.location.href = "/";
+                if(document.getElementById(myarray[0]+"div")){
+                    document.getElementById(myarray[0]+"div").remove();
+                    document.getElementById("controlls").remove()
+                    
+                }
+                
                 // this.props.history.goBack();
             }
            

@@ -36,7 +36,7 @@ const Stocks = () => {
                 })}
             </div>
             <Helmet>
-                <title>Trending Stocks on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
+                <title>Trending Stocks on MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build.</title>
             </Helmet>
         </div>
     )

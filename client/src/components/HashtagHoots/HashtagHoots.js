@@ -156,7 +156,7 @@ const HashtagHoots = () => {
                 <EndHootMsg />
             </div>
             <Helmet>
-                <title>#{hashtag} Hoots on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
+                <title>#{hashtag} Hoots on MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build.</title>
             </Helmet>
         </Fragment>
     )

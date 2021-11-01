@@ -88,6 +88,8 @@ const PrivateChannels = () => {
     const [likes, setLikes] = useState(0);
     const [views, setViews] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [broadcastStream, setBroadcastStream] = useState(false);
+    
     const [messageInboxValue, setMessageInboxValue] = useState("");
     const [file, setFile] = useState([]);
     const [src, setSrc] = useState(null);
@@ -124,7 +126,7 @@ const PrivateChannels = () => {
 
     const append = (chatname, message, position, imgSrc, isEmoji, isVideo, isImage) => {
         if (message) {
-            var messageContainer = document.querySelector('.container')
+            var messageContainer = document.querySelector('.chatarea')
             const messageBox = document.createElement('div');
             const ProfileBox = document.createElement('div');
             const messageElement = document.createElement('div');
@@ -1109,11 +1111,16 @@ const PrivateChannels = () => {
                                         </div> : null}
 
                                         <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }}  >
-                                           
-                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px' }} >Community Club Chat</div>
-                                          <div> 
+                                            
+                                            <div className="live-header"
+                                             style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px',display:'flex',flexDirection:'column',alignItems:'center' }} > {username}`s Club Chat</div>
+                                        <div> 
+
                                           <VideoChat hallId={hallId} userName={userInformation.username} host={username} />
 </div>
+<div className="chatarea"></div>
+                                     
+
                                            
                                            
                                                     
@@ -1365,10 +1372,11 @@ const PrivateChannels = () => {
                                         </div> : null}
 
                                         <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }} >
-                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px' }} >Community Club Chat</div>
-
-                                            <VideoChat hallId={hallId} userName={userInformation.username} host={username} />
-
+                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px',display:'flex',flexDirection:'row',alignItems:'center'  }} >  <LiveTvRounded style={{cursor:'pointer',outline:'none'}} data-tip="Stream Live" onClick={()=>{setBroadcastStream(true)}} /> {username}`s Club Chat</div>
+{broadcastStream?  <VideoChat hallId={hallId} userName={userInformation.username} host={username} />:null}
+                                          
+<div className="chatarea"></div>    
+                                          
                                            
                                             {emojiPicker && (
                                                 <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>

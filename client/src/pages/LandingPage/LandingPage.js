@@ -52,7 +52,7 @@ const LandingPage = () => {
             <main className="landing-page">
                 <div className="landing-ls">
                     <span>
-                        MegaHoot Partnering with Content Creators Globally
+                    MegaHoot Soapbox a Club Community For Everyone
                     </span>
                     <div className="img-text">
                         <a href={locattion.pathname}>
@@ -64,14 +64,17 @@ const LandingPage = () => {
                         </a>
                         <div className="landing-text">
                             <p>
-                                MegaHoot Soapbox Where Content Creators Monetize Their Private Clubs, Virtual Experiences, Personal Messages and Build Their Brand, Build Their Business With No Startup Cost.
-                            </p>
+                            MegaHoot Soapbox is a Club Community where Content Creators such as Celebrities, Artist, Creatives, Athletes, Business Owners & Entertainers Partner with MegaHoot, become a Soapbox Club Owner. They monetize their Private Clubs in several ways and enhance their Brands with No Startup Cost.
+                                </p>
                             <p>
-                                Content Creators can offer monthly membership subscriptions for their Private Club, have one time or weekly PPV live events with ticket sales, offer personal messages and live one on one OR group Vero Calls. They will be able to offer their members, their fans, the ability to join their live broadcast on MegaHoot Soapbox and interact in real time with the chat feature. Members will be able to engage in the Private Clubs with interactive chats with the host, with other members and in some cases post approved listings in the Clubs Marketplace.
-                            </p>
+                            Where All Members can join a Community Club for FREE, connect via Community Chat, share pictures, videos & audio, create a Break-Off Club Chat, build to becoming a Soapbox Private Club Owner and earning.
+                                </p>
                             <p>
-                                Content Creators find a great partner in MegaHoot Technologies with MegaHoot Soapbox, maximizing the benefits of our content partners.
-                            </p>
+                            Soapbox Club Owners can offer monthly membership subscriptions for their Private Club, have one time or weekly PPV live events with ticket sales, offer personal messages. live one on one OR group Vero Calls. They will be able to offer their members, their fans, the ability to join their live broadcast on MegaHoot Soapbox and interact in real time with the chat feature. Members will be able to engage in the Private Clubs with interactive chats with the host, with other members and in some cases post approved listings in the Clubs Marketplace.
+                                 </p>
+                                 {/* <p>
+                                 Content Creators find a great partner in MegaHoot Technologies with MegaHoot Soapbox, maximizing the benefits of our content partners.
+                                 </p> */}
                             {/* <p>
                                 <ul>
                                     <li>
@@ -152,21 +155,21 @@ const LandingPage = () => {
             <Helmet>
                 {/* General tags */}
                 <title>
-                    MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels
+                    MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build.
                 </title>
-                <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="description" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
                 {/* <meta name="image" content={ } /> */}
 
                 {/* Twitter Card tags */}
                 <meta name="twitter:card" content="summary" />
-                <meta name="twitter:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta name="twitter:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="twitter:title" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
+                <meta name="twitter:description" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
                 <meta name="twitter:image" content="/images/MegaHoot_Owl3_app.png" />
 
                 {/* OpenGraph tags */}
                 <meta property="og:url" content="https://www.megahoot.net/" />
-                <meta property="og:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta property="og:title" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
+                <meta property="og:description" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
                 <meta property="og:image" content="/images/MegaHoot_Owl3_app.png" />
             </Helmet>
         </div>

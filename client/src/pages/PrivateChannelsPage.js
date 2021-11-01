@@ -32,17 +32,17 @@ const PrivateChannelsPage = () => {
             <PrivateFloatingButton />
 
             <Helmet>
-                <title>{username}'s Private Club on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
+                <title>{username}'s Private Club on MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build.</title>
 
                 <meta name="twitter:card" content="summary" />
-                <meta name="twitter:title" content={`${username}'s Private Club on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels`} />
-                <meta name="twitter:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta name="twitter:title" content={`${username}'s Private Club on MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build.`} />
+                <meta name="twitter:description" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
                 <meta name="twitter:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox_Twittercar1.png" />
 
 
                 <meta property="og:url" content={`https://www.megahoot.net/private/Club/${username}`} />
-                <meta property="og:title" content={`${username}'s Private Club on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels`} />
-                <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta property="og:title" content={`${username}'s Private Club on MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build.`} />
+                <meta property="og:description" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
                 <meta property="og:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox_Twittercar1.png" />
             </Helmet>
         </div>

@@ -67,8 +67,8 @@ const EditProfilePage = () => {
                                 tumblr={user.tumblr}
                             />
                             <Helmet>
-                                <title>Edit Profile for {username} ({user.name}) on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
-                                <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                                <title>Edit Profile for {username} ({user.name}) on MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build.</title>
+                                <meta name="description" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
                             </Helmet>
                         </div>)
                     })

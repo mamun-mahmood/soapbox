@@ -86,8 +86,8 @@ const ProfilePage = () => {
                                 tumblr={user.tumblr}
                             />
                             <Helmet>
-                                <title>{user.name} (@{username}) on MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
-                                <meta name="description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                                <title>{user.name} (@{username}) on MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build.</title>
+                                <meta name="description" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
                             </Helmet>
                         </div>)
                     })

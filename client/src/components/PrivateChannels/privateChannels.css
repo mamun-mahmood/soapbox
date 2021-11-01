@@ -359,6 +359,8 @@ padding-right: 1rem;
 
 
 .container{
+    display: flex;
+    flex-direction: column;
   width: 40%;
    border: 1px solid #e1b8f886;
    padding: 33px;

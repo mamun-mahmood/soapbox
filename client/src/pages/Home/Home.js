@@ -44,22 +44,22 @@ const Home = () => {
 
             <Helmet>
                 {/* General tags */}
-                <title>Home / MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels</title>
+                <title>Home / MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build.</title>
 
                 {/* Twitter Card tags */}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:site" content="@megahootinc" />
                 <meta name="twitter:creator" content="@megahootinc" />
-                <meta name="twitter:title" content="Megahoot Soapbox, where Content Creators monetize their Private Channels, Virtual Experiences, Personal Messages and build their brand." />
-                <meta name="twitter:description" content="Megahoot Soapbox allows Content Creators to monetize their work and themselves, market on public Soapbox, build their Private Channel and Market Place, and interact in real time with their audience" />
+                <meta name="twitter:title" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
+                <meta name="twitter:description" content="MegaHoot Soapbox is a Club Community where our Club Owners can build a real business, members can connect, share and grow" />
                 <meta name="twitter:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox_Twittercar1.png" />
                 <meta name="twitter:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox_Twittercar2.png" />
                 <meta name="twitter:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox_Twittercar3.png" />
 
                 {/* OpenGraph tags */}
                 <meta property="og:url" content="https://www.megahoot.net/" />
-                <meta property="og:title" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
-                <meta property="og:description" content="MegaHoot Soapbox - Where Content Creators Monetize Their Private Channels" />
+                <meta property="og:title" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
+                <meta property="og:description" content="MegaHoot Soapbox : A Club Community Where Content Creators Become Club Owners, Earn and Build." />
                 <meta property="og:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox_Twittercar1.png" />
                 <meta property="og:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox_Twittercar2.png" />
                 <meta property="og:image" content="https://soapboxapi.megahoot.net/profile-pictures/soapbox_Twittercar3.png" />
