@@ -194,7 +194,8 @@ const HootInside = ({
     useEffect(() => {
         axios.put(`${BaseURL}/upload/likes`, {
             likes: likesCount,
-            image: hootImgId
+            // image: hootImgId
+            hootId: hootId
         })
     }, [likesCount])
 
@@ -834,7 +835,15 @@ const HootInside = ({
                                                     </h5>
                                                     <div className="edit-content">
                                                         {/* left side image */}
-                                                        <div className="post-media" style={{ width: !mimeType && "100%", margin: !mimeType && "0.5rem", marginLeft: !mimeType && "0" }}>
+                                                        <div
+                                                            className="post-media"
+                                                            style={{
+                                                                width: !mimeType && "100%",
+                                                                margin: !mimeType && "0.5rem",
+                                                                marginLeft: !mimeType && "0"
+                                                            }}
+                                                            onContextMenu={(e) => e.preventDefault()}
+                                                        >
                                                             {!mimeType ?
                                                                 ReactPlayer.canPlay(link) &&
                                                                     link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
@@ -1134,7 +1143,14 @@ const HootInside = ({
 
                             <div className="right-icons">
                                 {/* <div className="post-media"> */}
-                                <div style={{ display: "flex", flexDirection: "column", width: mimeType || "100%", paddingRight: mimeType || "0.5rem" }}>
+                                <div style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    width: mimeType || "100%",
+                                    paddingRight: mimeType || "0.5rem"
+                                }}
+                                    onContextMenu={(e) => e.preventDefault()}
+                                >
                                     {ReactPlayer.canPlay(link) &&
                                         link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
                                         ?
@@ -1211,8 +1227,6 @@ const HootInside = ({
                                         />
                                     }
                                 </div>
-
-
 
                                 {/* <MediaContent
                                     hootId={hootId}
@@ -1835,7 +1849,15 @@ const HootInside = ({
                                                 </h5>
                                                 <div className="edit-content">
                                                     {/* left side image */}
-                                                    <div className="post-media" style={{ width: !mimeType && "100%", margin: !mimeType && "0.5rem", marginLeft: !mimeType && "0" }}>
+                                                    <div
+                                                        className="post-media"
+                                                        style={{
+                                                            width: !mimeType && "100%",
+                                                            margin: !mimeType && "0.5rem",
+                                                            marginLeft: !mimeType && "0"
+                                                        }}
+                                                        onContextMenu={(e) => e.preventDefault()}
+                                                    >
                                                         {!mimeType ?
                                                             ReactPlayer.canPlay(link) &&
                                                                 link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
@@ -2206,7 +2228,15 @@ const HootInside = ({
                                     profilePicPath={profilePicPath}
                                 />
                             } */}
-                            <div style={{ display: "flex", flexDirection: "column", width: mimeType || "100%", paddingRight: mimeType || "0.5rem" }}>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    width: mimeType || "100%",
+                                    paddingRight: mimeType || "0.5rem"
+                                }}
+                                onContextMenu={(e) => e.preventDefault()}
+                            >
                                 {ReactPlayer.canPlay(link) &&
                                     link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
                                     ?

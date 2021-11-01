@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { FiPlus } from 'react-icons/fi'
 import './floatingButton.css'
 import axios from 'axios'
+import { SoapboxTooltip } from '../SoapboxTooltip'
 
 const PrivateFloatingButton = () => {
     const [userData, setUserData] = useState([]);
@@ -28,11 +29,20 @@ const PrivateFloatingButton = () => {
 
     return (
         <div className="float">
-            <Link to={userData.privateChannel
-                ? "/create-private"
-                : "/create"
+            <Link to={
+                userData.privateChannel
+                    ? "/create-private"
+                    : "/create"
             }>
-                <FiPlus className="plus" />
+                <SoapboxTooltip title={
+                    userData.privateChannel
+                        ? "Create Private Hoot"
+                        : "Create Hoot"
+                } placement="left">
+                    <div>
+                        <FiPlus className="plus" />
+                    </div>
+                </SoapboxTooltip>
             </Link>
         </div>
     )
