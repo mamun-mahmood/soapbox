@@ -44,9 +44,10 @@ import RandomSuggestedFollows from '../SideBar/RandomSuggestedFollows'
 import RandomCommunitySuggestion from "../SideBar/RandomCommunitySuggestion";
 import { HiBadgeCheck } from "react-icons/hi";
 import ReactTooltip from "react-tooltip";
+import VideoChat from "../VideoAudioCall/VideoChat";
 
 const PrivateChannels = () => {
-
+    const hallId=uuidv4()
     const [userProfilePic, setUserProfilePic] = useState('');
     const [userFullName, setUserFullName] = useState('');
     const [uploads, setUploads] = useState([]);
@@ -79,7 +80,7 @@ const PrivateChannels = () => {
     const [showPricingSetting, setShowPricingSetting] = useState(false)
     const { username } = useParams();
     const BaseURL = process.env.REACT_APP_API_URL;
-
+   
     const LIMIT = 4;
 
     const history = useHistory();
@@ -871,7 +872,7 @@ const PrivateChannels = () => {
                                     <span>Video</span>
                                     <span>Podcasts</span> */}
 
-                                    <span>Marketplace</span>
+                                    {/* <span>Marketplace</span> */}
                                     <span>Podcasts</span>
 
                                     <span onClick={() => {
@@ -1108,7 +1109,14 @@ const PrivateChannels = () => {
                                         </div> : null}
 
                                         <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }}  >
+                                           
                                             <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px' }} >Community Club Chat</div>
+                                          <div> 
+                                          <VideoChat hallId={hallId} userName={userInformation.username} host={username} />
+</div>
+                                           
+                                           
+                                                    
 
                                             {emojiPicker && (
                                                 <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
@@ -1359,7 +1367,9 @@ const PrivateChannels = () => {
                                         <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }} >
                                             <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px' }} >Community Club Chat</div>
 
+                                            <VideoChat hallId={hallId} userName={userInformation.username} host={username} />
 
+                                           
                                             {emojiPicker && (
                                                 <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
                                                     <div>
