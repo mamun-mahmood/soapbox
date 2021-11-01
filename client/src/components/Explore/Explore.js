@@ -70,8 +70,7 @@ const Explore = () => {
 
         await axios.all([
             axios.get(`${BaseURL}/upload/search/public/p?page=1&limit=${LIMIT}&keyword=${searchKeyword}`),
-            // axios.get(`${BaseURL}/upload/search/user/p?page=1&limit=${LIMIT}&keyword=${searchKeyword}`),
-            axios.get(`${BaseURL}/user/search?keyword=${searchKeyword}`),
+            searchKeyword.length > 2 && axios.get(`${BaseURL}/user/search?keyword=${searchKeyword}`),
         ]).then(axios.spread((res1, res2) => {
             setSearchResults(res1.data.results);
             setSearchUsersList(res2.data);
