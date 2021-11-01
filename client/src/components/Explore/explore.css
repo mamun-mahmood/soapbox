@@ -68,7 +68,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0 5rem;
-    padding-bottom: 1rem;
 }
 
 .found-user {

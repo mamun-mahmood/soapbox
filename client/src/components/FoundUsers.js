@@ -26,7 +26,13 @@ const FoundUsers = ({ user }) => {
                 <div className="div-suggested-username-name">
                     <div className="name-verification">
                         <Link to={path}>
-                            <div className="name">{user.name ? user.name : user.username}</div>
+                            <div className="name">
+                                {user.name
+                                    ? user.name.length > 15
+                                        ? user.name.substring(0, 15) + "..."
+                                        : user.name
+                                    : user.username}
+                            </div>
                         </Link>
 
                         {user.verified === 1

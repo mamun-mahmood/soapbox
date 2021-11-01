@@ -19,13 +19,16 @@ const Explore = () => {
     const [searchUsersList, setSearchUsersList] = useState([]);
     const [byDefault, setByDefault] = useState(true);
     const [hasMore, setHasMore] = useState(true);
+    const [hasMoreUser, setHasMoreUser] = useState(true);
     const [page, setpage] = useState(2);
     const [searchPage, setSearchPage] = useState(2);
+    const [userPage, setUserPage] = useState(2);
     const searchRef = useRef(null);
 
     const history = useHistory();
     const BaseURL = process.env.REACT_APP_API_URL;
     const LIMIT = 10;
+    const USERLIMIT = 4;
 
     // getting trending hoots
     useEffect(() => {
@@ -45,6 +48,8 @@ const Explore = () => {
         if (searchKeyword === "") {
             setByDefault(true);
             setSearchUsersList([]);
+            setUserPage(2);
+            setHasMoreUser(true);
         }
     }, [searchKeyword])
 
@@ -70,16 +75,16 @@ const Explore = () => {
 
         await axios.all([
             axios.get(`${BaseURL}/upload/search/public/p?page=1&limit=${LIMIT}&keyword=${searchKeyword}`),
-            searchKeyword.length > 2 && axios.get(`${BaseURL}/user/search?keyword=${searchKeyword}`),
+            searchKeyword.length > 2 && axios.get(`${BaseURL}/user/search/p?page=1&limit=${USERLIMIT}&keyword=${searchKeyword}`),
         ]).then(axios.spread((res1, res2) => {
             setSearchResults(res1.data.results);
-            setSearchUsersList(res2.data);
+            res2.data && setSearchUsersList(res2.data.results);
         }))
 
         searchRef.current.focus();
     }
 
-    // fetching more search results
+    // fetching more search hoots
     const fetchMoreSearchResults = async () => {
         await axios.get(`${BaseURL}/upload/search/public/p?page=${searchPage}&limit=${LIMIT}&keyword=${searchKeyword}`)
             .then((response) => {
@@ -93,6 +98,22 @@ const Explore = () => {
             });
 
         setSearchPage(searchPage + 1);
+    }
+
+    // fetching more search users
+    const fetchMoreSearchUsers = async () => {
+        await axios.get(`${BaseURL}/user/search/p?page=${userPage}&limit=${USERLIMIT}&keyword=${searchKeyword}`)
+            .then((response) => {
+                const searchUsersFromServer = response.data.results;
+
+                setSearchUsersList([...searchUsersList, ...searchUsersFromServer]);
+
+                if (searchUsersFromServer === 0 || searchUsersFromServer < USERLIMIT) {
+                    setHasMoreUser(false);
+                }
+            });
+
+        setUserPage(userPage + 1);
     }
 
     // call searchFromDb when enter is pressed
@@ -111,7 +132,7 @@ const Explore = () => {
                     onChange={(event) => { setSearchKeyword(event.target.value) }}
                     onKeyDown={(event) => { onEnterKey(event) }}
                     type="text"
-                    placeholder="Search Users and Hoots based on Hashtags, Stocks and Keywords & hit enter"
+                    placeholder="Search Creators and Hoots based on Hashtags, Stocks and Keywords & hit enter"
                 />
                 <FiSearch className="search-icon" onClick={searchFromDb} />
             </div>
@@ -128,6 +149,11 @@ const Explore = () => {
                 }
             </div>
 
+            {searchUsersList.length > 3
+                ? <small style={{ paddingLeft: "0.5rem" }} className="see-more-suggested" onClick={fetchMoreSearchUsers}>See More Creators</small>
+                : null
+            }
+
             {byDefault
                 ?
                 <InfiniteScroll
@@ -136,7 +162,7 @@ const Explore = () => {
                     hasMore={hasMore}
                     loader={<InfiniteScrollLoader />}
                 >
-                    <div className="hoot-profile-layout">
+                    <div className="hoot-profile-layout" style={{ marginTop: searchUsersList.length > 0 && "1rem" }}>
                         {trendingHoots.map((hoot) => {
                             return (
                                 <div key={hoot.id}>
@@ -237,7 +263,7 @@ const Explore = () => {
                         next={fetchMoreSearchResults}
                         hasMore={hasMore}
                     >
-                        <div className="hoot-profile-layout">
+                        <div className="hoot-profile-layout" style={{ marginTop: searchUsersList.length > 0 && "1rem" }}>
                             {searchResults.map((hoot) => {
                                 return (
                                     <div key={hoot.id}>
