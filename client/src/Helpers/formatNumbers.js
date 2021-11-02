@@ -15,3 +15,9 @@ export const formatSi = count => {
     if (count >= 1e9 && count < 1e12) return "B";
     if (count >= 1e12) return "T";
 };
+
+export const random = (min = 10, max = 50) => {
+    let num = Math.random() * (max - min) + min;
+
+    return Math.round(num);
+};
