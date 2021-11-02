@@ -18,8 +18,7 @@ class VideoChat extends Component {
 
 
     componentDidMount = () => {
-     
-      
+
         var divRoomSelection = document.getElementById('roomSelection');
         var divMeetingRoom = document.getElementById('meetingRoom');
         var inputRoom = document.getElementById('room');
@@ -103,15 +102,11 @@ class VideoChat extends Component {
             myarray.forEach((userid) => {
                 if (myarray.length == 1) {
                    
-                    document.getElementById(userid).style.width = "300px";
-                    document.getElementById(userid).style.minWidth = "300px";
-                    document.getElementById(userid).style.maxWidth = "90vw";
+                    document.getElementById(userid).style.width = "37vw";
+                    document.getElementById(userid).style.minWidth = "300px"
                     document.getElementById(userid).style.maxHeight = `${(document.getElementById(userid).offsetWidth / 16) * 9}px`;
                     document.getElementById(userid).style.objectFit = "cover";
-
-
-
-
+                    this.props.videoAvailable()
                 } else if (myarray.length == 2) {
 
 
@@ -148,7 +143,7 @@ class VideoChat extends Component {
             var name = document.createElement('div');
             video.id = userid;
             video.autoplay = true;
-            video.style.maxWidth="40%"
+            video.style.width="100%"
             name.appendChild(document.createTextNode(username));
             div.appendChild(video);
             div.appendChild(name);
@@ -218,6 +213,7 @@ class VideoChat extends Component {
             name.appendChild(document.createTextNode(userName));
             div.appendChild(video);
             div.appendChild(name);
+            video.style.width="100%"
             divMeetingRoom.appendChild(div);
 
             var user = {
@@ -452,25 +448,25 @@ if(document.getElementById(id + "div")){
     render() {
         return (
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column',maxWidth:'350px',maxHeight:'200px'}}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column',position:'fixed'}}>
             
                 <div id="meetingRoom"    ></div>
                
-                 <div id="controlls" style={{display:this.props.userName==this.props.host?"flex":"none",position:'absolute',top:'1px',left:'0px',flexDirection:'column',maxWidth:'50px !important',maxHeight:'180px',backgroundColor:'#C5ADD7',borderRadius:'2rem'}}  >
+                 <div id="controlls" style={{display:this.props.userName==this.props.host?"flex":"none",position:'absolute',top:'1px',left:'0px',flexDirection:'column',maxWidth:'50px !important',maxHeight:'180px',backgroundColor:'#662d9117',borderRadius:'2rem'}}  >
 
-                    <li id="hangup"><CallEnd /></li>
-                    <li id="mic" onClick={() => {
+                    <li id="hangup"><CallEnd style={{size:'20px'}} /></li>
+                    <li id="mic"  onClick={() => {
                         this.setState({ micMuted: !this.state.micMuted })
 
 
-                    }}>{this.state.micMuted ? <MicOff style={{ color: 'red' }} /> : <Mic />}</li>
+                    }}>{this.state.micMuted ? <MicOff style={{ color: 'red',size:'20px' }} /> : <Mic />}</li>
 
 
                     <li id="cam" onClick={() => {
 
 
 
-                    }}>{this.state.camMuted ? <VideocamOff style={{ color: 'red' }} /> : <Videocam />}</li>
+                    }}>{this.state.camMuted ? <VideocamOff style={{ color: 'red' ,size:'20px'}} /> : <Videocam />}</li>
                    
                 </div>
                

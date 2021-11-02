@@ -67,8 +67,9 @@ const PrivateChannels = () => {
     const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0)
     const [emojiPicker, setEmojiPicker] = useState(false);
     const [showFeed, setShowFeed] = useState(true);
-    const [privateChat, setPrivateChat] = useState(false)
-
+    const [privateChat, setPrivateChat] = useState(false);
+    const [VideoAvailable, setVideoAvailable] = useState(false)
+    
     const [showChatRoom, setShowChatRoom] = useState(false)
 
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
@@ -1116,9 +1117,10 @@ const PrivateChannels = () => {
                                              style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px',display:'flex',flexDirection:'column',alignItems:'center' }} > {username}`s Club Chat</div>
                                         <div> 
 
-                                          <VideoChat hallId={hallId} userName={userInformation.username} host={username} />
+                                          <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={()=>{setVideoAvailable(true)}} host={username} />
 </div>
-<div className="chatarea"></div>
+
+<div className="chatarea" style={{marginTop:VideoAvailable?"300px":'0px'}}></div>
                                      
 
                                            
@@ -1373,9 +1375,10 @@ const PrivateChannels = () => {
 
                                         <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }} >
                                             <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px',display:'flex',flexDirection:'row',alignItems:'center'  }} >  <LiveTvRounded style={{cursor:'pointer',outline:'none'}} data-tip="Stream Live" onClick={()=>{setBroadcastStream(true)}} /> {username}`s Club Chat</div>
-{broadcastStream?  <VideoChat hallId={hallId} userName={userInformation.username} host={username} />:null}
+{broadcastStream?  <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={()=>{setVideoAvailable(true)}} host={username} />:null}
                                           
-<div className="chatarea"></div>    
+
+<div className="chatarea" style={{marginTop:VideoAvailable?"300px":'0px'}}></div>  
                                           
                                            
                                             {emojiPicker && (
