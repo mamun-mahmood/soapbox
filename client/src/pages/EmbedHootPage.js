@@ -30,7 +30,7 @@ const EmbedHootPage = () => {
             {hoot &&
                 hoot.map((hoot) => {
                     return (
-                        <div style={{ backgroundColor: "#fff", height: "100%" }} key={hoot.id}>
+                        <div style={{ backgroundColor: "#fff", height: "100vh" }} key={hoot.id}>
                             <EmbedHoot
                                 hootId={hoot.id}
                                 timeStamp={hoot.timeStamp}
@@ -39,6 +39,7 @@ const EmbedHootPage = () => {
                                 ephemeral={hoot.ephemeral}
                                 mimeType={hoot.mimeType}
                                 hootImgId={hoot.image}
+                                audioPoster={hoot.audioPoster}
                                 likes={hoot.likes}
                                 views={hoot.views}
                                 username={hoot.authorUsername}

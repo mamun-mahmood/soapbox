@@ -5,11 +5,14 @@ import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { FiShare2, FiMessageSquare, FiEye } from 'react-icons/fi'
-import { FaRegHeart } from 'react-icons/fa'
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaRegHeart } from 'react-icons/fa'
 import { HiBadgeCheck } from 'react-icons/hi'
 import Highlighter from "react-highlight-words"
 import './IndividualHoot/individualHoot.css'
 import Avatar from 'react-avatar';
+import ReactPlayer from 'react-player';
+import { formatCount, formatSi, random } from '../Helpers/formatNumbers'
+import ExternalLinkPlayer from './ExternalLinkPlayer';
 
 const EmbedHoot = ({
     hootId,
@@ -19,6 +22,7 @@ const EmbedHoot = ({
     privateHoot,
     mimeType,
     hootImgId,
+    audioPoster,
     likes,
     views,
     username,
@@ -26,12 +30,14 @@ const EmbedHoot = ({
 }) => {
     const BaseURL = process.env.REACT_APP_API_URL;
     const filePath = `${BaseURL}/images/${hootImgId}`;
+    const audioPosterPath = `${BaseURL}/audio-posters/${audioPoster}`;
 
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const [comments, setComments] = useState([]);
     const [users, setUsers] = useState([]);
     const [userInformation, setUserInformation] = useState([]);
     const [hoverInfo, setHoverInfo] = useState(false);
+    const [isReadMore, setIsReadMore] = useState(true);
 
     const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
     const path = userInfo ? ((userInfo.username === username ? `/profile/${username}` : `/user/${username}`)) : `/user/${username}`
@@ -74,29 +80,10 @@ const EmbedHoot = ({
         totalLikes += upload.likes
     })
 
-    // count will be formatted 
-    const formatCount = count => {
-        if (count < 1e3) return count;
-        if (count >= 1e3 && count < 1e6) return +(count / 1e3).toFixed(1);
-        if (count >= 1e6 && count < 1e9) return +(count / 1e6).toFixed(1);
-        if (count >= 1e9 && count < 1e12) return +(count / 1e9).toFixed(1);
-        if (count >= 1e12) return +(count / 1e12).toFixed(1);
-    };
-
-    // si stands for International System of Units
-    const formatSi = count => {
-        if (count < 1e3) return "";
-        if (count >= 1e3 && count < 1e6) return "K";
-        if (count >= 1e6 && count < 1e9) return "M";
-        if (count >= 1e9 && count < 1e12) return "B";
-        if (count >= 1e12) return "T";
-    };
-
     return (
         <Fragment>
             {userInformation.map((user) => {
                 const profilePicPath = `${BaseURL}/profile-pictures/${user.profilePic}`;
-                {/* const individualLink = `http://localhost:3000/${username}/hoot/${hootId}`; */ }
                 const individualLink = `https://www.megahoot.net/${username}/hoot/${hootId}`;
 
                 return (
@@ -157,11 +144,15 @@ const EmbedHoot = ({
                                                             />
                                                         </div>
                                                     </Link>
-                                                    <button
-                                                        className="hover-btn-hoot-follow"
-                                                    >
-                                                        Follow
-                                                    </button>
+                                                    <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem", fontSize: "small" }}>
+                                                        <button className="btn-hoot-follow">
+                                                            Follow
+                                                        </button>
+
+                                                        <button className="btn-hoot-follow">
+                                                            Go To My Club
+                                                        </button>
+                                                    </div>
                                                 </div>
 
                                                 <div className="hoot-user-info">
@@ -200,15 +191,12 @@ const EmbedHoot = ({
                                         }
 
                                         <div className="user-actions">
-                                            <button
-                                                className="btn-hoot-follow"
-                                            >
-                                                Follow
+                                            <button className="btn-hoot-follow">Follow</button>
+                                            <button className="btn-hoot-follow join-my-club-margin">
+                                                Go To My Club
                                             </button>
                                             <div className="more">
-                                                <BiDotsHorizontalRounded
-                                                    className="more-icon"
-                                                />
+                                                <BiDotsHorizontalRounded className="more-icon" />
                                             </div>
                                         </div>
                                     </div>
@@ -219,37 +207,82 @@ const EmbedHoot = ({
                                                 highlightClassName="highlighterClass"
                                                 searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
                                                 autoEscape={true}
-                                                textToHighlight={caption}
+                                                textToHighlight={
+                                                    (caption.length > 300
+                                                        ? (isReadMore
+                                                            ? caption.slice(0, 320)
+                                                            : caption)
+                                                        : caption)
+                                                }
                                             />
+                                        </span>
+                                        {" "}<span
+                                            className="read-more-caption"
+                                            onClick={() => { setIsReadMore(!isReadMore) }}
+                                        >
+                                            {caption.length > 300 &&
+                                                (isReadMore
+                                                    ? <Fragment>Read More<FaAngleDoubleRight style={{ marginBottom: "0.1rem", marginLeft: "0.1rem" }} /></Fragment>
+                                                    : <Fragment>Read Less<FaAngleDoubleLeft style={{ marginBottom: "0.1rem", marginLeft: "0.1rem" }} /></Fragment>
+                                                )}
                                         </span>
                                         <br />
                                         {" "}<span className="hoot-link">
                                             <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
                                         </span>
                                     </div>
+
                                     <div className="right-icons">
-                                        <MediaContent
-                                            hootId={hootId}
-                                            mimeType={mimeType}
-                                            filePath={filePath}
-                                            views={views}
-                                            image={hootImgId}
-                                        />
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                width: mimeType || "100%",
+                                                paddingRight: mimeType || "0.5rem"
+                                            }}
+                                            onContextMenu={(e) => e.preventDefault()}
+                                        >
+                                            {ReactPlayer.canPlay(link) &&
+                                                <ExternalLinkPlayer
+                                                    link={link}
+                                                    filePath={filePath}
+                                                    username={username}
+                                                    views={views}
+                                                    hootImgId={hootImgId}
+                                                    profilePicPath={profilePicPath}
+                                                    hootId={hootId}
+                                                    mimeType={mimeType}
+                                                    audioPosterPath={audioPosterPath}
+                                                />
+                                            }
+
+                                            {mimeType &&
+                                                (link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                                    ? null
+                                                    : <MediaContent
+                                                        hootId={hootId}
+                                                        mimeType={mimeType}
+                                                        filePath={filePath}
+                                                        audioPoster={audioPoster}
+                                                        views={views}
+                                                        image={hootImgId}
+                                                        profilePicPath={profilePicPath}
+                                                    />
+                                                )
+                                            }
+                                        </div>
+
                                         <div className="post-icons">
                                             <div className="like-count">
                                                 <div className="like">
-                                                    <FaRegHeart
-                                                        className="hoot-likes-border"
-                                                    />
+                                                    <FaRegHeart className="hoot-likes-border" />
                                                 </div>
 
                                                 <div className="like-count">{likes === 0 ? likes : formatCount(likes) + formatSi(likes)}</div>
                                             </div>
                                             <div className="comment-count">
                                                 <div className="comment">
-                                                    <FiMessageSquare
-                                                        className="cursor-pointer"
-                                                    />
+                                                    <FiMessageSquare className="cursor-pointer" />
                                                 </div>
                                                 <div className="comment-count">{comments.length}</div>
                                             </div>
