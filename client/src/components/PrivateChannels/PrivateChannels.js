@@ -50,6 +50,9 @@ const PrivateChannels = () => {
     const hallId=uuidv4()
     const [userProfilePic, setUserProfilePic] = useState('');
     const [userFullName, setUserFullName] = useState('');
+    const [userEmail,setUserEmail]=useState('')
+    const [userId, setUserId] = useState('');
+    
     const [uploads, setUploads] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
@@ -95,6 +98,7 @@ const PrivateChannels = () => {
     const [file, setFile] = useState([]);
     const [src, setSrc] = useState(null);
     const [mimeType, setMimeType] = useState("");
+    const [currentInvoice,setCurrentInvoice]=useState('')
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const form = document.getElementById('send-container');
     const messageInput = document.getElementById('messageInp');
@@ -318,11 +322,18 @@ const PrivateChannels = () => {
         getUserData();
         axios.get(`${BaseURL}/user/${userInformation.username}`).then((res) => {
             setUserProfilePic(res.data[0].profilePic);
-            setUserFullName(res.data[0].name)
+            setUserFullName(res.data[0].name);
+            setUserId(res.data[0].id);
+            setUserEmail(res.data[0].email)
         })
             .catch(err => { console.log(err) })
     }, []);
 
+    useEffect(() => {
+        let invoice= uuidv4()
+        setCurrentInvoice(invoice);
+       
+      }, [])
     useEffect(() => {
         const getAllUploadData = async () => {
             axios
@@ -334,6 +345,23 @@ const PrivateChannels = () => {
         };
         getAllUploadData();
     }, []);
+
+const checkMembership=()=>{
+    axios.post(`${BaseURL}/user/getMember`,{
+        member:userInformation.username
+    }).then((res)=>{
+      
+   
+        setShowSubscribeButton(false);
+        setShowFeed(true);
+        setSubscribe(true);
+    })
+}
+
+useEffect(() => {
+    checkMembership()
+}, [])
+    
 
     const fetchMoreHoots = async () => {
         await axios
@@ -429,6 +457,72 @@ const PrivateChannels = () => {
 
 
     }
+
+    const addMembershipInDb=()=>{
+        if(!subscribe){
+          
+            axios.post(`${BaseURL}/user/membership`,{
+                owner:username,
+                member:userInformation.username,
+                price:subscribePrice
+    
+            }).then((res)=>{
+               
+                toast.success(`${username} Membership Activated`)
+            setShowSubscribeButton(false);
+            setShowFeed(true)
+            setSubscribe(true);
+            })
+            .catch(err=>console.log(err))
+        }
+       
+    }
+
+    const verifyOrder=()=>{
+    
+        axios.post('https://messangerapi533cdgf6c556.amaprods.com/api/users/showPurchasedOrder',{
+            email:userEmail
+          })
+          .then((res)=>{
+            res.data.message.forEach((e)=>{
+                axios.get(`https://megahoot.org/api/req.php?type=check_merchant_transaction_status&merch_key=SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U&inv=${e.invoice_id}`)
+                .then((res)=>{console.log(res.data.status,typeof(res.data.status),"sky xmg")
+                if(res.data.status=="1"){
+                  addMembershipInDb()
+                }
+                })
+                .catch(err=>console.log(err)) 
+            })
+          })
+          .catch((err)=>{
+            toast.success(`No Record Found or something went wrong`)
+          })
+        }
+        
+    const  dataUploaderForOrder = () => {
+        // handleSubmit();
+        // props.history.push("/signin?redirec=shipping");
+        // generateInvoice()
+        if(!subscribe){
+        
+    
+    axios.post(`https://messangerapi533cdgf6c556.amaprods.com/api/users/storePurchasedOrder/`,{
+      product:username,
+      invoice_id:currentInvoice,
+      user_id:userId,
+      product_id:currentInvoice,
+      email:userEmail
+    
+    })
+    .then((res)=>{console.log('success');document.getElementById('redirectToPayment').click()})
+    .catch((err)=>{console.log(err);alert(err)})
+    
+      
+        }else{
+         console.log('Please Add Some Items In Cart To Checkout')
+        }
+    
+      };
 
 
     const upload = (file, mimeType) => {
@@ -712,7 +806,7 @@ const PrivateChannels = () => {
                                                         <div>
 
 
-                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Tools</div>
+                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Tools Box</div>
                                                             <div className="control">
                                                                 <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
                                                                 <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
@@ -967,12 +1061,39 @@ const PrivateChannels = () => {
                                         </h5>
 
                                         {/* <p>Cost: {groupCallPrice} XMG</p> */}
+                                        <form method="POST" action="https://megahoot.org/mh_api_checkout.php">
+<input type="hidden" name="mid" value="SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U" />
+<input type="hidden" name="inv" value={currentInvoice} />
+<input type="hidden" name="subtotal" value={subscribePrice} />
+<input type="hidden" name="curr" value="XMG" />
+
+<input type="hidden" name="tp[]" value="1" />
+<input type="hidden" name="name[]" value={userInformation.username} />
+<input type="hidden" name="amount[]" value={subscribePrice} />
+<input type="hidden" name="q[]" value="1" />
+
+
+<input
+                  type="submit"
+              
+                id="redirectToPayment"
+                  value="Proceed to checkout"
+                  className="primary block"
+                  style={{
+                    display:'none',
+                    padding: "5px",
+                    backgroundColor: "rgb(241, 195, 89)",
+                    borderRadius: "5px",
+                    color: "black",
+                  }}
+                />
+</form>
                                         <button
                                             onClick={() => {
-                                                setSubscribe(true);
-                                                toast.success(`Subscribed to ${username}`)
-                                                setShowSubscribeButton(false);
-                                                setShowFeed(true)
+                                                dataUploaderForOrder()
+                                               
+                                               
+                                               
 
                                             }}
                                             className="d-grid col-12 btn-main login-form-button"
@@ -983,6 +1104,25 @@ const PrivateChannels = () => {
                                         >
                                             {!subscribe ? `Get Membership Now for ${subscribePrice} XMG` : `Already a Member`}
                                         </button>
+                                        <br></br>
+                                        <button
+                                            onClick={() => {
+                                                verifyOrder()
+                                               
+                                               
+                                               
+
+                                            }}
+                                            className="d-grid col-12 btn-main login-form-button"
+                                            variant="primary"
+                                            type="submit"
+
+
+                                        >
+                                            {!subscribe ? `Activate Services If Paid Already` : `Already a Member`}
+                                        </button>
+
+                                        
                                     </Form>     {/* <div className="btns"> <button>Request</button></div> */}
                                 </div>
                                 : null}
@@ -1113,8 +1253,9 @@ const PrivateChannels = () => {
 
                                         <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }}  >
                                             
-                                            <div className="live-header"
-                                             style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px',display:'flex',flexDirection:'column',alignItems:'center' }} > {username}`s Club Chat</div>
+                                        <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft:'-15px',marginTop: '-33px',display:'flex',flexDirection:'column',alignItems:'center' ,position:'fixed' ,width:'40%',zIndex:'5'}} >  {userInfo[0].name}`s Club Chat
+                                          
+                                            </div>
                                         <div> 
 
                                           <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={()=>{setVideoAvailable(true)}} host={username} />
@@ -1374,11 +1515,13 @@ const PrivateChannels = () => {
                                         </div> : null}
 
                                         <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }} >
-                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', marginTop: '-30px',display:'flex',flexDirection:'row',alignItems:'center'  }} >  <LiveTvRounded style={{cursor:'pointer',outline:'none'}} data-tip="Stream Live" onClick={()=>{setBroadcastStream(true)}} /> {username}`s Club Chat</div>
+                                            <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft:'-15px',marginTop: '-33px',display:'flex',flexDirection:'column',alignItems:'center' ,position:'fixed' ,width:'40%',zIndex:'5'}} >  {userInfo[0].name}`s Club Chat
+                                            <LiveTvRounded style={{cursor:'pointer',outline:'none'}} data-tip="Stream Live" onClick={()=>{setBroadcastStream(true)}} />
+                                            </div>
 {broadcastStream?  <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={()=>{setVideoAvailable(true)}} host={username} />:null}
                                           
 
-<div className="chatarea" style={{marginTop:VideoAvailable?"300px":'0px'}}></div>  
+<div className="chatarea" style={{marginTop:VideoAvailable?"300px":'0px',zIndex:'-1'}}></div>  
                                           
                                            
                                             {emojiPicker && (
@@ -1445,7 +1588,7 @@ const PrivateChannels = () => {
                                     <div className="send">
                                         <ReactTooltip />
                                         <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
-                                            <FaWindowClose className="icon-text" data-tip="Close ChatRoom"
+                                            <FaWindowClose className="icon-text" data-tip="Close Chatroom"
                                                 onClick={() => {
                                                     setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
                                                 }}
