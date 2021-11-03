@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const CaptionComp = ({ caption, username, isReadMore }) => {
+    const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
+
     return (
         (caption.length > 300
             ? isReadMore
@@ -11,8 +13,10 @@ const CaptionComp = ({ caption, username, isReadMore }) => {
                 if (item.startsWith('@')) {
                     return (
                         <span key={index} className="hoot-comment">
-                            <Link to={item.replace('@', '').replace(',', '').replace('.', '') === username
-                                ? `/profile/${item.replace('@', '').replace(',', '').replace('.', '')}`
+                            <Link to={userInfo
+                                ? ((userInfo.username === item.replace('@', '').replace(',', '').replace('.', '')
+                                    ? `/profile/${item.replace('@', '').replace(',', '').replace('.', '')}`
+                                    : `/user/${item.replace('@', '').replace(',', '').replace('.', '')}`))
                                 : `/user/${item.replace('@', '').replace(',', '').replace('.', '')}`
                             } className="mention-highlighter"
                             >{item}</Link>{" "}
