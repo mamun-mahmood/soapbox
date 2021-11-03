@@ -2473,6 +2473,17 @@ padding: 6rem 1rem;
   background-color: #EDEDFF;
 }
 
+.mention-highlighter {
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.mention-highlighter:hover {
+  text-decoration: underline;
+  color: var(--primary-color);
+}
+
 .profile-page-main {
   width: 100%;
 }

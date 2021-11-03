@@ -23,6 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
 import './IndividualHoot/individualHoot.css'
 import Expire from './Expire';
 import ReactPlayer from 'react-player'
+import CaptionComp from './CaptionComp';
 
 const HootInside = ({
     userId,
@@ -2064,20 +2065,31 @@ const HootInside = ({
 
                         {caption &&
                             <div className="post-comment">
-                                {" "}<span className="hoot-comment">
-                                    <Highlighter
+                                <CaptionComp caption={caption} username={username} isReadMore={isReadMore} />
+                                {/* {" "}<span className="hoot-comment" dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize((
+                                        caption.length > 300
+                                            ? (isReadMore
+                                                ? caption.slice(0, 320)
+                                                : caption)
+                                            : caption
+                                    ))
+                                }}> */}
+                                {/* <Highlighter
                                         highlightClassName="highlighterClass"
                                         searchWords={[...hashtagsFound, ...stocksFound, ...usernamesFound]}
                                         autoEscape={true}
-                                        textToHighlight={
-                                            (caption.length > 300
-                                                ? (isReadMore
-                                                    ? caption.slice(0, 320)
-                                                    : caption)
-                                                : caption)
-                                        }
-                                    />
-                                </span>
+                                        textToHighlight={ */}
+                                {/* { */}
+                                {/* (caption.length > 300
+                                        ? (isReadMore
+                                            ? caption.slice(0, 320)
+                                            : caption)
+                                        : caption) */}
+                                {/* } */}
+                                {/* }
+                                    /> */}
+                                {/* </span> */}
                                 {" "}<span
                                     className="read-more-caption"
                                     onClick={() => { setIsReadMore(!isReadMore) }}
@@ -2556,7 +2568,7 @@ const HootInside = ({
                     </div>
                 </div>
             }
-        </Fragment>
+        </Fragment >
     )
 }
 
