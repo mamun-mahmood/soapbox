@@ -15,6 +15,7 @@ const Post = ({
     link,
     ephemeral,
     privateHoot,
+    onDemandMedia,
     expiryDate,
     timeStamp,
     edited,
@@ -57,6 +58,7 @@ const Post = ({
                             link={link}
                             ephemeral={ephemeral}
                             privateHoot={privateHoot}
+                            onDemandMedia={onDemandMedia}
                             expiryDate={expiryDate}
                             timeStamp={timeStamp}
                             edited={edited}

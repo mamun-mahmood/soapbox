@@ -44,6 +44,7 @@ const HootInside = ({
     link,
     ephemeral,
     privateHoot,
+    onDemandMedia,
     expiryDate,
     timeStamp,
     edited,
@@ -1469,6 +1470,9 @@ const HootInside = ({
                                 {(privateHoot === 1) &&
                                     <small class="badge outline-badge d-flex flex-end">PRIVATE</small>
                                 }
+                                {(onDemandMedia === 1) &&
+                                    <small class="badge outline-badge d-flex flex-end">ON DEMAND</small>
+                                }
                             </div>
 
                             <hr className="mx-1 my-1 hr-color" />
@@ -2588,6 +2592,9 @@ const HootInside = ({
 
                             {(privateHoot === 1) &&
                                 <small class="badge outline-badge d-flex flex-end">PRIVATE</small>
+                            }
+                            {(onDemandMedia === 1) &&
+                                <small class="badge outline-badge d-flex flex-end">ON DEMAND</small>
                             }
                         </div>
 

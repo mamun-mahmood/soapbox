@@ -47,15 +47,17 @@ import ReactTooltip from "react-tooltip";
 import VideoChat from "../VideoAudioCall/VideoChat";
 
 const PrivateChannels = () => {
-    const hallId=uuidv4()
+    const hallId = uuidv4()
     const [userProfilePic, setUserProfilePic] = useState('');
     const [userFullName, setUserFullName] = useState('');
-    const [userEmail,setUserEmail]=useState('')
+    const [userEmail, setUserEmail] = useState('')
     const [userId, setUserId] = useState('');
-    
+
     const [uploads, setUploads] = useState([]);
+    const [onDemandUploads, setOnDemandUploads] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [page, setpage] = useState(2);
+    const [onDemandPage, setOnDemandPage] = useState(2);
     const [subscribe, setSubscribe] = useState(false);
     const [showSubscribeButton, setShowSubscribeButton] = useState(true)
     const [callRequest, setCallRequest] = useState(false);
@@ -72,7 +74,10 @@ const PrivateChannels = () => {
     const [showFeed, setShowFeed] = useState(true);
     const [privateChat, setPrivateChat] = useState(false);
     const [VideoAvailable, setVideoAvailable] = useState(false)
-    
+    const [onDemandMedia, setOnDemandMedia] = useState(false);
+    const [onDemandHasMore, setOnDemandHasMore] = useState(true);
+    const [media, setMedia] = useState("");
+
     const [showChatRoom, setShowChatRoom] = useState(false)
 
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
@@ -84,7 +89,7 @@ const PrivateChannels = () => {
     const [showPricingSetting, setShowPricingSetting] = useState(false)
     const { username } = useParams();
     const BaseURL = process.env.REACT_APP_API_URL;
-   
+
     const LIMIT = 4;
 
     const history = useHistory();
@@ -93,12 +98,12 @@ const PrivateChannels = () => {
     const [views, setViews] = useState(0);
     const [loading, setLoading] = useState(true);
     const [broadcastStream, setBroadcastStream] = useState(false);
-    
+
     const [messageInboxValue, setMessageInboxValue] = useState("");
     const [file, setFile] = useState([]);
     const [src, setSrc] = useState(null);
     const [mimeType, setMimeType] = useState("");
-    const [currentInvoice,setCurrentInvoice]=useState('')
+    const [currentInvoice, setCurrentInvoice] = useState('')
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const form = document.getElementById('send-container');
     const messageInput = document.getElementById('messageInp');
@@ -330,10 +335,10 @@ const PrivateChannels = () => {
     }, []);
 
     useEffect(() => {
-        let invoice= uuidv4()
+        let invoice = uuidv4()
         setCurrentInvoice(invoice);
-       
-      }, [])
+
+    }, [])
     useEffect(() => {
         const getAllUploadData = async () => {
             axios
@@ -346,22 +351,33 @@ const PrivateChannels = () => {
         getAllUploadData();
     }, []);
 
-const checkMembership=()=>{
-    axios.post(`${BaseURL}/user/getMember`,{
-        member:userInformation.username
-    }).then((res)=>{
-      
-   
-        setShowSubscribeButton(false);
-        setShowFeed(true);
-        setSubscribe(true);
-    })
-}
+    const getAllOnDemandMedia = async (media) => {
+        setMedia(media);
+        axios.get(`${BaseURL}/upload/user/private/onDemandMedia/p/${username}?page=1&limit=${LIMIT}&media=${media}`)
+            .then((response) => {
+                setOnDemandUploads(response.data.results);
+            });
+    };
 
-useEffect(() => {
-    checkMembership()
-}, [])
-    
+    // useEffect(() => {
+    // }, []);
+
+    const checkMembership = () => {
+        axios.post(`${BaseURL}/user/getMember`, {
+            member: userInformation.username
+        }).then((res) => {
+
+
+            setShowSubscribeButton(false);
+            setShowFeed(true);
+            setSubscribe(true);
+        })
+    }
+
+    useEffect(() => {
+        checkMembership()
+    }, [])
+
 
     const fetchMoreHoots = async () => {
         await axios
@@ -377,6 +393,22 @@ useEffect(() => {
             });
 
         setpage(page + 1);
+    };
+
+    const fetchMoreOnDemandHoots = async () => {
+        await axios
+            .get(`${BaseURL}/upload/user/private/onDemandMedia/p/${username}?page=${onDemandPage}&limit=${LIMIT}&media=${media}`)
+            .then((response) => {
+                const hootsFromServer = response.data.results;
+
+                setOnDemandUploads([...onDemandUploads, ...hootsFromServer]);
+
+                if (hootsFromServer === 0 || hootsFromServer < LIMIT) {
+                    setOnDemandHasMore(false);
+                }
+            });
+
+        setOnDemandPage(onDemandPage + 1);
     };
 
     const privateProtected = {
@@ -458,71 +490,72 @@ useEffect(() => {
 
     }
 
-    const addMembershipInDb=()=>{
-        if(!subscribe){
-          
-            axios.post(`${BaseURL}/user/membership`,{
-                owner:username,
-                member:userInformation.username,
-                price:subscribePrice
-    
-            }).then((res)=>{
-               
+    const addMembershipInDb = () => {
+        if (!subscribe) {
+
+            axios.post(`${BaseURL}/user/membership`, {
+                owner: username,
+                member: userInformation.username,
+                price: subscribePrice
+
+            }).then((res) => {
+
                 toast.success(`${username} Membership Activated`)
-            setShowSubscribeButton(false);
-            setShowFeed(true)
-            setSubscribe(true);
+                setShowSubscribeButton(false);
+                setShowFeed(true)
+                setSubscribe(true);
             })
-            .catch(err=>console.log(err))
+                .catch(err => console.log(err))
         }
-       
+
     }
 
-    const verifyOrder=()=>{
-    
-        axios.post('https://messangerapi533cdgf6c556.amaprods.com/api/users/showPurchasedOrder',{
-            email:userEmail
-          })
-          .then((res)=>{
-            res.data.message.forEach((e)=>{
-                axios.get(`https://megahoot.org/api/req.php?type=check_merchant_transaction_status&merch_key=SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U&inv=${e.invoice_id}`)
-                .then((res)=>{console.log(res.data.status,typeof(res.data.status),"sky xmg")
-                if(res.data.status=="1"){
-                  addMembershipInDb()
-                }
+    const verifyOrder = () => {
+
+        axios.post('https://messangerapi533cdgf6c556.amaprods.com/api/users/showPurchasedOrder', {
+            email: userEmail
+        })
+            .then((res) => {
+                res.data.message.forEach((e) => {
+                    axios.get(`https://megahoot.org/api/req.php?type=check_merchant_transaction_status&merch_key=SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U&inv=${e.invoice_id}`)
+                        .then((res) => {
+                            console.log(res.data.status, typeof (res.data.status), "sky xmg")
+                            if (res.data.status == "1") {
+                                addMembershipInDb()
+                            }
+                        })
+                        .catch(err => console.log(err))
                 })
-                .catch(err=>console.log(err)) 
             })
-          })
-          .catch((err)=>{
-            toast.success(`No Record Found or something went wrong`)
-          })
-        }
-        
-    const  dataUploaderForOrder = () => {
+            .catch((err) => {
+                toast.success(`No Record Found or something went wrong`)
+            })
+    }
+
+    const dataUploaderForOrder = () => {
         // handleSubmit();
         // props.history.push("/signin?redirec=shipping");
         // generateInvoice()
-        if(!subscribe){
-        
-    
-    axios.post(`https://messangerapi533cdgf6c556.amaprods.com/api/users/storePurchasedOrder/`,{
-      product:username,
-      invoice_id:currentInvoice,
-      user_id:userId,
-      product_id:currentInvoice,
-      email:userEmail
-    
-    })
-    .then((res)=>{console.log('success');document.getElementById('redirectToPayment').click()})
-    .catch((err)=>{console.log(err);alert(err)})
-    
-      
-        }else{
-         console.log('Please Add Some Items In Cart To Checkout')
+        if (!subscribe) {
+
+
+            axios.post(`https://messangerapi533cdgf6c556.amaprods.com/api/users/storePurchasedOrder/`, {
+                product: username,
+                invoice_id: currentInvoice,
+                user_id: userId,
+                product_id: currentInvoice,
+                email: userEmail
+
+            })
+                .then((res) => { console.log('success'); document.getElementById('redirectToPayment').click() })
+                .catch((err) => { console.log(err); alert(err) })
+
+
+        } else {
+            console.log('Please Add Some Items In Cart To Checkout')
         }
-    
-      };
+
+    };
 
 
     const upload = (file, mimeType) => {
@@ -813,19 +846,19 @@ useEffect(() => {
 
                                                                 <button style={{ minWidth: '208px' }} >Make a Vero Audio Call</button>
                                                                 <button style={{ minWidth: '208px' }} onClick={() => {
-                                                                const Id=uuidv4()
-                                                                history.push({
-                                                                    pathname: `/${uuidv4()}/SoapboxHall/${uuidv4()}` ,
-                                                                     state:{
-                                                                         host:true,
-                                                                         userName:userInformation.username,
-                                                                         hallId:Id,
-                                                                         hostUserName:username
-                                                                     }
+                                                                    const Id = uuidv4()
+                                                                    history.push({
+                                                                        pathname: `/${uuidv4()}/SoapboxHall/${uuidv4()}`,
+                                                                        state: {
+                                                                            host: true,
+                                                                            userName: userInformation.username,
+                                                                            hallId: Id,
+                                                                            hostUserName: username
+                                                                        }
 
-                                                                   
-                                                                 });
-                                                            }} >Make a Vero Video Call</button>
+
+                                                                    });
+                                                                }} >Make a Vero Video Call</button>
 
                                                                 <button style={{ minWidth: '208px' }}
                                                                     onClick={() => {
@@ -837,14 +870,54 @@ useEffect(() => {
                                                                         setShowChatRoom(false);
                                                                     }}
                                                                 >Price Settings</button>
+
                                                                 <button style={{ minWidth: '208px' }} >Podcasts</button>
-                                                                <button style={{ minWidth: '208px' }} >Audio</button>
-                                                                <button style={{ minWidth: '208px' }} >Video</button>
-                                                                <button style={{ minWidth: '208px' }} >Photos</button>
 
+                                                                <button
+                                                                    style={{ minWidth: '208px' }}
+                                                                    onClick={() => {
+                                                                        setShowRequest(false);
+                                                                        setShowSubscribers(false);
+                                                                        setShowPricingSetting(false);
+                                                                        setShowNotification(false);
+                                                                        setShowFeed(false);
+                                                                        setShowChatRoom(false);
+
+                                                                        !onDemandMedia && setOnDemandMedia(!onDemandMedia);
+                                                                        getAllOnDemandMedia("audio");
+                                                                    }}
+                                                                >Audio</button>
+
+                                                                <button
+                                                                    style={{ minWidth: '208px' }}
+                                                                    onClick={() => {
+                                                                        setShowRequest(false);
+                                                                        setShowSubscribers(false);
+                                                                        setShowPricingSetting(false);
+                                                                        setShowNotification(false);
+                                                                        setShowFeed(false);
+                                                                        setShowChatRoom(false);
+
+                                                                        !onDemandMedia && setOnDemandMedia(!onDemandMedia);
+                                                                        getAllOnDemandMedia("video");
+                                                                    }}
+                                                                >Video</button>
+
+                                                                <button
+                                                                    style={{ minWidth: '208px' }}
+                                                                    onClick={() => {
+                                                                        setShowRequest(false);
+                                                                        setShowSubscribers(false);
+                                                                        setShowPricingSetting(false);
+                                                                        setShowNotification(false);
+                                                                        setShowFeed(false);
+                                                                        setShowChatRoom(false);
+
+                                                                        !onDemandMedia && setOnDemandMedia(!onDemandMedia);
+                                                                        getAllOnDemandMedia("image");
+                                                                    }}
+                                                                >Photos</button>
                                                             </div>
-
-
 
                                                             <br></br>
                                                             <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }}>Create Pay Per View Event</div>
@@ -964,7 +1037,20 @@ useEffect(() => {
                                 }}
                             >
                                 <div className="tabs" style={{ margin: "0 0.5rem" }}>
-                                    <span onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(true); setShowSubscribeButton(false); setShowChatRoom(false) }} >Timeline</span>
+                                    <span onClick={() => {
+                                        setOneOnOneCall(false);
+                                        setGroupCall(false);
+                                        setRequestMessage(false);
+                                        setVerifiedAutograph(false);
+                                        setShowFeed(true);
+                                        setShowSubscribeButton(false);
+                                        setShowChatRoom(false)
+                                        setOnDemandMedia(false);
+                                    }}
+                                    >
+                                        Timeline
+                                    </span>
+
                                     {/* <span>Audio</span>
                                     <span>Video</span>
                                     <span>Podcasts</span> */}
@@ -1062,38 +1148,38 @@ useEffect(() => {
 
                                         {/* <p>Cost: {groupCallPrice} XMG</p> */}
                                         <form method="POST" action="https://megahoot.org/mh_api_checkout.php">
-<input type="hidden" name="mid" value="SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U" />
-<input type="hidden" name="inv" value={currentInvoice} />
-<input type="hidden" name="subtotal" value={subscribePrice} />
-<input type="hidden" name="curr" value="XMG" />
+                                            <input type="hidden" name="mid" value="SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U" />
+                                            <input type="hidden" name="inv" value={currentInvoice} />
+                                            <input type="hidden" name="subtotal" value={subscribePrice} />
+                                            <input type="hidden" name="curr" value="XMG" />
 
-<input type="hidden" name="tp[]" value="1" />
-<input type="hidden" name="name[]" value={userInformation.username} />
-<input type="hidden" name="amount[]" value={subscribePrice} />
-<input type="hidden" name="q[]" value="1" />
+                                            <input type="hidden" name="tp[]" value="1" />
+                                            <input type="hidden" name="name[]" value={userInformation.username} />
+                                            <input type="hidden" name="amount[]" value={subscribePrice} />
+                                            <input type="hidden" name="q[]" value="1" />
 
 
-<input
-                  type="submit"
-              
-                id="redirectToPayment"
-                  value="Proceed to checkout"
-                  className="primary block"
-                  style={{
-                    display:'none',
-                    padding: "5px",
-                    backgroundColor: "rgb(241, 195, 89)",
-                    borderRadius: "5px",
-                    color: "black",
-                  }}
-                />
-</form>
+                                            <input
+                                                type="submit"
+
+                                                id="redirectToPayment"
+                                                value="Proceed to checkout"
+                                                className="primary block"
+                                                style={{
+                                                    display: 'none',
+                                                    padding: "5px",
+                                                    backgroundColor: "rgb(241, 195, 89)",
+                                                    borderRadius: "5px",
+                                                    color: "black",
+                                                }}
+                                            />
+                                        </form>
                                         <button
                                             onClick={() => {
                                                 dataUploaderForOrder()
-                                               
-                                               
-                                               
+
+
+
 
                                             }}
                                             className="d-grid col-12 btn-main login-form-button"
@@ -1108,9 +1194,9 @@ useEffect(() => {
                                         <button
                                             onClick={() => {
                                                 verifyOrder()
-                                               
-                                               
-                                               
+
+
+
 
                                             }}
                                             className="d-grid col-12 btn-main login-form-button"
@@ -1122,7 +1208,7 @@ useEffect(() => {
                                             {!subscribe ? `Activate Services If Paid Already` : `Already a Member`}
                                         </button>
 
-                                        
+
                                     </Form>     {/* <div className="btns"> <button>Request</button></div> */}
                                 </div>
                                 : null}
@@ -1230,14 +1316,48 @@ useEffect(() => {
                                             })}
                                         </InfiniteScroll>
                                     )}
+                                </div>
+                                : null
+                            }
 
-
-
-
-
-                                </div> : null}
-
-
+                            {onDemandMedia
+                                ? <div className="channel-media" id="feed">
+                                    {onDemandUploads && (
+                                        <InfiniteScroll
+                                            dataLength={onDemandUploads.length}
+                                            next={fetchMoreOnDemandHoots}
+                                            hasMore={onDemandHasMore}
+                                        >
+                                            {onDemandUploads.map((upload) => {
+                                                return (
+                                                    <div key={upload}>
+                                                        <Post
+                                                            hootId={upload.id}
+                                                            username={upload.authorUsername}
+                                                            mimeType={upload.mimeType}
+                                                            hootImgId={upload.image}
+                                                            audioPoster={upload.audioPoster}
+                                                            likes={upload.likes}
+                                                            views={upload.views}
+                                                            followers={upload.followers}
+                                                            caption={upload.caption}
+                                                            link={upload.link}
+                                                            ephemeral={upload.ephemeral}
+                                                            privateHoot={upload.private}
+                                                            onDemandMedia={upload.onDemandMedia}
+                                                            expiryDate={upload.expiryDate}
+                                                            timeStamp={upload.timeStamp}
+                                                            edited={upload.edited}
+                                                            editedTimeStamp={upload.editedTimeStamp}
+                                                        />
+                                                    </div>
+                                                );
+                                            })}
+                                        </InfiniteScroll>
+                                    )}
+                                </div>
+                                : null
+                            }
 
                             {showChatRoom ?
                                 <div style={{ position: 'relative' }} >
@@ -1252,21 +1372,21 @@ useEffect(() => {
                                         </div> : null}
 
                                         <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }}  >
-                                            
-                                        <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft:'-15px',marginTop: '-33px',display:'flex',flexDirection:'column',alignItems:'center' ,position:'fixed' ,width:'40%',zIndex:'5'}} >  {userInfo[0].name}`s Club Chat
-                                          
+
+                                            <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft: '-15px', marginTop: '-33px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'fixed', width: '40%', zIndex: '5' }} >  {userInfo[0].name}`s Club Chat
+
                                             </div>
-                                        <div> 
+                                            <div>
 
-                                          <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={()=>{setVideoAvailable(true)}} host={username} />
-</div>
+                                                <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} />
+                                            </div>
 
-<div className="chatarea" style={{marginTop:VideoAvailable?"300px":'0px'}}></div>
-                                     
+                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px' }}></div>
 
-                                           
-                                           
-                                                    
+
+
+
+
 
                                             {emojiPicker && (
                                                 <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
@@ -1378,11 +1498,9 @@ useEffect(() => {
                                     </div>
                                 </div> : null}
                         </div>
-                    ) : null}
-
-
-
-
+                    )
+                        : null
+                    }
 
                     {userInformation.username == username ? (
                         <div className="channel-user-content">
@@ -1397,7 +1515,18 @@ useEffect(() => {
                                 <div className="tabs" style={{ margin: "0 0.5rem" }}>
                                     <span
                                         style={{ backgroundColor: showFeed ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
-                                        onClick={() => { setShowRequest(false); setShowFeed(!showFeed); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Timeline</span>
+                                        onClick={() => {
+                                            setShowRequest(false);
+                                            setShowFeed(!showFeed);
+                                            setShowSubscribers(false);
+                                            setShowPricingSetting(false);
+                                            setShowNotification(false);
+                                            setShowChatRoom(false)
+                                            setOnDemandMedia(false);
+                                        }}
+                                    >
+                                        Timeline
+                                    </span>
                                     <span
                                         style={{ backgroundColor: showRequest ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
                                         onClick={() => { setShowRequest(!showRequest); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Requests</span>
@@ -1501,7 +1630,48 @@ useEffect(() => {
                                         })}
                                     </InfiniteScroll>
                                 )}
-                            </div> : null}
+                            </div>
+                                : null
+                            }
+
+                            {onDemandMedia
+                                ? <div className="channel-media" id="feed">
+                                    {onDemandUploads && (
+                                        <InfiniteScroll
+                                            dataLength={onDemandUploads.length}
+                                            next={fetchMoreOnDemandHoots}
+                                            hasMore={onDemandHasMore}
+                                        >
+                                            {onDemandUploads.map((upload) => {
+                                                return (
+                                                    <div key={upload}>
+                                                        <Post
+                                                            hootId={upload.id}
+                                                            username={upload.authorUsername}
+                                                            mimeType={upload.mimeType}
+                                                            hootImgId={upload.image}
+                                                            audioPoster={upload.audioPoster}
+                                                            likes={upload.likes}
+                                                            views={upload.views}
+                                                            followers={upload.followers}
+                                                            caption={upload.caption}
+                                                            link={upload.link}
+                                                            ephemeral={upload.ephemeral}
+                                                            privateHoot={upload.private}
+                                                            onDemandMedia={upload.onDemandMedia}
+                                                            expiryDate={upload.expiryDate}
+                                                            timeStamp={upload.timeStamp}
+                                                            edited={upload.edited}
+                                                            editedTimeStamp={upload.editedTimeStamp}
+                                                        />
+                                                    </div>
+                                                );
+                                            })}
+                                        </InfiniteScroll>
+                                    )}
+                                </div>
+                                : null
+                            }
                             {showChatRoom ?
                                 <div style={{ position: 'relative' }} >
                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -1515,15 +1685,15 @@ useEffect(() => {
                                         </div> : null}
 
                                         <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }} >
-                                            <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft:'-15px',marginTop: '-33px',display:'flex',flexDirection:'column',alignItems:'center' ,position:'fixed' ,width:'40%',zIndex:'5'}} >  {userInfo[0].name}`s Club Chat
-                                            <LiveTvRounded style={{cursor:'pointer',outline:'none'}} data-tip="Stream Live" onClick={()=>{setBroadcastStream(true)}} />
+                                            <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft: '-15px', marginTop: '-33px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'fixed', width: '40%', zIndex: '5' }} >  {userInfo[0].name}`s Club Chat
+                                                <LiveTvRounded style={{ cursor: 'pointer', outline: 'none' }} data-tip="Stream Live" onClick={() => { setBroadcastStream(true) }} />
                                             </div>
-{broadcastStream?  <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={()=>{setVideoAvailable(true)}} host={username} />:null}
-                                          
+                                            {broadcastStream ? <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} /> : null}
 
-<div className="chatarea" style={{marginTop:VideoAvailable?"300px":'0px',zIndex:'-1'}}></div>  
-                                          
-                                           
+
+                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px', zIndex: '-1' }}></div>
+
+
                                             {emojiPicker && (
                                                 <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
                                                     <div>

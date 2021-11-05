@@ -14,10 +14,10 @@ const CaptionComp = ({ caption, username, isReadMore }) => {
                     return (
                         <span key={index} className="hoot-comment">
                             <Link to={userInfo
-                                ? ((userInfo.username === item.replace('@', '').replace(',', '').replace('.', '')
-                                    ? `/profile/${item.replace('@', '').replace(',', '').replace('.', '')}`
-                                    : `/user/${item.replace('@', '').replace(',', '').replace('.', '')}`))
-                                : `/user/${item.replace('@', '').replace(',', '').replace('.', '')}`
+                                ? ((userInfo.username === item.replace(/[@,.]/g, '')
+                                    ? `/profile/${item.replace(/[@,.]/g, '')}`
+                                    : `/user/${item.replace(/[@,.]/g, '')}`))
+                                : `/user/${item.replace(/[@,.]/g, '')}`
                             } className="mention-highlighter"
                             >{item}</Link>{" "}
                         </span>

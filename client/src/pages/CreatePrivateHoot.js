@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect, useRef, useCallback, useContext }
 import { Helmet } from 'react-helmet';
 import axios from 'axios'
 import Avatar from 'react-avatar';
-// import toast from 'react-hot-toast';
 import { format } from 'date-fns'
 import addDays from 'date-fns/addDays'
 import getTime from 'date-fns/getTime'
@@ -10,17 +9,15 @@ import addSeconds from 'date-fns/addSeconds'
 import addMinutes from 'date-fns/addMinutes'
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds'
 import ClickAwayListener from 'react-click-away-listener';
-import ReactTooltip from 'react-tooltip';
 import { Button } from 'react-bootstrap'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { IoCloseOutline, IoRadioButtonOn } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft, FiCamera, FiDownload, FiLink2, FiVideo } from "react-icons/fi";
 import BeatLoader from "react-spinners/BeatLoader";
 import NavBar from '../components/NavBar/NavBar'
-import { AiFillMinusCircle, AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai';
+import { AiOutlineAudio } from 'react-icons/ai';
 import { VscDebugRestart } from 'react-icons/vsc';
-// import { BsStopCircle } from 'react-icons/bs';
 import { FaStopCircle } from 'react-icons/fa';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Picker from 'emoji-picker-react';
@@ -30,7 +27,6 @@ import shutterClick from '../assets/shutter-click.wav';
 import useRecorder from "react-hook-recorder";
 import { v4 as uuidv4 } from 'uuid';
 import { MyStream } from '../context/MyStreamContext';
-import { LinkPreview } from '@dhaiwat10/react-link-preview';
 import ReactPlayer from 'react-player'
 
 const CreatePrivateHoot = () => {
@@ -48,6 +44,7 @@ const CreatePrivateHoot = () => {
     const [showLinkPreview, setShowLinkPreview] = useState(false);
     // const [links, setLinks] = useState([{ link: "" }]);
     const [linkModalOpen, setLinkModalOpen] = useState(false);
+    const [onDemandMedia, setOnDemandMedia] = useState(false);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -84,6 +81,7 @@ const CreatePrivateHoot = () => {
         formData.append("private", privateCheck ? 1 : 0)
         formData.append("expiryDate", ephemeralCheck ? expiryDate : 0)
         formData.append("authorEmail", email)
+        formData.append("onDemandMedia", onDemandMedia ? 1 : 0);
         formData.append("file", file);
         formData.append("audioPoster", audioPoster);
 
@@ -271,6 +269,7 @@ const CreatePrivateHoot = () => {
     const { setMyStream, setHookStream } = useContext(MyStream);
 
     const onDemandPhoto = () => {
+        setOnDemandMedia(true);
         setLiveVideo(false);
         setLiveAudio(false);
         if (userData.privateChannel) {
@@ -292,6 +291,7 @@ const CreatePrivateHoot = () => {
     }
 
     const onDemandVideo = () => {
+        setOnDemandMedia(true);
         setLivePhoto(false);
         setLiveAudio(false);
         if (userData.privateChannel) {
@@ -328,6 +328,7 @@ const CreatePrivateHoot = () => {
     }
 
     const onDemandAudio = () => {
+        setOnDemandMedia(true);
         setLivePhoto(false);
         setLiveVideo(false);
         if (userData.privateChannel) {
@@ -444,6 +445,8 @@ const CreatePrivateHoot = () => {
         // setLivePhoto(false);
         // setLiveVideo(false);
         // setLiveAudio(false);
+
+        setOnDemandMedia(false);
 
         if (livePhoto) {
             if (videoRef !== null) {

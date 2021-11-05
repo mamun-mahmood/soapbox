@@ -73,6 +73,7 @@ const CreateHoot = () => {
         formData.append("private", privateCheck ? 1 : 0)
         formData.append("expiryDate", ephemeralCheck ? expiryDate : 0)
         formData.append("authorEmail", email)
+        formData.append("onDemandMedia", 0);
         formData.append("file", file);
         formData.append("audioPoster", audioPoster);
 
