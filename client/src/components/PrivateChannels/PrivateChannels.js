@@ -983,53 +983,53 @@ const PrivateChannels = () => {
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
                                                                     onClick={() => {
-                                                                       if(subscribe){
-                                                                        setShowRequest(false);
-                                                                        setShowSubscribers(false);
-                                                                        setShowPricingSetting(false);
-                                                                        setShowNotification(false);
-                                                                        setShowFeed(false);
-                                                                        setShowChatRoom(false);
+                                                                        if (subscribe) {
+                                                                            setShowRequest(false);
+                                                                            setShowSubscribers(false);
+                                                                            setShowPricingSetting(false);
+                                                                            setShowNotification(false);
+                                                                            setShowFeed(false);
+                                                                            setShowChatRoom(false);
 
-                                                                        !onDemandMedia && setOnDemandMedia(!onDemandMedia);
-                                                                        getAllOnDemandMedia("audio");
-                                                                       }
+                                                                            !onDemandMedia && setOnDemandMedia(!onDemandMedia);
+                                                                            getAllOnDemandMedia("audio");
+                                                                        }
                                                                     }}
                                                                 >Audio</button>
 
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
                                                                     onClick={() => {
-                                                                        if(subscribe){
-                                                                           setShowRequest(false);
-                                                                        setShowSubscribers(false);
-                                                                        setShowPricingSetting(false);
-                                                                        setShowNotification(false);
-                                                                        setShowFeed(false);
-                                                                        setShowChatRoom(false);
+                                                                        if (subscribe) {
+                                                                            setShowRequest(false);
+                                                                            setShowSubscribers(false);
+                                                                            setShowPricingSetting(false);
+                                                                            setShowNotification(false);
+                                                                            setShowFeed(false);
+                                                                            setShowChatRoom(false);
 
-                                                                        !onDemandMedia && setOnDemandMedia(!onDemandMedia);
-                                                                        getAllOnDemandMedia("video");  
+                                                                            !onDemandMedia && setOnDemandMedia(!onDemandMedia);
+                                                                            getAllOnDemandMedia("video");
                                                                         }
-                                                                       
+
                                                                     }}
                                                                 >Video</button>
 
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
                                                                     onClick={() => {
-                                                                        if(subscribe){
-                                                                              setShowRequest(false);
-                                                                        setShowSubscribers(false);
-                                                                        setShowPricingSetting(false);
-                                                                        setShowNotification(false);
-                                                                        setShowFeed(false);
-                                                                        setShowChatRoom(false);
+                                                                        if (subscribe) {
+                                                                            setShowRequest(false);
+                                                                            setShowSubscribers(false);
+                                                                            setShowPricingSetting(false);
+                                                                            setShowNotification(false);
+                                                                            setShowFeed(false);
+                                                                            setShowChatRoom(false);
 
-                                                                        !onDemandMedia && setOnDemandMedia(!onDemandMedia);
-                                                                        getAllOnDemandMedia("image");  
+                                                                            !onDemandMedia && setOnDemandMedia(!onDemandMedia);
+                                                                            getAllOnDemandMedia("image");
                                                                         }
-                                                                    
+
                                                                     }}
                                                                 >Photos</button>
 
