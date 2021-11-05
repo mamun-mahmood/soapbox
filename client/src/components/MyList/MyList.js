@@ -255,7 +255,7 @@ const MyList = ({ username }) => {
                     <div className="modal-overlay"></div>
                     <ClickAwayListener onClickAway={() => { setIsCreateMyListModalOpen(false) }}>
                         <div className="myList-modal">
-                            <h4>{keywordsFromDb.length > 0 ? "Update" : "Create"} Following</h4>
+                            <h4>{keywordsFromDb.length > 0 ? "Topics to follow" : "Topics to follow"} </h4>
                             <div className="myList-info">
                                 <div className="myList-desc">
                                     {keywordsFromDb.length > 0
@@ -303,7 +303,7 @@ const MyList = ({ username }) => {
                                         className="btn-mylist"
                                         onClick={handleSubmit}
                                     >
-                                        Add to My List
+                                        Add Topics
                                     </button>{' '}
                                 </div>
                             </div>

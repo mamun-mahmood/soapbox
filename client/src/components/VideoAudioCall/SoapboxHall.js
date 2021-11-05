@@ -4,7 +4,7 @@ import kurentoUtils from "kurento-utils";
 import frame from '../../assets/frame.png';
 import bgRoom from '../../assets/roombg.png';
 import { Call, CallEnd, Camera, CameraEnhance, CameraFront, CameraRear, Chat, ControlCamera, Group, Mic, MicOff, MoreVert, PersonAdd, Settings, VideoCall, Videocam, VideocamOff, VolumeMute } from '@material-ui/icons';
-import './index.css'
+import './SoapboxHall.css'
 import { withRouter } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 import axios from 'axios'
