@@ -4,7 +4,7 @@ import SideBarOption from './SideBarOption'
 import { BsLightning } from 'react-icons/bs'
 import { Link, NavLink, useHistory } from 'react-router-dom'
 import { FiHome, FiHash, FiSearch, FiShield } from 'react-icons/fi'
-import { RiFileList3Line, RiShieldFlashLine, RiChatPrivateFill, RiGroup2Fill, RiGroup2Line, RiChatPrivateLine } from 'react-icons/ri'
+import { RiFileList3Line,RiAccountPinCircleFill, RiShieldFlashLine, RiChatPrivateFill, RiGroup2Fill, RiGroup2Line, RiChatPrivateLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
 import './sidebar.css';
@@ -211,7 +211,7 @@ const SideBar = () => {
                     </li> */}
 
                     <SideBarOption
-                        option="Home"
+                        option="All Hoots"
                         // link="/home"
                         link="/"
                         Icon={FiHome}
@@ -220,9 +220,9 @@ const SideBar = () => {
                     {userInfo
                         ?
                         <SideBarOption
-                            option="My List"
+                            option="Following"
                             link={`/${username}/mylist`}
-                            Icon={RiFileList3Line}
+                            Icon={RiAccountPinCircleFill}
                         />
                         : null
                     }

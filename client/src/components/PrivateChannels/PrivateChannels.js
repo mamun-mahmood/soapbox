@@ -806,7 +806,7 @@ useEffect(() => {
                                                         <div>
 
 
-                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Tools Box</div>
+                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Toolbox</div>
                                                             <div className="control">
                                                                 <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
                                                                 <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>

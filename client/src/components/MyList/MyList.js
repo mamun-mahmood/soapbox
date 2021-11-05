@@ -212,7 +212,7 @@ const MyList = ({ username }) => {
     return (
         <div className="mylist">
             <div className="top-mylist-header">
-                <h4>My List</h4>
+                <h4>Following</h4>
                 <div className="mylist-icons">
                     {keywordsFromDb.length > 0 &&
                         <FiMoreHorizontal
@@ -255,14 +255,14 @@ const MyList = ({ username }) => {
                     <div className="modal-overlay"></div>
                     <ClickAwayListener onClickAway={() => { setIsCreateMyListModalOpen(false) }}>
                         <div className="myList-modal">
-                            <h4>{keywordsFromDb.length > 0 ? "Update" : "Create"} My List</h4>
+                            <h4>{keywordsFromDb.length > 0 ? "Update" : "Create"} Following</h4>
                             <div className="myList-info">
                                 <div className="myList-desc">
                                     {keywordsFromDb.length > 0
                                         ?
-                                        "Add new keywords to your existing keywords in My List which will show Hoots only related to added keywords."
+                                        "Add topics that you want to follow and discover Hoots that matter to you."
                                         :
-                                        "Add keywords to Create My List which will show Hoots only related to added keywords."
+                                        "Add topics that you want to follow and discover Hoots that matter to you."
                                     }
                                 </div>
                                 <form onSubmit={handleSubmit}>
