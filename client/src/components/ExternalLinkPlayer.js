@@ -27,6 +27,7 @@ const ExternalLinkPlayer = ({ link, filePath, username, views, hootImgId, profil
                                 id: hootId
                             })
                         }}
+                        onDragStart={(e) => e.preventDefault()}
                     >
                         <source src={link} />
                         Your browser does not support HTML video.
@@ -51,6 +52,7 @@ const ExternalLinkPlayer = ({ link, filePath, username, views, hootImgId, profil
                                     id: hootId
                                 })
                             }}
+                            onDragStart={(e) => e.preventDefault()}
                         >
                             <source src={link} />
                             Your browser does not support HTML video.

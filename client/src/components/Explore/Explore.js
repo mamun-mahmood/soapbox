@@ -191,6 +191,7 @@ const Explore = () => {
                                                             style={{ margin: "0" }}
                                                             onMouseOver={event => event.target.play()}
                                                             onMouseOut={event => event.target.pause()}
+                                                            onDragStart={(e) => e.preventDefault()}
                                                         >
                                                             <source src={hoot.link} />
                                                             Your browser does not support HTML video.
@@ -211,6 +212,7 @@ const Explore = () => {
                                                                 poster={`${BaseURL}/profile-pictures/${`${BaseURL}/profile-pictures/${hoot.profilePic}`}`}
                                                                 className="hoot-vdo-profile"
                                                                 style={{ margin: "0" }}
+                                                                onDragStart={(e) => e.preventDefault()}
                                                             >
                                                                 <source src={hoot.link} />
                                                                 Your browser does not support HTML video.
@@ -292,6 +294,7 @@ const Explore = () => {
                                                                 style={{ margin: "0" }}
                                                                 onMouseOver={event => event.target.play()}
                                                                 onMouseOut={event => event.target.pause()}
+                                                                onDragStart={(e) => e.preventDefault()}
                                                             >
                                                                 <source src={hoot.link} />
                                                                 Your browser does not support HTML video.
@@ -312,6 +315,7 @@ const Explore = () => {
                                                                     poster={`${BaseURL}/profile-pictures/${`${BaseURL}/profile-pictures/${hoot.profilePic}`}`}
                                                                     className="hoot-vdo-profile"
                                                                     style={{ margin: "0" }}
+                                                                    onDragStart={(e) => e.preventDefault()}
                                                                 >
                                                                     <source src={hoot.link} />
                                                                     Your browser does not support HTML video.

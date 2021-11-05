@@ -401,6 +401,7 @@ const PublicProfile = ({
                                                                         style={{ margin: "0" }}
                                                                         onMouseOver={event => event.target.play()}
                                                                         onMouseOut={event => event.target.pause()}
+                                                                        onDragStart={(e) => e.preventDefault()}
                                                                     >
                                                                         <source
                                                                             src={user.link}
@@ -417,6 +418,7 @@ const PublicProfile = ({
                                                                             poster={`${BaseURL}/profile-pictures/${profilePic}`}
                                                                             className="hoot-vdo-profile"
                                                                             style={{ margin: "0" }}
+                                                                            onDragStart={(e) => e.preventDefault()}
                                                                         >
                                                                             <source
                                                                                 src={user.link}

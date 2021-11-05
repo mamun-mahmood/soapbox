@@ -46,9 +46,8 @@ const MediaProfile = ({
                         className={isVertical}
                         onContextMenu={(e) => e.preventDefault()}
                         onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
-                        onLoad={(e) => {
-                            imgRef();
-                        }}
+                        onLoad={(e) => { imgRef() }}
+                        onDragStart={(e) => e.preventDefault()}
                     />
                     {mimeType.includes("image/gif") &&
                         <MdGif
@@ -73,6 +72,7 @@ const MediaProfile = ({
                         onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
                         onMouseOver={event => event.target.play()}
                         onMouseOut={event => event.target.pause()}
+                        onDragStart={(e) => e.preventDefault()}
                     >
                         <source
                             src={filePath}
@@ -98,6 +98,7 @@ const MediaProfile = ({
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
                         onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
+                        onDragStart={(e) => e.preventDefault()}
                     >
                         <source
                             src={filePath}

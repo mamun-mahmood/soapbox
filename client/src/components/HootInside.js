@@ -862,6 +862,7 @@ const HootInside = ({
                                                                                     id: hootId
                                                                                 })
                                                                             }}
+                                                                            onDragStart={(e) => e.preventDefault()}
                                                                         >
                                                                             <source
                                                                                 src={link}
@@ -884,6 +885,7 @@ const HootInside = ({
                                                                                         id: hootId
                                                                                     })
                                                                                 }}
+                                                                                onDragStart={(e) => e.preventDefault()}
                                                                             >
                                                                                 <source
                                                                                     src={link}
@@ -1153,7 +1155,12 @@ const HootInside = ({
                                     onContextMenu={(e) => e.preventDefault()}
                                 >
                                     {ReactPlayer.canPlay(link) &&
-                                        link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                        link.endsWith('.mp4') ||
+                                        link.endsWith('.mkv') ||
+                                        link.endsWith('.mov') ||
+                                        link.endsWith('.ogv') ||
+                                        link.endsWith('.webm') ||
+                                        link.endsWith('.mpg')
                                         ?
                                         <div>
                                             <video
@@ -1168,15 +1175,20 @@ const HootInside = ({
                                                         id: hootId
                                                     })
                                                 }}
+                                                onDragStart={(e) => e.preventDefault()}
                                             >
-                                                <source
-                                                    src={link}
-                                                />
+                                                <source src={link} />
                                                 Your browser does not support HTML video.
                                             </video>
                                         </div>
                                         :
-                                        link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                        link.endsWith('.mp3') ||
+                                            link.endsWith('.ogg') ||
+                                            link.endsWith('.wav') ||
+                                            link.endsWith('.flac') ||
+                                            link.endsWith('.aac') ||
+                                            link.endsWith('.alac') ||
+                                            link.endsWith('.dsd')
                                             ?
                                             <div>
                                                 <video
@@ -1190,10 +1202,9 @@ const HootInside = ({
                                                             id: hootId
                                                         })
                                                     }}
+                                                    onDragStart={(e) => e.preventDefault()}
                                                 >
-                                                    <source
-                                                        src={link}
-                                                    />
+                                                    <source src={link} />
                                                     Your browser does not support HTML video.
                                                 </video>
                                             </div>
@@ -1861,7 +1872,12 @@ const HootInside = ({
                                                     >
                                                         {!mimeType ?
                                                             ReactPlayer.canPlay(link) &&
-                                                                link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                                                link.endsWith('.mp4') ||
+                                                                link.endsWith('.mkv') ||
+                                                                link.endsWith('.mov') ||
+                                                                link.endsWith('.ogv') ||
+                                                                link.endsWith('.webm') ||
+                                                                link.endsWith('.mpg')
                                                                 ?
                                                                 <div>
                                                                     <video
@@ -1876,10 +1892,9 @@ const HootInside = ({
                                                                                 id: hootId
                                                                             })
                                                                         }}
+                                                                        onDragStart={(e) => e.preventDefault()}
                                                                     >
-                                                                        <source
-                                                                            src={link}
-                                                                        />
+                                                                        <source src={link} />
                                                                         Your browser does not support HTML video.
                                                                     </video>
                                                                 </div>
@@ -1898,10 +1913,9 @@ const HootInside = ({
                                                                                     id: hootId
                                                                                 })
                                                                             }}
+                                                                            onDragStart={(e) => e.preventDefault()}
                                                                         >
-                                                                            <source
-                                                                                src={link}
-                                                                            />
+                                                                            <source src={link} />
                                                                             Your browser does not support HTML video.
                                                                         </video>
                                                                     </div>
@@ -2250,7 +2264,12 @@ const HootInside = ({
                                 onContextMenu={(e) => e.preventDefault()}
                             >
                                 {ReactPlayer.canPlay(link) &&
-                                    link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                    link.endsWith('.mp4') ||
+                                    link.endsWith('.mkv') ||
+                                    link.endsWith('.mov') ||
+                                    link.endsWith('.ogv') ||
+                                    link.endsWith('.webm') ||
+                                    link.endsWith('.mpg')
                                     ?
                                     <div>
                                         <video
@@ -2265,15 +2284,20 @@ const HootInside = ({
                                                     id: hootId
                                                 })
                                             }}
+                                            onDragStart={(e) => e.preventDefault()}
                                         >
-                                            <source
-                                                src={link}
-                                            />
+                                            <source src={link} />
                                             Your browser does not support HTML video.
                                         </video>
                                     </div>
                                     :
-                                    link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                    link.endsWith('.mp3') ||
+                                        link.endsWith('.ogg') ||
+                                        link.endsWith('.wav') ||
+                                        link.endsWith('.flac') ||
+                                        link.endsWith('.aac') ||
+                                        link.endsWith('.alac') ||
+                                        link.endsWith('.dsd')
                                         ?
                                         <div>
                                             <video
@@ -2287,10 +2311,9 @@ const HootInside = ({
                                                         id: hootId
                                                     })
                                                 }}
+                                                onDragStart={(e) => e.preventDefault()}
                                             >
-                                                <source
-                                                    src={link}
-                                                />
+                                                <source src={link} />
                                                 Your browser does not support HTML video.
                                             </video>
                                         </div>
@@ -2314,11 +2337,15 @@ const HootInside = ({
                                 }
 
                                 {mimeType &&
-                                    (link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
-                                        ?
-                                        null
-                                        :
-                                        <MediaContent
+                                    (link.endsWith('.mp3') ||
+                                        link.endsWith('.ogg') ||
+                                        link.endsWith('.wav') ||
+                                        link.endsWith('.flac') ||
+                                        link.endsWith('.aac') ||
+                                        link.endsWith('.alac') ||
+                                        link.endsWith('.dsd')
+                                        ? null
+                                        : <MediaContent
                                             hootId={hootId}
                                             mimeType={mimeType}
                                             filePath={filePath}

@@ -311,9 +311,13 @@ const Profile = ({
                                                             onClick={() => { history.push(`/${username}/hoot/${upload.id}`) }}
                                                         >
                                                             {ReactPlayer.canPlay(upload.link) &&
-                                                                upload.link.endsWith('.mp4') || upload.link.endsWith('.mkv') || upload.link.endsWith('.mov') || upload.link.endsWith('.ogv') || upload.link.endsWith('.webm') || upload.link.endsWith('.mpg')
-                                                                ?
-                                                                <div className="vdo-container">
+                                                                upload.link.endsWith('.mp4') ||
+                                                                upload.link.endsWith('.mkv') ||
+                                                                upload.link.endsWith('.mov') ||
+                                                                upload.link.endsWith('.ogv') ||
+                                                                upload.link.endsWith('.webm') ||
+                                                                upload.link.endsWith('.mpg')
+                                                                ? <div className="vdo-container">
                                                                     <video
                                                                         muted
                                                                         disablePictureInPicture
@@ -321,26 +325,29 @@ const Profile = ({
                                                                         style={{ margin: "0" }}
                                                                         onMouseOver={event => event.target.play()}
                                                                         onMouseOut={event => event.target.pause()}
+                                                                        onDragStart={(e) => e.preventDefault()}
                                                                     >
-                                                                        <source
-                                                                            src={upload.link}
-                                                                        />
+                                                                        <source src={upload.link} />
                                                                         Your browser does not support HTML video.
                                                                     </video>
                                                                 </div>
                                                                 :
-                                                                upload.link.endsWith('.mp3') || upload.link.endsWith('.ogg') || upload.link.endsWith('.wav') || upload.link.endsWith('.flac') || upload.link.endsWith('.aac') || upload.link.endsWith('.alac') || upload.link.endsWith('.dsd')
-                                                                    ?
-                                                                    <div className="vdo-container">
+                                                                upload.link.endsWith('.mp3') ||
+                                                                    upload.link.endsWith('.ogg') ||
+                                                                    upload.link.endsWith('.wav') ||
+                                                                    upload.link.endsWith('.flac') ||
+                                                                    upload.link.endsWith('.aac') ||
+                                                                    upload.link.endsWith('.alac') ||
+                                                                    upload.link.endsWith('.dsd')
+                                                                    ? <div className="vdo-container">
                                                                         <video
                                                                             muted
                                                                             poster={`${BaseURL}/profile-pictures/${profilePic}`}
                                                                             className="hoot-vdo-profile"
                                                                             style={{ margin: "0" }}
+                                                                            onDragStart={(e) => e.preventDefault()}
                                                                         >
-                                                                            <source
-                                                                                src={upload.link}
-                                                                            />
+                                                                            <source src={upload.link} />
                                                                             Your browser does not support HTML video.
                                                                         </video>
                                                                     </div>

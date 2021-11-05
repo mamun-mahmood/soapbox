@@ -99,6 +99,7 @@ const MediaContent = ({
                         className={isVertical}
                         onContextMenu={(e) => e.preventDefault()}
                         onLoad={(e) => { setViewCount(viewCount + 1), imgRef() }}
+                        onDragStart={(e) => e.preventDefault()}
                     />
                 </div>
             }
@@ -115,6 +116,7 @@ const MediaContent = ({
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
                         onLoadStart={(e) => setViewCount(viewCount + 1), autoComments}
+                        onDragStart={(e) => e.preventDefault()}
                     >
                         <source
                             src={filePath}
@@ -137,6 +139,7 @@ const MediaContent = ({
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
                         onLoadStart={(e) => setViewCount(viewCount + 1), autoComments}
+                        onDragStart={(e) => e.preventDefault()}
                     >
                         <source
                             src={filePath}

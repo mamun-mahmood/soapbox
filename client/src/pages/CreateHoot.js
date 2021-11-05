@@ -482,6 +482,7 @@ const CreateHoot = () => {
                                         disablePictureInPicture
                                         className="hoot-vdo"
                                         controlsList="nodownload"
+                                        onDragStart={(e) => e.preventDefault()}
                                     >
                                         <source
                                             src={link}
@@ -497,6 +498,7 @@ const CreateHoot = () => {
                                             className="hoot-vdo"
                                             style={{ width: "auto" }}
                                             controlsList="nodownload"
+                                            onDragStart={(e) => e.preventDefault()}
                                         >
                                             <source
                                                 src={link}

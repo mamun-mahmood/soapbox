@@ -805,6 +805,7 @@ const CreatePrivateHoot = () => {
                                         className="hoot-vdo"
                                         style={{ width: "none" }}
                                         controlsList="nodownload"
+                                        onDragStart={(e) => e.preventDefault()}
                                     >
                                         <source
                                             src={link}
@@ -820,6 +821,7 @@ const CreatePrivateHoot = () => {
                                             className="hoot-vdo"
                                             style={{ width: "auto" }}
                                             controlsList="nodownload"
+                                            onDragStart={(e) => e.preventDefault()}
                                         >
                                             <source
                                                 src={link}
