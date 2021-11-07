@@ -3,11 +3,12 @@ import socket, { startSocket } from './socket'
 import kurentoUtils from "kurento-utils";
 import frame from '../../assets/frame.png';
 import bgRoom from '../../assets/roombg.png';
-import { Call, CallEnd, Camera, CameraEnhance, CameraFront, CameraRear, Chat, ControlCamera, Group, Mic, MicOff, MoreVert, PersonAdd, Settings, VideoCall, Videocam, VideocamOff, VolumeMute } from '@material-ui/icons';
+import { Call, CallEnd, Camera, CameraEnhance, CameraFront, CameraRear, Chat, Check, ControlCamera, Group, Mic, MicOff, MoreVert, PersonAdd, Settings, VideoCall, Videocam, VideocamOff, VolumeMute } from '@material-ui/icons';
 import './index.css'
 import { withRouter } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 import axios from 'axios'
+import { FaWindowClose } from 'react-icons/fa';
 class SoapboxHall extends Component {
     constructor(props) {
         super(props);
@@ -440,7 +441,7 @@ class SoapboxHall extends Component {
                 videoTracks.forEach((track) => (track.enabled = false))
             }
         }
-
+      
 
 
 
@@ -527,7 +528,47 @@ class SoapboxHall extends Component {
                                 className="wrapper"
 
                             >
-                                {waiter.username} is in reception area
+                              <p style={{fontSize:'1rem'}}>{waiter.username} is in reception area</p>
+                              <Check onClick={()=>{
+
+var Message = {
+    event: 'comeInRoom',
+    userid: waiter.userid,
+    roomName: waiter.roomName,
+    hostUserName:this.props.location.state.hostUserName
+}
+
+
+
+console.log('sending ' + Message.event + ' message to server');
+socket.emit('message', Message);
+this.setState({
+    waiters: this.state.waiters.filter(
+      (user) => user !== waiter
+    )
+  });
+
+                              }} style={{color:'green',cursor:'pointer'}} />
+                              <FaWindowClose style={{color:'red',cursor:'pointer'}}
+                               onClick={()=>{
+
+                                var Message = {
+                                    event: 'rejected',
+                                    userid: waiter.userid,
+                                    roomName: waiter.roomName,
+                                }
+                                
+                                console.log('sending ' + Message.event + ' message to server');
+                                socket.emit('message', Message);
+
+                                this.setState({
+                                    waiters: this.state.waiters.filter(
+                                      (user) => user !== waiter
+                                    )
+                                  });
+                                
+                                                              }}
+                              />
                             </div>
                         ))}</div>
 

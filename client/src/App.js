@@ -35,6 +35,8 @@ import CreatePrivateHoot from './pages/CreatePrivateHoot'
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CommentsPanel from './pages/CommentsPanel/CommentsPanel';
+import AudioHall from './components/VideoAudioCall/AudioHall';
+import ReceptionAudio from './components/VideoAudioCall/audioReception';
 
 function App() {
   return (
@@ -69,6 +71,10 @@ function App() {
         <Route path="/:FakeData/SoapboxHall/:randomFakeKey?">
           <ProtectedRoute page={SoapboxHall} />
         </Route>
+        <Route path="/:FakeData/AudioHall/:randomFakeKey?">
+          <ProtectedRoute page={AudioHall} />
+        </Route>
+        
 
         <Route path="/:FakeData/RecordMessage/:hallId?/:userName?/:randomFakeKey?">
           <ProtectedRoute page={recordMessage} />
@@ -77,7 +83,10 @@ function App() {
         <Route path="/:FakeData/Reception/:hallId?/:randomFakeKey?">
           <ProtectedRoute page={Reception} />
         </Route>
-
+        <Route path="/:FakeData/ReceptionAudio/:hallId?/:randomFakeKey?">
+          <ProtectedRoute page={ReceptionAudio} />
+        </Route>
+        
         <Route path="/bedb02b7-1893-423a-a545-aea621d3d04b/Admin/bedb02b7-a545-aea621d3d04b-1893-423a">
           <ProtectedRoute page={Admin} />
         </Route>

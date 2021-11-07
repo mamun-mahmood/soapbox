@@ -3,7 +3,7 @@ import axios from 'axios'
 import SideBarOption from './SideBarOption'
 import { BsLightning } from 'react-icons/bs'
 import { Link, NavLink, useHistory } from 'react-router-dom'
-import { FiHome, FiHash, FiSearch, FiShield } from 'react-icons/fi'
+import { FiHome, FiHash, FiSearch, FiShield,FiKey } from 'react-icons/fi'
 import { RiFileList3Line, RiAccountPinCircleFill, RiShieldFlashLine, RiChatPrivateFill, RiGroup2Fill, RiGroup2Line, RiChatPrivateLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
@@ -253,6 +253,12 @@ const SideBar = () => {
                         link="/explore"
                         Icon={BsLightning}
                     />
+                     <SideBarOption
+                        option="Login"
+                        link="/login"
+                        Icon={FiKey}
+                    />
+                    
 
                     {/* <SideBarOption
                         option="Hashtags"
@@ -382,13 +388,13 @@ const SideBar = () => {
 
                     <div style={{ paddingLeft: "1rem" }}>
                         <li>
-                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Suggested Follows & Clubs</small>{" "}
+                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Discover People & Clubs</small>{" "}
                         </li>
                         <RandomSuggestedFollows />
                     </div>
                     <div style={{ paddingLeft: "1rem" }}>
                         <li>
-                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Community Clubs</small>{" "}
+                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Discover Community Clubs</small>{" "}
                         </li>
                         <RandomCommunitySuggestion />
                     </div>
@@ -396,7 +402,7 @@ const SideBar = () => {
                     {/* suggested Hoots  */}
                     <div style={{ paddingLeft: "1rem" }}>
                         <li>
-                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Suggested Hoots</small>{" "}
+                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Discover Hoots</small>{" "}
                         </li>
                         <RamdomSuggestedHoots />
                     </div>

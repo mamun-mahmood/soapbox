@@ -36,8 +36,37 @@ const constraints = window.constraints = {
           
             break;
          case 'comeInRoom':
-            socket.to(message.roomName).emit('message',message)
+            // socket.to(message.roomName).emit('message',message)
+              if(message.userid==myUserId){
+                  history.push({
+              pathname: `/${uuidv4()}/SoapboxHall/${uuidv4()}`,
+              state: {
+                  host: false,
+                  userName: userName,
+                  hallId: hallId,
+                  hostUserName: message.hostUserName
+              }
+
+
+          });
+              }
+          
             break;
+            case 'rejected':
+              if(message.userid==myUserId){
+                const video = document.querySelector('video');
+                const mediaStream = video.srcObject;
+                const videoTracks = mediaStream.getTracks();
+                videoTracks.forEach((track) => (track.stop()))
+                 history.push({
+                pathname: `/`,
+                
+  
+  
+            });
+            
+              }
+             
            
 
     }
@@ -51,6 +80,8 @@ const constraints = window.constraints = {
     window.stream = stream; // make variable available to browser console
     video.srcObject = stream;
     video.play()
+
+    
   }
   
   function handleError(error) {

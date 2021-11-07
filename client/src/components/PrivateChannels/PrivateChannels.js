@@ -44,7 +44,7 @@ import RandomSuggestedFollows from '../SideBar/RandomSuggestedFollows'
 import RandomCommunitySuggestion from "../SideBar/RandomCommunitySuggestion";
 import { HiBadgeCheck } from "react-icons/hi";
 import ReactTooltip from "react-tooltip";
-import VideoChat from "../VideoAudioCall/VideoChat";
+import VideoChat from "../VideoChat/VideoChat";
 
 const PrivateChannels = () => {
     const hallId = uuidv4()
@@ -844,7 +844,23 @@ const PrivateChannels = () => {
                                                                 <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
                                                                 <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
 
-                                                                <button style={{ minWidth: '208px' }} >Make a Vero Audio Call</button>
+                                                                <button style={{ minWidth: '208px' }}
+                                                                onClick={() => {
+                                                                    const Id = uuidv4()
+                                                                    history.push({
+                                                                        pathname: `/${uuidv4()}/AudioHall/${uuidv4()}`,
+                                                                        state: {
+                                                                            host: true,
+                                                                            userName: userInformation.username,
+                                                                            hallId: Id,
+                                                                            hostUserName: username,
+                                                                            profilePic:`${BaseURL}/profile-pictures/${userProfilePic}`
+                                                                        }
+
+
+                                                                    });
+                                                                }}
+                                                                >Make a Vero Audio Call</button>
                                                                 <button style={{ minWidth: '208px' }} onClick={() => {
                                                                     const Id = uuidv4()
                                                                     history.push({
