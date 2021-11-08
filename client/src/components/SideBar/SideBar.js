@@ -3,7 +3,7 @@ import axios from 'axios'
 import SideBarOption from './SideBarOption'
 import { BsLightning } from 'react-icons/bs'
 import { Link, NavLink, useHistory } from 'react-router-dom'
-import { FiHome, FiHash, FiSearch, FiShield,FiKey } from 'react-icons/fi'
+import { FiHome, FiHash, FiSearch, FiShield, FiKey } from 'react-icons/fi'
 import { RiFileList3Line, RiAccountPinCircleFill, RiShieldFlashLine, RiChatPrivateFill, RiGroup2Fill, RiGroup2Line, RiChatPrivateLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
@@ -253,12 +253,21 @@ const SideBar = () => {
                         link="/explore"
                         Icon={BsLightning}
                     />
-                     <SideBarOption
-                        option="Login"
-                        link="/login"
-                        Icon={FiKey}
-                    />
-                    
+
+                    {/* <SideBarOption
+                            option="Login"
+                            link="/login"
+                            Icon={FiKey}
+                        /> */}
+
+                    {!userInfo
+                        ? <div className="btn-login-home-page">
+                            <button onClick={() => { history.push("/login") }}>
+                                Login
+                            </button>
+                        </div>
+                        : null
+                    }
 
                     {/* <SideBarOption
                         option="Hashtags"

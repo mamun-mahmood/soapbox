@@ -467,6 +467,35 @@
     cursor: pointer;
 }
 
+.btn-login-home-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-left: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.btn-login-home-page > button {
+    width: 100%;
+    height: 2.5rem;
+
+    border: solid 1px var(--primary-color);
+    border-radius: 0.4rem;
+
+    color: var(--primary-color);
+    background-color: transparent;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.btn-login-home-page > button:hover {
+   background-color: #e6e6fa;
+}
+
 @media only screen and (max-width: 1000px) {
     .toggle {
         display: none;
