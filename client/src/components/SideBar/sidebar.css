@@ -473,9 +473,9 @@
     align-items: center;
 
     padding-left: 1rem;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin: 0.5rem;
+    margin-right: 1rem;
+    margin-left: 0;
 }
 
 .btn-login-home-page > button {
