@@ -19,7 +19,8 @@ const BrowseMoreHoots = Loadable({
 })
 
 const IndividualHoot = () => {
-    const { id } = useParams();
+    var { id } = useParams();
+id=atob(id);
     const [hoot, setHoot] = useState([]);
     const BaseURL = process.env.REACT_APP_API_URL;
     const history = useHistory();

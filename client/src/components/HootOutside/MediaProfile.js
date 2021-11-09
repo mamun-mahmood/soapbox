@@ -3,7 +3,7 @@ import LazyLoad from 'react-lazyload';
 import { useHistory } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa'
 import { MdGif, MdMusicNote } from 'react-icons/md'
-
+import { v4 as uuidv4 } from "uuid";
 const MediaProfile = ({
     mimeType,
     filePath,
@@ -45,14 +45,14 @@ const MediaProfile = ({
                         alt="soapbox-img"
                         className={isVertical}
                         onContextMenu={(e) => e.preventDefault()}
-                        onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
+                        onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}
                         onLoad={(e) => { imgRef() }}
                         onDragStart={(e) => e.preventDefault()}
                     />
                     {mimeType.includes("image/gif") &&
                         <MdGif
                             className="GIF-overlay"
-                            onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
+                            onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}
                         />
                     }
                 </LazyLoad>
@@ -69,7 +69,7 @@ const MediaProfile = ({
                         className="hoot-vdo-profile"
                         controlsList="nodownload"
                         onContextMenu={(event) => event.preventDefault()}
-                        onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
+                        onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}
                         onMouseOver={event => event.target.play()}
                         onMouseOut={event => event.target.pause()}
                         onDragStart={(e) => e.preventDefault()}
@@ -82,7 +82,7 @@ const MediaProfile = ({
                     </video>
                     <FaPlay
                         className="play-vdo-overlay"
-                        onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
+                        onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}
                     />
                 </LazyLoad>
             }
@@ -97,7 +97,7 @@ const MediaProfile = ({
                         poster={audioPoster !== null ? audioPosterPath : profilePicPath}
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
-                        onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
+                        onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}
                         onDragStart={(e) => e.preventDefault()}
                     >
                         <source
@@ -109,7 +109,7 @@ const MediaProfile = ({
                     </video>
                     <MdMusicNote
                         className="play-vdo-overlay"
-                        onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}
+                        onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}
                     />
                 </LazyLoad>
             }

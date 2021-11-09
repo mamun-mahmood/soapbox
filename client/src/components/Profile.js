@@ -308,7 +308,7 @@ const Profile = ({
                                                             className="hoot-img-vertical-profile"
                                                             style={{ animation: "none", backgroundColor: "#d9d1f8" }}
                                                             onContextMenu={(e) => e.preventDefault()}
-                                                            onClick={() => { history.push(`/${username}/hoot/${upload.id}`) }}
+                                                            onClick={() => { history.push(`/${username}/hoot/${btoa(upload.id)}/${uuidv4()}`) }}
                                                         >
                                                             {ReactPlayer.canPlay(upload.link) &&
                                                                 upload.link.endsWith('.mp4') ||
@@ -368,12 +368,12 @@ const Profile = ({
                                                         <FiPlayCircle
                                                             className="GIF-overlay"
                                                             style={{ borderRadius: "50%" }}
-                                                            onClick={() => { history.push(`/${username}/hoot/${upload.id}`) }}
+                                                            onClick={() => { history.push(`/${username}/hoot/${btoa(upload.id)}/${uuidv4()}`) }}
                                                         />
                                                     </div>
                                                     :
                                                     <HootOutside
-                                                        hootId={upload.id}
+                                                        hootId={(upload.id)}
                                                         username={upload.authorUsername}
                                                         mimeType={upload.mimeType}
                                                         hootImgId={upload.image}

@@ -54,7 +54,7 @@ const HootInside = ({
     const BaseURL = process.env.REACT_APP_API_URL; // API url 
     const hostURL = "https://www.megahoot.net"; // main website
     const filePath = `${BaseURL}/images/${hootImgId}`; // media url from server
-    const shareBaseUrl = `${hostURL}/${username}/hoot/${hootId}`; // url for individual hoot for main soapbox website
+    const shareBaseUrl = `${hostURL}/${username}/hoot/${btoa(hootId)}/${uuidv4()}`; // url for individual hoot for main soapbox website
     // encoded share url for individual hoot to be shared on other social media
     const shareUrl = encodeURIComponent(shareBaseUrl);
     // const shareCaption = encodeURIComponent(`${caption.length > 10 ? caption.substring(0, 70) : caption} @${username}`);
@@ -373,7 +373,7 @@ const HootInside = ({
         setIsEmbedModalOpen(true);
     }
 
-    const embedHootLink = `https://www.megahoot.net/embed/hoot/${hootId}`
+    const embedHootLink = `https://www.megahoot.net/embed/hoot/${btoa(hootId)}/${uuidv4()}`
 
     const homeRef = useRef(null);
     // const [iframeHeight, setIframeHeight] = useState(0)
@@ -750,7 +750,7 @@ const HootInside = ({
                                                 {userInfo ?
                                                     username === userInfo.username ?
                                                         <div className="more-options">
-                                                            <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                            <span onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}>Go to Hoot</span>
                                                             <span onClick={shareVia}>Share to</span>
                                                             <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                             <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -759,14 +759,14 @@ const HootInside = ({
                                                         </div>
                                                         :
                                                         <div className="more-options">
-                                                            <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                            <span onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}>Go to Hoot</span>
                                                             <span onClick={shareVia}>Share to</span>
                                                             <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                             <span onClick={copyTextToClipboard}>Copy Text</span>
                                                         </div>
                                                     :
                                                     <div className="more-options">
-                                                        <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                        <span onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}>Go to Hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -1776,7 +1776,7 @@ const HootInside = ({
                                             {userInfo ?
                                                 username === userInfo.username ?
                                                     <div className="more-options">
-                                                        <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                        <span onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}>Go to Hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -1786,7 +1786,7 @@ const HootInside = ({
                                                     </div>
                                                     :
                                                     <div className="more-options">
-                                                        <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                        <span onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}>Go to Hoot</span>
                                                         <span onClick={shareVia}>Share to</span>
                                                         <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                         <span onClick={copyTextToClipboard}>Copy Text</span>
@@ -1794,7 +1794,7 @@ const HootInside = ({
                                                     </div>
                                                 :
                                                 <div className="more-options">
-                                                    <span onClick={() => { history.push(`/${username}/hoot/${hootId}`) }}>Go to Hoot</span>
+                                                    <span onClick={() => { history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`) }}>Go to Hoot</span>
                                                     <span onClick={shareVia}>Share to</span>
                                                     <span onClick={copyLinkToClipboard}>Copy Link</span>
                                                     <span onClick={copyTextToClipboard}>Copy Text</span>

@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import ReactPlayer from 'react-player';
 import { useHistory } from 'react-router';
 import FoundUsers from '../FoundUsers';
-
+import { v4 as uuidv4 } from "uuid";
 const Explore = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [trendingHoots, setTrendingHoots] = useState([]);
@@ -173,7 +173,7 @@ const Explore = () => {
                                                 className="hoot-img-vertical-profile"
                                                 style={{ animation: "none", backgroundColor: "#d9d1f8" }}
                                                 onContextMenu={(e) => e.preventDefault()}
-                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${hoot.id}`) }}
+                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}/${uuidv4()}`) }}
                                             >
                                                 {ReactPlayer.canPlay(hoot.link) &&
                                                     hoot.link.endsWith('.mp4') ||
@@ -235,19 +235,19 @@ const Explore = () => {
                                             <FiPlayCircle
                                                 className="GIF-overlay"
                                                 style={{ borderRadius: "50%" }}
-                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${hoot.id}`) }}
+                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}/${uuidv4()}`) }}
                                             />
                                         </div>
                                         :
                                         hoot.mimeType.substr(0, 5) == "audio"
                                             ? <ExploreHoot
-                                                hootId={hoot.id}
+                                                hootId={(hoot.id)}
                                                 username={hoot.authorUsername}
                                                 mimeType={hoot.mimeType}
                                                 hootImgId={hoot.image}
                                             />
                                             : <HootOutside
-                                                hootId={hoot.id}
+                                                hootId={(hoot.id)}
                                                 username={hoot.authorUsername}
                                                 mimeType={hoot.mimeType}
                                                 hootImgId={hoot.image}
@@ -276,7 +276,7 @@ const Explore = () => {
                                                     className="hoot-img-vertical-profile"
                                                     style={{ animation: "none", backgroundColor: "#d9d1f8" }}
                                                     onContextMenu={(e) => e.preventDefault()}
-                                                    onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${hoot.id}`) }}
+                                                    onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}/${uuidv4()}`) }}
                                                 >
                                                     {ReactPlayer.canPlay(hoot.link) &&
                                                         hoot.link.endsWith('.mp4') ||
@@ -338,19 +338,19 @@ const Explore = () => {
                                                 <FiPlayCircle
                                                     className="GIF-overlay"
                                                     style={{ borderRadius: "50%" }}
-                                                    onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${hoot.id}`) }}
+                                                    onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}/${uuidv4()}`) }}
                                                 />
                                             </div>
                                             :
                                             hoot.mimeType.substr(0, 5) == "audio"
                                                 ? <ExploreHoot
-                                                    hootId={hoot.id}
+                                                    hootId={btoa(hoot.id)}
                                                     username={hoot.authorUsername}
                                                     mimeType={hoot.mimeType}
                                                     hootImgId={hoot.image}
                                                 />
                                                 : <HootOutside
-                                                    hootId={hoot.id}
+                                                    hootId={btoa(hoot.id)}
                                                     username={hoot.authorUsername}
                                                     mimeType={hoot.mimeType}
                                                     hootImgId={hoot.image}

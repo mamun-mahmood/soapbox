@@ -95,7 +95,7 @@ function App() {
           <ProtectedRoute page={CommentsPanel} />
         </Route>
 
-        <Route path="/embed/hoot/:hootId">
+        <Route path="/embed/hoot/:hootId/:FakeData">
           {/* <ProtectedRoute page={EmbedHootPage} /> */}
           <EmbedHootPage />
         </Route>
@@ -113,7 +113,7 @@ function App() {
           <PublicProfilePage />
         </Route>
 
-        <Route path="/:username/hoot/:id">
+        <Route path="/:username/hoot/:id/:FakeData">
           {/* <ProtectedRoute page={HootPage} /> */}
           <HootPage />
         </Route>

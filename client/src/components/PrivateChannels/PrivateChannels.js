@@ -7,7 +7,7 @@ import InfiniteScrollLoader from "../Feed/InfiniteScrollLoader";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
 import { FaTumblr, IoSend, FaWindowClose } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
-import { FiTwitter, FiSearch, FiSend, FiFolder, FiImage, FiVideo, FiSmile, FiStopCircle, FiSkipBack } from "react-icons/fi";
+import { FiTwitter, FiSearch, FiSend, FiFolder, FiImage, FiVideo, FiSmile, FiStopCircle, FiSkipBack, FiPlayCircle } from "react-icons/fi";
 import socket, { startSocket } from '../../socketChat';
 import Picker from 'emoji-picker-react';
 import Linkify from 'react-linkify';
@@ -45,6 +45,9 @@ import RandomCommunitySuggestion from "../SideBar/RandomCommunitySuggestion";
 import { HiBadgeCheck } from "react-icons/hi";
 import ReactTooltip from "react-tooltip";
 import VideoChat from "../VideoChat/VideoChat";
+import ReactPlayer from "react-player";
+import ExploreHoot from "../Explore/ExploreHoot";
+import HootOutside from "../HootOutside/HootOutside";
 
 const PrivateChannels = () => {
     const hallId = uuidv4()
@@ -1390,36 +1393,127 @@ const PrivateChannels = () => {
                             }
 
                             {onDemandMedia
-                                ? <div className="channel-media" id="feed">
+                                ? <div className="channel-media" id="feed" style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',flexWrap:'wrap'}}>
                                     {onDemandUploads && (
                                         <InfiniteScroll
                                             dataLength={onDemandUploads.length}
                                             next={fetchMoreOnDemandHoots}
                                             hasMore={onDemandHasMore}
+                                            style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',flexWrap:'wrap',padding:'1rem',margin:'1rem'}}
                                         >
-                                            {onDemandUploads.map((upload) => {
+                                            {onDemandUploads.map((hoot) => {
                                                 return (
-                                                    <div key={upload}>
-                                                        <Post
-                                                            hootId={upload.id}
-                                                            username={upload.authorUsername}
-                                                            mimeType={upload.mimeType}
-                                                            hootImgId={upload.image}
-                                                            audioPoster={upload.audioPoster}
-                                                            likes={upload.likes}
-                                                            views={upload.views}
-                                                            followers={upload.followers}
-                                                            caption={upload.caption}
-                                                            link={upload.link}
-                                                            ephemeral={upload.ephemeral}
-                                                            privateHoot={upload.private}
-                                                            onDemandMedia={upload.onDemandMedia}
-                                                            expiryDate={upload.expiryDate}
-                                                            timeStamp={upload.timeStamp}
-                                                            edited={upload.edited}
-                                                            editedTimeStamp={upload.editedTimeStamp}
-                                                        />
-                                                    </div>
+
+                                                    // <div key={upload}>
+                                                    //     <Post
+                                                    //         hootId={upload.id}
+                                                    //         username={upload.authorUsername}
+                                                    //         mimeType={upload.mimeType}
+                                                    //         hootImgId={upload.image}
+                                                    //         audioPoster={upload.audioPoster}
+                                                    //         likes={upload.likes}
+                                                    //         views={upload.views}
+                                                    //         followers={upload.followers}
+                                                    //         caption={upload.caption}
+                                                    //         link={upload.link}
+                                                    //         ephemeral={upload.ephemeral}
+                                                    //         privateHoot={upload.private}
+                                                    //         onDemandMedia={upload.onDemandMedia}
+                                                    //         expiryDate={upload.expiryDate}
+                                                    //         timeStamp={upload.timeStamp}
+                                                    //         edited={upload.edited}
+                                                    //         editedTimeStamp={upload.editedTimeStamp}
+                                                    //     />
+                                                    // </div>
+                                                    <div key={hoot.id}>
+                                                    {!hoot.mimeType
+                                                        ?
+                                                        <div className="img-container">
+                                                            <div
+                                                                className="hoot-img-vertical-profile"
+                                                                style={{ animation: "none", backgroundColor: "#d9d1f8" }}
+                                                                onContextMenu={(e) => e.preventDefault()}
+                                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
+                                                            >
+                                                                {ReactPlayer.canPlay(hoot.link) &&
+                                                                    hoot.link.endsWith('.mp4') ||
+                                                                    hoot.link.endsWith('.mkv') ||
+                                                                    hoot.link.endsWith('.mov') ||
+                                                                    hoot.link.endsWith('.ogv') ||
+                                                                    hoot.link.endsWith('.webm') ||
+                                                                    hoot.link.endsWith('.mpg')
+                                                                    ?
+                                                                    <div className="vdo-container">
+                                                                        <video
+                                                                            muted
+                                                                            disablePictureInPicture
+                                                                            className="hoot-vdo-profile"
+                                                                            style={{ margin: "0" }}
+                                                                            onMouseOver={event => event.target.play()}
+                                                                            onMouseOut={event => event.target.pause()}
+                                                                            onDragStart={(e) => e.preventDefault()}
+                                                                        >
+                                                                            <source src={hoot.link} />
+                                                                            Your browser does not support HTML video.
+                                                                        </video>
+                                                                    </div>
+                                                                    :
+                                                                    hoot.link.endsWith('.mp3') ||
+                                                                        hoot.link.endsWith('.ogg') ||
+                                                                        hoot.link.endsWith('.wav') ||
+                                                                        hoot.link.endsWith('.flac') ||
+                                                                        hoot.link.endsWith('.aac') ||
+                                                                        hoot.link.endsWith('.alac') ||
+                                                                        hoot.link.endsWith('.dsd')
+                                                                        ?
+                                                                        <div className="vdo-container">
+                                                                            <video
+                                                                                muted
+                                                                                poster={`${BaseURL}/profile-pictures/${`${BaseURL}/profile-pictures/${hoot.profilePic}`}`}
+                                                                                className="hoot-vdo-profile"
+                                                                                style={{ margin: "0" }}
+                                                                                onDragStart={(e) => e.preventDefault()}
+                                                                            >
+                                                                                <source src={hoot.link} />
+                                                                                Your browser does not support HTML video.
+                                                                            </video>
+                                                                        </div>
+                                                                        :
+                                                                        ReactPlayer.canPlay(hoot.link) &&
+                                                                        <div className='player-profile-wrapper'>
+                                                                            <ReactPlayer
+                                                                                url={hoot.link}
+                                                                                className='react-player'
+                                                                                controls="true"
+                                                                                width={hoot.mimeType ? '97%' : '100%'}
+                                                                                height='100%'
+                                                                                light={true}
+                                                                            />
+                                                                        </div>
+                                                                }
+                                                            </div>
+                                                            <FiPlayCircle
+                                                                className="GIF-overlay"
+                                                                style={{ borderRadius: "50%" }}
+                                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
+                                                            />
+                                                        </div>
+                                                        :
+                                                        hoot.mimeType.substr(0, 5) == "audio"
+                                                            ? <ExploreHoot
+                                                                hootId={(hoot.id)}
+                                                                username={hoot.authorUsername}
+                                                                mimeType={hoot.mimeType}
+                                                                hootImgId={hoot.image}
+                                                            />
+                                                            : <HootOutside
+                                                                hootId={(hoot.id)}
+                                                                username={hoot.authorUsername}
+                                                                mimeType={hoot.mimeType}
+                                                                hootImgId={hoot.image}
+                                                            />
+                                                    }
+                                                </div>
                                                 );
                                             })}
                                         </InfiniteScroll>
@@ -1704,36 +1798,126 @@ const PrivateChannels = () => {
                             }
 
                             {onDemandMedia
-                                ? <div className="channel-media" id="feed">
+                                ? <div className="channel-media" id="feed" style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',flexWrap:'wrap'}}>
                                     {onDemandUploads && (
                                         <InfiniteScroll
                                             dataLength={onDemandUploads.length}
                                             next={fetchMoreOnDemandHoots}
                                             hasMore={onDemandHasMore}
+                                            style={{display:'flex',margin:'1rem',flexDirection:'row',justifyContent:'center',alignItems:'center',flexWrap:'wrap',padding:'1rem'}}
                                         >
-                                            {onDemandUploads.map((upload) => {
+                                            {onDemandUploads.map((hoot) => {
                                                 return (
-                                                    <div key={upload}>
-                                                        <Post
-                                                            hootId={upload.id}
-                                                            username={upload.authorUsername}
-                                                            mimeType={upload.mimeType}
-                                                            hootImgId={upload.image}
-                                                            audioPoster={upload.audioPoster}
-                                                            likes={upload.likes}
-                                                            views={upload.views}
-                                                            followers={upload.followers}
-                                                            caption={upload.caption}
-                                                            link={upload.link}
-                                                            ephemeral={upload.ephemeral}
-                                                            privateHoot={upload.private}
-                                                            onDemandMedia={upload.onDemandMedia}
-                                                            expiryDate={upload.expiryDate}
-                                                            timeStamp={upload.timeStamp}
-                                                            edited={upload.edited}
-                                                            editedTimeStamp={upload.editedTimeStamp}
-                                                        />
-                                                    </div>
+                                                    // <div key={upload}>
+                                                    //     <Post
+                                                    //         hootId={upload.id}
+                                                    //         username={upload.authorUsername}
+                                                    //         mimeType={upload.mimeType}
+                                                    //         hootImgId={upload.image}
+                                                    //         audioPoster={upload.audioPoster}
+                                                    //         likes={upload.likes}
+                                                    //         views={upload.views}
+                                                    //         followers={upload.followers}
+                                                    //         caption={upload.caption}
+                                                    //         link={upload.link}
+                                                    //         ephemeral={upload.ephemeral}
+                                                    //         privateHoot={upload.private}
+                                                    //         onDemandMedia={upload.onDemandMedia}
+                                                    //         expiryDate={upload.expiryDate}
+                                                    //         timeStamp={upload.timeStamp}
+                                                    //         edited={upload.edited}
+                                                    //         editedTimeStamp={upload.editedTimeStamp}
+                                                    //     />
+                                                    // </div>
+                                                    <div key={hoot.id}>
+                                                    {!hoot.mimeType
+                                                        ?
+                                                        <div className="img-container">
+                                                            <div
+                                                                className="hoot-img-vertical-profile"
+                                                                style={{ animation: "none", backgroundColor: "#d9d1f8" }}
+                                                                onContextMenu={(e) => e.preventDefault()}
+                                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
+                                                            >
+                                                                {ReactPlayer.canPlay(hoot.link) &&
+                                                                    hoot.link.endsWith('.mp4') ||
+                                                                    hoot.link.endsWith('.mkv') ||
+                                                                    hoot.link.endsWith('.mov') ||
+                                                                    hoot.link.endsWith('.ogv') ||
+                                                                    hoot.link.endsWith('.webm') ||
+                                                                    hoot.link.endsWith('.mpg')
+                                                                    ?
+                                                                    <div className="vdo-container">
+                                                                        <video
+                                                                            muted
+                                                                            disablePictureInPicture
+                                                                            className="hoot-vdo-profile"
+                                                                            style={{ margin: "0" }}
+                                                                            onMouseOver={event => event.target.play()}
+                                                                            onMouseOut={event => event.target.pause()}
+                                                                            onDragStart={(e) => e.preventDefault()}
+                                                                        >
+                                                                            <source src={hoot.link} />
+                                                                            Your browser does not support HTML video.
+                                                                        </video>
+                                                                    </div>
+                                                                    :
+                                                                    hoot.link.endsWith('.mp3') ||
+                                                                        hoot.link.endsWith('.ogg') ||
+                                                                        hoot.link.endsWith('.wav') ||
+                                                                        hoot.link.endsWith('.flac') ||
+                                                                        hoot.link.endsWith('.aac') ||
+                                                                        hoot.link.endsWith('.alac') ||
+                                                                        hoot.link.endsWith('.dsd')
+                                                                        ?
+                                                                        <div className="vdo-container">
+                                                                            <video
+                                                                                muted
+                                                                                poster={`${BaseURL}/profile-pictures/${`${BaseURL}/profile-pictures/${hoot.profilePic}`}`}
+                                                                                className="hoot-vdo-profile"
+                                                                                style={{ margin: "0" }}
+                                                                                onDragStart={(e) => e.preventDefault()}
+                                                                            >
+                                                                                <source src={hoot.link} />
+                                                                                Your browser does not support HTML video.
+                                                                            </video>
+                                                                        </div>
+                                                                        :
+                                                                        ReactPlayer.canPlay(hoot.link) &&
+                                                                        <div className='player-profile-wrapper'>
+                                                                            <ReactPlayer
+                                                                                url={hoot.link}
+                                                                                className='react-player'
+                                                                                controls="true"
+                                                                                width={hoot.mimeType ? '97%' : '100%'}
+                                                                                height='100%'
+                                                                                light={true}
+                                                                            />
+                                                                        </div>
+                                                                }
+                                                            </div>
+                                                            <FiPlayCircle
+                                                                className="GIF-overlay"
+                                                                style={{ borderRadius: "50%" }}
+                                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
+                                                            />
+                                                        </div>
+                                                        :
+                                                        hoot.mimeType.substr(0, 5) == "audio"
+                                                            ? <ExploreHoot
+                                                                hootId={(hoot.id)}
+                                                                username={hoot.authorUsername}
+                                                                mimeType={hoot.mimeType}
+                                                                hootImgId={hoot.image}
+                                                            />
+                                                            : <HootOutside
+                                                                hootId={(hoot.id)}
+                                                                username={hoot.authorUsername}
+                                                                mimeType={hoot.mimeType}
+                                                                hootImgId={hoot.image}
+                                                            />
+                                                    }
+                                                </div>
                                                 );
                                             })}
                                         </InfiniteScroll>

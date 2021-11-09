@@ -388,7 +388,7 @@ const PublicProfile = ({
                                                             className="hoot-img-vertical-profile"
                                                             style={{ animation: "none", backgroundColor: "#d9d1f8" }}
                                                             onContextMenu={(e) => e.preventDefault()}
-                                                            onClick={() => { history.push(`/${username}/hoot/${user.id}`) }}
+                                                            onClick={() => { history.push(`/${username}/hoot/${btoa(user.id)}/${uuidv4()}`) }}
                                                         >
                                                             {ReactPlayer.canPlay(user.link) &&
                                                                 user.link.endsWith('.mp4') || user.link.endsWith('.mkv') || user.link.endsWith('.mov') || user.link.endsWith('.ogv') || user.link.endsWith('webm') || user.link.endsWith('.mpg')
@@ -443,7 +443,7 @@ const PublicProfile = ({
                                                         <FiPlayCircle
                                                             className="GIF-overlay"
                                                             style={{ borderRadius: "50%" }}
-                                                            onClick={() => { history.push(`/${username}/hoot/${user.id}`) }}
+                                                            onClick={() => { history.push(`/${username}/hoot/${btoa(user.id)}/${uuidv4()}`) }}
                                                         />
                                                     </div>
                                                     :
