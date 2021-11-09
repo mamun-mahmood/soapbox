@@ -71,7 +71,6 @@ const CreatePrivateHoot = () => {
     const upload = (event) => {
         event.preventDefault()
         setSaveLoading(true);
-
         const formData = new FormData();
         formData.append("timeStamp", timeStamp)
         formData.append("caption", caption)

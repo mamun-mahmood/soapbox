@@ -6,7 +6,7 @@ import { Link, NavLink, useHistory } from 'react-router-dom'
 import { FiHome, FiHash, FiSearch, FiShield, FiKey } from 'react-icons/fi'
 import { RiFileList3Line, RiAccountPinCircleFill, RiShieldFlashLine, RiChatPrivateFill, RiGroup2Fill, RiGroup2Line, RiChatPrivateLine } from 'react-icons/ri'
 import { IoCloseOutline } from 'react-icons/io5'
-import { BiMessageDetail, BiUser, BiDollar, BiWallet } from 'react-icons/bi'
+import { BiMessageDetail, BiUser, BiDollar, BiWallet,BiAddToQueue } from 'react-icons/bi'
 import './sidebar.css';
 import RandomSuggestedFollows from './RandomSuggestedFollows'
 import RamdomSuggestedHoots from './RandomSuggestedHoots'
@@ -238,6 +238,12 @@ const SideBar = () => {
                         Icon={RiGroup2Line}
                     // link={`/private/Club/${username}`}
                     />
+                     <SideBarOption
+                        option="Request Private Club"
+                        Icon={BiAddToQueue}
+                    // link={`/private/Club/${username}`}
+                    />
+                   
 
                     {userInfo
                         ? <SideBarOption
@@ -248,11 +254,13 @@ const SideBar = () => {
                         : null
                     }
 
+
                     <SideBarOption
                         option="Explore"
                         link="/explore"
                         Icon={BsLightning}
                     />
+                    
 
                     {/* <SideBarOption
                             option="Login"

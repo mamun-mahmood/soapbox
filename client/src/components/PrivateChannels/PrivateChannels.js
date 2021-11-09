@@ -348,6 +348,7 @@ const PrivateChannels = () => {
                 .get(`${BaseURL}/upload/user/private/p/${username}?page=1&limit=${LIMIT}`)
                 .then((response) => {
                     setUploads(response.data.results);
+                  
 
                 });
         };
@@ -887,6 +888,7 @@ const PrivateChannels = () => {
                                                                         setShowNotification(false);
                                                                         setShowFeed(false);
                                                                         setShowChatRoom(false);
+                                                                        setOnDemandMedia(false)
                                                                     }}
                                                                 >Price Settings</button>
 
@@ -1118,6 +1120,7 @@ const PrivateChannels = () => {
                                         setShowSubscribeButton(false);
                                         setShowChatRoom(false)
                                         setOnDemandMedia(false);
+
                                     }}
                                     >
                                         Timeline
@@ -1132,6 +1135,7 @@ const PrivateChannels = () => {
 
                                     <span onClick={() => {
                                         setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                        setOnDemandMedia(false)
                                         socket.emit('room', userInfo[0].username);
                                         socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
                                     }} >Club Chat</span>
@@ -1522,7 +1526,7 @@ const PrivateChannels = () => {
                                 : null
                             }
 
-                            {showChatRoom ?
+                            {showChatRoom && subscribe ?
                                 <div style={{ position: 'relative' }} >
                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                                         {privateChat ? <div className="privateChat-club">
@@ -1719,6 +1723,7 @@ const PrivateChannels = () => {
                                         setShowFeed(false);
                                         setShowChatRoom(false);
                                         setShowChatRoom(!showChatRoom);
+                                        setOnDemandMedia(false)
                                         socket.emit('room', userInfo[0].username);
                                         socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
                                     }}  >Club Chat</span>
@@ -1797,7 +1802,7 @@ const PrivateChannels = () => {
                                 : null
                             }
 
-                            {onDemandMedia
+                            {onDemandMedia 
                                 ? <div className="channel-media" id="feed" style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',flexWrap:'wrap'}}>
                                     {onDemandUploads && (
                                         <InfiniteScroll
@@ -1925,7 +1930,9 @@ const PrivateChannels = () => {
                                 </div>
                                 : null
                             }
-                            {showChatRoom ?
+
+                            
+                            {showChatRoom && subscribe ?
                                 <div style={{ position: 'relative' }} >
                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                                         {privateChat ? <div className="privateChat-club">
@@ -2013,7 +2020,7 @@ const PrivateChannels = () => {
                                         <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
                                             <FaWindowClose className="icon-text" data-tip="Close Chatroom"
                                                 onClick={() => {
-                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false);setOnDemandMedia(false); setShowChatRoom(!showChatRoom);
                                                 }}
 
                                             />
