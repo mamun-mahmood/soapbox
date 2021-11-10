@@ -1526,7 +1526,7 @@ const PrivateChannels = () => {
                                 : null
                             }
 
-                            {showChatRoom && subscribe ?
+                            {showChatRoom ?
                                 <div style={{ position: 'relative' }} >
                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                                         {privateChat ? <div className="privateChat-club">
@@ -1932,7 +1932,7 @@ const PrivateChannels = () => {
                             }
 
                             
-                            {showChatRoom && subscribe ?
+                            {showChatRoom ?
                                 <div style={{ position: 'relative' }} >
                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                                         {privateChat ? <div className="privateChat-club">
