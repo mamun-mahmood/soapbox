@@ -13,7 +13,7 @@ import Avatar from 'react-avatar';
 import ReactPlayer from 'react-player';
 import { formatCount, formatSi, random } from '../Helpers/formatNumbers'
 import ExternalLinkPlayer from './ExternalLinkPlayer';
-
+import { v4 as uuidv4 } from "uuid";
 const EmbedHoot = ({
     hootId,
     caption,
@@ -84,7 +84,7 @@ const EmbedHoot = ({
         <Fragment>
             {userInformation.map((user) => {
                 const profilePicPath = `${BaseURL}/profile-pictures/${user.profilePic}`;
-                const individualLink = `https://www.megahoot.net/${username}/hoot/${hootId}`;
+                const individualLink = `https://www.megahoot.net/${username}/hoot/${btoa(hootId)}/${uuidv4()}`;
 
                 return (
                     <Fragment key={user.id}>
