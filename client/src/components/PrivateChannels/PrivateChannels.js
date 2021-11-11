@@ -888,7 +888,16 @@ const PrivateChannels = () => {
                                                                         setShowNotification(false);
                                                                         setShowFeed(false);
                                                                         setShowChatRoom(false);
-                                                                        setOnDemandMedia(false)
+                                                                        setOnDemandMedia(false);
+
+                                                                        setTimeout(() => {
+                                                                            if(document.getElementById('slide')){
+
+                                                                                document.getElementById('slide').style.transition='1sec';
+                                                                                document.getElementById('slide').style.right='250px';
+                                                                            }
+                                                                          
+                                                                        }, 1)
                                                                     }}
                                                                 >Price Settings</button>
 
@@ -907,7 +916,7 @@ const PrivateChannels = () => {
                                                                         !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                         getAllOnDemandMedia("audio");
                                                                     }}
-                                                                >Audio</button>
+                                                                >Ondemand Audio</button>
 
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
@@ -922,7 +931,7 @@ const PrivateChannels = () => {
                                                                         !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                         getAllOnDemandMedia("video");
                                                                     }}
-                                                                >Video</button>
+                                                                >Ondemand Video</button>
 
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
@@ -937,7 +946,7 @@ const PrivateChannels = () => {
                                                                         !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                         getAllOnDemandMedia("image");
                                                                     }}
-                                                                >Photos</button>
+                                                                >Ondemand Photos</button>
                                                             </div>
 
                                                             <br></br>
@@ -1016,7 +1025,7 @@ const PrivateChannels = () => {
                                                                             getAllOnDemandMedia("audio");
                                                                         }
                                                                     }}
-                                                                >Audio</button>
+                                                                >Ondemand Audio</button>
 
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
@@ -1034,7 +1043,7 @@ const PrivateChannels = () => {
                                                                         }
 
                                                                     }}
-                                                                >Video</button>
+                                                                >Ondemand Video</button>
 
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
@@ -1052,7 +1061,7 @@ const PrivateChannels = () => {
                                                                         }
 
                                                                     }}
-                                                                >Photos</button>
+                                                                >Ondemand Photos</button>
 
                                                             </div>
                                                         </div>
@@ -1123,7 +1132,7 @@ const PrivateChannels = () => {
 
                                     }}
                                     >
-                                        Timeline
+                                        All Hoots
                                     </span>
 
                                     {/* <span>Audio</span>
@@ -1692,7 +1701,7 @@ const PrivateChannels = () => {
                                             setOnDemandMedia(false);
                                         }}
                                     >
-                                        Timeline
+                                       All Hoots
                                     </span>
                                     <span
                                         style={{ backgroundColor: showRequest ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
@@ -1741,19 +1750,27 @@ const PrivateChannels = () => {
                                 <h5>Requests</h5>
                                 <p>No Requests</p>
                             </div> : null}
-                            {showPricingSetting ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                            {showPricingSetting ?
+                            <div className="slide-container">
+                               
+                            <div id="slide" 
+                             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Set Service Price</h5>
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>1 on 1 call :  </label><input type="number" value={oneOnOnecallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setOneOnOneCallPrice(e.target.value) }} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label  style={{minWidth:'300px'}}>1 on 1 call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={oneOnOnecallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setOneOnOneCallPrice(e.target.value) }} />XMG</div>
 
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Group call :  </label><input type="number" value={groupCallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setGroupCallPrice(e.target.value) }} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Group call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={groupCallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setGroupCallPrice(e.target.value) }} />XMG</div>
 
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Personal Message :  </label><input type="number" value={requestMessagePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setRequestMessagePrice(e.target.value) }} />XMG</div>
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>verified Autograph Price :  </label><input type="number" value={verifiedAutographPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setVerifiedAutographPrice(e.target.value) }} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Personal Message :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={requestMessagePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setRequestMessagePrice(e.target.value) }} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>verified Autograph Price :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={verifiedAutographPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setVerifiedAutographPrice(e.target.value) }} />XMG</div>
 
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label>Membership :  </label><input type="number" value={subscribePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setSubscribePrice(e.target.value) }} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Membership :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={subscribePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setSubscribePrice(e.target.value) }} />XMG</div>
 
-                                <div className="btns" >  <button onClick={() => { updatePricing() }}  >Update Changes</button></div>
-                            </div> : null}
+                                <div className="btns" > 
+                                 <button onClick={() => { updatePricing() }} style={{minWidth:'400px',borderRadius:'8px'}}  >Update Changes</button>
+                                 
+                                 </div>
+                                 <p>Note: The minimum amount for service price is 5 XMG</p>
+                            </div> </div>: null}
                             {showSubscribers ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Memberships</h5>
                                 {subscribePrice} XMG

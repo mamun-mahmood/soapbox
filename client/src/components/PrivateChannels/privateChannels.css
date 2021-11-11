@@ -534,3 +534,20 @@ padding: 5px;
     width: 35px;
     height: 30px;
 }
+
+.slide-container{
+    position: relative;
+ 
+  
+}
+
+#slide{
+    position: absolute;
+    right: -100vw;
+ 
+    transition: 1s;
+}
+.slide-container:hover #slide {
+    transition: 1s;
+    right: 200px;
+}

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { Fragment, useEffect, useState } from 'react'
 import Highlighter from 'react-highlight-words';
 import { useHistory } from 'react-router';
-
+import { v4 as uuidv4 } from "uuid";
 const RamdomSuggestedHoots = () => {
     const [uploads, setUploads] = useState([]);
     const [page, setpage] = useState(2);
@@ -48,7 +48,7 @@ const RamdomSuggestedHoots = () => {
                             upload.mimeType.match(/image/gi) == "image"
                             ?
                             <div className="suggested-hoots"
-                                onClick={() => { history.push(`/${upload.authorUsername}/hoot/${upload.id}`) }}
+                                onClick={() => { history.push(`/${upload.authorUsername}/hoot/${btoa(upload.id)}/${uuidv4()}`) }}
                             >
                                 <div className="sh-media">
                                     <img
@@ -74,7 +74,7 @@ const RamdomSuggestedHoots = () => {
                             upload.mimeType.match(/video/gi) == "video"
                             ?
                             <div className="suggested-hoots"
-                                onClick={() => { history.push(`/${upload.authorUsername}/hoot/${upload.id}`) }}
+                                onClick={() => { history.push(`/${upload.authorUsername}/hoot/${btoa(upload.id)}/${uuidv4()}`) }}
                             >
                                 <div className="sh-media">
                                     <video
