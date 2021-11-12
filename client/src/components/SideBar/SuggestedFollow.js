@@ -139,7 +139,7 @@ const
                         className="avatar_name"
                     >
                         <Link to={path}>
-                            <div className="avatar-wraper">
+                            <div className="avatar-wraper" onDragStart={(e) => e.preventDefault()}>
                                 <Avatar
                                     size={50}
                                     round={true}
@@ -178,7 +178,7 @@ const
                         >
                             <div className="hover-user-follow">
                                 <Link to={path}>
-                                    <div className="avatar-hover-wraper">
+                                    <div className="avatar-hover-wraper" onDragStart={(e) => e.preventDefault()}>
                                         <Avatar
                                             size={50}
                                             round={true}

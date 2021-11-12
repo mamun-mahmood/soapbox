@@ -6,7 +6,7 @@ import './index.css'
 import { withRouter } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 
-import {VideoStreamMerger} from 'video-stream-merger'
+import { VideoStreamMerger } from 'video-stream-merger'
 
 class VideoChat extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class VideoChat extends Component {
         // variables
         var roomName = this.props.host
         var userName = this.props.userName;
-        var host=this.props.host
+        var host = this.props.host
         var participants = {};
 
         // Let's do this
@@ -101,7 +101,7 @@ class VideoChat extends Component {
 
             myarray.forEach((userid) => {
                 if (myarray.length == 1) {
-                   
+
                     document.getElementById(userid).style.width = "30vw";
                     document.getElementById(userid).style.minWidth = "300px"
                     document.getElementById(userid).style.maxHeight = `${(document.getElementById(userid).offsetWidth / 16) * 9}px`;
@@ -134,171 +134,171 @@ class VideoChat extends Component {
 
         };
         function receiveVideo(userid, username) {
-            if(username==host){
- myarray = [...myarray, userid];
-            var video = document.createElement('video');
-            var div = document.createElement('div');
-            div.className = "videoContainer";
-            div.id = userid + "div";
-            var name = document.createElement('div');
-            video.id = userid;
-            video.autoplay = true;
-            video.style.width="100%"
-            name.appendChild(document.createTextNode(username));
-            div.appendChild(video);
-            div.appendChild(name);
-            divMeetingRoom.appendChild(div);
+            if (username == host) {
+                myarray = [...myarray, userid];
+                var video = document.createElement('video');
+                var div = document.createElement('div');
+                div.className = "videoContainer";
+                div.id = userid + "div";
+                var name = document.createElement('div');
+                video.id = userid;
+                video.autoplay = true;
+                video.style.width = "100%"
+                name.appendChild(document.createTextNode(username));
+                div.appendChild(video);
+                div.appendChild(name);
+                divMeetingRoom.appendChild(div);
 
-            var user = {
-                id: userid,
-                username: username,
-                video: video,
-                rtcPeer: null
-            }
+                var user = {
+                    id: userid,
+                    username: username,
+                    video: video,
+                    rtcPeer: null
+                }
 
-            participants[user.id] = user;
+                participants[user.id] = user;
 
-            var options = {
-                remoteVideo: video,
-                onicecandidate: onIceCandidate
-            }
+                var options = {
+                    remoteVideo: video,
+                    onicecandidate: onIceCandidate
+                }
 
-            user.rtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options,
-                function (err) {
-                    if (err) {
-                        return console.error(err);
+                user.rtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options,
+                    function (err) {
+                        if (err) {
+                            return console.error(err);
+                        }
+                        this.generateOffer(onOffer);
                     }
-                    this.generateOffer(onOffer);
-                }
-            );
+                );
 
-            var onOffer = function (err, offer, wp) {
-                console.log('sending offer');
-                var message = {
-                    event: 'receiveVideoFrom',
-                    userid: user.id,
-                    roomName: roomName,
-                    sdpOffer: offer
+                var onOffer = function (err, offer, wp) {
+                    console.log('sending offer');
+                    var message = {
+                        event: 'receiveVideoFrom',
+                        userid: user.id,
+                        roomName: roomName,
+                        sdpOffer: offer
+                    }
+                    sendMessage(message);
                 }
-                sendMessage(message);
+
+                function onIceCandidate(candidate, wp) {
+                    console.log('sending ice candidates');
+                    var message = {
+                        event: 'candidate',
+                        userid: user.id,
+                        roomName: roomName,
+                        candidate: candidate
+                    }
+                    sendMessage(message);
+                }
+
+                dynamicVideoLayout(userid)
             }
 
-            function onIceCandidate(candidate, wp) {
-                console.log('sending ice candidates');
-                var message = {
-                    event: 'candidate',
-                    userid: user.id,
-                    roomName: roomName,
-                    candidate: candidate
-                }
-                sendMessage(message);
-            }
-
-            dynamicVideoLayout(userid)
-            }
-           
         }
 
         function onExistingParticipants(userid, existingUsers) {
-            if(host==userName){
-                 myarray = [...myarray, userid];
-            var video = document.createElement('video');
-            var div = document.createElement('div');
-            div.className = "videoContainer";
-            div.id = userid + "div";
-            var name = document.createElement('div');
-            video.id = userid;
-            video.className = "meetingRoom-video-attendee"
-            video.autoplay = true;
-            name.appendChild(document.createTextNode(userName));
-            div.appendChild(video);
-            div.appendChild(name);
-            video.style.width="100%"
-            divMeetingRoom.appendChild(div);
+            if (host == userName) {
+                myarray = [...myarray, userid];
+                var video = document.createElement('video');
+                var div = document.createElement('div');
+                div.className = "videoContainer";
+                div.id = userid + "div";
+                var name = document.createElement('div');
+                video.id = userid;
+                video.className = "meetingRoom-video-attendee"
+                video.autoplay = true;
+                name.appendChild(document.createTextNode(userName));
+                div.appendChild(video);
+                div.appendChild(name);
+                video.style.width = "100%"
+                divMeetingRoom.appendChild(div);
 
-            var user = {
-                id: userid,
-                username: userName,
-                video: video,
-                rtcPeer: null
-            }
-
-            participants[user.id] = user;
-
-            var constraints = {
-                audio: true,
-                video: {
-                    frameRate: {
-                        min: 1,
-                        ideal: 15,
-                        max: 30,
-                    },
-                    width: {
-                        min: 320,
-                        ideal: 1280,
-                        max: 1280,
-                    },
-                    height: {
-                        min: 180,
-                        ideal: 720,
-                        max: 720,
-                    },
-                    aspectRatio: 1.78,
-
+                var user = {
+                    id: userid,
+                    username: userName,
+                    video: video,
+                    rtcPeer: null
                 }
-            };
 
-            var options = {
-                localVideo: video,
-                mediaConstraints: constraints,
-                onicecandidate: onIceCandidate
-            }
+                participants[user.id] = user;
 
+                var constraints = {
+                    audio: true,
+                    video: {
+                        frameRate: {
+                            min: 1,
+                            ideal: 15,
+                            max: 30,
+                        },
+                        width: {
+                            min: 320,
+                            ideal: 1280,
+                            max: 1280,
+                        },
+                        height: {
+                            min: 180,
+                            ideal: 720,
+                            max: 720,
+                        },
+                        aspectRatio: 1.78,
 
-
-            user.rtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
-                function (err) {
-                    if (err) {
-                        return console.error(err);
                     }
-                    this.generateOffer(onOffer)
-                }
-            );
+                };
 
-            existingUsers.forEach(function (element) {
-                receiveVideo(element.id, element.name);
-            });
-
-            var onOffer = function (err, offer, wp) {
-                console.log('sending offer');
-                var message = {
-                    event: 'receiveVideoFrom',
-                    userid: user.id,
-                    roomName: roomName,
-                    sdpOffer: offer
+                var options = {
+                    localVideo: video,
+                    mediaConstraints: constraints,
+                    onicecandidate: onIceCandidate
                 }
-                sendMessage(message);
+
+
+
+                user.rtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
+                    function (err) {
+                        if (err) {
+                            return console.error(err);
+                        }
+                        this.generateOffer(onOffer)
+                    }
+                );
+
+                existingUsers.forEach(function (element) {
+                    receiveVideo(element.id, element.name);
+                });
+
+                var onOffer = function (err, offer, wp) {
+                    console.log('sending offer');
+                    var message = {
+                        event: 'receiveVideoFrom',
+                        userid: user.id,
+                        roomName: roomName,
+                        sdpOffer: offer
+                    }
+                    sendMessage(message);
+                }
+
+                function onIceCandidate(candidate, wp) {
+                    console.log('sending ice candidates');
+                    var message = {
+                        event: 'candidate',
+                        userid: user.id,
+                        roomName: roomName,
+                        candidate: candidate
+                    }
+                    sendMessage(message);
+                }
+                dynamicVideoLayout(userid)
+            } else {
+                existingUsers.forEach(function (element) {
+                    receiveVideo(element.id, element.name);
+                });
             }
 
-            function onIceCandidate(candidate, wp) {
-                console.log('sending ice candidates');
-                var message = {
-                    event: 'candidate',
-                    userid: user.id,
-                    roomName: roomName,
-                    candidate: candidate
-                }
-                sendMessage(message);
-            }
-            dynamicVideoLayout(userid)
-            }else{
-                 existingUsers.forEach(function (element) {
-                receiveVideo(element.id, element.name);
-            });
-            }
-           
         }
-     
+
         function onReceiveVideoAnswer(senderid, sdpAnswer) {
             participants[senderid].rtcPeer.processAnswer(sdpAnswer);
         }
@@ -318,40 +318,40 @@ class VideoChat extends Component {
 
 
         }
-        const Stop=()=> {
+        const Stop = () => {
             if (participants[myarray[0]] && participants[myarray[0]].rtcPeer) {
 
                 dispose(myarray[0]);
                 sendMessage({ id: myarray[0], event: 'disconnectMe', roomName: roomName, userName: userName })
             }
-           
+
         }
 
-        const dispose=(id)=> {
+        const dispose = (id) => {
 
-            if (participants[id]&& participants[id].rtcPeer) {
+            if (participants[id] && participants[id].rtcPeer) {
                 participants[id].rtcPeer.dispose();
                 participants[id].rtcPeer = null;
-                if(document.getElementById(myarray[0]+"div")){
-                    document.getElementById(myarray[0]+"div").remove();
+                if (document.getElementById(myarray[0] + "div")) {
+                    document.getElementById(myarray[0] + "div").remove();
                     document.getElementById("controll").remove()
-                    
+
                 }
-                
+
                 // this.props.history.goBack();
             }
-           
+
         }
 
 
         const disconnectMe = (id) => {
-if(document.getElementById(id + "div")){
- document.getElementById(id + "div").remove();
+            if (document.getElementById(id + "div")) {
+                document.getElementById(id + "div").remove();
 
-            myarray.splice(myarray.indexOf(id), 1);
-            dynamicVideoLayout()
-}
-           
+                myarray.splice(myarray.indexOf(id), 1);
+                dynamicVideoLayout()
+            }
+
         }
 
         document.getElementById('mic').onclick = () => {
@@ -439,7 +439,7 @@ if(document.getElementById(id + "div")){
             window.onbeforeunload = null; // necessary to prevent infinite loop, that kills your browser 
         }
 
-     
+
 
     }
 
@@ -448,28 +448,28 @@ if(document.getElementById(id + "div")){
     render() {
         return (
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column',position:'fixed'}}>
-            
-                <div id="meetingRoomDiv"    ></div>
-               
-                 <div id="controll" style={{display:this.props.userName==this.props.host?"flex":"none",position:'absolute',top:'1px',left:'0px',flexDirection:'column',maxWidth:'50px !important',maxHeight:'180px',backgroundColor:'#662d9117',borderRadius:'2rem'}}  >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', position: 'fixed' }}>
 
-                    <li id="hangup"><CallEnd style={{size:'20px'}} /></li>
-                    <li id="mic"  onClick={() => {
+                <div id="meetingRoomDiv"    ></div>
+
+                <div id="controll" style={{ display: this.props.userName == this.props.host ? "flex" : "none", position: 'absolute', top: '1px', left: '0px', flexDirection: 'column', maxWidth: '50px !important', maxHeight: '180px', backgroundColor: '#662d9117', borderRadius: '2rem' }}  >
+
+                    <li id="hangup"><CallEnd style={{ size: '20px' }} /></li>
+                    <li id="mic" onClick={() => {
                         this.setState({ micMuted: !this.state.micMuted })
 
 
-                    }}>{this.state.micMuted ? <MicOff style={{ color: 'red',size:'20px' }} /> : <Mic />}</li>
+                    }}>{this.state.micMuted ? <MicOff style={{ color: 'red', size: '20px' }} /> : <Mic />}</li>
 
 
                     <li id="cam" onClick={() => {
 
 
 
-                    }}>{this.state.camMuted ? <VideocamOff style={{ color: 'red' ,size:'20px'}} /> : <Videocam />}</li>
-                   
+                    }}>{this.state.camMuted ? <VideocamOff style={{ color: 'red', size: '20px' }} /> : <Videocam />}</li>
+
                 </div>
-               
+
 
 
 

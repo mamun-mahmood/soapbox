@@ -467,8 +467,8 @@ const HootInside = ({
             {ephemeral === 1
                 ?
                 <Expire expiryDate={expiryDate} hootImgId={hootImgId}>
-                    <div className="home" style={{maxWidth:privateHoot==1?"400px":"100%"}}>
-                        <div className="home-container" ref={homeRef} id="element-id" style={privateProtected} style={{maxWidth:privateHoot==1?"380px":"100%"}} >
+                    <div className="home" style={{ maxWidth: privateHoot == 1 ? "400px" : "100%" }}>
+                        <div className="home-container" ref={homeRef} id="element-id" style={privateProtected} style={{ maxWidth: privateHoot == 1 ? "380px" : "100%" }} >
                             <ReactTooltip />
                             <div className="post-heading">
                                 <div
@@ -477,7 +477,7 @@ const HootInside = ({
                                     className="avatar_name"
                                 >
                                     <Link to={path}>
-                                        <div className="avatar-wraper">
+                                        <div className="avatar-wraper" onDragStart={(e) => e.preventDefault()}>
                                             <Avatar
                                                 size={50}
                                                 round={true}
@@ -514,7 +514,7 @@ const HootInside = ({
                                     >
                                         <div className="hover-user-follow">
                                             <Link to={path}>
-                                                <div className="avatar-hover-wraper">
+                                                <div className="avatar-hover-wraper" onDragStart={(e) => e.preventDefault()}>
                                                     <Avatar
                                                         size={50}
                                                         round={true}
@@ -931,7 +931,7 @@ const HootInside = ({
                                                         {/* right side edit box */}
                                                         <div className="edit-caption d-flex flex-wrap">
                                                             <div className="edit-profile-username">
-                                                                <div className="avatar-wraper">
+                                                                <div className="avatar-wraper" onDragStart={(e) => e.preventDefault()}>
                                                                     <Avatar
                                                                         size={50}
                                                                         round={true}
@@ -1480,8 +1480,8 @@ const HootInside = ({
                     </div>
                 </Expire>
                 :
-                <div className="home" style={{maxWidth:privateHoot==1?"400px":"100%"}}>
-                    <div className="home-container" style={privateProtected}  style={{maxWidth:privateHoot==1?"380px":"100%"}} >
+                <div className="home" style={{ maxWidth: privateHoot == 1 ? "400px" : "100%" }}>
+                    <div className="home-container" style={privateProtected} style={{ maxWidth: privateHoot == 1 ? "380px" : "100%" }} >
                         <ReactTooltip />
                         <div className="post-heading">
                             <div
@@ -1490,7 +1490,7 @@ const HootInside = ({
                                 className="avatar_name"
                             >
                                 <Link to={path}>
-                                    <div className="avatar-wraper">
+                                    <div className="avatar-wraper" onDragStart={(e) => e.preventDefault()}>
                                         <Avatar
                                             size={50}
                                             round={true}
@@ -1528,7 +1528,7 @@ const HootInside = ({
                                 >
                                     <div className="hover-user-follow">
                                         <Link to={path}>
-                                            <div className="avatar-hover-wraper">
+                                            <div className="avatar-hover-wraper" onDragStart={(e) => e.preventDefault()}>
                                                 <Avatar
                                                     size={50}
                                                     round={true}
@@ -1954,7 +1954,7 @@ const HootInside = ({
                                                     {/* right side edit box */}
                                                     <div className="edit-caption d-flex flex-wrap">
                                                         <div className="edit-profile-username">
-                                                            <div className="avatar-wraper">
+                                                            <div className="avatar-wraper" onDragStart={(e) => e.preventDefault()}>
                                                                 <Avatar
                                                                     size={50}
                                                                     round={true}

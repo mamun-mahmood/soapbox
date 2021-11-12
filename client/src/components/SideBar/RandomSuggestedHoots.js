@@ -46,8 +46,8 @@ const RamdomSuggestedHoots = () => {
                     <div key={upload.id}>
                         {upload.mimeType &&
                             upload.mimeType.match(/image/gi) == "image"
-                            ?
-                            <div className="suggested-hoots"
+                            ? <div
+                                className="suggested-hoots"
                                 onClick={() => { history.push(`/${upload.authorUsername}/hoot/${btoa(upload.id)}/${uuidv4()}`) }}
                             >
                                 <div className="sh-media">
@@ -55,6 +55,7 @@ const RamdomSuggestedHoots = () => {
                                         className="suggested-hoot-img"
                                         src={`${BaseURL}/images/${upload.image}`}
                                         onContextMenu={(e) => e.preventDefault()}
+                                        onDragStart={(e) => e.preventDefault()}
                                     />
                                 </div>
                                 <div className="sh-caption">
@@ -66,14 +67,13 @@ const RamdomSuggestedHoots = () => {
                                     />
                                 </div>
                             </div>
-                            :
-                            null
+                            : null
                         }
 
                         {upload.mimeType &&
                             upload.mimeType.match(/video/gi) == "video"
-                            ?
-                            <div className="suggested-hoots"
+                            ? <div
+                                className="suggested-hoots"
                                 onClick={() => { history.push(`/${upload.authorUsername}/hoot/${btoa(upload.id)}/${uuidv4()}`) }}
                             >
                                 <div className="sh-media">
@@ -85,6 +85,7 @@ const RamdomSuggestedHoots = () => {
                                         controlsList="nodownload"
                                         className="suggested-hoot-img"
                                         onContextMenu={(e) => e.preventDefault()}
+                                        onDragStart={(e) => e.preventDefault()}
                                     >
                                         <source
                                             src={`${BaseURL}/images/${upload.image}`}
@@ -101,12 +102,12 @@ const RamdomSuggestedHoots = () => {
                                     />
                                 </div>
                             </div>
-                            :
-                            null
+                            : null
                         }
                     </div>
                 )
             })}
+
             <div style={{ textAlign: "right", paddingRight: "1rem", marginTop: "-0.5rem" }}>
                 <small className="see-more-suggested" onClick={fetchMoreSuggestedHoots}>see more</small>
             </div>

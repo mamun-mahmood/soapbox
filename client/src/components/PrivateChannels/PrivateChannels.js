@@ -349,14 +349,14 @@ const PrivateChannels = () => {
                 .get(`${BaseURL}/upload/user/private/p/${username}?page=1&limit=${LIMIT}`)
                 .then((response) => {
                     setUploads(response.data.results);
-                 setTimeout(() => {
-                    document.getElementById('chatRoomopen').click()
-                 }, 1000);
+                    setTimeout(() => {
+                        document.getElementById('chatRoomopen').click()
+                    }, 1000);
 
                 });
         };
         getAllUploadData();
-        
+
     }, []);
 
     const getAllOnDemandMedia = async (media) => {
@@ -369,7 +369,7 @@ const PrivateChannels = () => {
 
     // useEffect(() => {
     // }, []);
-        
+
 
     const checkMembership = () => {
         axios.post(`${BaseURL}/user/getMember`, {
@@ -855,21 +855,21 @@ const PrivateChannels = () => {
                                                                 <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
 
                                                                 <button style={{ minWidth: '208px' }}
-                                                                onClick={() => {
-                                                                    const Id = uuidv4()
-                                                                    history.push({
-                                                                        pathname: `/${uuidv4()}/AudioHall/${uuidv4()}`,
-                                                                        state: {
-                                                                            host: true,
-                                                                            userName: userInformation.username,
-                                                                            hallId: Id,
-                                                                            hostUserName: username,
-                                                                            profilePic:`${BaseURL}/profile-pictures/${userProfilePic}`
-                                                                        }
+                                                                    onClick={() => {
+                                                                        const Id = uuidv4()
+                                                                        history.push({
+                                                                            pathname: `/${uuidv4()}/AudioHall/${uuidv4()}`,
+                                                                            state: {
+                                                                                host: true,
+                                                                                userName: userInformation.username,
+                                                                                hallId: Id,
+                                                                                hostUserName: username,
+                                                                                profilePic: `${BaseURL}/profile-pictures/${userProfilePic}`
+                                                                            }
 
 
-                                                                    });
-                                                                }}
+                                                                        });
+                                                                    }}
                                                                 >Make a Vero Audio Call</button>
                                                                 <button style={{ minWidth: '208px' }} onClick={() => {
                                                                     const Id = uuidv4()
@@ -897,12 +897,12 @@ const PrivateChannels = () => {
                                                                         setOnDemandMedia(false);
 
                                                                         setTimeout(() => {
-                                                                            if(document.getElementById('slide')){
+                                                                            if (document.getElementById('slide')) {
 
-                                                                                document.getElementById('slide').style.transition='1sec';
-                                                                                document.getElementById('slide').style.right='250px';
+                                                                                document.getElementById('slide').style.transition = '1sec';
+                                                                                document.getElementById('slide').style.right = '250px';
                                                                             }
-                                                                          
+
                                                                         }, 1)
                                                                     }}
                                                                 >Price Settings</button>
@@ -1149,9 +1149,9 @@ const PrivateChannels = () => {
                                     <span>Podcasts</span>
 
                                     <span id="chatRoomopen" onClick={() => {
-                                        setOneOnOneCall(false); setGroupCall(false); 
+                                        setOneOnOneCall(false); setGroupCall(false);
                                         setRequestMessage(false); setVerifiedAutograph(false);
-                                         setShowFeed(true); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                        setShowFeed(true); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
                                         setOnDemandMedia(false)
                                         socket.emit('room', userInfo[0].username);
                                         socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
@@ -1374,7 +1374,7 @@ const PrivateChannels = () => {
 
 
                             {(showFeed && subscribe) ?
-                                <div className="channel-media" id="feed" style={{display:'flex'}}>
+                                <div className="channel-media" id="feed" style={{ display: 'flex' }}>
                                     {uploads && (
                                         <InfiniteScroll
                                             dataLength={uploads.length}
@@ -1409,157 +1409,157 @@ const PrivateChannels = () => {
                                             })}
                                         </InfiniteScroll>
                                     )}
-                                    
-                            {showChatRoom ?
-                                <div style={{ position: 'relative' }} >
-                                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                        {privateChat ? <div className="privateChat-club">
-                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', maxWidth: '300px' }} >Private Chat<FaWindowClose className="icon-text"
-                                                onClick={() => {
-                                                    setPrivateChat(false);
-                                                }}
-                                            /></div>
 
-                                        </div> : null}
+                                    {showChatRoom ?
+                                        <div style={{ position: 'relative' }} >
+                                            <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                                {privateChat ? <div className="privateChat-club">
+                                                    <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', maxWidth: '300px' }} >Private Chat<FaWindowClose className="icon-text"
+                                                        onClick={() => {
+                                                            setPrivateChat(false);
+                                                        }}
+                                                    /></div>
 
-                                        <div className="container" style={{ left: privateChat ? "20px" : "20px", width: privateChat ? "40%" : "60%",minWidth:'500px' }}  >
+                                                </div> : null}
 
-                                            <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft: '-15px', marginTop: '-33px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'fixed', width: '25%',maxWidth:'450px', zIndex: '5' }} >  {userInfo[0].name}`s Club Chat
+                                                <div className="container" style={{ left: privateChat ? "20px" : "20px", width: privateChat ? "40%" : "60%", minWidth: '500px' }}  >
 
-                                            </div>
-                                            <div>
+                                                    <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft: '-15px', marginTop: '-33px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'fixed', width: '25%', maxWidth: '450px', zIndex: '5' }} >  {userInfo[0].name}`s Club Chat
 
-                                                <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} />
-                                            </div>
-
-                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px' }}></div>
-
-
-
-
-
-
-                                            {emojiPicker && (
-                                                <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
-                                                    <div>
-                                                        <Picker
-                                                            native
-                                                            onEmojiClick={(event, emojiObject) => {
-                                                                setMessageInboxValue(messageInboxValue + emojiObject.emoji)
-                                                                // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
-                                                                //  // socket.emit('send',message);
-                                                                socket.emit('send', {
-                                                                    name: userFullName,
-                                                                    message: emojiObject.emoji,
-                                                                    profilePic: userProfilePic,
-                                                                    isEmoji: true
-                                                                });
-                                                            }}
-                                                            pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
-                                                        />
                                                     </div>
-                                                </ClickAwayListener>
-                                            )}
-                                            {src && mimeType.substr(0, 5) == "image" ? <div className="messageBox">
-                                                <img src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} />
-                                                <button onClick={() => {
-                                                    upload(file, file.type);
-                                                    setFile([]);
-                                                    setSrc(null);
-                                                    setMimeType("")
-                                                }}>Confirm</button>
-                                                <button onClick={() => {
+                                                    <div>
 
-                                                    setFile([]);
-                                                    setSrc(null);
-                                                    setMimeType("")
-                                                }}>Cancel</button>
-                                            </div> : null}
-                                            {src && mimeType.substr(0, 5) == "video" ?
-                                                <div className="messageBox">
-                                                    <video src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} className="messageBox" />
-                                                    <button onClick={() => {
-                                                        upload(file, file.type);
-                                                        setFile([]);
-                                                        setSrc(null);
-                                                        setMimeType("")
-                                                    }}>Confirm</button>
-                                                    <button onClick={() => {
+                                                        <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} />
+                                                    </div>
 
-                                                        setFile([]);
-                                                        setSrc(null);
-                                                        setMimeType("")
-                                                    }}>Cancel</button>
+                                                    <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px' }}></div>
+
+
+
+
+
+
+                                                    {emojiPicker && (
+                                                        <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                            <div>
+                                                                <Picker
+                                                                    native
+                                                                    onEmojiClick={(event, emojiObject) => {
+                                                                        setMessageInboxValue(messageInboxValue + emojiObject.emoji)
+                                                                        // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                                                        //  // socket.emit('send',message);
+                                                                        socket.emit('send', {
+                                                                            name: userFullName,
+                                                                            message: emojiObject.emoji,
+                                                                            profilePic: userProfilePic,
+                                                                            isEmoji: true
+                                                                        });
+                                                                    }}
+                                                                    pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
+                                                                />
+                                                            </div>
+                                                        </ClickAwayListener>
+                                                    )}
+                                                    {src && mimeType.substr(0, 5) == "image" ? <div className="messageBox">
+                                                        <img src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} />
+                                                        <button onClick={() => {
+                                                            upload(file, file.type);
+                                                            setFile([]);
+                                                            setSrc(null);
+                                                            setMimeType("")
+                                                        }}>Confirm</button>
+                                                        <button onClick={() => {
+
+                                                            setFile([]);
+                                                            setSrc(null);
+                                                            setMimeType("")
+                                                        }}>Cancel</button>
+                                                    </div> : null}
+                                                    {src && mimeType.substr(0, 5) == "video" ?
+                                                        <div className="messageBox">
+                                                            <video src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} className="messageBox" />
+                                                            <button onClick={() => {
+                                                                upload(file, file.type);
+                                                                setFile([]);
+                                                                setSrc(null);
+                                                                setMimeType("")
+                                                            }}>Confirm</button>
+                                                            <button onClick={() => {
+
+                                                                setFile([]);
+                                                                setSrc(null);
+                                                                setMimeType("")
+                                                            }}>Cancel</button>
+                                                        </div>
+                                                        : null}
                                                 </div>
-                                                : null}
-                                        </div>
 
-                                        {/* <div className="community-club">
+                                                {/* <div className="community-club">
                                             <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
                                             <RandomCommunitySuggestion />
                                         </div> */}
 
-                                    </div>
+                                            </div>
 
-                                    <div className="send">
-                                        <ReactTooltip />
-                                        <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
-                                            <FaWindowClose data-tip="Close CharRoom" className="icon-text"
-                                                onClick={() => {
-                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
-                                                }}
+                                            <div className="send">
+                                                <ReactTooltip />
+                                                <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
+                                                    <FaWindowClose data-tip="Close CharRoom" className="icon-text"
+                                                        onClick={() => {
+                                                            setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                                        }}
 
-                                            />
-                                            <label
-                                                htmlFor="post-video"
+                                                    />
+                                                    <label
+                                                        htmlFor="post-video"
 
-                                            >
-                                                <FiVideo data-tip="Share Video" className="icon-text" />
-                                            </label>
-                                            <input
-                                                type="file"
-                                                id="post-video"
-                                                name="video"
-                                                accept="video/*"
-                                                onChange={handleFile}
-                                                hidden
-                                            />
-                                            <label
-                                                htmlFor="post-image"
+                                                    >
+                                                        <FiVideo data-tip="Share Video" className="icon-text" />
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        id="post-video"
+                                                        name="video"
+                                                        accept="video/*"
+                                                        onChange={handleFile}
+                                                        hidden
+                                                    />
+                                                    <label
+                                                        htmlFor="post-image"
 
-                                            >
-                                                <FiImage data-tip="Share Photos" className="icon-text" />
-                                            </label>
-                                            <input
-                                                type="file"
-                                                id="post-image"
-                                                name="image"
-                                                accept="image/*"
-                                                onChange={handleFile}
-                                                hidden
-                                            />
-                                            <FiFolder data-tip="Share File" className="icon-text" />
-                                            <FiSmile className="icon-text" data-tip="Emoji"
-                                                onClick={() => { setEmojiPicker(!emojiPicker) }}
-                                            />
-                                            <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
-                                            <div className="btns"> <button type="submit"><FiSend /></button></div>
+                                                    >
+                                                        <FiImage data-tip="Share Photos" className="icon-text" />
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        id="post-image"
+                                                        name="image"
+                                                        accept="image/*"
+                                                        onChange={handleFile}
+                                                        hidden
+                                                    />
+                                                    <FiFolder data-tip="Share File" className="icon-text" />
+                                                    <FiSmile className="icon-text" data-tip="Emoji"
+                                                        onClick={() => { setEmojiPicker(!emojiPicker) }}
+                                                    />
+                                                    <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
+                                                    <div className="btns"> <button type="submit"><FiSend /></button></div>
 
-                                        </form>
-                                    </div>
-                                </div> : null}
+                                                </form>
+                                            </div>
+                                        </div> : null}
                                 </div>
                                 : null
                             }
 
                             {onDemandMedia
-                                ? <div className="channel-media" id="feed" style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',flexWrap:'wrap'}}>
+                                ? <div className="channel-media" id="feed" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
                                     {onDemandUploads && (
                                         <InfiniteScroll
                                             dataLength={onDemandUploads.length}
                                             next={fetchMoreOnDemandHoots}
                                             hasMore={onDemandHasMore}
-                                            style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',flexWrap:'wrap',padding:'1rem',margin:'1rem'}}
+                                            style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', padding: '1rem', margin: '1rem' }}
                                         >
                                             {onDemandUploads.map((hoot) => {
                                                 return (
@@ -1586,52 +1586,31 @@ const PrivateChannels = () => {
                                                     //     />
                                                     // </div>
                                                     <div key={hoot.id}>
-                                                    {!hoot.mimeType
-                                                        ?
-                                                        <div className="img-container">
-                                                            <div
-                                                                className="hoot-img-vertical-profile"
-                                                                style={{ animation: "none", backgroundColor: "#d9d1f8" }}
-                                                                onContextMenu={(e) => e.preventDefault()}
-                                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
-                                                            >
-                                                                {ReactPlayer.canPlay(hoot.link) &&
-                                                                    hoot.link.endsWith('.mp4') ||
-                                                                    hoot.link.endsWith('.mkv') ||
-                                                                    hoot.link.endsWith('.mov') ||
-                                                                    hoot.link.endsWith('.ogv') ||
-                                                                    hoot.link.endsWith('.webm') ||
-                                                                    hoot.link.endsWith('.mpg')
-                                                                    ?
-                                                                    <div className="vdo-container">
-                                                                        <video
-                                                                            muted
-                                                                            disablePictureInPicture
-                                                                            className="hoot-vdo-profile"
-                                                                            style={{ margin: "0" }}
-                                                                            onMouseOver={event => event.target.play()}
-                                                                            onMouseOut={event => event.target.pause()}
-                                                                            onDragStart={(e) => e.preventDefault()}
-                                                                        >
-                                                                            <source src={hoot.link} />
-                                                                            Your browser does not support HTML video.
-                                                                        </video>
-                                                                    </div>
-                                                                    :
-                                                                    hoot.link.endsWith('.mp3') ||
-                                                                        hoot.link.endsWith('.ogg') ||
-                                                                        hoot.link.endsWith('.wav') ||
-                                                                        hoot.link.endsWith('.flac') ||
-                                                                        hoot.link.endsWith('.aac') ||
-                                                                        hoot.link.endsWith('.alac') ||
-                                                                        hoot.link.endsWith('.dsd')
+                                                        {!hoot.mimeType
+                                                            ?
+                                                            <div className="img-container">
+                                                                <div
+                                                                    className="hoot-img-vertical-profile"
+                                                                    style={{ animation: "none", backgroundColor: "#d9d1f8" }}
+                                                                    onContextMenu={(e) => e.preventDefault()}
+                                                                    onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
+                                                                >
+                                                                    {ReactPlayer.canPlay(hoot.link) &&
+                                                                        hoot.link.endsWith('.mp4') ||
+                                                                        hoot.link.endsWith('.mkv') ||
+                                                                        hoot.link.endsWith('.mov') ||
+                                                                        hoot.link.endsWith('.ogv') ||
+                                                                        hoot.link.endsWith('.webm') ||
+                                                                        hoot.link.endsWith('.mpg')
                                                                         ?
                                                                         <div className="vdo-container">
                                                                             <video
                                                                                 muted
-                                                                                poster={`${BaseURL}/profile-pictures/${`${BaseURL}/profile-pictures/${hoot.profilePic}`}`}
+                                                                                disablePictureInPicture
                                                                                 className="hoot-vdo-profile"
                                                                                 style={{ margin: "0" }}
+                                                                                onMouseOver={event => event.target.play()}
+                                                                                onMouseOut={event => event.target.pause()}
                                                                                 onDragStart={(e) => e.preventDefault()}
                                                                             >
                                                                                 <source src={hoot.link} />
@@ -1639,41 +1618,62 @@ const PrivateChannels = () => {
                                                                             </video>
                                                                         </div>
                                                                         :
-                                                                        ReactPlayer.canPlay(hoot.link) &&
-                                                                        <div className='player-profile-wrapper'>
-                                                                            <ReactPlayer
-                                                                                url={hoot.link}
-                                                                                className='react-player'
-                                                                                controls="true"
-                                                                                width={hoot.mimeType ? '97%' : '100%'}
-                                                                                height='100%'
-                                                                                light={true}
-                                                                            />
-                                                                        </div>
-                                                                }
+                                                                        hoot.link.endsWith('.mp3') ||
+                                                                            hoot.link.endsWith('.ogg') ||
+                                                                            hoot.link.endsWith('.wav') ||
+                                                                            hoot.link.endsWith('.flac') ||
+                                                                            hoot.link.endsWith('.aac') ||
+                                                                            hoot.link.endsWith('.alac') ||
+                                                                            hoot.link.endsWith('.dsd')
+                                                                            ?
+                                                                            <div className="vdo-container">
+                                                                                <video
+                                                                                    muted
+                                                                                    poster={`${BaseURL}/profile-pictures/${`${BaseURL}/profile-pictures/${hoot.profilePic}`}`}
+                                                                                    className="hoot-vdo-profile"
+                                                                                    style={{ margin: "0" }}
+                                                                                    onDragStart={(e) => e.preventDefault()}
+                                                                                >
+                                                                                    <source src={hoot.link} />
+                                                                                    Your browser does not support HTML video.
+                                                                                </video>
+                                                                            </div>
+                                                                            :
+                                                                            ReactPlayer.canPlay(hoot.link) &&
+                                                                            <div className='player-profile-wrapper'>
+                                                                                <ReactPlayer
+                                                                                    url={hoot.link}
+                                                                                    className='react-player'
+                                                                                    controls="true"
+                                                                                    width={hoot.mimeType ? '97%' : '100%'}
+                                                                                    height='100%'
+                                                                                    light={true}
+                                                                                />
+                                                                            </div>
+                                                                    }
+                                                                </div>
+                                                                <FiPlayCircle
+                                                                    className="GIF-overlay"
+                                                                    style={{ borderRadius: "50%" }}
+                                                                    onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
+                                                                />
                                                             </div>
-                                                            <FiPlayCircle
-                                                                className="GIF-overlay"
-                                                                style={{ borderRadius: "50%" }}
-                                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
-                                                            />
-                                                        </div>
-                                                        :
-                                                        hoot.mimeType.substr(0, 5) == "audio"
-                                                            ? <ExploreHoot
-                                                                hootId={(hoot.id)}
-                                                                username={hoot.authorUsername}
-                                                                mimeType={hoot.mimeType}
-                                                                hootImgId={hoot.image}
-                                                            />
-                                                            : <HootOutside
-                                                                hootId={(hoot.id)}
-                                                                username={hoot.authorUsername}
-                                                                mimeType={hoot.mimeType}
-                                                                hootImgId={hoot.image}
-                                                            />
-                                                    }
-                                                </div>
+                                                            :
+                                                            hoot.mimeType.substr(0, 5) == "audio"
+                                                                ? <ExploreHoot
+                                                                    hootId={(hoot.id)}
+                                                                    username={hoot.authorUsername}
+                                                                    mimeType={hoot.mimeType}
+                                                                    hootImgId={hoot.image}
+                                                                />
+                                                                : <HootOutside
+                                                                    hootId={(hoot.id)}
+                                                                    username={hoot.authorUsername}
+                                                                    mimeType={hoot.mimeType}
+                                                                    hootImgId={hoot.image}
+                                                                />
+                                                        }
+                                                    </div>
                                                 );
                                             })}
                                         </InfiniteScroll>
@@ -1710,7 +1710,7 @@ const PrivateChannels = () => {
                                             setOnDemandMedia(false);
                                         }}
                                     >
-                                       All Hoots
+                                        All Hoots
                                     </span>
                                     <span
                                         style={{ backgroundColor: showRequest ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
@@ -1760,26 +1760,26 @@ const PrivateChannels = () => {
                                 <p>No Requests</p>
                             </div> : null}
                             {showPricingSetting ?
-                            <div className="slide-container">
-                               
-                            <div id="slide" 
-                             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Set Service Price</h5>
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label  style={{minWidth:'300px'}}>1 on 1 call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={oneOnOnecallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setOneOnOneCallPrice(e.target.value) }} />XMG</div>
+                                <div className="slide-container">
 
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Group call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={groupCallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setGroupCallPrice(e.target.value) }} />XMG</div>
+                                    <div id="slide"
+                                        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                                        <h5>Set Service Price</h5>
+                                        <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{ minWidth: '300px' }}>1 on 1 call :  </label><input style={{ borderRadius: '10px', padding: '4px', border: 'none', borderBottom: '3px solid grey', marginRight: '5px', outline: 'none' }} type="number" value={oneOnOnecallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setOneOnOneCallPrice(e.target.value) }} />XMG</div>
 
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Personal Message :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={requestMessagePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setRequestMessagePrice(e.target.value) }} />XMG</div>
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>verified Autograph Price :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={verifiedAutographPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setVerifiedAutographPrice(e.target.value) }} />XMG</div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{ minWidth: '300px' }}>Group call :  </label><input style={{ borderRadius: '10px', padding: '4px', border: 'none', borderBottom: '3px solid grey', marginRight: '5px', outline: 'none' }} type="number" value={groupCallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setGroupCallPrice(e.target.value) }} />XMG</div>
 
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Membership :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={subscribePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setSubscribePrice(e.target.value) }} />XMG</div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{ minWidth: '300px' }}>Personal Message :  </label><input style={{ borderRadius: '10px', padding: '4px', border: 'none', borderBottom: '3px solid grey', marginRight: '5px', outline: 'none' }} type="number" value={requestMessagePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setRequestMessagePrice(e.target.value) }} />XMG</div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{ minWidth: '300px' }}>verified Autograph Price :  </label><input style={{ borderRadius: '10px', padding: '4px', border: 'none', borderBottom: '3px solid grey', marginRight: '5px', outline: 'none' }} type="number" value={verifiedAutographPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setVerifiedAutographPrice(e.target.value) }} />XMG</div>
 
-                                <div className="btns" > 
-                                 <button onClick={() => { updatePricing() }} style={{minWidth:'400px',borderRadius:'8px'}}  >Update Changes</button>
-                                 
-                                 </div>
-                                 <p>Note: The minimum amount for service price is 5 XMG</p>
-                            </div> </div>: null}
+                                        <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{ minWidth: '300px' }}>Membership :  </label><input style={{ borderRadius: '10px', padding: '4px', border: 'none', borderBottom: '3px solid grey', marginRight: '5px', outline: 'none' }} type="number" value={subscribePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setSubscribePrice(e.target.value) }} />XMG</div>
+
+                                        <div className="btns" >
+                                            <button onClick={() => { updatePricing() }} style={{ minWidth: '400px', borderRadius: '8px' }}  >Update Changes</button>
+
+                                        </div>
+                                        <p>Note: The minimum amount for service price is 5 XMG</p>
+                                    </div> </div> : null}
                             {showSubscribers ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Memberships</h5>
                                 {subscribePrice} XMG
@@ -1789,7 +1789,7 @@ const PrivateChannels = () => {
                                 <h5>Notification</h5>
                                 <p>No Notification</p>
                             </div> : null}
-                            {showFeed ? <div className="channel-media" id="feed" style={{display:'flex'}}>
+                            {showFeed ? <div className="channel-media" id="feed" style={{ display: 'flex' }}>
                                 {uploads && (
                                     <InfiniteScroll
                                         dataLength={uploads.length}
@@ -1824,67 +1824,51 @@ const PrivateChannels = () => {
                                         })}
                                     </InfiniteScroll>
                                 )}
-                                 {showChatRoom ?
-                                <div style={{ position: 'relative' }} >
-                                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                        {privateChat ? <div className="privateChat-club">
-                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', maxWidth: '300px' }} >Private Chat<FaWindowClose className="icon-text"
-                                                onClick={() => {
-                                                    setPrivateChat(false);
-                                                }}
-                                            /></div>
+                                {showChatRoom ?
+                                    <div style={{ position: 'relative' }} >
+                                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                            {privateChat ? <div className="privateChat-club">
+                                                <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', maxWidth: '300px' }} >Private Chat<FaWindowClose className="icon-text"
+                                                    onClick={() => {
+                                                        setPrivateChat(false);
+                                                    }}
+                                                /></div>
 
-                                        </div> : null}
-
-                                        <div className="container" style={{ left: privateChat ? "20px" : "20px", width: privateChat ? "40%" : "60%" ,minWidth:'500px'}} >
-                                            <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft: '-15px', marginTop: '-33px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'fixed', width: '25%',minWidth:'450px', zIndex: '5' }} >  {userInfo[0].name}`s Club Chat
-                                                <LiveTvRounded style={{ cursor: 'pointer', outline: 'none' }} data-tip="Stream Live" onClick={() => { setBroadcastStream(true) }} />
-                                            </div>
-                                            {broadcastStream ? <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} /> : null}
-
-
-                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px', zIndex: '-1' }}></div>
-
-
-                                            {emojiPicker && (
-                                                <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
-                                                    <div>
-                                                        <Picker
-                                                            native
-                                                            onEmojiClick={(event, emojiObject) => {
-                                                                setMessageInboxValue(messageInboxValue + emojiObject.emoji)
-                                                                // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
-                                                                //  // socket.emit('send',message);
-                                                                socket.emit('send', {
-                                                                    name: userFullName,
-                                                                    message: emojiObject.emoji,
-                                                                    profilePic: userProfilePic,
-                                                                    isEmoji: true
-                                                                });
-                                                            }}
-                                                            pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
-                                                        />
-                                                    </div>
-                                                </ClickAwayListener>
-                                            )}
-                                            {src && mimeType.substr(0, 5) == "image" ? <div className="messageBox">
-                                                <img src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} />
-                                                <button onClick={() => {
-                                                    upload(file, file.type);
-                                                    setFile([]);
-                                                    setSrc(null);
-                                                    setMimeType("")
-                                                }}>Confirm</button>
-                                                <button onClick={() => {
-
-                                                    setFile([]);
-                                                    setSrc(null);
-                                                    setMimeType("")
-                                                }}>Cancel</button>
                                             </div> : null}
-                                            {src && mimeType.substr(0, 5) == "video" ?
-                                                <div className="messageBox">
-                                                    <video src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} className="messageBox" />
+
+                                            <div className="container" style={{ left: privateChat ? "20px" : "20px", width: privateChat ? "40%" : "60%", minWidth: '500px' }} >
+                                                <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft: '-15px', marginTop: '-33px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'fixed', width: '25%', minWidth: '450px', zIndex: '5' }} >  {userInfo[0].name}`s Club Chat
+                                                    <LiveTvRounded style={{ cursor: 'pointer', outline: 'none' }} data-tip="Stream Live" onClick={() => { setBroadcastStream(true) }} />
+                                                </div>
+                                                {broadcastStream ? <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} /> : null}
+
+
+                                                <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px', zIndex: '-1' }}></div>
+
+
+                                                {emojiPicker && (
+                                                    <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                        <div>
+                                                            <Picker
+                                                                native
+                                                                onEmojiClick={(event, emojiObject) => {
+                                                                    setMessageInboxValue(messageInboxValue + emojiObject.emoji)
+                                                                    // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                                                    //  // socket.emit('send',message);
+                                                                    socket.emit('send', {
+                                                                        name: userFullName,
+                                                                        message: emojiObject.emoji,
+                                                                        profilePic: userProfilePic,
+                                                                        isEmoji: true
+                                                                    });
+                                                                }}
+                                                                pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
+                                                            />
+                                                        </div>
+                                                    </ClickAwayListener>
+                                                )}
+                                                {src && mimeType.substr(0, 5) == "image" ? <div className="messageBox">
+                                                    <img src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} />
                                                     <button onClick={() => {
                                                         upload(file, file.type);
                                                         setFile([]);
@@ -1897,77 +1881,93 @@ const PrivateChannels = () => {
                                                         setSrc(null);
                                                         setMimeType("")
                                                     }}>Cancel</button>
-                                                </div>
-                                                : null}
-                                        </div>
-                                        {/* <div className="community-club">
+                                                </div> : null}
+                                                {src && mimeType.substr(0, 5) == "video" ?
+                                                    <div className="messageBox">
+                                                        <video src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} className="messageBox" />
+                                                        <button onClick={() => {
+                                                            upload(file, file.type);
+                                                            setFile([]);
+                                                            setSrc(null);
+                                                            setMimeType("")
+                                                        }}>Confirm</button>
+                                                        <button onClick={() => {
+
+                                                            setFile([]);
+                                                            setSrc(null);
+                                                            setMimeType("")
+                                                        }}>Cancel</button>
+                                                    </div>
+                                                    : null}
+                                            </div>
+                                            {/* <div className="community-club">
                                             <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
                                             <RandomCommunitySuggestion />
                                         </div> */}
 
-                                    </div>
+                                        </div>
 
-                                    <div className="send">
-                                        <ReactTooltip />
-                                        <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
-                                            <FaWindowClose className="icon-text" data-tip="Close Chatroom"
-                                                onClick={() => {
-                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false);setOnDemandMedia(false); setShowChatRoom(!showChatRoom);
-                                                }}
+                                        <div className="send">
+                                            <ReactTooltip />
+                                            <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
+                                                <FaWindowClose className="icon-text" data-tip="Close Chatroom"
+                                                    onClick={() => {
+                                                        setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setOnDemandMedia(false); setShowChatRoom(!showChatRoom);
+                                                    }}
 
-                                            />
+                                                />
 
-                                            <label
-                                                htmlFor="post-video"
+                                                <label
+                                                    htmlFor="post-video"
 
-                                            >
-                                                <FiVideo className="icon-text" data-tip="Share Video" />
-                                            </label>
-                                            <input
-                                                type="file"
-                                                id="post-video"
-                                                name="video"
-                                                accept="video/*"
-                                                onChange={handleFile}
-                                                hidden
-                                            />
-                                            <label
-                                                htmlFor="post-image"
+                                                >
+                                                    <FiVideo className="icon-text" data-tip="Share Video" />
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    id="post-video"
+                                                    name="video"
+                                                    accept="video/*"
+                                                    onChange={handleFile}
+                                                    hidden
+                                                />
+                                                <label
+                                                    htmlFor="post-image"
 
-                                            >
-                                                <FiImage className="icon-text" data-tip="Share Photos" />
-                                            </label>
-                                            <input
-                                                type="file"
-                                                id="post-image"
-                                                name="image"
-                                                accept="image/*"
-                                                onChange={handleFile}
-                                                hidden
-                                            />
+                                                >
+                                                    <FiImage className="icon-text" data-tip="Share Photos" />
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    id="post-image"
+                                                    name="image"
+                                                    accept="image/*"
+                                                    onChange={handleFile}
+                                                    hidden
+                                                />
 
-                                            <FiFolder className="icon-text" data-tip="Share File" />
-                                            <FiSmile className="icon-text" data-tip="Emoji"
-                                                onClick={() => { setEmojiPicker(!emojiPicker) }}
-                                            />
-                                            <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
-                                            <div className="btns"> <button type="submit"><FiSend /></button></div>
+                                                <FiFolder className="icon-text" data-tip="Share File" />
+                                                <FiSmile className="icon-text" data-tip="Emoji"
+                                                    onClick={() => { setEmojiPicker(!emojiPicker) }}
+                                                />
+                                                <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
+                                                <div className="btns"> <button type="submit"><FiSend /></button></div>
 
-                                        </form>
-                                    </div>
-                                </div> : null}
+                                            </form>
+                                        </div>
+                                    </div> : null}
                             </div>
                                 : null
                             }
 
-                            {onDemandMedia 
-                                ? <div className="channel-media" id="feed" style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',flexWrap:'wrap'}}>
+                            {onDemandMedia
+                                ? <div className="channel-media" id="feed" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
                                     {onDemandUploads && (
                                         <InfiniteScroll
                                             dataLength={onDemandUploads.length}
                                             next={fetchMoreOnDemandHoots}
                                             hasMore={onDemandHasMore}
-                                            style={{display:'flex',margin:'1rem',flexDirection:'row',justifyContent:'center',alignItems:'center',flexWrap:'wrap',padding:'1rem'}}
+                                            style={{ display: 'flex', margin: '1rem', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', padding: '1rem' }}
                                         >
                                             {onDemandUploads.map((hoot) => {
                                                 return (
@@ -1993,52 +1993,31 @@ const PrivateChannels = () => {
                                                     //     />
                                                     // </div>
                                                     <div key={hoot.id}>
-                                                    {!hoot.mimeType
-                                                        ?
-                                                        <div className="img-container">
-                                                            <div
-                                                                className="hoot-img-vertical-profile"
-                                                                style={{ animation: "none", backgroundColor: "#d9d1f8" }}
-                                                                onContextMenu={(e) => e.preventDefault()}
-                                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
-                                                            >
-                                                                {ReactPlayer.canPlay(hoot.link) &&
-                                                                    hoot.link.endsWith('.mp4') ||
-                                                                    hoot.link.endsWith('.mkv') ||
-                                                                    hoot.link.endsWith('.mov') ||
-                                                                    hoot.link.endsWith('.ogv') ||
-                                                                    hoot.link.endsWith('.webm') ||
-                                                                    hoot.link.endsWith('.mpg')
-                                                                    ?
-                                                                    <div className="vdo-container">
-                                                                        <video
-                                                                            muted
-                                                                            disablePictureInPicture
-                                                                            className="hoot-vdo-profile"
-                                                                            style={{ margin: "0" }}
-                                                                            onMouseOver={event => event.target.play()}
-                                                                            onMouseOut={event => event.target.pause()}
-                                                                            onDragStart={(e) => e.preventDefault()}
-                                                                        >
-                                                                            <source src={hoot.link} />
-                                                                            Your browser does not support HTML video.
-                                                                        </video>
-                                                                    </div>
-                                                                    :
-                                                                    hoot.link.endsWith('.mp3') ||
-                                                                        hoot.link.endsWith('.ogg') ||
-                                                                        hoot.link.endsWith('.wav') ||
-                                                                        hoot.link.endsWith('.flac') ||
-                                                                        hoot.link.endsWith('.aac') ||
-                                                                        hoot.link.endsWith('.alac') ||
-                                                                        hoot.link.endsWith('.dsd')
+                                                        {!hoot.mimeType
+                                                            ?
+                                                            <div className="img-container">
+                                                                <div
+                                                                    className="hoot-img-vertical-profile"
+                                                                    style={{ animation: "none", backgroundColor: "#d9d1f8" }}
+                                                                    onContextMenu={(e) => e.preventDefault()}
+                                                                    onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
+                                                                >
+                                                                    {ReactPlayer.canPlay(hoot.link) &&
+                                                                        hoot.link.endsWith('.mp4') ||
+                                                                        hoot.link.endsWith('.mkv') ||
+                                                                        hoot.link.endsWith('.mov') ||
+                                                                        hoot.link.endsWith('.ogv') ||
+                                                                        hoot.link.endsWith('.webm') ||
+                                                                        hoot.link.endsWith('.mpg')
                                                                         ?
                                                                         <div className="vdo-container">
                                                                             <video
                                                                                 muted
-                                                                                poster={`${BaseURL}/profile-pictures/${`${BaseURL}/profile-pictures/${hoot.profilePic}`}`}
+                                                                                disablePictureInPicture
                                                                                 className="hoot-vdo-profile"
                                                                                 style={{ margin: "0" }}
+                                                                                onMouseOver={event => event.target.play()}
+                                                                                onMouseOut={event => event.target.pause()}
                                                                                 onDragStart={(e) => e.preventDefault()}
                                                                             >
                                                                                 <source src={hoot.link} />
@@ -2046,41 +2025,62 @@ const PrivateChannels = () => {
                                                                             </video>
                                                                         </div>
                                                                         :
-                                                                        ReactPlayer.canPlay(hoot.link) &&
-                                                                        <div className='player-profile-wrapper'>
-                                                                            <ReactPlayer
-                                                                                url={hoot.link}
-                                                                                className='react-player'
-                                                                                controls="true"
-                                                                                width={hoot.mimeType ? '97%' : '100%'}
-                                                                                height='100%'
-                                                                                light={true}
-                                                                            />
-                                                                        </div>
-                                                                }
+                                                                        hoot.link.endsWith('.mp3') ||
+                                                                            hoot.link.endsWith('.ogg') ||
+                                                                            hoot.link.endsWith('.wav') ||
+                                                                            hoot.link.endsWith('.flac') ||
+                                                                            hoot.link.endsWith('.aac') ||
+                                                                            hoot.link.endsWith('.alac') ||
+                                                                            hoot.link.endsWith('.dsd')
+                                                                            ?
+                                                                            <div className="vdo-container">
+                                                                                <video
+                                                                                    muted
+                                                                                    poster={`${BaseURL}/profile-pictures/${`${BaseURL}/profile-pictures/${hoot.profilePic}`}`}
+                                                                                    className="hoot-vdo-profile"
+                                                                                    style={{ margin: "0" }}
+                                                                                    onDragStart={(e) => e.preventDefault()}
+                                                                                >
+                                                                                    <source src={hoot.link} />
+                                                                                    Your browser does not support HTML video.
+                                                                                </video>
+                                                                            </div>
+                                                                            :
+                                                                            ReactPlayer.canPlay(hoot.link) &&
+                                                                            <div className='player-profile-wrapper'>
+                                                                                <ReactPlayer
+                                                                                    url={hoot.link}
+                                                                                    className='react-player'
+                                                                                    controls="true"
+                                                                                    width={hoot.mimeType ? '97%' : '100%'}
+                                                                                    height='100%'
+                                                                                    light={true}
+                                                                                />
+                                                                            </div>
+                                                                    }
+                                                                </div>
+                                                                <FiPlayCircle
+                                                                    className="GIF-overlay"
+                                                                    style={{ borderRadius: "50%" }}
+                                                                    onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
+                                                                />
                                                             </div>
-                                                            <FiPlayCircle
-                                                                className="GIF-overlay"
-                                                                style={{ borderRadius: "50%" }}
-                                                                onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
-                                                            />
-                                                        </div>
-                                                        :
-                                                        hoot.mimeType.substr(0, 5) == "audio"
-                                                            ? <ExploreHoot
-                                                                hootId={(hoot.id)}
-                                                                username={hoot.authorUsername}
-                                                                mimeType={hoot.mimeType}
-                                                                hootImgId={hoot.image}
-                                                            />
-                                                            : <HootOutside
-                                                                hootId={(hoot.id)}
-                                                                username={hoot.authorUsername}
-                                                                mimeType={hoot.mimeType}
-                                                                hootImgId={hoot.image}
-                                                            />
-                                                    }
-                                                </div>
+                                                            :
+                                                            hoot.mimeType.substr(0, 5) == "audio"
+                                                                ? <ExploreHoot
+                                                                    hootId={(hoot.id)}
+                                                                    username={hoot.authorUsername}
+                                                                    mimeType={hoot.mimeType}
+                                                                    hootImgId={hoot.image}
+                                                                />
+                                                                : <HootOutside
+                                                                    hootId={(hoot.id)}
+                                                                    username={hoot.authorUsername}
+                                                                    mimeType={hoot.mimeType}
+                                                                    hootImgId={hoot.image}
+                                                                />
+                                                        }
+                                                    </div>
                                                 );
                                             })}
                                         </InfiniteScroll>
@@ -2089,8 +2089,8 @@ const PrivateChannels = () => {
                                 : null
                             }
 
-                            
-                           
+
+
 
                         </div>
                     ) : null}

@@ -5,7 +5,7 @@ import EmbedHoot from '../components/EmbedHoot';
 
 const EmbedHootPage = () => {
     var { hootId } = useParams();
-    hootId=atob(hootId);
+    hootId = atob(hootId);
     const [hoot, setHoot] = useState([]);
 
     const BaseURL = process.env.REACT_APP_API_URL;
