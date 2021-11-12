@@ -102,7 +102,7 @@ class VideoChat extends Component {
             myarray.forEach((userid) => {
                 if (myarray.length == 1) {
                    
-                    document.getElementById(userid).style.width = "37vw";
+                    document.getElementById(userid).style.width = "30vw";
                     document.getElementById(userid).style.minWidth = "300px"
                     document.getElementById(userid).style.maxHeight = `${(document.getElementById(userid).offsetWidth / 16) * 9}px`;
                     document.getElementById(userid).style.objectFit = "cover";

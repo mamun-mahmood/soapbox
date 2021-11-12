@@ -512,12 +512,13 @@ bottom: 1px;
 }
 
 #messageInp{
-width: 45%;
+width: 30%;
 background-color:#a09ba356;
 border: none;
 border-radius: 6px;
 height: 34px;
-min-width: 300px;
+min-width: 200px;
+max-width: 230px;
 outline: none;
 padding: 5px;
 

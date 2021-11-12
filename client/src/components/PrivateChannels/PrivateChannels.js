@@ -114,6 +114,7 @@ const PrivateChannels = () => {
     var totalViews = 0;
     var totalLikes = 0;
 
+
     var autolinker = new Autolinker({
         urls: {
             schemeMatches: true,
@@ -348,11 +349,14 @@ const PrivateChannels = () => {
                 .get(`${BaseURL}/upload/user/private/p/${username}?page=1&limit=${LIMIT}`)
                 .then((response) => {
                     setUploads(response.data.results);
-                  
+                 setTimeout(() => {
+                    document.getElementById('chatRoomopen').click()
+                 }, 1000);
 
                 });
         };
         getAllUploadData();
+        
     }, []);
 
     const getAllOnDemandMedia = async (media) => {
@@ -365,6 +369,7 @@ const PrivateChannels = () => {
 
     // useEffect(() => {
     // }, []);
+        
 
     const checkMembership = () => {
         axios.post(`${BaseURL}/user/getMember`, {
@@ -380,6 +385,7 @@ const PrivateChannels = () => {
 
     useEffect(() => {
         checkMembership()
+
     }, [])
 
 
@@ -1142,8 +1148,10 @@ const PrivateChannels = () => {
                                     {/* <span>Marketplace</span> */}
                                     <span>Podcasts</span>
 
-                                    <span onClick={() => {
-                                        setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                    <span id="chatRoomopen" onClick={() => {
+                                        setOneOnOneCall(false); setGroupCall(false); 
+                                        setRequestMessage(false); setVerifiedAutograph(false);
+                                         setShowFeed(true); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
                                         setOnDemandMedia(false)
                                         socket.emit('room', userInfo[0].username);
                                         socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
@@ -1366,7 +1374,7 @@ const PrivateChannels = () => {
 
 
                             {(showFeed && subscribe) ?
-                                <div className="channel-media" id="feed">
+                                <div className="channel-media" id="feed" style={{display:'flex'}}>
                                     {uploads && (
                                         <InfiniteScroll
                                             dataLength={uploads.length}
@@ -1401,6 +1409,145 @@ const PrivateChannels = () => {
                                             })}
                                         </InfiniteScroll>
                                     )}
+                                    
+                            {showChatRoom ?
+                                <div style={{ position: 'relative' }} >
+                                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                        {privateChat ? <div className="privateChat-club">
+                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', maxWidth: '300px' }} >Private Chat<FaWindowClose className="icon-text"
+                                                onClick={() => {
+                                                    setPrivateChat(false);
+                                                }}
+                                            /></div>
+
+                                        </div> : null}
+
+                                        <div className="container" style={{ left: privateChat ? "20px" : "20px", width: privateChat ? "40%" : "60%",minWidth:'500px' }}  >
+
+                                            <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft: '-15px', marginTop: '-33px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'fixed', width: '25%',maxWidth:'450px', zIndex: '5' }} >  {userInfo[0].name}`s Club Chat
+
+                                            </div>
+                                            <div>
+
+                                                <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} />
+                                            </div>
+
+                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px' }}></div>
+
+
+
+
+
+
+                                            {emojiPicker && (
+                                                <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                    <div>
+                                                        <Picker
+                                                            native
+                                                            onEmojiClick={(event, emojiObject) => {
+                                                                setMessageInboxValue(messageInboxValue + emojiObject.emoji)
+                                                                // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                                                //  // socket.emit('send',message);
+                                                                socket.emit('send', {
+                                                                    name: userFullName,
+                                                                    message: emojiObject.emoji,
+                                                                    profilePic: userProfilePic,
+                                                                    isEmoji: true
+                                                                });
+                                                            }}
+                                                            pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
+                                                        />
+                                                    </div>
+                                                </ClickAwayListener>
+                                            )}
+                                            {src && mimeType.substr(0, 5) == "image" ? <div className="messageBox">
+                                                <img src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} />
+                                                <button onClick={() => {
+                                                    upload(file, file.type);
+                                                    setFile([]);
+                                                    setSrc(null);
+                                                    setMimeType("")
+                                                }}>Confirm</button>
+                                                <button onClick={() => {
+
+                                                    setFile([]);
+                                                    setSrc(null);
+                                                    setMimeType("")
+                                                }}>Cancel</button>
+                                            </div> : null}
+                                            {src && mimeType.substr(0, 5) == "video" ?
+                                                <div className="messageBox">
+                                                    <video src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} className="messageBox" />
+                                                    <button onClick={() => {
+                                                        upload(file, file.type);
+                                                        setFile([]);
+                                                        setSrc(null);
+                                                        setMimeType("")
+                                                    }}>Confirm</button>
+                                                    <button onClick={() => {
+
+                                                        setFile([]);
+                                                        setSrc(null);
+                                                        setMimeType("")
+                                                    }}>Cancel</button>
+                                                </div>
+                                                : null}
+                                        </div>
+
+                                        {/* <div className="community-club">
+                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
+                                            <RandomCommunitySuggestion />
+                                        </div> */}
+
+                                    </div>
+
+                                    <div className="send">
+                                        <ReactTooltip />
+                                        <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
+                                            <FaWindowClose data-tip="Close CharRoom" className="icon-text"
+                                                onClick={() => {
+                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                                }}
+
+                                            />
+                                            <label
+                                                htmlFor="post-video"
+
+                                            >
+                                                <FiVideo data-tip="Share Video" className="icon-text" />
+                                            </label>
+                                            <input
+                                                type="file"
+                                                id="post-video"
+                                                name="video"
+                                                accept="video/*"
+                                                onChange={handleFile}
+                                                hidden
+                                            />
+                                            <label
+                                                htmlFor="post-image"
+
+                                            >
+                                                <FiImage data-tip="Share Photos" className="icon-text" />
+                                            </label>
+                                            <input
+                                                type="file"
+                                                id="post-image"
+                                                name="image"
+                                                accept="image/*"
+                                                onChange={handleFile}
+                                                hidden
+                                            />
+                                            <FiFolder data-tip="Share File" className="icon-text" />
+                                            <FiSmile className="icon-text" data-tip="Emoji"
+                                                onClick={() => { setEmojiPicker(!emojiPicker) }}
+                                            />
+                                            <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
+                                            <div className="btns"> <button type="submit"><FiSend /></button></div>
+
+                                        </form>
+                                    </div>
+                                </div> : null}
                                 </div>
                                 : null
                             }
@@ -1535,7 +1682,149 @@ const PrivateChannels = () => {
                                 : null
                             }
 
-                            {showChatRoom ?
+                        </div>
+                    )
+                        : null
+                    }
+
+                    {userInformation.username == username ? (
+                        <div className="channel-user-content" >
+                            <div
+                                className="channel-tabs shadow-sm"
+                                style={{
+                                    position: "sticky",
+                                    top: "4.2rem",
+                                    alignSelf: "flex-start",
+                                }}
+                            >
+                                <div className="tabs" style={{ margin: "0 0.5rem" }}>
+                                    <span
+                                        style={{ backgroundColor: showFeed ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
+                                        onClick={() => {
+                                            setShowRequest(false);
+                                            setShowFeed(!showFeed);
+                                            setShowSubscribers(false);
+                                            setShowPricingSetting(false);
+                                            setShowNotification(false);
+                                            setShowChatRoom(false)
+                                            setOnDemandMedia(false);
+                                        }}
+                                    >
+                                       All Hoots
+                                    </span>
+                                    <span
+                                        style={{ backgroundColor: showRequest ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
+                                        onClick={() => { setShowRequest(!showRequest); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Requests</span>
+                                    <span
+                                        style={{ backgroundColor: showSubscribers ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
+                                        onClick={() => { setShowRequest(false); setShowFeed(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Memberships</span>
+                                    {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
+                                    <span>Marketplace</span>
+
+                                    {/* <span 
+                                        onClick={() => {
+                                            history.push(
+                                                `/${uuidv4()}/RecordMessage/${uuidv4()}/${userInfo[0].name
+                                                }/${uuidv4()}/${uuidv4()}`
+                                            );
+                                        }}
+                                    >
+                                        <div className="channel-btn-icon">
+                                            Record Message
+                                        </div>
+                                    </span> */}
+                                    <span id="chatRoomopen" style={{ backgroundColor: showChatRoom ? "#8249A0" : '#A279BA', borderRadius: '8px' }} onClick={() => {
+                                        setShowRequest(false);
+                                        setShowSubscribers(false);
+                                        setShowPricingSetting(false);
+                                        setShowNotification(false);
+                                        setShowFeed(true);
+                                        setShowChatRoom(false);
+                                        setShowChatRoom(!showChatRoom);
+                                        setOnDemandMedia(false)
+                                        socket.emit('room', userInfo[0].username);
+                                        socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
+                                    }}  >Club Chat</span>
+                                    <span
+                                        style={{ backgroundColor: '#A279BA', borderRadius: '8px' }}
+                                    >Club Rules</span>
+                                </div>
+
+
+                                {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
+
+                                {/* <FiSearch className="search-channel-content" /> */}
+                            </div>
+                            {showRequest ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                                <h5>Requests</h5>
+                                <p>No Requests</p>
+                            </div> : null}
+                            {showPricingSetting ?
+                            <div className="slide-container">
+                               
+                            <div id="slide" 
+                             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                                <h5>Set Service Price</h5>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label  style={{minWidth:'300px'}}>1 on 1 call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={oneOnOnecallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setOneOnOneCallPrice(e.target.value) }} />XMG</div>
+
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Group call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={groupCallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setGroupCallPrice(e.target.value) }} />XMG</div>
+
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Personal Message :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={requestMessagePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setRequestMessagePrice(e.target.value) }} />XMG</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>verified Autograph Price :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={verifiedAutographPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setVerifiedAutographPrice(e.target.value) }} />XMG</div>
+
+                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Membership :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={subscribePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setSubscribePrice(e.target.value) }} />XMG</div>
+
+                                <div className="btns" > 
+                                 <button onClick={() => { updatePricing() }} style={{minWidth:'400px',borderRadius:'8px'}}  >Update Changes</button>
+                                 
+                                 </div>
+                                 <p>Note: The minimum amount for service price is 5 XMG</p>
+                            </div> </div>: null}
+                            {showSubscribers ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                                <h5>Memberships</h5>
+                                {subscribePrice} XMG
+                                <p>No Members</p>
+                            </div> : null}
+                            {showNotification ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                                <h5>Notification</h5>
+                                <p>No Notification</p>
+                            </div> : null}
+                            {showFeed ? <div className="channel-media" id="feed" style={{display:'flex'}}>
+                                {uploads && (
+                                    <InfiniteScroll
+                                        dataLength={uploads.length}
+                                        next={fetchMoreHoots}
+                                        hasMore={hasMore}
+                                    // loader={<InfiniteScrollLoader />}
+                                    >
+                                        {uploads.map((upload, index) => {
+                                            return (
+                                                <div key={upload}>
+                                                    <Post
+                                                        hootId={upload.id}
+                                                        username={upload.authorUsername}
+                                                        mimeType={upload.mimeType}
+                                                        hootImgId={upload.image}
+                                                        audioPoster={upload.audioPoster}
+                                                        likes={upload.likes}
+                                                        views={upload.views}
+                                                        followers={upload.followers}
+                                                        caption={upload.caption}
+                                                        link={upload.link}
+                                                        ephemeral={upload.ephemeral}
+                                                        privateHoot={upload.private}
+                                                        expiryDate={upload.expiryDate}
+                                                        timeStamp={upload.timeStamp}
+                                                        edited={upload.edited}
+                                                        editedTimeStamp={upload.editedTimeStamp}
+                                                    // privateProtected={privateProtected}
+                                                    />
+                                                </div>
+                                            );
+                                        })}
+                                    </InfiniteScroll>
+                                )}
+                                 {showChatRoom ?
                                 <div style={{ position: 'relative' }} >
                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                                         {privateChat ? <div className="privateChat-club">
@@ -1547,21 +1836,14 @@ const PrivateChannels = () => {
 
                                         </div> : null}
 
-                                        <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }}  >
-
-                                            <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft: '-15px', marginTop: '-33px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'fixed', width: '40%', zIndex: '5' }} >  {userInfo[0].name}`s Club Chat
-
+                                        <div className="container" style={{ left: privateChat ? "20px" : "20px", width: privateChat ? "40%" : "60%" ,minWidth:'500px'}} >
+                                            <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft: '-15px', marginTop: '-33px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'fixed', width: '25%',minWidth:'450px', zIndex: '5' }} >  {userInfo[0].name}`s Club Chat
+                                                <LiveTvRounded style={{ cursor: 'pointer', outline: 'none' }} data-tip="Stream Live" onClick={() => { setBroadcastStream(true) }} />
                                             </div>
-                                            <div>
-
-                                                <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} />
-                                            </div>
-
-                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px' }}></div>
+                                            {broadcastStream ? <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} /> : null}
 
 
-
-
+                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px', zIndex: '-1' }}></div>
 
 
                                             {emojiPicker && (
@@ -1618,28 +1900,28 @@ const PrivateChannels = () => {
                                                 </div>
                                                 : null}
                                         </div>
-
-                                        <div className="community-club">
+                                        {/* <div className="community-club">
                                             <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
                                             <RandomCommunitySuggestion />
-                                        </div>
+                                        </div> */}
 
                                     </div>
 
                                     <div className="send">
                                         <ReactTooltip />
                                         <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
-                                            <FaWindowClose data-tip="Close CharRoom" className="icon-text"
+                                            <FaWindowClose className="icon-text" data-tip="Close Chatroom"
                                                 onClick={() => {
-                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
+                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false);setOnDemandMedia(false); setShowChatRoom(!showChatRoom);
                                                 }}
 
                                             />
+
                                             <label
                                                 htmlFor="post-video"
 
                                             >
-                                                <FiVideo data-tip="Share Video" className="icon-text" />
+                                                <FiVideo className="icon-text" data-tip="Share Video" />
                                             </label>
                                             <input
                                                 type="file"
@@ -1653,7 +1935,7 @@ const PrivateChannels = () => {
                                                 htmlFor="post-image"
 
                                             >
-                                                <FiImage data-tip="Share Photos" className="icon-text" />
+                                                <FiImage className="icon-text" data-tip="Share Photos" />
                                             </label>
                                             <input
                                                 type="file"
@@ -1663,7 +1945,8 @@ const PrivateChannels = () => {
                                                 onChange={handleFile}
                                                 hidden
                                             />
-                                            <FiFolder data-tip="Share File" className="icon-text" />
+
+                                            <FiFolder className="icon-text" data-tip="Share File" />
                                             <FiSmile className="icon-text" data-tip="Emoji"
                                                 onClick={() => { setEmojiPicker(!emojiPicker) }}
                                             />
@@ -1673,148 +1956,6 @@ const PrivateChannels = () => {
                                         </form>
                                     </div>
                                 </div> : null}
-                        </div>
-                    )
-                        : null
-                    }
-
-                    {userInformation.username == username ? (
-                        <div className="channel-user-content">
-                            <div
-                                className="channel-tabs shadow-sm"
-                                style={{
-                                    position: "sticky",
-                                    top: "4.2rem",
-                                    alignSelf: "flex-start",
-                                }}
-                            >
-                                <div className="tabs" style={{ margin: "0 0.5rem" }}>
-                                    <span
-                                        style={{ backgroundColor: showFeed ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
-                                        onClick={() => {
-                                            setShowRequest(false);
-                                            setShowFeed(!showFeed);
-                                            setShowSubscribers(false);
-                                            setShowPricingSetting(false);
-                                            setShowNotification(false);
-                                            setShowChatRoom(false)
-                                            setOnDemandMedia(false);
-                                        }}
-                                    >
-                                       All Hoots
-                                    </span>
-                                    <span
-                                        style={{ backgroundColor: showRequest ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
-                                        onClick={() => { setShowRequest(!showRequest); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Requests</span>
-                                    <span
-                                        style={{ backgroundColor: showSubscribers ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
-                                        onClick={() => { setShowRequest(false); setShowFeed(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Memberships</span>
-                                    {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
-                                    <span>Marketplace</span>
-
-                                    {/* <span 
-                                        onClick={() => {
-                                            history.push(
-                                                `/${uuidv4()}/RecordMessage/${uuidv4()}/${userInfo[0].name
-                                                }/${uuidv4()}/${uuidv4()}`
-                                            );
-                                        }}
-                                    >
-                                        <div className="channel-btn-icon">
-                                            Record Message
-                                        </div>
-                                    </span> */}
-                                    <span style={{ backgroundColor: showChatRoom ? "#8249A0" : '#A279BA', borderRadius: '8px' }} onClick={() => {
-                                        setShowRequest(false);
-                                        setShowSubscribers(false);
-                                        setShowPricingSetting(false);
-                                        setShowNotification(false);
-                                        setShowFeed(false);
-                                        setShowChatRoom(false);
-                                        setShowChatRoom(!showChatRoom);
-                                        setOnDemandMedia(false)
-                                        socket.emit('room', userInfo[0].username);
-                                        socket.emit('new-user-joined', { name: userFullName, profilePic: userProfilePic });
-                                    }}  >Club Chat</span>
-                                    <span
-                                        style={{ backgroundColor: '#A279BA', borderRadius: '8px' }}
-                                    >Club Rules</span>
-                                </div>
-
-
-                                {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
-
-                                {/* <FiSearch className="search-channel-content" /> */}
-                            </div>
-                            {showRequest ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Requests</h5>
-                                <p>No Requests</p>
-                            </div> : null}
-                            {showPricingSetting ?
-                            <div className="slide-container">
-                               
-                            <div id="slide" 
-                             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Set Service Price</h5>
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label  style={{minWidth:'300px'}}>1 on 1 call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={oneOnOnecallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setOneOnOneCallPrice(e.target.value) }} />XMG</div>
-
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Group call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={groupCallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setGroupCallPrice(e.target.value) }} />XMG</div>
-
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Personal Message :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={requestMessagePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setRequestMessagePrice(e.target.value) }} />XMG</div>
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>verified Autograph Price :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={verifiedAutographPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setVerifiedAutographPrice(e.target.value) }} />XMG</div>
-
-                                <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Membership :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={subscribePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setSubscribePrice(e.target.value) }} />XMG</div>
-
-                                <div className="btns" > 
-                                 <button onClick={() => { updatePricing() }} style={{minWidth:'400px',borderRadius:'8px'}}  >Update Changes</button>
-                                 
-                                 </div>
-                                 <p>Note: The minimum amount for service price is 5 XMG</p>
-                            </div> </div>: null}
-                            {showSubscribers ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Memberships</h5>
-                                {subscribePrice} XMG
-                                <p>No Members</p>
-                            </div> : null}
-                            {showNotification ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Notification</h5>
-                                <p>No Notification</p>
-                            </div> : null}
-                            {showFeed ? <div className="channel-media" id="feed">
-                                {uploads && (
-                                    <InfiniteScroll
-                                        dataLength={uploads.length}
-                                        next={fetchMoreHoots}
-                                        hasMore={hasMore}
-                                    // loader={<InfiniteScrollLoader />}
-                                    >
-                                        {uploads.map((upload, index) => {
-                                            return (
-                                                <div key={upload}>
-                                                    <Post
-                                                        hootId={upload.id}
-                                                        username={upload.authorUsername}
-                                                        mimeType={upload.mimeType}
-                                                        hootImgId={upload.image}
-                                                        audioPoster={upload.audioPoster}
-                                                        likes={upload.likes}
-                                                        views={upload.views}
-                                                        followers={upload.followers}
-                                                        caption={upload.caption}
-                                                        link={upload.link}
-                                                        ephemeral={upload.ephemeral}
-                                                        privateHoot={upload.private}
-                                                        expiryDate={upload.expiryDate}
-                                                        timeStamp={upload.timeStamp}
-                                                        edited={upload.edited}
-                                                        editedTimeStamp={upload.editedTimeStamp}
-                                                    // privateProtected={privateProtected}
-                                                    />
-                                                </div>
-                                            );
-                                        })}
-                                    </InfiniteScroll>
-                                )}
                             </div>
                                 : null
                             }
@@ -1949,138 +2090,7 @@ const PrivateChannels = () => {
                             }
 
                             
-                            {showChatRoom ?
-                                <div style={{ position: 'relative' }} >
-                                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                        {privateChat ? <div className="privateChat-club">
-                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px', maxWidth: '300px' }} >Private Chat<FaWindowClose className="icon-text"
-                                                onClick={() => {
-                                                    setPrivateChat(false);
-                                                }}
-                                            /></div>
-
-                                        </div> : null}
-
-                                        <div className="container" style={{ left: privateChat ? "20px" : "-140px", width: privateChat ? "40%" : "60%" }} >
-                                            <div className="live-header" style={{ backgroundColor: '#C1A9D5', color: 'white', borderRadius: '3px', marginLeft: '-15px', marginTop: '-33px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'fixed', width: '40%', zIndex: '5' }} >  {userInfo[0].name}`s Club Chat
-                                                <LiveTvRounded style={{ cursor: 'pointer', outline: 'none' }} data-tip="Stream Live" onClick={() => { setBroadcastStream(true) }} />
-                                            </div>
-                                            {broadcastStream ? <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} /> : null}
-
-
-                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px', zIndex: '-1' }}></div>
-
-
-                                            {emojiPicker && (
-                                                <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
-                                                    <div>
-                                                        <Picker
-                                                            native
-                                                            onEmojiClick={(event, emojiObject) => {
-                                                                setMessageInboxValue(messageInboxValue + emojiObject.emoji)
-                                                                // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
-                                                                //  // socket.emit('send',message);
-                                                                socket.emit('send', {
-                                                                    name: userFullName,
-                                                                    message: emojiObject.emoji,
-                                                                    profilePic: userProfilePic,
-                                                                    isEmoji: true
-                                                                });
-                                                            }}
-                                                            pickerStyle={{ position: "absolute", bottom: '0px', left: "0.2rem", zIndex: "1111" }}
-                                                        />
-                                                    </div>
-                                                </ClickAwayListener>
-                                            )}
-                                            {src && mimeType.substr(0, 5) == "image" ? <div className="messageBox">
-                                                <img src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} />
-                                                <button onClick={() => {
-                                                    upload(file, file.type);
-                                                    setFile([]);
-                                                    setSrc(null);
-                                                    setMimeType("")
-                                                }}>Confirm</button>
-                                                <button onClick={() => {
-
-                                                    setFile([]);
-                                                    setSrc(null);
-                                                    setMimeType("")
-                                                }}>Cancel</button>
-                                            </div> : null}
-                                            {src && mimeType.substr(0, 5) == "video" ?
-                                                <div className="messageBox">
-                                                    <video src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} className="messageBox" />
-                                                    <button onClick={() => {
-                                                        upload(file, file.type);
-                                                        setFile([]);
-                                                        setSrc(null);
-                                                        setMimeType("")
-                                                    }}>Confirm</button>
-                                                    <button onClick={() => {
-
-                                                        setFile([]);
-                                                        setSrc(null);
-                                                        setMimeType("")
-                                                    }}>Cancel</button>
-                                                </div>
-                                                : null}
-                                        </div>
-                                        <div className="community-club">
-                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
-                                            <RandomCommunitySuggestion />
-                                        </div>
-
-                                    </div>
-
-                                    <div className="send">
-                                        <ReactTooltip />
-                                        <form action="#" id="send-container" onSubmit={(e) => messagesubmit(e)}>
-                                            <FaWindowClose className="icon-text" data-tip="Close Chatroom"
-                                                onClick={() => {
-                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(!showFeed); setShowSubscribeButton(false);setOnDemandMedia(false); setShowChatRoom(!showChatRoom);
-                                                }}
-
-                                            />
-
-                                            <label
-                                                htmlFor="post-video"
-
-                                            >
-                                                <FiVideo className="icon-text" data-tip="Share Video" />
-                                            </label>
-                                            <input
-                                                type="file"
-                                                id="post-video"
-                                                name="video"
-                                                accept="video/*"
-                                                onChange={handleFile}
-                                                hidden
-                                            />
-                                            <label
-                                                htmlFor="post-image"
-
-                                            >
-                                                <FiImage className="icon-text" data-tip="Share Photos" />
-                                            </label>
-                                            <input
-                                                type="file"
-                                                id="post-image"
-                                                name="image"
-                                                accept="image/*"
-                                                onChange={handleFile}
-                                                hidden
-                                            />
-
-                                            <FiFolder className="icon-text" data-tip="Share File" />
-                                            <FiSmile className="icon-text" data-tip="Emoji"
-                                                onClick={() => { setEmojiPicker(!emojiPicker) }}
-                                            />
-                                            <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" onChange={(e) => { setMessageInboxValue(e.target.value) }} />
-                                            <div className="btns"> <button type="submit"><FiSend /></button></div>
-
-                                        </form>
-                                    </div>
-                                </div> : null}
+                           
 
                         </div>
                     ) : null}

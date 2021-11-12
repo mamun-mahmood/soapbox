@@ -467,8 +467,8 @@ const HootInside = ({
             {ephemeral === 1
                 ?
                 <Expire expiryDate={expiryDate} hootImgId={hootImgId}>
-                    <div className="home">
-                        <div className="home-container" ref={homeRef} id="element-id" style={privateProtected}>
+                    <div className="home" style={{maxWidth:privateHoot==1?"400px":"100%"}}>
+                        <div className="home-container" ref={homeRef} id="element-id" style={privateProtected} style={{maxWidth:privateHoot==1?"380px":"100%"}} >
                             <ReactTooltip />
                             <div className="post-heading">
                                 <div
@@ -1480,8 +1480,8 @@ const HootInside = ({
                     </div>
                 </Expire>
                 :
-                <div className="home">
-                    <div className="home-container" style={privateProtected}>
+                <div className="home" style={{maxWidth:privateHoot==1?"400px":"100%"}}>
+                    <div className="home-container" style={privateProtected}  style={{maxWidth:privateHoot==1?"380px":"100%"}} >
                         <ReactTooltip />
                         <div className="post-heading">
                             <div
