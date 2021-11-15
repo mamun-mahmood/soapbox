@@ -550,17 +550,19 @@ padding: 5px;
 
 .slide-container{
     position: relative;
+
  
   
 }
 
-#slide{
+#slide,#slideR,#slideM,#slideRM,#slideOOC,#slideSSB,#slidegC,#slideVA{
     position: absolute;
     right: -100vw;
  
     transition: 1s;
     z-index: 20;
 }
+
 
 #slideFeed{
     position: absolute;

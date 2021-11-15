@@ -57,7 +57,8 @@ import { SoapboxTooltip } from "../SoapboxTooltip";
 import inviteicon from "../../assets/inviteicon.png";
 import rules from "../../assets/rules.png";
 import videolive from "../../assets/videoLive.png";
-
+import marketplaceicon from "../../assets/marketplace.png";
+import messagesicon from "../../assets/messages.png";
 import sendIcon from "../../assets/send.png";
 
 import privatehooticon from "../../assets/private-hoot.png";
@@ -441,17 +442,55 @@ const PrivateChannels = () => {
 
     const subscribeUser = () => {
 
-        setShowSubscribeButton(!showSubscribeButton)
+        if(showSubscribeButton){
+            document.getElementById('slideSSB').style.transition='2sec';
+            document.getElementById('slideSSB').style.right='-100vw';
+                                                                     
+           setTimeout(() => {
+            setShowSubscribeButton(false)
+             
+           }, 1000)
+        }else{
+            setShowSubscribeButton(!showSubscribeButton)
         setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(false)
+      
+            setTimeout(() => {
+           
+        if(document.getElementById('slideSSB')){
 
+            document.getElementById('slideSSB').style.transition='1sec';
+            document.getElementById('slideSSB').style.right='250px';
+        }
+      
+    }, 1)   
+        }
 
     };
 
     const unSubscribeUser = () => {
 
-        setShowSubscribeButton(!showSubscribeButton)
+        if(showSubscribeButton){
+            document.getElementById('slideSSB').style.transition='2sec';
+            document.getElementById('slideSSB').style.right='-100vw';
+                                                                     
+           setTimeout(() => {
+            setShowSubscribeButton(false)
+             
+           }, 1000)
+        }else{
+            setShowSubscribeButton(!showSubscribeButton)
         setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(false)
+      
+            setTimeout(() => {
+           
+        if(document.getElementById('slideSSB')){
 
+            document.getElementById('slideSSB').style.transition='1sec';
+            document.getElementById('slideSSB').style.right='250px';
+        }
+      
+    }, 1)   
+        }
 
     };
 
@@ -863,8 +902,59 @@ const PrivateChannels = () => {
                                                         <div>
  <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }}>Membership</div>
                                                             <div className="control">
-                                                            <button  style={{ minWidth: '208px' }} onClick={() => { setShowRequest(false); setShowFeed(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(true) }}  >Membership</button>
-                                                                <button  style={{ minWidth: '208px' }} onClick={() => { setShowRequest(!showRequest); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(true) }}>Requests</button>
+                                                            <button  style={{ minWidth: '208px' }} onClick={() => { 
+                                                                
+                                                               
+                                                                if(showSubscribers){
+                                                                    document.getElementById('slideM').style.transition='2sec';
+                                                                    document.getElementById('slideM').style.right='-100vw';
+                                                                                                                             
+                                                                   setTimeout(() => {
+                                                                      setShowSubscribers(false)
+                                                                     
+                                                                   }, 1000)
+                                                                }else{
+                                                                    setOnDemandMedia(false),setShowRequest(false); setShowFeed(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(true) 
+                                                            
+                                                                setTimeout(() => {
+                                                                   
+                                                                if(document.getElementById('slideM')){
+
+                                                                    document.getElementById('slideM').style.transition='1sec';
+                                                                    document.getElementById('slideM').style.right='250px';
+                                                                }
+                                                              
+                                                            }, 1)   
+                                                                }
+                        
+                                                            
+                                                            }}  >Membership</button>
+                                                               
+                                                                <button  style={{ minWidth: '208px' }} onClick={() => { 
+                                                                    
+                                                                    if(showRequest){
+                                                                        document.getElementById('slideR').style.transition='2sec';
+                                                                        document.getElementById('slideR').style.right='-100vw';
+                                                                                                                                 
+                                                                       setTimeout(() => {
+                                                                          setShowRequest(false)
+                                                                         
+                                                                       }, 1000)
+                                                                    }else{
+                                                                        setOnDemandMedia(false),setShowRequest(true); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(true) 
+                                                                
+                                                                    setTimeout(() => {
+                                                                       
+                                                                    if(document.getElementById('slideR')){
+    
+                                                                        document.getElementById('slideR').style.transition='1sec';
+                                                                        document.getElementById('slideR').style.right='250px';
+                                                                    }
+                                                                  
+                                                                }, 1)   
+                                                                    }}}
+                                                                    
+                                                                    >Requests</button>
                                                                 </div>
 
                                                             <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Toolbox</div>
@@ -955,7 +1045,7 @@ const PrivateChannels = () => {
                                                                         setShowNotification(false);
                                                                         setShowFeed(false);
                                                                         setShowChatRoom(false);
-
+                                                                     setClubFloor(false)
                                                                         !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                         getAllOnDemandMedia("audio");
                                                                     }}
@@ -970,7 +1060,7 @@ const PrivateChannels = () => {
                                                                         setShowNotification(false);
                                                                         setShowFeed(false);
                                                                         setShowChatRoom(false);
-
+                                                                        setClubFloor(false)
                                                                         !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                         getAllOnDemandMedia("video");
                                                                     }}
@@ -985,7 +1075,7 @@ const PrivateChannels = () => {
                                                                         setShowNotification(false);
                                                                         setShowFeed(false);
                                                                         setShowChatRoom(false);
-
+                                                                        setClubFloor(false)
                                                                         !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                         getAllOnDemandMedia("image");
                                                                     }}
@@ -1010,23 +1100,135 @@ const PrivateChannels = () => {
                                 ? "Virtual Experiences"
                                 : "Virtual Experiences"}
                             </button> */}
-                                                                <button onClick={() => { setOneOnOneCall(!oneOnOnecall); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(false); setShowSubscribeButton(false) }}>
+                                                                <button onClick={() => { 
+                                                                    
+                                                                    if(oneOnOnecall){
+                                                                        document.getElementById('slideOOC').style.transition='2sec';
+                                                                        document.getElementById('slideOOC').style.right='-100vw';
+                                                                                                                                 
+                                                                       setTimeout(() => {
+                                                                          setOneOnOneCall(false)
+                                                                         
+                                                                       }, 1000)
+                                                                    }else{
+                                                                        setOneOnOneCall(!oneOnOnecall); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(false); setShowSubscribeButton(false)
+                                                                    setTimeout(() => {
+                                                                       
+                                                                    if(document.getElementById('slideOOC')){
+    
+                                                                        document.getElementById('slideOOC').style.transition='1sec';
+                                                                        document.getElementById('slideOOC').style.right='250px';
+                                                                    }
+                                                                  
+                                                                }, 1)   
+                                                                    }
+                                                                   }}>
                                                                     1 on 1 call
                                                                 </button>
-                                                                <button onClick={() => { setOneOnOneCall(false); setGroupCall(!groupCall); setRequestMessage(false); setVerifiedAutograph(false); setShowFeed(false); setShowSubscribeButton(false) }} >
+                                                                <button onClick={() => { 
+                                                                    
+                                                                  
+                                                                    if(groupCall){
+                                                                        document.getElementById('slidegC').style.transition='2sec';
+                                                                        document.getElementById('slidegC').style.right='-100vw';
+                                                                                                                                 
+                                                                       setTimeout(() => {
+                                                                          setGroupCall(false)
+                                                                         
+                                                                       }, 1000)
+                                                                    }else{
+                                                                        setOneOnOneCall(false); setGroupCall(!groupCall); 
+                                                                        setRequestMessage(false); setVerifiedAutograph(false); 
+                                                                        setShowFeed(false); setShowSubscribeButton(false)
+                                                                     
+                                                                        setTimeout(() => {
+                                                                       
+                                                                    if(document.getElementById('slidegC')){
+    
+                                                                        document.getElementById('slidegC').style.transition='1sec';
+                                                                        document.getElementById('slidegC').style.right='250px';
+                                                                    }
+                                                                  
+                                                                }, 1)   
+                                                                    }
+                                                                     }} >
                                                                     {callRequest ? "Group call" : "Group call"}
                                                                 </button>
-                                                                <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(!requestMessage); setVerifiedAutograph(false); setShowFeed(false); setShowSubscribeButton(false) }} >
+                                                                <button onClick={() => {
+                                                                    
+                                                                    
+                                                                     if(requestMessage){
+                                                                        document.getElementById('slideRM').style.transition='2sec';
+                                                                        document.getElementById('slideRM').style.right='-100vw';
+                                                                                                                                 
+                                                                       setTimeout(() => {
+                                                                        setRequestMessage(false)
+                                                                         
+                                                                       }, 1000)
+                                                                    }else{
+                                                                        setOneOnOneCall(false); setGroupCall(false); 
+                                                                        setRequestMessage(!requestMessage); setVerifiedAutograph(false); 
+                                                                        setShowFeed(false); setShowSubscribeButton(false);
+                                                                     
+                                                                     
+                                                                        setTimeout(() => {
+                                                                       
+                                                                    if(document.getElementById('slideRM')){
+    
+                                                                        document.getElementById('slideRM').style.transition='1sec';
+                                                                        document.getElementById('slideRM').style.right='250px';
+                                                                    }
+                                                                  
+                                                                }, 1)   
+                                                                    }
+
+                                                                    
+                                                                    }} >
+                                                                    
                                                                     Message
                                                                 </button>
-                                                                <button onClick={() => { setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(!verifiedAutograph); setShowFeed(false); setShowSubscribeButton(false) }} >
+                                                                <button onClick={() => { 
+                                                                   
+                                                                    if(verifiedAutograph){
+                                                                        document.getElementById('slideVA').style.transition='2sec';
+                                                                        document.getElementById('slideVA').style.right='-100vw';
+                                                                                                                                 
+                                                                       setTimeout(() => {
+                                                                        setVerifiedAutograph(false)
+                                                                         
+                                                                       }, 1000)
+                                                                    }else{
+                                                                        setOneOnOneCall(false); 
+                                                                    setGroupCall(false); 
+                                                                    setRequestMessage(false); 
+                                                                    setVerifiedAutograph(!verifiedAutograph); 
+                                                                    setShowFeed(false); 
+                                                                    setShowSubscribeButton(false)
+                                                                     
+                                                                        setTimeout(() => {
+                                                                       
+                                                                    if(document.getElementById('slideVA')){
+    
+                                                                        document.getElementById('slideVA').style.transition='1sec';
+                                                                        document.getElementById('slideVA').style.right='250px';
+                                                                    }
+                                                                  
+                                                                }, 1)   
+                                                                    }
+
+
+                                                                    }} >
                                                                     Autograph
                                                                 </button>
                                                                 <button>
                                                                     Marketplace
                                                                 </button>
 
-                                                                <button onClick={() => { subscribe ? unSubscribeUser() : subscribeUser() }} >
+                                                                <button onClick={() => { 
+                                                                    subscribe ? unSubscribeUser() : subscribeUser()
+                                                                    
+                                                                    
+                                                                    }} >
 
                                                                     {subscribe ? "Membership" : "Get Membership"}
                                                                 </button>
@@ -1064,7 +1266,7 @@ const PrivateChannels = () => {
                                                                             setShowNotification(false);
                                                                             setShowFeed(false);
                                                                             setShowChatRoom(false);
-
+                                                                            setClubFloor(false)
                                                                             !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                             getAllOnDemandMedia("audio");
                                                                         }
@@ -1081,7 +1283,7 @@ const PrivateChannels = () => {
                                                                             setShowNotification(false);
                                                                             setShowFeed(false);
                                                                             setShowChatRoom(false);
-
+                                                                            setClubFloor(false)
                                                                             !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                             getAllOnDemandMedia("video");
                                                                         }
@@ -1099,7 +1301,7 @@ const PrivateChannels = () => {
                                                                             setShowNotification(false);
                                                                             setShowFeed(false);
                                                                             setShowChatRoom(false);
-
+                                                                            setClubFloor(false)
                                                                             !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                             getAllOnDemandMedia("image");
                                                                         }
@@ -1186,9 +1388,22 @@ const PrivateChannels = () => {
                                     {/* <span>Marketplace</span> */}
                                     <span  style={{fontSize:'14px'}}>CLUB AMENITIES</span>
                                     <span  style={{fontSize:'14px'}}>EVENTS</span>
-                                    <span  style={{fontSize:'14px'}}>MARKETPLACE</span>
-                                    
-                                    <span  style={{fontSize:'14px'}}>MESSAGES</span>
+                                 
+                                    <span 
+                                       
+                                       >
+                                            <SoapboxTooltip title={"MARKETPLACE"} placement="left"> 
+                                            <img src={marketplaceicon} width="25px" />
+                                           </SoapboxTooltip>
+                                           </span>
+                                 
+                                    <span 
+                                       
+                                       >
+                                            <SoapboxTooltip title={"MESSAGES"} placement="left"> 
+                                            <img src={messagesicon} width="25px" />
+                                           </SoapboxTooltip>
+                                           </span>
                                     <span 
                                        
                                        >
@@ -1213,8 +1428,19 @@ const PrivateChannels = () => {
 
                                 <FiSearch className="search-channel-content" />
                             </div>
-                            {oneOnOnecall ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                            {oneOnOnecall ?
+                            <div className="slide-container">
+                            <div id="slideOOC" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                           
+<FaWindowClose style={{cursor:'pointer',position:'relative',left:'200px',color:'red',top:'-5px'}} onClick={()=>{
+document.getElementById('slideOOC').style.transition='2sec';
+document.getElementById('slideOOC').style.right='-100vw';
+                          
+setTimeout(() => {
+setShowSubscribeButton(false)
 
+}, 1000)
+}} />
                                 <img src={oneonone} width="400px" />
                                 <Form className="login-form mx-auto p-4 pb-0">
                                     <h5 className="text-center mb-1 signup-head">Request 1 on 1 call</h5>
@@ -1279,10 +1505,21 @@ const PrivateChannels = () => {
                                 </Form>
                                 {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
                                 <div className="btns"> <button>Request</button></div> */}
-                            </div> : null}
+                            </div></div>: null}
 
                             {showSubscribeButton ?
-                                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                                <div className="slide-container">
+                                   
+                                <div id="slideSSB" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                                <FaWindowClose style={{cursor:'pointer',position:'relative',left:'200px',color:'red',top:'-5px'}} onClick={()=>{
+document.getElementById('slideSSB').style.transition='2sec';
+document.getElementById('slideSSB').style.right='-100vw';
+                          
+setTimeout(() => {
+setShowSubscribeButton(false)
+
+}, 1000)
+}} />
                                     <img src={groupcall} width="400px" />
                                     <Form className="login-form mx-auto p-4 pb-0" onSubmit={(e) => e.preventDefault()}>
 
@@ -1354,9 +1591,22 @@ const PrivateChannels = () => {
 
 
                                     </Form>     {/* <div className="btns"> <button>Request</button></div> */}
-                                </div>
+                                </div></div>
                                 : null}
-                            {groupCall ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                            {groupCall ? 
+                            <div className="slide-container">
+                            <div id="slidegC" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                         
+                            <FaWindowClose style={{cursor:'pointer',position:'relative',left:'200px',color:'red',top:'-5px'}} onClick={()=>{
+document.getElementById('slidegC').style.transition='2sec';
+document.getElementById('slidegC').style.right='-100vw';
+                          
+setTimeout(() => {
+setShowSubscribeButton(false)
+
+}, 1000)
+}} />
+                             
                                 <img src={groupcall} width="400px" />
                                 <Form className="login-form mx-auto p-4 pb-0">
 
@@ -1374,15 +1624,28 @@ const PrivateChannels = () => {
                                         Request Now for {groupCallPrice} XMG
                                     </button>
                                 </Form>     {/* <div className="btns"> <button>Request</button></div> */}
-                            </div> : null}
+                            </div></div> : null}
 
-                            {requestMessage ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                            {requestMessage ?
+                             <div className="slide-container">
+                            <div id="slideRM" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 {/* <h5>Request Personal Message</h5>
                                 
                                 <img src={personalmessage} width="400px" />
                                 <p>Cost: {requestMessagePrice} XMG</p>
                                 <input placeholder="Type Message" /> */}
                                 {/* <div className="btns"> <button>Request</button></div> */}
+
+                                
+                            <FaWindowClose style={{cursor:'pointer',position:'relative',left:'200px',color:'red',top:'-5px'}} onClick={()=>{
+document.getElementById('slideRM').style.transition='2sec';
+document.getElementById('slideRM').style.right='-100vw';
+                          
+setTimeout(() => {
+setShowSubscribeButton(false)
+
+}, 1000)
+}} />
                                 <img src={personalmessage} width="400px" />
                                 <Form className="login-form mx-auto p-4 pb-0">
                                     <h5 className="text-center mb-1 signup-head">Request Personal Message</h5>
@@ -1398,12 +1661,24 @@ const PrivateChannels = () => {
                                     >
                                         Request Now for {requestMessagePrice} XMG
                                     </button></Form>
-                            </div> : null}
+                            </div></div> : null}
 
-                            {verifiedAutograph ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                            {verifiedAutograph ?
+                             <div className="slide-container">
+                            <div id="slideVA" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 {/* <h5>Verified Autograph</h5>
                                 <p>Cost: {verifiedAutographPrice} XMG</p>
                                 <div className="btns"> <button>Request</button></div> */}
+
+<FaWindowClose style={{cursor:'pointer',position:'relative',left:'200px',color:'red',top:'-5px'}} onClick={()=>{
+document.getElementById('slideVA').style.transition='2sec';
+document.getElementById('slideVA').style.right='-100vw';
+                          
+setTimeout(() => {
+setShowSubscribeButton(false)
+
+}, 1000)
+}} />
                                 <img src={groupcall} width="400px" />
                                 <Form className="login-form mx-auto p-4 pb-0">
 
@@ -1420,11 +1695,12 @@ const PrivateChannels = () => {
                                     >
                                         Request Now for {verifiedAutographPrice} XMG
                                     </button></Form>
-                            </div> : null}
+                            </div></div> : null}
 
 
 
                             {(subscribe) ?
+                                <div>
                                 <div className="channel-media" id="feed" style={{display:'flex'}}>
                                       <GiHamburgerMenu className="GiHamburgerMenu" data-tip={clubFloor?"Hide Feeds":"Show Feeds"} onClick={() => {
                                           setClubFloor(!clubFloor)
@@ -1618,7 +1894,7 @@ const PrivateChannels = () => {
                                         </form>
                                     </div>
                                 </div> : null}
-                                </div>
+                                </div></div>
                                 : null
                             }
 
@@ -1828,13 +2104,28 @@ const PrivateChannels = () => {
 <span  
                                         style={{ backgroundColor: '#A279BA',fontSize:'14px ', borderRadius: '8px' }}
                                     >EVENTS</span>
+{/*                                                                    
                                                                        <span  style={{fontSize:'14px'}}
                                         style={{ backgroundColor: '#A279BA', borderRadius: '8px',fontSize:'14px ' }}
                                     >MARKETPLACE</span>
                                      <span  style={{fontSize:'14px'}}
                                         style={{ backgroundColor: '#A279BA', borderRadius: '8px',fontSize:'14px ' }}
-                                    >MESSAGES</span>
-                                        
+                                    >MESSAGES</span> */}
+                                           <span 
+                                       
+                                       >
+                                            <SoapboxTooltip title={"MARKETPLACE"} placement="left"> 
+                                            <img src={marketplaceicon} width="25px" />
+                                           </SoapboxTooltip>
+                                           </span>
+                                 
+                                    <span 
+                                       
+                                       >
+                                            <SoapboxTooltip title={"MESSAGES"} placement="left"> 
+                                            <img src={messagesicon} width="25px" />
+                                           </SoapboxTooltip>
+                                           </span>
                                         
                                         
                                            <span  
@@ -1865,16 +2156,47 @@ const PrivateChannels = () => {
 
                                 {/* <FiSearch className="search-channel-content" /> */}
                             </div>
-                            {showRequest ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Requests</h5>
+                            {showRequest ?<div className="slide-container">
+                                 <div  id="slideR" 
+                             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', backgroundColor:'#D6C8E1', margin: '1rem' ,minWidth:'600px',minHeight:'400px'}}>
+                            
+                                 
+                            <div style={{backgroundColor:'#8249A0',padding:'5px',width:'600px',display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',color:'white'}}>
+
+                             
+<h5>Requests</h5>
+<FaWindowClose style={{cursor:'pointer'}} onClick={()=>{
+document.getElementById('slideR').style.transition='2sec';
+document.getElementById('slideR').style.right='-100vw';
+                          
+setTimeout(() => {
+setShowRequest(false)
+
+}, 1000)
+}} />
+</div>
                                 <p>No Requests</p>
-                            </div> : null}
+                            </div></div> : null}
                             {showPricingSetting ?
                             <div className="slide-container">
                                
                             <div id="slide" 
-                             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <h5>Set Service Price</h5>
+                             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor:'#D6C8E1', margin: '1rem' ,minWidth:'600px',minHeight:'400px'}}>
+                              <div style={{backgroundColor:'#8249A0',padding:'5px',width:'600px',display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',color:'white'}}>
+
+                             
+<h5>Set Service Price</h5>
+<FaWindowClose style={{cursor:'pointer'}} onClick={()=>{
+document.getElementById('slide').style.transition='2sec';
+document.getElementById('slide').style.right='-100vw';
+                          
+setTimeout(() => {
+setShowPricingSetting(false)
+
+}, 1000)
+}} />
+</div>
+                      
                                 <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label  style={{minWidth:'300px'}}>1 on 1 call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={oneOnOnecallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setOneOnOneCallPrice(e.target.value) }} />XMG</div>
 
                                 <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Group call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={groupCallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setGroupCallPrice(e.target.value) }} />XMG</div>
@@ -1885,16 +2207,32 @@ const PrivateChannels = () => {
                                 <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Membership :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={subscribePrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setSubscribePrice(e.target.value) }} />XMG</div>
 
                                 <div className="btns" > 
-                                 <button onClick={() => { updatePricing() }} style={{minWidth:'400px',borderRadius:'8px'}}  >Update Changes</button>
+                                 <button onClick={() => { updatePricing() }} style={{minWidth:'400px',borderRadius:'8px',backgroundColor:'#8249A0'}}  >Update Changes</button>
                                  
                                  </div>
                                  <p>Note: The minimum amount for service price is 5 XMG</p>
                             </div> </div>: null}
-                            {showSubscribers ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                            {showSubscribers ?
+                            <div className="slide-container">
+                            <div id="slideM" style={{ borderRadius:'10px',minWidth:'600px',minHeight:'400px',display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#D6C8E1',margin: '1rem' }}>
+                              <div style={{backgroundColor:'#8249A0',padding:'5px',width:'600px',display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',color:'white'}}>
+
+                             
                                 <h5>Memberships</h5>
+                                <FaWindowClose style={{cursor:'pointer'}} onClick={()=>{
+ document.getElementById('slideM').style.transition='2sec';
+ document.getElementById('slideM').style.right='-100vw';
+                                                          
+setTimeout(() => {
+   setShowSubscribers(false)
+  
+}, 1000)
+                                }} />
+                              </div>
+                            
                                 {subscribePrice} XMG
                                 <p>No Members</p>
-                            </div> : null}
+                            </div></div> : null}
                             {showNotification ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Notification</h5>
                                 <p>No Notification</p>
