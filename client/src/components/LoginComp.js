@@ -39,7 +39,7 @@ const LoginComp = () => {
                     setMessage(response.data.message);
                     setTimeout(() => {
                         // history.push("/home");
-                        history.push("/");
+                        history.push(`/profile/${response.data.username}`);
                     }, 200);
                 }
                 setMessage(response.data.message);

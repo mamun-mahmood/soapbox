@@ -213,7 +213,7 @@ const SideBar = () => {
                     <SideBarOption
                         option="All Hoots"
                         // link="/home"
-                        link="/"
+                        link="/All-Hoots"
                         Icon={FiHome}
                     />
 

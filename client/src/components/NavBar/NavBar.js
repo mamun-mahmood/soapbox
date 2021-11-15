@@ -50,7 +50,7 @@ const NavBar = ({ width, header }) => {
             <div className="max-width-nav" style={{ maxWidth: width }}>
                 <div className="main-brand">
                     {/* <Link to="/home" className="navbar-brand cursor-pointer"> */}
-                    <Link to="/" className="navbar-brand cursor-pointer">
+                    <Link to="/All-Hoots" className="navbar-brand cursor-pointer">
                         <img
                             src="/images/MegaHoot_Owl3_app.png"
                             alt="Megahoot Soapbox"
@@ -68,17 +68,17 @@ const NavBar = ({ width, header }) => {
                     {localStorage.getItem("loggedIn")
                         ?
                         <Fragment>
-                            <NavLink
+                            {userData.privateChannel && header?null: <NavLink
                                 // activeClassName="nav-link-active"
                                 activeClassName=""
                                 className="nav-link main-title"
                                 // to="/home"
-                                to="/"
+                                to="/All-Hoots"
                             >
                                 Home
-                            </NavLink>
-
-                            <a
+                            </NavLink>}
+                           
+{userData.privateChannel && header?null:<a
                                 // activeClassName="nav-link-active"
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
@@ -87,9 +87,9 @@ const NavBar = ({ width, header }) => {
                                 href="https://www.megahoot.com/megahoot-soapbox/megahoot-soapbox-tutorials/"
                             >
                                 Tutorial
-                            </a>
-
-                            <NavLink
+                            </a>}
+                           
+{userData.privateChannel && header?null:<NavLink
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
                                 to={window.location.pathname === "/create-private"
@@ -106,7 +106,8 @@ const NavBar = ({ width, header }) => {
                                         ? "Create Private Hoot"
                                         : "Create Hoot"
                                 }
-                            </NavLink>
+                            </NavLink>}
+                           
 
                             <NavLink
                                 activeClassName="nav-link-active"

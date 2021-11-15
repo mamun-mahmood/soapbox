@@ -205,7 +205,7 @@ const PublicProfile = ({
                             <div className="user-info">
                                 <div className="display-name">
                                     <div className="profile-name-verification">
-                                        <h1>{name}</h1>
+                                        <h1 style={{fontSize:'14px'}}>{name}</h1>
                                         {verified === 1
                                             ?
                                             <div className="profile-verification-badge">
@@ -216,7 +216,7 @@ const PublicProfile = ({
                                     </div>
                                 </div>
 
-                                <div className="user-name-page">@{username}</div>
+                                <div className="user-name-page" style={{fontSize:'14px'}}>@{username}</div>
 
                                 <div className="user-follow">
                                     {userInformation ?
@@ -265,7 +265,7 @@ const PublicProfile = ({
                                 {privateChannel ?
                                     <button className="public-btn-add-private-c">
                                         <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
-                                            Go to Private Club
+                                            Go to My Club
                                         </Link>
                                     </button>
                                     : null
@@ -275,9 +275,9 @@ const PublicProfile = ({
 
                         <div className="profile-links">
                             <div className="user-counts">
-                                <div className="counts-stack"><span className="counts-bold">{formatCount(followersCount) + formatSi(followersCount)}</span> Followers</div>
-                                <div className="counts-stack"><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
-                                <div className="counts-stack"><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
+                                <div className="counts-stack"><span className="counts-bold">{formatCount(followersCount) + formatSi(followersCount)} Followers</span> </div>
+                                <div className="counts-stack"><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)} Views</span> </div>
+                                <div className="counts-stack"><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)} Likes</span> </div>
                             </div>
 
                             {bio &&

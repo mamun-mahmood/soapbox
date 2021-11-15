@@ -32,8 +32,8 @@
 
     display: flex;
     justify-content: center;
-    width: 380px;
-    flex: 0 0 380px;
+    width: 300px;
+    flex: 0 0 300px;
     background-color: #EDE9FF;
     transition: 0.3s;
    
@@ -361,7 +361,7 @@ padding-right: 1rem;
 .container{
     display: flex;
     flex-direction: column;
-  width: 40%;
+ 
    border: 1px solid #e1b8f886;
    padding: 33px;
   position: relative;
@@ -399,7 +399,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 .community-club{
     position: absolute;
     top: 0px;
-    right: 0;
+    left: 600px;
     background-color: whitesmoke;
   min-width: 280px;
   max-width: 280px;
@@ -475,7 +475,7 @@ overflow-wrap: break-word;
  font-weight:400;
 }
 .message-emoji{
-    font-size: 25px;
+    font-size: 15px;
 }
 .chat-profile{
     max-width: 30px;
@@ -512,13 +512,13 @@ bottom: 1px;
 }
 
 #messageInp{
-width: 30%;
+
 background-color:#a09ba356;
 border: none;
 border-radius: 6px;
 height: 34px;
-min-width: 200px;
-max-width: 230px;
+
+
 outline: none;
 padding: 5px;
 
@@ -536,6 +536,18 @@ padding: 5px;
     height: 30px;
 }
 
+.GiHamburgerMenu{
+    color:#8149a09c ;
+    cursor: pointer;
+    margin: 10px;
+    outline: none;
+}
+.GiHamburgerMenu:hover{
+    color:#8149a0fd ;
+    cursor: pointer; 
+    margin: 10px;
+}
+
 .slide-container{
     position: relative;
  
@@ -547,8 +559,12 @@ padding: 5px;
     right: -100vw;
  
     transition: 1s;
+    z-index: 20;
 }
-.slide-container:hover #slide {
+
+#slideFeed{
+    position: absolute;
+    left:30;
+ 
     transition: 1s;
-    right: 200px;
 }

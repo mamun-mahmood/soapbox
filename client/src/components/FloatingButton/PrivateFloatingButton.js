@@ -28,7 +28,7 @@ const PrivateFloatingButton = () => {
     }, [userInfo && userInfo.username])
 
     return (
-        <div className="float">
+        <div className="float" style={{display:'none'}}>
             <Link to={
                 userData.privateChannel
                     ? "/create-private"

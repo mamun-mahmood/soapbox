@@ -150,7 +150,7 @@ const Profile = ({
                             <div className="user-info">
                                 <div className="display-name">
                                     <div className="profile-name-verification">
-                                        <h1>{name}</h1>
+                                        <h1 style={{fontSize:'14px'}}>{name}</h1>
                                         {verified === 1
                                             ?
                                             <div className="profile-verification-badge">
@@ -161,7 +161,7 @@ const Profile = ({
                                     </div>
                                 </div>
 
-                                <div className="user-name-page">@{username}</div>
+                                <div className="user-name-page" style={{fontSize:'14px'}}>@{username}</div>
 
                                 <button className="btn-edit-profile">
                                     <Link to={`/edit/profile/${username}`}>
@@ -176,14 +176,14 @@ const Profile = ({
 
                                         {/* <Link to={`/${uuidv4()}/SoapboxHall/${uuidv4()}/${username}/${uuidv4()}/${uuidv4()}`}> */}
                                         <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
-                                            Go to Private Club
+                                            Go to My Club
                                         </Link>
                                     </button>
                                     : <button
                                         className="btn-add-private-c"
                                         onClick={addPrivateChannel}
                                     >
-                                        Add Private Club
+                                        Request Club Ownership
                                     </button>
                                 }
                             </div>
@@ -191,9 +191,9 @@ const Profile = ({
 
                         <div className="profile-links">
                             <div className="user-counts">
-                                <div className="counts-stack"><span className="counts-bold">{formatCount(followers) + formatSi(followers)}</span> Followers</div>
-                                <div className="counts-stack"><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)}</span> Views</div>
-                                <div className="counts-stack"><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)}</span> Likes</div>
+                                <div className="counts-stack"><span className="counts-bold">{formatCount(followers) + formatSi(followers)}  Followers</span></div>
+                                <div className="counts-stack"><span className="counts-bold">{formatCount(totalViews) + formatSi(totalViews)} Views</span> </div>
+                                <div className="counts-stack"><span className="counts-bold">{formatCount(totalLikes) + formatSi(totalLikes)} Likes</span> </div>
                             </div>
 
                             {bio &&
@@ -265,6 +265,14 @@ const Profile = ({
                                     </a>
                                 }
                             </div>
+                            <div>
+                            <button
+                                        className="btn-add-private-c"
+                                       
+                                    >
+                                        My Memberships
+                                    </button>
+                                </div>
                         </div>
                     </div>
 

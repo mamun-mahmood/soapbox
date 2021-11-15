@@ -6,6 +6,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Redirect
 } from 'react-router-dom';
 import "./App.css"
 
@@ -39,6 +40,7 @@ import AudioHall from './components/VideoAudioCall/AudioHall';
 import ReceptionAudio from './components/VideoAudioCall/audioReception';
 
 function App() {
+  const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
   return (
     <Router>
       <ToastContainer
@@ -65,7 +67,11 @@ function App() {
         {/* <Route path="/home"> */}
         <Route exact path="/">
           {/* <ProtectedRoute page={Home} /> */}
-          <Home />
+         {userInformation?<Redirect to={`/profile/${userInformation.username}`} />:<Home /> } 
+        </Route>
+        <Route exact path="/All-Hoots">
+          {/* <ProtectedRoute page={Home} /> */}
+        <Home /> 
         </Route>
 
         <Route path="/:FakeData/SoapboxHall/:randomFakeKey?">
