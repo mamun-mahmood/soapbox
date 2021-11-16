@@ -80,7 +80,7 @@ function App() {
         <Route path="/:FakeData/AudioHall/:randomFakeKey?">
           <ProtectedRoute page={AudioHall} />
         </Route>
-        
+
 
         <Route path="/:FakeData/RecordMessage/:hallId?/:userName?/:randomFakeKey?">
           <ProtectedRoute page={recordMessage} />
@@ -92,7 +92,7 @@ function App() {
         <Route path="/:FakeData/ReceptionAudio/:hallId?/:randomFakeKey?">
           <ProtectedRoute page={ReceptionAudio} />
         </Route>
-        
+
         <Route path="/bedb02b7-1893-423a-a545-aea621d3d04b/Admin/bedb02b7-a545-aea621d3d04b-1893-423a">
           <ProtectedRoute page={Admin} />
         </Route>

@@ -136,7 +136,7 @@ const Profile = ({
                 <div className="profile-page">
                     <div className="new-profile">
                         <div className="profile-container">
-                            <div className="profile-picture">
+                            <div className="profile-picture" onDragStart={(e) => e.preventDefault()}>
                                 <Avatar
                                     size={160}
                                     round={true}

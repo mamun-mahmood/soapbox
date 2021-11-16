@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom'
-// import toast from 'react-hot-toast';
 import { toast } from 'react-toastify';
 import { IoCloseOutline } from 'react-icons/io5';
 import { FiMenu } from 'react-icons/fi';

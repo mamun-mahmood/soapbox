@@ -151,7 +151,7 @@ dl, ol, ul {
 .landing-rs {
     flex: 35%;
     display: flex;
-    gap: 1rem;
+    gap: 0rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -228,6 +228,7 @@ footer span {
     background-color: var(--on-hover);
     border: none;
     transition: 0.3s;
+    margin-top: 0.5rem;
 }
 .go-to-feed button:hover {
     border: none;
@@ -247,11 +248,69 @@ footer span {
 }
 
 .login-form-button{
+    font-weight: 600;
     border: none !important;
 }
 
 .login-form-button:hover {
     border: none !important;
+}
+
+.sl-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-top: 0.5rem;
+}
+
+.sl-icon > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    
+    border: none;
+    border-radius: 50%;
+
+    color: #fff;
+    background-color: var(--primary-color);
+    
+    padding: 0.4rem;
+    font-weight: 600;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.sl-icon > div:hover {
+    background-color: var(--on-hover);
+    filter: drop-shadow(0px 0px 5px #8d8c8f)
+}
+
+.social-logins {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sl-hr {    
+    border: 0;
+    height: 1px;
+    
+    color: var(--text-color);
+    margin: 1rem 0.2rem 0.5rem 0.2rem;
+}
+
+.sl-or {
+    position: absolute;
+    top: -0.6rem;
+    left: 44%;
+    
+    padding: 0 0.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+    background-color: #c5c0e8;
 }
 
 @media only screen and (max-width: 1185px) {
