@@ -161,7 +161,7 @@ const EditProfile = ({
                 <div className="user-info">
                     <div className="edit-display-name">
                         <div className="profile-name-verification">
-                            <h1>{name}</h1>
+                            <h1 style={{fontSize:'14px'}}>{name}</h1>
                             {verified === 1
                                 ?
                                 <div className="profile-verification-badge">

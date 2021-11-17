@@ -44,12 +44,8 @@ const LoginComp = () => {
 
                     localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
                     setTimeout(() => {
-<<<<<<< HEAD
                         // history.push("/home");
                         history.push(`/profile/${response.data.username}`);
-=======
-                        history.push("/");
->>>>>>> 626386f40bbfbcfb49f034d335a31332b9e0a893
                     }, 200);
                 }
 

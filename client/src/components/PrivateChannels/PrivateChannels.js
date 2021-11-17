@@ -12,8 +12,8 @@ import { FiTwitter, FiSearch, FiSend, FiFolder, FiImage, FiVideo, FiSmile, FiSto
 import socket, { startSocket } from '../../socketChat';
 import {GiHamburgerMenu} from 'react-icons/gi'
 import Picker from 'emoji-picker-react';
-
 import Linkify from 'react-linkify';
+
 
 import {
     RiFacebookCircleLine,
@@ -60,7 +60,10 @@ import videolive from "../../assets/videoLive.png";
 import marketplaceicon from "../../assets/marketplace.png";
 import messagesicon from "../../assets/messages.png";
 import sendIcon from "../../assets/send.png";
-
+import videochat from "../../assets/videochat.png";
+import imagechat from "../../assets/imagechat.png";
+import filechat from "../../assets/filechat.png";
+import emojiIcon from "../../assets/emoji.png";
 import privatehooticon from "../../assets/private-hoot.png";
 const PrivateChannels = () => {
     const hallId = uuidv4()
@@ -68,7 +71,7 @@ const PrivateChannels = () => {
     const [userFullName, setUserFullName] = useState('');
     const [userEmail, setUserEmail] = useState('')
     const [userId, setUserId] = useState('');
-
+    const [chatData,setChatData]=useState([])
     const [uploads, setUploads] = useState([]);
     const [onDemandUploads, setOnDemandUploads] = useState([]);
     const [hasMore, setHasMore] = useState(true);
@@ -131,6 +134,7 @@ const PrivateChannels = () => {
 
 
     var autolinker = new Autolinker({
+        
         urls: {
             schemeMatches: true,
             wwwMatches: true,
@@ -154,116 +158,123 @@ const PrivateChannels = () => {
     });
 
     const append = (chatname, message, position, imgSrc, isEmoji, isVideo, isImage) => {
-        if (message) {
-            var messageContainer = document.querySelector('.chatarea')
-            const messageBox = document.createElement('div');
-            const ProfileBox = document.createElement('div');
-            const messageElement = document.createElement('div');
-            const image = document.createElement('img')
-            const name = document.createElement('p')
-
-            messageContainer.append(messageBox);
-            messageBox.append(ProfileBox);
-            messageBox.append(messageElement);
-            ProfileBox.onclick = function () {
 
 
-                //     toast.success(`Requested Private Chat to ${chatname}`
-                //     // , {
-                //     //     style: {
-                //     //         border: "2px solid #A279BA",
-                //     //         color: "#A279BA",
-                //     //     },
-                //     //     iconTheme: {
-                //     //         primary: "#A279BA",
-                //     //         secondary: "#FFFAEE",
-                //     //     },
-                //     // }
-                // );
-                const resolveAfter3Sec = new Promise(resolve => setTimeout(resolve, 3000));
-                toast.promise(
-                    resolveAfter3Sec,
-                    {
-                        pending: `Requesting Private Chat to ${chatname}`,
-                        success: setPrivateChat(true),
-                        error: 'Request Rejected'
-                    }
-                )
+        setChatData([...chatData,{chatname,message, position, imgSrc, isEmoji, isVideo, isImage}])
+        // if (message) {
+          
+           
+          
+        //     var messageContainer = document.querySelector('.chatarea')
+        //     const messageBox = document.createElement('div');
+        //     const ProfileBox = document.createElement('div');
+        //     const messageElement = document.createElement('div');
+        //     const image = document.createElement('img')
+        //     const name = document.createElement('p')
+        //     messageBox.ondragstart=(e) => e.preventDefault()
+        //     messageContainer.append(messageBox);
+        //     messageBox.append(ProfileBox);
+        //     messageBox.append(messageElement);
+        //     ProfileBox.onclick = function () {
 
 
-            }
+        //         //     toast.success(`Requested Private Chat to ${chatname}`
+        //         //     // , {
+        //         //     //     style: {
+        //         //     //         border: "2px solid #A279BA",
+        //         //     //         color: "#A279BA",
+        //         //     //     },
+        //         //     //     iconTheme: {
+        //         //     //         primary: "#A279BA",
+        //         //     //         secondary: "#FFFAEE",
+        //         //     //     },
+        //         //     // }
+        //         // );
+        //         const resolveAfter3Sec = new Promise(resolve => setTimeout(resolve, 3000));
+        //         toast.promise(
+        //             resolveAfter3Sec,
+        //             {
+        //                 pending: `Requesting Private Chat to ${chatname}`,
+        //                 success: setPrivateChat(true),
+        //                 error: 'Request Rejected'
+        //             }
+        //         )
 
-            ProfileBox.append(image)
-            ProfileBox.append(name)
 
-            messageBox.classList.add('messageBox');
-            ProfileBox.classList.add('ProfileBox')
+        //     }
 
-            var myLinkedMessage = autolinker.link(message);
-            if (!isVideo && !isImage) { messageElement.innerHTML += myLinkedMessage; }
+        //     ProfileBox.append(image)
+        //     ProfileBox.append(name)
 
-            name.innerText = chatname;
-            messageElement.classList.add('message');
-            if (isEmoji) {
-                messageElement.classList.add('message-emoji');
-            }
+        //     messageBox.classList.add('messageBox');
+        //     ProfileBox.classList.add('ProfileBox')
 
+        //     var myLinkedMessage = autolinker.link(message);
+        //     if (!isVideo && !isImage) { messageElement.innerHTML += myLinkedMessage; }
 
-
-            if (imgSrc) {
-
-                image.src = imgSrc;
-                if (position == "right") {
-                    image.classList.add('chat-profile');
-                } else {
-                    image.classList.add('chat-profile');
-                }
+        //     name.innerText = chatname;
+        //     messageElement.classList.add('message');
+        //     if (isEmoji) {
+        //         messageElement.classList.add('message-emoji');
+        //     }
 
 
 
-            }
-            if (isVideo) {
+        //     if (imgSrc) {
 
-                const video = document.createElement('video')
-                video.src = message;
-                messageElement.append(video);
-                video.style.maxWidth = "100%";
-                video.style.maxHeight = "auto";
-                video.style.marginTop = "10px";
-                video.style.borderRadius = "5px";
-                video.controls = true
-                // if (position == "right") {
-                //     image.classList.add('chat-profile');
-                // } else {
-                //     image.classList.add('chat-profile');
-                // }
+        //         image.src = imgSrc;
+                
+        //         if (position == "right") {
+        //             image.classList.add('chat-profile');
+        //         } else {
+        //             image.classList.add('chat-profile');
+        //         }
 
 
 
-            }
-            if (isImage) {
+        //     }
+        //     if (isVideo) {
 
-                const img = document.createElement('img')
-                img.src = message;
-                messageElement.append(img);
-                img.style.maxWidth = "100%";
-                img.style.maxHeight = "auto";
-                img.style.marginTop = "10px";
-                img.style.borderRadius = "5px";
-                // if (position == "right") {
-                //     image.classList.add('chat-profile');
-                // } else {
-                //     image.classList.add('chat-profile');
-                // }
-
-
-
-            }
+        //         const video = document.createElement('video')
+        //         video.src = message;
+        //         messageElement.append(video);
+        //         video.style.maxWidth = "100%";
+        //         video.style.maxHeight = "auto";
+        //         video.style.marginTop = "10px";
+        //         video.style.borderRadius = "5px";
+        //         video.controls = true
+        //         // if (position == "right") {
+        //         //     image.classList.add('chat-profile');
+        //         // } else {
+        //         //     image.classList.add('chat-profile');
+        //         // }
 
 
-            // messageContainer.append(messageElement);
-            messageContainer.scrollTop = messageContainer.scrollHeight;
-        }
+
+        //     }
+        //     if (isImage) {
+
+        //         const img = document.createElement('img')
+        //         img.src = message;
+        //         messageElement.append(img);
+        //         img.style.maxWidth = "100%";
+        //         img.style.maxHeight = "auto";
+        //         img.style.marginTop = "10px";
+        //         img.style.borderRadius = "5px";
+        //         // if (position == "right") {
+        //         //     image.classList.add('chat-profile');
+        //         // } else {
+        //         //     image.classList.add('chat-profile');
+        //         // }
+
+
+
+        //     }
+
+
+        //     // messageContainer.append(messageElement);
+        //     document.getElementsByClassName('container').scrollTop = document.getElementsByClassName('container').scrollHeight;
+        // }
 
 
     }
@@ -575,7 +586,7 @@ const PrivateChannels = () => {
 
     const verifyOrder = () => {
 
-        axios.post('https://messangerapi533cdgf6c556.amaprods.com/api/users/showPurchasedOrder', {
+        axios.post('https://messangerapi533cdgf6c556.aFmaprods.com/api/users/showPurchasedOrder', {
             email: userEmail
         })
             .then((res) => {
@@ -700,9 +711,9 @@ const PrivateChannels = () => {
                                             <div style={{ position: 'absolute', bottom: '75px', left: '75px', zIndex: 5 }} className="clubOwner">Club Owner</div>
                                             <div style={{ position: 'absolute', bottom: '59px', left: '130px', zIndex: 5 }} className="arrow-down"></div>
 
-                                            <img src={banner} alt="banner" /></div>
+                                            <img src={banner} alt="banner" onDragStart={(e) => e.preventDefault()} /></div>
 
-                                        <div className="profile-pic">
+                                        <div className="profile-pic" onDragStart={(e) => e.preventDefault()}>
 
                                             <img
                                                 src={`${BaseURL}/profile-pictures/${user.profilePic}`}
@@ -710,7 +721,7 @@ const PrivateChannels = () => {
                                             />
                                         </div>
                                         <div>
-                                            <div className="user-information">
+                                            <div className="user-information" >
 
                                                 <div className="name verificationBadgeContainer" style={{fontSize:'14px'}}>{user.name}
                                                     {user.verified === 1
@@ -1016,22 +1027,32 @@ const PrivateChannels = () => {
                                                                 >Price Settings</button> */}
  <button style={{ minWidth: '208px' }}
                                                                     onClick={() => {
-                                                                        setShowRequest(false);
-                                                                        setShowSubscribers(false);
-                                                                        setShowPricingSetting(!showPricingSetting);
-                                                                        setShowNotification(false);
-                                                                        setShowFeed(false);
-                                                                        setShowChatRoom(true);
-                                                                        setOnDemandMedia(false);
+                                                                        
 
-                                                                        setTimeout(() => {
-                                                                            if(document.getElementById('slide')){
+                                                                       
+                                                                if(showPricingSetting){
+                                                                    document.getElementById('slide').style.transition='2sec';
+                                                                    document.getElementById('slide').style.right='-100vw';
+                                                                                                                             
+                                                                   setTimeout(() => {
+                                                                      setShowPricingSetting(false)
+                                                                     
+                                                                   }, 1000)
+                                                                }else{
+                                                                    setOnDemandMedia(false),setShowRequest(false); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(!showPricingSetting); setShowNotification(false); setShowChatRoom(true) 
+                                                            
+                                                                setTimeout(() => {
+                                                                   
+                                                                if(document.getElementById('slide')){
 
-                                                                                document.getElementById('slide').style.transition='1sec';
-                                                                                document.getElementById('slide').style.right='250px';
-                                                                            }
-                                                                          
-                                                                        }, 1)
+                                                                    document.getElementById('slide').style.transition='1sec';
+                                                                    document.getElementById('slide').style.right='250px';
+                                                                }
+                                                              
+                                                            }, 1)   
+                                                                }
+
+                                                                        
                                                                     }}
                                                                 >Price Settings</button>
                                                                 <button style={{ minWidth: '208px' }} >Podcasts</button>
@@ -1049,7 +1070,7 @@ const PrivateChannels = () => {
                                                                         !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                         getAllOnDemandMedia("audio");
                                                                     }}
-                                                                >Ondemand Audio</button>
+                                                                >On-demand Audio</button>
 
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
@@ -1064,7 +1085,7 @@ const PrivateChannels = () => {
                                                                         !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                         getAllOnDemandMedia("video");
                                                                     }}
-                                                                >Ondemand Video</button>
+                                                                >On-demand Video</button>
 
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
@@ -1079,7 +1100,7 @@ const PrivateChannels = () => {
                                                                         !onDemandMedia && setOnDemandMedia(!onDemandMedia);
                                                                         getAllOnDemandMedia("image");
                                                                     }}
-                                                                >Ondemand Photos</button>
+                                                                >On-demand Photos</button>
                                                             </div>
 
                                                             <br></br>
@@ -1271,7 +1292,7 @@ const PrivateChannels = () => {
                                                                             getAllOnDemandMedia("audio");
                                                                         }
                                                                     }}
-                                                                >Ondemand Audio</button>
+                                                                >On-demand Audio</button>
 
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
@@ -1289,7 +1310,7 @@ const PrivateChannels = () => {
                                                                         }
 
                                                                     }}
-                                                                >Ondemand Video</button>
+                                                                >On-demand Video</button>
 
                                                                 <button
                                                                     style={{ minWidth: '208px' }}
@@ -1307,7 +1328,7 @@ const PrivateChannels = () => {
                                                                         }
 
                                                                     }}
-                                                                >Ondemand Photos</button>
+                                                                >On-demand Photos</button>
 
                                                             </div>
                                                         </div>
@@ -1364,6 +1385,8 @@ const PrivateChannels = () => {
                                     top: "4.2rem",
                                     alignSelf: "flex-start",
                                 }}
+                                onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event)=>{event.preventDefault ? event.preventDefault() : event.returnValue = false}}
                             >
                                 <div className="tabs" style={{ margin: "0 0.5rem" }}>
                                     <span onClick={() => {
@@ -1393,7 +1416,7 @@ const PrivateChannels = () => {
                                        
                                        >
                                             <SoapboxTooltip title={"MARKETPLACE"} placement="left"> 
-                                            <img src={marketplaceicon} width="25px" />
+                                            <img src={marketplaceicon} width="30px" />
                                            </SoapboxTooltip>
                                            </span>
                                  
@@ -1401,14 +1424,14 @@ const PrivateChannels = () => {
                                        
                                        >
                                             <SoapboxTooltip title={"MESSAGES"} placement="left"> 
-                                            <img src={messagesicon} width="25px" />
+                                            <img src={messagesicon} width="30px" />
                                            </SoapboxTooltip>
                                            </span>
                                     <span 
                                        
                                        >
                                             <SoapboxTooltip title={"Club Rules"} placement="left"> 
-                                            <img src={rules} width="25px" />
+                                            <img src={rules} width="30px" />
                                            </SoapboxTooltip>
                                            </span>
                                    
@@ -1772,7 +1795,25 @@ setShowSubscribeButton(false)
                                                 <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} />
                                             </div>
 
-                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px' }}></div>
+                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px' }}>
+                                            {chatData.length?chatData.map((e)=>
+     <div className="messageBox">
+         <div className="ProfileBox">
+             <img className="chat-profile" src={e.imgSrc?e.imgSrc:null} />
+         <p>{e.chatname}</p></div>
+         <Linkify  componentDecorator={(decoratedHref, decoratedText, key) => (
+        <a target="blank" href={decoratedHref} key={key}>
+            {decoratedText}
+        </a>
+    )}>  <div className={e.isEmoji?"message-emoji":"message"}>{(!e.isVideo && !e.isImage)?e.message:null}</div></Linkify>
+         {e.isVideo?<video  onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event)=>{event.preventDefault ? event.preventDefault() : event.returnValue = false}} style={{maxWidth:'100%',marginTop:'20px',borderRadius:'5px'}} controls={true} src={e.message}></video>:null}
+       {e.isImage?<img src={e.message}  onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event)=>{event.preventDefault ? event.preventDefault() : event.returnValue = false}} style={{maxWidth:'100%',marginTop:'20px',borderRadius:'5px'}} />:null}
+       
+     </div>
+    ):null}
+                                            </div>
 
 
 
@@ -1854,7 +1895,9 @@ setShowSubscribeButton(false)
                                                 htmlFor="post-video"
 
                                             >
-                                                <FiVideo data-tip="Share Video" className="icon-text" />
+                                                 <img src={videochat} style={{margin:'5px',cursor:'pointer'}}   data-tip="Share Video" width="27px" />
+                                               
+                                                {/* <FiVideo data-tip="Share Video" className="icon-text" /> */}
                                             </label>
                                             <input
                                                 type="file"
@@ -1868,7 +1911,8 @@ setShowSubscribeButton(false)
                                                 htmlFor="post-image"
 
                                             >
-                                                <FiImage data-tip="Share Photos" className="icon-text" />
+                                                  <img src={imagechat} style={{margin:'5px',cursor:'pointer'}}  data-tip="Share Photos" width="27px" />
+                                                {/* <FiImage data-tip="Share Photos" className="icon-text" /> */}
                                             </label>
                                             <input
                                                 type="file"
@@ -1878,10 +1922,13 @@ setShowSubscribeButton(false)
                                                 onChange={handleFile}
                                                 hidden
                                             />
-                                            <FiFolder data-tip="Share File" className="icon-text" />
-                                            <FiSmile className="icon-text" data-tip="Emoji"
-                                                onClick={() => { setEmojiPicker(!emojiPicker) }}
-                                            />
+                                            {/* <FiFolder data-tip="Share File" className="icon-text" /> */}
+                                            <img src={filechat} style={{margin:'5px',cursor:'pointer'}}   data-tip="Share File" width="27px" />
+                                          
+                                            {/* <FiSmile className="icon-text" data-tip="Emoji"
+                                               
+                                            /> */}
+                                             <img src={emojiIcon} style={{margin:'5px',cursor:'pointer'}} data-tip="Emoji"  onClick={() => { setEmojiPicker(!emojiPicker) }} width="27px" />
                                             <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" style={{width:clubFloor?'350px':'600px'}} onChange={(e) => { setMessageInboxValue(e.target.value) }} />
                                             <button type="submit" style={{border:'none',outline:'none',background:'none',marginLeft:'5px'}}> 
                                                  <SoapboxTooltip title={
@@ -2036,8 +2083,9 @@ setShowSubscribeButton(false)
                     {userInformation.username == username ? (
                         <div className="channel-user-content" >
                              
-                            <div
-                                className="channel-tabs shadow-sm"
+                            <div onmousedown={(event)=>{event.preventDefault ? event.preventDefault() : event.returnValue = false}}
+                                 onDragStart={(e) => e.preventDefault()}
+                              className="channel-tabs shadow-sm"
                                 style={{
                                     position: "sticky",
                                     top: "4.2rem",
@@ -2098,11 +2146,11 @@ setShowSubscribeButton(false)
                                     }}  >CLUB CHAT</span>
                                     <span
                                    
-                                        style={{ backgroundColor: '#A279BA', borderRadius: '8px' ,fontSize:'14px '}}
+                                        style={{ backgroundColor: '#652C90', borderRadius: '8px' ,fontSize:'14px '}}
                                     >CLUB AMENITIES</span>
 
 <span  
-                                        style={{ backgroundColor: '#A279BA',fontSize:'14px ', borderRadius: '8px' }}
+                                        style={{ backgroundColor: '#652C90',fontSize:'14px ', borderRadius: '8px' }}
                                     >EVENTS</span>
 {/*                                                                    
                                                                        <span  style={{fontSize:'14px'}}
@@ -2115,7 +2163,7 @@ setShowSubscribeButton(false)
                                        
                                        >
                                             <SoapboxTooltip title={"MARKETPLACE"} placement="left"> 
-                                            <img src={marketplaceicon} width="25px" />
+                                            <img src={marketplaceicon} width="30px" />
                                            </SoapboxTooltip>
                                            </span>
                                  
@@ -2123,7 +2171,7 @@ setShowSubscribeButton(false)
                                        
                                        >
                                             <SoapboxTooltip title={"MESSAGES"} placement="left"> 
-                                            <img src={messagesicon} width="25px" />
+                                            <img src={messagesicon} width="30px" />
                                            </SoapboxTooltip>
                                            </span>
                                         
@@ -2131,12 +2179,12 @@ setShowSubscribeButton(false)
                                            <span  
                                     >
                                           <SoapboxTooltip title={"Invite"} placement="left">  
-                                          <img src={inviteicon} width="25px" /></SoapboxTooltip></span>
+                                          <img src={inviteicon} width="30px" /></SoapboxTooltip></span>
                                       <span 
                                        
                                     >
                                          <SoapboxTooltip title={"Club Rules"} placement="left"> 
-                                         <img src={rules} width="25px" />
+                                         <img src={rules} width="30px" />
                                         </SoapboxTooltip>
                                         </span>
                                     {/* <button  style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}}>INVITE</button>
@@ -2146,7 +2194,7 @@ setShowSubscribeButton(false)
                 <SoapboxTooltip title={
                    "Create Private Hoot"
                 } placement="left">
-                   <img src={privatehooticon} width="25px" />
+                   <img src={privatehooticon} width="30px" />
                 </SoapboxTooltip>
           </span>
                                 </div>
@@ -2309,7 +2357,24 @@ setTimeout(() => {
                                             {broadcastStream ? <VideoChat hallId={hallId} userName={userInformation.username} videoAvailable={() => { setVideoAvailable(true) }} host={username} /> : null}
 
 
-                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px', zIndex: '-1' }}></div>
+                                            <div className="chatarea" style={{ marginTop: VideoAvailable ? "300px" : '0px', zIndex: '-1' }}>
+
+                                            {chatData.length?chatData.map((e)=>
+     <div className="messageBox">
+         <div className="ProfileBox"><img className="chat-profile" src={e.imgSrc?e.imgSrc:null} /><p>{e.chatname}</p></div>
+         <Linkify  componentDecorator={(decoratedHref, decoratedText, key) => (
+        <a target="blank" href={decoratedHref} key={key}>
+            {decoratedText}
+        </a>
+    )}>  <div className={e.isEmoji?"message-emoji":"message"}>{(!e.isVideo && !e.isImage)?e.message:null}</div></Linkify>
+        
+         {e.isVideo?<video  onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event)=>{event.preventDefault ? event.preventDefault() : event.returnValue = false}} style={{maxWidth:'100%',marginTop:'20px',borderRadius:'5px'}} controls={true} src={e.message}></video>:null}
+       {e.isImage?<img src={e.message}  onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event)=>{event.preventDefault ? event.preventDefault() : event.returnValue = false}} style={{maxWidth:'100%',marginTop:'20px',borderRadius:'5px'}} />:null}
+     </div>
+    ):null}
+                                            </div>
 
 
                                             {emojiPicker && (
@@ -2376,18 +2441,13 @@ setTimeout(() => {
                                     <div className="send">
                                         <ReactTooltip />
                                         <form action="#" id="send-container" style={{marginLeft:!clubFloor?'50px':'5px'}} onSubmit={(e) => messagesubmit(e)}>
-                                            {/* <FaWindowClose className="icon-text" data-tip="Close Chatroom"
-                                                onClick={() => {
-                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setClubFloor(!clubFloor); setShowSubscribeButton(false);setOnDemandMedia(false); setShowChatRoom(!showChatRoom);
-                                                }}
-
-                                            /> */}
-
-                                            <label
+                                        <label
                                                 htmlFor="post-video"
 
                                             >
-                                                <FiVideo className="icon-text" data-tip="Share Video" />
+                                                 <img src={videochat} style={{margin:'5px',cursor:'pointer'}}   data-tip="Share Video" width="27px" />
+                                               
+                                                {/* <FiVideo data-tip="Share Video" className="icon-text" /> */}
                                             </label>
                                             <input
                                                 type="file"
@@ -2401,7 +2461,8 @@ setTimeout(() => {
                                                 htmlFor="post-image"
 
                                             >
-                                                <FiImage className="icon-text" data-tip="Share Photos" />
+                                                  <img src={imagechat} style={{margin:'5px',cursor:'pointer'}}  data-tip="Share Photos" width="27px" />
+                                                {/* <FiImage data-tip="Share Photos" className="icon-text" /> */}
                                             </label>
                                             <input
                                                 type="file"
@@ -2411,11 +2472,14 @@ setTimeout(() => {
                                                 onChange={handleFile}
                                                 hidden
                                             />
-
-                                            <FiFolder className="icon-text" data-tip="Share File" />
-                                            <FiSmile className="icon-text" data-tip="Emoji"
-                                                onClick={() => { setEmojiPicker(!emojiPicker) }}
-                                            />
+                                            {/* <FiFolder data-tip="Share File" className="icon-text" /> */}
+                                            <img src={filechat} style={{margin:'5px',cursor:'pointer'}}   data-tip="Share File" width="27px" />
+                                          
+                                            {/* <FiSmile className="icon-text" data-tip="Emoji"
+                                               
+                                            /> */}
+                                             <img src={emojiIcon}style={{margin:'5px',cursor:'pointer'}} data-tip="Emoji"  onClick={() => { setEmojiPicker(!emojiPicker) }} width="27px" />
+                                          
                                             <input type="text" name="messageInp" value={messageInboxValue} id="messageInp" style={{width:clubFloor?'350px':'600px'}} onChange={(e) => { setMessageInboxValue(e.target.value) }} />
                                             <button type="submit" style={{border:'none',outline:'none',background:'none',marginLeft:'5px'}}> 
                                                  <SoapboxTooltip title={

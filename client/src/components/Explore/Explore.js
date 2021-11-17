@@ -12,6 +12,7 @@ import ReactPlayer from 'react-player';
 import { useHistory } from 'react-router';
 import FoundUsers from '../FoundUsers';
 import { v4 as uuidv4 } from "uuid";
+import exploreicon from "../../assets/explore.png"
 const Explore = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [trendingHoots, setTrendingHoots] = useState([]);
@@ -134,7 +135,8 @@ const Explore = () => {
                     type="text"
                     placeholder="Search Creators and Hoots based on Hashtags, Stocks and Keywords & hit enter"
                 />
-                <FiSearch className="search-icon" onClick={searchFromDb} />
+                <img src={exploreicon} width="40px" className="search-icon" onClick={searchFromDb} />
+                {/* <FiSearch className="search-icon"  /> */}
             </div>
 
             <div className="search-users-list">

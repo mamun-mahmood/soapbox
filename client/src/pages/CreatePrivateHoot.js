@@ -28,6 +28,15 @@ import useRecorder from "react-hook-recorder";
 import { v4 as uuidv4 } from 'uuid';
 import { MyStream } from '../context/MyStreamContext';
 import ReactPlayer from 'react-player'
+import imagerecord from '../assets/imagerecord.png';
+import videorecord from '../assets/videorecord.png';
+import audiorecord from '../assets/audiorecord.png';
+import imageupload from '../assets/imageupload.png';
+import audioupload from '../assets/audioupload.png';
+import videoupload from '../assets/videoupload.png';
+import emojiupload from '../assets/emojiupload.png';
+import addlink from '../assets/addlink.png';
+import hooticon from '../assets/hooticon.png';
 
 const CreatePrivateHoot = () => {
     const [caption, setCaption] = useState("");
@@ -598,321 +607,7 @@ const CreatePrivateHoot = () => {
                         {/* <img className="avatar" src="/images/default_user_profile.svg" alt="avatar" /> */}
                         <div className="name avatar_name">{userData.name}</div>
 
-                        <div className="post-content">
-                            <textarea
-                                autoFocus
-                                maxLength="2200"
-                                className="textarea-style"
-                                placeholder="Share Your World. Hoot Hoot! (optional)"
-                                value={caption}
-                                onChange={(event) => {
-                                    const value = event.target.value;
-                                    setCaption(value);
-                                }}
-                            ></textarea>
-
-                            {/* inserted links  */}
-
-                            {/* {link &&
-                                <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all" }}>
-                                    <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
-                                </div>
-                            } */}
-
-                            {!showLinkPreview ?
-                                link ?
-                                    <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all", marginTop: "-0.5rem" }}>
-                                        <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
-                                    </div>
-                                    : null
-                                : null
-                            }
-
-                            {/* <div style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>
-                                {formValues.map((link, index) => {
-                                    return (
-                                        <div key={index} style={{ padding: "0rem 0.5rem 0rem 0.5rem", wordBreak: "break-all" }}>
-                                            <a href={link.name} target="_blank" rel="noopener noreferrer" className="link-content">{link.name}</a>
-                                        </div>
-                                    )
-                                })}
-                            </div> */}
-
-                            <div className="d-flex justify-content-between m-1 btn-caption-top">
-                                <form action="">
-                                    <div className="d-flex justify-content-end my-2 align-items-center" style={{ position: "relative" }}>
-
-                                        {/* Photo */}
-                                        <label
-                                            htmlFor="post-image"
-                                            className="btn-label"
-                                            onClick={closeOnDemand}
-                                        >
-                                            Photo
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id="post-image"
-                                            name="photo"
-                                            accept="image/*"
-                                            onChange={handleFile}
-                                            hidden
-                                        />
-
-                                        {/* Video */}
-                                        <label
-                                            htmlFor="post-video"
-                                            className="btn-label"
-                                            onClick={closeOnDemand}
-                                        >
-                                            Video
-                                        </label>
-                                        <input
-                                            type="file"
-                                            name="video"
-                                            id="post-video"
-                                            accept="video/*"
-                                            onChange={handleFile}
-                                            hidden
-                                        />
-
-                                        {/* Audio */}
-                                        <label
-                                            htmlFor="post-audio"
-                                            className="btn-label"
-                                            onClick={closeOnDemand}
-                                        >
-                                            Audio
-                                        </label>
-                                        <input
-                                            type="file"
-                                            name="audio"
-                                            id="post-audio"
-                                            accept="audio/*"
-                                            onChange={handleFile}
-                                            hidden
-                                        />
-
-                                        <div
-                                            className="emoji-hover"
-                                            onClick={() => { setEmojiPicker(!emojiPicker) }}
-                                        >
-                                            <span
-                                                onMouseEnter={() => { emojiPicker || setDefaultEmoji(emojis[Math.floor(Math.random() * emojis.length)]) }}
-                                            >
-                                                {defaultEmoji}
-                                            </span>
-                                        </div>
-
-                                        {emojiPicker && (
-                                            <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
-                                                <div>
-                                                    <Picker
-                                                        native
-                                                        onEmojiClick={(event, emojiObject) => {
-                                                            setCaption(caption + emojiObject.emoji);
-                                                        }}
-                                                        pickerStyle={{ position: "absolute", top: "2.5rem", left: "0.2rem", zIndex: "1111" }}
-                                                    />
-                                                </div>
-                                            </ClickAwayListener>
-                                        )}
-
-                                        {/* data-tip="Insert Link" data-text-color="#8249A0" data-background-color="#D9D2FA" */}
-                                        <SoapboxTooltip title="Insert Link" placement="right">
-                                            <div>
-                                                <FiLink2 className="insert-link" onClick={() => { setLinkModalOpen(true) }} />
-                                            </div>
-                                        </SoapboxTooltip>
-                                    </div>
-                                </form>
-
-                                {/* Link Modal */}
-                                {linkModalOpen &&
-                                    <Fragment>
-                                        <div className="modal-overlay"></div>
-                                        <ClickAwayListener onClickAway={() => { setLinkModalOpen(false) }}>
-                                            <div className="link-modal">
-                                                <h5>Insert link(s)</h5>
-
-                                                <input autoFocus type="text" value={link} onChange={(event) => { setLink(event.target.value) }} />
-
-                                                {/* <form onSubmit={handleSubmit}> */}
-                                                {/* <div>
-                                                    {formValues.map((element, index) => (
-                                                        <div className="form-inline" key={index}>
-                                                            <input
-                                                                type="text"
-                                                                name="name"
-                                                                value={element.name || ""}
-                                                                onChange={e => handleChange(index, e)}
-                                                                placeholder="link to"
-                                                                autoFocus
-                                                            />
-                                                            {index ?
-                                                                <AiFillMinusCircle className="btn-minus-link" onClick={() => removeFormFields(index)} />
-                                                                : null
-                                                            }
-                                                        </div>
-                                                    ))}
-                                                </div> */}
-
-                                                <div className="btn-post mt-2 link-info">
-                                                    {/* <button className="btn-add-link" type="button" onClick={() => addFormFields()}>
-                                                        Add
-                                                    </button> */}
-                                                    <button
-                                                        className="btn-insert-link"
-                                                        onClick={insertLink}
-                                                    >
-                                                        Insert
-                                                    </button>{' '}
-                                                </div>
-                                                <IoCloseOutline className="close-modal" onClick={() => setLinkModalOpen(false)} />
-                                            </div>
-                                        </ClickAwayListener>
-                                    </Fragment>
-                                }
-
-                                <div className="caption-count">
-                                    <h6 className={caption.length > 2120 && "text-danger"}>
-                                        {" "}
-                                        {caption.length}/2200
-                                    </h6>
-                                </div>
-
-                                <div className="btn-post my-2">
-                                    <Button
-                                        variant="primary mx-1"
-                                        className="btn-create-hoot"
-                                        onClick={upload}
-                                        disabled={!ReactPlayer.canPlay(link) && file.length === 0}
-                                    >
-                                        Hoot
-                                    </Button>{' '}
-                                </div>
-                            </div>
-
-                            {/* <LinkPreview
-                                    margin="0 0.5rem"
-                                    className="link-pr-sb"
-                                    url={link}
-                                /> */}
-                            {showLinkPreview ?
-                                link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
-                                    ?
-                                    <video
-                                        muted controls
-                                        disablePictureInPicture
-                                        className="hoot-vdo"
-                                        style={{ width: "none" }}
-                                        controlsList="nodownload"
-                                        onDragStart={(e) => e.preventDefault()}
-                                    >
-                                        <source
-                                            src={link}
-                                        />
-                                        Your browser does not support HTML video.
-                                    </video>
-                                    :
-                                    link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
-                                        ?
-                                        <video
-                                            muted controls
-                                            poster={src ? src : `${BaseURL}/profile-pictures/${userData.profilePic}`}
-                                            className="hoot-vdo"
-                                            style={{ width: "auto" }}
-                                            controlsList="nodownload"
-                                            onDragStart={(e) => e.preventDefault()}
-                                        >
-                                            <source
-                                                src={link}
-                                            />
-                                            Your browser does not support HTML video.
-                                        </video>
-                                        :
-                                        ReactPlayer.canPlay(link) &&
-                                        <div className='player-wrapper'>
-                                            <ReactPlayer
-                                                url={link}
-                                                className='react-player'
-                                                controls="true"
-                                                width='97%'
-                                                height='100%'
-                                            />
-                                        </div>
-                                : null
-                            }
-
-                            {showLinkPreview &&
-                                link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
-                                ?
-                                <small style={{ margin: "0 0.5rem", color: "#6B7280", display: "block", fontWeight: "500" }}>
-                                    (By Default <b>Profile Picture</b> will be taken as <b>Audio Poster</b> and it can be changed by <b>Selecting Photo</b>)
-                                </small>
-                                : null
-                            }
-
-                            <div className="ephemeral">
-                                <input
-                                    type="checkbox"
-                                    className="ephemeral-toggle"
-                                    checked={ephemeralCheck}
-                                    onChange={makeEphemeral} />
-                                <span>
-                                    Ephemeral{" "}
-                                </span>
-                                <small>(Hoot's lifetime will be 7 days)</small>
-                            </div>
-
-                            <div className="ephemeral">
-                                <input
-                                    type="checkbox"
-                                    className="ephemeral-toggle"
-                                    checked={privateCheck}
-                                    // onChange={makePrivate}
-                                    disabled
-                                />
-                                <span>Private{" "}</span>
-                                <small>
-                                    {userData.privateChannel === 0 ? "(Requires Private Club, Please go to Profile and add Private Club)" : null}
-                                </small>
-                            </div>
-
-                            {file.length !== 0 &&
-                                file.type.match(/audio/gi) == "audio"
-                                ?
-                                <Fragment>
-                                    <label
-                                        htmlFor="change-audio-poster"
-                                        className="change-audio-poster"
-                                    >
-                                        Change Audio Poster
-                                    </label>
-                                    <input
-                                        type="file"
-                                        name="audio"
-                                        id="change-audio-poster"
-                                        accept="image/*"
-                                        onChange={(event) => {
-                                            const poster = event.target.files[0];
-                                            setAudioPoster(poster);
-                                        }}
-                                        hidden
-                                    />
-                                </Fragment>
-                                : null
-                            }
-
-                            {file.length !== 0 &&
-                                file.type.match(/audio/gi) == "audio"
-                                ? <small style={{ margin: "0 0.5rem", color: "#6B7280", display: "block", fontWeight: "500" }}>
-                                    (By Default <b>Profile Picture</b> will be taken as <b>Audio Poster</b> and it can be changed by <b>Selecting Audio Poster</b>)
-                                </small>
-                                : null
-                            }
-
-                        </div>
+                      
                     </div>
 
                     <div className="record-on-create-hoot">
@@ -1013,23 +708,120 @@ const CreatePrivateHoot = () => {
                         {userData.privateChannel
                             ?
                             <div className="extra-features">
-                                <SoapboxTooltip title="Photo" placement="right">
-                                    <div className="extra-outer" onClick={onDemandPhoto}>
+                                <SoapboxTooltip title="Capture Photo"  placement="right">
+                                    {/* <div className="extra-outer" onClick={onDemandPhoto}>
                                         <FiCamera className="extra-fi" />
-                                    </div>
+                                    </div> */}
+                                    <img src={imagerecord} onClick={onDemandPhoto} style={{cursor:'pointer'}} width="35px" />
                                 </SoapboxTooltip>
 
-                                <SoapboxTooltip title="Video" placement="right">
-                                    <div className="extra-outer" onClick={onDemandVideo}>
+                                <SoapboxTooltip title="Record Video" placement="right">
+                                    {/* <div className="extra-outer" onClick={onDemandVideo}>
                                         <FiVideo className="extra-fi" />
-                                    </div>
+                                    </div> */}
+                                     <img src={videorecord} style={{cursor:'pointer'}} onClick={onDemandVideo} width="35px" />
                                 </SoapboxTooltip>
 
-                                <SoapboxTooltip title="Audio" placement="right">
-                                    <div className="extra-outer" onClick={onDemandAudio}>
+                                <SoapboxTooltip title="Record Audio" placement="right">
+                                    {/* <div className="extra-outer" onClick={onDemandAudio}>
                                         <AiOutlineAudio className="extra-fi" />
-                                    </div>
+                                    </div> */}
+                                      <img src={audiorecord} style={{cursor:'pointer'}} onClick={onDemandAudio} width="35px" />
                                 </SoapboxTooltip>
+                                <label
+                                            htmlFor="post-image"
+                                          
+                                            onClick={closeOnDemand}
+                                        >
+                                           <SoapboxTooltip title="upload image" placement="right">
+                                      <img src={imageupload} style={{cursor:'pointer'}}  width="35px" />
+                                </SoapboxTooltip>
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="post-image"
+                                            name="photo"
+                                            accept="image/*"
+                                            onChange={handleFile}
+                                            hidden
+                                        />
+
+                                        {/* Video */}
+                                        <label
+                                            htmlFor="post-video"
+                                          
+                                            onClick={closeOnDemand}
+                                        >
+                                          <SoapboxTooltip title="upload video" placement="right">
+                                      <img src={videoupload} style={{cursor:'pointer'}}  width="35px" />
+                                </SoapboxTooltip>
+                                        </label>
+                                        <input
+                                            type="file"
+                                            name="video"
+                                            id="post-video"
+                                            accept="video/*"
+                                            onChange={handleFile}
+                                            hidden
+                                        />
+
+                                        {/* Audio */}
+                                        <label
+                                            htmlFor="post-audio"
+                                           
+                                            onClick={closeOnDemand}
+                                        >
+                                            <SoapboxTooltip title="upload audio" placement="right">
+                                      <img src={audioupload} style={{cursor:'pointer'}}  width="35px" />
+                                </SoapboxTooltip>
+                                        </label>
+                                        <input
+                                            type="file"
+                                            name="audio"
+                                            id="post-audio"
+                                            accept="audio/*"
+                                            onChange={handleFile}
+                                            hidden
+                                        />
+
+                                        <div
+                                            className="emoji-hover"
+                                            onClick={() => { setEmojiPicker(!emojiPicker) }}
+                                        >
+                                            {/* <span
+                                                onMouseEnter={() => { emojiPicker || setDefaultEmoji(emojis[Math.floor(Math.random() * emojis.length)]) }}
+                                            >
+                                                {defaultEmoji}
+                                            </span> */}
+                                              <SoapboxTooltip title="Emoji" placement="right">
+                                      <img src={emojiupload} style={{cursor:'pointer'}}  width="35px" />
+                                </SoapboxTooltip>
+                                        </div>
+
+                                        {emojiPicker && (
+                                            <ClickAwayListener onClickAway={() => { setEmojiPicker(false) }}>
+                                                <div>
+                                                    <Picker
+                                                        native
+                                                        onEmojiClick={(event, emojiObject) => {
+                                                            setCaption(caption + emojiObject.emoji);
+                                                        }}
+                                                        pickerStyle={{ position: "absolute", top: "2.5rem", left: "0.2rem", zIndex: "1111" }}
+                                                    />
+                                                </div>
+                                            </ClickAwayListener>
+                                        )}
+
+                                        {/* data-tip="Insert Link" data-text-color="#8249A0" data-background-color="#D9D2FA" */}
+                                        {/* <SoapboxTooltip title="Insert Link" placement="right">
+                                            <div>
+                                                <FiLink2 className="insert-link" onClick={() => { setLinkModalOpen(true) }} />
+                                            </div>
+                                        </SoapboxTooltip> */}
+                                         <SoapboxTooltip title="Insert Link" placement="right">
+                                      <img src={addlink} style={{cursor:'pointer'}}  onClick={() => { setLinkModalOpen(true) }} width="35px" />
+                                </SoapboxTooltip>
+
                             </div>
                             : null
                         }
@@ -1127,6 +919,254 @@ const CreatePrivateHoot = () => {
                         </div>
                         : null
                     }
+                     <div className="post-caption d-flex flex-wrap">
+                      
+
+                        <div className="post-content">
+                            <textarea
+                                autoFocus
+                                maxLength="2200"
+                                className="textarea-style"
+                                placeholder="Share Your World. Hoot Hoot! (optional)"
+                                value={caption}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setCaption(value);
+                                }}
+                            ></textarea>
+
+                            {/* inserted links  */}
+
+                            {/* {link &&
+                                <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all" }}>
+                                    <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                </div>
+                            } */}
+
+                            {!showLinkPreview ?
+                                link ?
+                                    <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all", marginTop: "-0.5rem" }}>
+                                        <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                    </div>
+                                    : null
+                                : null
+                            }
+
+                            {/* <div style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>
+                                {formValues.map((link, index) => {
+                                    return (
+                                        <div key={index} style={{ padding: "0rem 0.5rem 0rem 0.5rem", wordBreak: "break-all" }}>
+                                            <a href={link.name} target="_blank" rel="noopener noreferrer" className="link-content">{link.name}</a>
+                                        </div>
+                                    )
+                                })}
+                            </div> */}
+
+                            <div className="d-flex justify-content-between m-1 btn-caption-top">
+                                <form action="">
+                                    <div className="d-flex justify-content-end my-2 align-items-center" style={{ position: "relative" }}>
+
+                                        {/* Photo */}
+                                     
+                                    </div>
+                                </form>
+
+                                {/* Link Modal */}
+                                {linkModalOpen &&
+                                    <Fragment>
+                                        <div className="modal-overlay"></div>
+                                        <ClickAwayListener onClickAway={() => { setLinkModalOpen(false) }}>
+                                            <div className="link-modal">
+                                                <h5>Insert link(s)</h5>
+
+                                                <input autoFocus type="text" value={link} onChange={(event) => { setLink(event.target.value) }} />
+
+                                                {/* <form onSubmit={handleSubmit}> */}
+                                                {/* <div>
+                                                    {formValues.map((element, index) => (
+                                                        <div className="form-inline" key={index}>
+                                                            <input
+                                                                type="text"
+                                                                name="name"
+                                                                value={element.name || ""}
+                                                                onChange={e => handleChange(index, e)}
+                                                                placeholder="link to"
+                                                                autoFocus
+                                                            />
+                                                            {index ?
+                                                                <AiFillMinusCircle className="btn-minus-link" onClick={() => removeFormFields(index)} />
+                                                                : null
+                                                            }
+                                                        </div>
+                                                    ))}
+                                                </div> */}
+
+                                                <div className="btn-post mt-2 link-info">
+                                                    {/* <button className="btn-add-link" type="button" onClick={() => addFormFields()}>
+                                                        Add
+                                                    </button> */}
+                                                    <button
+                                                        className="btn-insert-link"
+                                                        onClick={insertLink}
+                                                    >
+                                                        Insert
+                                                    </button>{' '}
+                                                </div>
+                                                <IoCloseOutline className="close-modal" onClick={() => setLinkModalOpen(false)} />
+                                            </div>
+                                        </ClickAwayListener>
+                                    </Fragment>
+                                }
+
+                                <div className="caption-count">
+                                    <h6 className={caption.length > 2120 && "text-danger"}>
+                                        {" "}
+                                        {caption.length}/2200
+                                    </h6>
+                                </div>
+
+                                <div className="btn-post my-2">
+                                    {/* <Button
+                                        variant="primary mx-1"
+                                        className="btn-create-hoot"
+                                        onClick={upload}
+                                        disabled={!ReactPlayer.canPlay(link) && file.length === 0}
+                                    >
+                                        Hoot
+                                    </Button>{' '} */}
+                                      <SoapboxTooltip title="Hoot" placement="right">
+                                      <img src={hooticon} 
+                                       onClick={upload}
+                                       disabled={!ReactPlayer.canPlay(link) && file.length === 0}
+                                      style={{cursor:'pointer'}}  width="35px" />
+                                </SoapboxTooltip>
+                                </div>
+                            </div>
+
+                            {/* <LinkPreview
+                                    margin="0 0.5rem"
+                                    className="link-pr-sb"
+                                    url={link}
+                                /> */}
+                            {showLinkPreview ?
+                                link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
+                                    ?
+                                    <video
+                                        muted controls
+                                        disablePictureInPicture
+                                        className="hoot-vdo"
+                                        style={{ width: "none" }}
+                                        controlsList="nodownload"
+                                        onDragStart={(e) => e.preventDefault()}
+                                    >
+                                        <source
+                                            src={link}
+                                        />
+                                        Your browser does not support HTML video.
+                                    </video>
+                                    :
+                                    link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                        ?
+                                        <video
+                                            muted controls
+                                            poster={src ? src : `${BaseURL}/profile-pictures/${userData.profilePic}`}
+                                            className="hoot-vdo"
+                                            style={{ width: "auto" }}
+                                            controlsList="nodownload"
+                                            onDragStart={(e) => e.preventDefault()}
+                                        >
+                                            <source
+                                                src={link}
+                                            />
+                                            Your browser does not support HTML video.
+                                        </video>
+                                        :
+                                        ReactPlayer.canPlay(link) &&
+                                        <div className='player-wrapper'>
+                                            <ReactPlayer
+                                                url={link}
+                                                className='react-player'
+                                                controls="true"
+                                                width='97%'
+                                                height='100%'
+                                            />
+                                        </div>
+                                : null
+                            }
+
+                            {showLinkPreview &&
+                                link.endsWith('.mp3') || link.endsWith('.ogg') || link.endsWith('.wav') || link.endsWith('.flac') || link.endsWith('.aac') || link.endsWith('.alac') || link.endsWith('.dsd')
+                                ?
+                                <small style={{ margin: "0 0.5rem", color: "#6B7280", display: "block", fontWeight: "500" }}>
+                                    (By Default <b>Profile Picture</b> will be taken as <b>Audio Poster</b> and it can be changed by <b>Selecting Photo</b>)
+                                </small>
+                                : null
+                            }
+
+                           <div style={{marginTop:'-20px',display:'flex',flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}}>
+                         
+
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={privateCheck}
+                                    // onChange={makePrivate}
+                                    disabled
+                                />
+                                <span>Private{" "}</span>
+                                <small>
+                                    {userData.privateChannel === 0 ? "(Requires Private Club, Please go to Profile and add Private Club)" : null}
+                                </small>
+                            </div>
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={ephemeralCheck}
+                                    onChange={makeEphemeral} />
+                                <span>
+                                    Ephemeral{" "}
+                                </span>
+                                <small>(Hoot's lifetime will be 7 days)</small>
+                            </div>
+                           </div>
+
+                            {file.length !== 0 &&
+                                file.type.match(/audio/gi) == "audio"
+                                ?
+                                <Fragment>
+                                    <label
+                                        htmlFor="change-audio-poster"
+                                        className="change-audio-poster"
+                                    >
+                                        Change Audio Poster
+                                    </label>
+                                    <input
+                                        type="file"
+                                        name="audio"
+                                        id="change-audio-poster"
+                                        accept="image/*"
+                                        onChange={(event) => {
+                                            const poster = event.target.files[0];
+                                            setAudioPoster(poster);
+                                        }}
+                                        hidden
+                                    />
+                                </Fragment>
+                                : null
+                            }
+
+                            {file.length !== 0 &&
+                                file.type.match(/audio/gi) == "audio"
+                                ? <small style={{ margin: "0 0.5rem", color: "#6B7280", display: "block", fontWeight: "500" }}>
+                                    (By Default <b>Profile Picture</b> will be taken as <b>Audio Poster</b> and it can be changed by <b>Selecting Audio Poster</b>)
+                                </small>
+                                : null
+                            }
+
+                        </div>
+                    </div>
                 </div>
             }
 

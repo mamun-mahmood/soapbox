@@ -13,7 +13,14 @@ import RamdomSuggestedHoots from './RandomSuggestedHoots'
 import { MyLists } from '../../context/MyListContext'
 import RandomCommunitySuggestion from './RandomCommunitySuggestion'
 import { AiTwotoneLock } from 'react-icons/ai'
-
+import communityclub from '../../assets/homeicon.png'
+import following from '../../assets/following.png'
+import requestprivateclub from '../../assets/requestprivateclub.png'
+import privateclub from '../../assets/privateclub.png'
+import homeicon from '../../assets/communityclub.png'
+import explore from '../../assets/explore.png'
+import profile from '../../assets/profile.png'
+import allhoots from '../../assets/allhoots.png'
 const SideBar = () => {
     // const [mainActive, setMainActive] = useState("active");
     // const [hashtags, setHashtags] = useState([]);
@@ -214,7 +221,7 @@ const SideBar = () => {
                         option="All Hoots"
                         // link="/home"
                         link="/All-Hoots"
-                        Icon={FiHome}
+                        Icon={allhoots}
                     />
 
                     {userInfo
@@ -222,25 +229,25 @@ const SideBar = () => {
                         <SideBarOption
                             option="Following"
                             link={`/${username}/mylist`}
-                            Icon={RiAccountPinCircleFill}
+                            Icon={following}
                         />
                         : null
                     }
 
                     <SideBarOption
                         option="Private Clubs"
-                        Icon={AiTwotoneLock}
+                        Icon={privateclub}
                     // link={`/private/Club/${username}`}
                     />
 
                     <SideBarOption
                         option="Community Clubs"
-                        Icon={RiGroup2Line}
+                        Icon={communityclub}
                     // link={`/private/Club/${username}`}
                     />
                     <SideBarOption
                         option="Request Private Club"
-                        Icon={BiAddToQueue}
+                        Icon={requestprivateclub}
                     // link={`/private/Club/${username}`}
                     />
 
@@ -249,7 +256,7 @@ const SideBar = () => {
                         ? <SideBarOption
                             option="Profile"
                             link={`/profile/${username}`}
-                            Icon={BiUser}
+                            Icon={profile}
                         />
                         : null
                     }
@@ -258,7 +265,7 @@ const SideBar = () => {
                     <SideBarOption
                         option="Explore"
                         link="/explore"
-                        Icon={BsLightning}
+                        Icon={explore}
                     />
 
 

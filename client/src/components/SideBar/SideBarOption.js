@@ -11,7 +11,8 @@ const SideBarOption = ({ option, link, Icon, looks }) => {
                     className={looks}
                     to={link}
                 >
-                    <Icon className={"sidebar-icon"} />
+                 
+                    <img src={Icon} width={option==="All Hoots"?"20px":"24px"} className={"sidebar-icon"} />
                     <span>
                         {option}
                     </span>
@@ -22,7 +23,7 @@ const SideBarOption = ({ option, link, Icon, looks }) => {
                     className={looks}
                     href="soapbox:;"
                 >
-                    <Icon className={"sidebar-icon"} />
+                    <img src={Icon} width={option==="All Hoots"?"20px":"24px"} className={"sidebar-icon"} />
                     <span>
                         {option}
                     </span>

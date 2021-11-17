@@ -51,6 +51,7 @@
     height: 100%;
 }
 
+
 .profile-pic {
     width: 100%;
     display: flex;
@@ -263,7 +264,7 @@
 padding-left: 1rem;
 padding-right: 1rem;
     width: 100%;
-    background-color:  #A279BA;
+    background-color:  #652C90;
     z-index: 1;
 }
 
@@ -476,6 +477,9 @@ overflow-wrap: break-word;
 }
 .message-emoji{
     font-size: 15px;
+    margin-left: 35px;
+    margin-top: -20px;
+    font-weight:400;
 }
 .chat-profile{
     max-width: 30px;
@@ -484,9 +488,12 @@ overflow-wrap: break-word;
     max-height: 30px;
     border-radius: 15px;
     margin-right: 5px;
+    background-color: #652C90;
    
 
 }
+
+
 
 .left{
 float: left;

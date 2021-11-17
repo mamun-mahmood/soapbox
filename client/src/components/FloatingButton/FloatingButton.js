@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FiPlus } from 'react-icons/fi'
 import { SoapboxTooltip } from '../SoapboxTooltip'
+import hooticon from '../../assets/hoot-public.png'
 import './floatingButton.css'
 
 const FloatingButton = () => {
@@ -9,9 +10,7 @@ const FloatingButton = () => {
         <div className="float">
             <Link to="/create">
                 <SoapboxTooltip title="Create Hoot" placement="left">
-                    <div>
-                        <FiPlus className="plus" />
-                    </div>
+                <img src={hooticon}  className="hooticon" width="40px" />
                 </SoapboxTooltip>
             </Link>
         </div>
