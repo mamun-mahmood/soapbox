@@ -13,7 +13,7 @@ import socket, { startSocket } from '../../socketChat';
 import {GiHamburgerMenu} from 'react-icons/gi'
 import Picker from 'emoji-picker-react';
 import Linkify from 'react-linkify';
-
+import CreatePrivateHoot from '../../pages/CreatePrivateHoot'
 
 import {
     RiFacebookCircleLine,
@@ -65,6 +65,8 @@ import imagechat from "../../assets/imagechat.png";
 import filechat from "../../assets/filechat.png";
 import emojiIcon from "../../assets/emoji.png";
 import privatehooticon from "../../assets/private-hoot.png";
+import xmgwallet from "../../assets/xmgwallet.png";
+
 const PrivateChannels = () => {
     const hallId = uuidv4()
     const [userProfilePic, setUserProfilePic] = useState('');
@@ -78,7 +80,7 @@ const PrivateChannels = () => {
     const [page, setpage] = useState(2);
     const [onDemandPage, setOnDemandPage] = useState(2);
     const [subscribe, setSubscribe] = useState(false);
-    const [showSubscribeButton, setShowSubscribeButton] = useState(true)
+    const [showSubscribeButton, setShowSubscribeButton] = useState(false)
     const [callRequest, setCallRequest] = useState(false);
     const [oneOnOnecall, setOneOnOneCall] = useState(false)
     const [groupCall, setGroupCall] = useState(false)
@@ -92,15 +94,15 @@ const PrivateChannels = () => {
     const [emojiPicker, setEmojiPicker] = useState(false);
     const [showFeed, setShowFeed] = useState(true);
     const [clubFloor, setClubFloor] = useState(true);
-    
+    const [showCreateHoot,setShowCreateHoot] =useState(false)
     const [privateChat, setPrivateChat] = useState(false);
     const [VideoAvailable, setVideoAvailable] = useState(false)
     const [onDemandMedia, setOnDemandMedia] = useState(false);
     const [onDemandHasMore, setOnDemandHasMore] = useState(true);
     const [media, setMedia] = useState("");
-
+    const [showClubRules, setShowClubRules] = useState(false)
     const [showChatRoom, setShowChatRoom] = useState(false)
-
+    
     const [verifiedAutograph, setVerifiedAutograph] = useState(false)
     const [showRequest, setShowRequest] = useState(false)
     const [showSubscribers, setShowSubscribers] = useState(false)
@@ -109,6 +111,7 @@ const PrivateChannels = () => {
 
     const [showPricingSetting, setShowPricingSetting] = useState(false)
     const { username } = useParams();
+
     const BaseURL = process.env.REACT_APP_API_URL;
 
     const LIMIT = 4;
@@ -159,13 +162,13 @@ const PrivateChannels = () => {
 
     const append = (chatname, message, position, imgSrc, isEmoji, isVideo, isImage) => {
 
-
-        setChatData([...chatData,{chatname,message, position, imgSrc, isEmoji, isVideo, isImage}])
+      setChatData(e=>[...e,{chatname,message, position, imgSrc, isEmoji, isVideo, isImage}])
+        // setChatData([...chatData,{chatname,message, position, imgSrc, isEmoji, isVideo, isImage}])
         // if (message) {
           
            
           
-        //     var messageContainer = document.querySelector('.chatarea')
+           var messageContainer = document.querySelector('.container')
         //     const messageBox = document.createElement('div');
         //     const ProfileBox = document.createElement('div');
         //     const messageElement = document.createElement('div');
@@ -273,10 +276,10 @@ const PrivateChannels = () => {
 
 
         //     // messageContainer.append(messageElement);
-        //     document.getElementsByClassName('container').scrollTop = document.getElementsByClassName('container').scrollHeight;
+        //     messageContainer.scrollTop = messageContainer.scrollHeight;
         // }
 
-
+        messageContainer.scrollTop = messageContainer.scrollHeight;
     }
     function isEmoji(str) {
         var ranges = [
@@ -316,6 +319,7 @@ const PrivateChannels = () => {
                 append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji)
 
             } else {
+                
                 append(data.name, `${data.message}`, 'left', `${BaseURL}/profile-pictures/${data.profilePic}`, data.isEmoji, data.isVideo, data.isImage)
             }
         })
@@ -360,6 +364,7 @@ const PrivateChannels = () => {
             setUserFullName(res.data[0].name);
             setUserId(res.data[0].id);
             setUserEmail(res.data[0].email)
+           
         })
             .catch(err => { console.log(err) })
     }, []);
@@ -376,7 +381,7 @@ const PrivateChannels = () => {
                 .then((response) => {
                     setUploads(response.data.results);
                  setTimeout(() => {
-                    document.getElementById('chatRoomopen').click()
+                   if(subscribe || userInformation.username == username){document.getElementById('chatRoomopen').click()}
                  }, 1000);
 
                 });
@@ -399,13 +404,15 @@ const PrivateChannels = () => {
 
     const checkMembership = () => {
         axios.post(`${BaseURL}/user/getMember`, {
-            member: userInformation.username
+            member: userInformation.username,
+            owner:username
         }).then((res) => {
 
-
+           
             setShowSubscribeButton(false);
             setShowFeed(true);
             setSubscribe(true);
+            document.getElementById('chatRoomopen').click()
         })
     }
 
@@ -559,47 +566,65 @@ const PrivateChannels = () => {
         (file && setMimeType(file.type));
         setSrc(URL.createObjectURL(file));
         // setMessageInboxValue(file.name);
-
+        setTimeout(() => {
+            let messageContainer=document.querySelector('.container')
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }, 500);
+       
 
 
     }
 
-    const addMembershipInDb = () => {
-        if (!subscribe) {
+    const addMembershipInDb = (username) => {
+        if(!subscribe){ axios.post(`${BaseURL}/user/membership`, {
+            owner: username,
+            member: userInformation.username,
+            price: subscribePrice
 
-            axios.post(`${BaseURL}/user/membership`, {
-                owner: username,
-                member: userInformation.username,
-                price: subscribePrice
-
-            }).then((res) => {
-
-                toast.success(`${username} Membership Activated`)
-                setShowSubscribeButton(false);
-                setShowFeed(true)
-                setSubscribe(true);
-            })
-                .catch(err => console.log(err))
-        }
+        }).then((res) => {
+          
+            toast.success(`${username} Membership Activated`)
+            setShowSubscribeButton(false);
+            setShowFeed(true)
+            setSubscribe(true);
+            document.getElementById('chatRoomopen').click()
+        })
+            .catch(err =>   alert(JSON.stringify(err)))}
+      
+       
+       
 
     }
 
-    const verifyOrder = () => {
-
-        axios.post('https://messangerapi533cdgf6c556.aFmaprods.com/api/users/showPurchasedOrder', {
-            email: userEmail
+    const verifyOrder = (username) => {
+        axios.post('https://messangerapi533cdgf6c556.amaprods.com/api/users/showPurchasedOrderSoapbox', {
+            email: userEmail,
+            product:username
         })
             .then((res) => {
-                res.data.message.forEach((e) => {
-                    axios.get(`https://megahoot.org/api/req.php?type=check_merchant_transaction_status&merch_key=SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U&inv=${e.invoice_id}`)
-                        .then((res) => {
-                            console.log(res.data.status, typeof (res.data.status), "sky xmg")
-                            if (res.data.status == "1") {
-                                addMembershipInDb()
-                            }
-                        })
-                        .catch(err => console.log(err))
+               
+                // res.data.message.forEach((e) => {
+                    
+                //     axios.get(`https://megahoot.org/api/req.php?type=check_merchant_transaction_status&merch_key=SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U&inv=${e.invoice_id}`)
+                //         .then((res) => {
+                           
+                //             console.log(res.data.status, typeof (res.data.status), "sky xmg")
+                //             if (res.data.status == "1") {
+                //                 addMembershipInDb(username,subscribePrice)
+                //             }
+                //         })
+                //         .catch(err => console.log(err))
+                // })
+              
+                axios.get(`https://megahoot.org/api/req.php?type=check_merchant_transaction_status&merch_key=SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U&inv=${res.data.message[0].invoice_id}`)
+                .then((res) => {
+                   
+                    console.log(res.data.status, typeof (res.data.status), "sky xmg")
+                    if (res.data.status == "1") {
+                        addMembershipInDb(username,subscribePrice)
+                    }
                 })
+                .catch(err => console.log(err))
             })
             .catch((err) => {
                 toast.success(`No Record Found or something went wrong`)
@@ -908,10 +933,23 @@ const PrivateChannels = () => {
                                                     )}
                                                 </div>
                                                 <div>
+                                               {userInformation.username !== username ?
+                                               <div>
+                                                   <div className="live-header"
+  style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }}>Crypto Tools</div>
+  <div className="control">
+  <button style={{ minWidth: '208px' }} >XMG Wallet</button>
+  <button style={{ minWidth: '208px' }} >Pecu Novus Wallet</button>
+  <button style={{ minWidth: '208px' }} >MegaHoot Vault</button>
+  <button style={{ minWidth: '208px' }} >Crypto Index</button>
+  </div>
+                                               </div>
+                                               :null}
                                                     {userInformation.username !== username ? <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Request a Virtual Experience</div> : null}
                                                     {userInformation.username == username ? (
                                                         <div>
- <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }}>Membership</div>
+ <div className="live-header"
+  style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }}>Membership</div>
                                                             <div className="control">
                                                             <button  style={{ minWidth: '208px' }} onClick={() => { 
                                                                 
@@ -967,11 +1005,18 @@ const PrivateChannels = () => {
                                                                     
                                                                     >Requests</button>
                                                                 </div>
-
+                                                                <div className="live-header"
+  style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }}>Crypto Tools</div>
+  <div className="control">
+  <button style={{ minWidth: '208px' }} >XMG Wallet</button>
+  <button style={{ minWidth: '208px' }} >Pecu Novus Wallet</button>
+  <button style={{ minWidth: '208px' }} >MegaHoot Vault</button>
+  <button style={{ minWidth: '208px' }} >Crypto Index</button>
+  </div>
                                                             <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }} >Club Toolbox</div>
                                                             <div className="control">
                                                                 <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
-                                                                <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
+                                                               
 
                                                                 <button style={{ minWidth: '208px' }}
                                                                 onClick={() => {
@@ -1105,9 +1150,9 @@ const PrivateChannels = () => {
 
                                                             <br></br>
                                                            
-                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }}>Create Pay Per View Event</div>
+                                                            <div className="live-header" style={{ backgroundColor: '#8249A0', color: 'white', borderRadius: '3px' }}>Pay Per View Event</div>
                                                             <div className="control">
-
+                                                             <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
                                                                 <button style={{ minWidth: '208px' }}>Broadcast Vero Live PPV</button>
                                                                 <button style={{ minWidth: '208px' }} >Broadcast Vero Pre-recorded PPV</button>
 
@@ -1431,7 +1476,32 @@ const PrivateChannels = () => {
                                        
                                        >
                                             <SoapboxTooltip title={"Club Rules"} placement="left"> 
-                                            <img src={rules} width="30px" />
+                                            <img src={rules} width="30px"
+                                              onClick={()=>{
+                                                if(showClubRules){
+                                                    document.getElementById('slideCR').style.transition='2sec';
+                                                    document.getElementById('slideCR').style.right='-100vw';
+                                                                                                             
+                                                   setTimeout(() => {
+                                                      setShowClubRules(false)
+                                                     
+                                                   }, 1000)
+                                                }else{
+                                                    setShowClubRules(true),setOnDemandMedia(false),setShowCreateHoot(false),setShowRequest(false); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(true) 
+                                            
+                                                setTimeout(() => {
+                                                   
+                                                if(document.getElementById('slideCR')){
+            
+                                                    document.getElementById('slideCR').style.transition='1sec';
+                                                    document.getElementById('slideCR').style.right='150px';
+                                                }
+                                              
+                                            }, 1)   
+                                            
+                                           }
+                                             }}
+                                            />
                                            </SoapboxTooltip>
                                            </span>
                                    
@@ -1451,6 +1521,80 @@ const PrivateChannels = () => {
 
                                 <FiSearch className="search-channel-content" />
                             </div>
+                            {showClubRules?<div className="slide-container clubRulesText">
+                          <div id="slideCR" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                       <div style={{maxHeight:'450px',overflowY:'scroll',position:'relative'}}>
+                       <FaWindowClose className="FaWindowClose"  style={{cursor:'pointer',color:'red',position:'absolute',right:'0px'}} onClick={()=>{
+ document.getElementById('slideCR').style.transition='2sec';
+ document.getElementById('slideCR').style.right='-100vw';
+                                                          
+setTimeout(() => {
+   setShowClubRules(false)
+  
+}, 1000)
+                                }} />
+                         <h4>  RULES OF THE ROAD</h4>
+ <p>
+Soapbox is a Club Community where members can not only connect but Club Owners can build real businesses as Private Club Owners.. All Community Clubs are here for you, our members, that allow you to create discussions, share ideas, support each other, create events, connect with likeminded people and we encourage you to find the right community club for you. Even create build your own virtual business as a Private Club Owner, a real business.
+</p>
+<p>
+So with that said these are some general Club rules that all members have to adhere to:
+</p>
+<h5>RULE 1</h5>
+
+<p>
+Be mindful of others and don't join a community club to cause disruption. Community Clubs are topic specific with Break-Off Chats that are created by members to create conversation, find the club that is right for you. Members that create disruption by adding offensive content, hate speech, attacking others, inciting violence, well they run the risk of not only being banned from that Club Community but also run the risk of being banned from Soapbox in general. We take this very seriously and bans are not temporary, they are permanent. 
+</p>
+<h5>RULE 2</h5>
+<p>
+Privacy and Security, All club members must adhere to privacy policies and in simple terms respect other members' privacy and keep the community safe. Don't harass other members with repeated private chat requests or messages, Do not instigate harassment by revealing someone's personal information, sharing sexually explicit media of someone or threatening them. Violators run the risk of not only being banned from that Club but also being banned from Soapbox in general. 
+
+<h5> RULE 3</h5>
+
+Impersonating someone to mislead others, sharing sexual or suggestive content involving minors, threatening other members will be cause for an immediate ban. Soapbox members don't have to use their real names but impersonating a celebrity or business to trick people is a NO NO, we protect our members and have a zero tolerance policy as it relates to these three issues.
+
+<h5> RULE 4</h5>
+
+Don't be a bully, no one likes a bully, so remember to help build the Club Communities for the better of the community. Sharing opinions is encouraged, creating conversations with opposing views is fine, trying to bully someone into sharing your opinion as it relates to political views, parenting or other is a violation. Everyone is entitled to their own views so respect that, if you don't like their views then create your OWN Break-Off Chat for a topic that you want or better yet Request to be a Private Club Owner and control your own little world.
+
+<h5>RULE 5 </h5>
+
+Spamming, just don't do it, keep the community clean , robust and enjoyable. Spammers will be banned.
+
+<h5>RULE 6 </h5>
+
+Sharing illegal content, soliciting or facilitating illegal transactions or prohibited transactions will result in an immediate ban. 
+
+<h5>RULE 7 </h5>
+
+Safety first, Soapbox uses the XMG Coin as an internal cryptocurrency for ALL transactions on Soapbox. This protects our members from credit card fraud, illegal chargebacks and fraud in general. Soapbox can guarantee against fraud this way, so all transactions for products or services MUST be kept on Soapbox for your protection, Transactions done away from Soapbox are a violation of our security measures and prevent us from protecting members. All products, services and  other listings that are in the Marketplace are directly posted on Fortis Auction Blockmarket, this is Soapbox's ONLY Marketplace. Members must adhere to using Fortis for their sales of products, services and other transactions. Avoid fraud and adhere to our security measures for your protection. 
+
+<h5>RULE 8 </h5>
+
+Virtual Experiences are a great tool for members to connect with Private Club Owners that may be celebrities, pro athletes, authors and more. Transactions away from Soapbox are a violation and can cause the Private Club Owner and Member to receive a first warning, if it happens a second time then the Member can be banned and the Private Club Owner will lose their club ownership rights.
+</p>
+<h5>RULE 9</h5>
+<p>
+Virtual and In Person Events can be set up on Soapbox for the better of the community, don't abuse that and if in person events are being arranged please put safety first. We want our members to always be safe and sound.
+</p>
+<p>
+The rules are simple and enforcement of these rules come from our members HOWEVER falsely reporting a member for a violation can result in a first warning to the member that falsely reported . We needed to make that crystal clear to avoid false reports.
+</p>
+<p>
+Above all please protect your communities, help to grow them, help and support others, make it your own. For Private Club Owners, this is your business, so treat it as such and build it strong for the better of your Club and the Soapbox Community in general.
+</p>
+
+<h5>
+ENFORCEMENT OF RULES</h5>
+
+<p>
+Well we have a number of ways that rules are enforced and we take it seriously. We will ask you nicely to cut it out the first time, the next step won't be that friendly and the last step is not only a permanent ban from that Community or Private Club but from the entire MegaHoot ecosystem. Trust me you don't want that as you will not be able to use Soapbox, VeroHive, DocuMega, XMG Fintech, MegaHoot Vault, ZecureHive, gaming or any platforms that will be added in the future. So play by the rules and make Soapbox as great as it can be!
+</p>
+                             </div>
+                             </div>
+                          
+
+                          </div>:null}
                             {oneOnOnecall ?
                             <div className="slide-container">
                             <div id="slideOOC" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
@@ -1597,7 +1741,7 @@ setShowSubscribeButton(false)
                                         <br></br>
                                         <button
                                             onClick={() => {
-                                                verifyOrder()
+                                                verifyOrder(username)
 
 
 
@@ -1844,6 +1988,7 @@ setShowSubscribeButton(false)
                                             {src && mimeType.substr(0, 5) == "image" ? <div className="messageBox">
                                                 <img src={src} style={{ width: '100%', height: 'auto', marginTop: '-10px' }} />
                                                 <button onClick={() => {
+                                                   
                                                     upload(file, file.type);
                                                     setFile([]);
                                                     setSrc(null);
@@ -2081,6 +2226,7 @@ setShowSubscribeButton(false)
                     }
 
                     {userInformation.username == username ? (
+
                         <div className="channel-user-content" >
                              
                             <div onmousedown={(event)=>{event.preventDefault ? event.preventDefault() : event.returnValue = false}}
@@ -2184,12 +2330,67 @@ setShowSubscribeButton(false)
                                        
                                     >
                                          <SoapboxTooltip title={"Club Rules"} placement="left"> 
-                                         <img src={rules} width="30px" />
+                                         <img src={rules} width="30px"
+                                         onClick={()=>{
+                                            if(showClubRules){
+                                                document.getElementById('slideCR').style.transition='2sec';
+                                                document.getElementById('slideCR').style.right='-100vw';
+                                                                                                         
+                                               setTimeout(() => {
+                                                  setShowClubRules(false)
+                                                 
+                                               }, 1000)
+                                            }else{
+                                                setShowClubRules(true),setOnDemandMedia(false),setShowCreateHoot(false),setShowRequest(false); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(true) 
+                                        
+                                            setTimeout(() => {
+                                               
+                                            if(document.getElementById('slideCR')){
+        
+                                                document.getElementById('slideCR').style.transition='1sec';
+                                                document.getElementById('slideCR').style.right='150px';
+                                            }
+                                          
+                                        }, 1)   
+                                        
+                                       }
+                                         }}
+                                         />
                                         </SoapboxTooltip>
                                         </span>
                                     {/* <button  style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}}>INVITE</button>
                                     <button style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}} >CLUB RULES</button> */}
-                               <span onClick={()=>{history.push('/create-private')}}>
+{/*                              
+                             <span>
+          <SoapboxTooltip title={
+                   "XMG Wallet"
+                } placement="left">
+                   <img src={xmgwallet} width="30px" />
+                </SoapboxTooltip>
+                </span> */}
+                               <span onClick={()=>{
+                                    if(showCreateHoot){
+                                        document.getElementById('slideH').style.transition='2sec';
+                                        document.getElementById('slideH').style.left='-100vw';
+                                                                                                 
+                                       setTimeout(() => {
+                                          setShowCreateHoot(false)
+                                         
+                                       }, 1000)
+                                    }else{
+                                        setOnDemandMedia(false),setShowCreateHoot(true),setShowRequest(false); setShowFeed(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(true) 
+                                
+                                    setTimeout(() => {
+                                       
+                                    if(document.getElementById('slideH')){
+
+                                        document.getElementById('slideH').style.transition='1sec';
+                                        document.getElementById('slideH').style.left='150px';
+                                    }
+                                  
+                                }, 1)   
+                                
+                               }}}>
                                   
                 <SoapboxTooltip title={
                    "Create Private Hoot"
@@ -2197,6 +2398,7 @@ setShowSubscribeButton(false)
                    <img src={privatehooticon} width="30px" />
                 </SoapboxTooltip>
           </span>
+        
                                 </div>
 
 
@@ -2204,6 +2406,8 @@ setShowSubscribeButton(false)
 
                                 {/* <FiSearch className="search-channel-content" /> */}
                             </div>
+
+                          
                             {showRequest ?<div className="slide-container">
                                  <div  id="slideR" 
                              style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', backgroundColor:'#D6C8E1', margin: '1rem' ,minWidth:'600px',minHeight:'400px'}}>
@@ -2244,7 +2448,9 @@ setShowPricingSetting(false)
 }, 1000)
 }} />
 </div>
-                      
+
+
+     
                                 <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label  style={{minWidth:'300px'}}>1 on 1 call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={oneOnOnecallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setOneOnOneCallPrice(e.target.value) }} />XMG</div>
 
                                 <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: '1rem', alignItems: 'center' }}> <label style={{minWidth:'300px'}}>Group call :  </label><input style={{borderRadius:'10px',padding:'4px',border:'none',borderBottom:'3px solid grey',marginRight:'5px',outline:'none'}} type="number" value={groupCallPrice} placeholder="Amount XMG" min={5} max={100} onChange={(e) => { setGroupCallPrice(e.target.value) }} />XMG</div>
@@ -2281,10 +2487,101 @@ setTimeout(() => {
                                 {subscribePrice} XMG
                                 <p>No Members</p>
                             </div></div> : null}
+                            {showCreateHoot?<div className="slide-container">
+                              <div id="slideH">
+                                  <CreatePrivateHoot closeHoot={()=>{
+
+document.getElementById('slideH').style.transition='2sec';
+document.getElementById('slideH').style.right='-100vw';
+                          
+setTimeout(() => {
+setShowCreateHoot(false)
+window.location.reload(false);
+}, 1000)
+                                  }} />
+                              </div>
+                          </div>:null} 
+
+                          {showClubRules?<div className="slide-container clubRulesText">
+                          <div id="slideCR" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                       <div style={{maxHeight:'450px',overflowY:'scroll',position:'relative'}}>
+                       <FaWindowClose className="FaWindowClose"  style={{cursor:'pointer',color:'red',position:'absolute',right:'0px'}} onClick={()=>{
+ document.getElementById('slideCR').style.transition='2sec';
+ document.getElementById('slideCR').style.right='-100vw';
+                                                          
+setTimeout(() => {
+   setShowClubRules(false)
+  
+}, 1000)
+                                }} />
+                         <h4>  RULES OF THE ROAD</h4>
+ <p>
+Soapbox is a Club Community where members can not only connect but Club Owners can build real businesses as Private Club Owners.. All Community Clubs are here for you, our members, that allow you to create discussions, share ideas, support each other, create events, connect with likeminded people and we encourage you to find the right community club for you. Even create build your own virtual business as a Private Club Owner, a real business.
+</p>
+<p>
+So with that said these are some general Club rules that all members have to adhere to:
+</p>
+<h5>RULE 1</h5>
+
+<p>
+Be mindful of others and don't join a community club to cause disruption. Community Clubs are topic specific with Break-Off Chats that are created by members to create conversation, find the club that is right for you. Members that create disruption by adding offensive content, hate speech, attacking others, inciting violence, well they run the risk of not only being banned from that Club Community but also run the risk of being banned from Soapbox in general. We take this very seriously and bans are not temporary, they are permanent. 
+</p>
+<h5>RULE 2</h5>
+<p>
+Privacy and Security, All club members must adhere to privacy policies and in simple terms respect other members' privacy and keep the community safe. Don't harass other members with repeated private chat requests or messages, Do not instigate harassment by revealing someone's personal information, sharing sexually explicit media of someone or threatening them. Violators run the risk of not only being banned from that Club but also being banned from Soapbox in general. 
+
+<h5> RULE 3</h5>
+
+Impersonating someone to mislead others, sharing sexual or suggestive content involving minors, threatening other members will be cause for an immediate ban. Soapbox members don't have to use their real names but impersonating a celebrity or business to trick people is a NO NO, we protect our members and have a zero tolerance policy as it relates to these three issues.
+
+<h5> RULE 4</h5>
+
+Don't be a bully, no one likes a bully, so remember to help build the Club Communities for the better of the community. Sharing opinions is encouraged, creating conversations with opposing views is fine, trying to bully someone into sharing your opinion as it relates to political views, parenting or other is a violation. Everyone is entitled to their own views so respect that, if you don't like their views then create your OWN Break-Off Chat for a topic that you want or better yet Request to be a Private Club Owner and control your own little world.
+
+<h5>RULE 5 </h5>
+
+Spamming, just don't do it, keep the community clean , robust and enjoyable. Spammers will be banned.
+
+<h5>RULE 6 </h5>
+
+Sharing illegal content, soliciting or facilitating illegal transactions or prohibited transactions will result in an immediate ban. 
+
+<h5>RULE 7 </h5>
+
+Safety first, Soapbox uses the XMG Coin as an internal cryptocurrency for ALL transactions on Soapbox. This protects our members from credit card fraud, illegal chargebacks and fraud in general. Soapbox can guarantee against fraud this way, so all transactions for products or services MUST be kept on Soapbox for your protection, Transactions done away from Soapbox are a violation of our security measures and prevent us from protecting members. All products, services and  other listings that are in the Marketplace are directly posted on Fortis Auction Blockmarket, this is Soapbox's ONLY Marketplace. Members must adhere to using Fortis for their sales of products, services and other transactions. Avoid fraud and adhere to our security measures for your protection. 
+
+<h5>RULE 8 </h5>
+
+Virtual Experiences are a great tool for members to connect with Private Club Owners that may be celebrities, pro athletes, authors and more. Transactions away from Soapbox are a violation and can cause the Private Club Owner and Member to receive a first warning, if it happens a second time then the Member can be banned and the Private Club Owner will lose their club ownership rights.
+</p>
+<h5>RULE 9</h5>
+<p>
+Virtual and In Person Events can be set up on Soapbox for the better of the community, don't abuse that and if in person events are being arranged please put safety first. We want our members to always be safe and sound.
+</p>
+<p>
+The rules are simple and enforcement of these rules come from our members HOWEVER falsely reporting a member for a violation can result in a first warning to the member that falsely reported . We needed to make that crystal clear to avoid false reports.
+</p>
+<p>
+Above all please protect your communities, help to grow them, help and support others, make it your own. For Private Club Owners, this is your business, so treat it as such and build it strong for the better of your Club and the Soapbox Community in general.
+</p>
+
+<h5>
+ENFORCEMENT OF RULES</h5>
+
+<p>
+Well we have a number of ways that rules are enforced and we take it seriously. We will ask you nicely to cut it out the first time, the next step won't be that friendly and the last step is not only a permanent ban from that Community or Private Club but from the entire MegaHoot ecosystem. Trust me you don't want that as you will not be able to use Soapbox, VeroHive, DocuMega, XMG Fintech, MegaHoot Vault, ZecureHive, gaming or any platforms that will be added in the future. So play by the rules and make Soapbox as great as it can be!
+</p>
+                             </div>
+                             </div>
+                          
+
+                          </div>:null}
                             {showNotification ? <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 <h5>Notification</h5>
                                 <p>No Notification</p>
                             </div> : null}
+                            
+                            
                            
                              <div className="channel-media" id="feed" style={{display:'flex'}}>
 

@@ -19,6 +19,7 @@ import requestprivateclub from '../../assets/requestprivateclub.png'
 import privateclub from '../../assets/privateclub.png'
 import homeicon from '../../assets/communityclub.png'
 import explore from '../../assets/explore.png'
+import XMGWALLET from '../../assets/XMGWALLETL.png'
 import profile from '../../assets/profile.png'
 import allhoots from '../../assets/allhoots.png'
 const SideBar = () => {
@@ -250,6 +251,7 @@ const SideBar = () => {
                         Icon={requestprivateclub}
                     // link={`/private/Club/${username}`}
                     />
+                     
 
 
                     {userInfo
@@ -262,6 +264,13 @@ const SideBar = () => {
                     }
 
 
+
+<SideBarOption
+                        option="XMG Wallet"
+                        Icon={XMGWALLET}
+                    // link={`/private/Club/${username}`}
+                    />
+                  
                     <SideBarOption
                         option="Explore"
                         link="/explore"
@@ -462,7 +471,7 @@ const SideBar = () => {
                         </a>
                     </li>
 
-                    <li>
+                    {/* <li>
                         <a
                             style={{ padding: "0.1rem 0.5rem" }}
                             activeClassName="sidebar-option-active"
@@ -471,7 +480,7 @@ const SideBar = () => {
                         >
                             <span>XMG Wallet</span>
                         </a>
-                    </li>
+                    </li> */}
 
                     <li>
                         <a
@@ -480,7 +489,7 @@ const SideBar = () => {
                             href="https://megahootvault.com/"
                             target="_blank" rel="noopener noreferrer"
                         >
-                            <span>Megahoot Vault</span>
+                            <span>Crypto Index</span>
                         </a>
                     </li>
 

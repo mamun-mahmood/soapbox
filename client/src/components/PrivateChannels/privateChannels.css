@@ -376,6 +376,7 @@ padding-right: 1rem;
  
  
    z-index: 5;
+   
 
 
 }
@@ -562,12 +563,39 @@ padding: 5px;
   
 }
 
-#slide,#slideR,#slideM,#slideRM,#slideOOC,#slideSSB,#slidegC,#slideVA{
+#slide,#slideR,#slideM,#slideRM,#slideOOC,#slideSSB,#slidegC,#slideVA,#slideCR{
     position: absolute;
     right: -100vw;
  
     transition: 1s;
     z-index: 20;
+}
+
+#slideH{
+    position: absolute;
+    left: -100vw;
+ 
+    transition: 1s;
+    z-index: 20;
+}
+#slideCR{
+    padding: 5px;
+    border-radius: 10px;
+    border: 5px solid #652C90;
+}
+.FaWindowClose{
+    margin: 5px;
+}
+.FaWindowClose:hover{
+    color: rgb(189, 6, 6);
+    transform: scale(1.5);
+
+}
+
+.clubRulesText p{
+    line-height: 40px;
+    max-width: 800px;
+   
 }
 
 

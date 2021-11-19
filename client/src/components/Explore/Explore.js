@@ -346,13 +346,13 @@ const Explore = () => {
                                             :
                                             hoot.mimeType.substr(0, 5) == "audio"
                                                 ? <ExploreHoot
-                                                    hootId={btoa(hoot.id)}
+                                                    hootId={(hoot.id)}
                                                     username={hoot.authorUsername}
                                                     mimeType={hoot.mimeType}
                                                     hootImgId={hoot.image}
                                                 />
                                                 : <HootOutside
-                                                    hootId={btoa(hoot.id)}
+                                                    hootId={(hoot.id)}
                                                     username={hoot.authorUsername}
                                                     mimeType={hoot.mimeType}
                                                     hootImgId={hoot.image}

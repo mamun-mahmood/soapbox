@@ -21,16 +21,19 @@ const BrowseMoreHoots = Loadable({
 const IndividualHoot = () => {
     var { id } = useParams();
 id=atob(id);
+
     const [hoot, setHoot] = useState([]);
     const BaseURL = process.env.REACT_APP_API_URL;
     const history = useHistory();
 
     useEffect(() => {
         // here id is hootId
+       
         const getHootById = async () => {
+          
             await axios.get(`${BaseURL}/hoot/public/${id}`)
                 .then((response) => {
-                    if (response.data[0].private == 1) {
+                    if (response.data[0] && response.data[0].private == 1) {
                         history.push(`/${uuidv4()}/private/Club/${response.data[0].authorUsername}/${uuidv4()}`);
                     } else {
                         setHoot(response.data);

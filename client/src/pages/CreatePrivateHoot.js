@@ -34,11 +34,11 @@ import audiorecord from '../assets/audiorecord.png';
 import imageupload from '../assets/imageupload.png';
 import audioupload from '../assets/audioupload.png';
 import videoupload from '../assets/videoupload.png';
-import emojiupload from '../assets/emojiupload.png';
+import emojiupload from '../assets/emoji.png';
 import addlink from '../assets/addlink.png';
 import hooticon from '../assets/hooticon.png';
 
-const CreatePrivateHoot = () => {
+const CreatePrivateHoot = (props) => {
     const [caption, setCaption] = useState("");
     const [file, setFile] = useState([]);
     const [audioPoster, setAudioPoster] = useState([]);
@@ -108,9 +108,10 @@ const CreatePrivateHoot = () => {
                 })
             ]).then(axios.spread((res1, res2) => {
                 if (res1) {
-                    setTimeout(() => {
-                        history.push(`/${uuidv4()}/private/Club/${username}/${uuidv4()}`);
-                    }, 500);
+props.closeHoot()
+                    // setTimeout(() => {
+                    //     history.push(`/${uuidv4()}/private/Club/${username}/${uuidv4()}`);
+                    // }, 500);
                 }
             }))
         }
@@ -290,9 +291,9 @@ const CreatePrivateHoot = () => {
             setLiveAudio(false);
 
             getVideo();
-            setTimeout(() => {
-                window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
-            }, 1000);
+            // setTimeout(() => {
+            //     window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+            // }, 1000);
         } else {
             toast.info("Requires Private Club")
         }
@@ -320,9 +321,9 @@ const CreatePrivateHoot = () => {
             //     }
             // }
 
-            setTimeout(() => {
-                window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
-            }, 1000);
+            // setTimeout(() => {
+            //     window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+            // }, 1000);
         } else {
             toast.info("Requires Private Club")
         }
@@ -411,9 +412,9 @@ const CreatePrivateHoot = () => {
     }
 
     const closePhoto = () => {
-        setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }, 0);
+        // setTimeout(() => {
+        //     window.scrollTo({ top: 0, behavior: "smooth" });
+        // }, 0);
 
         const video = videoRef.current;
 
@@ -545,9 +546,9 @@ const CreatePrivateHoot = () => {
     // }
 
     const closeVideo = async () => {
-        setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }, 0);
+        // setTimeout(() => {
+        //     window.scrollTo({ top: 0, behavior: "smooth" });
+        // }, 0);
 
         setFile([]);
         setRecordedVideoUrl(null);
@@ -577,24 +578,18 @@ const CreatePrivateHoot = () => {
 
     return (
         <Fragment>
-            <NavBar />
-            {loading &&
-                <div className="loading">
-                    <BeatLoader color={"#8249A0"} size={20} />
-                </div>
-            }
-            {!loading &&
-                <div className="upload-post">
-                    <div className="back-to-home">
-                        {/* <Link to="/home"> */}
+            {/* <NavBar /> */}
+            <div className="upload-post-private">
+                    {/* <div className="back-to-home">
+                       
                         <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
                             <FiArrowLeft className="left-arrow" />
                         </Link>
                         <span>
                             Back
                         </span>
-                    </div>
-                    <div className="post-caption d-flex flex-wrap">
+                    </div> */}
+                    {/* <div className="post-caption d-flex flex-wrap">
                         <div className="avatar-wraper">
                             <Avatar
                                 size={50}
@@ -604,11 +599,10 @@ const CreatePrivateHoot = () => {
                                 className={userData.profilePic === null ? null : "skeleton-img"}
                             />
                         </div>
-                        {/* <img className="avatar" src="/images/default_user_profile.svg" alt="avatar" /> */}
-                        <div className="name avatar_name">{userData.name}</div>
+                          <div className="name avatar_name">{userData.name}</div>
 
                       
-                    </div>
+                    </div> */}
 
                     <div className="record-on-create-hoot">
                         {extraFeatures
@@ -667,8 +661,17 @@ const CreatePrivateHoot = () => {
                                 }
                             </div>
                             :
-                            <div className="media-preview">
-                                {mimeType === "" && <p>Upload Preview</p>}
+                            <div className="media-preview-private">
+                                
+                                {!showLinkPreview ?
+                                link ?
+                                    <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all", marginTop: "-0.5rem" }}>
+                                        <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                    </div>
+                                    : null
+                                : null
+                            }
+                                {mimeType === "" && !showLinkPreview && !link &&<p>Upload Preview</p>}
                                 {mimeType !== "" &&
                                     <IoCloseOutline className="close-preview" onClick={closePreview} />
                                 }
@@ -695,7 +698,7 @@ const CreatePrivateHoot = () => {
                                 {mimeType.match(/audio/gi) == "audio" &&
                                     <video
                                         poster={audioPoster.length !== 0 ? URL.createObjectURL(audioPoster) : profilePicPath}
-                                        className="hoot-vdo"
+                                        className="hoot-vdo-private"
                                         controls
                                     >
                                         <source src={src} />
@@ -712,21 +715,21 @@ const CreatePrivateHoot = () => {
                                     {/* <div className="extra-outer" onClick={onDemandPhoto}>
                                         <FiCamera className="extra-fi" />
                                     </div> */}
-                                    <img src={imagerecord} onClick={onDemandPhoto} style={{cursor:'pointer'}} width="35px" />
+                                    <img   className="emoji-hover" src={imagerecord} onClick={onDemandPhoto} style={{cursor:'pointer'}} width="35px" />
                                 </SoapboxTooltip>
 
                                 <SoapboxTooltip title="Record Video" placement="right">
                                     {/* <div className="extra-outer" onClick={onDemandVideo}>
                                         <FiVideo className="extra-fi" />
                                     </div> */}
-                                     <img src={videorecord} style={{cursor:'pointer'}} onClick={onDemandVideo} width="35px" />
+                                     <img   className="emoji-hover" src={videorecord} style={{cursor:'pointer'}} onClick={onDemandVideo} width="35px" />
                                 </SoapboxTooltip>
 
                                 <SoapboxTooltip title="Record Audio" placement="right">
                                     {/* <div className="extra-outer" onClick={onDemandAudio}>
                                         <AiOutlineAudio className="extra-fi" />
                                     </div> */}
-                                      <img src={audiorecord} style={{cursor:'pointer'}} onClick={onDemandAudio} width="35px" />
+                                      <img   className="emoji-hover" src={audiorecord} style={{cursor:'pointer'}} onClick={onDemandAudio} width="35px" />
                                 </SoapboxTooltip>
                                 <label
                                             htmlFor="post-image"
@@ -734,7 +737,7 @@ const CreatePrivateHoot = () => {
                                             onClick={closeOnDemand}
                                         >
                                            <SoapboxTooltip title="upload image" placement="right">
-                                      <img src={imageupload} style={{cursor:'pointer'}}  width="35px" />
+                                      <img   className="emoji-hover" src={imageupload} style={{cursor:'pointer'}}  width="35px" />
                                 </SoapboxTooltip>
                                         </label>
                                         <input
@@ -753,7 +756,7 @@ const CreatePrivateHoot = () => {
                                             onClick={closeOnDemand}
                                         >
                                           <SoapboxTooltip title="upload video" placement="right">
-                                      <img src={videoupload} style={{cursor:'pointer'}}  width="35px" />
+                                      <img   className="emoji-hover" src={videoupload} style={{cursor:'pointer'}}  width="35px" />
                                 </SoapboxTooltip>
                                         </label>
                                         <input
@@ -772,7 +775,7 @@ const CreatePrivateHoot = () => {
                                             onClick={closeOnDemand}
                                         >
                                             <SoapboxTooltip title="upload audio" placement="right">
-                                      <img src={audioupload} style={{cursor:'pointer'}}  width="35px" />
+                                      <img   className="emoji-hover" src={audioupload} style={{cursor:'pointer'}}  width="35px" />
                                 </SoapboxTooltip>
                                         </label>
                                         <input
@@ -794,7 +797,7 @@ const CreatePrivateHoot = () => {
                                                 {defaultEmoji}
                                             </span> */}
                                               <SoapboxTooltip title="Emoji" placement="right">
-                                      <img src={emojiupload} style={{cursor:'pointer'}}  width="35px" />
+                                      <img   className="emoji-hover" src={emojiupload} style={{cursor:'pointer'}}  width="35px" />
                                 </SoapboxTooltip>
                                         </div>
 
@@ -819,12 +822,55 @@ const CreatePrivateHoot = () => {
                                             </div>
                                         </SoapboxTooltip> */}
                                          <SoapboxTooltip title="Insert Link" placement="right">
-                                      <img src={addlink} style={{cursor:'pointer'}}  onClick={() => { setLinkModalOpen(true) }} width="35px" />
+                                      <img   className="emoji-hover" src={addlink} style={{cursor:'pointer'}}  onClick={() => { setLinkModalOpen(true) }} width="35px" />
                                 </SoapboxTooltip>
 
                             </div>
                             : null
                         }
+                          <div className="btn-post my-2" style={{backgroundColor:'whitesmoke',display:'flex',flexDirection:'column',justifyContent:'space-evenly',border:'2px dashed #8249A0',paddingLeft:'5px'}}>
+                                    {/* <Button
+                                        variant="primary mx-1"
+                                        className="btn-create-hoot"
+                                        onClick={upload}
+                                        disabled={!ReactPlayer.canPlay(link) && file.length === 0}
+                                    >
+                                        Hoot
+                                    </Button>{' '} */}
+                                    
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={privateCheck}
+                                    // onChange={makePrivate}
+                                    disabled
+                                />
+                                <span>Private{" "}</span>
+                                <small>
+                                    {userData.privateChannel === 0 ? "(Requires Private Club, Please go to Profile and add Private Club)" : null}
+                                </small>
+                            </div>
+                            <SoapboxTooltip title="Hoot's lifetime will be 7 days" placement="left">
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={ephemeralCheck}
+                                    onChange={makeEphemeral} />
+                                <span>
+                                    Ephemeral{" "}
+                                </span>
+                               
+                            </div>
+                            </SoapboxTooltip>
+                                      <SoapboxTooltip title="Hoot" placement="right">
+                                      <img src={hooticon} className="emoji-hover"
+                                       onClick={upload}
+                                       disabled={!ReactPlayer.canPlay(link) && file.length === 0}
+                                      style={{cursor:'pointer'}}  width="60px" style={{marginLeft:'40px'}} />
+                                </SoapboxTooltip>
+                                </div>
                     </div>
 
                     {extraFeatures ?
@@ -926,15 +972,26 @@ const CreatePrivateHoot = () => {
                             <textarea
                                 autoFocus
                                 maxLength="2200"
-                                className="textarea-style"
+                                className="textarea-style-private"
                                 placeholder="Share Your World. Hoot Hoot! (optional)"
                                 value={caption}
                                 onChange={(event) => {
                                     const value = event.target.value;
                                     setCaption(value);
                                 }}
-                            ></textarea>
-
+                            >
+                            </textarea>
+                            
+ {/* <h6 className={caption.length > 2120 && "text-danger"}>
+                                        {" "}
+                                        {caption.length}/2200
+                                    </h6> */}
+                                     <div className="caption-count-private">
+                                    <h6 className={caption.length > 2120 && "text-danger"}>
+                                        {" "}
+                                        {caption.length}/2200
+                                    </h6>
+                                </div>
                             {/* inserted links  */}
 
                             {/* {link &&
@@ -943,14 +1000,7 @@ const CreatePrivateHoot = () => {
                                 </div>
                             } */}
 
-                            {!showLinkPreview ?
-                                link ?
-                                    <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all", marginTop: "-0.5rem" }}>
-                                        <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
-                                    </div>
-                                    : null
-                                : null
-                            }
+                           
 
                             {/* <div style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>
                                 {formValues.map((link, index) => {
@@ -1018,43 +1068,54 @@ const CreatePrivateHoot = () => {
                                     </Fragment>
                                 }
 
-                                <div className="caption-count">
-                                    <h6 className={caption.length > 2120 && "text-danger"}>
-                                        {" "}
-                                        {caption.length}/2200
-                                    </h6>
-                                </div>
+                               
 
-                                <div className="btn-post my-2">
-                                    {/* <Button
-                                        variant="primary mx-1"
-                                        className="btn-create-hoot"
-                                        onClick={upload}
-                                        disabled={!ReactPlayer.canPlay(link) && file.length === 0}
-                                    >
-                                        Hoot
-                                    </Button>{' '} */}
+                                {/* <div className="btn-post my-2">
+                                   
+                                    
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={privateCheck}
+                                   
+                                    disabled
+                                />
+                                <span>Private{" "}</span>
+                                <small>
+                                    {userData.privateChannel === 0 ? "(Requires Private Club, Please go to Profile and add Private Club)" : null}
+                                </small>
+                            </div>
+                            <SoapboxTooltip title="Hoot's lifetime will be 7 days" placement="left">
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={ephemeralCheck}
+                                    onChange={makeEphemeral} />
+                                <span>
+                                    Ephemeral{" "}
+                                </span>
+                               
+                            </div>
+                            </SoapboxTooltip>
                                       <SoapboxTooltip title="Hoot" placement="right">
                                       <img src={hooticon} 
                                        onClick={upload}
                                        disabled={!ReactPlayer.canPlay(link) && file.length === 0}
-                                      style={{cursor:'pointer'}}  width="35px" />
+                                      style={{cursor:'pointer'}}  width="50px" />
                                 </SoapboxTooltip>
-                                </div>
+                                </div> */}
                             </div>
 
-                            {/* <LinkPreview
-                                    margin="0 0.5rem"
-                                    className="link-pr-sb"
-                                    url={link}
-                                /> */}
+                           
                             {showLinkPreview ?
                                 link.endsWith('.mp4') || link.endsWith('.mkv') || link.endsWith('.mov') || link.endsWith('.ogv') || link.endsWith('webm') || link.endsWith('.mpg')
                                     ?
                                     <video
                                         muted controls
                                         disablePictureInPicture
-                                        className="hoot-vdo"
+                                        className="hoot-vdo-private"
                                         style={{ width: "none" }}
                                         controlsList="nodownload"
                                         onDragStart={(e) => e.preventDefault()}
@@ -1070,7 +1131,7 @@ const CreatePrivateHoot = () => {
                                         <video
                                             muted controls
                                             poster={src ? src : `${BaseURL}/profile-pictures/${userData.profilePic}`}
-                                            className="hoot-vdo"
+                                            className="hoot-vdo-private"
                                             style={{ width: "auto" }}
                                             controlsList="nodownload"
                                             onDragStart={(e) => e.preventDefault()}
@@ -1082,13 +1143,13 @@ const CreatePrivateHoot = () => {
                                         </video>
                                         :
                                         ReactPlayer.canPlay(link) &&
-                                        <div className='player-wrapper'>
+                                        <div className='player-wrapper-private'>
                                             <ReactPlayer
                                                 url={link}
                                                 className='react-player'
                                                 controls="true"
-                                                width='97%'
-                                                height='100%'
+                                                width='473px'
+                                                height='252px'
                                             />
                                         </div>
                                 : null
@@ -1105,7 +1166,7 @@ const CreatePrivateHoot = () => {
 
                            <div style={{marginTop:'-20px',display:'flex',flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}}>
                          
-
+{/* 
                             <div className="ephemeral">
                                 <input
                                     type="checkbox"
@@ -1129,7 +1190,7 @@ const CreatePrivateHoot = () => {
                                     Ephemeral{" "}
                                 </span>
                                 <small>(Hoot's lifetime will be 7 days)</small>
-                            </div>
+                            </div> */}
                            </div>
 
                             {file.length !== 0 &&
@@ -1168,7 +1229,6 @@ const CreatePrivateHoot = () => {
                         </div>
                     </div>
                 </div>
-            }
 
             <Helmet>
                 {/* General tags */}
