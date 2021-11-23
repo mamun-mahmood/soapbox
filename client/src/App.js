@@ -38,6 +38,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CommentsPanel from './pages/CommentsPanel/CommentsPanel';
 import AudioHall from './components/VideoAudioCall/AudioHall';
 import ReceptionAudio from './components/VideoAudioCall/audioReception';
+import StripePage from './components/Stripe/StripePage';
 
 function App() {
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
@@ -159,6 +160,10 @@ function App() {
 
         <Route path="/:fakeKey/private/Club/:username/:randomKey">
           <ProtectedRoute page={PrivateChannelsPage} />
+          {/* <PrivateChannelsPage /> */}
+        </Route>
+        <Route path="/:fakeKey/Payments/:randomKey">
+          <ProtectedRoute page={StripePage} />
           {/* <PrivateChannelsPage /> */}
         </Route>
 

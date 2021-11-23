@@ -34,6 +34,7 @@ import live from "../../assets/banner-3.jfif";
 import "./privateChannels.css";
 // import toast from "react-hot-toast";
 import { toast } from 'react-toastify';
+import SubscribedUser from '../SubscribedUser';
 import { IoRecording } from "react-icons/io5";
 import { BiVideoRecording } from "react-icons/bi";
 import { Call, Event, LiveTvRounded, VideoCall } from "@material-ui/icons";
@@ -66,6 +67,10 @@ import filechat from "../../assets/filechat.png";
 import emojiIcon from "../../assets/emoji.png";
 import privatehooticon from "../../assets/private-hoot.png";
 import xmgwallet from "../../assets/xmgwallet.png";
+import StripePage from "../Stripe/StripePage";
+import { loadStripe } from "@stripe/stripe-js";
+import { useStripe } from "@stripe/react-stripe-js";
+const stripe = loadStripe('pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz');
 
 const PrivateChannels = () => {
     const hallId = uuidv4()
@@ -107,17 +112,19 @@ const PrivateChannels = () => {
     const [showRequest, setShowRequest] = useState(false)
     const [showSubscribers, setShowSubscribers] = useState(false)
     const [showNotification, setShowNotification] = useState(false)
-
+    // const {retrievePaymentIntent, confirmPayment} = useStripe()
 
     const [showPricingSetting, setShowPricingSetting] = useState(false)
     const { username } = useParams();
-
+  
     const BaseURL = process.env.REACT_APP_API_URL;
 
     const LIMIT = 4;
 
     const history = useHistory();
     const [userInfo, setUserInfo] = useState([]);
+    const [subscribedMembers, setSubscribedMembers] = useState([]);
+    
     const [likes, setLikes] = useState(0);
     const [views, setViews] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -333,6 +340,7 @@ const PrivateChannels = () => {
         const getUserData = async () => {
             await axios.get(`${BaseURL}/user/${username}`).then((response) => {
                 setUserInfo(response.data);
+              
                 console.log("dky");
                 axios.get(`${BaseURL}/upload/user/${username}`)
                     .then((response) => {
@@ -352,9 +360,23 @@ const PrivateChannels = () => {
                             setRequestMessagePrice(res.data[0].personalMessage);
                             setSubscribePrice(res.data[0].subscription);
                             setVerifiedAutographPrice(res.data[0].verifiedAutographPrice)
+                            const params = new URLSearchParams(window.location.search) // id=123
+                            let paymentIntent = params.get('payment_intent') // 123 
+                           let redirect_status=params.get('redirect_status')
+                           let payment_intent_client_secret=params.get('payment_intent_client_secret')
+                            if (!paymentIntent) {
+                                // Stripe.js has not yet loaded.
+                                // Make sure to disable form submission until Stripe.js has loaded.
+                                return;
+                              }else if(paymentIntent&&payment_intent_client_secret&&redirect_status=="succeeded"){
+                               
+                                // addMembershipInDb(username,subscribePrice)
+                                addMembershipInDb(username,res.data[0].subscription,payment_intent_client_secret,"",0)
+                              }
 
                         })
                     })
+                   
             });
             setLoading(false);
         };
@@ -390,6 +412,11 @@ const PrivateChannels = () => {
         
     }, []);
 
+
+    useEffect(()=>{
+    
+    },[])
+    
     const getAllOnDemandMedia = async (media) => {
         setMedia(media);
         axios.get(`${BaseURL}/upload/user/private/onDemandMedia/p/${username}?page=1&limit=${LIMIT}&media=${media}`)
@@ -414,6 +441,7 @@ const PrivateChannels = () => {
             setSubscribe(true);
             document.getElementById('chatRoomopen').click()
         })
+       
     }
 
     useEffect(() => {
@@ -575,11 +603,16 @@ const PrivateChannels = () => {
 
     }
 
-    const addMembershipInDb = (username) => {
+    const addMembershipInDb = (username,subscribePrice,client_id,invoice,communityClub) => {
+
         if(!subscribe){ axios.post(`${BaseURL}/user/membership`, {
+          
             owner: username,
             member: userInformation.username,
-            price: subscribePrice
+            price: subscribePrice,
+            client_id:client_id,
+            invoice:invoice,
+            communityClub:communityClub
 
         }).then((res) => {
           
@@ -621,7 +654,8 @@ const PrivateChannels = () => {
                    
                     console.log(res.data.status, typeof (res.data.status), "sky xmg")
                     if (res.data.status == "1") {
-                        addMembershipInDb(username,subscribePrice)
+                      
+                        addMembershipInDb(username,subscribePrice,"",res.data.message[0].invoice_id,0)
                     }
                 })
                 .catch(err => console.log(err))
@@ -712,6 +746,61 @@ const PrivateChannels = () => {
         //     error: 'Please try again',
         // });
     }
+
+// const getThisUserData=(username)=>{
+//     axios.get(`${BaseURL}/user/${username}`).then((res) => {
+//        return res.data[0]
+// })
+// .catch(err => { console.log(err) })
+// }
+
+    const getAllSubscribedMembers=()=>{
+axios.post(`${BaseURL}/user/getAllMember`,{
+    owner:username
+
+}).then((res)=>{
+    setSubscribedMembers(res.data)
+}).catch((err)=>console.log(err))
+    }
+
+    const getIntent=()=>{
+        axios.post(`http://localhost:3001/Payments/checkout`,{
+            data:{amount:subscribePrice,currency:"usd"}
+        })
+        .then((res)=>{
+           return(res.data.client_secret)
+        
+        })
+        .catch(err=>console.log(err))
+    }
+    useEffect(() => {
+      getAllSubscribedMembers()  
+    }, [])
+
+//    useEffect(() => {
+   
+//     let clientSecret ="pi_3JytnwL1MA97pYvH1vTUJhgu_secret_b5a40SDcurxmKiyEdNsmiBRo0"
+//     //     const {paymentIntent} =  await stripe.retrievePaymentIntent(client_secret);
+//     //     if (paymentIntent && paymentIntent.status === 'succeeded') {
+//     //       // Handle successful payment here
+//     //       alert("success")
+//     //     } else {
+//     //       // Handle unsuccessful, processing, or canceled payments and API errors here
+//     //     }
+//     //   })();
+
+//       stripe.confirmCardPayment(clientSecret).then(function(response) {
+//         if (response.error) {
+//           // Handle error here
+//         } else if (response.paymentIntent && response.paymentIntent.status === 'succeeded') {
+//           // Handle successful payment here
+//           alert('sucesss')
+//         }
+//       });
+//    }, [stripe])
+
+
+    
     return (
         <Fragment>
             <div className="private-channels" style={{ userSelect: "none" }}>
@@ -1597,9 +1686,9 @@ Well we have a number of ways that rules are enforced and we take it seriously. 
                           </div>:null}
                             {oneOnOnecall ?
                             <div className="slide-container">
-                            <div id="slideOOC" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                            <div id="slideOOC" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                            
-<FaWindowClose style={{cursor:'pointer',position:'relative',left:'200px',color:'red',top:'-5px'}} onClick={()=>{
+<FaWindowClose  style={{cursor:'pointer',position:'absolute',right:'0px',color:'red',top:'0px'}} className="FaWindowClose" onClick={()=>{
 document.getElementById('slideOOC').style.transition='2sec';
 document.getElementById('slideOOC').style.right='-100vw';
                           
@@ -1608,9 +1697,22 @@ setShowSubscribeButton(false)
 
 }, 1000)
 }} />
-                                <img src={oneonone} width="400px" />
+                              <div>  <img src={oneonone} width="400px" />
+                              <p style={{maxWidth:'390px',lineHeight:'25px'}}>
+
+MegaHoot Soapbox recommends that members use the XMG Payment Portal to purchase Virtual 
+Experiences and digital items in the Fortis Marketplace. This is the one way that we can 
+fully protect all Members and Club Owners from fraud. XMG Coins can be purchased from your XMG Wallet at www.megahoot.org. 
+If you do not have one it's very simple to create your XMG Wallet.
+</p>
+<p style={{maxWidth:'390px',lineHeight:'25px'}}>
+Alternatively we do give the option for members to use their
+credit card via our credit 
+card processing partners Stripe for convenience. 
+</p>
+                            </div>
                                 <Form className="login-form mx-auto p-4 pb-0">
-                                    <h5 className="text-center mb-1 signup-head">Request 1 on 1 call</h5>
+                                    <p className="text-center mb-1 signup-head" style={{fontSize:'1rem'}}>Request 1 on 1 call</p>
                                     {/* <Form.Label className="text-color-auth">This Message is for</Form.Label> */}
                                     {/* <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
                 <Form.Group className="mb-1" controlId="formBasicText" >
@@ -1677,8 +1779,8 @@ setShowSubscribeButton(false)
                             {showSubscribeButton ?
                                 <div className="slide-container">
                                    
-                                <div id="slideSSB" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
-                                <FaWindowClose style={{cursor:'pointer',position:'relative',left:'200px',color:'red',top:'-5px'}} onClick={()=>{
+                                <div id="slideSSB" style={{display: 'flex', flexDirection:subscribe?"column":'row', justifyContent: 'center', alignItems:subscribe?"center":'flex-start', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem'}}>
+                                <FaWindowClose style={{cursor:'pointer',position:'absolute',right:'5px',color:'red',top:'5px'}} onClick={()=>{
 document.getElementById('slideSSB').style.transition='2sec';
 document.getElementById('slideSSB').style.right='-100vw';
                           
@@ -1687,22 +1789,40 @@ setShowSubscribeButton(false)
 
 }, 1000)
 }} />
-                                    <img src={groupcall} width="400px" />
-                                    <Form className="login-form mx-auto p-4 pb-0" onSubmit={(e) => e.preventDefault()}>
+                                   <div> <img src={groupcall} width="400px" />
+                                   {!subscribe?<div>
 
-                                        <h5 className="text-center mb-1 signup-head">
+                                    <p style={{maxWidth:'390px',lineHeight:'25px'}}>
+
+                                    MegaHoot Soapbox recommends that members use the XMG Payment Portal to purchase Virtual 
+                                    Experiences and digital items in the Fortis Marketplace. This is the one way that we can 
+                                    fully protect all Members and Club Owners from fraud. XMG Coins can be purchased from your XMG Wallet at www.megahoot.org. 
+                                    If you do not have one it's very simple to create your XMG Wallet.
+</p>
+<p style={{maxWidth:'390px',lineHeight:'25px'}}>
+Alternatively we do give the option for members to use their
+ credit card via our credit 
+card processing partners Stripe for convenience. 
+    </p>
+                                   </div>:null}
+                                 
+                                   </div>
+                                    {!subscribe?<Form className="login-form mx-auto p-4 pb-0" onSubmit={(e) => e.preventDefault()}>
+
+                                        <p className="text-center mb-1 signup-head">
                                             {!subscribe ? `Request Membership` : `Already a Member`}
-                                        </h5>
+                                        </p>
 
                                         {/* <p>Cost: {groupCallPrice} XMG</p> */}
-                                        <form method="POST" action="https://megahoot.org/mh_api_checkout.php">
+
+                                        <form method="POST" action="https://megahoot.org/mh_api_checkout.php" target="_blank">
                                             <input type="hidden" name="mid" value="SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U" />
                                             <input type="hidden" name="inv" value={currentInvoice} />
                                             <input type="hidden" name="subtotal" value={subscribePrice} />
                                             <input type="hidden" name="curr" value="XMG" />
 
                                             <input type="hidden" name="tp[]" value="1" />
-                                            <input type="hidden" name="name[]" value={userInformation.username} />
+                                            <input type="hidden" name="name[]" value={`${userInfo[0].name}'s Club Membership`} />
                                             <input type="hidden" name="amount[]" value={subscribePrice} />
                                             <input type="hidden" name="q[]" value="1" />
 
@@ -1722,7 +1842,27 @@ setShowSubscribeButton(false)
                                                 }}
                                             />
                                         </form>
-                                        <button
+                                       
+                                       {userInfo[0].communityClub==1?<button
+                                            onClick={() => {
+                                                addMembershipInDb(username,0,"","",1)
+                                                
+
+
+
+
+                                            }}
+                                            className="d-grid col-12 btn-main login-form-button"
+                                            variant="primary"
+                                           
+
+
+                                        >
+                                            {!subscribe ? `Activate Membership ` : `Already a Member`}
+                                        </button>
+                                       
+                                       :<div>
+                                            <button
                                             onClick={() => {
                                                 dataUploaderForOrder()
 
@@ -1736,8 +1876,9 @@ setShowSubscribeButton(false)
 
 
                                         >
-                                            {!subscribe ? `Get Membership Now for ${subscribePrice} XMG` : `Already a Member`}
+                                            {!subscribe ? `Get Membership Now for ${subscribePrice} USD/Month` : `Already a Member`}
                                         </button>
+                                       
                                         <br></br>
                                         <button
                                             onClick={() => {
@@ -1755,16 +1896,49 @@ setShowSubscribeButton(false)
                                         >
                                             {!subscribe ? `Activate Services If Paid Already` : `Already a Member`}
                                         </button>
+                                        <p style={{textAlign:'center'}}>Or</p>
+                                        <button 
+                                         onClick={() => {
+        
+                                            history.push({
+                                              pathname: `/${uuidv4()}/Payments/${uuidv4()}`,
+                                              state: {
+                                                amount:subscribePrice*100,
+                                                currency:"usd",
+                                                member:userInformation.username,
+                                                owner:username,
+                                                returnUrl:`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`,
+                                              
+
+                                              },
+                                            });
+                                          }}
+
+                                          className="d-grid col-12 btn-main login-form-button"
+                                          variant="primary"
+                                        >Pay via Card</button>
+                                           </div>}
+                                       
+
+                                        {/* <StripePage storeDbData={{owner:username,
+            member:userInformation.username,
+            price:subscribePrice}} data={{amount:subscribePrice*100,currency:"usd"}} returnUrl={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`} /> */}
+                          
 
 
-                                    </Form>     {/* <div className="btns"> <button>Request</button></div> */}
+
+                                    </Form>:<p className="text-center mb-1 signup-head">
+                                            {!subscribe ? `Request Membership` : `Already a Member`}
+                                        </p>}
+                                    {/* <div className="btns"> <button>Request</button></div> */}
                                 </div></div>
                                 : null}
+
                             {groupCall ? 
                             <div className="slide-container">
-                            <div id="slidegC" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                            <div id="slidegC" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                          
-                            <FaWindowClose style={{cursor:'pointer',position:'relative',left:'200px',color:'red',top:'-5px'}} onClick={()=>{
+                            <FaWindowClose style={{cursor:'pointer',position:'absolute',right:'0px',color:'red',top:'0px'}} className="FaWindowClose" onClick={()=>{
 document.getElementById('slidegC').style.transition='2sec';
 document.getElementById('slidegC').style.right='-100vw';
                           
@@ -1774,10 +1948,22 @@ setShowSubscribeButton(false)
 }, 1000)
 }} />
                              
-                                <img src={groupcall} width="400px" />
+                               <div> <img src={groupcall} width="400px" />
+                                <p style={{maxWidth:'390px',lineHeight:'25px'}}>
+
+MegaHoot Soapbox recommends that members use the XMG Payment Portal to purchase Virtual 
+Experiences and digital items in the Fortis Marketplace. This is the one way that we can 
+fully protect all Members and Club Owners from fraud. XMG Coins can be purchased from your XMG Wallet at www.megahoot.org. 
+If you do not have one it's very simple to create your XMG Wallet.
+</p>
+<p style={{maxWidth:'390px',lineHeight:'25px'}}>
+Alternatively we do give the option for members to use their
+credit card via our credit 
+card processing partners Stripe for convenience. 
+</p></div>
                                 <Form className="login-form mx-auto p-4 pb-0">
 
-                                    <h5 className="text-center mb-1 signup-head">Request Group call</h5>
+                                    <p className="text-center mb-1 signup-head" style={{fontSize:'1rem'}}>Request Group call</p>
 
                                     {/* <p>Cost: {groupCallPrice} XMG</p> */}
                                     <button
@@ -1795,7 +1981,7 @@ setShowSubscribeButton(false)
 
                             {requestMessage ?
                              <div className="slide-container">
-                            <div id="slideRM" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                            <div id="slideRM" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 {/* <h5>Request Personal Message</h5>
                                 
                                 <img src={personalmessage} width="400px" />
@@ -1804,7 +1990,7 @@ setShowSubscribeButton(false)
                                 {/* <div className="btns"> <button>Request</button></div> */}
 
                                 
-                            <FaWindowClose style={{cursor:'pointer',position:'relative',left:'200px',color:'red',top:'-5px'}} onClick={()=>{
+                            <FaWindowClose style={{cursor:'pointer',position:'absolute',right:'0px',color:'red',top:'0px'}} className="FaWindowClose" onClick={()=>{
 document.getElementById('slideRM').style.transition='2sec';
 document.getElementById('slideRM').style.right='-100vw';
                           
@@ -1813,9 +1999,23 @@ setShowSubscribeButton(false)
 
 }, 1000)
 }} />
+<div>
                                 <img src={personalmessage} width="400px" />
+                                <p style={{maxWidth:'390px',lineHeight:'25px'}}>
+
+MegaHoot Soapbox recommends that members use the XMG Payment Portal to purchase Virtual 
+Experiences and digital items in the Fortis Marketplace. This is the one way that we can 
+fully protect all Members and Club Owners from fraud. XMG Coins can be purchased from your XMG Wallet at www.megahoot.org. 
+If you do not have one it's very simple to create your XMG Wallet.
+</p>
+<p style={{maxWidth:'390px',lineHeight:'25px'}}>
+Alternatively we do give the option for members to use their
+credit card via our credit 
+card processing partners Stripe for convenience. 
+</p>
+                                </div>
                                 <Form className="login-form mx-auto p-4 pb-0">
-                                    <h5 className="text-center mb-1 signup-head">Request Personal Message</h5>
+                                    <p className="text-center mb-1 signup-head" style={{fontSize:'1rem'}}>Request Personal Message</p>
 
                                     {/* <p>Cost: {groupCallPrice} XMG</p> */}
                                     <button
@@ -1832,12 +2032,12 @@ setShowSubscribeButton(false)
 
                             {verifiedAutograph ?
                              <div className="slide-container">
-                            <div id="slideVA" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
+                            <div id="slideVA" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start', backgroundColor: '#DCD5FA', padding: '1rem', margin: '1rem' }}>
                                 {/* <h5>Verified Autograph</h5>
                                 <p>Cost: {verifiedAutographPrice} XMG</p>
                                 <div className="btns"> <button>Request</button></div> */}
 
-<FaWindowClose style={{cursor:'pointer',position:'relative',left:'200px',color:'red',top:'-5px'}} onClick={()=>{
+<FaWindowClose style={{cursor:'pointer',position:'absolute',right:'0px',color:'red',top:'0px'}} className="FaWindowClose" onClick={()=>{
 document.getElementById('slideVA').style.transition='2sec';
 document.getElementById('slideVA').style.right='-100vw';
                           
@@ -1846,10 +2046,25 @@ setShowSubscribeButton(false)
 
 }, 1000)
 }} />
+                            <div>
                                 <img src={groupcall} width="400px" />
+                                <p style={{maxWidth:'390px',lineHeight:'25px'}}>
+
+MegaHoot Soapbox recommends that members use the XMG Payment Portal to purchase Virtual 
+Experiences and digital items in the Fortis Marketplace. This is the one way that we can 
+fully protect all Members and Club Owners from fraud. XMG Coins can be purchased from your XMG Wallet at www.megahoot.org. 
+If you do not have one it's very simple to create your XMG Wallet.
+</p>
+<p style={{maxWidth:'390px',lineHeight:'25px'}}>
+Alternatively we do give the option for members to use their
+credit card via our credit 
+card processing partners Stripe for convenience. 
+</p>
+                                </div>
+
                                 <Form className="login-form mx-auto p-4 pb-0">
 
-                                    <h5 className="text-center mb-1 signup-head">Request Verified Autograph</h5>
+                                    <h5 className="text-center mb-1 signup-head" style={{fontSize:'1rem'}}>Request Verified Autograph</h5>
 
                                     {/* <p>Cost: {groupCallPrice} XMG</p> */}
                                     <button
@@ -2472,8 +2687,8 @@ setShowPricingSetting(false)
                               <div style={{backgroundColor:'#8249A0',padding:'5px',width:'600px',display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',color:'white'}}>
 
                              
-                                <h5>Memberships</h5>
-                                <FaWindowClose style={{cursor:'pointer'}} onClick={()=>{
+                                <h5>Memberships </h5>
+                                <FaWindowClose className="FaWindowClose" style={{cursor:'pointer'}} onClick={()=>{
  document.getElementById('slideM').style.transition='2sec';
  document.getElementById('slideM').style.right='-100vw';
                                                           
@@ -2484,8 +2699,15 @@ setTimeout(() => {
                                 }} />
                               </div>
                             
-                                {subscribePrice} XMG
-                                <p>No Members</p>
+                               
+                               
+                                <div style={{maxHeight:'400px',padding:'1rem',overflowY:'auto'}}>{subscribedMembers.map((user,index)=><div key={user.id} className="messageBox" style={{minWidth:'250px',padding:'1px',margin:'8px'}}>
+                                 <SubscribedUser username={user.member}  />
+                                 </div>)}
+                             
+                             </div>
+
+                                
                             </div></div> : null}
                             {showCreateHoot?<div className="slide-container">
                               <div id="slideH">
