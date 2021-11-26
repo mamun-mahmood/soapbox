@@ -9,7 +9,7 @@ import {
   } from "react-router-dom";
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz');
+const stripePromise = loadStripe('pk_live_51IoEG4L1MA97pYvHAOJ70frl3exWX7dGAWBcjpMHXHJWHA0gadnu5TyjrCg11EabBsawrbcSydyj1ytoxXuGLBud00tkY6vWrc');
 const BaseURL = process.env.REACT_APP_API_URL;
 function StripePage(props) {
   let location = useLocation();
@@ -40,7 +40,7 @@ const [clientSecret,setClientSecret]=useState("")
 
   return (
    clientSecret? <Elements stripe={stripePromise} options={{clientSecret:clientSecret}} owner={location.state.owner} >
-   <CheckoutForm returnUrl={location.state.returnUrl} owner={location.state.owner} />
+   <CheckoutForm returnUrl={location.state.returnUrl} owner={location.state.owner} amount={amount} />
  </Elements>:<div className="loading">
                     <BeatLoader color={"#8249A0"} size={20} />
                 </div>

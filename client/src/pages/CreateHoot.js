@@ -409,7 +409,7 @@ const CreateHoot = () => {
                                         <div className="modal-overlay"></div>
                                         <ClickAwayListener onClickAway={() => { setLinkModalOpen(false) }}>
                                             <div className="link-modal">
-                                                <h5>Insert link(s)</h5>
+                                                <h5>Add your Youtube,Podcast,Media Links</h5>
 
                                                 <input autoFocus type="text" value={link} onChange={(event) => { setLink(event.target.value) }} />
 
