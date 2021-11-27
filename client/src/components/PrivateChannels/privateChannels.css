@@ -391,7 +391,7 @@
   right: -100vw;
   min-width: 450px;
   max-width: 450px;
-  background-color: #8149a018;
+  background-color: #D6D2EB;
   transition: 1s;
   border: 2px solid #e1b8f8be;
 
@@ -401,7 +401,7 @@
   min-height: 75vh;
   overflow-y: auto;
   border-radius: 10px;
-  z-index: 5;
+  z-index: 50;
 }
 
 .privateChat-club .chatarea{
@@ -443,7 +443,7 @@ padding: 33px;
   border-radius: 10px;
  
 
-  z-index: 8;
+  z-index: 81;
 }
 .community-club {
   position: absolute;
@@ -641,4 +641,54 @@ overflow-wrap: break-word;
   left: 30;
 
   transition: 1s;
+}
+
+.showBreakoffForm{
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top:30%;
+  right:-100vw;
+  min-width: 350px;
+  max-width: 350px;
+  min-height: 200px;
+  height: 200px;
+  background-color: #08080869;
+  transition: 1s;
+  
+ 
+  padding-top: 0px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  overflow-y: auto;
+  border-radius: 10px;
+ 
+
+  z-index: 80;
+}
+
+.showBreakoffForm input{
+  width: 90%;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
+  font-size: 1rem;
+  border: none;
+
+}
+.showBreakoffForm button{
+  top: 120px;
+  width: 120px;
+  right: 50px !important;
+}
+.showBreakoffForm h5{
+  background-color: #652C90;
+  width: 100%;
+  color: white;
+  padding: 5px;
+  font-weight: 400;
+  font-size: 1rem;
+  text-align: center;
 }

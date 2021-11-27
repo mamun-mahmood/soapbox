@@ -54,6 +54,8 @@ import { v4 as uuidv4 } from "uuid";
 import oneonone from "../../assets/oneonone.png";
 import groupcall from "../../assets/groupcall.png";
 import personalmessage from "../../assets/personalmessage.png";
+import membershipGraphic from "../../assets/membershipGraphic.png";
+
 import { Form } from "react-bootstrap";
 import ClickAwayListener from "react-click-away-listener";
 import Autolinker from "autolinker";
@@ -118,6 +120,7 @@ const PrivateChannels = () => {
   const [showCreateHoot, setShowCreateHoot] = useState(false);
   const [privateChat, setPrivateChat] = useState(false);
   const [privateChatList, setPrivateChatList] = useState(false);
+  const [showBreakoffForm, setShowBreakoffForm] = useState(false);
   
   const [VideoAvailable, setVideoAvailable] = useState(false);
   const [onDemandMedia, setOnDemandMedia] = useState(false);
@@ -2020,7 +2023,31 @@ const PrivateChannels = () => {
                   {/* <button  style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}}>CLUB RULES</button> */}
                 
                   <SoapboxTooltip title={"Create Breakoff Chat"} placement="left">
-                  <span style={{display:'flex',justifyContent:'center',alignItems:'center',height:'22px',backgroundColor:'white',color:'purple',borderRadius:'5px'}}>
+                  <span style={{display:'flex',justifyContent:'center',alignItems:'center',height:'22px',backgroundColor:'white',color:'purple',borderRadius:'5px'}}
+                    onClick={()=>{
+                      
+                    if (showBreakoffForm) {
+                      document.getElementById("showBreakoffFormId").style.transition =
+                        "2s";
+                      document.getElementById("showBreakoffFormId").style.right = "-100vw";
+
+                      setTimeout(() => {
+                        setShowBreakoffForm(false);
+                      }, 1000);
+                    } else {
+                      setShowBreakoffForm(true);
+
+                      setTimeout(() => {
+                        if (document.getElementById("showBreakoffFormId")) {
+                          document.getElementById("showBreakoffFormId").style.transition =
+                            "1s";
+                            document.getElementById("showBreakoffFormId").style.right =
+                            "30%";
+                        }
+                      }, 1);
+                    }
+                    }}
+                  >
                  
                       <FiPlus />
                   
@@ -2226,6 +2253,14 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
+
+              {showBreakoffForm?<div className="showBreakoffForm" id="showBreakoffFormId">
+                <h5>Enter The Topic for Breakoff Chat</h5>
+                <div style={{padding:'33px',position:'relative',width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}> <input placeholder="Enter Topic"  />
+                <button className="d-grid col-12 btn-main login-form-button" style={{position:'absolute',right:'0'}}>Create Now</button>
+                </div>
+               
+              </div>:null}
               {oneOnOnecall ? (
                 <div className="slide-container">
                   <div
@@ -2392,7 +2427,7 @@ const PrivateChannels = () => {
                     />
                     <div>
                       {" "}
-                      <img src={groupcall} width="400px" />
+                      <img src={membershipGraphic} width="400px" />
                       {!subscribe ? (
                         <div>
                           <p
@@ -2400,6 +2435,7 @@ const PrivateChannels = () => {
                               maxWidth: "390px",
                               lineHeight: "25px",
                               fontSize: "smaller",
+                             
                             }}
                           >
                             MegaHoot Soapbox recommends that members use the XMG
@@ -3988,7 +4024,32 @@ const PrivateChannels = () => {
                     </SoapboxTooltip>
                   </span>
                   <SoapboxTooltip title={"Create Breakoff Chat"} placement="left">
-                  <span style={{display:'flex',justifyContent:'center',alignItems:'center',height:'22px',backgroundColor:'white',color:'purple',borderRadius:'5px'}}>
+                  <span style={{display:'flex',justifyContent:'center',alignItems:'center',height:'22px',backgroundColor:'white',color:'purple',borderRadius:'5px'}}
+                  onClick={()=>{
+                  
+                    if (showBreakoffForm) {
+                      document.getElementById("showBreakoffFormId").style.transition =
+                        "2s";
+                      document.getElementById("showBreakoffFormId").style.right = "-100vw";
+
+                      setTimeout(() => {
+                        setShowBreakoffForm(false);
+                      }, 1000);
+                    } else {
+                      setShowBreakoffForm(true);
+
+                      setTimeout(() => {
+                        if (document.getElementById("showBreakoffFormId")) {
+                          document.getElementById("showBreakoffFormId").style.transition =
+                            "1s";
+                            document.getElementById("showBreakoffFormId").style.right =
+                            "30%";
+                        }
+                      }, 1);
+                    }
+                  
+                  }}
+                  >
                  
                       <FiPlus />
                   
@@ -4359,6 +4420,15 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
+
+{showBreakoffForm?<div className="showBreakoffForm" id="showBreakoffFormId">
+<h5>Enter The Topic for Breakoff Chat</h5>
+
+<div style={{padding:'33px',width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}> <input placeholder="Enter Topic"  />
+<button className="d-grid col-12 btn-main login-form-button" style={{position:'absolute',right:'0'}}>Create Now</button>
+</div>
+  
+</div>:null}
 
               {showClubRules ? (
                 <div className="slide-container clubRulesText">
