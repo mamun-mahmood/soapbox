@@ -115,6 +115,8 @@ const PrivateChannels = () => {
   const [requestMessagePrice, setRequestMessagePrice] = useState(0);
   const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0);
   const [emojiPicker, setEmojiPicker] = useState(false);
+  const [emojiPickerPrivate, setEmojiPickerPrivate] = useState(false);
+  
   const [showFeed, setShowFeed] = useState(true);
   const [clubFloor, setClubFloor] = useState(true);
   const [showCreateHoot, setShowCreateHoot] = useState(false);
@@ -152,6 +154,7 @@ const PrivateChannels = () => {
   const [broadcastStream, setBroadcastStream] = useState(false);
   const [messageInboxValuePrivate, setMessageInboxValuePrivate] = useState("");
   const [messageInboxValue, setMessageInboxValue] = useState("");
+  const [breakOffInput, setBreakOffInput] = useState("");
   
   const [file, setFile] = useState([]);
   const [src, setSrc] = useState(null);
@@ -886,6 +889,32 @@ const PrivateChannels = () => {
   // .catch(err => { console.log(err) })
   // }
 
+  const createBreakoff=()=>{
+   
+   axios.post(`${BaseURL}/Upload/createBreakOff`,{
+    mainClub:username,
+    topic:breakOffInput,
+    createdBy:userInformation.username
+   })
+   .then((res)=>{
+     if(res.data.status==0){
+       toast.success(res.data.message)
+     }else{toast.success(res.data.message);
+    setBreakOffInput('');
+    document.getElementById("showBreakoffFormId").style.transition =
+    "2s";
+  document.getElementById("showBreakoffFormId").style.right = "-100vw";
+
+  setTimeout(() => {
+    setShowBreakoffForm(false);
+  }, 1000);
+    }
+   })
+   .catch((err)=>{
+     console.log(err)
+   })
+
+  }
   const getAllSubscribedMembers = () => {
     axios
       .post(`${BaseURL}/user/getAllMember`, {
@@ -2021,32 +2050,39 @@ const PrivateChannels = () => {
 
                   {/* <button  style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}}>INVITE</button> */}
                   {/* <button  style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}}>CLUB RULES</button> */}
-                
+             
                   <SoapboxTooltip title={"Create Breakoff Chat"} placement="left">
                   <span style={{display:'flex',justifyContent:'center',alignItems:'center',height:'22px',backgroundColor:'white',color:'purple',borderRadius:'5px'}}
-                    onClick={()=>{
-                      
-                    if (showBreakoffForm) {
-                      document.getElementById("showBreakoffFormId").style.transition =
-                        "2s";
-                      document.getElementById("showBreakoffFormId").style.right = "-100vw";
+                  onClick={()=>{
+                    if(userInfo[0].communityClub==1)
+  { 
+    if(subscribe || userInformation.username == username){
+      if (showBreakoffForm) {
+        document.getElementById("showBreakoffFormId").style.transition =
+          "2s";
+        document.getElementById("showBreakoffFormId").style.right = "-100vw";
 
-                      setTimeout(() => {
-                        setShowBreakoffForm(false);
-                      }, 1000);
-                    } else {
-                      setShowBreakoffForm(true);
+        setTimeout(() => {
+          setShowBreakoffForm(false);
+        }, 1000);
+      } else {
+        setShowBreakoffForm(true);
 
-                      setTimeout(() => {
-                        if (document.getElementById("showBreakoffFormId")) {
-                          document.getElementById("showBreakoffFormId").style.transition =
-                            "1s";
-                            document.getElementById("showBreakoffFormId").style.right =
-                            "30%";
-                        }
-                      }, 1);
-                    }
-                    }}
+        setTimeout(() => {
+          if (document.getElementById("showBreakoffFormId")) {
+            document.getElementById("showBreakoffFormId").style.transition =
+              "1s";
+              document.getElementById("showBreakoffFormId").style.right =
+              "30%";
+          }
+        }, 1);
+      }
+  }else{toast.success('Members Only Access')}
+  }else{
+                    toast.success('BreakOff Chat can be accessible only in Community Clubs')
+                  }
+                
+                  }}
                   >
                  
                       <FiPlus />
@@ -2054,6 +2090,8 @@ const PrivateChannels = () => {
                    
                     </span>
                     </SoapboxTooltip>
+                    
+                  
                   <span
                     id="chatRoomopen"
                     onClick={() => {
@@ -2255,9 +2293,20 @@ const PrivateChannels = () => {
               ) : null}
 
               {showBreakoffForm?<div className="showBreakoffForm" id="showBreakoffFormId">
-                <h5>Enter The Topic for Breakoff Chat</h5>
-                <div style={{padding:'33px',position:'relative',width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}> <input placeholder="Enter Topic"  />
-                <button className="d-grid col-12 btn-main login-form-button" style={{position:'absolute',right:'0'}}>Create Now</button>
+                <h5>Enter The Topic for BreakOff Chat</h5>
+                <div style={{padding:'33px',position:'relative',width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}> <input placeholder="Enter Topic" value={breakOffInput}  onChange={(e) => {
+                                setBreakOffInput(e.target.value);
+                              }}  />
+                <button className="d-grid col-12 btn-main login-form-button" style={{position:'absolute',right:'0'}} 
+                onClick={()=>{
+                  if(breakOffInput){createBreakoff()}else{
+                    toast.success(
+                     "Please Enter Topic for Breakoff chat"
+                   ); 
+                   }
+                  
+                }}
+                >Create Now</button>
                 </div>
                
               </div>:null}
@@ -3119,6 +3168,39 @@ const PrivateChannels = () => {
                                 </div>
                               ))
                             : null}
+
+{emojiPickerPrivate && (
+                              <ClickAwayListener
+                                onClickAway={() => {
+                                  setEmojiPickerPrivate(false);
+                                }}
+                              >
+                                <div>
+                                  <Picker
+                                    native
+                                    onEmojiClick={(event, emojiObject) => {
+                                      setMessageInboxValuePrivate(
+                                        messageInboxValuePrivate + emojiObject.emoji
+                                      );
+                                      // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                      //  // socket.emit('send',message);
+                                      // socket.emit('send', {
+                                      //     name: userFullName,
+                                      //     message: emojiObject.emoji,
+                                      //     profilePic: userProfilePic,
+                                      //     isEmoji: true
+                                      // });
+                                    }}
+                                    pickerStyle={{
+                                      position: "absolute",
+                                      bottom: "0px",
+                                      left: "0.2rem",
+                                      zIndex: "1111",
+                                    }}
+                                  />
+                                </div>
+                              </ClickAwayListener>
+                            )}
                         </div>
 
                         <div className="send">
@@ -3187,9 +3269,9 @@ const PrivateChannels = () => {
                               src={emojiIcon}
                               style={{ margin: "5px", cursor: "pointer" }}
                               data-tip="Emoji"
-                            //   onClick={() => {
-                            //     setEmojiPicker(!emojiPicker);
-                            //   }}
+                              onClick={() => {
+                                setEmojiPickerPrivate(!emojiPickerPrivate);
+                              }}
                               width="27px"
                             />
                             <input
@@ -4033,31 +4115,38 @@ const PrivateChannels = () => {
                       <img src={privatehooticon} width="30px" />
                     </SoapboxTooltip>
                   </span>
+                  
                   <SoapboxTooltip title={"Create Breakoff Chat"} placement="left">
                   <span style={{display:'flex',justifyContent:'center',alignItems:'center',height:'22px',backgroundColor:'white',color:'purple',borderRadius:'5px'}}
                   onClick={()=>{
-                  
-                    if (showBreakoffForm) {
-                      document.getElementById("showBreakoffFormId").style.transition =
-                        "2s";
-                      document.getElementById("showBreakoffFormId").style.right = "-100vw";
+                    if(userInfo[0].communityClub==1)
+  { 
+    if(subscribe || userInformation.username == username){
+      if (showBreakoffForm) {
+        document.getElementById("showBreakoffFormId").style.transition =
+          "2s";
+        document.getElementById("showBreakoffFormId").style.right = "-100vw";
 
-                      setTimeout(() => {
-                        setShowBreakoffForm(false);
-                      }, 1000);
-                    } else {
-                      setShowBreakoffForm(true);
+        setTimeout(() => {
+          setShowBreakoffForm(false);
+        }, 1000);
+      } else {
+        setShowBreakoffForm(true);
 
-                      setTimeout(() => {
-                        if (document.getElementById("showBreakoffFormId")) {
-                          document.getElementById("showBreakoffFormId").style.transition =
-                            "1s";
-                            document.getElementById("showBreakoffFormId").style.right =
-                            "30%";
-                        }
-                      }, 1);
-                    }
-                  
+        setTimeout(() => {
+          if (document.getElementById("showBreakoffFormId")) {
+            document.getElementById("showBreakoffFormId").style.transition =
+              "1s";
+              document.getElementById("showBreakoffFormId").style.right =
+              "30%";
+          }
+        }, 1);
+      }
+  }else{toast.success('Members Only Access')}
+  }else{
+                    toast.success('BreakOff Chat can be accessible only in Community Clubs')
+                  }
+                
                   }}
                   >
                  
@@ -4432,13 +4521,24 @@ const PrivateChannels = () => {
               ) : null}
 
 {showBreakoffForm?<div className="showBreakoffForm" id="showBreakoffFormId">
-<h5>Enter The Topic for Breakoff Chat</h5>
-
-<div style={{padding:'33px',width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}> <input placeholder="Enter Topic"  />
-<button className="d-grid col-12 btn-main login-form-button" style={{position:'absolute',right:'0'}}>Create Now</button>
-</div>
-  
-</div>:null}
+                <h5>Enter The Topic for BreakOff Chat</h5>
+                <div style={{padding:'33px',position:'relative',width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}> <input placeholder="Enter Topic" value={breakOffInput}  onChange={(e) => {
+                                setBreakOffInput(e.target.value);
+                              }}  />
+                <button className="d-grid col-12 btn-main login-form-button" style={{position:'absolute',right:'0'}} 
+                onClick={()=>{
+                  if(breakOffInput){createBreakoff()}else{
+                   toast.success(
+                    "Please Enter Topic for Breakoff chat"
+                  ); 
+                  }
+                  
+                  
+                }}
+                >Create Now</button>
+                </div>
+               
+              </div>:null}
 
               {showClubRules ? (
                 <div className="slide-container clubRulesText">
@@ -4839,6 +4939,39 @@ const PrivateChannels = () => {
                             </div>
                           ))
                         : null}
+
+{emojiPickerPrivate && (
+                              <ClickAwayListener
+                                onClickAway={() => {
+                                  setEmojiPickerPrivate(false);
+                                }}
+                              >
+                                <div>
+                                  <Picker
+                                    native
+                                    onEmojiClick={(event, emojiObject) => {
+                                      setMessageInboxValuePrivate(
+                                        messageInboxValuePrivate + emojiObject.emoji
+                                      );
+                                      // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                      //  // socket.emit('send',message);
+                                      // socket.emit('send', {
+                                      //     name: userFullName,
+                                      //     message: emojiObject.emoji,
+                                      //     profilePic: userProfilePic,
+                                      //     isEmoji: true
+                                      // });
+                                    }}
+                                    pickerStyle={{
+                                      position: "absolute",
+                                      bottom: "0px",
+                                      left: "0.2rem",
+                                      zIndex: "1111",
+                                    }}
+                                  />
+                                </div>
+                              </ClickAwayListener>
+                            )}
                     </div>
 
                     <div className="send">
@@ -4907,10 +5040,11 @@ const PrivateChannels = () => {
                           src={emojiIcon}
                           style={{ margin: "5px", cursor: "pointer" }}
                           data-tip="Emoji"
-                        //   onClick={() => {
-                        //     setEmojiPicker(!emojiPicker);
-                        //   }}
+                          onClick={() => {
+                            setEmojiPickerPrivate(!emojiPickerPrivate);
+                          }}
                           width="27px"
+
                         />
                         <input
                           type="text"
