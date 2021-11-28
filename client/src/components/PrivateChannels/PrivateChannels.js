@@ -2303,6 +2303,7 @@ const PrivateChannels = () => {
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
+                          textAlign:'justify'
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -2318,6 +2319,7 @@ const PrivateChannels = () => {
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
+                          textAlign:'justify'
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -2435,6 +2437,7 @@ const PrivateChannels = () => {
                               maxWidth: "390px",
                               lineHeight: "25px",
                               fontSize: "smaller",
+                              textAlign:'justify'
                              
                             }}
                           >
@@ -2452,6 +2455,7 @@ const PrivateChannels = () => {
                               maxWidth: "390px",
                               lineHeight: "25px",
                               fontSize: "smaller",
+                              textAlign:'justify'
                             }}
                           >
                             Alternatively we do give the option for members to
@@ -2649,6 +2653,7 @@ const PrivateChannels = () => {
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
+                          textAlign:'justify'
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -2664,6 +2669,7 @@ const PrivateChannels = () => {
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
+                          textAlign:'justify'
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -2742,6 +2748,7 @@ const PrivateChannels = () => {
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
+                          textAlign:'justify'
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -2757,6 +2764,7 @@ const PrivateChannels = () => {
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
+                          textAlign:'justify'
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -2831,6 +2839,7 @@ const PrivateChannels = () => {
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
+                          textAlign:'justify'
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -2846,6 +2855,7 @@ const PrivateChannels = () => {
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
+                          textAlign:'justify'
                         }}
                       >
                         Alternatively we do give the option for members to use

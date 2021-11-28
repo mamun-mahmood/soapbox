@@ -2,6 +2,9 @@
   padding-top: 4.5rem;
 }
 
+p{
+  text-align: justify !important;
+}
 .channel-banner img {
   /* position: fixed; */
   width: 100%;
@@ -692,3 +695,4 @@ overflow-wrap: break-word;
   font-size: 1rem;
   text-align: center;
 }
+
