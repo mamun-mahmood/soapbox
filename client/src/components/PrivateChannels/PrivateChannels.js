@@ -7,7 +7,9 @@ import InfiniteScrollLoader from "../Feed/InfiniteScrollLoader";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
 import { FaTumblr, IoSend, FaWindowClose } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
+import {BsTrash} from 'react-icons/bs'
 import { FcInvite, FcRules } from "react-icons/fc";
+
 import {
   FiTwitter,
   FiSearch,
@@ -96,7 +98,8 @@ const PrivateChannels = () => {
   const [userId, setUserId] = useState("");
   const [chatData, setChatData] = useState([]);
   const [chatDataPrivate, setChatDataPrivate] = useState([]);
-  
+  const [showIframe,setShowIframe] = useState(false);
+  const [iframeBox,setIframeBox]=useState(null);
   const [uploads, setUploads] = useState([]);
   const [onDemandUploads, setOnDemandUploads] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -356,7 +359,10 @@ const PrivateChannels = () => {
     
 
     socket.on("left", (name) => {
-      append(name, `${name} left the chat`);
+      if(userFullName!==name){
+         append(name, `${name} left the chat`);
+      }
+     
     });
   }, []);
 
@@ -642,6 +648,41 @@ const PrivateChannels = () => {
       }, 1);
     }
   };
+
+  const deletePrivateChatAll = (roomname)=>{
+    
+    if(window.confirm("Are you Sure,you want to delete all chats Permanently?")){
+      axios.post(`${BaseURL}/upload/deleteChatAll`,{
+        roomname:roomname
+      }).then((res)=>{
+        setChatData([])
+        toast.success(res.data.message)
+
+      }).catch(err=>console.log(err))
+     
+      
+     
+      
+    }
+  }
+
+  const deletePrivateChatDuo = (a,b)=>{
+    
+    if(window.confirm("Are you Sure,you want to delete all chats Permanently?")){
+      axios.post(`${BaseURL}/upload/deleteChatDuo`,{
+        from:a,
+        to:b
+      }).then((res)=>{
+        setChatDataPrivate([])
+        toast.success(res.data.message)
+
+      }).catch(err=>console.log(err))
+     
+      
+     
+      
+    }
+  }
 
   const callRequestUser = () => {
     setCallRequest(!callRequest);
@@ -1256,16 +1297,139 @@ const PrivateChannels = () => {
                                 Crypto Tools
                               </div>
                               <div className="control">
-                                <button style={{ minWidth: "208px" }}>
+                                <button style={{ minWidth: "208px" }} 
+                              
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://megahootvault.org/login/',title:'XMG Wallet'})
+                                   setShowIframe(true)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "250px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
                                   XMG Wallet
                                 </button>
-                                <button style={{ minWidth: "208px" }}>
+                                <button style={{ minWidth: "208px" }}
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({src:'https://pecunovus.org/login/',title:'Pecu Novus Wallet'})
+                                     setShowIframe(true)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "250px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                               >
                                   Pecu Novus Wallet
+                                  
                                 </button>
-                                <button style={{ minWidth: "208px" }}>
+                                <button style={{ minWidth: "208px" }}
+                               
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://megahootvault.org/login/',title:'MegaHoot Vault'})
+                                   setShowIframe(true)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "250px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
                                   MegaHoot Vault
                                 </button>
-                                <button style={{ minWidth: "208px" }}>
+                                <button style={{ minWidth: "208px" }}
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://www.megahootvault.com/',title:'Crypto Index'})
+                                   setShowIframe(true)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "250px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
                                   Crypto Index
                                 </button>
                               </div>
@@ -1386,16 +1550,139 @@ const PrivateChannels = () => {
                                 Crypto Tools
                               </div>
                               <div className="control">
-                                <button style={{ minWidth: "208px" }}>
+                                <button style={{ minWidth: "208px" }} 
+                              
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://megahootvault.org/login/',title:'XMG Wallet'})
+                                   setShowIframe(true)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "250px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
                                   XMG Wallet
                                 </button>
-                                <button style={{ minWidth: "208px" }}>
+                                <button style={{ minWidth: "208px" }}
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({src:'https://pecunovus.org/login/',title:'Pecu Novus Wallet'})
+                                     setShowIframe(true)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "250px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                               >
                                   Pecu Novus Wallet
+                                  
                                 </button>
-                                <button style={{ minWidth: "208px" }}>
+                                <button style={{ minWidth: "208px" }}
+                               
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://megahootvault.org/login/',title:'MegaHoot Vault'})
+                                   setShowIframe(true)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "250px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
                                   MegaHoot Vault
                                 </button>
-                                <button style={{ minWidth: "208px" }}>
+                                <button style={{ minWidth: "208px" }}
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://www.megahootvault.com/',title:'Crypto Index'})
+                                   setShowIframe(true)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "250px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
                                   Crypto Index
                                 </button>
                               </div>
@@ -2292,6 +2579,7 @@ const PrivateChannels = () => {
                 </div>
               ) : null}
 
+             
               {showBreakoffForm?<div className="showBreakoffForm" id="showBreakoffFormId">
                 <h5>Enter The Topic for BreakOff Chat</h5>
                 <div style={{padding:'33px',position:'relative',width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}> <input placeholder="Enter Topic" value={breakOffInput}  onChange={(e) => {
@@ -2436,6 +2724,51 @@ const PrivateChannels = () => {
                         Request Now for {oneOnOnecallPrice} XMG
                       </button>
                     </Form>
+                    {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
+                                <div className="btns"> <button>Request</button></div> */}
+                  </div>
+                </div>
+              ) : null}
+               {showIframe ? (
+                <div className="slide-container">
+                  <div
+                    id="slideIFM"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
+                      backgroundColor: "#DCD5FA",
+                      padding: "1rem",
+                      margin: "1rem",
+                      width:'60%',
+                      overflowY:'scroll',
+                      height:'600px',
+                      maxHeight:'500px'
+                    }}
+                  >
+                    <FaWindowClose
+                      style={{
+                        cursor: "pointer",
+                        position: "absolute",
+                        right: "0px",
+                        color: "red",
+                        top: "0px",
+                      }}
+                      className="FaWindowClose"
+                      onClick={() => {
+                        document.getElementById("slideIFM").style.transition =
+                          "2sec";
+                        document.getElementById("slideIFM").style.right =
+                          "-100vw";
+
+                        setTimeout(() => {
+                          setShowSubscribeButton(false);
+                        }, 1000);
+                      }}
+                    />
+                  <iframe src={iframeBox.src}
+                   title={iframeBox.title} width="100%" height="600"></iframe>
                     {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
                                 <div className="btns"> <button>Request</button></div> */}
                   </div>
@@ -4519,6 +4852,52 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
+              {showIframe ? (
+                <div className="slide-container">
+                  <div
+                    id="slideIFM"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
+                      backgroundColor: "#DCD5FA",
+                      padding: "1rem",
+                      margin: "1rem",
+                      width:'60%',
+                      height:'600px',
+                      maxHeight:'500px',
+                      overflowY:'scroll'
+                    
+                    }}
+                  >
+                    <FaWindowClose
+                      style={{
+                        cursor: "pointer",
+                        position: "absolute",
+                        right: "0px",
+                        color: "red",
+                        top: "0px",
+                      }}
+                      className="FaWindowClose"
+                      onClick={() => {
+                        document.getElementById("slideIFM").style.transition =
+                          "2sec";
+                        document.getElementById("slideIFM").style.right =
+                          "-100vw";
+
+                        setTimeout(() => {
+                          setShowSubscribeButton(false);
+                        }, 1000);
+                      }}
+                    />
+                  <iframe src={iframeBox.src}
+                   title={iframeBox.title} width="100%" height="600"></iframe>
+                    {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
+                                <div className="btns"> <button>Request</button></div> */}
+                  </div>
+                </div>
+              ) : null}
 
 {showBreakoffForm?<div className="showBreakoffForm" id="showBreakoffFormId">
                 <h5>Enter The Topic for BreakOff Chat</h5>
@@ -4714,6 +5093,8 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
+
+
               {showNotification ? (
                 <div
                   style={{
@@ -4834,8 +5215,24 @@ const PrivateChannels = () => {
                           {privateChatPerson.name}
                         </p>
                       </span>
-                      <span>
-                        Private Chat
+                      <span style={{display:'flex',alignItems:'center'}}>
+                      {userInfo[0].communityClub==1?null:<SoapboxTooltip title={"Delete Chat"} placement="top">
+                            {/* <img
+                              src={videolive}
+                              style={{ cursor: "pointer" }}
+                              width="30px"
+                              onClick={() => {
+                                setBroadcastStream(true);
+                              }}
+                            /> */}
+                            <span 
+                            style={{display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128',width:'25px',height:'25px',borderRadius:'27px',marginRight:'15px',fontSize:'20px'}}
+                            onClick={()=>{deletePrivateChatDuo(userInfo[0].name,privateChatPerson.name)}}
+                            >
+                            
+                            <BsTrash  />
+                            </span>
+                          </SoapboxTooltip>}     Private Chat
                         <FaWindowClose
                           className="icon-text"
                           onClick={() => {
@@ -5113,7 +5510,7 @@ const PrivateChannels = () => {
                         >
                           {" "}
                           {userInfo[0].name}`s Club Chat
-                          <SoapboxTooltip title={"Stream Live"} placement="top">
+                        <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}><SoapboxTooltip title={"Stream Live"} placement="top">
                             <img
                               src={videolive}
                               style={{ cursor: "pointer" }}
@@ -5123,6 +5520,26 @@ const PrivateChannels = () => {
                               }}
                             />
                           </SoapboxTooltip>
+                          {userInfo[0].communityClub==1?null:<SoapboxTooltip title={"Delete Chat"} placement="top">
+                            {/* <img
+                              src={videolive}
+                              style={{ cursor: "pointer" }}
+                              width="30px"
+                              onClick={() => {
+                                setBroadcastStream(true);
+                              }}
+                            /> */}
+                            <span 
+                            style={{display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128',width:'25px',height:'25px',borderRadius:'27px',marginLeft:'15px',fontSize:'20px'}}
+                            onClick={()=>{deletePrivateChatAll(userInfo[0].username)}}
+                            >
+                            
+                            <BsTrash  />
+                            </span>
+                          </SoapboxTooltip>}
+                         
+                          </div>
+                          
                         </div>
                         {broadcastStream ? (
                           <VideoChat

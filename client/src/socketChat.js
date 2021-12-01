@@ -4,7 +4,7 @@ const io = require('socket.io-client');
 // const fs = require('fs');
 // const SOCKET_URI = "https://api.fortisab.com/"
 // const SOCKET_URI = "http://socketsignalapi001.amaprods.com/"
-const SOCKET_URI = "https://www.verotownhall.com/"
+const SOCKET_URI = "https://socketapi37464cvfgfsdhfg.megahoot.net/"
 const socket = io(SOCKET_URI);
 
 
