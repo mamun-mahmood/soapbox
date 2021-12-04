@@ -470,11 +470,24 @@ const [inviteBox,setInviteBox]=useState(false)
             imgSrc = `${BaseURL}/profile-pictures/${i.chat.profilePic}`,
             isEmoji = i.chat.isEmoji,
             isVideo = i.chat.isVideo,
-            isImage = i.chat.isImage;
-          setChatData((e) => [
-            ...e,
-            { chatname, message, position, imgSrc, isEmoji, isVideo, isImage },
-          ]);
+            isImage = i.chat.isImage,
+            isPoll = i.chat.isPoll;
+         
+
+
+          if(isPoll){
+            let pollData= JSON.parse(message)
+           
+            setChatData((e) => [
+             ...e,
+             { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
+           ]);
+           }else{
+              setChatData((e) => [
+             ...e,
+             { chatname, message, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
+           ]);
+           }
         });
 
         setTimeout(() => {
@@ -1006,6 +1019,23 @@ const [inviteBox,setInviteBox]=useState(false)
       "",
       true
     );
+
+
+    let isCommunity=userInfo[0].communityClub
+    let isClub=userInfo[0].communityClub==1?0:1
+    let data =JSON.stringify(pollFormData)
+    socket.emit("send", {
+      name: userFullName,
+      isClub:isClub,
+       isPrivate:0,
+       isCommunity:isCommunity,
+      message: data,
+      profilePic: userProfilePic,
+      isEmoji: false,
+      isVideo:"",
+     isImage:"",
+      isPoll:true
+    });
   }
   const getAllSubscribedMembers = () => {
     axios
@@ -1082,7 +1112,7 @@ const [inviteBox,setInviteBox]=useState(false)
                         style={{
                           position: "absolute",
                           bottom: "75px",
-                          left: "75px",
+                          left: "55px",
                           zIndex: 5,
                         }}
                         className="clubOwner"
@@ -1093,7 +1123,7 @@ const [inviteBox,setInviteBox]=useState(false)
                         style={{
                           position: "absolute",
                           bottom: "59px",
-                          left: "130px",
+                          left: "105px",
                           zIndex: 5,
                         }}
                         className="arrow-down"
