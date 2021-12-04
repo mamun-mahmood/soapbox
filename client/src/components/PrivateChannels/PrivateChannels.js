@@ -7,8 +7,10 @@ import InfiniteScrollLoader from "../Feed/InfiniteScrollLoader";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
 import { FaTumblr, IoSend, FaWindowClose } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
+import {RiCalendarEventLine} from "react-icons/ri"
 import {BsTrash} from 'react-icons/bs'
 import { FcInvite, FcRules } from "react-icons/fc";
+import Scheduler from '../Scheduler/Scheduler'
 
 import {
   FiTwitter,
@@ -58,7 +60,7 @@ import groupcall from "../../assets/groupcall.png";
 import personalmessage from "../../assets/personalmessage.png";
 import membershipGraphic from "../../assets/membershipGraphic.png";
 
-import { Form } from "react-bootstrap";
+import { Button, Form, Modal,ProgressBar } from "react-bootstrap";
 import ClickAwayListener from "react-click-away-listener";
 import Autolinker from "autolinker";
 import RandomSuggestedFollows from "../SideBar/RandomSuggestedFollows";
@@ -86,6 +88,8 @@ import xmgwallet from "../../assets/xmgwallet.png";
 import StripePage from "../Stripe/StripePage";
 import { loadStripe } from "@stripe/stripe-js";
 import { useStripe } from "@stripe/react-stripe-js";
+import ModelShow from "./model";
+import MyVerticallyCenteredModal from "./model";
 const stripe = loadStripe(
   "pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz"
 );
@@ -97,10 +101,12 @@ const PrivateChannels = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userId, setUserId] = useState("");
   const [chatData, setChatData] = useState([]);
+  const [FormEditPoll,setFormEditPoll] = useState(true)
   const [chatDataPrivate, setChatDataPrivate] = useState([]);
   const [showIframe,setShowIframe] = useState(false);
   const [iframeBox,setIframeBox]=useState(null);
   const [uploads, setUploads] = useState([]);
+  const [clubName,setClubName] = useState('')
   const [onDemandUploads, setOnDemandUploads] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setpage] = useState(2);
@@ -150,7 +156,7 @@ const PrivateChannels = () => {
   const history = useHistory();
   const [userInfo, setUserInfo] = useState([]);
   const [subscribedMembers, setSubscribedMembers] = useState([]);
-
+const [inviteBox,setInviteBox]=useState(false)
   const [likes, setLikes] = useState(0);
   const [views, setViews] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -158,7 +164,12 @@ const PrivateChannels = () => {
   const [messageInboxValuePrivate, setMessageInboxValuePrivate] = useState("");
   const [messageInboxValue, setMessageInboxValue] = useState("");
   const [breakOffInput, setBreakOffInput] = useState("");
-  
+  const [showPollForm,setShowPollForm] = useState(false)
+  const [pollFormData,setPollFormData] =useState({Question:'',OptionA:'',OptionB:'',OptionC:''})
+  const [pollFormDataQ,setPollFormDataQ] =useState("")
+  const [pollFormDataOA,setPollFormDataOA] =useState("")
+  const [pollFormDataOB,setPollFormDataOB] =useState("")
+  const [pollFormDataOC,setPollFormDataOC] =useState("")
   const [file, setFile] = useState([]);
   const [src, setSrc] = useState(null);
   const [mimeType, setMimeType] = useState("");
@@ -200,13 +211,24 @@ const PrivateChannels = () => {
     imgSrc,
     isEmoji,
     isVideo,
-    isImage
+    isImage,
+    isPoll
   ) => {
-    setChatData((e) => [
-      ...e,
-      { chatname, message, position, imgSrc, isEmoji, isVideo, isImage },
-    ]);
+    if(isPoll){
+     let pollData= JSON.parse(message)
     
+     setChatData((e) => [
+      ...e,
+      { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
+    ]);
+    }else{
+       setChatData((e) => [
+      ...e,
+      { chatname, message, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
+    ]);
+    }
+   
+  
 
     var messageContainer = document.querySelector(".container");
 
@@ -370,7 +392,7 @@ const PrivateChannels = () => {
     const getUserData = async () => {
       await axios.get(`${BaseURL}/user/${username}`).then((response) => {
         setUserInfo(response.data);
-
+        setClubName(response.data[0].isCommunity==1?response.data[0].username:`${response.data[0].username}'s Private'`)
         console.log("dky");
         axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
           response.data.map((user) => {
@@ -956,6 +978,35 @@ const PrivateChannels = () => {
    })
 
   }
+
+  const handlePollFormSubmission=(user)=>{
+    if(pollFormDataQ&&(pollFormDataOA || pollFormDataOB || pollFormDataOC)){
+      toast.success('Created Poll Successfully!')
+      setPollFormData({
+        Question:pollFormDataQ,
+        OptionA:pollFormDataOA,
+        OptionB:pollFormDataOB,
+        OptionC:pollFormDataOC,
+        createdBy:user
+      })
+      setFormEditPoll(!FormEditPoll)
+
+    }
+  }
+
+  const sentPollMessageInChat=(pollFormData)=>{
+    setShowPollForm(false)
+    append(
+      userFullName,
+      `${JSON.stringify(pollFormData)}`,
+      "right",
+      `${BaseURL}/profile-pictures/${userProfilePic}`,
+      false,
+      "",
+      "",
+      true
+    );
+  }
   const getAllSubscribedMembers = () => {
     axios
       .post(`${BaseURL}/user/getAllMember`, {
@@ -1009,17 +1060,18 @@ const PrivateChannels = () => {
         <div className="channel-banner">
           {/* <img src={banner} alt="banner" /> */}
         </div>
-        <div className="channel-content">
-          {userInfo.map((user) => {
-            return (
-              <Fragment key={user.id}>
-                <div className="channel-user-info">
+        <div className="channel-content" >
+<div  style={{flex:'0.2'}}  >
+<Fragment key={userInfo[0]&&userInfo[0].id}>
+                <div className="channel-user-info"   >
                   <ul
                     style={{
-                      position: "sticky",
-                      maxHeight: "90vh",
-                      overflowY: "scroll",
+                      position: "fixed",
+                     minWidth:'100% !important',
                       alignSelf: "flex-start",
+                      maxHeight:'105vh',
+                      overflowY:'scroll',
+                      marginBottom:'150px'
                     }}
                   >
                     <div
@@ -1059,7 +1111,7 @@ const PrivateChannels = () => {
                       onDragStart={(e) => e.preventDefault()}
                     >
                       <img
-                        src={`${BaseURL}/profile-pictures/${user.profilePic}`}
+                        src={`${BaseURL}/profile-pictures/${userInfo[0]&&userInfo[0].profilePic}`}
                         alt="profile"
                       />
                     </div>
@@ -1069,8 +1121,8 @@ const PrivateChannels = () => {
                           className="name verificationBadgeContainer"
                           style={{ fontSize: "14px" }}
                         >
-                          {user.name}
-                          {user.verified === 1 ? (
+                          {userInfo[0]&&userInfo[0].name}
+                          {userInfo[0]&&userInfo[0].verified === 1 ? (
                             <div className="profile-verification-badge">
                               <HiBadgeCheck
                                 data-tip="Verified account"
@@ -1081,7 +1133,7 @@ const PrivateChannels = () => {
                           ) : null}
                         </div>
                         <div className="username" style={{ fontSize: "14px" }}>
-                          @{user.username}
+                          @{userInfo[0]&&userInfo[0].username}
                         </div>
                         <div className="followers">
                           <b style={{ fontSize: "14px" }}>
@@ -1094,41 +1146,41 @@ const PrivateChannels = () => {
                           <span style={{ fontSize: "14px" }}> Views</span>
                         </div>
 
-                        {/* {user.bio && (
+                        {/* {userInfo[0]&&userInfo[0].bio && (
                                                     <div
                                                         className="user-desc"
                                                         style={{ textAlign: "center" }}
                                                     >
-                                                        {user.bio}
+                                                        {userInfo[0]&&userInfo[0].bio}
                                                     </div>
                                                 )} */}
 
-                        {user.website && (
+                        {userInfo[0]&&userInfo[0].website && (
                           <a
                             href={
-                              !user.website.includes("https://")
-                                ? "https://" + user.website
-                                : user.website
+                              !userInfo[0]&&userInfo[0].website.includes("https://")
+                                ? "https://" + userInfo[0]&&userInfo[0].website
+                                : userInfo[0]&&userInfo[0].website
                             }
                             target="_blank"
                             rel="noopener noreferrer"
                             className="profile-website"
                           >
-                            {user.website.includes("https://")
-                              ? user.website.slice(8)
-                              : user.website}
+                            {userInfo[0]&&userInfo[0].website.includes("https://")
+                              ? userInfo[0]&&userInfo[0].website.slice(8)
+                              : userInfo[0]&&userInfo[0].website}
                           </a>
                         )}
                         <div
                           className="social-profile-icon-links"
                           style={{ flexWrap: "wrap" }}
                         >
-                          {user.twitter && (
+                          {userInfo[0]&&userInfo[0].twitter && (
                             <a
                               href={
-                                !user.twitter.includes("https://")
-                                  ? "https://" + user.twitter
-                                  : user.twitter
+                                !userInfo[0]&&userInfo[0].twitter.includes("https://")
+                                  ? "https://" + userInfo[0]&&userInfo[0].twitter
+                                  : userInfo[0]&&userInfo[0].twitter
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1136,12 +1188,12 @@ const PrivateChannels = () => {
                               <FiTwitter className="social-profile-icon s-twitter" />
                             </a>
                           )}
-                          {user.instagram && (
+                          {userInfo[0]&&userInfo[0].instagram && (
                             <a
                               href={
-                                !user.instagram.includes("https://")
-                                  ? "https://" + user.instagram
-                                  : user.instagram
+                                !userInfo[0]&&userInfo[0].instagram.includes("https://")
+                                  ? "https://" + userInfo[0]&&userInfo[0].instagram
+                                  : userInfo[0]&&userInfo[0].instagram
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1149,12 +1201,12 @@ const PrivateChannels = () => {
                               <AiOutlineInstagram className="social-profile-icon s-instagram" />
                             </a>
                           )}
-                          {user.linkedIn && (
+                          {userInfo[0]&&userInfo[0].linkedIn && (
                             <a
                               href={
-                                !user.linkedIn.includes("https://")
-                                  ? "https://" + user.linkedIn
-                                  : user.linkedIn
+                                !userInfo[0]&&userInfo[0].linkedIn.includes("https://")
+                                  ? "https://" + userInfo[0]&&userInfo[0].linkedIn
+                                  : userInfo[0]&&userInfo[0].linkedIn
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1162,12 +1214,12 @@ const PrivateChannels = () => {
                               <AiOutlineLinkedin className="social-profile-icon s-linkedin" />
                             </a>
                           )}
-                          {user.facebook && (
+                          {userInfo[0]&&userInfo[0].facebook && (
                             <a
                               href={
-                                !user.facebook.includes("https://")
-                                  ? "https://" + user.facebook
-                                  : user.facebook
+                                !userInfo[0]&&userInfo[0].facebook.includes("https://")
+                                  ? "https://" + userInfo[0]&&userInfo[0].facebook
+                                  : userInfo[0]&&userInfo[0].facebook
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1175,12 +1227,12 @@ const PrivateChannels = () => {
                               <RiFacebookCircleLine className="social-profile-icon s-facebook" />
                             </a>
                           )}
-                          {user.tiktok && (
+                          {userInfo[0]&&userInfo[0].tiktok && (
                             <a
                               href={
-                                !user.tiktok.includes("https://")
-                                  ? "https://" + user.tiktok
-                                  : user.tiktok
+                                !userInfo[0]&&userInfo[0].tiktok.includes("https://")
+                                  ? "https://" + userInfo[0]&&userInfo[0].tiktok
+                                  : userInfo[0]&&userInfo[0].tiktok
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1188,12 +1240,12 @@ const PrivateChannels = () => {
                               <SiTiktok className="social-profile-icon s-tiktok" />
                             </a>
                           )}
-                          {user.snapchat && (
+                          {userInfo[0]&&userInfo[0].snapchat && (
                             <a
                               href={
-                                !user.snapchat.includes("https://")
-                                  ? "https://" + user.snapchat
-                                  : user.snapchat
+                                !userInfo[0]&&userInfo[0].snapchat.includes("https://")
+                                  ? "https://" + userInfo[0]&&userInfo[0].snapchat
+                                  : userInfo[0]&&userInfo[0].snapchat
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1201,12 +1253,12 @@ const PrivateChannels = () => {
                               <RiSnapchatLine className="social-profile-icon s-snapchat" />
                             </a>
                           )}
-                          {user.reddit && (
+                          {userInfo[0]&&userInfo[0].reddit && (
                             <a
                               href={
-                                !user.reddit.includes("https://")
-                                  ? "https://" + user.reddit
-                                  : user.reddit
+                                !userInfo[0]&&userInfo[0].reddit.includes("https://")
+                                  ? "https://" + userInfo[0]&&userInfo[0].reddit
+                                  : userInfo[0]&&userInfo[0].reddit
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1214,12 +1266,12 @@ const PrivateChannels = () => {
                               <AiOutlineReddit className="social-profile-icon s-reddit" />
                             </a>
                           )}
-                          {user.pinterest && (
+                          {userInfo[0]&&userInfo[0].pinterest && (
                             <a
                               href={
-                                !user.pinterest.includes("https://")
-                                  ? "https://" + user.pinterest
-                                  : user.pinterest
+                                !userInfo[0]&&userInfo[0].pinterest.includes("https://")
+                                  ? "https://" + userInfo[0]&&userInfo[0].pinterest
+                                  : userInfo[0]&&userInfo[0].pinterest
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1227,12 +1279,12 @@ const PrivateChannels = () => {
                               <RiPinterestLine className="social-profile-icon s-pinterest" />
                             </a>
                           )}
-                          {user.medium && (
+                          {userInfo[0]&&userInfo[0].medium && (
                             <a
                               href={
-                                !user.medium.includes("https://")
-                                  ? "https://" + user.medium
-                                  : user.medium
+                                !userInfo[0]&&userInfo[0].medium.includes("https://")
+                                  ? "https://" + userInfo[0]&&userInfo[0].medium
+                                  : userInfo[0]&&userInfo[0].medium
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1240,12 +1292,12 @@ const PrivateChannels = () => {
                               <AiOutlineMedium className="social-profile-icon s-medium" />
                             </a>
                           )}
-                          {user.tumblr && (
+                          {userInfo[0]&&userInfo[0].tumblr && (
                             <a
                               href={
-                                !user.tumblr.includes("https://")
-                                  ? "https://" + user.tumblr
-                                  : user.tumblr
+                                !userInfo[0]&&userInfo[0].tumblr.includes("https://")
+                                  ? "https://" + userInfo[0]&&userInfo[0].tumblr
+                                  : userInfo[0]&&userInfo[0].tumblr
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1254,8 +1306,9 @@ const PrivateChannels = () => {
                             </a>
                           )}
                         </div>
+                        {/* channel info */}
                         <div>
-                        {userInfo[0].communityClub == 1 ? (
+                        {userInfo[0]&&userInfo[0].communityClub == 1 ? (
                                 <div>
                                   <div
                                     className="live-header"
@@ -1286,6 +1339,114 @@ const PrivateChannels = () => {
                               ) : null}
                           {userInformation.username !== username ? (
                             <div>
+                              <div className="live-header"  style={{
+                                  backgroundColor: "#8249A0",
+                                  color: "white",
+                                  borderRadius: "3px",
+                                }}>Member Tools</div>
+                              <div className="control">
+                                 <button style={{ minWidth: "208px" }}
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://www.verohive.net',title:'VeroHive'})
+                                   setShowIframe(true)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "-15px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
+                                  Video Meetings
+                                </button>
+                                <button style={{ minWidth: "208px" }}
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://documega.net/signin/?secure=true',title:'DocuMega'})
+                                   setShowIframe(true)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "-15px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
+                                  eDocuments
+                                </button>
+                                <button style={{ minWidth: "208px" }}
+                               
+                               onClick={() => {
+                                 if (showIframe) {
+                                   document.getElementById(
+                                     "slideIFM"
+                                   ).style.transition = "2sec";
+                                   document.getElementById(
+                                     "slideIFM"
+                                   ).style.right = "-100vw";
+
+                                   setTimeout(() => {
+                                     setShowIframe(false);
+                                   }, 1000);
+                                 } else {
+                                   setIframeBox({src:'https://megahootvault.org/login/',title:'MegaHoot Vault'})
+                                  setShowIframe(true)
+                                   setTimeout(() => {
+                                     if (
+                                       document.getElementById("slideIFM")
+                                     ) {
+                                       document.getElementById(
+                                         "slideIFM"
+                                       ).style.transition = "1sec";
+                                       document.getElementById(
+                                         "slideIFM"
+                                       ).style.right = "-15px";
+                                     }
+                                   }, 1);
+                                 }
+                               }}
+                               >
+                                 MegaHoot Vault
+                               </button>
+                                
+                              </div>
                               <div
                                 className="live-header"
                                 style={{
@@ -1310,9 +1471,9 @@ const PrivateChannels = () => {
 
                                     setTimeout(() => {
                                       setShowIframe(false);
-                                    }, 1000);
+                                    }, 500);
                                   } else {
-                                    setIframeBox({src:'https://megahootvault.org/login/',title:'XMG Wallet'})
+                                    setIframeBox({src:'https://megahoot.org/',title:'XMG Wallet'})
                                    setShowIframe(true)
                                     setTimeout(() => {
                                       if (
@@ -1323,13 +1484,13 @@ const PrivateChannels = () => {
                                         ).style.transition = "1sec";
                                         document.getElementById(
                                           "slideIFM"
-                                        ).style.right = "250px";
+                                        ).style.right = "-15px";
                                       }
                                     }, 1);
                                   }
                                 }}
                                 >
-                                  XMG Wallet
+                                Buy XMG Coins
                                 </button>
                                 <button style={{ minWidth: "208px" }}
                                   onClick={() => {
@@ -1356,7 +1517,7 @@ const PrivateChannels = () => {
                                           ).style.transition = "1sec";
                                           document.getElementById(
                                             "slideIFM"
-                                          ).style.right = "250px";
+                                          ).style.right = "-15px";
                                         }
                                       }, 1);
                                     }
@@ -1365,40 +1526,7 @@ const PrivateChannels = () => {
                                   Pecu Novus Wallet
                                   
                                 </button>
-                                <button style={{ minWidth: "208px" }}
-                               
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
-
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    }, 1000);
-                                  } else {
-                                    setIframeBox({src:'https://megahootvault.org/login/',title:'MegaHoot Vault'})
-                                   setShowIframe(true)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "250px";
-                                      }
-                                    }, 1);
-                                  }
-                                }}
-                                >
-                                  MegaHoot Vault
-                                </button>
+                              
                                 <button style={{ minWidth: "208px" }}
                                 onClick={() => {
                                   if (showIframe) {
@@ -1424,7 +1552,7 @@ const PrivateChannels = () => {
                                         ).style.transition = "1sec";
                                         document.getElementById(
                                           "slideIFM"
-                                        ).style.right = "250px";
+                                        ).style.right = "-15px";
                                       }
                                     }, 1);
                                   }
@@ -1432,11 +1560,12 @@ const PrivateChannels = () => {
                                 >
                                   Crypto Index
                                 </button>
+                               
                               </div>
                             </div>
                           ) : null}
                           {userInformation.username !== username &&
-                          userInfo[0].communityClub !== 1 ? (
+                         userInfo[0]&&userInfo[0].communityClub !== 1 ? (
                             <div
                               className="live-header"
                               style={{
@@ -1539,6 +1668,115 @@ const PrivateChannels = () => {
                                   Requests
                                 </button>
                               </div>
+                              
+                              <div className="live-header"  style={{
+                                  backgroundColor: "#8249A0",
+                                  color: "white",
+                                  borderRadius: "3px",
+                                }}>Member Tools</div>
+                              <div className="control">
+                                 <button style={{ minWidth: "208px" }}
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://www.verohive.net',title:'VeroHive'})
+                                   setShowIframe(true)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "-15px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
+                                  Video Meetings
+                                </button>
+                                <button style={{ minWidth: "208px" }}
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://documega.net/signin/?secure=true',title:'DocuMega'})
+                                   setShowIframe(true)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "-15px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
+                                  eDocuments
+                                </button>
+                                <button style={{ minWidth: "208px" }}
+                               
+                               onClick={() => {
+                                 if (showIframe) {
+                                   document.getElementById(
+                                     "slideIFM"
+                                   ).style.transition = "2sec";
+                                   document.getElementById(
+                                     "slideIFM"
+                                   ).style.right = "-100vw";
+
+                                   setTimeout(() => {
+                                     setShowIframe(false);
+                                   }, 1000);
+                                 } else {
+                                   setIframeBox({src:'https://megahootvault.org/login/',title:'MegaHoot Vault'})
+                                  setShowIframe(true)
+                                   setTimeout(() => {
+                                     if (
+                                       document.getElementById("slideIFM")
+                                     ) {
+                                       document.getElementById(
+                                         "slideIFM"
+                                       ).style.transition = "1sec";
+                                       document.getElementById(
+                                         "slideIFM"
+                                       ).style.right = "-15px";
+                                     }
+                                   }, 1);
+                                 }
+                               }}
+                               >
+                                 MegaHoot Vault
+                               </button>
+                                
+                              </div>
                               <div
                                 className="live-header"
                                 style={{
@@ -1560,13 +1798,15 @@ const PrivateChannels = () => {
                                     document.getElementById(
                                       "slideIFM"
                                     ).style.right = "-100vw";
-
+                                    setClubFloor(true)
                                     setTimeout(() => {
                                       setShowIframe(false);
+                                    
                                     }, 1000);
                                   } else {
-                                    setIframeBox({src:'https://megahootvault.org/login/',title:'XMG Wallet'})
+                                    setIframeBox({src:'https://megahoot.org/',title:'XMG Wallet'})
                                    setShowIframe(true)
+                                   setClubFloor(false)
                                     setTimeout(() => {
                                       if (
                                         document.getElementById("slideIFM")
@@ -1576,13 +1816,13 @@ const PrivateChannels = () => {
                                         ).style.transition = "1sec";
                                         document.getElementById(
                                           "slideIFM"
-                                        ).style.right = "250px";
+                                        ).style.right = "-15px";
                                       }
                                     }, 1);
                                   }
                                 }}
                                 >
-                                  XMG Wallet
+                                Buy XMG Coins
                                 </button>
                                 <button style={{ minWidth: "208px" }}
                                   onClick={() => {
@@ -1593,13 +1833,15 @@ const PrivateChannels = () => {
                                       document.getElementById(
                                         "slideIFM"
                                       ).style.right = "-100vw";
-
+                                      setClubFloor(true)
                                       setTimeout(() => {
                                         setShowIframe(false);
+                                        
                                       }, 1000);
                                     } else {
                                       setIframeBox({src:'https://pecunovus.org/login/',title:'Pecu Novus Wallet'})
                                      setShowIframe(true)
+                                     setClubFloor(false)
                                       setTimeout(() => {
                                         if (
                                           document.getElementById("slideIFM")
@@ -1609,7 +1851,7 @@ const PrivateChannels = () => {
                                           ).style.transition = "1sec";
                                           document.getElementById(
                                             "slideIFM"
-                                          ).style.right = "250px";
+                                          ).style.right = "-15px";
                                         }
                                       }, 1);
                                     }
@@ -1618,7 +1860,7 @@ const PrivateChannels = () => {
                                   Pecu Novus Wallet
                                   
                                 </button>
-                                <button style={{ minWidth: "208px" }}
+                                {/* <button style={{ minWidth: "208px" }}
                                
                                 onClick={() => {
                                   if (showIframe) {
@@ -1628,13 +1870,14 @@ const PrivateChannels = () => {
                                     document.getElementById(
                                       "slideIFM"
                                     ).style.right = "-100vw";
-
+                                    setClubFloor(true)
                                     setTimeout(() => {
                                       setShowIframe(false);
                                     }, 1000);
                                   } else {
                                     setIframeBox({src:'https://megahootvault.org/login/',title:'MegaHoot Vault'})
                                    setShowIframe(true)
+                                   setClubFloor(false)
                                     setTimeout(() => {
                                       if (
                                         document.getElementById("slideIFM")
@@ -1644,14 +1887,14 @@ const PrivateChannels = () => {
                                         ).style.transition = "1sec";
                                         document.getElementById(
                                           "slideIFM"
-                                        ).style.right = "250px";
+                                        ).style.right = "-15px";
                                       }
                                     }, 1);
                                   }
                                 }}
                                 >
                                   MegaHoot Vault
-                                </button>
+                                </button> */}
                                 <button style={{ minWidth: "208px" }}
                                 onClick={() => {
                                   if (showIframe) {
@@ -1661,13 +1904,14 @@ const PrivateChannels = () => {
                                     document.getElementById(
                                       "slideIFM"
                                     ).style.right = "-100vw";
-
+                                    setClubFloor(true)
                                     setTimeout(() => {
                                       setShowIframe(false);
                                     }, 1000);
                                   } else {
                                     setIframeBox({src:'https://www.megahootvault.com/',title:'Crypto Index'})
                                    setShowIframe(true)
+                                   setClubFloor(false)
                                     setTimeout(() => {
                                       if (
                                         document.getElementById("slideIFM")
@@ -1677,7 +1921,7 @@ const PrivateChannels = () => {
                                         ).style.transition = "1sec";
                                         document.getElementById(
                                           "slideIFM"
-                                        ).style.right = "250px";
+                                        ).style.right = "-15px";
                                       }
                                     }, 1);
                                   }
@@ -1685,6 +1929,40 @@ const PrivateChannels = () => {
                                 >
                                   Crypto Index
                                 </button>
+                                {/* <button style={{ minWidth: "208px" }}
+                                onClick={() => {
+                                  if (showIframe) {
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.transition = "2sec";
+                                    document.getElementById(
+                                      "slideIFM"
+                                    ).style.right = "-100vw";
+                                    setClubFloor(true)
+                                    setTimeout(() => {
+                                      setShowIframe(false);
+                                    }, 1000);
+                                  } else {
+                                    setIframeBox({src:'https://www.verotownhall.com',title:'VeroHive'})
+                                   setShowIframe(true)
+                                   setClubFloor(false)
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById("slideIFM")
+                                      ) {
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "slideIFM"
+                                        ).style.right = "-15px";
+                                      }
+                                    }, 1);
+                                  }
+                                }}
+                                >
+                                  TownHall
+                                </button> */}
                               </div>
                               <div
                                 className="live-header"
@@ -1886,7 +2164,7 @@ const PrivateChannels = () => {
                             </div>
                           ) : (
                             <div>
-                              {userInfo[0].communityClub !== 1 ? (
+                              {userInfo[0]&&userInfo[0].communityClub !== 1 ? (
                                 <div className="control">
                                   {/* <button>
                               {callRequest
@@ -2191,11 +2469,10 @@ const PrivateChannels = () => {
                   </ul>
                 </div>
               </Fragment>
-            );
-          })}
+</div>
 
           {userInformation.username !== username ? (
-            <div className="channel-user-content">
+            <div className="channel-user-content" style={{flex:'0.8'}} >
               {/* <div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
                             <div className="tabs">
                                 <span>Requests</span>
@@ -2291,6 +2568,11 @@ const PrivateChannels = () => {
                                                   }, 200);
                                                 }
                                   }} />
+                    </SoapboxTooltip>
+                  </span>
+                  <span onClick={()=>setInviteBox(true)}>
+                    <SoapboxTooltip title={"Invite"} placement="left">
+                      <img src={inviteicon} width="30px" />
                     </SoapboxTooltip>
                   </span>
                   <span>
@@ -2404,6 +2686,7 @@ const PrivateChannels = () => {
 
                 <FiSearch className="search-channel-content" />
               </div>
+            
               {showClubRules ? (
                 <div className="slide-container clubRulesText">
                   <div
@@ -2579,7 +2862,19 @@ const PrivateChannels = () => {
                 </div>
               ) : null}
 
+{inviteBox?<MyVerticallyCenteredModal
+              title={"Invitation"}
+              closeModal={()=>setInviteBox(false)}
+              clubname={userInfo[0].communityClub==1?username:`${userInfo[0].name}'s Private `}
+              clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+              username={userInformation.username}
              
+            
+
+          show={inviteBox}
+          onHide={() =>setInviteBox(false)}
+        />:null}
+            
               {showBreakoffForm?<div className="showBreakoffForm" id="showBreakoffFormId">
                 <h5>Enter The Topic for BreakOff Chat</h5>
                 <div style={{padding:'33px',position:'relative',width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}> <input placeholder="Enter Topic" value={breakOffInput}  onChange={(e) => {
@@ -2598,6 +2893,7 @@ const PrivateChannels = () => {
                 </div>
                
               </div>:null}
+           
               {oneOnOnecall ? (
                 <div className="slide-container">
                   <div
@@ -2741,10 +3037,10 @@ const PrivateChannels = () => {
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
-                      width:'60%',
+                      width:'100%',
                       overflowY:'scroll',
-                      height:'600px',
-                      maxHeight:'500px'
+                      height:'100vh',
+                     
                     }}
                   >
                     <FaWindowClose
@@ -2761,14 +3057,14 @@ const PrivateChannels = () => {
                           "2sec";
                         document.getElementById("slideIFM").style.right =
                           "-100vw";
-
+                        setClubFloor(true)
                         setTimeout(() => {
-                          setShowSubscribeButton(false);
-                        }, 1000);
+                          setShowIframe(false);
+                        }, 500);
                       }}
                     />
-                  <iframe src={iframeBox.src}
-                   title={iframeBox.title} width="100%" height="600"></iframe>
+                  <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
+                   title={iframeBox.title} width="100%" height="100%"></iframe>
                     {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
                                 <div className="btns"> <button>Request</button></div> */}
                   </div>
@@ -3678,7 +3974,165 @@ const PrivateChannels = () => {
                             >
                               {" "}
                               {userInfo[0].name}`s Club Chat
+                              <SoapboxTooltip title={"Create Poll"} placement="top">
+                      
+                            
+                      <span 
+                       onClick={()=>{
+                            if (showPollForm) {
+                              document.getElementById("showPollFormId").style.transition =
+                                "2s";
+                              document.getElementById("showPollFormId").style.left = "200vw";
+                      
+                              setTimeout(() => {
+                                setShowPollForm(false);
+                              }, 1000);
+                            } else {
+                              setShowPollForm(true);
+                      
+                              setTimeout(() => {
+                                if (document.getElementById("showPollFormId")) {
+                                  document.getElementById("showPollFormId").style.transition =
+                                    "1s";
+                                    document.getElementById("showPollFormId").style.left =
+                                    "70px";
+                                }
+                              }, 1);
+                            }
+                      }}
+                      style={{display:'flex',justifyContent:'center',
+                      alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128'
+                      ,width:'22px',height:'22px',borderRadius:'27px',marginLeft:'15px',
+                      fontSize:'18px'}}
+                     
+                      >
+                      
+                      <RiCalendarEventLine  />
+                      </span>
+
+                    </SoapboxTooltip>
                             </div>
+                            {showPollForm?  <div className="showPollForm" id="showPollFormId">
+             <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',backgroundColor:'#652C90'}}>   <h5>Create A Poll</h5>
+                <FaWindowClose  className="FaWindowClose"    onClick={()=>{
+                              if (showPollForm) {
+                                document.getElementById("showPollFormId").style.transition =
+                                  "2s";
+                                document.getElementById("showPollFormId").style.left = "200vw";
+                        
+                                setTimeout(() => {
+                                  setShowPollForm(false);
+                                }, 1000);
+                              } else {
+                                setShowPollForm(true);
+                        
+                                setTimeout(() => {
+                                  if (document.getElementById("showPollFormId")) {
+                                    document.getElementById("showPollFormId").style.transition =
+                                      "1s";
+                                      document.getElementById("showPollFormId").style.left =
+                                      "70px";
+                                  }
+                                }, 1);
+                              }
+                        }} /></div>
+                <div style={{padding:'33px',position:'relative',width:'100%',display:'flex'
+                ,flexDirection:'column',justifyContent:'space-evenly'}}>
+                  
+                   {/* <input placeholder="Enter Question For Poll" value={breakOffInput}  onChange={(e) => {
+                                setBreakOffInput(e.target.value);
+                              }}  />
+                       <div style={{display:'flex',flexDirection:'column',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',width:'90%',margin:'5px'}}>  
+                       <div  style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}} >
+                       <input type="checkbox" style={{flex:'0.2'}} />
+                        <p style={{flex:'0.8',margin:'0px'}}>July 3</p>
+                         </div>
+                        <progress value="32" max="100"  />
+                        </div>
+                       
+                        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',alignItems:'center',width:'90%',margin:'5px'}}>  
+                        <input type="checkbox" style={{flex:'0.2'}} /><p style={{flex:'0.8',margin:'0px'}}>July 4</p></div>
+                        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',alignItems:'center',width:'90%',margin:'5px'}}>  
+                        <input type="checkbox" style={{flex:'0.2'}} /><p style={{flex:'0.8',margin:'0px'}}>July 5</p></div>
+                     */}
+
+                     {FormEditPoll?
+                        <Form onSubmit={(e)=>e.preventDefault()}>
+  <Form.Group className="mb-3" >
+    <Form.Label>Enter Question For Poll</Form.Label>
+    <Form.Control type="text" onChange={(e)=>{setPollFormDataQ(e.target.value)}} placeholder="Enter Question For Poll" />
+  </Form.Group>
+  <Form.Group className="mb-3" >
+    <Form.Label>Option A</Form.Label>
+    <Form.Control value={pollFormDataOA} onChange={(e)=>{setPollFormDataOA(e.target.value)}} placeholder="Option A" />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+    <Form.Label>Option B</Form.Label>
+    <Form.Control value={pollFormDataOB} onChange={(e)=>{setPollFormDataOB(e.target.value)}}  placeholder="Option b" />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+    <Form.Label>Option C</Form.Label>
+    <Form.Control value={pollFormDataOC} onChange={(e)=>{setPollFormDataOC(e.target.value)}} placeholder="Option c" />
+  </Form.Group>
+  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+    <Form.Check type="checkbox" label="Check me out" />
+  </Form.Group> */}
+  <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
+    Preview 
+  </Button>
+  <Button variant="primary" type="submit" style={{marginLeft:'5px'}} onClick={()=>{handlePollFormSubmission(userFullName)}}>
+    Submit
+  </Button>
+</Form>
+:<Form onSubmit={(e)=>e.preventDefault()}>
+  <Form.Group className="mb-3" >
+    <Form.Label>{pollFormData.Question}</Form.Label>
+   
+  </Form.Group>
+  <Form.Group className="mb-3" >
+   
+    <Form.Check type="checkbox" label={pollFormData.OptionA} />
+    <ProgressBar animated  variant="success" now={90} />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="checkbox" label={pollFormData.OptionB} />
+    <ProgressBar animated  variant="info" now={50} />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="checkbox" label={pollFormData.OptionC} />
+    <ProgressBar animated  variant="warning" now={70} />
+  </Form.Group>
+  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+    <Form.Check type="checkbox" label="Check me out" />
+  </Form.Group> */}
+  <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
+    Edit 
+  </Button>
+  <Button variant="primary" type="submit" style={{marginLeft:'5px'}} onClick={()=>{sentPollMessageInChat(pollFormData)}}>
+    Submit
+  </Button>
+</Form>
+}
+
+
+                              
+                {/* <button className="d-grid col-12 btn-main login-form-button" 
+                onClick={()=>{
+                  if(breakOffInput){createBreakoff()}else{
+                    toast.success(
+                     "Please Enter Topic for Breakoff chat"
+                   ); 
+                   }
+                  
+                }}
+                >Create Now</button> */}
+                </div>
+               
+              </div>:null}
                             <div>
                               <VideoChat
                                 hallId={hallId}
@@ -3696,6 +4150,7 @@ const PrivateChannels = () => {
                                 marginTop: VideoAvailable ? "300px" : "0px",
                               }}
                             >
+                              
                               {chatData.length
                                 ? chatData.map((e) => (
                                     <div
@@ -3772,11 +4227,40 @@ const PrivateChannels = () => {
                                               : "message"
                                           }
                                         >
-                                          {!e.isVideo && !e.isImage
+                                          {!e.isVideo && !e.isImage && !e.isPoll
                                             ? e.message
                                             : null}
                                         </div>
                                       </Linkify>
+                                      {e.isPoll?<div style={{marginTop:'30px'}}>
+                                        <Form onSubmit={(e)=>e.preventDefault()}>
+  <Form.Group className="mb-3" >
+  <h3>{e.pollData.Question}</h3>
+
+  </Form.Group>
+  <Form.Group className="mb-3" >
+   
+    <Form.Check type="checkbox" label={e.pollData.OptionA} />
+    <ProgressBar animated  variant="success" now={90} />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="checkbox" label={e.pollData.OptionB} />
+    <ProgressBar animated  variant="info" now={50} />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="checkbox" label={e.pollData.OptionC} />
+    <ProgressBar animated  variant="warning" now={70} />
+  </Form.Group>
+  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+    <Form.Check type="checkbox" label="Check me out" />
+  </Form.Group> */}
+  <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
+    Vote
+  </Button>
+</Form>
+                                      </div>:null}
                                       {e.isVideo ? (
                                         <video
                                           onDragStart={(e) =>
@@ -3818,7 +4302,7 @@ const PrivateChannels = () => {
                                   ))
                                 : null}
                             </div>
-
+                         
                             {emojiPicker && (
                               <ClickAwayListener
                                 onClickAway={() => {
@@ -4196,8 +4680,9 @@ const PrivateChannels = () => {
             </div>
           ) : null}
 
+
           {userInformation.username == username ? (
-            <div className="channel-user-content">
+            <div className="channel-user-content" style={{flex:'0.8'}} >
               <div
                 onmousedown={(event) => {
                   event.preventDefault
@@ -4353,7 +4838,7 @@ const PrivateChannels = () => {
                     </SoapboxTooltip>
                   </span>
 
-                  <span>
+                  <span onClick={()=>setInviteBox(true)}>
                     <SoapboxTooltip title={"Invite"} placement="left">
                       <img src={inviteicon} width="30px" />
                     </SoapboxTooltip>
@@ -4494,7 +4979,20 @@ const PrivateChannels = () => {
 
                 {/* <FiSearch className="search-channel-content" /> */}
               </div>
+              {/* <ModelShow /> */}
+              {inviteBox?<MyVerticallyCenteredModal
+              title={"Invitation"}
+              closeModal={()=>setInviteBox(false)}
+              clubname={userInfo[0].communityClub==1?username:`${userInfo[0].name}'s Private `}
+              clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+              username={userInformation.username}
+             
+            
 
+          show={inviteBox}
+          onHide={() =>setInviteBox(false)}
+        />:null}
+            
               {showRequest ? (
                 <div className="slide-container">
                   <div
@@ -4864,10 +5362,10 @@ const PrivateChannels = () => {
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
-                      width:'60%',
-                      height:'600px',
-                      maxHeight:'500px',
-                      overflowY:'scroll'
+                      width:'100%',
+                      height:'100vh',
+                    
+                     
                     
                     }}
                   >
@@ -4885,14 +5383,14 @@ const PrivateChannels = () => {
                           "2sec";
                         document.getElementById("slideIFM").style.right =
                           "-100vw";
-
+                          setClubFloor(true)
                         setTimeout(() => {
-                          setShowSubscribeButton(false);
-                        }, 1000);
+                          setShowIframe(false);
+                        }, 500);
                       }}
                     />
-                  <iframe src={iframeBox.src}
-                   title={iframeBox.title} width="100%" height="600"></iframe>
+                 <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
+                   title={iframeBox.title} width="100%" height="100%"></iframe>
                     {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
                                 <div className="btns"> <button>Request</button></div> */}
                   </div>
@@ -4918,7 +5416,8 @@ const PrivateChannels = () => {
                 </div>
                
               </div>:null}
-
+            
+            
               {showClubRules ? (
                 <div className="slide-container clubRulesText">
                   <div
@@ -5226,7 +5725,7 @@ const PrivateChannels = () => {
                               }}
                             /> */}
                             <span 
-                            style={{display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128',width:'25px',height:'25px',borderRadius:'27px',marginRight:'15px',fontSize:'20px'}}
+                            style={{display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128',width:'22px',height:'22px',borderRadius:'27px',marginRight:'15px',fontSize:'18px'}}
                             onClick={()=>{deletePrivateChatDuo(userInfo[0].name,privateChatPerson.name)}}
                             >
                             
@@ -5296,10 +5795,38 @@ const PrivateChannels = () => {
                                     e.isEmoji ? "message-emoji" : "message"
                                   }
                                 >
-                                  {!e.isVideo && !e.isImage ? e.message : null}
+                                  {!e.isVideo && !e.isImage && !e.isPoll ? e.message : null}
                                 </div>
                               </Linkify>
-
+                              {e.isPoll?<div>
+                                        <Form onSubmit={(e)=>e.preventDefault()}>
+  <Form.Group className="mb-3" >
+    <Form.Label>{e.message.Question}</Form.Label>
+   
+  </Form.Group>
+  <Form.Group className="mb-3" >
+   
+    <Form.Check type="checkbox" label={e.message.OptionA} />
+    <ProgressBar animated  variant="success" now={90} />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="checkbox" label={e.message.OptionB} />
+    <ProgressBar animated  variant="info" now={50} />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="checkbox" label={e.message.OptionC} />
+    <ProgressBar animated  variant="warning" now={70} />
+  </Form.Group>
+  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+    <Form.Check type="checkbox" label="Check me out" />
+  </Form.Group> */}
+  <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
+    Vote
+  </Button>
+</Form>
+                                      </div>:null}
                               {e.isVideo ? (
                                 <video
                                   onDragStart={(e) => e.preventDefault()}
@@ -5510,15 +6037,52 @@ const PrivateChannels = () => {
                         >
                           {" "}
                           {userInfo[0].name}`s Club Chat
-                        <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}><SoapboxTooltip title={"Stream Live"} placement="top">
+                          
+                        <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                          <SoapboxTooltip title={"Stream Live"} placement="top">
                             <img
                               src={videolive}
                               style={{ cursor: "pointer" }}
-                              width="30px"
+                              width="25px"
                               onClick={() => {
                                 setBroadcastStream(true);
                               }}
                             />
+                          </SoapboxTooltip>
+                          <SoapboxTooltip title={"Create Poll"} placement="top">
+                      
+                            
+                            <span 
+                            style={{display:'flex',justifyContent:'center',
+                            alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128'
+                            ,width:'22px',height:'22px',borderRadius:'27px',marginLeft:'15px',
+                            fontSize:'18px'}}
+                            onClick={()=>{
+                              if (showPollForm) {
+                                document.getElementById("showPollFormId").style.transition =
+                                  "2s";
+                                document.getElementById("showPollFormId").style.left = "200vw";
+                        
+                                setTimeout(() => {
+                                  setShowPollForm(false);
+                                }, 1000);
+                              } else {
+                                setShowPollForm(true);
+                        
+                                setTimeout(() => {
+                                  if (document.getElementById("showPollFormId")) {
+                                    document.getElementById("showPollFormId").style.transition =
+                                      "1s";
+                                      document.getElementById("showPollFormId").style.left =
+                                      "70px";
+                                  }
+                                }, 1);
+                              }
+                        }}
+                            >
+                            
+                            <RiCalendarEventLine  />
+                            </span>
                           </SoapboxTooltip>
                           {userInfo[0].communityClub==1?null:<SoapboxTooltip title={"Delete Chat"} placement="top">
                             {/* <img
@@ -5530,7 +6094,7 @@ const PrivateChannels = () => {
                               }}
                             /> */}
                             <span 
-                            style={{display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128',width:'25px',height:'25px',borderRadius:'27px',marginLeft:'15px',fontSize:'20px'}}
+                            style={{display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128',width:'22px',height:'22px',borderRadius:'27px',marginLeft:'15px',fontSize:'18px'}}
                             onClick={()=>{deletePrivateChatAll(userInfo[0].username)}}
                             >
                             
@@ -5541,6 +6105,127 @@ const PrivateChannels = () => {
                           </div>
                           
                         </div>
+                        {showPollForm?  <div className="showPollForm" id="showPollFormId">
+             <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',backgroundColor:'#652C90'}}>   <h5>Create A Poll</h5>
+                <FaWindowClose  className="FaWindowClose"    onClick={()=>{
+                              if (showPollForm) {
+                                document.getElementById("showPollFormId").style.transition =
+                                  "2s";
+                                document.getElementById("showPollFormId").style.left = "200vw";
+                        
+                                setTimeout(() => {
+                                  setShowPollForm(false);
+                                }, 1000);
+                              } else {
+                                setShowPollForm(true);
+                        
+                                setTimeout(() => {
+                                  if (document.getElementById("showPollFormId")) {
+                                    document.getElementById("showPollFormId").style.transition =
+                                      "1s";
+                                      document.getElementById("showPollFormId").style.left =
+                                      "70px";
+                                  }
+                                }, 1);
+                              }
+                        }} /></div>
+                <div style={{padding:'33px',position:'relative',width:'100%',display:'flex'
+                ,flexDirection:'column',justifyContent:'space-evenly'}}>
+                  
+                   {/* <input placeholder="Enter Question For Poll" value={breakOffInput}  onChange={(e) => {
+                                setBreakOffInput(e.target.value);
+                              }}  />
+                       <div style={{display:'flex',flexDirection:'column',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',width:'90%',margin:'5px'}}>  
+                       <div  style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}} >
+                       <input type="checkbox" style={{flex:'0.2'}} />
+                        <p style={{flex:'0.8',margin:'0px'}}>July 3</p>
+                         </div>
+                        <progress value="32" max="100"  />
+                        </div>
+                       
+                        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',alignItems:'center',width:'90%',margin:'5px'}}>  
+                        <input type="checkbox" style={{flex:'0.2'}} /><p style={{flex:'0.8',margin:'0px'}}>July 4</p></div>
+                        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',alignItems:'center',width:'90%',margin:'5px'}}>  
+                        <input type="checkbox" style={{flex:'0.2'}} /><p style={{flex:'0.8',margin:'0px'}}>July 5</p></div>
+                     */}
+
+                     {FormEditPoll?
+                        <Form onSubmit={(e)=>e.preventDefault()}>
+  <Form.Group className="mb-3" >
+    <Form.Label>Enter Question For Poll</Form.Label>
+    <Form.Control type="text" onChange={(e)=>{setPollFormDataQ(e.target.value)}} placeholder="Enter Question For Poll" />
+  </Form.Group>
+  <Form.Group className="mb-3" >
+    <Form.Label>Option A</Form.Label>
+    <Form.Control value={pollFormDataOA} onChange={(e)=>{setPollFormDataOA(e.target.value)}} placeholder="Option A" />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+    <Form.Label>Option B</Form.Label>
+    <Form.Control value={pollFormDataOB} onChange={(e)=>{setPollFormDataOB(e.target.value)}}  placeholder="Option b" />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+    <Form.Label>Option C</Form.Label>
+    <Form.Control value={pollFormDataOC} onChange={(e)=>{setPollFormDataOC(e.target.value)}} placeholder="Option c" />
+  </Form.Group>
+  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+    <Form.Check type="checkbox" label="Check me out" />
+  </Form.Group> */}
+  <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
+    Preview 
+  </Button>
+  <Button variant="primary" type="submit" style={{marginLeft:'5px'}} onClick={()=>{handlePollFormSubmission(userFullName)}}>
+    Submit
+  </Button>
+</Form>
+:<Form onSubmit={(e)=>e.preventDefault()}>
+  <Form.Group className="mb-3" >
+    <Form.Label>{pollFormData.Question}</Form.Label>
+   
+  </Form.Group>
+  <Form.Group className="mb-3" >
+   
+    <Form.Check type="checkbox" label={pollFormData.OptionA} />
+    <ProgressBar animated  variant="success" now={90} />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="checkbox" label={pollFormData.OptionB} />
+    <ProgressBar animated  variant="info" now={50} />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="checkbox" label={pollFormData.OptionC} />
+    <ProgressBar animated  variant="warning" now={70} />
+  </Form.Group>
+  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+    <Form.Check type="checkbox" label="Check me out" />
+  </Form.Group> */}
+  <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
+    Edit 
+  </Button>
+  <Button variant="primary" type="submit" style={{marginLeft:'5px'}} onClick={()=>{sentPollMessageInChat(pollFormData)}}>
+    Submit
+  </Button>
+</Form>
+}
+
+
+                              
+                {/* <button className="d-grid col-12 btn-main login-form-button" 
+                onClick={()=>{
+                  if(breakOffInput){createBreakoff()}else{
+                    toast.success(
+                     "Please Enter Topic for Breakoff chat"
+                   ); 
+                   }
+                  
+                }}
+                >Create Now</button> */}
+                </div>
+               
+              </div>:null}
                         {broadcastStream ? (
                           <VideoChat
                             hallId={hallId}
@@ -5551,7 +6236,7 @@ const PrivateChannels = () => {
                             host={username}
                           />
                         ) : null}
-
+   
                         <div
                           className="chatarea"
                           style={{
@@ -5559,6 +6244,7 @@ const PrivateChannels = () => {
                             zIndex: "-1",
                           }}
                         >
+                        
                           {chatData.length
                             ? chatData.map((e) => (
                                 <div
@@ -5630,12 +6316,40 @@ const PrivateChannels = () => {
                                         e.isEmoji ? "message-emoji" : "message"
                                       }
                                     >
-                                      {!e.isVideo && !e.isImage
+                                      {!e.isVideo && !e.isImage && !e.isPoll
                                         ? e.message
                                         : null}
                                     </div>
                                   </Linkify>
+                                  {e.isPoll?<div style={{marginTop:'30px'}}>
+                                        <Form onSubmit={(e)=>e.preventDefault()}>
+  <Form.Group className="mb-3" >
+  <h3>{e.pollData.Question}</h3>
 
+  </Form.Group>
+  <Form.Group className="mb-3" >
+   
+    <Form.Check type="checkbox" label={e.pollData.OptionA} />
+    <ProgressBar animated  variant="success" now={90} />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="checkbox" label={e.pollData.OptionB} />
+    <ProgressBar animated  variant="info" now={50} />
+  </Form.Group>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="checkbox" label={e.pollData.OptionC} />
+    <ProgressBar animated  variant="warning" now={70} />
+  </Form.Group>
+  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+    <Form.Check type="checkbox" label="Check me out" />
+  </Form.Group> */}
+  <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
+    Vote
+  </Button>
+</Form>
+                                      </div>:null}
                                   {e.isVideo ? (
                                     <video
                                       onDragStart={(e) => e.preventDefault()}
@@ -5673,7 +6387,7 @@ const PrivateChannels = () => {
                               ))
                             : null}
                         </div>
-
+                    
                         {emojiPicker && (
                           <ClickAwayListener
                             onClickAway={() => {

@@ -265,11 +265,11 @@ const SideBar = () => {
 
 
 
-<SideBarOption
+{/* <SideBarOption
                         option="XMG Wallet"
                         Icon={XMGWALLET}
                     // link={`/private/Club/${username}`}
-                    />
+                    /> */}
                   
                     <SideBarOption
                         option="Explore"
@@ -457,7 +457,7 @@ const SideBar = () => {
                             href="https://www.verohive.com/"
                             target="_blank" rel="noopener noreferrer"
                         >
-                            <span>VeroHive Video Conferencing</span>
+                            <span>Video Meetings</span>
                         </a>
                     </li>
                     <li>
@@ -467,7 +467,7 @@ const SideBar = () => {
                             href="https://fortisab.com/"
                             target="_blank" rel="noopener noreferrer"
                         >
-                            <span>Fortis Auction Blockmarket</span>
+                            <span>FortisAB Marketplace</span>
                         </a>
                     </li>
 

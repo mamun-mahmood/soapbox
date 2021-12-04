@@ -1862,6 +1862,67 @@ hr {
   font-weight: 500;
 }
 
+.slide-container {
+  position: relative;
+}
+#slideIFMP{
+  position: absolute;
+  min-width: 70%;
+  min-height: 100%; 
+   transition: 1s; 
+  width: 70% !important;
+  height: 100vh !important;
+  z-index: 999999;
+  left: 200vw;
+  top: 0;
+  background-color: white;
+  transition: 1s;
+  
+}
+
+#slideIFMP .header-iframe{
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-end;
+  align-items: center;
+  width: 100%;
+  background-color: #F8F9FA;
+  z-index: 9999999;
+  padding: 5px;
+  font-weight: bold;
+  height: 73px;
+}
+
+.live-header {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: #dcd5fa;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+}
+#slideIFMP .header-iframe button{
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+   width: 30px;
+   height: 30px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  border: none;
+  margin-right:25px
+}
+#slideIFMP .header-iframe button:hover{
+
+  background-color: rgb(141, 3, 3);
+  
+}
+
+
 .profile-page {
   width: 100%;
   overflow-x: hidden;

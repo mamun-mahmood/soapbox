@@ -107,9 +107,9 @@ function App() {
           <EmbedHootPage />
         </Route>
 
-        <Route path="/create-private">
+        {/* <Route path="/create-private">
           <ProtectedRoute page={CreatePrivateHoot} />
-        </Route>
+        </Route> */}
 
         <Route exact path="/create">
           <ProtectedRoute page={CreateHoot} />
@@ -159,7 +159,7 @@ function App() {
         </Route>
 
         <Route path="/:fakeKey/private/Club/:username/:randomKey">
-          <ProtectedRoute page={PrivateChannelsPage} />
+        {userInformation?<ProtectedRoute page={PrivateChannelsPage} />:<ProtectedRoute page={LandingPage} />}  
           {/* <PrivateChannelsPage /> */}
         </Route>
         <Route path="/:fakeKey/Payments/:randomKey">

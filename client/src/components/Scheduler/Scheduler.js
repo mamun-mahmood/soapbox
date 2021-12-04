@@ -12,23 +12,23 @@ export default function Scheduler() {
                         name="meetingtitle"
                         type="text" style={{ width: '150px' }}
                         ref="meetingtitle"
-                        value={this.state.meetingtitle}
-                        onChange={this.onChange}
+                        // value={this.state.meetingtitle}
+                        // onChange={this.onChange}
 
                     /><br></br><br></br>
                     <textarea placeholder="description"
                         name="meetingdescription"
                         type="text" style={{ width: '150px' }}
                         ref="meetingdescription"
-                        value={this.state.meetingdescription}
-                        onChange={this.onChange}
+                        // value={this.state.meetingdescription}
+                        // onChange={this.onChange}
                     /><br></br><br></br>
                     <select placeholder="Date" type="text"
                         name="meetingDate"
                         type="text" style={{ width: '30px' }}
                         ref="meetingDate"
-                        value={this.state.meetingDate}
-                        onChange={this.onChange}
+                        // value={this.state.meetingDate}
+                        // onChange={this.onChange}
                     >
                         <option>1</option>
                         <option>2</option>
@@ -68,8 +68,8 @@ export default function Scheduler() {
                         name="meetingMonth"
                         type="text" style={{ width: '100px' }}
                         ref="meetingMonth"
-                        value={this.state.meetingMonth}
-                        onChange={this.onChange}
+                        // value={this.state.meetingMonth}
+                        // onChange={this.onChange}
                     >
                         <option>January</option>
                         <option>February</option>
@@ -91,8 +91,8 @@ export default function Scheduler() {
                         name="meetingYear"
                         type="text" style={{ width: '60px' }}
                         ref="meetingYear"
-                        value={this.state.meetingYear}
-                        onChange={this.onChange}
+                        // value={this.state.meetingYear}
+                        // onChange={this.onChange}
                     >
                         <option>2020</option>
                         <option>2021</option>
@@ -106,8 +106,8 @@ export default function Scheduler() {
                         name="meetingHrs"
                         type="text" style={{ width: '30px' }}
                         ref="meetingHrs"
-                        value={this.state.meetingHrs}
-                        onChange={this.onChange}
+                        // value={this.state.meetingHrs}
+                        // onChange={this.onChange}
                     />
                     /
                     <input
@@ -116,8 +116,8 @@ export default function Scheduler() {
                         name="meetingMin"
                         type="text" style={{ width: '30px' }}
                         ref="meetingMin"
-                        value={this.state.meetingMin}
-                        onChange={this.onChange}
+                        // value={this.state.meetingMin}
+                        // onChange={this.onChange}
 
                     /> /
                     <input
@@ -127,42 +127,12 @@ export default function Scheduler() {
                         name="meetingSec"
                         type="text" style={{ width: '30px' }}
                         ref="meetingSec"
-                        value={this.state.meetingSec}
-                        onChange={this.onChange}
+                        // value={this.state.meetingSec}
+                        // onChange={this.onChange}
                     />
 
 
-                    <br></br><br></br>
-                    <hr></hr>
-                    <h5>Invite Contacts </h5> <div>
-
-                        <button onClick={() => this.viewfollowing()}>View Contacts</button>
-                        {this.state.following && this.state.following.length > 0
-                            ? this.state.following.map((value, index) => {
-                                if (index < 10) {
-                                    return (
-                                        <div style={{ backgroundColor: "#663399" }}>
-                                            <span> {value.fullnamerequested == this.state.firstname + this.state.lastname ? (value.fullnameaccepted) : (value.fullnamerequested)}</span>
-                                            {/* <span>Enter </span> */}
-                                            <button onClick={() => this.setState({
-                                                show: true
-                                            })}>Send</button>
-                                            {this.state.show ? (<div>
-                                                <input type="text" placeholder="typesomething" name="write" onChange={(event) => { this.inputHandler(event) }} />
-                                                <span>{value.emailrequested == this.state.email ? (<button onClick={() => this.sendemail(value.emailaccepted)}>Send Email</button>) : (<button onClick={() => this.sendemail(value.emailrequested)}>Send Email</button>)}</span>
-                                            </div>) : null}
-
-                                        </div>
-
-                                    );
-                                }
-                            })
-                            : null}
-                    </div>
-                    <input type='text' placeholder='search'></input> <button>Add</button>
-
-                    <br></br><br></br>
-                    <hr></hr>
+                    
                     <button>Confirm</button>
                 </form>
 

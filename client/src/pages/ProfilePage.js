@@ -16,7 +16,7 @@ const ProfilePage = () => {
     const { username } = useParams();
     const [userInfo, setUserInfo] = useState([]);
     const [loading, setLoading] = useState(true);
-
+  
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const BaseURL = process.env.REACT_APP_API_URL;
 
