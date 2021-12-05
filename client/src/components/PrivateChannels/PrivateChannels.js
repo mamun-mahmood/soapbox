@@ -347,7 +347,8 @@ const [inviteBox,setInviteBox]=useState(false)
           `${BaseURL}/profile-pictures/${data.profilePic}`,
           data.isEmoji,
           data.isVideo,
-          data.isImage
+          data.isImage,
+          data.isPoll
         );
       }
     });
@@ -4192,7 +4193,7 @@ const [inviteBox,setInviteBox]=useState(false)
                                             : "100%",
                                       }}
                                       onClick={() => {
-                                          if(e.chatname!==userFullName){
+                                          if(e.chatname!==userFullName && !e.isPoll){
                                               toast.success(
                                           `Opening Private Chat with ${e.chatname}`
                                         );
@@ -6284,7 +6285,7 @@ const [inviteBox,setInviteBox]=useState(false)
                                       e.isVideo || e.isImage ? "200px" : "100%",
                                   }}
                                   onClick={() => {
-                                    if(e.chatname!==userFullName){
+                                    if(e.chatname!==userFullName && !e.isPoll){
                                         toast.success(
                                     `Opening Private Chat with ${e.chatname}`
                                   );
