@@ -165,7 +165,7 @@ const [inviteBox,setInviteBox]=useState(false)
   const [messageInboxValue, setMessageInboxValue] = useState("");
   const [breakOffInput, setBreakOffInput] = useState("");
   const [showPollForm,setShowPollForm] = useState(false)
-  const [pollFormData,setPollFormData] =useState({Question:'',OptionA:'',OptionB:'',OptionC:''})
+  const [pollFormData,setPollFormData] =useState({Question:'',OptionA:'',OptionB:'',OptionC:'',createdBy:'',threadId:'',pollA:90,pollB:50,pollC:60})
   const [pollFormDataQ,setPollFormDataQ] =useState("")
   const [pollFormDataOA,setPollFormDataOA] =useState("")
   const [pollFormDataOB,setPollFormDataOB] =useState("")
@@ -273,7 +273,7 @@ const [inviteBox,setInviteBox]=useState(false)
         `${message}`,
         "right",
         `${BaseURL}/profile-pictures/${userProfilePic}`,
-        emojiValidator
+        emojiValidator,
       );
       // socket.emit('send',message);
       let isCommunity=userInfo[0].communityClub
@@ -382,7 +382,8 @@ const [inviteBox,setInviteBox]=useState(false)
     
 
     socket.on("left", (name) => {
-      if(userFullName!==name){
+   
+      if(userFullName&&userFullName!==name){
          append(name, `${name} left the chat`);
       }
      
@@ -996,12 +997,17 @@ const [inviteBox,setInviteBox]=useState(false)
   const handlePollFormSubmission=(user)=>{
     if(pollFormDataQ&&(pollFormDataOA || pollFormDataOB || pollFormDataOC)){
       toast.success('Created Poll Successfully!')
+      let threadId= uuidv4()
       setPollFormData({
         Question:pollFormDataQ,
         OptionA:pollFormDataOA,
         OptionB:pollFormDataOB,
         OptionC:pollFormDataOC,
-        createdBy:user
+        createdBy:user,
+        threadId:threadId,
+        pollA:0,
+        pollB:0,
+        pollC:0
       })
       setFormEditPoll(!FormEditPoll)
 
@@ -4091,7 +4097,8 @@ const [inviteBox,setInviteBox]=useState(false)
                         <Form onSubmit={(e)=>e.preventDefault()}>
   <Form.Group className="mb-3" >
     <Form.Label>Enter Question For Poll</Form.Label>
-    <Form.Control type="text" onChange={(e)=>{setPollFormDataQ(e.target.value)}} placeholder="Enter Question For Poll" />
+    <Form.Control type="text"   value={pollFormDataQ}
+    onChange={(e)=>{setPollFormDataQ(e.target.value)}} placeholder="Enter Question For Poll" />
   </Form.Group>
   <Form.Group className="mb-3" >
     <Form.Label>Option A</Form.Label>
@@ -4110,9 +4117,9 @@ const [inviteBox,setInviteBox]=useState(false)
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
   </Form.Group> */}
-  <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
+  {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Preview 
-  </Button>
+  </Button> */}
   <Button variant="primary" type="submit" style={{marginLeft:'5px'}} onClick={()=>{handlePollFormSubmission(userFullName)}}>
     Submit
   </Button>
@@ -4125,17 +4132,17 @@ const [inviteBox,setInviteBox]=useState(false)
   <Form.Group className="mb-3" >
    
     <Form.Check type="checkbox" label={pollFormData.OptionA} />
-    <ProgressBar animated  variant="success" now={90} />
+    <ProgressBar animated  variant="success" now={pollFormData.pollA} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
   <Form.Check type="checkbox" label={pollFormData.OptionB} />
-    <ProgressBar animated  variant="info" now={50} />
+    <ProgressBar animated  variant="info" now={pollFormData.pollB} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
   <Form.Check type="checkbox" label={pollFormData.OptionC} />
-    <ProgressBar animated  variant="warning" now={70} />
+    <ProgressBar animated  variant="warning" now={pollFormData.pollC} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
@@ -4266,7 +4273,7 @@ const [inviteBox,setInviteBox]=useState(false)
                                       {e.isPoll?<div style={{marginTop:'30px'}}>
                                         <Form onSubmit={(e)=>e.preventDefault()}>
   <Form.Group className="mb-3" >
-  <h3>{e.pollData.Question}</h3>
+  <p style={{fontSize:'14px'}}>{e.pollData.Question}</p>
 
   </Form.Group>
   <Form.Group className="mb-3" >
@@ -6184,7 +6191,8 @@ const [inviteBox,setInviteBox]=useState(false)
                         <Form onSubmit={(e)=>e.preventDefault()}>
   <Form.Group className="mb-3" >
     <Form.Label>Enter Question For Poll</Form.Label>
-    <Form.Control type="text" onChange={(e)=>{setPollFormDataQ(e.target.value)}} placeholder="Enter Question For Poll" />
+    <Form.Control type="text"  value={pollFormDataQ}
+    onChange={(e)=>{setPollFormDataQ(e.target.value)}} placeholder="Enter Question For Poll" />
   </Form.Group>
   <Form.Group className="mb-3" >
     <Form.Label>Option A</Form.Label>
@@ -6203,9 +6211,9 @@ const [inviteBox,setInviteBox]=useState(false)
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
   </Form.Group> */}
-  <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
+  {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Preview 
-  </Button>
+  </Button> */}
   <Button variant="primary" type="submit" style={{marginLeft:'5px'}} onClick={()=>{handlePollFormSubmission(userFullName)}}>
     Submit
   </Button>
@@ -6218,17 +6226,17 @@ const [inviteBox,setInviteBox]=useState(false)
   <Form.Group className="mb-3" >
    
     <Form.Check type="checkbox" label={pollFormData.OptionA} />
-    <ProgressBar animated  variant="success" now={90} />
+    <ProgressBar animated  variant="success" now={pollFormData.pollA} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
   <Form.Check type="checkbox" label={pollFormData.OptionB} />
-    <ProgressBar animated  variant="info" now={50} />
+    <ProgressBar animated  variant="info" now={pollFormData.pollB} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
   <Form.Check type="checkbox" label={pollFormData.OptionC} />
-    <ProgressBar animated  variant="warning" now={70} />
+    <ProgressBar animated  variant="warning" now={pollFormData.pollC} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
@@ -6355,7 +6363,7 @@ const [inviteBox,setInviteBox]=useState(false)
                                   {e.isPoll?<div style={{marginTop:'30px'}}>
                                         <Form onSubmit={(e)=>e.preventDefault()}>
   <Form.Group className="mb-3" >
-  <h3>{e.pollData.Question}</h3>
+  <p style={{fontSize:'14px'}}>{e.pollData.Question}</p>
 
   </Form.Group>
   <Form.Group className="mb-3" >

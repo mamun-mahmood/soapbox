@@ -246,12 +246,13 @@ const SideBar = () => {
                         Icon={communityclub}
                     // link={`/private/Club/${username}`}
                     />
-                    <SideBarOption
+                    {userInfo?  <SideBarOption
                         option="Request Private Club"
                         Icon={requestprivateclub}
-                    // link={`/private/Club/${username}`}
+                     link={`/request-private-club/${username}`}
                     />
-                     
+                     :null}
+                  
 
 
                     {userInfo

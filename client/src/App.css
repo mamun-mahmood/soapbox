@@ -2910,3 +2910,21 @@ left: 10;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
+.contract-viewer{
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid lightgrey;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: white;
+  cursor:auto;
+ 
+}
+.contract-viewer h5{
+  text-align: center;
+}
+.contract-viewer p{
+  line-height: 30px;
+  font-size: 14px;
+  width: 100%;
+}

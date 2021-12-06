@@ -39,6 +39,7 @@ import CommentsPanel from './pages/CommentsPanel/CommentsPanel';
 import AudioHall from './components/VideoAudioCall/AudioHall';
 import ReceptionAudio from './components/VideoAudioCall/audioReception';
 import StripePage from './components/Stripe/StripePage';
+import RequestPrivateClubPage from './pages/RequestPrivateClubPage';
 
 function App() {
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
@@ -132,6 +133,9 @@ function App() {
         <Route path="/profile/:username">
           <ProtectedRoute page={ProfilePage} />
         </Route>
+        <Route path="/request-private-club/:username">
+          <ProtectedRoute page={RequestPrivateClubPage} />
+        </Route>
 
         <Route path="/hashtags/:hashtag">
           {/* <ProtectedRoute page={HashtagHootsPage} /> */}
@@ -159,8 +163,8 @@ function App() {
         </Route>
 
         <Route path="/:fakeKey/private/Club/:username/:randomKey">
-        {userInformation?<ProtectedRoute page={PrivateChannelsPage} />:<ProtectedRoute page={LandingPage} />}  
-          {/* <PrivateChannelsPage /> */}
+        {/* {userInformation?<ProtectedRoute page={PrivateChannelsPage} />:<ProtectedRoute page={LandingPage} />}   */}
+        <ProtectedRoute page={PrivateChannelsPage} />
         </Route>
         <Route path="/:fakeKey/Payments/:randomKey">
           <ProtectedRoute page={StripePage} />
