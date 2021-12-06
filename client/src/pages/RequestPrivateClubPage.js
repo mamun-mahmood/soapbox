@@ -17,55 +17,54 @@ const RequestPrivateClubPage = () => {
     const { username } = useParams();
     const [userInfo, setUserInfo] = useState([]);
     const [loading, setLoading] = useState(true);
-  
+    const [category,setCategory] = useState('');
+    const [purpose,setPurpose] = useState('');
+    
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const BaseURL = process.env.REACT_APP_API_URL;
 
     const { myStream, hookStream } = useContext(MyStream);
-    const categoryForClub=["Olympics (Olympics)",
-      "  World of Fitness (Fitness)",
-       " World of Bodybuilding (bodybuilding)",
-      "  Books & Authors (Bookclub)",
-       " Luxury & Wealth (Luxury)",
-        "Entrepreneurs & Startups (entrepreneur)",
-        "Cannabis & CBD (Cannabis)",
-        "NFTs & Digital Art (nft)",
-        "Commercial Real Estate (CRE)",
-        "Music & Artist (Music)",
-        "Dating & Relationships (dating)",
-        "Indie Movies (indiemovies)",
-        "Real Estate (realestate)",
-        "Religion (push)",
-        "Cosplay & Creations (cosplay)",
-        "MMA & Kickboxing (MMA)",
-        "Martial Arts & Training (martialarts)",
-        "Food & Cooking (foodies)",
-        "Fashion & Events (fashion)",
-        "DIY & Interior Design (diy)",
-        "Crypto & Trading (crypto)",
-       " All Things Gothic (gothic)",
-        "Beauty & Health (beauty)",
-        "World of Crossfit (crossfit)",
-        "Mental Health (mentalhealth)",
-        "Wine & Events (wineclub)",
-        "Keto & Diets (keto)",
-        "Political Campaigns (elections)",
-        "Boxing & Training (boxing)",
-        "American Muscle Cars (americanmuscle)",
-        "Blockchain (Blockchain)",
-       " Ballet & Events (ballet)",
-       " Bitcoin (bitcoin)"]
-       const privateClubCategory=["Deal Making & Investments (investmentclub)",
-
-        "Models & Adult Entertainers (playersclub)",
-        
-       " Gaming & Gamers (gamergirl)",
-        
-        "Alternative Lifestyle & Events (altlife)",
-        
-        "True Crime History & Events (truecrime)",
-        
-       " College Sports (collegespotlight)"]
+    const categoryForClub=[{name:"Olympics (Olympics)",username:"Olympics"} ,
+    {name:"World of Fitness (Fitness)",username:"Fitness"},
+    {name:"World of Bodybuilding (bodybuilding)",username:"bodybuilding"},
+    {name:"Books & Authors (Bookclub)",username:"Bookclub"},
+    {name:"Entrepreneurs & Startups (entrepreneur)",username:"entrepreneur"},
+    {name:"Cannabis & CBD (Cannabis)",username:"Cannabis"},
+    {name:"NFTs & Digital Art (nft)",username:"nft"},
+    {name:"Commercial Real Estate (CRE)",username:"CRE"},
+    {name:"Music & Artist (Music)",username:"Music"},
+    {name:"Dating & Relationships (dating)",username:"dating"} ,
+    {name:"Indie Movies (indiemovies)",username:"indiemovies"} ,
+    {name:"Real Estate (realestate)",username:"realestate"} ,
+    {name:"Religion (push)",username:"push"} ,
+    {name:"Cosplay & Creations (cosplay)",username:"cosplay"} ,
+    {name:"MMA & Kickboxing (MMA)",username:"MMA"} ,
+    {name:"Martial Arts & Training (martialarts)",username:"martialarts"} ,
+    {name:"Food & Cooking (foodies)",username:"foodies"} ,
+    {name:"Fashion & Events (fashion)",username:"fashion"} ,
+    {name:"DIY & Interior Design (diy)",username:"diy"} ,
+    {name:"Crypto & Trading (crypto)",username:"crypto"} ,
+    {name:"All Things Gothic (gothic)",username:"gothic"} ,
+    {name:"Beauty & Health (beauty)",username:"beauty"} ,
+    {name:"World of Crossfit (crossfit)",username:"crossfit"} ,
+    {name:"Mental Health (mentalhealth)",username:"mentalhealth"} ,
+    {name:"Wine & Events (wineclub)",username:"wineclub"} ,
+    {name:"Keto & Diets (keto)",username:"keto"} ,
+     {name:"Political Campaigns (elections)",username:"elections"} ,
+    {name:"Boxing & Training (boxing)",username:"boxing"} ,
+    {name:"American Muscle Cars (americanmuscle)",username:"americanmuscle"} ,
+    {name:"Blockchain (Blockchain)",username:"Blockchain"} ,
+    {name:"Ballet & Events (ballet)",username:"ballet"} ,
+    {name:"Bitcoin (bitcoin)",username:"bitcoin"} ,
+]
+       const privateClubCategory=[
+        {name:"Deal Making & Investments (investmentclub)",username:"investmentclub"},  
+        {name:"Models & Adult Entertainers (playersclub)",username:"playersclub"},   
+        {name:"Gaming & Gamers (gamergirl)",username:"gamergirl"},  
+        {name:"Alternative Lifestyle & Events (altlife)",username:"altlife"},  
+        {name:"True Crime History & Events (truecrime)",username:"truecrime"},  
+        {name:"College Sports (collegespotlight)",username:"collegespotlight"},  
+      ]
     
     useEffect(() => {
         if (myStream) {
@@ -97,10 +96,16 @@ const RequestPrivateClubPage = () => {
     }, [username])
 
     const submitRequestHandler=()=>{
-        toast.success('Private Club Request Submitted Successfully')
-        setTimeout(() => {
-            history.push("/");
-        }, 500);
+        axios.post(`${BaseURL}/upload/RequestPrivateClub`,{
+            username:username,category:category,purpose:purpose,toc:1
+        }).then((res)=>{
+
+            toast.success(res.data)
+            setTimeout(() => {
+                history.push("/");
+            }, 500);
+        })
+      
     }
     return (
         <Fragment >
@@ -175,14 +180,16 @@ B) At the Club Owner's discretion they can select to receive a cash transfer to 
 By digital signing below, the undersigned Soapbox Private Club Owner understands and agrees to all of the terms of this agreement.
                            </p>
                     </div>
-
+                   
+                   
   <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" required label="I have read the PRIVATE CLUB OWNER AGREEMENT and i agree to abide the rules" />
    
   </Form.Group>
   <Form.Group className="mb-3" controlId="formBasicEmail">
     <Form.Label>What is the purpose of your private club?</Form.Label>
-    <Form.Control as="textarea" rows={3} required type="text" placeholder="Type your answer in brief" />
+  
+    <Form.Control as="textarea" rows={3} required value={purpose} onChange={(e)=>{setPurpose(e.target.value)}} type="text" placeholder="Type your answer in brief" />
     <Form.Text className="text-muted">
       We'll never share your information with anyone else.
     </Form.Text>
@@ -191,7 +198,7 @@ By digital signing below, the undersigned Soapbox Private Club Owner understands
   <Form.Group className="mb-3" controlId="formBasicEmail">
     <Form.Label>Private Club Category</Form.Label>
     
-    <Form.Control as="select" required  aria-label="Default select example">
+    <Form.Control as="select" value={category} required  aria-label="Default select example" onChange={(e)=>{setCategory(e.target.value)}}>
   {/* <option>Select Category</option>
   <option value="1">One</option>
   <option value="2">Two</option>
@@ -202,8 +209,8 @@ By digital signing below, the undersigned Soapbox Private Club Owner understands
   <option value="2">Two</option>
   <option value="3">Three</option> */}
    <option>Select Category</option>
-  {categoryForClub.map((e)=> <option value={e}>{e}</option>)}
-  {privateClubCategory.map((e)=> <option value={e}>{e}</option>)}
+  {categoryForClub.map((e)=> <option value={e.username}>{e.name}</option>)}
+  {privateClubCategory.map((e)=> <option value={e.username}>{e.name}</option>)}
   
 </Form.Control>
   </Form.Group>

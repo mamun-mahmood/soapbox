@@ -738,6 +738,34 @@ overflow-wrap: break-word;
   z-index: 9999999999;
 }
 
+.Approve-request{
+background-color: green;
+margin: 1rem;
+color: white;
+border-radius: 5px;
+padding: 3px;
+outline: none;
+cursor: pointer;
+}
+
+.Approve-request:hover{
+  background-color: rgb(0, 75, 0);
+  transform: scale(1.05);
+}
+
+.Delete-request{
+background-color: red;
+margin: 1rem;
+color: white;
+border-radius: 5px;
+padding: 3px;
+outline: none;
+cursor: pointer;
+}
+.Delete-request:hover{
+  background-color: rgb(163, 3, 3);
+  transform: scale(1.05);
+}
 /* .showPollForm input{
   width: 90%;
   background-color: white;

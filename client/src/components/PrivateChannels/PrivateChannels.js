@@ -26,7 +26,7 @@ import {
   FiPlus,
 } from "react-icons/fi";
 import socket, { startSocket } from "../../socketChat";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { GiHamburgerMenu, GiTick } from "react-icons/gi";
 import Picker from "emoji-picker-react";
 import Linkify from "react-linkify";
 import CreatePrivateHoot from "../../pages/CreatePrivateHoot";
@@ -156,6 +156,7 @@ const PrivateChannels = () => {
   const history = useHistory();
   const [userInfo, setUserInfo] = useState([]);
   const [subscribedMembers, setSubscribedMembers] = useState([]);
+  const [clubRequestsData,setClubRequestsData] =useState([])
 const [inviteBox,setInviteBox]=useState(false)
   const [likes, setLikes] = useState(0);
   const [views, setViews] = useState(0);
@@ -574,6 +575,7 @@ const [inviteBox,setInviteBox]=useState(false)
         setOnDemandUploads(response.data.results);
       });
   };
+
 
   // useEffect(() => {
   // }, []);
@@ -1057,7 +1059,7 @@ const [inviteBox,setInviteBox]=useState(false)
 
   const getIntent = () => {
     axios
-      .post(`http://localhost:3001/Payments/checkout`, {
+      .post(`${BaseURL}/Payments/checkout`, {
         data: { amount: subscribePrice, currency: "usd" },
       })
       .then((res) => {
@@ -1069,6 +1071,51 @@ const [inviteBox,setInviteBox]=useState(false)
     getAllSubscribedMembers();
   }, []);
 
+const deleteClubRequest=(user)=>{
+  axios.post(`${BaseURL}/upload/removeRequest`,{
+    username:user.username
+  }).then(res=>{
+    setClubRequestsData(clubRequestsData.filter((e)=>e.username!==user.username))
+    toast.success("Deleted Request")
+    
+  
+  })
+}
+const deleteClubRequestAuto=(user)=>{
+  axios.post(`${BaseURL}/upload/removeRequest`,{
+    username:user.username
+  }).then(res=>{
+    setClubRequestsData(clubRequestsData.filter((e)=>e.username!==user.username))
+   
+    
+  
+  })
+}
+  const handleClubRequestApprove=(user)=>{
+    axios.post(`${BaseURL}/upload/approveRequest`,{
+      username:user.username
+    }).then(res=>{
+        if(res.data.status==1){
+          toast.success(res.data.message)
+          deleteClubRequestAuto(user)
+        }
+      
+    
+    })
+  }
+  const getAllClubRequest=()=>{
+    axios.post(`${BaseURL}/upload/getAllClubRequests`,{
+      username:username
+    }).then(res=>{
+    
+        setClubRequestsData(res.data)
+    
+    })
+  }
+
+  useEffect(() => {
+    getAllClubRequest()
+  }, [username])
   //    useEffect(() => {
 
   //     let clientSecret ="pi_3JytnwL1MA97pYvH1vTUJhgu_secret_b5a40SDcurxmKiyEdNsmiBRo0"
@@ -5058,7 +5105,7 @@ const [inviteBox,setInviteBox]=useState(false)
                         color: "white",
                       }}
                     >
-                      <h5>Requests</h5>
+                      <h5>Club Requests</h5>
                       <FaWindowClose
                        className="FaWindowClose"
                         style={{ cursor: "pointer" }}
@@ -5073,8 +5120,34 @@ const [inviteBox,setInviteBox]=useState(false)
                           }, 1000);
                         }}
                       />
+                   
                     </div>
-                    <p>No Requests</p>
+                    {/* <p>No Requests</p> */}
+                    {/* <h5>Club Request</h5> */}
+                    <div
+                      style={{
+                        maxHeight: "400px",
+                        padding: "1rem",
+                        overflowY: "auto",
+                       
+                      }}
+                    >
+                      {clubRequestsData.map((user, index) => (
+                        <div
+                          key={user.id}
+                          className="messageBox"
+                          style={{
+                            minWidth: "250px",
+                            padding: "1px",
+                            margin: "8px",
+                            display:'flex',
+                            flexDirection:'row'
+                          }}
+                        >
+                          <SubscribedUser username={user.username} /><button className="Approve-request" onClick={()=>{handleClubRequestApprove(user)}}>Approve</button><button className="Delete-request" onClick={()=>deleteClubRequest(user)}>Delete</button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ) : null}
@@ -5366,6 +5439,8 @@ const [inviteBox,setInviteBox]=useState(false)
                         </div>
                       ))}
                     </div>
+                  
+
                   </div>
                 </div>
               ) : null}
