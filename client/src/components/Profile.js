@@ -146,6 +146,14 @@ const Profile = ({
       ));
     }
   };
+  const createPrivateClubRequest=(privateC)=>{
+    if(!privateC){
+history.push(`/request-private-club/${username}`)
+    }else{
+      toast.error('You Can not request for another Private Club if you already have one!')
+    }
+    
+  }
 
   return (
     <div className="profile-page-main">
@@ -213,9 +221,9 @@ const Profile = ({
                 ) : (
                   <button
                     className="btn-add-private-c"
-                    onClick={addPrivateChannel}
+                    onClick={()=>{createPrivateClubRequest(privateC)}}
                   >
-                    Request Club Ownership
+                    Request Private Club
                   </button>
                 )}
               </div>

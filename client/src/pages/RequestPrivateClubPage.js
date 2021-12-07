@@ -19,6 +19,7 @@ const RequestPrivateClubPage = () => {
     const [loading, setLoading] = useState(true);
     const [category,setCategory] = useState('');
     const [purpose,setPurpose] = useState('');
+    const [fullname,setFullname]=useState('')
     
     const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
     const BaseURL = process.env.REACT_APP_API_URL;
@@ -56,6 +57,8 @@ const RequestPrivateClubPage = () => {
     {name:"Blockchain (Blockchain)",username:"Blockchain"} ,
     {name:"Ballet & Events (ballet)",username:"ballet"} ,
     {name:"Bitcoin (bitcoin)",username:"bitcoin"} ,
+    {name:"Sports (sportstalk)",username:"sportstalk"} ,
+    {name:"Stocks & Trading (stockwatch)",username:"stockwatch"} ,
 ]
        const privateClubCategory=[
         {name:"Deal Making & Investments (investmentclub)",username:"investmentclub"},  
@@ -96,8 +99,9 @@ const RequestPrivateClubPage = () => {
     }, [username])
 
     const submitRequestHandler=()=>{
-        axios.post(`${BaseURL}/upload/RequestPrivateClub`,{
-            username:username,category:category,purpose:purpose,toc:1
+        if(category){
+             axios.post(`${BaseURL}/upload/RequestPrivateClub`,{
+            username:username,category:category,purpose:purpose,toc:1,fullname:fullname
         }).then((res)=>{
 
             toast.success(res.data)
@@ -105,6 +109,10 @@ const RequestPrivateClubPage = () => {
                 history.push("/");
             }, 500);
         })
+        }else{
+            toast.error('Please Choose any Club category to proceed')
+        }
+       
       
     }
     return (
@@ -182,9 +190,10 @@ By digital signing below, the undersigned Soapbox Private Club Owner understands
                     </div>
                    
                    
-  <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" required label="I have read the PRIVATE CLUB OWNER AGREEMENT and i agree to abide the rules" />
-   
+  <Form.Group className="mb-3" controlId="formBasicCheckbox" >
+    <Form.Check type="checkbox"  required label="I have read the PRIVATE CLUB OWNER AGREEMENT and i agree to abide the rules" />
+    <Form.Control type="text" value={fullname} onChange={(e)=>{setFullname(e.target.value)}}  required placeholder="Full Name" />
+  
   </Form.Group>
   <Form.Group className="mb-3" controlId="formBasicEmail">
     <Form.Label>What is the purpose of your private club?</Form.Label>

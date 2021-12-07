@@ -1082,7 +1082,7 @@ const deleteClubRequest=(user)=>{
   })
 }
 const deleteClubRequestAuto=(user)=>{
-  axios.post(`${BaseURL}/upload/removeRequest`,{
+  axios.post(`${BaseURL}/upload/clearRequestList`,{
     username:user.username
   }).then(res=>{
     setClubRequestsData(clubRequestsData.filter((e)=>e.username!==user.username))
