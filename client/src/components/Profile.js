@@ -463,7 +463,7 @@ history.push(`/request-private-club/${username}`)
                         setShowIframe(false);
                       }, 500);
                     } else {
-                      setIframeBox({src:'https://documega.net/signin/?secure=true',title:'DocuMega'})
+                      setIframeBox({src:'https://www.documega.com/enterprise-solutions/documega/',title:'DocuMega'})
                      setShowIframe(true)
                       setTimeout(() => {
                         if (
@@ -506,7 +506,7 @@ history.push(`/request-private-club/${username}`)
                         setShowIframe(false);
                       }, 500);
                     } else {
-                        setIframeBox({src:'https://megahoot.org/',title:'XMG Wallet'})
+                        setIframeBox({src:'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/',title:'XMG Wallet'})
                                    
                      setShowIframe(true)
                       setTimeout(() => {
@@ -542,7 +542,7 @@ history.push(`/request-private-club/${username}`)
                         setShowIframe(false);
                       }, 500);
                     } else {
-                        setIframeBox({src:'https://megahootvault.org/login/',title:'MegaHoot Vault'})
+                        setIframeBox({src:'https://www.megahoot.com/vault/megahoot-vault/',title:'MegaHoot Vault'})
                                 
                                 
                      setShowIframe(true)
