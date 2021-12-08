@@ -868,3 +868,16 @@ cursor: pointer;
   align-items: center;
   justify-content: center;
 }
+
+.progress-bar{
+  background-color: #8249A0 !important;
+}
+
+.progress{
+  height: 6px !important;
+}
+
+.form-check-input:checked{
+  background-color: #8249A0 !important;
+  border:#8249A0 !important ;  
+}

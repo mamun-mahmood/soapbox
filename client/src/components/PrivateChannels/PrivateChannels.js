@@ -4162,7 +4162,7 @@ const deleteClubRequestAuto=(user)=>{
     <Form.Control value={pollFormDataOC} onChange={(e)=>{setPollFormDataOC(e.target.value)}} placeholder="Option c" />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
+    <Form.Check type="radio" label="Check me out" />
   </Form.Group> */}
   {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Preview 
@@ -4178,21 +4178,21 @@ const deleteClubRequestAuto=(user)=>{
   </Form.Group>
   <Form.Group className="mb-3" >
    
-    <Form.Check type="checkbox" label={pollFormData.OptionA} />
-    <ProgressBar animated  variant="success" now={pollFormData.pollA} />
+    <Form.Check type="radio" label={pollFormData.OptionA} />
+    <ProgressBar   variant="success" now={pollFormData.pollA} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={pollFormData.OptionB} />
-    <ProgressBar animated  variant="info" now={pollFormData.pollB} />
+  <Form.Check type="radio" label={pollFormData.OptionB} />
+    <ProgressBar   variant="info" now={pollFormData.pollB} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={pollFormData.OptionC} />
-    <ProgressBar animated  variant="warning" now={pollFormData.pollC} />
+  <Form.Check type="radio" label={pollFormData.OptionC} />
+    <ProgressBar   variant="warning" now={pollFormData.pollC} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
+    <Form.Check type="radio" label="Check me out" />
   </Form.Group> */}
   <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Edit 
@@ -4325,21 +4325,21 @@ const deleteClubRequestAuto=(user)=>{
   </Form.Group>
   <Form.Group className="mb-3" >
    
-    <Form.Check type="checkbox" label={e.pollData.OptionA} />
-    <ProgressBar animated  variant="success" now={90} />
+    <Form.Check type="radio" label={e.pollData.OptionA} />
+    <ProgressBar    now={90} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.pollData.OptionB} />
-    <ProgressBar animated  variant="info" now={50} />
+  <Form.Check type="radio" label={e.pollData.OptionB} />
+    <ProgressBar    now={50} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.pollData.OptionC} />
-    <ProgressBar animated  variant="warning" now={70} />
+  <Form.Check type="radio" label={e.pollData.OptionC} />
+    <ProgressBar    now={70} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
+    <Form.Check type="radio" label="Check me out" />
   </Form.Group> */}
   <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
     Vote
@@ -5919,21 +5919,21 @@ const deleteClubRequestAuto=(user)=>{
   </Form.Group>
   <Form.Group className="mb-3" >
    
-    <Form.Check type="checkbox" label={e.message.OptionA} />
-    <ProgressBar animated  variant="success" now={90} />
+    <Form.Check type="radio" label={e.message.OptionA} />
+    <ProgressBar   now={90} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.message.OptionB} />
-    <ProgressBar animated  variant="info" now={50} />
+  <Form.Check type="radio" label={e.message.OptionB} />
+    <ProgressBar    now={50} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.message.OptionC} />
-    <ProgressBar animated  variant="warning" now={70} />
+  <Form.Check type="radio" label={e.message.OptionC} />
+    <ProgressBar    now={70} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
+    <Form.Check type="radio" label="Check me out" />
   </Form.Group> */}
   <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
     Vote
@@ -6284,7 +6284,7 @@ const deleteClubRequestAuto=(user)=>{
     <Form.Control value={pollFormDataOC} onChange={(e)=>{setPollFormDataOC(e.target.value)}} placeholder="Option c" />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
+    <Form.Check type="radio" label="Check me out" />
   </Form.Group> */}
   {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Preview 
@@ -6300,21 +6300,21 @@ const deleteClubRequestAuto=(user)=>{
   </Form.Group>
   <Form.Group className="mb-3" >
    
-    <Form.Check type="checkbox" label={pollFormData.OptionA} />
-    <ProgressBar animated  variant="success" now={pollFormData.pollA} />
+    <Form.Check type="radio" label={pollFormData.OptionA} />
+    <ProgressBar   variant="success" now={pollFormData.pollA} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={pollFormData.OptionB} />
-    <ProgressBar animated  variant="info" now={pollFormData.pollB} />
+  <Form.Check type="radio" label={pollFormData.OptionB} />
+    <ProgressBar   variant="info" now={pollFormData.pollB} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={pollFormData.OptionC} />
-    <ProgressBar animated  variant="warning" now={pollFormData.pollC} />
+  <Form.Check type="radio" label={pollFormData.OptionC} />
+    <ProgressBar   variant="warning" now={pollFormData.pollC} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
+    <Form.Check type="radio" label="Check me out" />
   </Form.Group> */}
   <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Edit 
@@ -6443,21 +6443,21 @@ const deleteClubRequestAuto=(user)=>{
   </Form.Group>
   <Form.Group className="mb-3" >
    
-    <Form.Check type="checkbox" label={e.pollData.OptionA} />
-    <ProgressBar animated  variant="success" now={90} />
+    <Form.Check type="radio" label={e.pollData.OptionA} />
+    <ProgressBar    now={90} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.pollData.OptionB} />
-    <ProgressBar animated  variant="info" now={50} />
+  <Form.Check type="radio" label={e.pollData.OptionB} />
+    <ProgressBar    now={50} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.pollData.OptionC} />
-    <ProgressBar animated  variant="warning" now={70} />
+  <Form.Check type="radio" label={e.pollData.OptionC} />
+    <ProgressBar    now={70} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
+    <Form.Check type="radio" label="Check me out" />
   </Form.Group> */}
   <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
     Vote
