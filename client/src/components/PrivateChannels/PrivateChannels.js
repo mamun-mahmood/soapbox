@@ -213,19 +213,22 @@ const [inviteBox,setInviteBox]=useState(false)
     isEmoji,
     isVideo,
     isImage,
-    isPoll
+    isPoll,
+    timestamp
   ) => {
+   
+   
     if(isPoll){
      let pollData= JSON.parse(message)
     
      setChatData((e) => [
       ...e,
-      { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
+      { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage,isPoll,timestamp },
     ]);
     }else{
        setChatData((e) => [
       ...e,
-      { chatname, message, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
+      { chatname, message, position, imgSrc, isEmoji, isVideo, isImage,isPoll,timestamp },
     ]);
     }
    
@@ -266,6 +269,11 @@ const [inviteBox,setInviteBox]=useState(false)
   const messagesubmit = (e) => {
     e.preventDefault();
     if (messageInboxValue) {
+      let today = new Date();
+      let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      let dateTime = date+' '+time;
+      let timestamp = dateTime
       const message = messageInboxValue;
       let emojiValidator = isEmoji(message);
 
@@ -274,7 +282,7 @@ const [inviteBox,setInviteBox]=useState(false)
         `${message}`,
         "right",
         `${BaseURL}/profile-pictures/${userProfilePic}`,
-        emojiValidator,
+        emojiValidator,"","","",timestamp
       );
       // socket.emit('send',message);
       let isCommunity=userInfo[0].communityClub
@@ -287,6 +295,7 @@ const [inviteBox,setInviteBox]=useState(false)
         message: message,
         profilePic: userProfilePic,
         isEmoji: isEmoji(message),
+        timestamp:timestamp
       });
       setMessageInboxValue("");
     }
@@ -474,8 +483,8 @@ const [inviteBox,setInviteBox]=useState(false)
             isEmoji = i.chat.isEmoji,
             isVideo = i.chat.isVideo,
             isImage = i.chat.isImage,
-            isPoll = i.chat.isPoll;
-         
+            isPoll = i.chat.isPoll,
+            timestamp=i.chat.timestamp
 
 
           if(isPoll){
@@ -483,12 +492,12 @@ const [inviteBox,setInviteBox]=useState(false)
            
             setChatData((e) => [
              ...e,
-             { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
+             { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage,isPoll,timestamp },
            ]);
            }else{
               setChatData((e) => [
              ...e,
-             { chatname, message, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
+             { chatname, message, position, imgSrc, isEmoji, isVideo, isImage,isPoll,timestamp },
            ]);
            }
         });
@@ -521,10 +530,11 @@ const [inviteBox,setInviteBox]=useState(false)
             imgSrc = `${BaseURL}/profile-pictures/${i.chat.profilePic}`,
             isEmoji = i.chat.isEmoji,
             isVideo = i.chat.isVideo,
-            isImage = i.chat.isImage;
+            isImage = i.chat.isImage,
+            timestamp=i.chat.timestamp
           setChatDataPrivate((e) => [
             ...e,
-            { chatname, message, position, imgSrc, isEmoji, isVideo, isImage },
+            { chatname, message, position, imgSrc, isEmoji, isVideo, isImage,timestamp },
           ]);
         });
         setTimeout(() => {
@@ -3056,7 +3066,7 @@ const deleteClubRequestAuto=(user)=>{
                 <Form.Group className="mb-1" controlId="formBasicText" >
                    
                     <Form.Check 
-                        type="radio"
+                        type="radio" name="radio"
                        
                       
                       
@@ -3071,7 +3081,7 @@ const deleteClubRequestAuto=(user)=>{
                 <Form.Group className="mb-1" controlId="formBasicText" >
                    
                    <Form.Check 
-                       type="radio"
+                       type="radio" name="radio"
                       
                      
                      
@@ -3817,6 +3827,7 @@ const deleteClubRequestAuto=(user)=>{
                                       src={e.imgSrc ? e.imgSrc : null}
                                     />
                                     <p>{e.chatname}</p>
+                                    <p  className="timestamp"> {e.timestamp}</p>
                                   </div>
                                   <Linkify
                                     componentDecorator={(
@@ -3842,6 +3853,7 @@ const deleteClubRequestAuto=(user)=>{
                                       {!e.isVideo && !e.isImage
                                         ? e.message
                                         : null}
+                                          
                                     </div>
                                   </Linkify>
 
@@ -4162,7 +4174,7 @@ const deleteClubRequestAuto=(user)=>{
     <Form.Control value={pollFormDataOC} onChange={(e)=>{setPollFormDataOC(e.target.value)}} placeholder="Option c" />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="radio" label="Check me out" />
+    <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
   {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Preview 
@@ -4178,21 +4190,21 @@ const deleteClubRequestAuto=(user)=>{
   </Form.Group>
   <Form.Group className="mb-3" >
    
-    <Form.Check type="radio" label={pollFormData.OptionA} />
+    <Form.Check type="radio" name="radio" label={pollFormData.OptionA} />
     <ProgressBar   variant="success" now={pollFormData.pollA} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" label={pollFormData.OptionB} />
+  <Form.Check type="radio" name="radio" label={pollFormData.OptionB} />
     <ProgressBar   variant="info" now={pollFormData.pollB} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" label={pollFormData.OptionC} />
+  <Form.Check type="radio" name="radio" label={pollFormData.OptionC} />
     <ProgressBar   variant="warning" now={pollFormData.pollC} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="radio" label="Check me out" />
+    <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
   <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Edit 
@@ -4288,6 +4300,7 @@ const deleteClubRequestAuto=(user)=>{
                                           src={e.imgSrc ? e.imgSrc : null}
                                         />
                                         <p>{e.chatname}</p>
+                                        <p  className="timestamp"> {e.timestamp}</p>
                                       </div>
                                       <Linkify
                                         componentDecorator={(
@@ -4315,6 +4328,7 @@ const deleteClubRequestAuto=(user)=>{
                                           {!e.isVideo && !e.isImage && !e.isPoll
                                             ? e.message
                                             : null}
+                                     
                                         </div>
                                       </Linkify>
                                       {e.isPoll?<div style={{marginTop:'30px'}}>
@@ -4325,21 +4339,21 @@ const deleteClubRequestAuto=(user)=>{
   </Form.Group>
   <Form.Group className="mb-3" >
    
-    <Form.Check type="radio" label={e.pollData.OptionA} />
-    <ProgressBar    now={90} />
+    <Form.Check type="radio" name="radio" label={e.pollData.OptionA} />
+    <ProgressBar    now={0} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" label={e.pollData.OptionB} />
-    <ProgressBar    now={50} />
+  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} />
+    <ProgressBar   now={e.pollData.pollB} onChange={()=>e.pollData.pollB=e.pollData.pollB+1} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" label={e.pollData.OptionC} />
-    <ProgressBar    now={70} />
+  <Form.Check type="radio" name="radio" label={e.pollData.OptionC} />
+    <ProgressBar    now={0} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="radio" label="Check me out" />
+    <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
   <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
     Vote
@@ -5886,6 +5900,7 @@ const deleteClubRequestAuto=(user)=>{
                                   src={e.imgSrc ? e.imgSrc : null}
                                 />
                                 <p>{e.chatname}</p>
+                                <p className="timestamp"> {e.timestamp}</p>
                               </div>
                               <Linkify
                                 componentDecorator={(
@@ -5909,6 +5924,7 @@ const deleteClubRequestAuto=(user)=>{
                                   }
                                 >
                                   {!e.isVideo && !e.isImage && !e.isPoll ? e.message : null}
+                                
                                 </div>
                               </Linkify>
                               {e.isPoll?<div>
@@ -5919,21 +5935,21 @@ const deleteClubRequestAuto=(user)=>{
   </Form.Group>
   <Form.Group className="mb-3" >
    
-    <Form.Check type="radio" label={e.message.OptionA} />
-    <ProgressBar   now={90} />
+    <Form.Check type="radio" name="radio" label={e.message.OptionA} />
+    <ProgressBar   now={0} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" label={e.message.OptionB} />
-    <ProgressBar    now={50} />
+  <Form.Check type="radio" name="radio" label={e.message.OptionB} />
+    <ProgressBar    now={0} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" label={e.message.OptionC} />
-    <ProgressBar    now={70} />
+  <Form.Check type="radio" name="radio" label={e.message.OptionC} />
+    <ProgressBar    now={0} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="radio" label="Check me out" />
+    <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
   <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
     Vote
@@ -6284,7 +6300,7 @@ const deleteClubRequestAuto=(user)=>{
     <Form.Control value={pollFormDataOC} onChange={(e)=>{setPollFormDataOC(e.target.value)}} placeholder="Option c" />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="radio" label="Check me out" />
+    <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
   {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Preview 
@@ -6300,21 +6316,21 @@ const deleteClubRequestAuto=(user)=>{
   </Form.Group>
   <Form.Group className="mb-3" >
    
-    <Form.Check type="radio" label={pollFormData.OptionA} />
+    <Form.Check type="radio" name="radio" label={pollFormData.OptionA} />
     <ProgressBar   variant="success" now={pollFormData.pollA} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" label={pollFormData.OptionB} />
+  <Form.Check type="radio" name="radio" label={pollFormData.OptionB} />
     <ProgressBar   variant="info" now={pollFormData.pollB} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" label={pollFormData.OptionC} />
+  <Form.Check type="radio" name="radio" label={pollFormData.OptionC} />
     <ProgressBar   variant="warning" now={pollFormData.pollC} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="radio" label="Check me out" />
+    <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
   <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Edit 
@@ -6408,6 +6424,7 @@ const deleteClubRequestAuto=(user)=>{
                                       src={e.imgSrc ? e.imgSrc : null}
                                     />
                                     <p>{e.chatname}</p>
+                                    <p  className="timestamp"> {e.timestamp}</p>
                                   </div>
                                   <Linkify
                                     componentDecorator={(
@@ -6433,6 +6450,7 @@ const deleteClubRequestAuto=(user)=>{
                                       {!e.isVideo && !e.isImage && !e.isPoll
                                         ? e.message
                                         : null}
+                                       
                                     </div>
                                   </Linkify>
                                   {e.isPoll?<div style={{marginTop:'30px'}}>
@@ -6443,21 +6461,21 @@ const deleteClubRequestAuto=(user)=>{
   </Form.Group>
   <Form.Group className="mb-3" >
    
-    <Form.Check type="radio" label={e.pollData.OptionA} />
-    <ProgressBar    now={90} />
+    <Form.Check type="radio" name="radio" label={e.pollData.OptionA} />
+    <ProgressBar    now={0} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" label={e.pollData.OptionB} />
-    <ProgressBar    now={50} />
+  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} />
+    <ProgressBar    now={0} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" label={e.pollData.OptionC} />
-    <ProgressBar    now={70} />
+  <Form.Check type="radio" name="radio" label={e.pollData.OptionC} />
+    <ProgressBar    now={0} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="radio" label="Check me out" />
+    <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
   <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
     Vote

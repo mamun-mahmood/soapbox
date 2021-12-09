@@ -881,3 +881,10 @@ cursor: pointer;
   background-color: #8249A0 !important;
   border:#8249A0 !important ;  
 }
+
+.timestamp{
+  font-size: 8px !important;
+  position: absolute !important;
+  right: 10px ;
+  top: 10px;
+}
