@@ -4338,7 +4338,7 @@ const deleteClubRequestAuto=(user)=>{
                                      
                                         </div>
                                       </Linkify>
-                                      {e.isPoll?<div style={{marginTop:'30px'}}>
+                                      {e.isPoll?<div style={{marginTop:'30px'}} className="pollFormDiv">
                                         <Form onSubmit={(e)=>e.preventDefault()}>
   <Form.Group className="mb-3" >
   <p style={{fontSize:'14px'}}>{e.pollData.Question}</p>
@@ -5934,7 +5934,7 @@ const deleteClubRequestAuto=(user)=>{
                                 
                                 </div>
                               </Linkify>
-                              {e.isPoll?<div>
+                              {e.isPoll?<div style={{marginTop:'30px'}} className="pollFormDiv">
                                         <Form onSubmit={(e)=>e.preventDefault()}>
   <Form.Group className="mb-3" >
     <Form.Label>{e.message.Question}</Form.Label>
@@ -6460,7 +6460,7 @@ const deleteClubRequestAuto=(user)=>{
                                        
                                     </div>
                                   </Linkify>
-                                  {e.isPoll?<div style={{marginTop:'30px'}}>
+                                  {e.isPoll?<div style={{marginTop:'30px'}} className="pollFormDiv">
                                         <Form onSubmit={(e)=>e.preventDefault()}>
   <Form.Group className="mb-3" >
   <p style={{fontSize:'14px'}}>{e.pollData.Question}</p>

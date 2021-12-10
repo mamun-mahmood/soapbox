@@ -888,3 +888,9 @@ cursor: pointer;
   right: 10px ;
   top: 10px;
 }
+
+.pollFormDiv{
+  padding: 2rem;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.137);
+}
