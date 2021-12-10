@@ -167,6 +167,7 @@ const [inviteBox,setInviteBox]=useState(false)
   const [breakOffInput, setBreakOffInput] = useState("");
   const [showPollForm,setShowPollForm] = useState(false)
   const [pollFormData,setPollFormData] =useState({Question:'',OptionA:'',OptionB:'',OptionC:'',createdBy:'',threadId:'',pollA:90,pollB:50,pollC:60})
+  const [pollAnswers,setPollAnswers]= useState([])
   const [pollFormDataQ,setPollFormDataQ] =useState("")
   const [pollFormDataOA,setPollFormDataOA] =useState("")
   const [pollFormDataOB,setPollFormDataOB] =useState("")
@@ -470,6 +471,15 @@ const [inviteBox,setInviteBox]=useState(false)
       });
   }, []);
 
+  const updatePollData=(e)=>{
+
+    let threadId=e.pollData.threadId
+    // axios.post(`${BaseURL}/upload/updatePollData`,{
+    //   threadId:threadId,
+    //   message:e.pollData
+    // })
+  }
+
   const getChatData = (username) => {
     axios
       .post(`${BaseURL}/upload/getChatData`, {
@@ -491,10 +501,11 @@ const [inviteBox,setInviteBox]=useState(false)
 
           if(isPoll){
             let pollData= JSON.parse(message)
-           
+          
             setChatData((e) => [
              ...e,
              { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage,isPoll,timestamp },
+            
            ]);
            }else{
               setChatData((e) => [
@@ -4341,28 +4352,74 @@ const deleteClubRequestAuto=(user)=>{
                                       {e.isPoll?<div style={{marginTop:'30px'}} className="pollFormDiv">
                                         <Form onSubmit={(e)=>e.preventDefault()}>
   <Form.Group className="mb-3" >
-  <p style={{fontSize:'14px'}}>{e.pollData.Question}</p>
-
+    <Form.Label>{e.pollData.Question}</Form.Label>
+   
   </Form.Group>
+  
   <Form.Group className="mb-3" >
    
-    <Form.Check type="radio" name="radio" label={e.pollData.OptionA} />
-    <ProgressBar    now={0} />
+    <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
+    onChange={()=>{
+    
+      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+    // chatData[chatData.indexOf(e)]
+    e.pollData.pollA=100
+    e.pollData.pollB=0
+    e.pollData.pollC=0
+   
+    let messageContainer = document.querySelector(".container");
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+    setChatData(chatData.filter((chat)=>chat!==e))
+    setChatData((chat)=>[...chat,e])
+    updatePollData(e)
+    }} 
+    />
+    <ProgressBar   now={e.pollData.pollA} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} />
-    <ProgressBar   now={e.pollData.pollB} onChange={()=>e.pollData.pollB=e.pollData.pollB+1} />
+  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={()=>{
+    
+      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+    // chatData[chatData.indexOf(e)]
+    e.pollData.pollB=100
+    e.pollData.pollA=0
+    e.pollData.pollC=0
+    let messageContainer = document.querySelector(".container");
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+    setChatData(chatData.filter((chat)=>chat!==e))
+    setChatData((chat)=>[...chat,e])
+    updatePollData(e)
+    }}  />
+    <ProgressBar    now={e.pollData.pollB} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" name="radio" label={e.pollData.OptionC} />
-    <ProgressBar    now={0} />
+  <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
+  onChange={()=>{
+    
+    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+  // chatData[chatData.indexOf(e)]
+  
+  e.pollData.pollC=100
+  e.pollData.pollA=0
+  e.pollData.pollB=0
+  let messageContainer = document.querySelector(".container");
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+    setChatData(chatData.filter((chat)=>chat!==e))
+    setChatData((chat)=>[...chat,e])
+    updatePollData(e) 
+  }} 
+  />
+    <ProgressBar    now={e.pollData.pollC} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-  <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
+ <Button variant="primary" type="submit" id={e.pollData.threadId}  onClick={()=>{toast.success('Voted Successfully');document.getElementById(e.pollData.threadId).disabled=true}}>
     Vote
   </Button>
 </Form>
@@ -5937,28 +5994,68 @@ const deleteClubRequestAuto=(user)=>{
                               {e.isPoll?<div style={{marginTop:'30px'}} className="pollFormDiv">
                                         <Form onSubmit={(e)=>e.preventDefault()}>
   <Form.Group className="mb-3" >
-    <Form.Label>{e.message.Question}</Form.Label>
+    <Form.Label>{e.pollData.Question}</Form.Label>
    
-  </Form.Group>
-  <Form.Group className="mb-3" >
-   
-    <Form.Check type="radio" name="radio" label={e.message.OptionA} />
-    <ProgressBar   now={0} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" name="radio" label={e.message.OptionB} />
-    <ProgressBar    now={0} />
+   
+    <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
+    onChange={()=>{
+    
+    e.pollData.pollA=100
+    e.pollData.pollB=0
+    e.pollData.pollC=0
+    let messageContainer = document.querySelector(".container");
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+    setChatData(chatData.filter((chat)=>chat!==e))
+    setChatData((chat)=>[...chat,e])
+    updatePollData(e) 
+    }} 
+    />
+    <ProgressBar   now={e.pollData.pollA} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" name="radio" label={e.message.OptionC} />
-    <ProgressBar    now={0} />
+  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={()=>{
+    
+    e.pollData.pollB=100
+    e.pollData.pollA=0
+    e.pollData.pollC=0
+    let messageContainer = document.querySelector(".container");
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+    setChatData(chatData.filter((chat)=>chat!==e))
+    setChatData((chat)=>[...chat,e])
+    updatePollData(e) 
+    }}  />
+    <ProgressBar    now={e.pollData.pollB} />
   </Form.Group>
-  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="radio" name="radio" label="Check me out" />
-  </Form.Group> */}
-  <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
+  
+  <Form.Group className="mb-3" >
+  <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
+  onChange={()=>{
+    
+
+
+  e.pollData.pollC=100
+  e.pollData.pollA=0
+  e.pollData.pollB=0
+ 
+  let messageContainer = document.querySelector(".container");
+
+  messageContainer.scrollTop = messageContainer.scrollHeight;
+  setChatData(chatData.filter((chat)=>chat!==e))
+  setChatData((chat)=>[...chat,e])
+  updatePollData(e)
+    
+  }} 
+  />
+    <ProgressBar    now={e.pollData.pollC} />
+  </Form.Group>
+ 
+  <Button variant="primary" type="submit" id={e.pollData.threadId}  onClick={()=>{toast.success('Voted Successfully');document.getElementById(e.pollData.threadId).disabled=true}}>
     Vote
   </Button>
 </Form>
@@ -6463,28 +6560,76 @@ const deleteClubRequestAuto=(user)=>{
                                   {e.isPoll?<div style={{marginTop:'30px'}} className="pollFormDiv">
                                         <Form onSubmit={(e)=>e.preventDefault()}>
   <Form.Group className="mb-3" >
-  <p style={{fontSize:'14px'}}>{e.pollData.Question}</p>
-
+    <Form.Label>{e.pollData.Question}</Form.Label>
+   
   </Form.Group>
+  
   <Form.Group className="mb-3" >
    
-    <Form.Check type="radio" name="radio" label={e.pollData.OptionA} />
-    <ProgressBar    now={0} />
+    <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
+    onChange={()=>{
+    
+      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+    // chatData[chatData.indexOf(e)]
+
+    e.pollData.pollA=100
+    e.pollData.pollB=0
+    e.pollData.pollC=0
+    let messageContainer = document.querySelector(".container");
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+    setChatData(chatData.filter((chat)=>chat!==e))
+    setChatData((chat)=>[...chat,e])
+    updatePollData(e)
+    }} 
+    />
+    <ProgressBar   now={e.pollData.pollA} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} />
-    <ProgressBar    now={0} />
+  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={()=>{
+    
+      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+    // chatData[chatData.indexOf(e)]
+   
+    e.pollData.pollB=100
+    e.pollData.pollA=0
+    e.pollData.pollC=0
+   
+    let messageContainer = document.querySelector(".container");
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+    setChatData(chatData.filter((chat)=>chat!==e))
+    setChatData((chat)=>[...chat,e])
+    updatePollData(e) 
+    }}  />
+    <ProgressBar    now={e.pollData.pollB} />
   </Form.Group>
   
   <Form.Group className="mb-3" >
-  <Form.Check type="radio" name="radio" label={e.pollData.OptionC} />
-    <ProgressBar    now={0} />
+  <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
+  onChange={()=>{
+    
+    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+  // chatData[chatData.indexOf(e)]
+  
+  e.pollData.pollC=100
+  e.pollData.pollA=0
+  e.pollData.pollB=0
+  let messageContainer = document.querySelector(".container");
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+    setChatData(chatData.filter((chat)=>chat!==e))
+    setChatData((chat)=>[...chat,e])
+    updatePollData(e)
+  }} 
+  />
+    <ProgressBar    now={e.pollData.pollC} />
   </Form.Group>
   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-  <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
+  <Button variant="primary" type="submit" id={e.pollData.threadId}  onClick={()=>{toast.success('Voted Successfully');document.getElementById(e.pollData.threadId).disabled=true}}>
     Vote
   </Button>
 </Form>
