@@ -883,7 +883,7 @@ cursor: pointer;
 }
 
 .timestamp{
-  font-size: 8px !important;
+  font-size: 12px !important;
   position: absolute !important;
   right: 10px ;
   top: 10px;

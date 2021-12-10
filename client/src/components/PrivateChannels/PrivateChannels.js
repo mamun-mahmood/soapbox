@@ -270,10 +270,8 @@ const [inviteBox,setInviteBox]=useState(false)
     e.preventDefault();
     if (messageInboxValue) {
       let today = new Date();
-      let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      let dateTime = date+' '+time;
-      let timestamp = dateTime
+     
+      let timestamp = today.toLocaleTimeString()+" " + today.toLocaleDateString()
       const message = messageInboxValue;
       let emojiValidator = isEmoji(message);
 
@@ -304,6 +302,9 @@ const [inviteBox,setInviteBox]=useState(false)
     e.preventDefault();
     if (messageInboxValuePrivate) {
       const message = messageInboxValuePrivate;
+      let today = new Date();
+     
+      let timestamp = today.toLocaleTimeString()+" " + today.toLocaleDateString()
       let emojiValidator = isEmoji(message);
 
       appendPrivate(
@@ -324,6 +325,7 @@ const [inviteBox,setInviteBox]=useState(false)
         message: message,
         profilePic: userProfilePic,
         isEmoji: isEmoji(message),
+        timestamp:timestamp
       });
       setMessageInboxValuePrivate("");
     }
@@ -1027,6 +1029,9 @@ const [inviteBox,setInviteBox]=useState(false)
   }
 
   const sentPollMessageInChat=(pollFormData)=>{
+    let today = new Date();
+     
+    let timestamp = today.toLocaleTimeString()+" " + today.toLocaleDateString()
     setShowPollForm(false)
     append(
       userFullName,
@@ -1036,7 +1041,8 @@ const [inviteBox,setInviteBox]=useState(false)
       false,
       "",
       "",
-      true
+      true,
+      timestamp
     );
 
 
@@ -1053,7 +1059,8 @@ const [inviteBox,setInviteBox]=useState(false)
       isEmoji: false,
       isVideo:"",
      isImage:"",
-      isPoll:true
+      isPoll:true,
+      timestamp:timestamp
     });
   }
   const getAllSubscribedMembers = () => {
