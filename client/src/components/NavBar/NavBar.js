@@ -64,7 +64,7 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
                     </div>
                 </div>
 
-                {userData.privateChannel && privateUserImage
+                {userData && userData.privateChannel && privateUserImage
                     ? <SoapboxTooltip title={showExtraFeatures ? "Hide Profile" : "Show Profile"} placement="bottom">
                         <div
                             className="extra-div-block"
@@ -105,7 +105,7 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
                                 </a>
                             }
 
-                            {userData.privateChannel && header
+                            {userData && userData.privateChannel && header
                                 ? null
                                 : <NavLink
                                     activeClassName="nav-link-active"
