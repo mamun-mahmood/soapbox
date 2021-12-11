@@ -190,7 +190,8 @@ const PrivateChannels = () => {
     isEmoji,
     isVideo,
     isImage,
-    isPoll
+    isPoll,
+    timestamp
   ) => {
     if (isPoll) {
       let pollData = JSON.parse(message)
@@ -243,6 +244,9 @@ const PrivateChannels = () => {
   const messagesubmit = (e) => {
     e.preventDefault();
     if (messageInboxValue) {
+      let today = new Date();
+
+      let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
       const message = messageInboxValue;
       let emojiValidator = isEmoji(message);
 
@@ -251,7 +255,7 @@ const PrivateChannels = () => {
         `${message}`,
         "right",
         `${BaseURL}/profile-pictures/${userProfilePic}`,
-        emojiValidator,
+        emojiValidator, "", "", "", timestamp
       );
       // socket.emit('send',message);
       let isCommunity = userInfo[0].communityClub
@@ -264,6 +268,7 @@ const PrivateChannels = () => {
         message: message,
         profilePic: userProfilePic,
         isEmoji: isEmoji(message),
+        timestamp: timestamp
       });
       setMessageInboxValue("");
     }
@@ -273,6 +278,9 @@ const PrivateChannels = () => {
     e.preventDefault();
     if (messageInboxValuePrivate) {
       const message = messageInboxValuePrivate;
+      let today = new Date();
+
+      let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
       let emojiValidator = isEmoji(message);
 
       appendPrivate(
@@ -293,6 +301,7 @@ const PrivateChannels = () => {
         message: message,
         profilePic: userProfilePic,
         isEmoji: isEmoji(message),
+        timestamp: timestamp
       });
       setMessageInboxValuePrivate("");
     }
@@ -434,6 +443,15 @@ const PrivateChannels = () => {
       });
   }, []);
 
+  const updatePollData = (e) => {
+
+    let threadId = e.pollData.threadId
+    // axios.post(`${BaseURL}/upload/updatePollData`,{
+    //   threadId:threadId,
+    //   message:e.pollData
+    // })
+  }
+
   const getChatData = (username) => {
     axios
       .post(`${BaseURL}/upload/getChatData`, {
@@ -492,10 +510,11 @@ const PrivateChannels = () => {
             imgSrc = `${BaseURL}/profile-pictures/${i.chat.profilePic}`,
             isEmoji = i.chat.isEmoji,
             isVideo = i.chat.isVideo,
-            isImage = i.chat.isImage;
+            isImage = i.chat.isImage,
+            timestamp = i.chat.timestamp
           setChatDataPrivate((e) => [
             ...e,
-            { chatname, message, position, imgSrc, isEmoji, isVideo, isImage },
+            { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, timestamp },
           ]);
         });
         setTimeout(() => {
@@ -936,7 +955,8 @@ const PrivateChannels = () => {
       false,
       "",
       "",
-      true
+      true,
+      timestamp
     );
 
     let isCommunity = userInfo[0].communityClub
@@ -2795,7 +2815,7 @@ const PrivateChannels = () => {
                 <Form.Group className="mb-1" controlId="formBasicText" >
                    
                     <Form.Check 
-                        type="radio"
+                        type="radio" name="radio"
                        
                       
                       
@@ -2810,7 +2830,7 @@ const PrivateChannels = () => {
                 <Form.Group className="mb-1" controlId="formBasicText" >
                    
                    <Form.Check 
-                       type="radio"
+                       type="radio" name="radio"
                       
                      
                      

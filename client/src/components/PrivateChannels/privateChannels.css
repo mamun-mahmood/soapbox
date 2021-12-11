@@ -1051,3 +1051,29 @@ cursor: pointer;
   justify-content: center;
 }
 
+.progress-bar{
+  background-color: #8249A0 !important;
+}
+
+.progress{
+  height: 6px !important;
+}
+
+.form-check-input:checked{
+  background-color: #8249A0 !important;
+  border:#8249A0 !important ;  
+}
+
+.timestamp{
+  font-size: 11px !important;
+  position: absolute !important;
+  right: 10px ;
+  top: 10px;
+  font-weight: normal;
+}
+
+.pollFormDiv{
+  padding: 2rem;
+  border-radius: 15px;
+  background-color: #dcd5fa;
+}

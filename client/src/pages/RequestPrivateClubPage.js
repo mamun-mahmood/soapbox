@@ -240,7 +240,7 @@ By digital signing below, the undersigned Soapbox Private Club Owner understands
 {!loading&&userInfo[0].verified &&
                     <div className="loading">
                         {/* <BeatLoader color={"#8249A0"} loading={loading} size={20} /> */}
-                        <h5>You Can not request for another Private Club if you already have one!</h5>
+                        <h5>You currently have a private club</h5>
                     </div>
                 }
                 {/* {!loading &&
