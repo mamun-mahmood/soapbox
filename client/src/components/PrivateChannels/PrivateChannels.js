@@ -3,39 +3,24 @@ import { useHistory, useParams } from "react-router";
 import axios from "axios";
 import Post from "../Post";
 import InfiniteScroll from "react-infinite-scroll-component";
-import InfiniteScrollLoader from "../Feed/InfiniteScrollLoader";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
-import { FaTumblr, IoSend, FaWindowClose } from "react-icons/fa";
+import { FaRegTrashAlt, FaTumblr, FaWindowClose } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
-import {RiCalendarEventLine} from "react-icons/ri"
-import {BsTrash} from 'react-icons/bs'
-import { FcInvite, FcRules } from "react-icons/fc";
-import Scheduler from '../Scheduler/Scheduler'
-
+import { RiCalendarEventLine, RiLiveLine } from "react-icons/ri"
+import { BsPlusCircleFill, BsTrash } from 'react-icons/bs'
 import {
   FiTwitter,
   FiSearch,
-  FiSend,
-  FiFolder,
-  FiImage,
-  FiVideo,
-  FiSmile,
-  FiStopCircle,
-  FiSkipBack,
   FiPlayCircle,
-  FiPlus,
 } from "react-icons/fi";
 import socket, { startSocket } from "../../socketChat";
-import { GiHamburgerMenu, GiTick } from "react-icons/gi";
+import { GiHamburgerMenu } from "react-icons/gi";
 import Picker from "emoji-picker-react";
 import Linkify from "react-linkify";
 import CreatePrivateHoot from "../../pages/CreatePrivateHoot";
-
 import {
   RiFacebookCircleLine,
-  RiLiveFill,
   RiPinterestLine,
-  RiRecordCircleFill,
   RiSnapchatLine,
 } from "react-icons/ri";
 import {
@@ -44,35 +29,26 @@ import {
   AiOutlineMedium,
   AiOutlineReddit,
 } from "react-icons/ai";
-import EndMsg from "../Feed/EndMsg";
 import banner from "../../assets/banner-3.jfif";
 import live from "../../assets/banner-3.jfif";
 import "./privateChannels.css";
-// import toast from "react-hot-toast";
 import { toast } from "react-toastify";
 import SubscribedUser from "../SubscribedUser";
-import { IoRecording } from "react-icons/io5";
-import { BiVideoRecording } from "react-icons/bi";
-import { Call, Event, LiveTvRounded, VideoCall } from "@material-ui/icons";
 import { v4 as uuidv4 } from "uuid";
 import oneonone from "../../assets/oneonone.png";
 import groupcall from "../../assets/groupcall.png";
 import personalmessage from "../../assets/personalmessage.png";
 import membershipGraphic from "../../assets/membershipGraphic.png";
 
-import { Button, Form, Modal,ProgressBar } from "react-bootstrap";
+import { Button, Form, ProgressBar } from "react-bootstrap";
 import ClickAwayListener from "react-click-away-listener";
 import Autolinker from "autolinker";
-import RandomSuggestedFollows from "../SideBar/RandomSuggestedFollows";
-import RandomCommunitySuggestion from "../SideBar/RandomCommunitySuggestion";
-import { HiBadgeCheck } from "react-icons/hi";
+import { HiBadgeCheck, HiMenuAlt2 } from "react-icons/hi";
 import ReactTooltip from "react-tooltip";
 import VideoChat from "../VideoChat/VideoChat";
 import ReactPlayer from "react-player";
 import ExploreHoot from "../Explore/ExploreHoot";
 import HootOutside from "../HootOutside/HootOutside";
-import { Link } from "react-router-dom";
-import { SoapboxTooltip } from "../SoapboxTooltip";
 import inviteicon from "../../assets/inviteicon.png";
 import rules from "../../assets/rules.png";
 import videolive from "../../assets/videoLive.png";
@@ -84,12 +60,13 @@ import imagechat from "../../assets/imagechat.png";
 import filechat from "../../assets/filechat.png";
 import emojiIcon from "../../assets/emoji.png";
 import privatehooticon from "../../assets/private-hoot.png";
-import xmgwallet from "../../assets/xmgwallet.png";
-import StripePage from "../Stripe/StripePage";
 import { loadStripe } from "@stripe/stripe-js";
-import { useStripe } from "@stripe/react-stripe-js";
-import ModelShow from "./model";
 import MyVerticallyCenteredModal from "./model";
+import { SoapboxTooltip } from "../SoapboxTooltip";
+import SoapboxPrivateClubRules from "./SoapboxPrivateClubRules";
+import Media from 'react-media';
+import NavBar from "../NavBar/NavBar";
+
 const stripe = loadStripe(
   "pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz"
 );
@@ -101,12 +78,12 @@ const PrivateChannels = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userId, setUserId] = useState("");
   const [chatData, setChatData] = useState([]);
-  const [FormEditPoll,setFormEditPoll] = useState(true)
+  const [FormEditPoll, setFormEditPoll] = useState(true)
   const [chatDataPrivate, setChatDataPrivate] = useState([]);
-  const [showIframe,setShowIframe] = useState(false);
-  const [iframeBox,setIframeBox]=useState(null);
+  const [showIframe, setShowIframe] = useState(false);
+  const [iframeBox, setIframeBox] = useState(null);
   const [uploads, setUploads] = useState([]);
-  const [clubName,setClubName] = useState('')
+  const [clubName, setClubName] = useState('')
   const [onDemandUploads, setOnDemandUploads] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setpage] = useState(2);
@@ -125,14 +102,14 @@ const PrivateChannels = () => {
   const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0);
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [emojiPickerPrivate, setEmojiPickerPrivate] = useState(false);
-  
+
   const [showFeed, setShowFeed] = useState(true);
   const [clubFloor, setClubFloor] = useState(true);
   const [showCreateHoot, setShowCreateHoot] = useState(false);
   const [privateChat, setPrivateChat] = useState(false);
   const [privateChatList, setPrivateChatList] = useState(false);
   const [showBreakoffForm, setShowBreakoffForm] = useState(false);
-  
+
   const [VideoAvailable, setVideoAvailable] = useState(false);
   const [onDemandMedia, setOnDemandMedia] = useState(false);
   const [onDemandHasMore, setOnDemandHasMore] = useState(true);
@@ -156,8 +133,8 @@ const PrivateChannels = () => {
   const history = useHistory();
   const [userInfo, setUserInfo] = useState([]);
   const [subscribedMembers, setSubscribedMembers] = useState([]);
-  const [clubRequestsData,setClubRequestsData] =useState([])
-const [inviteBox,setInviteBox]=useState(false)
+  const [clubRequestsData, setClubRequestsData] = useState([])
+  const [inviteBox, setInviteBox] = useState(false)
   const [likes, setLikes] = useState(0);
   const [views, setViews] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -165,12 +142,12 @@ const [inviteBox,setInviteBox]=useState(false)
   const [messageInboxValuePrivate, setMessageInboxValuePrivate] = useState("");
   const [messageInboxValue, setMessageInboxValue] = useState("");
   const [breakOffInput, setBreakOffInput] = useState("");
-  const [showPollForm,setShowPollForm] = useState(false)
-  const [pollFormData,setPollFormData] =useState({Question:'',OptionA:'',OptionB:'',OptionC:'',createdBy:'',threadId:'',pollA:90,pollB:50,pollC:60})
-  const [pollFormDataQ,setPollFormDataQ] =useState("")
-  const [pollFormDataOA,setPollFormDataOA] =useState("")
-  const [pollFormDataOB,setPollFormDataOB] =useState("")
-  const [pollFormDataOC,setPollFormDataOC] =useState("")
+  const [showPollForm, setShowPollForm] = useState(false)
+  const [pollFormData, setPollFormData] = useState({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA: 90, pollB: 50, pollC: 60 })
+  const [pollFormDataQ, setPollFormDataQ] = useState("")
+  const [pollFormDataOA, setPollFormDataOA] = useState("")
+  const [pollFormDataOB, setPollFormDataOB] = useState("")
+  const [pollFormDataOC, setPollFormDataOC] = useState("")
   const [file, setFile] = useState([]);
   const [src, setSrc] = useState(null);
   const [mimeType, setMimeType] = useState("");
@@ -215,24 +192,23 @@ const [inviteBox,setInviteBox]=useState(false)
     isImage,
     isPoll
   ) => {
-    if(isPoll){
-     let pollData= JSON.parse(message)
-    
-     setChatData((e) => [
-      ...e,
-      { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
-    ]);
-    }else{
-       setChatData((e) => [
-      ...e,
-      { chatname, message, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
-    ]);
+    if (isPoll) {
+      let pollData = JSON.parse(message)
+
+      setChatData((e) => [
+        ...e,
+        { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll },
+      ]);
+    } else {
+      setChatData((e) => [
+        ...e,
+        { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll },
+      ]);
     }
-   
-  
+
+
 
     var messageContainer = document.querySelector(".container");
-
     messageContainer.scrollTop = messageContainer.scrollHeight;
   };
   const appendPrivate = (
@@ -250,19 +226,20 @@ const [inviteBox,setInviteBox]=useState(false)
     ]);
 
     var messageContainer = document.querySelector(".privateChat-club");
-
     messageContainer.scrollTop = messageContainer.scrollHeight;
   };
   function isEmoji(str) {
     var ranges = [
       "(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff]|[\u0023-\u0039]\ufe0f?\u20e3|\u3299|\u3297|\u303d|\u3030|\u24c2|\ud83c[\udd70-\udd71]|\ud83c[\udd7e-\udd7f]|\ud83c\udd8e|\ud83c[\udd91-\udd9a]|\ud83c[\udde6-\uddff]|[\ud83c[\ude01-\ude02]|\ud83c\ude1a|\ud83c\ude2f|[\ud83c[\ude32-\ude3a]|[\ud83c[\ude50-\ude51]|\u203c|\u2049|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|\u00a9|\u00ae|\u2122|\u2139|\ud83c\udc04|[\u2600-\u26FF]|\u2b05|\u2b06|\u2b07|\u2b1b|\u2b1c|\u2b50|\u2b55|\u231a|\u231b|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\ud83c\udccf|\u2934|\u2935|[\u2190-\u21ff])", // U+1F680 to U+1F6FF
     ];
+
     if (str.match(ranges.join("|"))) {
       return true;
     } else {
       return false;
     }
   }
+
   const messagesubmit = (e) => {
     e.preventDefault();
     if (messageInboxValue) {
@@ -277,13 +254,13 @@ const [inviteBox,setInviteBox]=useState(false)
         emojiValidator,
       );
       // socket.emit('send',message);
-      let isCommunity=userInfo[0].communityClub
-      let isClub=userInfo[0].communityClub==1?0:1
+      let isCommunity = userInfo[0].communityClub
+      let isClub = userInfo[0].communityClub == 1 ? 0 : 1
       socket.emit("send", {
         name: userFullName,
-        isClub:isClub,
-         isPrivate:0,
-         isCommunity:isCommunity,
+        isClub: isClub,
+        isPrivate: 0,
+        isCommunity: isCommunity,
         message: message,
         profilePic: userProfilePic,
         isEmoji: isEmoji(message),
@@ -291,6 +268,7 @@ const [inviteBox,setInviteBox]=useState(false)
       setMessageInboxValue("");
     }
   };
+
   const messagesubmitPrivate = (e) => {
     e.preventDefault();
     if (messageInboxValuePrivate) {
@@ -306,11 +284,11 @@ const [inviteBox,setInviteBox]=useState(false)
       );
       // socket.emit('send',message);
       socket.emit("private-message-soapbox", {
-         to:privateChatPerson.name,
-         from:userFullName,
-         isClub:0,
-         isPrivate:1,
-         isCommunity:0,
+        to: privateChatPerson.name,
+        from: userFullName,
+        isClub: 0,
+        isPrivate: 1,
+        isCommunity: 0,
         name: userFullName,
         message: message,
         profilePic: userProfilePic,
@@ -354,8 +332,8 @@ const [inviteBox,setInviteBox]=useState(false)
       }
     });
     socket.on("receive-private-chat-soapbox", (data) => {
-    
-        if(data.to==userFullName && data.from==privateChatPerson?privateChatPerson.name:userInformation.username){
+
+      if (data.to == userFullName && data.from == privateChatPerson ? privateChatPerson.name : userInformation.username) {
 
         if (data.isEmoji) {
           appendPrivate(
@@ -366,7 +344,7 @@ const [inviteBox,setInviteBox]=useState(false)
             data.isEmoji
           );
         } else {
-            appendPrivate(
+          appendPrivate(
             data.name,
             `${data.message}`,
             "left",
@@ -376,18 +354,15 @@ const [inviteBox,setInviteBox]=useState(false)
             data.isImage
           );
         }
-        }
-       
-      });
+      }
 
-    
+    });
 
     socket.on("left", (name) => {
-   
-      if(userFullName&&userFullName!==name){
-         append(name, `${name} left the chat`);
+
+      if (userFullName && userFullName !== name) {
+        append(name, `${name} left the chat`);
       }
-     
     });
   }, []);
 
@@ -395,7 +370,7 @@ const [inviteBox,setInviteBox]=useState(false)
     const getUserData = async () => {
       await axios.get(`${BaseURL}/user/${username}`).then((response) => {
         setUserInfo(response.data);
-        setClubName(response.data[0].isCommunity==1?response.data[0].username:`${response.data[0].username}'s Private'`)
+        setClubName(response.data[0].isCommunity == 1 ? response.data[0].username : `${response.data[0].username}'s Private'`)
         console.log("dky");
         axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
           response.data.map((user) => {
@@ -475,45 +450,41 @@ const [inviteBox,setInviteBox]=useState(false)
             isVideo = i.chat.isVideo,
             isImage = i.chat.isImage,
             isPoll = i.chat.isPoll;
-         
 
+          if (isPoll) {
+            let pollData = JSON.parse(message)
 
-          if(isPoll){
-            let pollData= JSON.parse(message)
-           
             setChatData((e) => [
-             ...e,
-             { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
-           ]);
-           }else{
-              setChatData((e) => [
-             ...e,
-             { chatname, message, position, imgSrc, isEmoji, isVideo, isImage,isPoll },
-           ]);
-           }
+              ...e,
+              { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll },
+            ]);
+          } else {
+            setChatData((e) => [
+              ...e,
+              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll },
+            ]);
+          }
         });
 
         setTimeout(() => {
-           if(document.querySelector(".container")){
-          var messageContainer = document.querySelector(".container");
+          if (document.querySelector(".container")) {
+            var messageContainer = document.querySelector(".container");
 
-          messageContainer.scrollTop = messageContainer.scrollHeight;
-        }
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+          }
         }, 1000);
-       
-      
       });
   };
-  const getChatDataPrivate = (a,b) => {
-    
-      setChatDataPrivate([]);
+
+  const getChatDataPrivate = (a, b) => {
+    setChatDataPrivate([]);
     axios
       .post(`${BaseURL}/upload/getChatDataPrivate`, {
-        to:a,
-        from:b
+        to: a,
+        from: b
       })
       .then((res) => {
-      
+
         res.data.forEach((i) => {
           let chatname = i.chat.name,
             message = i.chat.message,
@@ -528,23 +499,25 @@ const [inviteBox,setInviteBox]=useState(false)
           ]);
         });
         setTimeout(() => {
-           if(document.querySelector(".privateChat-club")){
-          var messageContainer = document.querySelector(".privateChat-club");
+          if (document.querySelector(".privateChat-club")) {
+            var messageContainer = document.querySelector(".privateChat-club");
 
-          messageContainer.scrollTop = messageContainer.scrollHeight;
-        }
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+          }
         }, 1000);
-       
+
       });
   };
 
   useEffect(() => {
     getChatData(username);
   }, []);
+
   useEffect(() => {
     let invoice = uuidv4();
     setCurrentInvoice(invoice);
   }, []);
+
   useEffect(() => {
     const getAllUploadData = async () => {
       axios
@@ -563,7 +536,7 @@ const [inviteBox,setInviteBox]=useState(false)
     getAllUploadData();
   }, []);
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const getAllOnDemandMedia = async (media) => {
     setMedia(media);
@@ -575,10 +548,6 @@ const [inviteBox,setInviteBox]=useState(false)
         setOnDemandUploads(response.data.results);
       });
   };
-
-
-  // useEffect(() => {
-  // }, []);
 
   const checkMembership = () => {
     axios
@@ -634,10 +603,6 @@ const [inviteBox,setInviteBox]=useState(false)
     setOnDemandPage(onDemandPage + 1);
   };
 
-  const privateProtected = {
-    userSelect: "none",
-  };
-
   const subscribeUser = () => {
     if (showSubscribeButton) {
       document.getElementById("slideSSB").style.transition = "2sec";
@@ -688,75 +653,43 @@ const [inviteBox,setInviteBox]=useState(false)
     }
   };
 
-  const deletePrivateChatAll = (roomname)=>{
-    
-    if(window.confirm("Are you Sure,you want to delete all chats Permanently?")){
-      axios.post(`${BaseURL}/upload/deleteChatAll`,{
-        roomname:roomname
-      }).then((res)=>{
+  const deletePrivateChatAll = (roomname) => {
+
+    if (window.confirm("Are you Sure,you want to delete all chats Permanently?")) {
+      axios.post(`${BaseURL}/upload/deleteChatAll`, {
+        roomname: roomname
+      }).then((res) => {
         setChatData([])
         toast.success(res.data.message)
 
-      }).catch(err=>console.log(err))
-     
-      
-     
-      
+      }).catch(err => console.log(err))
     }
   }
 
-  const deletePrivateChatDuo = (a,b)=>{
-    
-    if(window.confirm("Are you Sure,you want to delete all chats Permanently?")){
-      axios.post(`${BaseURL}/upload/deleteChatDuo`,{
-        from:a,
-        to:b
-      }).then((res)=>{
+  const deletePrivateChatDuo = (a, b) => {
+
+    if (window.confirm("Are you Sure,you want to delete all chats Permanently?")) {
+      axios.post(`${BaseURL}/upload/deleteChatDuo`, {
+        from: a,
+        to: b
+      }).then((res) => {
         setChatDataPrivate([])
         toast.success(res.data.message)
 
-      }).catch(err=>console.log(err))
-     
-      
-     
-      
+      }).catch(err => console.log(err))
     }
   }
 
   const callRequestUser = () => {
     setCallRequest(!callRequest);
 
-    toast.success(
-      `Requested call to ${username}`
-      // , {
-      //     style: {
-      //         border: "2px solid #A279BA",
-      //         color: "#A279BA",
-      //     },
-      //     iconTheme: {
-      //         primary: "#A279BA",
-      //         secondary: "#FFFAEE",
-      //     },
-      // }
-    );
+    toast.success(`Requested call to ${username}`);
   };
 
   const cancelCallRequestUser = () => {
     setCallRequest(!callRequest);
 
-    toast.success(
-      `Cancelled call request to ${username}`
-      // , {
-      //     style: {
-      //         border: "2px solid #A279BA",
-      //         color: "#A279BA",
-      //     },
-      //     iconTheme: {
-      //         primary: "#A279BA",
-      //         secondary: "#FFFAEE",
-      //     },
-      // }
-    );
+    toast.success(`Cancelled call request to ${username}`);
   };
 
   const updatePricing = () => {
@@ -893,17 +826,7 @@ const [inviteBox,setInviteBox]=useState(false)
   };
 
   const upload = (file, mimeType) => {
-    // setSaveLoading(true);
-
     const formData = new FormData();
-    // formData.append("timeStamp", timeStamp)
-    // formData.append("caption", caption)
-    // // formData.append("link", JSON.stringify(formValues))
-    // formData.append("link", link)
-    // formData.append("ephemeral", ephemeralCheck ? 1 : 0)
-    // formData.append("private", privateCheck ? 1 : 0)
-    // formData.append("expiryDate", ephemeralCheck ? expiryDate : 0)
-    // formData.append("authorEmail", email)
     formData.append("file", file);
 
     const uploadData = async () => {
@@ -955,68 +878,55 @@ const [inviteBox,setInviteBox]=useState(false)
     };
 
     uploadData();
-    // toast.promise(uploadDataToast, {
-    //     pending: 'Sending Hoot...',
-    //     success: 'Hoot Successful',
-    //     error: 'Please try again',
-    // });
   };
 
-  // const getThisUserData=(username)=>{
-  //     axios.get(`${BaseURL}/user/${username}`).then((res) => {
-  //        return res.data[0]
-  // })
-  // .catch(err => { console.log(err) })
-  // }
+  const createBreakoff = () => {
 
-  const createBreakoff=()=>{
-   
-   axios.post(`${BaseURL}/Upload/createBreakOff`,{
-    mainClub:username,
-    topic:breakOffInput,
-    createdBy:userInformation.username
-   })
-   .then((res)=>{
-     if(res.data.status==0){
-       toast.success(res.data.message)
-     }else{toast.success(res.data.message);
-    setBreakOffInput('');
-    document.getElementById("showBreakoffFormId").style.transition =
-    "2s";
-  document.getElementById("showBreakoffFormId").style.right = "-100vw";
+    axios.post(`${BaseURL}/Upload/createBreakOff`, {
+      mainClub: username,
+      topic: breakOffInput,
+      createdBy: userInformation.username
+    })
+      .then((res) => {
+        if (res.data.status == 0) {
+          toast.success(res.data.message)
+        } else {
+          toast.success(res.data.message);
+          setBreakOffInput('');
+          document.getElementById("showBreakoffFormId").style.transition =
+            "2s";
+          document.getElementById("showBreakoffFormId").style.right = "-100vw";
 
-  setTimeout(() => {
-    setShowBreakoffForm(false);
-  }, 1000);
-    }
-   })
-   .catch((err)=>{
-     console.log(err)
-   })
-
+          setTimeout(() => {
+            setShowBreakoffForm(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
-  const handlePollFormSubmission=(user)=>{
-    if(pollFormDataQ&&(pollFormDataOA || pollFormDataOB || pollFormDataOC)){
+  const handlePollFormSubmission = (user) => {
+    if (pollFormDataQ && (pollFormDataOA || pollFormDataOB || pollFormDataOC)) {
       toast.success('Created Poll Successfully!')
-      let threadId= uuidv4()
+      let threadId = uuidv4()
       setPollFormData({
-        Question:pollFormDataQ,
-        OptionA:pollFormDataOA,
-        OptionB:pollFormDataOB,
-        OptionC:pollFormDataOC,
-        createdBy:user,
-        threadId:threadId,
-        pollA:0,
-        pollB:0,
-        pollC:0
+        Question: pollFormDataQ,
+        OptionA: pollFormDataOA,
+        OptionB: pollFormDataOB,
+        OptionC: pollFormDataOC,
+        createdBy: user,
+        threadId: threadId,
+        pollA: 0,
+        pollB: 0,
+        pollC: 0
       })
       setFormEditPoll(!FormEditPoll)
-
     }
   }
 
-  const sentPollMessageInChat=(pollFormData)=>{
+  const sentPollMessageInChat = (pollFormData) => {
     setShowPollForm(false)
     append(
       userFullName,
@@ -1029,23 +939,23 @@ const [inviteBox,setInviteBox]=useState(false)
       true
     );
 
-
-    let isCommunity=userInfo[0].communityClub
-    let isClub=userInfo[0].communityClub==1?0:1
-    let data =JSON.stringify(pollFormData)
+    let isCommunity = userInfo[0].communityClub
+    let isClub = userInfo[0].communityClub == 1 ? 0 : 1
+    let data = JSON.stringify(pollFormData)
     socket.emit("send", {
       name: userFullName,
-      isClub:isClub,
-       isPrivate:0,
-       isCommunity:isCommunity,
+      isClub: isClub,
+      isPrivate: 0,
+      isCommunity: isCommunity,
       message: data,
       profilePic: userProfilePic,
       isEmoji: false,
-      isVideo:"",
-     isImage:"",
-      isPoll:true
+      isVideo: "",
+      isImage: "",
+      isPoll: true
     });
   }
+
   const getAllSubscribedMembers = () => {
     axios
       .post(`${BaseURL}/user/getAllMember`, {
@@ -1067,49 +977,44 @@ const [inviteBox,setInviteBox]=useState(false)
       })
       .catch((err) => console.log(err));
   };
+
   useEffect(() => {
     getAllSubscribedMembers();
   }, []);
 
-const deleteClubRequest=(user)=>{
-  axios.post(`${BaseURL}/upload/removeRequest`,{
-    username:user.username
-  }).then(res=>{
-    setClubRequestsData(clubRequestsData.filter((e)=>e.username!==user.username))
-    toast.success("Deleted Request")
-    
-  
-  })
-}
-const deleteClubRequestAuto=(user)=>{
-  axios.post(`${BaseURL}/upload/clearRequestList`,{
-    username:user.username
-  }).then(res=>{
-    setClubRequestsData(clubRequestsData.filter((e)=>e.username!==user.username))
-   
-    
-  
-  })
-}
-  const handleClubRequestApprove=(user)=>{
-    axios.post(`${BaseURL}/upload/approveRequest`,{
-      username:user.username
-    }).then(res=>{
-        if(res.data.status==1){
-          toast.success(res.data.message)
-          deleteClubRequestAuto(user)
-        }
-      
-    
+  const deleteClubRequest = (user) => {
+    axios.post(`${BaseURL}/upload/removeRequest`, {
+      username: user.username
+    }).then(res => {
+      setClubRequestsData(clubRequestsData.filter((e) => e.username !== user.username))
+      toast.success("Deleted Request")
     })
   }
-  const getAllClubRequest=()=>{
-    axios.post(`${BaseURL}/upload/getAllClubRequests`,{
-      username:username
-    }).then(res=>{
-    
-        setClubRequestsData(res.data)
-    
+
+  const deleteClubRequestAuto = (user) => {
+    axios.post(`${BaseURL}/upload/clearRequestList`, {
+      username: user.username
+    }).then(res => {
+      setClubRequestsData(clubRequestsData.filter((e) => e.username !== user.username))
+    })
+  }
+
+  const handleClubRequestApprove = (user) => {
+    axios.post(`${BaseURL}/upload/approveRequest`, {
+      username: user.username
+    }).then(res => {
+      if (res.data.status == 1) {
+        toast.success(res.data.message)
+        deleteClubRequestAuto(user)
+      }
+    })
+  }
+
+  const getAllClubRequest = () => {
+    axios.post(`${BaseURL}/upload/getAllClubRequests`, {
+      username: username
+    }).then(res => {
+      setClubRequestsData(res.data)
     })
   }
 
@@ -1138,51 +1043,61 @@ const deleteClubRequestAuto=(user)=>{
   //       });
   //    }, [stripe])
 
+  const [showExtraFeatures, setShowExtraFeatures] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth > 930) {
+      setShowExtraFeatures(true);
+    }
+    if (window.innerWidth < 930) {
+      setShowExtraFeatures(false);
+      setClubFloor(false);
+    }
+  }, [clubFloor])
+
   return (
     <Fragment>
+      <NavBar
+        width={"none"}
+        height={60}
+        header={"Soapbox Private Club"}
+        showExtraFeatures={showExtraFeatures}
+        setShowExtraFeatures={setShowExtraFeatures}
+        privateUserImage={`${BaseURL}/profile-pictures/${userInfo[0] && userInfo[0].profilePic}`}
+      />
       <div className="private-channels" style={{ userSelect: "none" }}>
         <div className="channel-banner">
-          {/* <img src={banner} alt="banner" /> */}
         </div>
         <div className="channel-content" >
-<div  style={{flex:'0.2'}}  >
-<Fragment key={userInfo[0]&&userInfo[0].id}>
-                <div className="channel-user-info"   >
-                  <ul
+          <div style={{ flex: '0.2' }}  >
+            <Fragment key={userInfo[0] && userInfo[0].id}>
+              <div className="channel-user-info">
+                {showExtraFeatures
+                  ? <ul
                     style={{
-                      position: "fixed",
-                     minWidth:'100% !important',
+                      // position: "fixed",
+                      minWidth: '100% !important',
                       alignSelf: "flex-start",
-                      maxHeight:'105vh',
-                      overflowY:'scroll',
-                      marginBottom:'150px'
+                      // maxHeight: '105vh',
+                      maxHeight: '93vh',
+                      overflowY: 'scroll',
+
+                      // OR this for full height ...
+                      // height: "-webkit-fill-available",
+                      // marginBottom: '5%'
                     }}
                   >
-                    <div
-                      className="channel-banner"
-                      style={{ position: "relative" }}
-                    >
-                      <div
-                        style={{
-                          position: "absolute",
-                          bottom: "75px",
-                          left: "55px",
-                          zIndex: 5,
-                        }}
-                        className="clubOwner"
-                      >
-                        Club Owner
-                      </div>
-                      <div
-                        style={{
-                          position: "absolute",
-                          bottom: "59px",
-                          left: "105px",
-                          zIndex: 5,
-                        }}
-                        className="arrow-down"
-                      ></div>
+                    {/* <div className="channel-banner" style={{ position: "relative" }}> */}
 
+                    {/* <div className="extra-div-block shadow-sm">
+                    <span>Soapbox Private Club</span>
+                    <img
+                      src={`${BaseURL}/profile-pictures/${userInfo[0] && userInfo[0].profilePic}`}
+                      alt="profile"
+                    />
+                  </div> */}
+
+                    <div className="channel-banner">
                       <img
                         src={banner}
                         alt="banner"
@@ -1190,24 +1105,42 @@ const deleteClubRequestAuto=(user)=>{
                       />
                     </div>
 
-                    <div
-                      className="profile-pic"
-                      onDragStart={(e) => e.preventDefault()}
-                    >
+                    <div className="profile-pic" onDragStart={(e) => e.preventDefault()} style={{ position: "relative" }}>
                       <img
-                        src={`${BaseURL}/profile-pictures/${userInfo[0]&&userInfo[0].profilePic}`}
+                        src={`${BaseURL}/profile-pictures/${userInfo[0] && userInfo[0].profilePic}`}
                         alt="profile"
                       />
+                      <div
+                        className="clubOwner"
+                        style={{
+                          position: "absolute",
+                          bottom: "4.5rem",
+                          // left: "4.5rem",
+                          zIndex: 5,
+                        }}
+                      >
+                        Club Owner
+                      </div>
+
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: "4rem",
+                          // left: "135px",
+                          zIndex: 5,
+                        }}
+                        className="arrow-down"
+                      ></div>
                     </div>
                     <div>
                       <div className="user-information">
                         <div
                           className="name verificationBadgeContainer"
-                          style={{ fontSize: "14px" }}
+                          style={{ fontSize: "1.2rem", gap: "0.2rem" }}
                         >
-                          {userInfo[0]&&userInfo[0].name}
-                          {userInfo[0]&&userInfo[0].verified === 1 ? (
-                            <div className="profile-verification-badge">
+                          {userInfo[0] && userInfo[0].name}
+                          {userInfo[0] && userInfo[0].verified === 1 ? (
+                            <div className="profile-verification-badge" style={{ padding: 0, fontSize: "1.5rem" }}>
                               <HiBadgeCheck
                                 data-tip="Verified account"
                                 data-text-color="#8249A0"
@@ -1216,18 +1149,18 @@ const deleteClubRequestAuto=(user)=>{
                             </div>
                           ) : null}
                         </div>
-                        <div className="username" style={{ fontSize: "14px" }}>
-                          @{userInfo[0]&&userInfo[0].username}
+                        <div className="username" style={{ fontSize: "0.9rem", color: "#6B7280", fontWeight: "600", marginTop: "-0.3rem", marginBottom: "0.5rem" }}>
+                          @{userInfo[0] && userInfo[0].username}
                         </div>
                         <div className="followers">
-                          <b style={{ fontSize: "14px" }}>
+                          <b style={{ fontSize: "1.05rem", color: "#334155" }}>
                             {formatCount(likes) + formatSi(likes)}
                           </b>
-                          <span style={{ fontSize: "14px" }}> Likes </span>
-                          <b style={{ fontSize: "14px" }}>
+                          <span style={{ fontSize: "1rem", color: "#4B5563", marginRight: "0.5rem" }}> Likes </span>
+                          <b style={{ fontSize: "1.05rem", color: "#334155" }}>
                             {formatCount(views) + formatSi(views)}
                           </b>
-                          <span style={{ fontSize: "14px" }}> Views</span>
+                          <span style={{ fontSize: "1rem", color: "#4B5563" }}> Views</span>
                         </div>
 
                         {/* {userInfo[0]&&userInfo[0].bio && (
@@ -1239,32 +1172,32 @@ const deleteClubRequestAuto=(user)=>{
                                                     </div>
                                                 )} */}
 
-                        {userInfo[0]&&userInfo[0].website && (
+                        {userInfo[0] && userInfo[0].website && (
                           <a
                             href={
-                              !userInfo[0]&&userInfo[0].website.includes("https://")
-                                ? "https://" + userInfo[0]&&userInfo[0].website
-                                : userInfo[0]&&userInfo[0].website
+                              !userInfo[0] && userInfo[0].website.includes("https://")
+                                ? "https://" + userInfo[0] && userInfo[0].website
+                                : userInfo[0] && userInfo[0].website
                             }
                             target="_blank"
                             rel="noopener noreferrer"
                             className="profile-website"
                           >
-                            {userInfo[0]&&userInfo[0].website.includes("https://")
-                              ? userInfo[0]&&userInfo[0].website.slice(8)
-                              : userInfo[0]&&userInfo[0].website}
+                            {userInfo[0] && userInfo[0].website.includes("https://")
+                              ? userInfo[0] && userInfo[0].website.slice(8)
+                              : userInfo[0] && userInfo[0].website}
                           </a>
                         )}
                         <div
                           className="social-profile-icon-links"
-                          style={{ flexWrap: "wrap" }}
+                          style={{ flexWrap: "wrap", gap: "0.5rem" }}
                         >
-                          {userInfo[0]&&userInfo[0].twitter && (
+                          {userInfo[0] && userInfo[0].twitter && (
                             <a
                               href={
-                                !userInfo[0]&&userInfo[0].twitter.includes("https://")
-                                  ? "https://" + userInfo[0]&&userInfo[0].twitter
-                                  : userInfo[0]&&userInfo[0].twitter
+                                !userInfo[0] && userInfo[0].twitter.includes("https://")
+                                  ? "https://" + userInfo[0] && userInfo[0].twitter
+                                  : userInfo[0] && userInfo[0].twitter
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1272,12 +1205,12 @@ const deleteClubRequestAuto=(user)=>{
                               <FiTwitter className="social-profile-icon s-twitter" />
                             </a>
                           )}
-                          {userInfo[0]&&userInfo[0].instagram && (
+                          {userInfo[0] && userInfo[0].instagram && (
                             <a
                               href={
-                                !userInfo[0]&&userInfo[0].instagram.includes("https://")
-                                  ? "https://" + userInfo[0]&&userInfo[0].instagram
-                                  : userInfo[0]&&userInfo[0].instagram
+                                !userInfo[0] && userInfo[0].instagram.includes("https://")
+                                  ? "https://" + userInfo[0] && userInfo[0].instagram
+                                  : userInfo[0] && userInfo[0].instagram
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1285,12 +1218,12 @@ const deleteClubRequestAuto=(user)=>{
                               <AiOutlineInstagram className="social-profile-icon s-instagram" />
                             </a>
                           )}
-                          {userInfo[0]&&userInfo[0].linkedIn && (
+                          {userInfo[0] && userInfo[0].linkedIn && (
                             <a
                               href={
-                                !userInfo[0]&&userInfo[0].linkedIn.includes("https://")
-                                  ? "https://" + userInfo[0]&&userInfo[0].linkedIn
-                                  : userInfo[0]&&userInfo[0].linkedIn
+                                !userInfo[0] && userInfo[0].linkedIn.includes("https://")
+                                  ? "https://" + userInfo[0] && userInfo[0].linkedIn
+                                  : userInfo[0] && userInfo[0].linkedIn
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1298,12 +1231,12 @@ const deleteClubRequestAuto=(user)=>{
                               <AiOutlineLinkedin className="social-profile-icon s-linkedin" />
                             </a>
                           )}
-                          {userInfo[0]&&userInfo[0].facebook && (
+                          {userInfo[0] && userInfo[0].facebook && (
                             <a
                               href={
-                                !userInfo[0]&&userInfo[0].facebook.includes("https://")
-                                  ? "https://" + userInfo[0]&&userInfo[0].facebook
-                                  : userInfo[0]&&userInfo[0].facebook
+                                !userInfo[0] && userInfo[0].facebook.includes("https://")
+                                  ? "https://" + userInfo[0] && userInfo[0].facebook
+                                  : userInfo[0] && userInfo[0].facebook
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1311,12 +1244,12 @@ const deleteClubRequestAuto=(user)=>{
                               <RiFacebookCircleLine className="social-profile-icon s-facebook" />
                             </a>
                           )}
-                          {userInfo[0]&&userInfo[0].tiktok && (
+                          {userInfo[0] && userInfo[0].tiktok && (
                             <a
                               href={
-                                !userInfo[0]&&userInfo[0].tiktok.includes("https://")
-                                  ? "https://" + userInfo[0]&&userInfo[0].tiktok
-                                  : userInfo[0]&&userInfo[0].tiktok
+                                !userInfo[0] && userInfo[0].tiktok.includes("https://")
+                                  ? "https://" + userInfo[0] && userInfo[0].tiktok
+                                  : userInfo[0] && userInfo[0].tiktok
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1324,12 +1257,12 @@ const deleteClubRequestAuto=(user)=>{
                               <SiTiktok className="social-profile-icon s-tiktok" />
                             </a>
                           )}
-                          {userInfo[0]&&userInfo[0].snapchat && (
+                          {userInfo[0] && userInfo[0].snapchat && (
                             <a
                               href={
-                                !userInfo[0]&&userInfo[0].snapchat.includes("https://")
-                                  ? "https://" + userInfo[0]&&userInfo[0].snapchat
-                                  : userInfo[0]&&userInfo[0].snapchat
+                                !userInfo[0] && userInfo[0].snapchat.includes("https://")
+                                  ? "https://" + userInfo[0] && userInfo[0].snapchat
+                                  : userInfo[0] && userInfo[0].snapchat
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1337,12 +1270,12 @@ const deleteClubRequestAuto=(user)=>{
                               <RiSnapchatLine className="social-profile-icon s-snapchat" />
                             </a>
                           )}
-                          {userInfo[0]&&userInfo[0].reddit && (
+                          {userInfo[0] && userInfo[0].reddit && (
                             <a
                               href={
-                                !userInfo[0]&&userInfo[0].reddit.includes("https://")
-                                  ? "https://" + userInfo[0]&&userInfo[0].reddit
-                                  : userInfo[0]&&userInfo[0].reddit
+                                !userInfo[0] && userInfo[0].reddit.includes("https://")
+                                  ? "https://" + userInfo[0] && userInfo[0].reddit
+                                  : userInfo[0] && userInfo[0].reddit
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1350,12 +1283,12 @@ const deleteClubRequestAuto=(user)=>{
                               <AiOutlineReddit className="social-profile-icon s-reddit" />
                             </a>
                           )}
-                          {userInfo[0]&&userInfo[0].pinterest && (
+                          {userInfo[0] && userInfo[0].pinterest && (
                             <a
                               href={
-                                !userInfo[0]&&userInfo[0].pinterest.includes("https://")
-                                  ? "https://" + userInfo[0]&&userInfo[0].pinterest
-                                  : userInfo[0]&&userInfo[0].pinterest
+                                !userInfo[0] && userInfo[0].pinterest.includes("https://")
+                                  ? "https://" + userInfo[0] && userInfo[0].pinterest
+                                  : userInfo[0] && userInfo[0].pinterest
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1363,12 +1296,12 @@ const deleteClubRequestAuto=(user)=>{
                               <RiPinterestLine className="social-profile-icon s-pinterest" />
                             </a>
                           )}
-                          {userInfo[0]&&userInfo[0].medium && (
+                          {userInfo[0] && userInfo[0].medium && (
                             <a
                               href={
-                                !userInfo[0]&&userInfo[0].medium.includes("https://")
-                                  ? "https://" + userInfo[0]&&userInfo[0].medium
-                                  : userInfo[0]&&userInfo[0].medium
+                                !userInfo[0] && userInfo[0].medium.includes("https://")
+                                  ? "https://" + userInfo[0] && userInfo[0].medium
+                                  : userInfo[0] && userInfo[0].medium
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1376,12 +1309,12 @@ const deleteClubRequestAuto=(user)=>{
                               <AiOutlineMedium className="social-profile-icon s-medium" />
                             </a>
                           )}
-                          {userInfo[0]&&userInfo[0].tumblr && (
+                          {userInfo[0] && userInfo[0].tumblr && (
                             <a
                               href={
-                                !userInfo[0]&&userInfo[0].tumblr.includes("https://")
-                                  ? "https://" + userInfo[0]&&userInfo[0].tumblr
-                                  : userInfo[0]&&userInfo[0].tumblr
+                                !userInfo[0] && userInfo[0].tumblr.includes("https://")
+                                  ? "https://" + userInfo[0] && userInfo[0].tumblr
+                                  : userInfo[0] && userInfo[0].tumblr
                               }
                               target="_blank"
                               rel="noopener noreferrer"
@@ -1392,145 +1325,8 @@ const deleteClubRequestAuto=(user)=>{
                         </div>
                         {/* channel info */}
                         <div>
-                        {userInfo[0]&&userInfo[0].communityClub == 1 ? (
-                                <div>
-                                  <div
-                                    className="live-header"
-                                    style={{
-                                      backgroundColor: "#8249A0",
-                                      color: "white",
-                                      borderRadius: "3px",
-                                    }}
-                                  >
-                                    Club Tools
-                                  </div>
-                                  <div className="control">
-                                    <button>Marketplace</button>
-
-                                    <button
-                                      onClick={() => {
-                                        subscribe
-                                          ? unSubscribeUser()
-                                          : subscribeUser();
-                                      }}
-                                    >
-                                      {subscribe
-                                        ? "Membership"
-                                        : "Get Membership"}
-                                    </button>
-                                  </div>
-                                </div>
-                              ) : null}
-                          {userInformation.username !== username ? (
+                          {userInfo[0] && userInfo[0].communityClub == 1 ? (
                             <div>
-                              <div className="live-header"  style={{
-                                  backgroundColor: "#8249A0",
-                                  color: "white",
-                                  borderRadius: "3px",
-                                }}>Member Tools</div>
-                              <div className="control">
-                                 <button style={{ minWidth: "208px" }}
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
-
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    }, 1000);
-                                  } else {
-                                    setIframeBox({src:'https://www.verohive.net',title:'VeroHive'})
-                                   setShowIframe(true)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "-15px";
-                                      }
-                                    }, 1);
-                                  }
-                                }}
-                                >
-                                  Video Meetings
-                                </button>
-                                <button style={{ minWidth: "208px" }}
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
-
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    }, 1000);
-                                  } else {
-                                    setIframeBox({src:'https://www.documega.com/enterprise-solutions/documega/',title:'DocuMega'})
-                                   setShowIframe(true)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "-15px";
-                                      }
-                                    }, 1);
-                                  }
-                                }}
-                                >
-                                  eDocuments
-                                </button>
-                                <button style={{ minWidth: "208px" }}
-                               
-                               onClick={() => {
-                                 if (showIframe) {
-                                   document.getElementById(
-                                     "slideIFM"
-                                   ).style.transition = "2sec";
-                                   document.getElementById(
-                                     "slideIFM"
-                                   ).style.right = "-100vw";
-
-                                   setTimeout(() => {
-                                     setShowIframe(false);
-                                   }, 1000);
-                                 } else {
-                                   setIframeBox({src:'https://www.megahoot.com/vault/megahoot-vault/',title:'MegaHoot Vault'})
-                                  setShowIframe(true)
-                                   setTimeout(() => {
-                                     if (
-                                       document.getElementById("slideIFM")
-                                     ) {
-                                       document.getElementById(
-                                         "slideIFM"
-                                       ).style.transition = "1sec";
-                                       document.getElementById(
-                                         "slideIFM"
-                                       ).style.right = "-15px";
-                                     }
-                                   }, 1);
-                                 }
-                               }}
-                               >
-                                 MegaHoot Vault
-                               </button>
-                                
-                              </div>
                               <div
                                 className="live-header"
                                 style={{
@@ -1539,42 +1335,65 @@ const deleteClubRequestAuto=(user)=>{
                                   borderRadius: "3px",
                                 }}
                               >
-                                Crypto Tools
+                                Club Tools
                               </div>
                               <div className="control">
-                                <button style={{ minWidth: "208px" }} 
-                              
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
+                                <button>Marketplace</button>
 
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    }, 500);
-                                  } else {
-                                    setIframeBox({src:'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/',title:'XMG Wallet'})
-                                   setShowIframe(true)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "-15px";
-                                      }
-                                    }, 1);
-                                  }
-                                }}
+                                <button
+                                  onClick={() => {
+                                    subscribe
+                                      ? unSubscribeUser()
+                                      : subscribeUser();
+                                  }}
                                 >
-                                Buy XMG Coins
+                                  {subscribe
+                                    ? "Membership"
+                                    : "Get Membership"}
+                                </button>
+                              </div>
+                            </div>
+                          ) : null}
+                          {userInformation.username !== username ? (
+                            <div>
+                              <div className="live-header" style={{
+                                backgroundColor: "#8249A0",
+                                color: "white",
+                                borderRadius: "3px",
+                              }}>Member Tools</div>
+                              <div className="control">
+                                <button style={{ minWidth: "208px" }}
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({ src: 'https://www.verohive.net', title: 'VeroHive' })
+                                      setShowIframe(true)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-15px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                                >
+                                  Video Meetings
                                 </button>
                                 <button style={{ minWidth: "208px" }}
                                   onClick={() => {
@@ -1590,8 +1409,8 @@ const deleteClubRequestAuto=(user)=>{
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({src:'https://pecunovus.org/login/',title:'Pecu Novus Wallet'})
-                                     setShowIframe(true)
+                                      setIframeBox({ src: 'https://www.documega.com/enterprise-solutions/documega/', title: 'DocuMega' })
+                                      setShowIframe(true)
                                       setTimeout(() => {
                                         if (
                                           document.getElementById("slideIFM")
@@ -1606,50 +1425,164 @@ const deleteClubRequestAuto=(user)=>{
                                       }, 1);
                                     }
                                   }}
-                               >
-                                  Pecu Novus Wallet
-                                  
+                                >
+                                  eDocuments
                                 </button>
-                              
                                 <button style={{ minWidth: "208px" }}
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
 
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    }, 1000);
-                                  } else {
-                                    setIframeBox({src:'https://www.megahootvault.com/',title:'Crypto Index'})
-                                   setShowIframe(true)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "-15px";
-                                      }
-                                    }, 1);
-                                  }
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({ src: 'https://www.megahoot.com/vault/megahoot-vault/', title: 'MegaHoot Vault' })
+                                      setShowIframe(true)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-15px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                                >
+                                  MegaHoot Vault
+                                </button>
+
+                              </div>
+                              <div
+                                className="live-header"
+                                style={{
+                                  backgroundColor: "#8249A0",
+                                  color: "white",
+                                  borderRadius: "3px",
                                 }}
+                              >
+                                Crypto Tools
+                              </div>
+                              <div className="control">
+                                <button style={{ minWidth: "208px" }}
+
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+                                      }, 500);
+                                    } else {
+                                      setIframeBox({ src: 'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/', title: 'XMG Wallet' })
+                                      setShowIframe(true)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-15px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                                >
+                                  Buy XMG Coins
+                                </button>
+                                <button style={{ minWidth: "208px" }}
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({ src: 'https://pecunovus.org/login/', title: 'Pecu Novus Wallet' })
+                                      setShowIframe(true)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-15px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                                >
+                                  Pecu Novus Wallet
+
+                                </button>
+
+                                <button style={{ minWidth: "208px" }}
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({ src: 'https://www.megahootvault.com/', title: 'Crypto Index' })
+                                      setShowIframe(true)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-15px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
                                 >
                                   Crypto Index
                                 </button>
-                               
+
                               </div>
                             </div>
                           ) : null}
                           {userInformation.username !== username &&
-                         userInfo[0]&&userInfo[0].communityClub !== 1 ? (
+                            userInfo[0] && userInfo[0].communityClub !== 1 ? (
                             <div
                               className="live-header"
                               style={{
@@ -1662,13 +1595,12 @@ const deleteClubRequestAuto=(user)=>{
                             </div>
                           ) : null}
                           {userInformation.username == username ? (
-                            <div>
+                            <div className="top-features-medium">
                               <div
-                                className="live-header"
+                                className="live-header top-option-medium"
                                 style={{
                                   backgroundColor: "#8249A0",
                                   color: "white",
-                                  borderRadius: "3px",
                                 }}
                               >
                                 Membership
@@ -1752,162 +1684,12 @@ const deleteClubRequestAuto=(user)=>{
                                   Requests
                                 </button>
                               </div>
-                              
-                              <div className="live-header"  style={{
-                                  backgroundColor: "#8249A0",
-                                  color: "white",
-                                  borderRadius: "3px",
-                                }}>Member Tools</div>
+
+                              <div className="live-header top-option-medium" style={{
+                                backgroundColor: "#8249A0",
+                                color: "white",
+                              }}>Member Tools</div>
                               <div className="control">
-                                 <button style={{ minWidth: "208px" }}
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
-
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    }, 1000);
-                                  } else {
-                                    setIframeBox({src:'https://www.verohive.net',title:'VeroHive'})
-                                   setShowIframe(true)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "-15px";
-                                      }
-                                    }, 1);
-                                  }
-                                }}
-                                >
-                                  Video Meetings
-                                </button>
-                                <button style={{ minWidth: "208px" }}
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
-
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    }, 1000);
-                                  } else {
-                                    setIframeBox({src:'https://www.documega.com/enterprise-solutions/documega/',title:'DocuMega'})
-                                   setShowIframe(true)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "-15px";
-                                      }
-                                    }, 1);
-                                  }
-                                }}
-                                >
-                                  eDocuments
-                                </button>
-                                <button style={{ minWidth: "208px" }}
-                               
-                               onClick={() => {
-                                 if (showIframe) {
-                                   document.getElementById(
-                                     "slideIFM"
-                                   ).style.transition = "2sec";
-                                   document.getElementById(
-                                     "slideIFM"
-                                   ).style.right = "-100vw";
-
-                                   setTimeout(() => {
-                                     setShowIframe(false);
-                                   }, 1000);
-                                 } else {
-                                   setIframeBox({src:'https://www.megahoot.com/vault/megahoot-vault/',title:'MegaHoot Vault'})
-                                  setShowIframe(true)
-                                   setTimeout(() => {
-                                     if (
-                                       document.getElementById("slideIFM")
-                                     ) {
-                                       document.getElementById(
-                                         "slideIFM"
-                                       ).style.transition = "1sec";
-                                       document.getElementById(
-                                         "slideIFM"
-                                       ).style.right = "-15px";
-                                     }
-                                   }, 1);
-                                 }
-                               }}
-                               >
-                                 MegaHoot Vault
-                               </button>
-                                
-                              </div>
-                              <div
-                                className="live-header"
-                                style={{
-                                  backgroundColor: "#8249A0",
-                                  color: "white",
-                                  borderRadius: "3px",
-                                }}
-                              >
-                                Crypto Tools
-                              </div>
-                              <div className="control">
-                                <button style={{ minWidth: "208px" }} 
-                              
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
-                                    setClubFloor(true)
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    
-                                    }, 1000);
-                                  } else {
-                                    setIframeBox({src:'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/',title:'XMG Wallet'})
-                                   setShowIframe(true)
-                                   setClubFloor(false)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "-15px";
-                                      }
-                                    }, 1);
-                                  }
-                                }}
-                                >
-                                Buy XMG Coins
-                                </button>
                                 <button style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
@@ -1917,15 +1699,13 @@ const deleteClubRequestAuto=(user)=>{
                                       document.getElementById(
                                         "slideIFM"
                                       ).style.right = "-100vw";
-                                      setClubFloor(true)
+
                                       setTimeout(() => {
                                         setShowIframe(false);
-                                        
                                       }, 1000);
                                     } else {
-                                      setIframeBox({src:'https://pecunovus.org/login/',title:'Pecu Novus Wallet'})
-                                     setShowIframe(true)
-                                     setClubFloor(false)
+                                      setIframeBox({ src: 'https://www.verohive.net', title: 'VeroHive' })
+                                      setShowIframe(true)
                                       setTimeout(() => {
                                         if (
                                           document.getElementById("slideIFM")
@@ -1940,9 +1720,159 @@ const deleteClubRequestAuto=(user)=>{
                                       }, 1);
                                     }
                                   }}
-                               >
+                                >
+                                  Video Meetings
+                                </button>
+                                <button style={{ minWidth: "208px" }}
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({ src: 'https://www.documega.com/enterprise-solutions/documega/', title: 'DocuMega' })
+                                      setShowIframe(true)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-15px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                                >
+                                  eDocuments
+                                </button>
+                                <button style={{ minWidth: "208px" }}
+
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({ src: 'https://www.megahoot.com/vault/megahoot-vault/', title: 'MegaHoot Vault' })
+                                      setShowIframe(true)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-15px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                                >
+                                  MegaHoot Vault
+                                </button>
+
+                              </div>
+                              <div
+                                className="live-header top-option-medium"
+                                style={{
+                                  backgroundColor: "#8249A0",
+                                  color: "white",
+                                }}
+                              >
+                                Crypto Tools
+                              </div>
+                              <div className="control">
+                                <button style={{ minWidth: "208px" }}
+
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+                                      setClubFloor(true)
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({ src: 'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/', title: 'XMG Wallet' })
+                                      setShowIframe(true)
+                                      setClubFloor(false)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-15px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                                >
+                                  Buy XMG Coins
+                                </button>
+                                <button style={{ minWidth: "208px" }}
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+                                      setClubFloor(true)
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({ src: 'https://pecunovus.org/login/', title: 'Pecu Novus Wallet' })
+                                      setShowIframe(true)
+                                      setClubFloor(false)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-15px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                                >
                                   Pecu Novus Wallet
-                                  
+
                                 </button>
                                 {/* <button style={{ minWidth: "208px" }}
                                
@@ -1980,36 +1910,36 @@ const deleteClubRequestAuto=(user)=>{
                                   MegaHoot Vault
                                 </button> */}
                                 <button style={{ minWidth: "208px" }}
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
-                                    setClubFloor(true)
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    }, 1000);
-                                  } else {
-                                    setIframeBox({src:'https://www.megahootvault.com/',title:'Crypto Index'})
-                                   setShowIframe(true)
-                                   setClubFloor(false)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "-15px";
-                                      }
-                                    }, 1);
-                                  }
-                                }}
+                                  onClick={() => {
+                                    if (showIframe) {
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
+                                      setClubFloor(true)
+                                      setTimeout(() => {
+                                        setShowIframe(false);
+                                      }, 1000);
+                                    } else {
+                                      setIframeBox({ src: 'https://www.megahootvault.com/', title: 'Crypto Index' })
+                                      setShowIframe(true)
+                                      setClubFloor(false)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-15px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
                                 >
                                   Crypto Index
                                 </button>
@@ -2049,11 +1979,10 @@ const deleteClubRequestAuto=(user)=>{
                                 </button> */}
                               </div>
                               <div
-                                className="live-header"
+                                className="live-header top-option-medium"
                                 style={{
                                   backgroundColor: "#8249A0",
                                   color: "white",
-                                  borderRadius: "3px",
                                 }}
                               >
                                 Club Toolbox
@@ -2225,11 +2154,10 @@ const deleteClubRequestAuto=(user)=>{
                               <br></br>
 
                               <div
-                                className="live-header"
+                                className="live-header top-option-medium"
                                 style={{
                                   backgroundColor: "#8249A0",
                                   color: "white",
-                                  borderRadius: "3px",
                                 }}
                               >
                                 Pay Per View Event
@@ -2248,7 +2176,7 @@ const deleteClubRequestAuto=(user)=>{
                             </div>
                           ) : (
                             <div>
-                              {userInfo[0]&&userInfo[0].communityClub !== 1 ? (
+                              {userInfo[0] && userInfo[0].communityClub !== 1 ? (
                                 <div className="control">
                                   {/* <button>
                               {callRequest
@@ -2424,7 +2352,7 @@ const deleteClubRequestAuto=(user)=>{
                                   </button>
                                 </div>
                               ) : null}
-                              
+
 
                               <div
                                 className="live-header"
@@ -2525,16 +2453,15 @@ const deleteClubRequestAuto=(user)=>{
 
                       <div className="channel-live-events">
                         <div
-                          className="live-header"
+                          className="live-header live-events-medium"
                           style={{
                             backgroundColor: "#8249A0",
                             color: "white",
-                            borderRadius: "3px",
                           }}
                         >
                           Live Events
                         </div>
-                        <div className="live-events">
+                        <div className="live-events" style={{ marginBottom: "10rem" }}>
                           <div className="live-cards">
                             <img src={live} alt="live" />
                             <button>Buy</button>
@@ -2551,31 +2478,19 @@ const deleteClubRequestAuto=(user)=>{
                       </div>
                     </div>
                   </ul>
-                </div>
-              </Fragment>
-</div>
+                  : null
+                }
+              </div>
+            </Fragment>
+          </div>
 
           {userInformation.username !== username ? (
-            <div className="channel-user-content" style={{flex:'0.8'}} >
-              {/* <div className="channel-tabs shadow-sm" style={{ position: "sticky", top: "4.2rem", alignSelf: "flex-start" }}>
-                            <div className="tabs">
-                                <span>Requests</span>
-                                <span>Subscribers</span>
-                                <span>Notification</span>
-                                <span onClick={() => { history.push(`/SoapboxHall/${uuidv4()}/${userInformation.username}/${uuidv4()}/${uuidv4()}`) }}>
-                                    <div className="channel-btn-icon">
-                                        Live Room
-                                        <LiveTvRounded />
-                                    </div>
-                                </span>
-                            </div>
-                            <FiSearch className="search-channel-content" />
-                        </div> */}
+            <div className="channel-user-content" style={{ flex: '0.8' }} >
               <div
                 className="channel-tabs shadow-sm"
                 style={{
                   position: "sticky",
-                  top: "4.2rem",
+                  top: "3.5rem",
                   alignSelf: "flex-start",
                 }}
                 onDragStart={(e) => e.preventDefault()}
@@ -2588,79 +2503,74 @@ const deleteClubRequestAuto=(user)=>{
                 <div className="tabs" style={{ margin: "0 0.5rem" }}>
                   <span
                     onClick={() => {
-                      if(privateChat==false){
-                         setOneOnOneCall(false);
-                      setGroupCall(false);
-                      setRequestMessage(false);
-                      setVerifiedAutograph(false);
-                      setClubFloor(true);
-                      setShowSubscribeButton(false);
-                      setShowChatRoom(true);
-                      setOnDemandMedia(false);
-                      }else{
+                      if (privateChat == false) {
+                        setOneOnOneCall(false);
+                        setGroupCall(false);
+                        setRequestMessage(false);
+                        setVerifiedAutograph(false);
+                        setClubFloor(true);
+                        setShowSubscribeButton(false);
+                        setShowChatRoom(true);
+                        setOnDemandMedia(false);
+                      } else {
                         toast.success("Please close Private chat to view feeds");
                       }
-                     
                     }}
                     style={{ fontSize: "14px" }}
                   >
                     CLUB FLOOR
                   </span>
 
-                  {/* <span>Audio</span>
-                                    <span>Video</span>
-                                    <span>Podcasts</span> */}
-
-                  {/* <span>Marketplace</span> */}
                   <span style={{ fontSize: "14px" }}>CLUB AMENITIES</span>
                   <span style={{ fontSize: "14px" }}>EVENTS</span>
 
                   <span>
-                    <SoapboxTooltip title={"MARKETPLACE"} placement="left">
+                    <SoapboxTooltip title={"MARKETPLACE"} placement="bottom" privateTooltip={true}>
                       <img src={marketplaceicon} width="30px" />
                     </SoapboxTooltip>
                   </span>
 
                   <span>
-                    <SoapboxTooltip title={"MESSAGES"} placement="left">
-                      <img src={messagesicon} width="30px"   onClick={() => {
-                                    if(!privateChatList){
-                                      setPrivateChatList(!privateChatList)
-                                               
-                                                setTimeout(() => {
-                                                  if (
-                                                    document.getElementById(
-                                                      "privateChatList"
-                                                    )
-                                                  ) {
-                                                    document.getElementById(
-                                                      "privateChatList"
-                                                    ).style.transition = "1sec";
-                                                    document.getElementById(
-                                                      "privateChatList"
-                                                    ).style.right = "0px";
-                                                  }
-                                                }, 1);}else{
-                                                  document.getElementById(
-                                                    "privateChatList"
-                                                  ).style.transition = "1sec";
-                                                  document.getElementById(
-                                                    "privateChatList"
-                                                  ).style.right = "-100vw";
-                                                  setTimeout(() => {
-                                                    setPrivateChatList(false)
-                                                  }, 200);
-                                                }
-                                  }} />
+                    <SoapboxTooltip title={"MESSAGES"} placement="bottom" privateTooltip={true}>
+                      <img src={messagesicon} width="30px" onClick={() => {
+                        if (!privateChatList) {
+                          setPrivateChatList(!privateChatList)
+
+                          setTimeout(() => {
+                            if (
+                              document.getElementById(
+                                "privateChatList"
+                              )
+                            ) {
+                              document.getElementById(
+                                "privateChatList"
+                              ).style.transition = "1sec";
+                              document.getElementById(
+                                "privateChatList"
+                              ).style.right = "0.8rem";
+                            }
+                          }, 1);
+                        } else {
+                          document.getElementById(
+                            "privateChatList"
+                          ).style.transition = "1sec";
+                          document.getElementById(
+                            "privateChatList"
+                          ).style.right = "-100vw";
+                          setTimeout(() => {
+                            setPrivateChatList(false)
+                          }, 200);
+                        }
+                      }} />
                     </SoapboxTooltip>
                   </span>
-                  <span onClick={()=>setInviteBox(true)}>
-                    <SoapboxTooltip title={"Invite"} placement="left">
+                  <span onClick={() => setInviteBox(true)}>
+                    <SoapboxTooltip title={"Invite"} placement="bottom" privateTooltip={true}>
                       <img src={inviteicon} width="30px" />
                     </SoapboxTooltip>
                   </span>
                   <span>
-                    <SoapboxTooltip title={"Club Rules"} placement="left">
+                    <SoapboxTooltip title={"Club Rules"} placement="bottom" privateTooltip={true}>
                       <img
                         src={rules}
                         width="30px"
@@ -2703,48 +2613,48 @@ const deleteClubRequestAuto=(user)=>{
 
                   {/* <button  style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}}>INVITE</button> */}
                   {/* <button  style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}}>CLUB RULES</button> */}
-             
-                  <SoapboxTooltip title={"Create Breakoff Chat"} placement="left">
-                  <span style={{display:'flex',justifyContent:'center',alignItems:'center',height:'22px',backgroundColor:'white',color:'purple',borderRadius:'5px'}}
-                  onClick={()=>{
-                    if(userInfo[0].communityClub==1)
-  { 
-    if(subscribe || userInformation.username == username){
-      if (showBreakoffForm) {
-        document.getElementById("showBreakoffFormId").style.transition =
-          "2s";
-        document.getElementById("showBreakoffFormId").style.right = "-100vw";
 
-        setTimeout(() => {
-          setShowBreakoffForm(false);
-        }, 1000);
-      } else {
-        setShowBreakoffForm(true);
+                  <SoapboxTooltip title={"Create Breakoff Chat"} placement="bottom">
+                    <span style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      color: '#FFF',
+                      fontSize: "1.5rem"
+                    }}
+                      onClick={() => {
+                        if (userInfo[0].communityClub == 1) {
+                          if (subscribe || userInformation.username == username) {
+                            if (showBreakoffForm) {
+                              document.getElementById("showBreakoffFormId").style.transition =
+                                "2s";
+                              document.getElementById("showBreakoffFormId").style.right = "-100vw";
 
-        setTimeout(() => {
-          if (document.getElementById("showBreakoffFormId")) {
-            document.getElementById("showBreakoffFormId").style.transition =
-              "1s";
-              document.getElementById("showBreakoffFormId").style.right =
-              "30%";
-          }
-        }, 1);
-      }
-  }else{toast.success('Members Only Access')}
-  }else{
-                    toast.success('BreakOff Chat can be accessible only in Community Clubs')
-                  }
-                
-                  }}
-                  >
-                 
-                      <FiPlus />
-                  
-                   
+                              setTimeout(() => {
+                                setShowBreakoffForm(false);
+                              }, 1000);
+                            } else {
+                              setShowBreakoffForm(true);
+
+                              setTimeout(() => {
+                                if (document.getElementById("showBreakoffFormId")) {
+                                  document.getElementById("showBreakoffFormId").style.transition =
+                                    "1s";
+                                  document.getElementById("showBreakoffFormId").style.right =
+                                    "30%";
+                                }
+                              }, 1);
+                            }
+                          } else { toast.success('Members Only Access') }
+                        } else {
+                          toast.success('BreakOff Chat can be accessible only in Community Clubs')
+                        }
+                      }}
+                    >
+                      <BsPlusCircleFill />
                     </span>
-                    </SoapboxTooltip>
-                    
-                  
+                  </SoapboxTooltip>
+
                   <span
                     id="chatRoomopen"
                     onClick={() => {
@@ -2770,214 +2680,43 @@ const deleteClubRequestAuto=(user)=>{
 
                 <FiSearch className="search-channel-content" />
               </div>
-            
+
               {showClubRules ? (
-                <div className="slide-container clubRulesText">
-                  <div
-                    id="slideCR"
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#DCD5FA",
-                      padding: "1rem",
-                      margin: "1rem",
-                    }}
-                  >
-                    <div
-                      style={{
-                        maxHeight: "450px",
-                        overflowY: "scroll",
-                        position: "relative",
-                      }}
-                    >
-                      <FaWindowClose
-                        className="FaWindowClose"
-                        style={{
-                          cursor: "pointer",
-                          color: "red",
-                          position: "absolute",
-                          right: "0px",
-                        }}
-                        onClick={() => {
-                          document.getElementById("slideCR").style.transition =
-                            "2sec";
-                          document.getElementById("slideCR").style.right =
-                            "-100vw";
-
-                          setTimeout(() => {
-                            setShowClubRules(false);
-                          }, 1000);
-                        }}
-                      />
-                      <h4> RULES OF THE ROAD</h4>
-                      <p>
-                        Soapbox is a Club Community where members can not only
-                        connect but Club Owners can build real businesses as
-                        Private Club Owners.. All Community Clubs are here for
-                        you, our members, that allow you to create discussions,
-                        share ideas, support each other, create events, connect
-                        with likeminded people and we encourage you to find the
-                        right community club for you. Even create build your own
-                        virtual business as a Private Club Owner, a real
-                        business.
-                      </p>
-                      <p>
-                        So with that said these are some general Club rules that
-                        all members have to adhere to:
-                      </p>
-                      <h5>RULE 1</h5>
-
-                      <p>
-                        Be mindful of others and don't join a community club to
-                        cause disruption. Community Clubs are topic specific
-                        with Break-Off Chats that are created by members to
-                        create conversation, find the club that is right for
-                        you. Members that create disruption by adding offensive
-                        content, hate speech, attacking others, inciting
-                        violence, well they run the risk of not only being
-                        banned from that Club Community but also run the risk of
-                        being banned from Soapbox in general. We take this very
-                        seriously and bans are not temporary, they are
-                        permanent.
-                      </p>
-                      <h5>RULE 2</h5>
-                      <p>
-                        Privacy and Security, All club members must adhere to
-                        privacy policies and in simple terms respect other
-                        members' privacy and keep the community safe. Don't
-                        harass other members with repeated private chat requests
-                        or messages, Do not instigate harassment by revealing
-                        someone's personal information, sharing sexually
-                        explicit media of someone or threatening them. Violators
-                        run the risk of not only being banned from that Club but
-                        also being banned from Soapbox in general.
-                        <h5> RULE 3</h5>
-                        Impersonating someone to mislead others, sharing sexual
-                        or suggestive content involving minors, threatening
-                        other members will be cause for an immediate ban.
-                        Soapbox members don't have to use their real names but
-                        impersonating a celebrity or business to trick people is
-                        a NO NO, we protect our members and have a zero
-                        tolerance policy as it relates to these three issues.
-                        <h5> RULE 4</h5>
-                        Don't be a bully, no one likes a bully, so remember to
-                        help build the Club Communities for the better of the
-                        community. Sharing opinions is encouraged, creating
-                        conversations with opposing views is fine, trying to
-                        bully someone into sharing your opinion as it relates to
-                        political views, parenting or other is a violation.
-                        Everyone is entitled to their own views so respect that,
-                        if you don't like their views then create your OWN
-                        Break-Off Chat for a topic that you want or better yet
-                        Request to be a Private Club Owner and control your own
-                        little world.
-                        <h5>RULE 5 </h5>
-                        Spamming, just don't do it, keep the community clean ,
-                        robust and enjoyable. Spammers will be banned.
-                        <h5>RULE 6 </h5>
-                        Sharing illegal content, soliciting or facilitating
-                        illegal transactions or prohibited transactions will
-                        result in an immediate ban.
-                        <h5>RULE 7 </h5>
-                        Safety first, Soapbox uses the XMG Coin as an internal
-                        cryptocurrency for ALL transactions on Soapbox. This
-                        protects our members from credit card fraud, illegal
-                        chargebacks and fraud in general. Soapbox can guarantee
-                        against fraud this way, so all transactions for products
-                        or services MUST be kept on Soapbox for your protection,
-                        Transactions done away from Soapbox are a violation of
-                        our security measures and prevent us from protecting
-                        members. All products, services and other listings that
-                        are in the Marketplace are directly posted on Fortis
-                        Auction Blockmarket, this is Soapbox's ONLY Marketplace.
-                        Members must adhere to using Fortis for their sales of
-                        products, services and other transactions. Avoid fraud
-                        and adhere to our security measures for your protection.
-                        <h5>RULE 8 </h5>
-                        Virtual Experiences are a great tool for members to
-                        connect with Private Club Owners that may be
-                        celebrities, pro athletes, authors and more.
-                        Transactions away from Soapbox are a violation and can
-                        cause the Private Club Owner and Member to receive a
-                        first warning, if it happens a second time then the
-                        Member can be banned and the Private Club Owner will
-                        lose their club ownership rights.
-                      </p>
-                      <h5>RULE 9</h5>
-                      <p>
-                        Virtual and In Person Events can be set up on Soapbox
-                        for the better of the community, don't abuse that and if
-                        in person events are being arranged please put safety
-                        first. We want our members to always be safe and sound.
-                      </p>
-                      <p>
-                        The rules are simple and enforcement of these rules come
-                        from our members HOWEVER falsely reporting a member for
-                        a violation can result in a first warning to the member
-                        that falsely reported . We needed to make that crystal
-                        clear to avoid false reports.
-                      </p>
-                      <p>
-                        Above all please protect your communities, help to grow
-                        them, help and support others, make it your own. For
-                        Private Club Owners, this is your business, so treat it
-                        as such and build it strong for the better of your Club
-                        and the Soapbox Community in general.
-                      </p>
-
-                      <h5>ENFORCEMENT OF RULES</h5>
-
-                      <p>
-                        Well we have a number of ways that rules are enforced
-                        and we take it seriously. We will ask you nicely to cut
-                        it out the first time, the next step won't be that
-                        friendly and the last step is not only a permanent ban
-                        from that Community or Private Club but from the entire
-                        MegaHoot ecosystem. Trust me you don't want that as you
-                        will not be able to use Soapbox, VeroHive, DocuMega, XMG
-                        Fintech, MegaHoot Vault, ZecureHive, gaming or any
-                        platforms that will be added in the future. So play by
-                        the rules and make Soapbox as great as it can be!
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <SoapboxPrivateClubRules setShowClubRules={setShowClubRules} />
               ) : null}
 
-{inviteBox?<MyVerticallyCenteredModal
-              title={"Invitation"}
-              closeModal={()=>setInviteBox(false)}
-              clubname={userInfo[0].communityClub==1?username:`${userInfo[0].name}'s Private `}
-              clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
-              username={userInformation.username}
-             
-            
+              {inviteBox ? <MyVerticallyCenteredModal
+                title={"Invitation"}
+                closeModal={() => setInviteBox(false)}
+                clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+                username={userInformation.username}
 
-          show={inviteBox}
-          onHide={() =>setInviteBox(false)}
-        />:null}
-            
-              {showBreakoffForm?<div className="showBreakoffForm" id="showBreakoffFormId">
+
+
+                show={inviteBox}
+                onHide={() => setInviteBox(false)}
+              /> : null}
+
+              {showBreakoffForm ? <div className="showBreakoffForm" id="showBreakoffFormId">
                 <h5>Enter The Topic for BreakOff Chat</h5>
-                <div style={{padding:'33px',position:'relative',width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}> <input placeholder="Enter Topic" value={breakOffInput}  onChange={(e) => {
-                                setBreakOffInput(e.target.value);
-                              }}  />
-                <button className="d-grid col-12 btn-main login-form-button" style={{position:'absolute',right:'0'}} 
-                onClick={()=>{
-                  if(breakOffInput){createBreakoff()}else{
-                    toast.success(
-                     "Please Enter Topic for Breakoff chat"
-                   ); 
-                   }
-                  
-                }}
-                >Create Now</button>
+                <div style={{ padding: '33px', position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}> <input placeholder="Enter Topic" value={breakOffInput} onChange={(e) => {
+                  setBreakOffInput(e.target.value);
+                }} />
+                  <button className="d-grid col-12 btn-main login-form-button" style={{ position: 'absolute', right: '0' }}
+                    onClick={() => {
+                      if (breakOffInput) { createBreakoff() } else {
+                        toast.success(
+                          "Please Enter Topic for Breakoff chat"
+                        );
+                      }
+
+                    }}
+                  >Create Now</button>
                 </div>
-               
-              </div>:null}
-           
+
+              </div> : null}
+
               {oneOnOnecall ? (
                 <div className="slide-container">
                   <div
@@ -3020,7 +2759,7 @@ const deleteClubRequestAuto=(user)=>{
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
-                          textAlign:'justify'
+                          textAlign: 'justify'
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3036,7 +2775,7 @@ const deleteClubRequestAuto=(user)=>{
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
-                          textAlign:'justify'
+                          textAlign: 'justify'
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -3109,7 +2848,7 @@ const deleteClubRequestAuto=(user)=>{
                   </div>
                 </div>
               ) : null}
-               {showIframe ? (
+              {showIframe ? (
                 <div className="slide-container">
                   <div
                     id="slideIFM"
@@ -3121,10 +2860,10 @@ const deleteClubRequestAuto=(user)=>{
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
-                      width:'100%',
-                      overflowY:'scroll',
-                      height:'100vh',
-                     
+                      width: '100%',
+                      overflowY: 'scroll',
+                      height: '100vh',
+
                     }}
                   >
                     <FaWindowClose
@@ -3147,8 +2886,8 @@ const deleteClubRequestAuto=(user)=>{
                         }, 500);
                       }}
                     />
-                  <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
-                   title={iframeBox.title} width="100%" height="100%"></iframe>
+                    <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
+                      title={iframeBox.title} width="100%" height="100%"></iframe>
                     {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
                                 <div className="btns"> <button>Request</button></div> */}
                   </div>
@@ -3199,8 +2938,8 @@ const deleteClubRequestAuto=(user)=>{
                               maxWidth: "390px",
                               lineHeight: "25px",
                               fontSize: "smaller",
-                              textAlign:'justify'
-                             
+                              textAlign: 'justify'
+
                             }}
                           >
                             MegaHoot Soapbox recommends that members use the XMG
@@ -3217,7 +2956,7 @@ const deleteClubRequestAuto=(user)=>{
                               maxWidth: "390px",
                               lineHeight: "25px",
                               fontSize: "smaller",
-                              textAlign:'justify'
+                              textAlign: 'justify'
                             }}
                           >
                             Alternatively we do give the option for members to
@@ -3415,7 +3154,7 @@ const deleteClubRequestAuto=(user)=>{
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
-                          textAlign:'justify'
+                          textAlign: 'justify'
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3431,7 +3170,7 @@ const deleteClubRequestAuto=(user)=>{
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
-                          textAlign:'justify'
+                          textAlign: 'justify'
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -3510,7 +3249,7 @@ const deleteClubRequestAuto=(user)=>{
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
-                          textAlign:'justify'
+                          textAlign: 'justify'
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3526,7 +3265,7 @@ const deleteClubRequestAuto=(user)=>{
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
-                          textAlign:'justify'
+                          textAlign: 'justify'
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -3601,7 +3340,7 @@ const deleteClubRequestAuto=(user)=>{
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
-                          textAlign:'justify'
+                          textAlign: 'justify'
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3617,7 +3356,7 @@ const deleteClubRequestAuto=(user)=>{
                           maxWidth: "390px",
                           lineHeight: "25px",
                           fontSize: "smaller",
-                          textAlign:'justify'
+                          textAlign: 'justify'
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -3655,59 +3394,60 @@ const deleteClubRequestAuto=(user)=>{
                     id="feed"
                     style={{ display: "flex", transition: "1s" }}
                   >
-                    <GiHamburgerMenu
-                      className="GiHamburgerMenu"
-                      data-tip={clubFloor ? "Hide Feeds" : "Show Feeds"}
-                      onClick={() => {
-                        if (privateChat==false) {
-                          setClubFloor(!clubFloor);
-                        } else {
-                          toast.success(
-                            "Please close Private chat to view feeds"
-                          );
-                        }
-                        //   if(document.getElementById('slideFeed')){
+                    {/* <GiHamburgerMenu
+                        className="GiHamburgerMenu"
+                        data-tip={clubFloor ? "Hide Feeds" : "Show Feeds"}
+                        onClick={() => {
+                          if (privateChat == false) {
+                            setClubFloor(!clubFloor);
+                          } else {
+                            toast.success(
+                              "Please close Private chat to view feeds"
+                            );
+                          }
+                          //   if(document.getElementById('slideFeed')){
 
-                        //     document.getElementById('slideFeed').style.transition='1sec';
-                        //     document.getElementById('slideFeed').style.left=clubFloor?'-100vw':'30px';
-                        // }
-                      }}
-                    />
+                          //     document.getElementById('slideFeed').style.transition='1sec';
+                          //     document.getElementById('slideFeed').style.left=clubFloor?'-100vw':'30px';
+                          // }
+                        }}
+                      /> */}
+
                     {clubFloor
                       ? uploads && (
-                          <InfiniteScroll
-                            dataLength={uploads.length}
-                            next={fetchMoreHoots}
-                            hasMore={hasMore}
-                            // loader={<InfiniteScrollLoader />}
-                          >
-                            {uploads.map((upload) => {
-                              return (
-                                <div key={upload}>
-                                  <Post
-                                    hootId={upload.id}
-                                    username={upload.authorUsername}
-                                    mimeType={upload.mimeType}
-                                    hootImgId={upload.image}
-                                    audioPoster={upload.audioPoster}
-                                    likes={upload.likes}
-                                    views={upload.views}
-                                    followers={upload.followers}
-                                    caption={upload.caption}
-                                    link={upload.link}
-                                    ephemeral={upload.ephemeral}
-                                    privateHoot={upload.private}
-                                    expiryDate={upload.expiryDate}
-                                    timeStamp={upload.timeStamp}
-                                    edited={upload.edited}
-                                    editedTimeStamp={upload.editedTimeStamp}
-                                    // privateProtected={privateProtected}
-                                  />
-                                </div>
-                              );
-                            })}
-                          </InfiniteScroll>
-                        )
+                        <InfiniteScroll
+                          dataLength={uploads.length}
+                          next={fetchMoreHoots}
+                          hasMore={hasMore}
+                        // loader={<InfiniteScrollLoader />}
+                        >
+                          {uploads.map((upload) => {
+                            return (
+                              <div key={upload}>
+                                <Post
+                                  hootId={upload.id}
+                                  username={upload.authorUsername}
+                                  mimeType={upload.mimeType}
+                                  hootImgId={upload.image}
+                                  audioPoster={upload.audioPoster}
+                                  likes={upload.likes}
+                                  views={upload.views}
+                                  followers={upload.followers}
+                                  caption={upload.caption}
+                                  link={upload.link}
+                                  ephemeral={upload.ephemeral}
+                                  privateHoot={upload.private}
+                                  expiryDate={upload.expiryDate}
+                                  timeStamp={upload.timeStamp}
+                                  edited={upload.edited}
+                                  editedTimeStamp={upload.editedTimeStamp}
+                                // privateProtected={privateProtected}
+                                />
+                              </div>
+                            );
+                          })}
+                        </InfiniteScroll>
+                      )
                       : null}
                     {privateChat ? (
                       <div className="privateChat-club" id="privatechatslide">
@@ -3735,7 +3475,7 @@ const deleteClubRequestAuto=(user)=>{
                             }}
                           >
                             {privateChatPerson &&
-                            privateChatPerson.profilePic ? (
+                              privateChatPerson.profilePic ? (
                               <img
                                 src={privateChatPerson.profilePic}
                                 style={{
@@ -3758,7 +3498,7 @@ const deleteClubRequestAuto=(user)=>{
                           <span>
                             Private Chat
                             <FaWindowClose
-                             className="FaWindowClose"
+                              className="FaWindowClose"
                               onClick={() => {
                                 document.getElementById(
                                   "privatechatslide"
@@ -3785,135 +3525,135 @@ const deleteClubRequestAuto=(user)=>{
                         >
                           {chatDataPrivate.length
                             ? chatDataPrivate.map((e) => (
-                                <div
-                                  className="messageBox"
-                                  style={{
-                                    maxWidth:
-                                      e.isVideo || e.isImage ? "200px" : "100%",
-                                  }}
-                                  onClick={() => {
-                                    setPrivateChat(true);
-                                    setClubFloor(false);
-                                   
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById(
-                                          "privatechatslide"
-                                        )
-                                      ) {
-                                        document.getElementById(
-                                          "privatechatslide"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "privatechatslide"
-                                        ).style.right = "30px";
-                                      }
-                                    }, 1);
-                                  }}
-                                >
-                                  <div className="ProfileBox">
-                                    <img
-                                      className="chat-profile"
-                                      src={e.imgSrc ? e.imgSrc : null}
-                                    />
-                                    <p>{e.chatname}</p>
-                                  </div>
-                                  <Linkify
-                                    componentDecorator={(
-                                      decoratedHref,
-                                      decoratedText,
-                                      key
-                                    ) => (
-                                      <a
-                                        target="blank"
-                                        href={decoratedHref}
-                                        key={key}
-                                      >
-                                        {decoratedText}
-                                      </a>
-                                    )}
-                                  >
-                                    {" "}
-                                    <div
-                                      className={
-                                        e.isEmoji ? "message-emoji" : "message"
-                                      }
-                                    >
-                                      {!e.isVideo && !e.isImage
-                                        ? e.message
-                                        : null}
-                                    </div>
-                                  </Linkify>
+                              <div
+                                className="messageBox"
+                                style={{
+                                  maxWidth:
+                                    e.isVideo || e.isImage ? "200px" : "100%",
+                                }}
+                                onClick={() => {
+                                  setPrivateChat(true);
+                                  setClubFloor(false);
 
-                                  {e.isVideo ? (
-                                    <video
-                                      onDragStart={(e) => e.preventDefault()}
-                                      onmousedown={(event) => {
-                                        event.preventDefault
-                                          ? event.preventDefault()
-                                          : (event.returnValue = false);
-                                      }}
-                                      style={{
-                                        maxWidth: "200px",
-                                        marginTop: "20px",
-                                        borderRadius: "5px",
-                                      }}
-                                      controls={true}
-                                      src={e.message}
-                                    ></video>
-                                  ) : null}
-                                  {e.isImage ? (
-                                    <img
-                                      src={e.message}
-                                      onDragStart={(e) => e.preventDefault()}
-                                      onmousedown={(event) => {
-                                        event.preventDefault
-                                          ? event.preventDefault()
-                                          : (event.returnValue = false);
-                                      }}
-                                      style={{
-                                        maxWidth: "200px",
-                                        marginTop: "20px",
-                                        borderRadius: "5px",
-                                      }}
-                                    />
-                                  ) : null}
-                                </div>
-                              ))
-                            : null}
-
-{emojiPickerPrivate && (
-                              <ClickAwayListener
-                                onClickAway={() => {
-                                  setEmojiPickerPrivate(false);
+                                  setTimeout(() => {
+                                    if (
+                                      document.getElementById(
+                                        "privatechatslide"
+                                      )
+                                    ) {
+                                      document.getElementById(
+                                        "privatechatslide"
+                                      ).style.transition = "1sec";
+                                      document.getElementById(
+                                        "privatechatslide"
+                                      ).style.right = "30px";
+                                    }
+                                  }, 1);
                                 }}
                               >
-                                <div>
-                                  <Picker
-                                    native
-                                    onEmojiClick={(event, emojiObject) => {
-                                      setMessageInboxValuePrivate(
-                                        messageInboxValuePrivate + emojiObject.emoji
-                                      );
-                                      // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
-                                      //  // socket.emit('send',message);
-                                      // socket.emit('send', {
-                                      //     name: userFullName,
-                                      //     message: emojiObject.emoji,
-                                      //     profilePic: userProfilePic,
-                                      //     isEmoji: true
-                                      // });
+                                <div className="ProfileBox">
+                                  <img
+                                    className="chat-profile"
+                                    src={e.imgSrc ? e.imgSrc : null}
+                                  />
+                                  <p>{e.chatname}</p>
+                                </div>
+                                <Linkify
+                                  componentDecorator={(
+                                    decoratedHref,
+                                    decoratedText,
+                                    key
+                                  ) => (
+                                    <a
+                                      target="blank"
+                                      href={decoratedHref}
+                                      key={key}
+                                    >
+                                      {decoratedText}
+                                    </a>
+                                  )}
+                                >
+                                  {" "}
+                                  <div
+                                    className={
+                                      e.isEmoji ? "message-emoji" : "message"
+                                    }
+                                  >
+                                    {!e.isVideo && !e.isImage
+                                      ? e.message
+                                      : null}
+                                  </div>
+                                </Linkify>
+
+                                {e.isVideo ? (
+                                  <video
+                                    onDragStart={(e) => e.preventDefault()}
+                                    onmousedown={(event) => {
+                                      event.preventDefault
+                                        ? event.preventDefault()
+                                        : (event.returnValue = false);
                                     }}
-                                    pickerStyle={{
-                                      position: "absolute",
-                                      bottom: "0px",
-                                      left: "0.2rem",
-                                      zIndex: "1111",
+                                    style={{
+                                      maxWidth: "200px",
+                                      marginTop: "20px",
+                                      borderRadius: "5px",
+                                    }}
+                                    controls={true}
+                                    src={e.message}
+                                  ></video>
+                                ) : null}
+                                {e.isImage ? (
+                                  <img
+                                    src={e.message}
+                                    onDragStart={(e) => e.preventDefault()}
+                                    onmousedown={(event) => {
+                                      event.preventDefault
+                                        ? event.preventDefault()
+                                        : (event.returnValue = false);
+                                    }}
+                                    style={{
+                                      maxWidth: "200px",
+                                      marginTop: "20px",
+                                      borderRadius: "5px",
                                     }}
                                   />
-                                </div>
-                              </ClickAwayListener>
-                            )}
+                                ) : null}
+                              </div>
+                            ))
+                            : null}
+
+                          {emojiPickerPrivate && (
+                            <ClickAwayListener
+                              onClickAway={() => {
+                                setEmojiPickerPrivate(false);
+                              }}
+                            >
+                              <div>
+                                <Picker
+                                  native
+                                  onEmojiClick={(event, emojiObject) => {
+                                    setMessageInboxValuePrivate(
+                                      messageInboxValuePrivate + emojiObject.emoji
+                                    );
+                                    // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                    //  // socket.emit('send',message);
+                                    // socket.emit('send', {
+                                    //     name: userFullName,
+                                    //     message: emojiObject.emoji,
+                                    //     profilePic: userProfilePic,
+                                    //     isEmoji: true
+                                    // });
+                                  }}
+                                  pickerStyle={{
+                                    position: "absolute",
+                                    bottom: "0px",
+                                    left: "0.2rem",
+                                    zIndex: "1111",
+                                  }}
+                                />
+                              </div>
+                            </ClickAwayListener>
+                          )}
                         </div>
 
                         <div className="send">
@@ -3924,21 +3664,14 @@ const deleteClubRequestAuto=(user)=>{
                             style={{ marginLeft: privateChat ? "5px" : "5px" }}
                             onSubmit={(e) => messagesubmitPrivate(e)}
                           >
-                            {/* <FaWindowClose data-tip="Close ChatRoom" className="icon-text"
-                                                onClick={() => {
-                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setClubFloor(!clubFloor); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
-                                                }}
-
-                                            /> */}
                             <label htmlFor="post-video">
-                              <img
-                                src={videochat}
-                                style={{ margin: "5px", cursor: "pointer" }}
-                                data-tip="Share Video"
-                                width="27px"
-                              />
-
-                              {/* <FiVideo data-tip="Share Video" className="icon-text" /> */}
+                              <SoapboxTooltip title={"Share Video"} placement="top">
+                                <img
+                                  src={videochat}
+                                  style={{ margin: "5px", cursor: "pointer" }}
+                                  width="27px"
+                                />
+                              </SoapboxTooltip>
                             </label>
                             <input
                               type="file"
@@ -3949,14 +3682,15 @@ const deleteClubRequestAuto=(user)=>{
                               disabled={true}
                               hidden
                             />
+
                             <label htmlFor="post-image">
-                              <img
-                                src={imagechat}
-                                style={{ margin: "5px", cursor: "pointer" }}
-                                data-tip="Share Photos"
-                                width="27px"
-                              />
-                              {/* <FiImage data-tip="Share Photos" className="icon-text" /> */}
+                              <SoapboxTooltip title={"Share Photos"} placement="top">
+                                <img
+                                  src={imagechat}
+                                  style={{ margin: "5px", cursor: "pointer" }}
+                                  width="27px"
+                                />
+                              </SoapboxTooltip>
                             </label>
                             <input
                               type="file"
@@ -3967,37 +3701,38 @@ const deleteClubRequestAuto=(user)=>{
                               hidden
                               disabled={true}
                             />
-                            {/* <FiFolder data-tip="Share File" className="icon-text" /> */}
-                            <img
-                              src={filechat}
-                              style={{ margin: "5px", cursor: "pointer" }}
-                              data-tip="Share File"
-                              width="27px"
-                            />
 
-                            {/* <FiSmile className="icon-text" data-tip="Emoji"
-                                               
-                                            /> */}
-                            <img
-                              src={emojiIcon}
-                              style={{ margin: "5px", cursor: "pointer" }}
-                              data-tip="Emoji"
-                              onClick={() => {
-                                setEmojiPickerPrivate(!emojiPickerPrivate);
-                              }}
-                              width="27px"
-                            />
+                            <SoapboxTooltip title={"Share File"} placement="top">
+                              <img
+                                src={filechat}
+                                style={{ margin: "5px", cursor: "pointer" }}
+                                width="27px"
+                              />
+                            </SoapboxTooltip>
+
+                            <SoapboxTooltip title={"Emoji"} placement="top">
+                              <img
+                                src={emojiIcon}
+                                style={{ margin: "5px", cursor: "pointer" }}
+                                onClick={() => {
+                                  setEmojiPickerPrivate(!emojiPickerPrivate);
+                                }}
+                                width="27px"
+                              />
+                            </SoapboxTooltip>
+
                             <input
                               type="text"
                               name="messageInp"
                               value={messageInboxValuePrivate}
+                              autoComplete="off"
                               id="messageInp"
                               style={{ width: privateChat ? "230px" : "230px" }}
                               onChange={(e) => {
                                 setMessageInboxValuePrivate(e.target.value);
                               }}
-                              
                             />
+
                             <button
                               type="submit"
                               style={{
@@ -4007,21 +3742,37 @@ const deleteClubRequestAuto=(user)=>{
                                 marginLeft: "5px",
                               }}
                             >
-                              <SoapboxTooltip
-                                title={"Send Message"}
-                                placement="top"
-                              >
+                              <SoapboxTooltip title={"Send Message"} placement="top" >
                                 <img src={sendIcon} width="27px" />
                               </SoapboxTooltip>
                             </button>
                           </form>
                         </div>
                       </div>
-                    ) : null}
-                    {privateChatList?<div className="privateChatListBox" id="privateChatList">
-                    <div><h5 style={{textAlign:'center',fontSize:'0.93rem',fontWeight:'600',margin:'0.5rem',borderRadius:'5px',padding:'0.5rem',width:'100%',backgroundColor:"whitesmoke"}}>Private Messages</h5></div>
-               
-                    </div>:null}
+                    )
+                      : null
+                    }
+
+                    {privateChatList
+                      ? <div className="privateChatListBox" id="privateChatList">
+                        <div>
+                          <h5 style={{
+                            textAlign: 'center',
+                            fontSize: '0.93rem',
+                            fontWeight: '600',
+                            margin: '0.5rem 0',
+                            borderRadius: '5px',
+                            padding: '0.5rem',
+                            width: '100%',
+                            backgroundColor: "whitesmoke"
+                          }}
+                          >
+                            Private Messages
+                          </h5>
+                        </div>
+                      </div>
+                      : null
+                    }
 
                     {showChatRoom ? (
                       <div style={{ position: "relative" }}>
@@ -4031,11 +3782,9 @@ const deleteClubRequestAuto=(user)=>{
                             style={{
                               left: clubFloor || privateChat ? "20px" : "100px",
                               width: clubFloor || privateChat ? "40%" : "80%",
-                              minWidth:
-                                clubFloor || privateChat ? "500px" : "700px",
+                              minWidth: clubFloor || privateChat ? "500px" : "700px",
                               transition: "1s",
-
-                            
+                              marginTop: "0.5rem"
                             }}
                           >
                             <div
@@ -4051,79 +3800,86 @@ const deleteClubRequestAuto=(user)=>{
                                 alignItems: "center",
                                 position: "fixed",
                                 width: "25%",
-                                minWidth:
-                                  clubFloor || privateChat ? "450px" : "650px",
+                                minWidth: clubFloor || privateChat ? "450px" : "650px",
                                 zIndex: "5",
                               }}
                             >
                               {" "}
-                              {userInfo[0].name}`s Club Chat
+                              {userInfo[0].name}'s Club Chat
                               <SoapboxTooltip title={"Create Poll"} placement="top">
-                      
-                            
-                      <span 
-                       onClick={()=>{
-                            if (showPollForm) {
-                              document.getElementById("showPollFormId").style.transition =
-                                "2s";
-                              document.getElementById("showPollFormId").style.left = "200vw";
-                      
-                              setTimeout(() => {
-                                setShowPollForm(false);
-                              }, 1000);
-                            } else {
-                              setShowPollForm(true);
-                      
-                              setTimeout(() => {
-                                if (document.getElementById("showPollFormId")) {
-                                  document.getElementById("showPollFormId").style.transition =
-                                    "1s";
-                                    document.getElementById("showPollFormId").style.left =
-                                    "70px";
-                                }
-                              }, 1);
-                            }
-                      }}
-                      style={{display:'flex',justifyContent:'center',
-                      alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128'
-                      ,width:'22px',height:'22px',borderRadius:'27px',marginLeft:'15px',
-                      fontSize:'18px'}}
-                     
-                      >
-                      
-                      <RiCalendarEventLine  />
-                      </span>
 
-                    </SoapboxTooltip>
+                                <span
+                                  onClick={() => {
+                                    if (showPollForm) {
+                                      document.getElementById("showPollFormId").style.transition = "2s";
+                                      document.getElementById("showPollFormId").style.left = "200vw";
+
+                                      setTimeout(() => {
+                                        setShowPollForm(false);
+                                      }, 1000);
+                                    } else {
+                                      setShowPollForm(true);
+
+                                      setTimeout(() => {
+                                        if (document.getElementById("showPollFormId")) {
+                                          document.getElementById("showPollFormId").style.transition = "1s";
+                                          document.getElementById("showPollFormId").style.left = "70px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                                  style={{
+                                    display: 'flex', justifyContent: 'center',
+                                    alignItems: 'center', cursor: 'pointer', backgroundColor: '#CF2128'
+                                    , width: '22px', height: '22px', borderRadius: '27px', marginLeft: '15px',
+                                    fontSize: '18px'
+                                  }}
+                                >
+                                  <RiCalendarEventLine />
+                                </span>
+                              </SoapboxTooltip>
                             </div>
-                            {showPollForm?  <div className="showPollForm" id="showPollFormId">
-             <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',backgroundColor:'#652C90'}}>   <h5>Create A Poll</h5>
-                <FaWindowClose  className="FaWindowClose"    onClick={()=>{
-                              if (showPollForm) {
-                                document.getElementById("showPollFormId").style.transition =
-                                  "2s";
-                                document.getElementById("showPollFormId").style.left = "200vw";
-                        
-                                setTimeout(() => {
-                                  setShowPollForm(false);
-                                }, 1000);
-                              } else {
-                                setShowPollForm(true);
-                        
-                                setTimeout(() => {
-                                  if (document.getElementById("showPollFormId")) {
-                                    document.getElementById("showPollFormId").style.transition =
-                                      "1s";
-                                      document.getElementById("showPollFormId").style.left =
-                                      "70px";
-                                  }
-                                }, 1);
-                              }
-                        }} /></div>
-                <div style={{padding:'33px',position:'relative',width:'100%',display:'flex'
-                ,flexDirection:'column',justifyContent:'space-evenly'}}>
-                  
-                   {/* <input placeholder="Enter Question For Poll" value={breakOffInput}  onChange={(e) => {
+                            {showPollForm
+                              ? <div className="showPollForm" id="showPollFormId">
+                                <div
+                                  style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    backgroundColor: '#652C90'
+                                  }}
+                                >
+                                  <h5>Create A Poll</h5>
+                                  <FaWindowClose className="FaWindowClose" onClick={() => {
+                                    if (showPollForm) {
+                                      document.getElementById("showPollFormId").style.transition = "2s";
+                                      document.getElementById("showPollFormId").style.left = "200vw";
+
+                                      setTimeout(() => {
+                                        setShowPollForm(false);
+                                      }, 1000);
+                                    } else {
+                                      setShowPollForm(true);
+
+                                      setTimeout(() => {
+                                        if (document.getElementById("showPollFormId")) {
+                                          document.getElementById("showPollFormId").style.transition = "1s";
+                                          document.getElementById("showPollFormId").style.left = "70px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }} /></div>
+                                <div style={{
+                                  padding: '33px',
+                                  position: 'relative',
+                                  width: '100%',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  justifyContent: 'space-evenly'
+                                }}>
+
+                                  {/* <input placeholder="Enter Question For Poll" value={breakOffInput}  onChange={(e) => {
                                 setBreakOffInput(e.target.value);
                               }}  />
                        <div style={{display:'flex',flexDirection:'column',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',width:'90%',margin:'5px'}}>  
@@ -4139,73 +3895,69 @@ const deleteClubRequestAuto=(user)=>{
                         <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',alignItems:'center',width:'90%',margin:'5px'}}>  
                         <input type="checkbox" style={{flex:'0.2'}} /><p style={{flex:'0.8',margin:'0px'}}>July 5</p></div>
                      */}
+                                  {FormEditPoll ?
+                                    <Form onSubmit={(e) => e.preventDefault()}>
+                                      <Form.Group className="mb-3" >
+                                        <Form.Label>Enter Question For Poll</Form.Label>
+                                        <Form.Control type="text" value={pollFormDataQ}
+                                          onChange={(e) => { setPollFormDataQ(e.target.value) }} placeholder="Enter Question For Poll" />
+                                      </Form.Group>
+                                      <Form.Group className="mb-3" >
+                                        <Form.Label>Option A</Form.Label>
+                                        <Form.Control value={pollFormDataOA} onChange={(e) => { setPollFormDataOA(e.target.value) }} placeholder="Option A" />
+                                      </Form.Group>
 
-                     {FormEditPoll?
-                        <Form onSubmit={(e)=>e.preventDefault()}>
-  <Form.Group className="mb-3" >
-    <Form.Label>Enter Question For Poll</Form.Label>
-    <Form.Control type="text"   value={pollFormDataQ}
-    onChange={(e)=>{setPollFormDataQ(e.target.value)}} placeholder="Enter Question For Poll" />
-  </Form.Group>
-  <Form.Group className="mb-3" >
-    <Form.Label>Option A</Form.Label>
-    <Form.Control value={pollFormDataOA} onChange={(e)=>{setPollFormDataOA(e.target.value)}} placeholder="Option A" />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-    <Form.Label>Option B</Form.Label>
-    <Form.Control value={pollFormDataOB} onChange={(e)=>{setPollFormDataOB(e.target.value)}}  placeholder="Option b" />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-    <Form.Label>Option C</Form.Label>
-    <Form.Control value={pollFormDataOC} onChange={(e)=>{setPollFormDataOC(e.target.value)}} placeholder="Option c" />
-  </Form.Group>
-  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                      <Form.Group className="mb-3" >
+                                        <Form.Label>Option B</Form.Label>
+                                        <Form.Control value={pollFormDataOB} onChange={(e) => { setPollFormDataOB(e.target.value) }} placeholder="Option b" />
+                                      </Form.Group>
+
+                                      <Form.Group className="mb-3" >
+                                        <Form.Label>Option C</Form.Label>
+                                        <Form.Control value={pollFormDataOC} onChange={(e) => { setPollFormDataOC(e.target.value) }} placeholder="Option c" />
+                                      </Form.Group>
+                                      {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
   </Form.Group> */}
-  {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
+                                      {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Preview 
   </Button> */}
-  <Button variant="primary" type="submit" style={{marginLeft:'5px'}} onClick={()=>{handlePollFormSubmission(userFullName)}}>
-    Submit
-  </Button>
-</Form>
-:<Form onSubmit={(e)=>e.preventDefault()}>
-  <Form.Group className="mb-3" >
-    <Form.Label>{pollFormData.Question}</Form.Label>
-   
-  </Form.Group>
-  <Form.Group className="mb-3" >
-   
-    <Form.Check type="checkbox" label={pollFormData.OptionA} />
-    <ProgressBar animated  variant="success" now={pollFormData.pollA} />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={pollFormData.OptionB} />
-    <ProgressBar animated  variant="info" now={pollFormData.pollB} />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={pollFormData.OptionC} />
-    <ProgressBar animated  variant="warning" now={pollFormData.pollC} />
-  </Form.Group>
-  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                      <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={() => { handlePollFormSubmission(userFullName) }}>
+                                        Submit
+                                      </Button>
+                                    </Form>
+                                    : <Form onSubmit={(e) => e.preventDefault()}>
+                                      <Form.Group className="mb-3" >
+                                        <Form.Label>{pollFormData.Question}</Form.Label>
+
+                                      </Form.Group>
+                                      <Form.Group className="mb-3" >
+
+                                        <Form.Check type="checkbox" label={pollFormData.OptionA} />
+                                        <ProgressBar animated variant="success" now={pollFormData.pollA} />
+                                      </Form.Group>
+
+                                      <Form.Group className="mb-3" >
+                                        <Form.Check type="checkbox" label={pollFormData.OptionB} />
+                                        <ProgressBar animated variant="info" now={pollFormData.pollB} />
+                                      </Form.Group>
+
+                                      <Form.Group className="mb-3" >
+                                        <Form.Check type="checkbox" label={pollFormData.OptionC} />
+                                        <ProgressBar animated variant="warning" now={pollFormData.pollC} />
+                                      </Form.Group>
+                                      {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
   </Form.Group> */}
-  <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
-    Edit 
-  </Button>
-  <Button variant="primary" type="submit" style={{marginLeft:'5px'}} onClick={()=>{sentPollMessageInChat(pollFormData)}}>
-    Submit
-  </Button>
-</Form>
-}
-
-
-                              
-                {/* <button className="d-grid col-12 btn-main login-form-button" 
+                                      <Button variant="primary" onClick={() => { setFormEditPoll(!FormEditPoll) }} >
+                                        Edit
+                                      </Button>
+                                      <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={() => { sentPollMessageInChat(pollFormData) }}>
+                                        Submit
+                                      </Button>
+                                    </Form>
+                                  }
+                                  {/* <button className="d-grid col-12 btn-main login-form-button" 
                 onClick={()=>{
                   if(breakOffInput){createBreakoff()}else{
                     toast.success(
@@ -4215,9 +3967,11 @@ const deleteClubRequestAuto=(user)=>{
                   
                 }}
                 >Create Now</button> */}
-                </div>
-               
-              </div>:null}
+                                </div>
+                              </div>
+                              : null
+                            }
+
                             <div>
                               <VideoChat
                                 hallId={hallId}
@@ -4235,20 +3989,20 @@ const deleteClubRequestAuto=(user)=>{
                                 marginTop: VideoAvailable ? "300px" : "0px",
                               }}
                             >
-                              
+
                               {chatData.length
                                 ? chatData.map((e) => (
-                                    <div
-                                      className="messageBox"
-                                      style={{
-                                        maxWidth:
-                                          e.isVideo || e.isImage
-                                            ? "200px"
-                                            : "100%",
-                                      }}
-                                      onClick={() => {
-                                          if(e.chatname!==userFullName && !e.isPoll){
-                                              toast.success(
+                                  <div
+                                    className="messageBox"
+                                    style={{
+                                      maxWidth:
+                                        e.isVideo || e.isImage
+                                          ? "200px"
+                                          : "100%",
+                                    }}
+                                    onClick={() => {
+                                      if (e.chatname !== userFullName && !e.isPoll) {
+                                        toast.success(
                                           `Opening Private Chat with ${e.chatname}`
                                         );
                                         setPrivateChatPerson({
@@ -4258,7 +4012,7 @@ const deleteClubRequestAuto=(user)=>{
                                         setPrivateChat(true);
                                         setClubFloor(false);
                                         // socket.emit("room", userInfo[0].username+userInformation.username);
-                                        getChatDataPrivate(e.chatname,userFullName)
+                                        getChatDataPrivate(e.chatname, userFullName)
                                         // socket.emit("new-user-joined", {
                                         //     name: userFullName,
                                         //     profilePic: userProfilePic,
@@ -4277,117 +4031,117 @@ const deleteClubRequestAuto=(user)=>{
                                               "privatechatslide"
                                             ).style.right = "30px";
                                           }
-                                        }, 1);  
-                                          }
-                                      
-                                      }}
-                                    >
-                                      <div className="ProfileBox">
-                                        <img
-                                          className="chat-profile"
-                                          src={e.imgSrc ? e.imgSrc : null}
-                                        />
-                                        <p>{e.chatname}</p>
-                                      </div>
-                                      <Linkify
-                                        componentDecorator={(
-                                          decoratedHref,
-                                          decoratedText,
-                                          key
-                                        ) => (
-                                          <a
-                                            target="blank"
-                                            href={decoratedHref}
-                                            key={key}
-                                          >
-                                            {decoratedText}
-                                          </a>
-                                        )}
-                                      >
-                                        {" "}
-                                        <div
-                                          className={
-                                            e.isEmoji
-                                              ? "message-emoji"
-                                              : "message"
-                                          }
-                                        >
-                                          {!e.isVideo && !e.isImage && !e.isPoll
-                                            ? e.message
-                                            : null}
-                                        </div>
-                                      </Linkify>
-                                      {e.isPoll?<div style={{marginTop:'30px'}}>
-                                        <Form onSubmit={(e)=>e.preventDefault()}>
-  <Form.Group className="mb-3" >
-  <p style={{fontSize:'14px'}}>{e.pollData.Question}</p>
+                                        }, 1);
+                                      }
 
-  </Form.Group>
-  <Form.Group className="mb-3" >
-   
-    <Form.Check type="checkbox" label={e.pollData.OptionA} />
-    <ProgressBar animated  variant="success" now={90} />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.pollData.OptionB} />
-    <ProgressBar animated  variant="info" now={50} />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.pollData.OptionC} />
-    <ProgressBar animated  variant="warning" now={70} />
-  </Form.Group>
-  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                    }}
+                                  >
+                                    <div className="ProfileBox">
+                                      <img
+                                        className="chat-profile"
+                                        src={e.imgSrc ? e.imgSrc : null}
+                                      />
+                                      <p>{e.chatname}</p>
+                                    </div>
+                                    <Linkify
+                                      componentDecorator={(
+                                        decoratedHref,
+                                        decoratedText,
+                                        key
+                                      ) => (
+                                        <a
+                                          target="blank"
+                                          href={decoratedHref}
+                                          key={key}
+                                        >
+                                          {decoratedText}
+                                        </a>
+                                      )}
+                                    >
+                                      {" "}
+                                      <div
+                                        className={
+                                          e.isEmoji
+                                            ? "message-emoji"
+                                            : "message"
+                                        }
+                                      >
+                                        {!e.isVideo && !e.isImage && !e.isPoll
+                                          ? e.message
+                                          : null}
+                                      </div>
+                                    </Linkify>
+                                    {e.isPoll ? <div style={{ marginTop: '30px' }}>
+                                      <Form onSubmit={(e) => e.preventDefault()}>
+                                        <Form.Group className="mb-3" >
+                                          <p style={{ fontSize: '14px' }}>{e.pollData.Question}</p>
+
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" >
+
+                                          <Form.Check type="checkbox" label={e.pollData.OptionA} />
+                                          <ProgressBar animated variant="success" now={90} />
+                                        </Form.Group>
+
+                                        <Form.Group className="mb-3" >
+                                          <Form.Check type="checkbox" label={e.pollData.OptionB} />
+                                          <ProgressBar animated variant="info" now={50} />
+                                        </Form.Group>
+
+                                        <Form.Group className="mb-3" >
+                                          <Form.Check type="checkbox" label={e.pollData.OptionC} />
+                                          <ProgressBar animated variant="warning" now={70} />
+                                        </Form.Group>
+                                        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
   </Form.Group> */}
-  <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
-    Vote
-  </Button>
-</Form>
-                                      </div>:null}
-                                      {e.isVideo ? (
-                                        <video
-                                          onDragStart={(e) =>
-                                            e.preventDefault()
-                                          }
-                                          onmousedown={(event) => {
-                                            event.preventDefault
-                                              ? event.preventDefault()
-                                              : (event.returnValue = false);
-                                          }}
-                                          style={{
-                                            maxWidth: "200px",
-                                            marginTop: "20px",
-                                            borderRadius: "5px",
-                                          }}
-                                          controls={true}
-                                          src={e.message}
-                                        ></video>
-                                      ) : null}
-                                      {e.isImage ? (
-                                        <img
-                                          src={e.message}
-                                          onDragStart={(e) =>
-                                            e.preventDefault()
-                                          }
-                                          onmousedown={(event) => {
-                                            event.preventDefault
-                                              ? event.preventDefault()
-                                              : (event.returnValue = false);
-                                          }}
-                                          style={{
-                                            maxWidth: "200px",
-                                            marginTop: "20px",
-                                            borderRadius: "5px",
-                                          }}
-                                        />
-                                      ) : null}
-                                    </div>
-                                  ))
+                                        <Button variant="primary" type="submit" onClick={() => { toast.success('Voted Successfully') }}>
+                                          Vote
+                                        </Button>
+                                      </Form>
+                                    </div> : null}
+                                    {e.isVideo ? (
+                                      <video
+                                        onDragStart={(e) =>
+                                          e.preventDefault()
+                                        }
+                                        onmousedown={(event) => {
+                                          event.preventDefault
+                                            ? event.preventDefault()
+                                            : (event.returnValue = false);
+                                        }}
+                                        style={{
+                                          maxWidth: "200px",
+                                          marginTop: "20px",
+                                          borderRadius: "5px",
+                                        }}
+                                        controls={true}
+                                        src={e.message}
+                                      ></video>
+                                    ) : null}
+                                    {e.isImage ? (
+                                      <img
+                                        src={e.message}
+                                        onDragStart={(e) =>
+                                          e.preventDefault()
+                                        }
+                                        onmousedown={(event) => {
+                                          event.preventDefault
+                                            ? event.preventDefault()
+                                            : (event.returnValue = false);
+                                        }}
+                                        style={{
+                                          maxWidth: "200px",
+                                          marginTop: "20px",
+                                          borderRadius: "5px",
+                                        }}
+                                      />
+                                    ) : null}
+                                  </div>
+                                ))
                                 : null}
                             </div>
-                         
+
                             {emojiPicker && (
                               <ClickAwayListener
                                 onClickAway={() => {
@@ -4501,21 +4255,14 @@ const deleteClubRequestAuto=(user)=>{
                             }}
                             onSubmit={(e) => messagesubmit(e)}
                           >
-                            {/* <FaWindowClose data-tip="Close ChatRoom" className="icon-text"
-                                                onClick={() => {
-                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setClubFloor(!clubFloor); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
-                                                }}
-
-                                            /> */}
                             <label htmlFor="post-video">
-                              <img
-                                src={videochat}
-                                style={{ margin: "5px", cursor: "pointer" }}
-                                data-tip="Share Video"
-                                width="27px"
-                              />
-
-                              {/* <FiVideo data-tip="Share Video" className="icon-text" /> */}
+                              <SoapboxTooltip title={"Share Video"} placement="top">
+                                <img
+                                  src={videochat}
+                                  style={{ margin: "5px", cursor: "pointer" }}
+                                  width="27px"
+                                />
+                              </SoapboxTooltip>
                             </label>
                             <input
                               type="file"
@@ -4525,14 +4272,15 @@ const deleteClubRequestAuto=(user)=>{
                               onChange={handleFile}
                               hidden
                             />
+
                             <label htmlFor="post-image">
-                              <img
-                                src={imagechat}
-                                style={{ margin: "5px", cursor: "pointer" }}
-                                data-tip="Share Photos"
-                                width="27px"
-                              />
-                              {/* <FiImage data-tip="Share Photos" className="icon-text" /> */}
+                              <SoapboxTooltip title={"Share Photos"} placement="top">
+                                <img
+                                  src={imagechat}
+                                  style={{ margin: "5px", cursor: "pointer" }}
+                                  width="27px"
+                                />
+                              </SoapboxTooltip>
                             </label>
                             <input
                               type="file"
@@ -4542,30 +4290,31 @@ const deleteClubRequestAuto=(user)=>{
                               onChange={handleFile}
                               hidden
                             />
-                            {/* <FiFolder data-tip="Share File" className="icon-text" /> */}
-                            <img
-                              src={filechat}
-                              style={{ margin: "5px", cursor: "pointer" }}
-                              data-tip="Share File"
-                              width="27px"
-                            />
 
-                            {/* <FiSmile className="icon-text" data-tip="Emoji"
-                                               
-                                            /> */}
-                            <img
-                              src={emojiIcon}
-                              style={{ margin: "5px", cursor: "pointer" }}
-                              data-tip="Emoji"
-                              onClick={() => {
-                                setEmojiPicker(!emojiPicker);
-                              }}
-                              width="27px"
-                            />
+                            <SoapboxTooltip title={"Share File"} placement="top">
+                              <img
+                                src={filechat}
+                                style={{ margin: "5px", cursor: "pointer" }}
+                                width="27px"
+                              />
+                            </SoapboxTooltip>
+
+                            <SoapboxTooltip title={"Emoji"} placement="top">
+                              <img
+                                src={emojiIcon}
+                                style={{ margin: "5px", cursor: "pointer" }}
+                                onClick={() => {
+                                  setEmojiPicker(!emojiPicker);
+                                }}
+                                width="27px"
+                              />
+                            </SoapboxTooltip>
+
                             <input
                               type="text"
                               name="messageInp"
                               value={messageInboxValue}
+                              autoComplete="off"
                               id="messageInp"
                               style={{
                                 width:
@@ -4575,6 +4324,7 @@ const deleteClubRequestAuto=(user)=>{
                                 setMessageInboxValue(e.target.value);
                               }}
                             />
+
                             <button
                               type="submit"
                               style={{
@@ -4584,10 +4334,7 @@ const deleteClubRequestAuto=(user)=>{
                                 marginLeft: "5px",
                               }}
                             >
-                              <SoapboxTooltip
-                                title={"Send Message"}
-                                placement="top"
-                              >
+                              <SoapboxTooltip title={"Send Message"} placement="top">
                                 <img src={sendIcon} width="27px" />
                               </SoapboxTooltip>
                             </button>
@@ -4669,11 +4416,11 @@ const deleteClubRequestAuto=(user)=>{
                                 >
                                   {(ReactPlayer.canPlay(hoot.link) &&
                                     hoot.link.endsWith(".mp4")) ||
-                                  hoot.link.endsWith(".mkv") ||
-                                  hoot.link.endsWith(".mov") ||
-                                  hoot.link.endsWith(".ogv") ||
-                                  hoot.link.endsWith(".webm") ||
-                                  hoot.link.endsWith(".mpg") ? (
+                                    hoot.link.endsWith(".mkv") ||
+                                    hoot.link.endsWith(".mov") ||
+                                    hoot.link.endsWith(".ogv") ||
+                                    hoot.link.endsWith(".webm") ||
+                                    hoot.link.endsWith(".mpg") ? (
                                     <div className="vdo-container">
                                       <video
                                         muted
@@ -4767,7 +4514,7 @@ const deleteClubRequestAuto=(user)=>{
 
 
           {userInformation.username == username ? (
-            <div className="channel-user-content" style={{flex:'0.8'}} >
+            <div className="channel-user-content" style={{ flex: '0.8' }} >
               <div
                 onmousedown={(event) => {
                   event.preventDefault
@@ -4778,29 +4525,57 @@ const deleteClubRequestAuto=(user)=>{
                 className="channel-tabs shadow-sm"
                 style={{
                   position: "sticky",
-                  top: "4.2rem",
+                  top: "3.5rem",
                   alignSelf: "flex-start",
                 }}
               >
                 <div className="tabs" style={{ margin: "0 0.5rem" }}>
+                  <SoapboxTooltip title={clubFloor ? "Hide Feeds" : "Show Feeds"} placement="bottom">
+                    <div>
+                      <HiMenuAlt2
+                        style={{
+                          color: "#FFFFFF",
+                          cursor: "pointer",
+                          outline: "none",
+                          fontSize: "1.4rem",
+                          marginTop: "0.2rem"
+                        }}
+                        // className="GiHamburgerMenu"
+                        // data-tip={clubFloor ? "Hide Feeds" : "Show Feeds"}
+                        onClick={() => {
+                          if (privateChat == false) {
+                            setClubFloor(!clubFloor);
+                          } else {
+                            toast.success("Please close Private chat to view feeds");
+                          }
+                          //   if(document.getElementById('slideFeed')){
+
+                          //     document.getElementById('slideFeed').style.transition='1sec';
+                          //     document.getElementById('slideFeed').style.left=clubFloor?'-100vw':'30px';
+                          // }
+                        }}
+                      />
+                    </div>
+                  </SoapboxTooltip>
+
                   <span
                     style={{
                       backgroundColor: clubFloor ? "#8249A0" : "#A279BA",
                       borderRadius: "8px",
                     }}
                     onClick={() => {
-                      if(privateChat==false){
-                          setShowRequest(false);
-                      setClubFloor(true);
-                      setShowSubscribers(false);
-                      setShowPricingSetting(false);
-                      setShowNotification(false);
-                      setShowChatRoom(true);
-                      setOnDemandMedia(false);
-                      }else{
+                      if (privateChat == false) {
+                        setShowRequest(false);
+                        setClubFloor(true);
+                        setShowSubscribers(false);
+                        setShowPricingSetting(false);
+                        setShowNotification(false);
+                        setShowChatRoom(true);
+                        setOnDemandMedia(false);
+                      } else {
                         toast.success("Please close Private chat to view feeds");
                       }
-                    
+
                     }}
                     style={{ fontSize: "14px" }}
                   >
@@ -4857,7 +4632,7 @@ const deleteClubRequestAuto=(user)=>{
                   </span>
                   <span
                     style={{
-                      backgroundColor: "#652C90",
+                      // backgroundColor: "#652C90",
                       borderRadius: "8px",
                       fontSize: "14px ",
                     }}
@@ -4867,7 +4642,7 @@ const deleteClubRequestAuto=(user)=>{
 
                   <span
                     style={{
-                      backgroundColor: "#652C90",
+                      // backgroundColor: "#652C90",
                       fontSize: "14px ",
                       borderRadius: "8px",
                     }}
@@ -4882,54 +4657,55 @@ const deleteClubRequestAuto=(user)=>{
                                         style={{ backgroundColor: '#A279BA', borderRadius: '8px',fontSize:'14px ' }}
                                     >MESSAGES</span> */}
                   <span>
-                    <SoapboxTooltip title={"MARKETPLACE"} placement="left">
+                    <SoapboxTooltip title={"MARKETPLACE"} placement="bottom" privateTooltip={true}>
                       <img src={marketplaceicon} width="30px" />
                     </SoapboxTooltip>
                   </span>
 
                   <span>
-                    <SoapboxTooltip title={"MESSAGES"} placement="left">
+                    <SoapboxTooltip title={"MESSAGES"} placement="bottom" privateTooltip={true}>
                       <img src={messagesicon} width="30px" onClick={() => {
 
-                        if(!privateChatList){
+                        if (!privateChatList) {
                           setPrivateChatList(!privateChatList)
-                                   
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById(
-                                          "privateChatList"
-                                        )
-                                      ) {
-                                        document.getElementById(
-                                          "privateChatList"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "privateChatList"
-                                        ).style.right = "0px";
-                                      }
-                                    }, 1);}else{
-                                      document.getElementById(
-                                        "privateChatList"
-                                      ).style.transition = "1sec";
-                                      document.getElementById(
-                                        "privateChatList"
-                                      ).style.right = "-100vw";
-                                      setTimeout(() => {
-                                        setPrivateChatList(false)
-                                      }, 200);
-                                    }
-                                   
-                                  }} />
+
+                          setTimeout(() => {
+                            if (
+                              document.getElementById(
+                                "privateChatList"
+                              )
+                            ) {
+                              document.getElementById(
+                                "privateChatList"
+                              ).style.transition = "1sec";
+                              document.getElementById(
+                                "privateChatList"
+                              ).style.right = "0.8rem";
+                            }
+                          }, 1);
+                        } else {
+                          document.getElementById(
+                            "privateChatList"
+                          ).style.transition = "1sec";
+                          document.getElementById(
+                            "privateChatList"
+                          ).style.right = "-100vw";
+                          setTimeout(() => {
+                            setPrivateChatList(false)
+                          }, 200);
+                        }
+
+                      }} />
                     </SoapboxTooltip>
                   </span>
 
-                  <span onClick={()=>setInviteBox(true)}>
-                    <SoapboxTooltip title={"Invite"} placement="left">
+                  <span onClick={() => setInviteBox(true)}>
+                    <SoapboxTooltip title={"Invite"} placement="bottom" privateTooltip={true}>
                       <img src={inviteicon} width="30px" />
                     </SoapboxTooltip>
                   </span>
                   <span>
-                    <SoapboxTooltip title={"Club Rules"} placement="left">
+                    <SoapboxTooltip title={"Club Rules"} placement="bottom" privateTooltip={true}>
                       <img
                         src={rules}
                         width="30px"
@@ -4969,7 +4745,7 @@ const deleteClubRequestAuto=(user)=>{
                       />
                     </SoapboxTooltip>
                   </span>
-                
+
                   {/* <button  style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}}>INVITE</button>
                                     <button style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}} >CLUB RULES</button> */}
                   {/*                              
@@ -4983,8 +4759,7 @@ const deleteClubRequestAuto=(user)=>{
                   <span
                     onClick={() => {
                       if (showCreateHoot) {
-                        document.getElementById("slideH").style.transition =
-                          "2sec";
+                        document.getElementById("slideH").style.transition = "2sec";
                         document.getElementById("slideH").style.left = "-100vw";
 
                         setTimeout(() => {
@@ -5002,62 +4777,60 @@ const deleteClubRequestAuto=(user)=>{
 
                         setTimeout(() => {
                           if (document.getElementById("slideH")) {
-                            document.getElementById("slideH").style.transition =
-                              "1sec";
-                            document.getElementById("slideH").style.left =
-                              "150px";
+                            document.getElementById("slideH").style.transition = "1sec";
+                            document.getElementById("slideH").style.left = "150px";
                           }
                         }, 1);
                       }
                     }}
                   >
-                    <SoapboxTooltip
-                      title={"Create Private Hoot"}
-                      placement="left"
-                    >
+                    <SoapboxTooltip title={"Create Private Hoot"} placement="bottom" privateTooltip={true}>
                       <img src={privatehooticon} width="30px" />
                     </SoapboxTooltip>
                   </span>
-                  
-                  <SoapboxTooltip title={"Create Breakoff Chat"} placement="left">
-                  <span style={{display:'flex',justifyContent:'center',alignItems:'center',height:'22px',backgroundColor:'white',color:'purple',borderRadius:'5px'}}
-                  onClick={()=>{
-                    if(userInfo[0].communityClub==1)
-  { 
-    if(subscribe || userInformation.username == username){
-      if (showBreakoffForm) {
-        document.getElementById("showBreakoffFormId").style.transition =
-          "2s";
-        document.getElementById("showBreakoffFormId").style.right = "-100vw";
 
-        setTimeout(() => {
-          setShowBreakoffForm(false);
-        }, 1000);
-      } else {
-        setShowBreakoffForm(true);
 
-        setTimeout(() => {
-          if (document.getElementById("showBreakoffFormId")) {
-            document.getElementById("showBreakoffFormId").style.transition =
-              "1s";
-              document.getElementById("showBreakoffFormId").style.right =
-              "30%";
-          }
-        }, 1);
-      }
-  }else{toast.success('Members Only Access')}
-  }else{
-                    toast.success('BreakOff Chat can be accessible only in Community Clubs')
-                  }
-                
-                  }}
-                  >
-                 
-                      <FiPlus />
-                  
-                   
+
+                  <SoapboxTooltip title={"Create Breakoff Chat"} placement="bottom">
+                    <span style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      color: '#FFF',
+                      fontSize: "1.5rem"
+                    }}
+                      onClick={() => {
+                        if (userInfo[0].communityClub == 1) {
+                          if (subscribe || userInformation.username == username) {
+                            if (showBreakoffForm) {
+                              document.getElementById("showBreakoffFormId").style.transition =
+                                "2s";
+                              document.getElementById("showBreakoffFormId").style.right = "-100vw";
+
+                              setTimeout(() => {
+                                setShowBreakoffForm(false);
+                              }, 1000);
+                            } else {
+                              setShowBreakoffForm(true);
+
+                              setTimeout(() => {
+                                if (document.getElementById("showBreakoffFormId")) {
+                                  document.getElementById("showBreakoffFormId").style.transition =
+                                    "1s";
+                                  document.getElementById("showBreakoffFormId").style.right =
+                                    "30%";
+                                }
+                              }, 1);
+                            }
+                          } else { toast.success('Members Only Access') }
+                        } else {
+                          toast.success('BreakOff Chat can be accessible only in Community Clubs')
+                        }
+                      }}
+                    >
+                      <BsPlusCircleFill />
                     </span>
-                    </SoapboxTooltip>
+                  </SoapboxTooltip>
                 </div>
 
                 {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
@@ -5065,21 +4838,21 @@ const deleteClubRequestAuto=(user)=>{
                 {/* <FiSearch className="search-channel-content" /> */}
               </div>
               {/* <ModelShow /> */}
-              {inviteBox?<MyVerticallyCenteredModal
-              title={"Invitation"}
-              closeModal={()=>setInviteBox(false)}
-              clubname={userInfo[0].communityClub==1?username:`${userInfo[0].name}'s Private `}
-              clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
-              username={userInformation.username}
-             
-            
+              {inviteBox
+                ? <MyVerticallyCenteredModal
+                  title={"Invitation"}
+                  closeModal={() => setInviteBox(false)}
+                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+                  username={userInformation.username}
+                  show={inviteBox}
+                  onHide={() => setInviteBox(false)}
+                />
+                : null
+              }
 
-          show={inviteBox}
-          onHide={() =>setInviteBox(false)}
-        />:null}
-            
-              {showRequest ? (
-                <div className="slide-container">
+              {showRequest
+                ? (<div className="slide-container">
                   <div
                     id="slideR"
                     style={{
@@ -5107,20 +4880,18 @@ const deleteClubRequestAuto=(user)=>{
                     >
                       <h5>Club Requests</h5>
                       <FaWindowClose
-                       className="FaWindowClose"
+                        className="FaWindowClose"
                         style={{ cursor: "pointer" }}
                         onClick={() => {
-                          document.getElementById("slideR").style.transition =
-                            "2sec";
-                          document.getElementById("slideR").style.right =
-                            "-100vw";
+                          document.getElementById("slideR").style.transition = "2sec";
+                          document.getElementById("slideR").style.right = "-100vw";
 
                           setTimeout(() => {
                             setShowRequest(false);
                           }, 1000);
                         }}
                       />
-                   
+
                     </div>
                     {/* <p>No Requests</p> */}
                     {/* <h5>Club Request</h5> */}
@@ -5129,7 +4900,6 @@ const deleteClubRequestAuto=(user)=>{
                         maxHeight: "400px",
                         padding: "1rem",
                         overflowY: "auto",
-                       
                       }}
                     >
                       {clubRequestsData.map((user, index) => (
@@ -5140,17 +4910,33 @@ const deleteClubRequestAuto=(user)=>{
                             minWidth: "250px",
                             padding: "1px",
                             margin: "8px",
-                            display:'flex',
-                            flexDirection:'row'
+                            display: 'flex',
+                            flexDirection: 'row'
                           }}
                         >
-                          <SubscribedUser username={user.username} /><button className="Approve-request" onClick={()=>{handleClubRequestApprove(user)}}>Approve</button><button className="Delete-request" onClick={()=>deleteClubRequest(user)}>Delete</button>
+                          <SubscribedUser username={user.username} />
+                          <button
+                            className="Approve-request"
+                            onClick={() => { handleClubRequestApprove(user) }}
+                          >
+                            Approve
+                          </button>
+
+                          <button
+                            className="Delete-request"
+                            onClick={() => deleteClubRequest(user)}
+                          >
+                            Delete
+                          </button>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
-              ) : null}
+                )
+                : null
+              }
+
               {showPricingSetting ? (
                 <div className="slide-container">
                   <div
@@ -5179,8 +4965,9 @@ const deleteClubRequestAuto=(user)=>{
                       }}
                     >
                       <h5>Set Service Price</h5>
+
                       <FaWindowClose
-                       className="FaWindowClose"
+                        className="FaWindowClose"
                         style={{ cursor: "pointer" }}
                         onClick={() => {
                           document.getElementById("slide").style.transition =
@@ -5439,7 +5226,7 @@ const deleteClubRequestAuto=(user)=>{
                         </div>
                       ))}
                     </div>
-                  
+
 
                   </div>
                 </div>
@@ -5475,11 +5262,11 @@ const deleteClubRequestAuto=(user)=>{
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
-                      width:'100%',
-                      height:'100vh',
-                    
-                     
-                    
+                      width: '100%',
+                      height: '100vh',
+
+
+
                     }}
                   >
                     <FaWindowClose
@@ -5496,214 +5283,43 @@ const deleteClubRequestAuto=(user)=>{
                           "2sec";
                         document.getElementById("slideIFM").style.right =
                           "-100vw";
-                          setClubFloor(true)
+                        setClubFloor(true)
                         setTimeout(() => {
                           setShowIframe(false);
                         }, 500);
                       }}
                     />
-                 <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
-                   title={iframeBox.title} width="100%" height="100%"></iframe>
+                    <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
+                      title={iframeBox.title} width="100%" height="100%"></iframe>
                     {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
                                 <div className="btns"> <button>Request</button></div> */}
                   </div>
                 </div>
               ) : null}
 
-{showBreakoffForm?<div className="showBreakoffForm" id="showBreakoffFormId">
+              {showBreakoffForm ? <div className="showBreakoffForm" id="showBreakoffFormId">
                 <h5>Enter The Topic for BreakOff Chat</h5>
-                <div style={{padding:'33px',position:'relative',width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}> <input placeholder="Enter Topic" value={breakOffInput}  onChange={(e) => {
-                                setBreakOffInput(e.target.value);
-                              }}  />
-                <button className="d-grid col-12 btn-main login-form-button" style={{position:'absolute',right:'0'}} 
-                onClick={()=>{
-                  if(breakOffInput){createBreakoff()}else{
-                   toast.success(
-                    "Please Enter Topic for Breakoff chat"
-                  ); 
-                  }
-                  
-                  
-                }}
-                >Create Now</button>
-                </div>
-               
-              </div>:null}
-            
-            
-              {showClubRules ? (
-                <div className="slide-container clubRulesText">
-                  <div
-                    id="slideCR"
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#DCD5FA",
-                      padding: "1rem",
-                      margin: "1rem",
+                <div style={{ padding: '33px', position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}> <input placeholder="Enter Topic" value={breakOffInput} onChange={(e) => {
+                  setBreakOffInput(e.target.value);
+                }} />
+                  <button className="d-grid col-12 btn-main login-form-button" style={{ position: 'absolute', right: '0' }}
+                    onClick={() => {
+                      if (breakOffInput) { createBreakoff() } else {
+                        toast.success(
+                          "Please Enter Topic for Breakoff chat"
+                        );
+                      }
+
+
                     }}
-                  >
-                    <div
-                      style={{
-                        maxHeight: "450px",
-                        overflowY: "scroll",
-                        position: "relative",
-                      }}
-                    >
-                      <FaWindowClose
-                        className="FaWindowClose"
-                        style={{
-                          cursor: "pointer",
-                          color: "red",
-                          position: "absolute",
-                          right: "0px",
-                        }}
-                        onClick={() => {
-                          document.getElementById("slideCR").style.transition =
-                            "2sec";
-                          document.getElementById("slideCR").style.right =
-                            "-100vw";
-
-                          setTimeout(() => {
-                            setShowClubRules(false);
-                          }, 1000);
-                        }}
-                      />
-                      <h4> RULES OF THE ROAD</h4>
-                      <p>
-                        Soapbox is a Club Community where members can not only
-                        connect but Club Owners can build real businesses as
-                        Private Club Owners.. All Community Clubs are here for
-                        you, our members, that allow you to create discussions,
-                        share ideas, support each other, create events, connect
-                        with likeminded people and we encourage you to find the
-                        right community club for you. Even create build your own
-                        virtual business as a Private Club Owner, a real
-                        business.
-                      </p>
-                      <p>
-                        So with that said these are some general Club rules that
-                        all members have to adhere to:
-                      </p>
-                      <h5>RULE 1</h5>
-
-                      <p>
-                        Be mindful of others and don't join a community club to
-                        cause disruption. Community Clubs are topic specific
-                        with Break-Off Chats that are created by members to
-                        create conversation, find the club that is right for
-                        you. Members that create disruption by adding offensive
-                        content, hate speech, attacking others, inciting
-                        violence, well they run the risk of not only being
-                        banned from that Club Community but also run the risk of
-                        being banned from Soapbox in general. We take this very
-                        seriously and bans are not temporary, they are
-                        permanent.
-                      </p>
-                      <h5>RULE 2</h5>
-                      <p>
-                        Privacy and Security, All club members must adhere to
-                        privacy policies and in simple terms respect other
-                        members' privacy and keep the community safe. Don't
-                        harass other members with repeated private chat requests
-                        or messages, Do not instigate harassment by revealing
-                        someone's personal information, sharing sexually
-                        explicit media of someone or threatening them. Violators
-                        run the risk of not only being banned from that Club but
-                        also being banned from Soapbox in general.
-                        <h5> RULE 3</h5>
-                        Impersonating someone to mislead others, sharing sexual
-                        or suggestive content involving minors, threatening
-                        other members will be cause for an immediate ban.
-                        Soapbox members don't have to use their real names but
-                        impersonating a celebrity or business to trick people is
-                        a NO NO, we protect our members and have a zero
-                        tolerance policy as it relates to these three issues.
-                        <h5> RULE 4</h5>
-                        Don't be a bully, no one likes a bully, so remember to
-                        help build the Club Communities for the better of the
-                        community. Sharing opinions is encouraged, creating
-                        conversations with opposing views is fine, trying to
-                        bully someone into sharing your opinion as it relates to
-                        political views, parenting or other is a violation.
-                        Everyone is entitled to their own views so respect that,
-                        if you don't like their views then create your OWN
-                        Break-Off Chat for a topic that you want or better yet
-                        Request to be a Private Club Owner and control your own
-                        little world.
-                        <h5>RULE 5 </h5>
-                        Spamming, just don't do it, keep the community clean ,
-                        robust and enjoyable. Spammers will be banned.
-                        <h5>RULE 6 </h5>
-                        Sharing illegal content, soliciting or facilitating
-                        illegal transactions or prohibited transactions will
-                        result in an immediate ban.
-                        <h5>RULE 7 </h5>
-                        Safety first, Soapbox uses the XMG Coin as an internal
-                        cryptocurrency for ALL transactions on Soapbox. This
-                        protects our members from credit card fraud, illegal
-                        chargebacks and fraud in general. Soapbox can guarantee
-                        against fraud this way, so all transactions for products
-                        or services MUST be kept on Soapbox for your protection,
-                        Transactions done away from Soapbox are a violation of
-                        our security measures and prevent us from protecting
-                        members. All products, services and other listings that
-                        are in the Marketplace are directly posted on Fortis
-                        Auction Blockmarket, this is Soapbox's ONLY Marketplace.
-                        Members must adhere to using Fortis for their sales of
-                        products, services and other transactions. Avoid fraud
-                        and adhere to our security measures for your protection.
-                        <h5>RULE 8 </h5>
-                        Virtual Experiences are a great tool for members to
-                        connect with Private Club Owners that may be
-                        celebrities, pro athletes, authors and more.
-                        Transactions away from Soapbox are a violation and can
-                        cause the Private Club Owner and Member to receive a
-                        first warning, if it happens a second time then the
-                        Member can be banned and the Private Club Owner will
-                        lose their club ownership rights.
-                      </p>
-                      <h5>RULE 9</h5>
-                      <p>
-                        Virtual and In Person Events can be set up on Soapbox
-                        for the better of the community, don't abuse that and if
-                        in person events are being arranged please put safety
-                        first. We want our members to always be safe and sound.
-                      </p>
-                      <p>
-                        The rules are simple and enforcement of these rules come
-                        from our members HOWEVER falsely reporting a member for
-                        a violation can result in a first warning to the member
-                        that falsely reported . We needed to make that crystal
-                        clear to avoid false reports.
-                      </p>
-                      <p>
-                        Above all please protect your communities, help to grow
-                        them, help and support others, make it your own. For
-                        Private Club Owners, this is your business, so treat it
-                        as such and build it strong for the better of your Club
-                        and the Soapbox Community in general.
-                      </p>
-
-                      <h5>ENFORCEMENT OF RULES</h5>
-
-                      <p>
-                        Well we have a number of ways that rules are enforced
-                        and we take it seriously. We will ask you nicely to cut
-                        it out the first time, the next step won't be that
-                        friendly and the last step is not only a permanent ban
-                        from that Community or Private Club but from the entire
-                        MegaHoot ecosystem. Trust me you don't want that as you
-                        will not be able to use Soapbox, VeroHive, DocuMega, XMG
-                        Fintech, MegaHoot Vault, ZecureHive, gaming or any
-                        platforms that will be added in the future. So play by
-                        the rules and make Soapbox as great as it can be!
-                      </p>
-                    </div>
-                  </div>
+                  >Create Now</button>
                 </div>
+
+              </div> : null}
+
+
+              {showClubRules ? (
+                <SoapboxPrivateClubRules setShowClubRules={setShowClubRules} />
               ) : null}
 
 
@@ -5729,59 +5345,59 @@ const deleteClubRequestAuto=(user)=>{
                 id="feed"
                 style={{ display: "flex", transition: "1s" }}
               >
-                <GiHamburgerMenu
-                  className="GiHamburgerMenu"
-                  data-tip={clubFloor ? "Hide Feeds" : "Show Feeds"}
-                  onClick={() => {
-                    if (privateChat==false) {
-                      setClubFloor(!clubFloor);
-                    } else {
-                      toast.success("Please close Private chat to view feeds");
-                    }
-                    //   if(document.getElementById('slideFeed')){
+                {/* <GiHamburgerMenu
+                    className="GiHamburgerMenu"
+                    data-tip={clubFloor ? "Hide Feeds" : "Show Feeds"}
+                    onClick={() => {
+                      if (privateChat == false) {
+                        setClubFloor(!clubFloor);
+                      } else {
+                        toast.success("Please close Private chat to view feeds");
+                      }
+                      //   if(document.getElementById('slideFeed')){
 
-                    //     document.getElementById('slideFeed').style.transition='1sec';
-                    //     document.getElementById('slideFeed').style.left=clubFloor?'-100vw':'30px';
-                    // }
-                  }}
-                />
+                      //     document.getElementById('slideFeed').style.transition='1sec';
+                      //     document.getElementById('slideFeed').style.left=clubFloor?'-100vw':'30px';
+                      // }
+                    }}
+                  /> */}
 
                 {clubFloor
                   ? uploads && (
-                      <InfiniteScroll
-                        dataLength={uploads.length}
-                        next={fetchMoreHoots}
-                        hasMore={hasMore}
-                        // loader={<InfiniteScrollLoader />}
-                      >
-                        {uploads.map((upload, index) => {
-                          return (
-                            <div key={upload}>
-                              <Post
-                                hootId={upload.id}
-                                username={upload.authorUsername}
-                                mimeType={upload.mimeType}
-                                hootImgId={upload.image}
-                                audioPoster={upload.audioPoster}
-                                likes={upload.likes}
-                                views={upload.views}
-                                followers={upload.followers}
-                                caption={upload.caption}
-                                link={upload.link}
-                                ephemeral={upload.ephemeral}
-                                privateHoot={upload.private}
-                                expiryDate={upload.expiryDate}
-                                timeStamp={upload.timeStamp}
-                                edited={upload.edited}
-                                editedTimeStamp={upload.editedTimeStamp}
-                                // privateProtected={privateProtected}
-                              />
-                            </div>
-                          );
-                        })}
-                      </InfiniteScroll>
-                    )
-                  : null}
+                    <InfiniteScroll
+                      dataLength={uploads.length}
+                      next={fetchMoreHoots}
+                      hasMore={hasMore}
+                    >
+                      {uploads.map((upload) => {
+                        return (
+                          <div key={upload}>
+                            <Post
+                              hootId={upload.id}
+                              username={upload.authorUsername}
+                              mimeType={upload.mimeType}
+                              hootImgId={upload.image}
+                              audioPoster={upload.audioPoster}
+                              likes={upload.likes}
+                              views={upload.views}
+                              followers={upload.followers}
+                              caption={upload.caption}
+                              link={upload.link}
+                              ephemeral={upload.ephemeral}
+                              privateHoot={upload.private}
+                              expiryDate={upload.expiryDate}
+                              timeStamp={upload.timeStamp}
+                              edited={upload.edited}
+                              editedTimeStamp={upload.editedTimeStamp}
+                            />
+                          </div>
+                        );
+                      })}
+                    </InfiniteScroll>
+                  )
+                  : null
+                }
+
                 {privateChat ? (
                   <div className="privateChat-club" id="privatechatslide">
                     <div
@@ -5816,7 +5432,10 @@ const deleteClubRequestAuto=(user)=>{
                               borderRadius: "15px",
                             }}
                           />
-                        ) : null}
+                        )
+                          : null
+                        }
+
                         <p
                           style={{
                             fontWeight: "400",
@@ -5827,24 +5446,31 @@ const deleteClubRequestAuto=(user)=>{
                           {privateChatPerson.name}
                         </p>
                       </span>
-                      <span style={{display:'flex',alignItems:'center'}}>
-                      {userInfo[0].communityClub==1?null:<SoapboxTooltip title={"Delete Chat"} placement="top">
-                            {/* <img
-                              src={videolive}
-                              style={{ cursor: "pointer" }}
-                              width="30px"
-                              onClick={() => {
-                                setBroadcastStream(true);
+
+                      <span style={{ display: 'flex', alignItems: 'center' }}>
+                        {userInfo[0].communityClub == 1
+                          ? null
+                          : <SoapboxTooltip title={"Delete Chat"} placement="bottom">
+                            <span
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                cursor: 'pointer',
+                                backgroundColor: '#CF2128',
+                                width: '22px',
+                                height: '22px',
+                                borderRadius: '27px',
+                                marginRight: '15px',
+                                fontSize: '18px'
                               }}
-                            /> */}
-                            <span 
-                            style={{display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128',width:'22px',height:'22px',borderRadius:'27px',marginRight:'15px',fontSize:'18px'}}
-                            onClick={()=>{deletePrivateChatDuo(userInfo[0].name,privateChatPerson.name)}}
+                              onClick={() => { deletePrivateChatDuo(userInfo[0].name, privateChatPerson.name) }}
                             >
-                            
-                            <BsTrash  />
+                              <BsTrash />
                             </span>
-                          </SoapboxTooltip>}     Private Chat
+                          </SoapboxTooltip>
+                        }
+                        Private Chat
                         <FaWindowClose
                           className="icon-text"
                           onClick={() => {
@@ -5872,143 +5498,141 @@ const deleteClubRequestAuto=(user)=>{
                     >
                       {chatDataPrivate.length
                         ? chatDataPrivate.map((e) => (
-                            <div
-                              className="messageBox"
-                              style={{
-                                maxWidth:
-                                  e.isVideo || e.isImage ? "200px" : "100%",
-                              }}
-                             
-                            >
-                              <div className="ProfileBox">
-                                <img
-                                  className="chat-profile"
-                                  src={e.imgSrc ? e.imgSrc : null}
-                                />
-                                <p>{e.chatname}</p>
-                              </div>
-                              <Linkify
-                                componentDecorator={(
-                                  decoratedHref,
-                                  decoratedText,
-                                  key
-                                ) => (
-                                  <a
-                                    target="blank"
-                                    href={decoratedHref}
-                                    key={key}
-                                  >
-                                    {decoratedText}
-                                  </a>
-                                )}
-                              >
-                                {" "}
-                                <div
-                                  className={
-                                    e.isEmoji ? "message-emoji" : "message"
-                                  }
-                                >
-                                  {!e.isVideo && !e.isImage && !e.isPoll ? e.message : null}
-                                </div>
-                              </Linkify>
-                              {e.isPoll?<div>
-                                        <Form onSubmit={(e)=>e.preventDefault()}>
-  <Form.Group className="mb-3" >
-    <Form.Label>{e.message.Question}</Form.Label>
-   
-  </Form.Group>
-  <Form.Group className="mb-3" >
-   
-    <Form.Check type="checkbox" label={e.message.OptionA} />
-    <ProgressBar animated  variant="success" now={90} />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.message.OptionB} />
-    <ProgressBar animated  variant="info" now={50} />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.message.OptionC} />
-    <ProgressBar animated  variant="warning" now={70} />
-  </Form.Group>
-  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
-  </Form.Group> */}
-  <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
-    Vote
-  </Button>
-</Form>
-                                      </div>:null}
-                              {e.isVideo ? (
-                                <video
-                                  onDragStart={(e) => e.preventDefault()}
-                                  onmousedown={(event) => {
-                                    event.preventDefault
-                                      ? event.preventDefault()
-                                      : (event.returnValue = false);
-                                  }}
-                                  style={{
-                                    maxWidth: "200px",
-                                    marginTop: "20px",
-                                    borderRadius: "5px",
-                                  }}
-                                  controls={true}
-                                  src={e.message}
-                                ></video>
-                              ) : null}
-                              {e.isImage ? (
-                                <img
-                                  src={e.message}
-                                  onDragStart={(e) => e.preventDefault()}
-                                  onmousedown={(event) => {
-                                    event.preventDefault
-                                      ? event.preventDefault()
-                                      : (event.returnValue = false);
-                                  }}
-                                  style={{
-                                    maxWidth: "200px",
-                                    marginTop: "20px",
-                                    borderRadius: "5px",
-                                  }}
-                                />
-                              ) : null}
+                          <div
+                            className="messageBox"
+                            style={{
+                              maxWidth:
+                                e.isVideo || e.isImage ? "200px" : "100%",
+                            }}
+
+                          >
+                            <div className="ProfileBox">
+                              <img
+                                className="chat-profile"
+                                src={e.imgSrc ? e.imgSrc : null}
+                              />
+                              <p>{e.chatname}</p>
                             </div>
-                          ))
+                            <Linkify
+                              componentDecorator={(
+                                decoratedHref,
+                                decoratedText,
+                                key
+                              ) => (
+                                <a
+                                  target="blank"
+                                  href={decoratedHref}
+                                  key={key}
+                                >
+                                  {decoratedText}
+                                </a>
+                              )}
+                            >
+                              {" "}
+                              <div
+                                className={
+                                  e.isEmoji ? "message-emoji" : "message"
+                                }
+                              >
+                                {!e.isVideo && !e.isImage && !e.isPoll ? e.message : null}
+                              </div>
+                            </Linkify>
+                            {e.isPoll ? <div>
+                              <Form onSubmit={(e) => e.preventDefault()}>
+                                <Form.Group className="mb-3" >
+                                  <Form.Label>{e.message.Question}</Form.Label>
+
+                                </Form.Group>
+                                <Form.Group className="mb-3" >
+
+                                  <Form.Check type="checkbox" label={e.message.OptionA} />
+                                  <ProgressBar animated variant="success" now={90} />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" >
+                                  <Form.Check type="checkbox" label={e.message.OptionB} />
+                                  <ProgressBar animated variant="info" now={50} />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" >
+                                  <Form.Check type="checkbox" label={e.message.OptionC} />
+                                  <ProgressBar animated variant="warning" now={70} />
+                                </Form.Group>
+
+                                <Button variant="primary" type="submit" onClick={() => { toast.success('Voted Successfully') }}>
+                                  Vote
+                                </Button>
+                              </Form>
+                            </div> : null}
+                            {e.isVideo ? (
+                              <video
+                                onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event) => {
+                                  event.preventDefault
+                                    ? event.preventDefault()
+                                    : (event.returnValue = false);
+                                }}
+                                style={{
+                                  maxWidth: "200px",
+                                  marginTop: "20px",
+                                  borderRadius: "5px",
+                                }}
+                                controls={true}
+                                src={e.message}
+                              ></video>
+                            ) : null}
+                            {e.isImage ? (
+                              <img
+                                src={e.message}
+                                onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event) => {
+                                  event.preventDefault
+                                    ? event.preventDefault()
+                                    : (event.returnValue = false);
+                                }}
+                                style={{
+                                  maxWidth: "200px",
+                                  marginTop: "20px",
+                                  borderRadius: "5px",
+                                }}
+                              />
+                            ) : null}
+                          </div>
+                        ))
                         : null}
 
-{emojiPickerPrivate && (
-                              <ClickAwayListener
-                                onClickAway={() => {
-                                  setEmojiPickerPrivate(false);
-                                }}
-                              >
-                                <div>
-                                  <Picker
-                                    native
-                                    onEmojiClick={(event, emojiObject) => {
-                                      setMessageInboxValuePrivate(
-                                        messageInboxValuePrivate + emojiObject.emoji
-                                      );
-                                      // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
-                                      //  // socket.emit('send',message);
-                                      // socket.emit('send', {
-                                      //     name: userFullName,
-                                      //     message: emojiObject.emoji,
-                                      //     profilePic: userProfilePic,
-                                      //     isEmoji: true
-                                      // });
-                                    }}
-                                    pickerStyle={{
-                                      position: "absolute",
-                                      bottom: "0px",
-                                      left: "0.2rem",
-                                      zIndex: "1111",
-                                    }}
-                                  />
-                                </div>
-                              </ClickAwayListener>
-                            )}
+                      {emojiPickerPrivate && (
+                        <ClickAwayListener
+                          onClickAway={() => {
+                            setEmojiPickerPrivate(false);
+                          }}
+                        >
+                          <div>
+                            <Picker
+                              native
+                              onEmojiClick={(event, emojiObject) => {
+                                setMessageInboxValuePrivate(
+                                  messageInboxValuePrivate + emojiObject.emoji
+                                );
+                                // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                //  // socket.emit('send',message);
+                                // socket.emit('send', {
+                                //     name: userFullName,
+                                //     message: emojiObject.emoji,
+                                //     profilePic: userProfilePic,
+                                //     isEmoji: true
+                                // });
+                              }}
+                              pickerStyle={{
+                                position: "absolute",
+                                bottom: "0px",
+                                left: "0.2rem",
+                                zIndex: "1111",
+                              }}
+                            />
+                          </div>
+                        </ClickAwayListener>
+                      )}
                     </div>
 
                     <div className="send">
@@ -6019,21 +5643,14 @@ const deleteClubRequestAuto=(user)=>{
                         style={{ marginLeft: privateChat ? "5px" : "5px" }}
                         onSubmit={(e) => messagesubmitPrivate(e)}
                       >
-                        {/* <FaWindowClose data-tip="Close ChatRoom" className="icon-text"
-                                                onClick={() => {
-                                                    setOneOnOneCall(false); setGroupCall(false); setRequestMessage(false); setVerifiedAutograph(false); setClubFloor(!clubFloor); setShowSubscribeButton(false); setShowChatRoom(!showChatRoom);
-                                                }}
-
-                                            /> */}
                         <label htmlFor="post-video">
-                          <img
-                            src={videochat}
-                            style={{ margin: "5px", cursor: "pointer" }}
-                            data-tip="Share Video"
-                            width="27px"
-                          />
-
-                          {/* <FiVideo data-tip="Share Video" className="icon-text" /> */}
+                          <SoapboxTooltip title={"Share Video"} placement="top">
+                            <img
+                              src={videochat}
+                              style={{ margin: "5px", cursor: "pointer" }}
+                              width="27px"
+                            />
+                          </SoapboxTooltip>
                         </label>
                         <input
                           type="file"
@@ -6044,14 +5661,15 @@ const deleteClubRequestAuto=(user)=>{
                           hidden
                           disabled={true}
                         />
+
                         <label htmlFor="post-image">
-                          <img
-                            src={imagechat}
-                            style={{ margin: "5px", cursor: "pointer" }}
-                            data-tip="Share Photos"
-                            width="27px"
-                          />
-                          {/* <FiImage data-tip="Share Photos" className="icon-text" /> */}
+                          <SoapboxTooltip title={"Share Photos"} placement="top">
+                            <img
+                              src={imagechat}
+                              style={{ margin: "5px", cursor: "pointer" }}
+                              width="27px"
+                            />
+                          </SoapboxTooltip>
                         </label>
                         <input
                           type="file"
@@ -6062,37 +5680,38 @@ const deleteClubRequestAuto=(user)=>{
                           hidden
                           disabled={true}
                         />
-                        {/* <FiFolder data-tip="Share File" className="icon-text" /> */}
-                        <img
-                          src={filechat}
-                          style={{ margin: "5px", cursor: "pointer" }}
-                          data-tip="Share File"
-                          width="27px"
-                        />
 
-                        {/* <FiSmile className="icon-text" data-tip="Emoji"
-                                               
-                                            /> */}
-                        <img
-                          src={emojiIcon}
-                          style={{ margin: "5px", cursor: "pointer" }}
-                          data-tip="Emoji"
-                          onClick={() => {
-                            setEmojiPickerPrivate(!emojiPickerPrivate);
-                          }}
-                          width="27px"
+                        <SoapboxTooltip title={"Share File"} placement="top">
+                          <img
+                            src={filechat}
+                            style={{ margin: "5px", cursor: "pointer" }}
+                            width="27px"
+                          />
+                        </SoapboxTooltip>
 
-                        />
+                        <SoapboxTooltip title={"Emoji"} placement="top">
+                          <img
+                            src={emojiIcon}
+                            style={{ margin: "5px", cursor: "pointer" }}
+                            onClick={() => {
+                              setEmojiPickerPrivate(!emojiPickerPrivate);
+                            }}
+                            width="27px"
+                          />
+                        </SoapboxTooltip>
+
                         <input
                           type="text"
                           name="messageInp"
                           value={messageInboxValuePrivate}
+                          autoComplete="off"
                           id="messageInp"
                           style={{ width: privateChat ? "230px" : "230px" }}
                           onChange={(e) => {
                             setMessageInboxValuePrivate(e.target.value);
                           }}
                         />
+
                         <button
                           type="submit"
                           style={{
@@ -6102,602 +5721,653 @@ const deleteClubRequestAuto=(user)=>{
                             marginLeft: "5px",
                           }}
                         >
-                          <SoapboxTooltip
-                            title={"Send Message"}
-                            placement="top"
-                          >
+                          <SoapboxTooltip title={"Send Message"} placement="top">
                             <img src={sendIcon} width="27px" />
                           </SoapboxTooltip>
                         </button>
                       </form>
                     </div>
                   </div>
-                ) : null}
-                 {privateChatList?<div className="privateChatListBox" id="privateChatList">
-                 <div><h5 style={{textAlign:'center',fontSize:'0.93rem',fontWeight:'600',margin:'0.5rem',borderRadius:'5px',padding:'0.5rem',width:'100%',backgroundColor:"whitesmoke"}}>Private Messages</h5></div>
-                 
-                 </div>:null}
-                {showChatRoom ? (
-                  <div style={{ position: "relative" }}>
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                      <div
-                        className="container"
-                        style={{
-                          left: clubFloor || privateChat ? "20px" : "100px",
-                          width: clubFloor || privateChat ? "40%" : "80%",
-                          minWidth:
-                            clubFloor || privateChat ? "500px" : "700px",
-                          transition: "1s",
-                        }}
+                )
+                  : null
+                }
+
+                {privateChatList
+                  ? <div className="privateChatListBox" id="privateChatList">
+                    <div>
+                      <h5 style={{
+                        textAlign: 'center',
+                        fontSize: '0.93rem',
+                        fontWeight: '600',
+                        margin: '0.5rem',
+                        borderRadius: '5px',
+                        padding: '0.5rem',
+                        width: '100%',
+                        backgroundColor: "whitesmoke"
+                      }}
                       >
-                        <div
-                          className="live-header"
-                          style={{
-                            backgroundColor: "#C1A9D5",
-                            color: "white",
-                            borderRadius: "3px",
-                            marginLeft: "-15px",
-                            marginTop: "-33px",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            position: "fixed",
-                            width: "25%",
-                            minWidth:
-                              clubFloor || privateChat ? "450px" : "650px",
-                            zIndex: "5",
+                        Private Messages
+                      </h5>
+                    </div>
+                  </div>
+                  : null
+
+                }
+
+                {/* ------------------- Chat Container newly style added here ------------------- */}
+                {showChatRoom ? (
+                  <div
+                    className="container"
+                    style={{
+                      // left: clubFloor || privateChat ? "20px" : "100px",
+                      // width: clubFloor || privateChat ? "40%" : "80%",
+
+                      // minWidth: clubFloor || privateChat ? "500px" : "700px",
+                      transition: "1s",
+                      marginTop: "0.4rem",
+                      backgroundColor: "#EDEDFF",
+                      border: "2px solid #D9D2FA",
+                      overflowX: "hidden",
+                    }}
+                  >
+                    <div
+                      className="live-header"
+                      style={{
+                        margin: 0,
+                        backgroundColor: "#8249A0",
+                        color: "white",
+                        // borderRadius: "3px",
+                        // marginLeft: "-35px",
+                        // marginTop: "-35px",
+                        display: "flex",
+                        // flexDirection: "column",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        // position: "fixed",
+                        // width: "25%",
+                        // minWidth: clubFloor || privateChat ? "450px" : "650px",
+                        // minWidth: "inherit",
+                        borderBottomLeftRadius: 0,
+                        borderBottomRightRadius: 0,
+                        padding: "0.5rem",
+                        gap: "0.5rem",
+                        zIndex: "5",
+                      }}
+                    >
+                      {" "}
+                      <span>
+                        {userInfo[0].name}'s Club Chat
+                      </span>
+
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: "0.5rem"
+                      }}
+                      >
+                        {/* <img
+                                src={videolive}
+                                style={{ cursor: "pointer" }}
+                                width="28px"
+                                onClick={() => {
+                                  setBroadcastStream(true);
+                                }}
+                              /> */}
+                        <SoapboxTooltip title={"Stream Live"} placement="bottom">
+                          <span style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            backgroundColor: '#dcd5fa',
+                            color: "#8249A0",
+                            width: '26px',
+                            height: '26px',
+                            borderRadius: '50%',
+                            // marginLeft: '15px',
+                            fontSize: '1.1rem'
                           }}
-                        >
-                          {" "}
-                          {userInfo[0].name}`s Club Chat
-                          
-                        <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                          <SoapboxTooltip title={"Stream Live"} placement="top">
-                            <img
-                              src={videolive}
-                              style={{ cursor: "pointer" }}
-                              width="25px"
-                              onClick={() => {
-                                setBroadcastStream(true);
-                              }}
-                            />
-                          </SoapboxTooltip>
-                          <SoapboxTooltip title={"Create Poll"} placement="top">
-                      
-                            
-                            <span 
-                            style={{display:'flex',justifyContent:'center',
-                            alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128'
-                            ,width:'22px',height:'22px',borderRadius:'27px',marginLeft:'15px',
-                            fontSize:'18px'}}
-                            onClick={()=>{
-                              if (showPollForm) {
-                                document.getElementById("showPollFormId").style.transition =
-                                  "2s";
-                                document.getElementById("showPollFormId").style.left = "200vw";
-                        
-                                setTimeout(() => {
-                                  setShowPollForm(false);
-                                }, 1000);
-                              } else {
-                                setShowPollForm(true);
-                        
-                                setTimeout(() => {
-                                  if (document.getElementById("showPollFormId")) {
-                                    document.getElementById("showPollFormId").style.transition =
-                                      "1s";
-                                      document.getElementById("showPollFormId").style.left =
-                                      "70px";
-                                  }
-                                }, 1);
-                              }
-                        }}
-                            >
-                            
-                            <RiCalendarEventLine  />
-                            </span>
-                          </SoapboxTooltip>
-                          {userInfo[0].communityClub==1?null:<SoapboxTooltip title={"Delete Chat"} placement="top">
-                            {/* <img
-                              src={videolive}
-                              style={{ cursor: "pointer" }}
-                              width="30px"
-                              onClick={() => {
-                                setBroadcastStream(true);
-                              }}
-                            /> */}
-                            <span 
-                            style={{display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer',backgroundColor:'#CF2128',width:'22px',height:'22px',borderRadius:'27px',marginLeft:'15px',fontSize:'18px'}}
-                            onClick={()=>{deletePrivateChatAll(userInfo[0].username)}}
-                            >
-                            
-                            <BsTrash  />
-                            </span>
-                          </SoapboxTooltip>}
-                         
-                          </div>
-                          
-                        </div>
-                        {showPollForm?  <div className="showPollForm" id="showPollFormId">
-             <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',backgroundColor:'#652C90'}}>   <h5>Create A Poll</h5>
-                <FaWindowClose  className="FaWindowClose"    onClick={()=>{
-                              if (showPollForm) {
-                                document.getElementById("showPollFormId").style.transition =
-                                  "2s";
-                                document.getElementById("showPollFormId").style.left = "200vw";
-                        
-                                setTimeout(() => {
-                                  setShowPollForm(false);
-                                }, 1000);
-                              } else {
-                                setShowPollForm(true);
-                        
-                                setTimeout(() => {
-                                  if (document.getElementById("showPollFormId")) {
-                                    document.getElementById("showPollFormId").style.transition =
-                                      "1s";
-                                      document.getElementById("showPollFormId").style.left =
-                                      "70px";
-                                  }
-                                }, 1);
-                              }
-                        }} /></div>
-                <div style={{padding:'33px',position:'relative',width:'100%',display:'flex'
-                ,flexDirection:'column',justifyContent:'space-evenly'}}>
-                  
-                   {/* <input placeholder="Enter Question For Poll" value={breakOffInput}  onChange={(e) => {
-                                setBreakOffInput(e.target.value);
-                              }}  />
-                       <div style={{display:'flex',flexDirection:'column',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',width:'90%',margin:'5px'}}>  
-                       <div  style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}} >
-                       <input type="checkbox" style={{flex:'0.2'}} />
-                        <p style={{flex:'0.8',margin:'0px'}}>July 3</p>
-                         </div>
-                        <progress value="32" max="100"  />
-                        </div>
-                       
-                        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',alignItems:'center',width:'90%',margin:'5px'}}>  
-                        <input type="checkbox" style={{flex:'0.2'}} /><p style={{flex:'0.8',margin:'0px'}}>July 4</p></div>
-                        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',alignItems:'center',width:'90%',margin:'5px'}}>  
-                        <input type="checkbox" style={{flex:'0.2'}} /><p style={{flex:'0.8',margin:'0px'}}>July 5</p></div>
-                     */}
-
-                     {FormEditPoll?
-                        <Form onSubmit={(e)=>e.preventDefault()}>
-  <Form.Group className="mb-3" >
-    <Form.Label>Enter Question For Poll</Form.Label>
-    <Form.Control type="text"  value={pollFormDataQ}
-    onChange={(e)=>{setPollFormDataQ(e.target.value)}} placeholder="Enter Question For Poll" />
-  </Form.Group>
-  <Form.Group className="mb-3" >
-    <Form.Label>Option A</Form.Label>
-    <Form.Control value={pollFormDataOA} onChange={(e)=>{setPollFormDataOA(e.target.value)}} placeholder="Option A" />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-    <Form.Label>Option B</Form.Label>
-    <Form.Control value={pollFormDataOB} onChange={(e)=>{setPollFormDataOB(e.target.value)}}  placeholder="Option b" />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-    <Form.Label>Option C</Form.Label>
-    <Form.Control value={pollFormDataOC} onChange={(e)=>{setPollFormDataOC(e.target.value)}} placeholder="Option c" />
-  </Form.Group>
-  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
-  </Form.Group> */}
-  {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
-    Preview 
-  </Button> */}
-  <Button variant="primary" type="submit" style={{marginLeft:'5px'}} onClick={()=>{handlePollFormSubmission(userFullName)}}>
-    Submit
-  </Button>
-</Form>
-:<Form onSubmit={(e)=>e.preventDefault()}>
-  <Form.Group className="mb-3" >
-    <Form.Label>{pollFormData.Question}</Form.Label>
-   
-  </Form.Group>
-  <Form.Group className="mb-3" >
-   
-    <Form.Check type="checkbox" label={pollFormData.OptionA} />
-    <ProgressBar animated  variant="success" now={pollFormData.pollA} />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={pollFormData.OptionB} />
-    <ProgressBar animated  variant="info" now={pollFormData.pollB} />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={pollFormData.OptionC} />
-    <ProgressBar animated  variant="warning" now={pollFormData.pollC} />
-  </Form.Group>
-  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
-  </Form.Group> */}
-  <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
-    Edit 
-  </Button>
-  <Button variant="primary" type="submit" style={{marginLeft:'5px'}} onClick={()=>{sentPollMessageInChat(pollFormData)}}>
-    Submit
-  </Button>
-</Form>
-}
-
-
-                              
-                {/* <button className="d-grid col-12 btn-main login-form-button" 
-                onClick={()=>{
-                  if(breakOffInput){createBreakoff()}else{
-                    toast.success(
-                     "Please Enter Topic for Breakoff chat"
-                   ); 
-                   }
-                  
-                }}
-                >Create Now</button> */}
-                </div>
-               
-              </div>:null}
-                        {broadcastStream ? (
-                          <VideoChat
-                            hallId={hallId}
-                            userName={userInformation.username}
-                            videoAvailable={() => {
-                              setVideoAvailable(true);
-                            }}
-                            host={username}
-                          />
-                        ) : null}
-   
-                        <div
-                          className="chatarea"
-                          style={{
-                            marginTop: VideoAvailable ? "300px" : "0px",
-                            zIndex: "-1",
-                          }}
-                        >
-                        
-                          {chatData.length
-                            ? chatData.map((e) => (
-                                <div
-                                  className="messageBox"
-                                  style={{
-                                    maxWidth:
-                                      e.isVideo || e.isImage ? "200px" : "100%",
-                                  }}
-                                  onClick={() => {
-                                    if(e.chatname!==userFullName && !e.isPoll){
-                                        toast.success(
-                                    `Opening Private Chat with ${e.chatname}`
-                                  );
-                                  setPrivateChatPerson({
-                                    name: e.chatname,
-                                    profilePic: e.imgSrc,
-                                  });
-                                  setPrivateChat(true);
-                                  setClubFloor(false);
-                                  // socket.emit("room", userInfo[0].username+userInformation.username);
-                                  getChatDataPrivate(e.chatname,userFullName)
-                                  // socket.emit("new-user-joined", {
-                                  //     name: userFullName,
-                                  //     profilePic: userProfilePic,
-                                  //   });
-
-                                  setTimeout(() => {
-                                    if (
-                                      document.getElementById(
-                                        "privatechatslide"
-                                      )
-                                    ) {
-                                      document.getElementById(
-                                        "privatechatslide"
-                                      ).style.transition = "1sec";
-                                      document.getElementById(
-                                        "privatechatslide"
-                                      ).style.right = "30px";
-                                    }
-                                  }, 1);  
-                                    }
-                                  }}
-                                >
-                                  <div className="ProfileBox">
-                                    <img
-                                      className="chat-profile"
-                                      src={e.imgSrc ? e.imgSrc : null}
-                                    />
-                                    <p>{e.chatname}</p>
-                                  </div>
-                                  <Linkify
-                                    componentDecorator={(
-                                      decoratedHref,
-                                      decoratedText,
-                                      key
-                                    ) => (
-                                      <a
-                                        target="blank"
-                                        href={decoratedHref}
-                                        key={key}
-                                      >
-                                        {decoratedText}
-                                      </a>
-                                    )}
-                                  >
-                                    {" "}
-                                    <div
-                                      className={
-                                        e.isEmoji ? "message-emoji" : "message"
-                                      }
-                                    >
-                                      {!e.isVideo && !e.isImage && !e.isPoll
-                                        ? e.message
-                                        : null}
-                                    </div>
-                                  </Linkify>
-                                  {e.isPoll?<div style={{marginTop:'30px'}}>
-                                        <Form onSubmit={(e)=>e.preventDefault()}>
-  <Form.Group className="mb-3" >
-  <p style={{fontSize:'14px'}}>{e.pollData.Question}</p>
-
-  </Form.Group>
-  <Form.Group className="mb-3" >
-   
-    <Form.Check type="checkbox" label={e.pollData.OptionA} />
-    <ProgressBar animated  variant="success" now={90} />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.pollData.OptionB} />
-    <ProgressBar animated  variant="info" now={50} />
-  </Form.Group>
-  
-  <Form.Group className="mb-3" >
-  <Form.Check type="checkbox" label={e.pollData.OptionC} />
-    <ProgressBar animated  variant="warning" now={70} />
-  </Form.Group>
-  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
-  </Form.Group> */}
-  <Button variant="primary" type="submit"  onClick={()=>{toast.success('Voted Successfully')}}>
-    Vote
-  </Button>
-</Form>
-                                      </div>:null}
-                                  {e.isVideo ? (
-                                    <video
-                                      onDragStart={(e) => e.preventDefault()}
-                                      onmousedown={(event) => {
-                                        event.preventDefault
-                                          ? event.preventDefault()
-                                          : (event.returnValue = false);
-                                      }}
-                                      style={{
-                                        maxWidth: "200px",
-                                        marginTop: "20px",
-                                        borderRadius: "5px",
-                                      }}
-                                      controls={true}
-                                      src={e.message}
-                                    ></video>
-                                  ) : null}
-                                  {e.isImage ? (
-                                    <img
-                                      src={e.message}
-                                      onDragStart={(e) => e.preventDefault()}
-                                      onmousedown={(event) => {
-                                        event.preventDefault
-                                          ? event.preventDefault()
-                                          : (event.returnValue = false);
-                                      }}
-                                      style={{
-                                        maxWidth: "200px",
-                                        marginTop: "20px",
-                                        borderRadius: "5px",
-                                      }}
-                                    />
-                                  ) : null}
-                                </div>
-                              ))
-                            : null}
-                        </div>
-                    
-                        {emojiPicker && (
-                          <ClickAwayListener
-                            onClickAway={() => {
-                              setEmojiPicker(false);
+                            onClick={() => {
+                              setBroadcastStream(true);
                             }}
                           >
-                            <div>
-                              <Picker
-                                native
-                                onEmojiClick={(event, emojiObject) => {
-                                  setMessageInboxValue(
-                                    messageInboxValue + emojiObject.emoji
-                                  );
-                                  // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
-                                  //  // socket.emit('send',message);
-                                  // socket.emit('send', {
-                                  //     name: userFullName,
-                                  //     message: emojiObject.emoji,
-                                  //     profilePic: userProfilePic,
-                                  //     isEmoji: true
-                                  // });
-                                }}
-                                pickerStyle={{
-                                  position: "absolute",
-                                  bottom: "0px",
-                                  left: "0.2rem",
-                                  zIndex: "1111",
-                                }}
-                              />
-                            </div>
-                          </ClickAwayListener>
-                        )}
-                        {src && mimeType.substr(0, 5) == "image" ? (
-                          <div className="messageBox">
-                            <img
-                              src={src}
-                              style={{
-                                width: "200px",
-                                height: "auto",
-                                marginTop: "-10px",
-                              }}
-                            />
-                            <button
-                              onClick={() => {
-                                upload(file, file.type);
-                                setFile([]);
-                                setSrc(null);
-                                setMimeType("");
-                              }}
+                            <RiLiveLine />
+                          </span>
+                        </SoapboxTooltip>
+
+                        <SoapboxTooltip title={"Create Poll"} placement="bottom">
+                          <span style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            backgroundColor: '#dcd5fa',
+                            color: "#8249A0",
+                            width: '26px',
+                            height: '26px',
+                            borderRadius: '50%',
+                            // marginLeft: '15px',
+                            fontSize: '1.1rem'
+                          }}
+                            onClick={() => {
+                              if (showPollForm) {
+                                document.getElementById("showPollFormId").style.transition = "2s";
+                                document.getElementById("showPollFormId").style.left = "200vw";
+
+                                setTimeout(() => {
+                                  setShowPollForm(false);
+                                }, 1000);
+                              } else {
+                                setShowPollForm(true);
+
+                                setTimeout(() => {
+                                  if (document.getElementById("showPollFormId")) {
+                                    document.getElementById("showPollFormId").style.transition = "1s";
+                                    document.getElementById("showPollFormId").style.left = "70px";
+                                  }
+                                }, 1);
+                              }
+                            }}
+                          >
+                            <RiCalendarEventLine />
+                          </span>
+                        </SoapboxTooltip>
+
+                        {userInfo[0].communityClub == 1
+                          ? null
+                          : <SoapboxTooltip title={"Delete Chat"} placement="bottom">
+                            <span style={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              cursor: 'pointer',
+                              backgroundColor: '#dcd5fa',
+                              color: "#8249A0",
+                              width: '26px',
+                              height: '26px',
+                              borderRadius: '50%',
+                              // marginLeft: '15px', 
+                              fontSize: '1.1rem'
+                            }}
+                              onClick={() => { deletePrivateChatAll(userInfo[0].username) }}
                             >
-                              Confirm
-                            </button>
-                            <button
-                              onClick={() => {
-                                setFile([]);
-                                setSrc(null);
-                                setMimeType("");
-                              }}
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        ) : null}
-                        {src && mimeType.substr(0, 5) == "video" ? (
-                          <div className="messageBox">
-                            <video
-                              src={src}
-                              style={{
-                                width: "200px",
-                                height: "auto",
-                                marginTop: "-10px",
-                              }}
-                              className="messageBox"
-                            />
-                            <button
-                              onClick={() => {
-                                upload(file, file.type);
-                                setFile([]);
-                                setSrc(null);
-                                setMimeType("");
-                              }}
-                            >
-                              Confirm
-                            </button>
-                            <button
-                              onClick={() => {
-                                setFile([]);
-                                setSrc(null);
-                                setMimeType("");
-                              }}
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        ) : null}
+                              <FaRegTrashAlt />
+                            </span>
+                          </SoapboxTooltip>}
                       </div>
-                      {/* {!clubFloor? <div className="community-club">
-                                            <div className="live-header" style={{ backgroundColor: '#8149a06c', color: 'white', borderRadius: '3px' }} >Community Clubs</div>
-                                            <RandomCommunitySuggestion />
-                                        </div>:null} */}
                     </div>
 
+                    {showPollForm
+                      ? <div className="showPollForm" id="showPollFormId">
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          backgroundColor: '#652C90'
+                        }}
+                        >
+                          <h5>Create A Poll</h5>
+                          <FaWindowClose className="FaWindowClose" onClick={() => {
+                            if (showPollForm) {
+                              document.getElementById("showPollFormId").style.transition = "2s";
+                              document.getElementById("showPollFormId").style.left = "200vw";
+
+                              setTimeout(() => {
+                                setShowPollForm(false);
+                              }, 1000);
+                            } else {
+                              setShowPollForm(true);
+
+                              setTimeout(() => {
+                                if (document.getElementById("showPollFormId")) {
+                                  document.getElementById("showPollFormId").style.transition = "1s";
+                                  document.getElementById("showPollFormId").style.left = "70px";
+                                }
+                              }, 1);
+                            }
+                          }} />
+                        </div>
+
+                        <div style={{
+                          padding: '33px',
+                          position: 'relative',
+                          width: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-evenly'
+                        }}>
+
+                          {FormEditPoll ?
+                            <Form onSubmit={(e) => e.preventDefault()}>
+                              <Form.Group className="mb-3" >
+                                <Form.Label>Enter Question For Poll</Form.Label>
+                                <Form.Control type="text" value={pollFormDataQ}
+                                  onChange={(e) => { setPollFormDataQ(e.target.value) }} placeholder="Enter Question For Poll" />
+                              </Form.Group>
+                              <Form.Group className="mb-3" >
+                                <Form.Label>Option A</Form.Label>
+                                <Form.Control value={pollFormDataOA} onChange={(e) => { setPollFormDataOA(e.target.value) }} placeholder="Option A" />
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                                <Form.Label>Option B</Form.Label>
+                                <Form.Control value={pollFormDataOB} onChange={(e) => { setPollFormDataOB(e.target.value) }} placeholder="Option b" />
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                                <Form.Label>Option C</Form.Label>
+                                <Form.Control value={pollFormDataOC} onChange={(e) => { setPollFormDataOC(e.target.value) }} placeholder="Option c" />
+                              </Form.Group>
+
+                              <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={() => { handlePollFormSubmission(userFullName) }}>
+                                Submit
+                              </Button>
+                            </Form>
+                            : <Form onSubmit={(e) => e.preventDefault()}>
+                              <Form.Group className="mb-3" >
+                                <Form.Label>{pollFormData.Question}</Form.Label>
+
+                              </Form.Group>
+                              <Form.Group className="mb-3" >
+
+                                <Form.Check type="checkbox" label={pollFormData.OptionA} />
+                                <ProgressBar animated variant="success" now={pollFormData.pollA} />
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                                <Form.Check type="checkbox" label={pollFormData.OptionB} />
+                                <ProgressBar animated variant="info" now={pollFormData.pollB} />
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                                <Form.Check type="checkbox" label={pollFormData.OptionC} />
+                                <ProgressBar animated variant="warning" now={pollFormData.pollC} />
+                              </Form.Group>
+
+                              <Button variant="primary" onClick={() => { setFormEditPoll(!FormEditPoll) }} >
+                                Edit
+                              </Button>
+                              <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={() => { sentPollMessageInChat(pollFormData) }}>
+                                Submit
+                              </Button>
+                            </Form>
+                          }
+                        </div>
+
+                      </div>
+                      : null
+                    }
+
+                    {broadcastStream ? (
+                      <VideoChat
+                        hallId={hallId}
+                        userName={userInformation.username}
+                        videoAvailable={() => {
+                          setVideoAvailable(true);
+                        }}
+                        host={username}
+                      />
+                    )
+                      : null
+                    }
+
+                    <div
+                      className="chatarea"
+                      style={{
+                        marginTop: VideoAvailable ? "300px" : "0px",
+                        zIndex: "-1",
+                        marginBottom: "3rem",
+                        overflow: "auto",
+                      }}
+                    >
+                      {chatData.length
+                        ? chatData.map((e) => (
+                          <div
+                            className="messageBox"
+                            style={{
+                              maxWidth:
+                                e.isVideo || e.isImage ? "200px" : "100%",
+                              // width: "max-content",
+                              maxWidth: "fit-content",
+                              marginLeft: "auto",
+                              position: "relative",
+                              left: "3rem",
+                              marginRight: "3.5rem"
+                            }}
+                            onClick={() => {
+                              if (e.chatname !== userFullName && !e.isPoll) {
+                                toast.success(
+                                  `Opening Private Chat with ${e.chatname}`
+                                );
+                                setPrivateChatPerson({
+                                  name: e.chatname,
+                                  profilePic: e.imgSrc,
+                                });
+                                setPrivateChat(true);
+                                setClubFloor(false);
+                                // socket.emit("room", userInfo[0].username+userInformation.username);
+                                getChatDataPrivate(e.chatname, userFullName)
+                                // socket.emit("new-user-joined", {
+                                //     name: userFullName,
+                                //     profilePic: userProfilePic,
+                                //   });
+
+                                setTimeout(() => {
+                                  if (
+                                    document.getElementById(
+                                      "privatechatslide"
+                                    )
+                                  ) {
+                                    document.getElementById(
+                                      "privatechatslide"
+                                    ).style.transition = "1sec";
+                                    document.getElementById(
+                                      "privatechatslide"
+                                    ).style.right = "30px";
+                                  }
+                                }, 1);
+                              }
+                            }}
+                          >
+                            <div className="ProfileBox">
+                              <img
+                                className="chat-profile"
+                                src={e.imgSrc ? e.imgSrc : null}
+                              />
+                              <p>{e.chatname}</p>
+                            </div>
+                            <Linkify
+                              componentDecorator={(
+                                decoratedHref,
+                                decoratedText,
+                                key
+                              ) => (
+                                <a
+                                  target="blank"
+                                  href={decoratedHref}
+                                  key={key}
+                                >
+                                  {decoratedText}
+                                </a>
+                              )}
+                            >
+                              {" "}
+                              <div
+                                className={
+                                  e.isEmoji ? "message-emoji" : "message"
+                                }
+                              >
+                                {!e.isVideo && !e.isImage && !e.isPoll
+                                  ? e.message
+                                  : null}
+                              </div>
+                            </Linkify>
+                            {e.isPoll ? <div style={{ marginTop: '30px' }}>
+                              <Form onSubmit={(e) => e.preventDefault()}>
+                                <Form.Group className="mb-3" >
+                                  <p style={{ fontSize: '14px' }}>{e.pollData.Question}</p>
+
+                                </Form.Group>
+                                <Form.Group className="mb-3" >
+
+                                  <Form.Check type="checkbox" label={e.pollData.OptionA} />
+                                  <ProgressBar animated variant="success" now={90} />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" >
+                                  <Form.Check type="checkbox" label={e.pollData.OptionB} />
+                                  <ProgressBar animated variant="info" now={50} />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" >
+                                  <Form.Check type="checkbox" label={e.pollData.OptionC} />
+                                  <ProgressBar animated variant="warning" now={70} />
+                                </Form.Group>
+
+                                <Button variant="primary" type="submit" onClick={() => { toast.success('Voted Successfully') }}>
+                                  Vote
+                                </Button>
+                              </Form>
+                            </div> : null}
+                            {e.isVideo ? (
+                              <video
+                                onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event) => {
+                                  event.preventDefault
+                                    ? event.preventDefault()
+                                    : (event.returnValue = false);
+                                }}
+                                style={{
+                                  maxWidth: "200px",
+                                  marginTop: "20px",
+                                  borderRadius: "5px",
+                                }}
+                                controls={true}
+                                src={e.message}
+                              ></video>
+                            ) : null}
+                            {e.isImage ? (
+                              <img
+                                src={e.message}
+                                onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event) => {
+                                  event.preventDefault
+                                    ? event.preventDefault()
+                                    : (event.returnValue = false);
+                                }}
+                                style={{
+                                  maxWidth: "200px",
+                                  marginTop: "20px",
+                                  borderRadius: "5px",
+                                }}
+                              />
+                            ) : null}
+                          </div>
+                        ))
+                        : null}
+                    </div>
+
+                    {emojiPicker && (
+                      <ClickAwayListener
+                        onClickAway={() => {
+                          setEmojiPicker(false);
+                        }}
+                      >
+                        <div>
+                          <Picker
+                            native
+                            onEmojiClick={(event, emojiObject) => {
+                              setMessageInboxValue(
+                                messageInboxValue + emojiObject.emoji
+                              );
+                              // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                              //  // socket.emit('send',message);
+                              // socket.emit('send', {
+                              //     name: userFullName,
+                              //     message: emojiObject.emoji,
+                              //     profilePic: userProfilePic,
+                              //     isEmoji: true
+                              // });
+                            }}
+                            pickerStyle={{
+                              position: "absolute",
+                              bottom: "3rem",
+                              left: "0.5rem",
+                              zIndex: "1111",
+                            }}
+                          />
+                        </div>
+                      </ClickAwayListener>
+                    )}
+                    {src && mimeType.substr(0, 5) == "image" ? (
+                      <div className="messageBox">
+                        <img
+                          src={src}
+                          style={{
+                            width: "200px",
+                            height: "auto",
+                            marginTop: "-10px",
+                          }}
+                        />
+                        <button
+                          onClick={() => {
+                            upload(file, file.type);
+                            setFile([]);
+                            setSrc(null);
+                            setMimeType("");
+                          }}
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          onClick={() => {
+                            setFile([]);
+                            setSrc(null);
+                            setMimeType("");
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )
+                      : null
+                    }
+
+                    {src && mimeType.substr(0, 5) == "video" ? (
+                      <div className="messageBox">
+                        <video
+                          src={src}
+                          style={{
+                            width: "200px",
+                            height: "auto",
+                            marginTop: "-10px",
+                          }}
+                          className="messageBox"
+                        />
+                        <button
+                          onClick={() => {
+                            upload(file, file.type);
+                            setFile([]);
+                            setSrc(null);
+                            setMimeType("");
+                          }}
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          onClick={() => {
+                            setFile([]);
+                            setSrc(null);
+                            setMimeType("");
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )
+                      : null
+                    }
+
+                    {/* ----------------------------- newly redesigned chat area ------------------------- */}
                     <div className="send">
                       <ReactTooltip />
                       <form
                         action="#"
                         id="send-container"
                         style={{
-                          marginLeft: clubFloor || privateChat ? "5px" : "50px",
+                          // marginLeft: clubFloor || privateChat ? "5px" : "50px",
                         }}
                         onSubmit={(e) => messagesubmit(e)}
                       >
-                        <label htmlFor="post-video">
-                          <img
-                            src={videochat}
-                            style={{ margin: "5px", cursor: "pointer" }}
-                            data-tip="Share Video"
-                            width="27px"
+                        <div className="in-chat-sharing-options">
+                          <label htmlFor="post-video">
+                            <SoapboxTooltip title={"Share Video"} placement="top">
+                              <img
+                                src={videochat}
+                                style={{ margin: "5px", cursor: "pointer" }}
+                                width="27px"
+                              />
+                            </SoapboxTooltip>
+                          </label>
+                          <input
+                            type="file"
+                            id="post-video"
+                            name="video"
+                            accept="video/*"
+                            onChange={handleFile}
+                            hidden
                           />
 
-                          {/* <FiVideo data-tip="Share Video" className="icon-text" /> */}
-                        </label>
-                        <input
-                          type="file"
-                          id="post-video"
-                          name="video"
-                          accept="video/*"
-                          onChange={handleFile}
-                          hidden
-                        />
-                        <label htmlFor="post-image">
-                          <img
-                            src={imagechat}
-                            style={{ margin: "5px", cursor: "pointer" }}
-                            data-tip="Share Photos"
-                            width="27px"
+                          <label htmlFor="post-image">
+                            <SoapboxTooltip title={"Share Photos"} placement="top">
+                              <img
+                                src={imagechat}
+                                style={{ margin: "5px", cursor: "pointer" }}
+                                width="27px"
+                              />
+                            </SoapboxTooltip>
+                          </label>
+                          <input
+                            type="file"
+                            id="post-image"
+                            name="image"
+                            accept="image/*"
+                            onChange={handleFile}
+                            hidden
                           />
-                          {/* <FiImage data-tip="Share Photos" className="icon-text" /> */}
-                        </label>
-                        <input
-                          type="file"
-                          id="post-image"
-                          name="image"
-                          accept="image/*"
-                          onChange={handleFile}
-                          hidden
-                        />
-                        {/* <FiFolder data-tip="Share File" className="icon-text" /> */}
-                        <img
-                          src={filechat}
-                          style={{ margin: "5px", cursor: "pointer" }}
-                          data-tip="Share File"
-                          width="27px"
-                        />
 
-                        {/* <FiSmile className="icon-text" data-tip="Emoji"
-                                               
-                                            /> */}
-                        <img
-                          src={emojiIcon}
-                          style={{ margin: "5px", cursor: "pointer" }}
-                          data-tip="Emoji"
-                          onClick={() => {
-                            setEmojiPicker(!emojiPicker);
-                          }}
-                          width="27px"
-                        />
-
-                        <input
-                          type="text"
-                          name="messageInp"
-                          value={messageInboxValue}
-                          id="messageInp"
-                          style={{
-                            width: clubFloor || privateChat ? "350px" : "600px",
-                          }}
-                          onChange={(e) => {
-                            setMessageInboxValue(e.target.value);
-                          }}
-                        />
-                        <button
-                          type="submit"
-                          style={{
-                            border: "none",
-                            outline: "none",
-                            background: "none",
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <SoapboxTooltip
-                            title={"Send Message"}
-                            placement="top"
-                          >
-                            <img src={sendIcon} width="27px" />
+                          <SoapboxTooltip title={"Share File"} placement="top">
+                            <img
+                              src={filechat}
+                              style={{ margin: "5px", cursor: "pointer" }}
+                              width="27px"
+                            />
                           </SoapboxTooltip>
-                        </button>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
+                          <SoapboxTooltip title={"Emoji"} placement="top">
+                            <img
+                              src={emojiIcon}
+                              style={{ margin: "5px", cursor: "pointer" }}
+                              onClick={() => {
+                                setEmojiPicker(!emojiPicker);
+                              }}
+                              width="27px"
+                            />
+                          </SoapboxTooltip>
+
+                          <input
+                            type="text"
+                            name="messageInp"
+                            value={messageInboxValue}
+                            autoComplete="off"
+                            id="messageInp"
+                            style={{
+                              // width: clubFloor || privateChat ? "350px" : "600px",
+                            }}
+                            onChange={(e) => {
+                              setMessageInboxValue(e.target.value);
+                            }}
+                          />
+
+                          <button
+                            type="submit"
+                            style={{
+                              border: "none",
+                              outline: "none",
+                              background: "none",
+                              marginLeft: "5px",
+                            }}
+                          >
+                            <SoapboxTooltip title={"Send Message"} placement="top">
+                              <img src={sendIcon} width="27px" />
+                            </SoapboxTooltip>
+                          </button>
+                        </div>
                       </form>
                     </div>
                   </div>
@@ -6774,11 +6444,11 @@ const deleteClubRequestAuto=(user)=>{
                                 >
                                   {(ReactPlayer.canPlay(hoot.link) &&
                                     hoot.link.endsWith(".mp4")) ||
-                                  hoot.link.endsWith(".mkv") ||
-                                  hoot.link.endsWith(".mov") ||
-                                  hoot.link.endsWith(".ogv") ||
-                                  hoot.link.endsWith(".webm") ||
-                                  hoot.link.endsWith(".mpg") ? (
+                                    hoot.link.endsWith(".mkv") ||
+                                    hoot.link.endsWith(".mov") ||
+                                    hoot.link.endsWith(".ogv") ||
+                                    hoot.link.endsWith(".webm") ||
+                                    hoot.link.endsWith(".mpg") ? (
                                     <div className="vdo-container">
                                       <video
                                         muted
@@ -6870,8 +6540,8 @@ const deleteClubRequestAuto=(user)=>{
             </div>
           ) : null}
         </div>
-      </div>
-    </Fragment>
+      </div >
+    </Fragment >
   );
 };
 

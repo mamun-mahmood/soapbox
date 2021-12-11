@@ -632,8 +632,8 @@ hr {
 }
 
 .home-container {
-  /* max-width: 650px; */
-  width: 650px;
+  max-width: 650px;
+  /* width: 650px; */
   height: auto;
   margin: 0 auto;
   border: 1px solid var(--border-color);

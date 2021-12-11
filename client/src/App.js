@@ -69,16 +69,21 @@ function App() {
         {/* <Route path="/home"> */}
         <Route exact path="/">
           {/* <ProtectedRoute page={Home} /> */}
-         {userInformation?<Redirect to={`/profile/${userInformation.username}`} />:<Home /> } 
+          {userInformation
+            ? <Redirect to={`/profile/${userInformation.username}`} />
+            : <Home />
+          }
         </Route>
+
         <Route exact path="/All-Hoots">
           {/* <ProtectedRoute page={Home} /> */}
-        <Home /> 
+          <Home />
         </Route>
 
         <Route path="/:FakeData/SoapboxHall/:randomFakeKey?">
           <ProtectedRoute page={SoapboxHall} />
         </Route>
+
         <Route path="/:FakeData/AudioHall/:randomFakeKey?">
           <ProtectedRoute page={AudioHall} />
         </Route>
@@ -91,6 +96,7 @@ function App() {
         <Route path="/:FakeData/Reception/:hallId?/:randomFakeKey?">
           <ProtectedRoute page={Reception} />
         </Route>
+
         <Route path="/:FakeData/ReceptionAudio/:hallId?/:randomFakeKey?">
           <ProtectedRoute page={ReceptionAudio} />
         </Route>
@@ -133,6 +139,7 @@ function App() {
         <Route path="/profile/:username">
           <ProtectedRoute page={ProfilePage} />
         </Route>
+
         <Route path="/request-private-club/:username">
           <ProtectedRoute page={RequestPrivateClubPage} />
         </Route>
@@ -163,9 +170,10 @@ function App() {
         </Route>
 
         <Route path="/:fakeKey/private/Club/:username/:randomKey">
-        {/* {userInformation?<ProtectedRoute page={PrivateChannelsPage} />:<ProtectedRoute page={LandingPage} />}   */}
-        <ProtectedRoute page={PrivateChannelsPage} />
+          {/* {userInformation?<ProtectedRoute page={PrivateChannelsPage} />:<ProtectedRoute page={LandingPage} />}   */}
+          <ProtectedRoute page={PrivateChannelsPage} />
         </Route>
+
         <Route path="/:fakeKey/Payments/:randomKey">
           <ProtectedRoute page={StripePage} />
           {/* <PrivateChannelsPage /> */}

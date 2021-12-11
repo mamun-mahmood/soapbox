@@ -3,10 +3,12 @@ import { Link, NavLink, useHistory, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { IoCloseOutline } from 'react-icons/io5';
 import { FiMenu } from 'react-icons/fi';
+import { HiMenuAlt3 } from 'react-icons/hi';
 import './navbar.css';
 import axios from 'axios';
+import { SoapboxTooltip } from '../SoapboxTooltip';
 
-const NavBar = ({ width, header }) => {
+const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, setShowExtraFeatures }) => {
     const history = useHistory();
     const [showLinks, setShowLinks] = useState(false);
     const [userData, setUserData] = useState([]);
@@ -46,9 +48,8 @@ const NavBar = ({ width, header }) => {
 
     return (
         <nav className="main-nav shadow-sm" style={{ zIndex: "11111" }}>
-            <div className="max-width-nav" style={{ maxWidth: width }}>
+            <div className="max-width-nav" style={{ maxWidth: width, height: height }}>
                 <div className="main-brand">
-                    {/* <Link to="/home" className="navbar-brand cursor-pointer"> */}
                     <Link to="/All-Hoots" className="navbar-brand cursor-pointer">
                         <img
                             src="/images/MegaHoot_Owl3_app.png"
@@ -63,50 +64,67 @@ const NavBar = ({ width, header }) => {
                     </div>
                 </div>
 
-                <ul className="main-list-inline" id={showLinks ? "main-hidden" : ""}>
+                {userData.privateChannel && privateUserImage
+                    ? <SoapboxTooltip title={showExtraFeatures ? "Hide Profile" : "Show Profile"} placement="bottom">
+                        <div
+                            className="extra-div-block"
+                            onClick={() => setShowExtraFeatures(!showExtraFeatures)}
+                        >
+                            <img
+                                src={privateUserImage}
+                                alt={userData.username}
+                            />
+                        </div>
+                    </SoapboxTooltip>
+                    : null
+                }
+
+                <ul className="main-list-inline" id={showLinks ? height ? "private-main-hidden" : "main-hidden" : ""}>
                     {localStorage.getItem("loggedIn")
-                        ?
-                        <Fragment>
-                            {userData.privateChannel && header?null: <NavLink
-                                // activeClassName="nav-link-active"
-                                activeClassName=""
-                                className="nav-link main-title"
-                                // to="/home"
-                                to="/All-Hoots"
-                            >
-                                Home
-                            </NavLink>}
-                           
-{userData.privateChannel && header?null:<a
-                                // activeClassName="nav-link-active"
-                                activeClassName="nav-link-active"
-                                className="nav-link main-title"
-                                // to="/home"
-                                target="_blank"
-                                href="https://www.megahoot.com/megahoot-soapbox/megahoot-soapbox-tutorials/"
-                            >
-                                Tutorial
-                            </a>}
-                           
-{userData.privateChannel && header?null:<NavLink
-                                activeClassName="nav-link-active"
-                                className="nav-link main-title"
-                                to={window.location.pathname === "/create-private"
-                                    ? "/create-private"
-                                    : userData.privateChannel && header
+                        ? <Fragment>
+                            {userData.privateChannel && header
+                                ? null
+                                : <NavLink
+                                    activeClassName=""
+                                    className="nav-link main-title"
+                                    to="/All-Hoots"
+                                >
+                                    Home
+                                </NavLink>
+                            }
+
+                            {userData.privateChannel && header
+                                ? null
+                                : <a
+                                    activeClassName="nav-link-active"
+                                    className="nav-link main-title"
+                                    target="_blank"
+                                    href="https://www.megahoot.com/megahoot-soapbox/megahoot-soapbox-tutorials/"
+                                >
+                                    Tutorial
+                                </a>
+                            }
+
+                            {userData.privateChannel && header
+                                ? null
+                                : <NavLink
+                                    activeClassName="nav-link-active"
+                                    className="nav-link main-title"
+                                    to={window.location.pathname === "/create-private"
                                         ? "/create-private"
-                                        : "/create"
-                                }
-                            // to={"/create"}
-                            >
-                                {window.location.pathname === "/create-private"
-                                    ? "Create Private Hoot"
-                                    : userData.privateChannel && header
+                                        : userData.privateChannel && header
+                                            ? "/create-private"
+                                            : "/create"
+                                    }
+                                >
+                                    {window.location.pathname === "/create-private"
                                         ? "Create Private Hoot"
-                                        : "Create Hoot"
-                                }
-                            </NavLink>}
-                           
+                                        : userData.privateChannel && header
+                                            ? "Create Private Hoot"
+                                            : "Create Hoot"
+                                    }
+                                </NavLink>
+                            }
 
                             <NavLink
                                 activeClassName="nav-link-active"
@@ -137,18 +155,16 @@ const NavBar = ({ width, header }) => {
                                 Logout
                             </NavLink>
                         </Fragment>
-                        :
-                        <Fragment>
+                        : <Fragment>
                             <a
-                                // activeClassName="nav-link-active"
                                 activeClassName="nav-link-active"
                                 className="nav-link main-title"
-                                // to="/home"
                                 target="_blank"
                                 href="https://www.megahoot.com/megahoot-soapbox/megahoot-soapbox-tutorials/"
                             >
                                 Tutorial
                             </a>
+
                             <NavLink
                                 exact
                                 activeClassName="nav-link-active"
@@ -157,6 +173,7 @@ const NavBar = ({ width, header }) => {
                             >
                                 Login
                             </NavLink>
+
                             <NavLink
                                 exact
                                 activeClassName="nav-link-active"
@@ -170,13 +187,11 @@ const NavBar = ({ width, header }) => {
                 </ul>
 
                 {showLinks
-                    ?
-                    <IoCloseOutline className="main-nav-menu" onClick={() => setShowLinks(!showLinks)} />
-                    :
-                    <FiMenu className="main-nav-menu" onClick={() => setShowLinks(!showLinks)} />
+                    ? <IoCloseOutline className="main-nav-menu" onClick={() => setShowLinks(!showLinks)} />
+                    : <HiMenuAlt3 className="main-nav-menu" onClick={() => setShowLinks(!showLinks)} />
                 }
             </div>
-        </nav>
+        </nav >
     )
 }
 
