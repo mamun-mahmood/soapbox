@@ -1186,7 +1186,7 @@ const PrivateChannels = () => {
                       <div className="user-information">
                         <div
                           className="name verificationBadgeContainer"
-                          style={{ fontSize: "1.2rem", gap: "0.2rem" }}
+                          style={{ fontSize: "14px", gap: "0.2rem" }}
                         >
                           {userInfo[0] && userInfo[0].name}
                           {userInfo[0] && userInfo[0].verified === 1 ? (
@@ -1199,15 +1199,15 @@ const PrivateChannels = () => {
                             </div>
                           ) : null}
                         </div>
-                        <div className="username" style={{ fontSize: "0.9rem", color: "#6B7280", fontWeight: "600", marginTop: "-0.3rem", marginBottom: "0.5rem" }}>
+                        <div className="username" style={{ fontSize: "14px", color: "#6B7280", fontWeight: "600", marginTop: "-0.3rem", marginBottom: "0.5rem" }}>
                           @{userInfo[0] && userInfo[0].username}
                         </div>
                         <div className="followers">
-                          <b style={{ fontSize: "1.05rem", color: "#334155" }}>
+                          <b style={{ fontSize: "14px", color: "#334155" }}>
                             {formatCount(likes) + formatSi(likes)}
                           </b>
-                          <span style={{ fontSize: "1rem", color: "#4B5563", marginRight: "0.5rem" }}> Likes </span>
-                          <b style={{ fontSize: "1.05rem", color: "#334155" }}>
+                          <span style={{ fontSize: "14px", color: "#4B5563", marginRight: "0.5rem" }}> Likes </span>
+                          <b style={{ fontSize: "14px", color: "#334155" }}>
                             {formatCount(views) + formatSi(views)}
                           </b>
                           <span style={{ fontSize: "1rem", color: "#4B5563" }}> Views</span>
