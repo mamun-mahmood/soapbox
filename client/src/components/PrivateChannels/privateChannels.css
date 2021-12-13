@@ -822,6 +822,7 @@ overflow-wrap: break-word;
 .FaWindowClose {
   margin: 5px;
   color: white;
+  cursor: pointer;
 }
 .FaWindowClose:hover {
   color: rgb(189, 6, 6);

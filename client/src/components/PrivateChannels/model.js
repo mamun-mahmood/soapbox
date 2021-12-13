@@ -4,6 +4,7 @@ import { Button, CloseButton, Modal } from 'react-bootstrap';
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import { SettingsSystemDaydream } from '@material-ui/icons';
+import { FaWindowClose } from "react-icons/fa";
 function MyVerticallyCenteredModal(props) {
     const MyComponent=props.component
 const [emails,setEmails]=useState([])
@@ -126,7 +127,8 @@ const handleKeyDown = (e) => {
           <Modal.Title id="contained-modal-title-vcenter">
          {props.title}
           </Modal.Title>
-          <CloseButton variant="white" aria-label="X" onClick={()=>props.closeModal()} />
+          <FaWindowClose
+                        className="FaWindowClose" style={{color:'red'}} onClick={()=>props.closeModal()} />
         </Modal.Header>
         <Modal.Body  >
             <h5>Please Enter Email to Invite</h5>

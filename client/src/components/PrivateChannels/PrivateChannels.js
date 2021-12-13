@@ -66,6 +66,7 @@ import { SoapboxTooltip } from "../SoapboxTooltip";
 import SoapboxPrivateClubRules from "./SoapboxPrivateClubRules";
 import Media from 'react-media';
 import NavBar from "../NavBar/NavBar";
+import MyVerticallyCenteredScheduler from "./scheduler";
 
 const stripe = loadStripe(
   "pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz"
@@ -135,6 +136,8 @@ const PrivateChannels = () => {
   const [subscribedMembers, setSubscribedMembers] = useState([]);
   const [clubRequestsData, setClubRequestsData] = useState([])
   const [inviteBox, setInviteBox] = useState(false)
+  const [scheduleBox, setScheduleBox] = useState(false)
+  
   const [likes, setLikes] = useState(0);
   const [views, setViews] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -329,7 +332,7 @@ const PrivateChannels = () => {
           "",
           "",
           "",
-          data.timeStamp
+          data.timestamp
         );
       } else {
         append(
@@ -1512,7 +1515,7 @@ const PrivateChannels = () => {
                                 >
                                   MegaHoot Vault
                                 </button>
-
+                                <button style={{ minWidth: "208px" }} onClick={()=>{setScheduleBox(!scheduleBox)}} >Scheduler</button>
                               </div>
                               <div
                                 className="live-header"
@@ -1840,7 +1843,8 @@ const PrivateChannels = () => {
                                 >
                                   MegaHoot Vault
                                 </button>
-
+                                <button style={{ minWidth: "208px" }} onClick={()=>{setScheduleBox(!scheduleBox)}} >Scheduler</button>
+                      
                               </div>
                               <div
                                 className="live-header top-option-medium"
@@ -2767,6 +2771,18 @@ const PrivateChannels = () => {
 
                 show={inviteBox}
                 onHide={() => setInviteBox(false)}
+              /> : null}
+               {scheduleBox ? <MyVerticallyCenteredScheduler
+                title={"Schedule an event"}
+                closeModal={() => setScheduleBox(false)}
+                clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+                username={userInformation.username}
+
+
+
+                show={scheduleBox}
+                onHide={() => setScheduleBox(false)}
               /> : null}
 
               {showClubRules ? (
@@ -4948,6 +4964,19 @@ const PrivateChannels = () => {
                 />
                 : null
               }
+
+{scheduleBox ? <MyVerticallyCenteredScheduler
+                title={"Schedule an event"}
+                closeModal={() => setScheduleBox(false)}
+                clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+                username={userInformation.username}
+
+
+
+                show={scheduleBox}
+                onHide={() => setScheduleBox(false)}
+              /> : null}
 
               {showRequest
                 ? (<div className="slide-container">
