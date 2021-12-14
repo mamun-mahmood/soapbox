@@ -14,7 +14,7 @@ const [error,setError]=useState(null)
 const [eventDate,setEventDate] = useState('')
 const [eventTime,setEventTime] = useState('')
 const [eventTitle,setEventTitle] = useState('')
-
+const [eventDesc,setEventDesc] = useState('')
 const clubname=props.clubname
 const username=props.username
 const clublink=props.clublink
@@ -74,11 +74,11 @@ const handleKeyDown = (e) => {
                 clublink: clublink,
                 username:username,
                 clubname:clubname,
-                event:{eventDate:eventDate,eventTime:eventTime,eventTitle:eventTitle}
+                event:{eventDate:eventDate,eventTime:eventTime,eventTitle:eventTitle,eventDesc:eventDesc}
 
             }),
         }).then((response) => {
-          
+            storeMyEvent()
             toast.success(response.data.message);
            
 
@@ -91,9 +91,21 @@ const handleKeyDown = (e) => {
             }
         }).catch((err) => { console.log(err) })
     };
+
+    const storeMyEvent=()=>{
+        
+        axios.post(`${BaseURL}/upload/storeEvent`,{
+            event:{eventTitle,eventDate,eventTime,emails,eventDesc},
+            username:username
+        })
+        .then(res=>{
+            console.log(res.data)
+        })
+    }
   const inviteHandler = () => {
    if(emails.length>0){
        if(value==''){
+
           emails.forEach(Email=>{
             sendEmail(Email);
         })  
@@ -152,6 +164,8 @@ const handleKeyDown = (e) => {
                         </div>)}
           </div>
           <input placeholder="Event Title" value={eventTitle} onChange={(e)=>setEventTitle(e.target.value)} className="inputscheduler" onFocus></input>
+      
+          <textarea placeholder="Event Description(Optional)" value={eventDesc} onChange={(e)=>setEventDesc(e.target.value)} className="inputscheduler" onFocus></textarea>
   
       <input placeholder="Enter Email to invite" className="inputscheduler" onFocus onChange={(e)=>setValue(e.target.value)} onKeyDown={handleKeyDown}></input>
       <input type="date" name='Event Date' value={eventDate} onChange={(e)=>setEventDate(e.target.value)} className="inputscheduler" />

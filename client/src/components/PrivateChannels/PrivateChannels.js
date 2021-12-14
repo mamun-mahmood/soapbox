@@ -103,7 +103,9 @@ const PrivateChannels = () => {
   const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0);
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [emojiPickerPrivate, setEmojiPickerPrivate] = useState(false);
-
+  const [AllMyEvents,setAllMyEvents] = useState([])
+  const [showAllMyEvents,setShowAllMyEvents] = useState(false)
+ 
   const [showFeed, setShowFeed] = useState(true);
   const [clubFloor, setClubFloor] = useState(true);
   const [showCreateHoot, setShowCreateHoot] = useState(false);
@@ -310,6 +312,32 @@ const PrivateChannels = () => {
     }
   };
 
+
+  const getAllEvents=(username)=>{
+    axios.post(`${BaseURL}/upload/getMyEvents`,{
+      username:username
+    })
+    .then(res=>{
+      setAllMyEvents(res.data)
+      setShowAllMyEvents(true)
+      
+      setTimeout(() => {
+        if (document.getElementById("slideE")) {
+          document.getElementById(
+            "slideE"
+          ).style.transition = "1sec";
+          document.getElementById(
+            "slideE"
+          ).style.right = "250px";
+        }
+      }, 1);
+    })
+  }
+
+
+  // useEffect(() => {
+  //  getAllEvents(username)
+  // }, [username])
   useEffect(() => {
     socket.on("user-joined", (name) => {
       append(
@@ -1843,8 +1871,7 @@ const PrivateChannels = () => {
                                 >
                                   MegaHoot Vault
                                 </button>
-                                <button style={{ minWidth: "208px" }} onClick={()=>{setScheduleBox(!scheduleBox)}} >Scheduler</button>
-                      
+                            
                               </div>
                               <div
                                 className="live-header top-option-medium"
@@ -2042,9 +2069,8 @@ const PrivateChannels = () => {
                                 Club Toolbox
                               </div>
                               <div className="control">
-                                <button style={{ minWidth: "208px" }}>
-                                  Schedule a Virtual Experience
-                                </button>
+                              <button style={{ minWidth: "208px" }} onClick={()=>{setScheduleBox(!scheduleBox)}} >Schedule An Event</button>
+                      
 
                                 <button
                                   style={{ minWidth: "208px" }}
@@ -2602,8 +2628,8 @@ const PrivateChannels = () => {
                     CLUB FLOOR
                   </span>
 
-                  <span style={{ fontSize: "14px" }}>CLUB AMENITIES</span>
-                  <span style={{ fontSize: "14px" }}>EVENTS</span>
+                  <span style={{ fontSize: "14px" }} >CLUB AMENITIES</span>
+                  <span style={{ fontSize: "14px" }} >EVENTS</span>
 
                   <span>
                     <SoapboxTooltip title={"MARKETPLACE"} placement="bottom" privateTooltip={true}>
@@ -4760,6 +4786,7 @@ const PrivateChannels = () => {
                       fontSize: "14px ",
                       borderRadius: "8px",
                     }}
+                    onClick={()=>getAllEvents(username)}
                   >
                     EVENTS
                   </span>
@@ -5063,6 +5090,94 @@ const PrivateChannels = () => {
                 )
                 : null
               }
+
+              {showAllMyEvents?<div className="slide-container">
+                  <div
+                    id="slideE"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      backgroundColor: "#D6C8E1",
+                      margin: "1rem",
+                      minWidth: "600px",
+                      minHeight: "400px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        backgroundColor: "#8249A0",
+                        padding: "5px",
+                        width: "600px",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        color: "white",
+                        
+                      }}
+                    >
+                      <h5>My Scheduled Events</h5>
+                      <FaWindowClose
+                        className="FaWindowClose"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          document.getElementById("slideE").style.transition = "2sec";
+                          document.getElementById("slideE").style.right = "-100vw";
+
+                          setTimeout(() => {
+                            setShowAllMyEvents(false);
+                          }, 1000);
+                        }}
+                      />
+
+                    </div>
+                    {/* <p>No Requests</p> */}
+                    {/* <h5>Club Request</h5> */}
+                    <div
+                      style={{
+                        maxHeight: "400px",
+                        padding: "1rem",
+                        overflowY: "auto",
+                      }}
+                    >
+                      {AllMyEvents.map((event, index) => (
+                        <div
+                          key={index}
+                          className="messageBox"
+                          style={{
+                            minWidth: "300px",
+                            padding: "1px",
+                            margin: "8px",
+                            display: 'flex',
+                            flexDirection: 'column'
+                          }}
+                        >
+                          <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Title: {event.eventTitle}</p>
+                          <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Date : {event.eventDate}</p>
+                          <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Time :{event.eventTime}</p>
+                         {event.eventDesc? <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Description :{event.eventDesc}</p>
+                      :null}
+                          {/* <SubscribedUser username={user.username} /> */}
+                          {/* <button
+                            className="Approve-request"
+                            onClick={() => { handleClubRequestApprove(user) }}
+                          >
+                            Approve
+                          </button>
+
+                          <button
+                            className="Delete-request"
+                            onClick={() => deleteClubRequest(user)}
+                          >
+                            Delete
+                          </button> */}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>:null}
 
               {showPricingSetting ? (
                 <div className="slide-container">
