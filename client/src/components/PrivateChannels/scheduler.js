@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, {useState} from 'react'
-import { Button, CloseButton, Modal } from 'react-bootstrap';
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import { SettingsSystemDaydream } from '@material-ui/icons';
 import { FaWindowClose } from "react-icons/fa";
+import { Button,ProgressBar,CloseButton, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 function MyVerticallyCenteredScheduler(props) {
     const MyComponent=props.component
@@ -15,6 +15,13 @@ const [eventDate,setEventDate] = useState('')
 const [eventTime,setEventTime] = useState('')
 const [eventTitle,setEventTitle] = useState('')
 const [eventDesc,setEventDesc] = useState('')
+const [showPollForm, setShowPollForm] = useState(false)
+const [pollFormData, setPollFormData] = useState({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA: 90, pollB: 50, pollC: 60 })
+const [pollFormDataQ, setPollFormDataQ] = useState("")
+const [pollFormDataOA, setPollFormDataOA] = useState("")
+const [pollFormDataOB, setPollFormDataOB] = useState("")
+const [pollFormDataOC, setPollFormDataOC] = useState("")
+const [FormEditPoll, setFormEditPoll] = useState(true)
 const clubname=props.clubname
 const username=props.username
 const clublink=props.clublink
@@ -147,8 +154,26 @@ const handleKeyDown = (e) => {
          {props.title}
           </Modal.Title>
           {/* <CloseButton variant="white"  title='X' className='FaWindowClose' onClick={()=>props.closeModal()} /> */}
+          <button style={{outline:'none',border:'none',padding:'3px',borderRadius:'5px'}} onClick={()=>{    if (showPollForm) {
+                                document.getElementById("showPollFormId").style.transition = "2s";
+                                document.getElementById("showPollFormId").style.left = "200vw";
+
+                                setTimeout(() => {
+                                  setShowPollForm(false);
+                                }, 1000);
+                              } else {
+                                setShowPollForm(true);
+
+                                setTimeout(() => {
+                                  if (document.getElementById("showPollFormId")) {
+                                    document.getElementById("showPollFormId").style.transition = "1s";
+                                    document.getElementById("showPollFormId").style.left = "70px";
+                                  }
+                                }, 1);
+                              }}}>Create Poll</button>
      <FaWindowClose
                         className="FaWindowClose" style={{color:'red'}} onClick={()=>props.closeModal()} />
+
         </Modal.Header>
         <Modal.Body  >
             {/* <h5>Please Enter Email to Invite</h5> */}
@@ -163,6 +188,139 @@ const handleKeyDown = (e) => {
 
                         </div>)}
           </div>
+          
+          {showPollForm
+                        ? <div className="showPollForm" id="showPollFormId" style={{top:'0px'}}>
+                          <div
+                            style={{
+                              display: 'flex',
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              backgroundColor: '#652C90'
+                            }}
+                          >
+                            <h5>Create A Poll</h5>
+                            <FaWindowClose className="FaWindowClose" onClick={() => {
+                              if (showPollForm) {
+                                document.getElementById("showPollFormId").style.transition = "2s";
+                                document.getElementById("showPollFormId").style.left = "200vw";
+
+                                setTimeout(() => {
+                                  setShowPollForm(false);
+                                }, 1000);
+                              } else {
+                                setShowPollForm(true);
+
+                                setTimeout(() => {
+                                  if (document.getElementById("showPollFormId")) {
+                                    document.getElementById("showPollFormId").style.transition = "1s";
+                                    document.getElementById("showPollFormId").style.left = "70px";
+                                  }
+                                }, 1);
+                              }
+                            }} /></div>
+                          <div style={{
+                            padding: '33px',
+                            position: 'relative',
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-evenly',
+                            backgroundColor:'#dbdbdba2'
+                          }}>
+
+                            {/* <input placeholder="Enter Question For Poll" value={breakOffInput}  onChange={(e) => {
+                                setBreakOffInput(e.target.value);
+                              }}  />
+                       <div style={{display:'flex',flexDirection:'column',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',width:'90%',margin:'5px'}}>  
+                       <div  style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}} >
+                       <input type="checkbox" style={{flex:'0.2'}} />
+                        <p style={{flex:'0.8',margin:'0px'}}>July 3</p>
+                         </div>
+                        <progress value="32" max="100"  />
+                        </div>
+                       
+                        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',alignItems:'center',width:'90%',margin:'5px'}}>  
+                        <input type="checkbox" style={{flex:'0.2'}} /><p style={{flex:'0.8',margin:'0px'}}>July 4</p></div>
+                        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',alignItems:'center',width:'90%',margin:'5px'}}>  
+                        <input type="checkbox" style={{flex:'0.2'}} /><p style={{flex:'0.8',margin:'0px'}}>July 5</p></div>
+                     */}
+                            {FormEditPoll ?
+                              <Form onSubmit={(e) => e.preventDefault()}>
+                                <Form.Group className="mb-3" >
+                                  <Form.Label>Enter Question For Poll</Form.Label>
+                                  <Form.Control type="text" value={pollFormDataQ}
+                                    onChange={(e) => { setPollFormDataQ(e.target.value) }} placeholder="Enter Question For Poll" />
+                                </Form.Group>
+                                <Form.Group className="mb-3" >
+                                  <Form.Label>Option A</Form.Label>
+                                  <Form.Control value={pollFormDataOA} onChange={(e) => { setPollFormDataOA(e.target.value) }} placeholder="Option A" />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" >
+                                  <Form.Label>Option B</Form.Label>
+                                  <Form.Control value={pollFormDataOB} onChange={(e) => { setPollFormDataOB(e.target.value) }} placeholder="Option b" />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" >
+                                  <Form.Label>Option C</Form.Label>
+                                  <Form.Control value={pollFormDataOC} onChange={(e) => { setPollFormDataOC(e.target.value) }} placeholder="Option c" />
+                                </Form.Group>
+                                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+    <Form.Check type="checkbox" label="Check me out" />
+  </Form.Group> */}
+                                {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
+    Preview 
+  </Button> */}
+                                <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
+                                  Submit
+                                </Button>
+                              </Form>
+                              : <Form onSubmit={(e) => e.preventDefault()}>
+                                <Form.Group className="mb-3" >
+                                  <Form.Label>{pollFormData.Question}</Form.Label>
+
+                                </Form.Group>
+                                <Form.Group className="mb-3" >
+
+                                  <Form.Check type="checkbox" label={pollFormData.OptionA} />
+                                  <ProgressBar animated variant="success" now={pollFormData.pollA} />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" >
+                                  <Form.Check type="checkbox" label={pollFormData.OptionB} />
+                                  <ProgressBar animated variant="info" now={pollFormData.pollB} />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" >
+                                  <Form.Check type="checkbox" label={pollFormData.OptionC} />
+                                  <ProgressBar animated variant="warning" now={pollFormData.pollC} />
+                                </Form.Group>
+                                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+    <Form.Check type="checkbox" label="Check me out" />
+  </Form.Group> */}
+                                <Button variant="primary" onClick={() => { setFormEditPoll(!FormEditPoll) }} >
+                                  Edit
+                                </Button>
+                                <Button variant="primary" type="submit" style={{ marginLeft: '5px' }}>
+                                  Submit
+                                </Button>
+                              </Form>
+                            }
+                            {/* <button className="d-grid col-12 btn-main login-form-button" 
+                onClick={()=>{
+                  if(breakOffInput){createBreakoff()}else{
+                    toast.success(
+                     "Please Enter Topic for Breakoff chat"
+                   ); 
+                   }
+                  
+                }}
+                >Create Now</button> */}
+                          </div>
+                        </div>
+                        : null}
           <input placeholder="Event Title" value={eventTitle} onChange={(e)=>setEventTitle(e.target.value)} className="inputscheduler" onFocus></input>
       
           <textarea placeholder="Event Description(Optional)" value={eventDesc} onChange={(e)=>setEventDesc(e.target.value)} className="inputscheduler" onFocus></textarea>

@@ -8,6 +8,7 @@ import { FaRegTrashAlt, FaTumblr, FaWindowClose } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
 import { RiCalendarEventLine, RiLiveLine } from "react-icons/ri"
 import { BsPlusCircleFill, BsTrash } from 'react-icons/bs'
+import { IoCloseCircle } from 'react-icons/io5'
 import {
   FiTwitter,
   FiSearch,
@@ -137,9 +138,8 @@ const PrivateChannels = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [subscribedMembers, setSubscribedMembers] = useState([]);
   const [clubRequestsData, setClubRequestsData] = useState([])
-  const [inviteBox, setInviteBox] = useState(false)
-  const [scheduleBox, setScheduleBox] = useState(false)
-  
+  const [inviteBox, setInviteBox] = useState(false);
+  const [scheduleBox, setScheduleBox] = useState(false);
   const [likes, setLikes] = useState(0);
   const [views, setViews] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -1135,6 +1135,7 @@ const PrivateChannels = () => {
 
   return (
     <Fragment>
+      {/* NavBar for Private Boapbox */}
       <NavBar
         width={"none"}
         height={60}
@@ -1145,10 +1146,7 @@ const PrivateChannels = () => {
       />
 
       <div className="private-channels" style={{ userSelect: "none" }}>
-        <div className="channel-banner"></div>
-
         <div className="channel-content" >
-
           {/* Sidebar Drawer which includes Private User Profile and other Extra Features... */}
           <div style={{ flex: '0.2' }}  >
             <Fragment key={userInfo[0] && userInfo[0].id}>
@@ -1168,16 +1166,7 @@ const PrivateChannels = () => {
                       // marginBottom: '5%'
                     }}
                   >
-                    {/* <div className="channel-banner" style={{ position: "relative" }}> */}
-
-                    {/* <div className="extra-div-block shadow-sm">
-                    <span>Soapbox Private Club</span>
-                    <img
-                      src={`${BaseURL}/profile-pictures/${userInfo[0] && userInfo[0].profilePic}`}
-                      alt="profile"
-                    />
-                  </div> */}
-
+                    {/* Club Banner */}
                     <div className="channel-banner">
                       <img
                         src={banner}
@@ -1186,6 +1175,7 @@ const PrivateChannels = () => {
                       />
                     </div>
 
+                    {/* Club Profile with Badge*/}
                     <div className="profile-pic" onDragStart={(e) => e.preventDefault()} style={{ position: "relative" }}>
                       <img
                         src={`${BaseURL}/profile-pictures/${userInfo[0] && userInfo[0].profilePic}`}
@@ -1196,7 +1186,6 @@ const PrivateChannels = () => {
                         style={{
                           position: "absolute",
                           bottom: "4.5rem",
-                          // left: "4.5rem",
                           zIndex: 5,
                         }}
                       >
@@ -1207,21 +1196,31 @@ const PrivateChannels = () => {
                         style={{
                           position: "absolute",
                           bottom: "4rem",
-                          // left: "135px",
                           zIndex: 5,
                         }}
                         className="arrow-down"
                       ></div>
                     </div>
+
+                    {/* User Information & Live Events */}
                     <div>
+                      {/* user information */}
                       <div className="user-information">
+                        {/* user's full name with verified badge */}
                         <div
                           className="name verificationBadgeContainer"
                           style={{ fontSize: "14px", gap: "0.2rem" }}
                         >
                           {userInfo[0] && userInfo[0].name}
                           {userInfo[0] && userInfo[0].verified === 1 ? (
-                            <div className="profile-verification-badge" style={{ padding: 0, fontSize: "1.5rem" }}>
+                            <div
+                              className="profile-verification-badge"
+                              style={{
+                                padding: 0,
+                                fontSize: "1.2rem",
+                                marginBottom: "0.2rem"
+                              }}
+                            >
                               <HiBadgeCheck
                                 data-tip="Verified account"
                                 data-text-color="#8249A0"
@@ -1230,29 +1229,47 @@ const PrivateChannels = () => {
                             </div>
                           ) : null}
                         </div>
-                        <div className="username" style={{ fontSize: "14px", color: "#6B7280", fontWeight: "600", marginTop: "-0.3rem", marginBottom: "0.5rem" }}>
+
+                        {/* user's username  */}
+                        <div
+                          className="username"
+                          style={{
+                            fontSize: "14px",
+                            color: "#6B7280",
+                            fontWeight: "600",
+                            marginTop: "-0.3rem",
+                            marginBottom: "0.5rem"
+                          }}
+                        >
                           @{userInfo[0] && userInfo[0].username}
                         </div>
+
+                        {/* user's likes and views */}
                         <div className="followers">
                           <b style={{ fontSize: "14px", color: "#334155" }}>
                             {formatCount(likes) + formatSi(likes)}
                           </b>
+
                           <span style={{ fontSize: "14px", color: "#4B5563", marginRight: "0.5rem" }}> Likes </span>
+
                           <b style={{ fontSize: "14px", color: "#334155" }}>
                             {formatCount(views) + formatSi(views)}
                           </b>
+
                           <span style={{ fontSize: "1rem", color: "#4B5563" }}> Views</span>
                         </div>
 
+                        {/* user's bio */}
                         {/* {userInfo[0]&&userInfo[0].bio && (
-                                                    <div
-                                                        className="user-desc"
-                                                        style={{ textAlign: "center" }}
-                                                    >
-                                                        {userInfo[0]&&userInfo[0].bio}
-                                                    </div>
-                                                )} */}
+                              <div
+                                className="user-desc"
+                                style={{ textAlign: "center" }}
+                              >
+                                {userInfo[0]&&userInfo[0].bio}
+                              </div>
+                            )} */}
 
+                        {/* user's website link */}
                         {userInfo[0] && userInfo[0].website && (
                           <a
                             href={
@@ -1269,6 +1286,8 @@ const PrivateChannels = () => {
                               : userInfo[0] && userInfo[0].website}
                           </a>
                         )}
+
+                        {/* user's social media links */}
                         <div
                           className="social-profile-icon-links"
                           style={{ flexWrap: "wrap", gap: "0.5rem" }}
@@ -1286,6 +1305,7 @@ const PrivateChannels = () => {
                               <FiTwitter className="social-profile-icon s-twitter" />
                             </a>
                           )}
+
                           {userInfo[0] && userInfo[0].instagram && (
                             <a
                               href={
@@ -1299,6 +1319,7 @@ const PrivateChannels = () => {
                               <AiOutlineInstagram className="social-profile-icon s-instagram" />
                             </a>
                           )}
+
                           {userInfo[0] && userInfo[0].linkedIn && (
                             <a
                               href={
@@ -1312,6 +1333,7 @@ const PrivateChannels = () => {
                               <AiOutlineLinkedin className="social-profile-icon s-linkedin" />
                             </a>
                           )}
+
                           {userInfo[0] && userInfo[0].facebook && (
                             <a
                               href={
@@ -1325,6 +1347,7 @@ const PrivateChannels = () => {
                               <RiFacebookCircleLine className="social-profile-icon s-facebook" />
                             </a>
                           )}
+
                           {userInfo[0] && userInfo[0].tiktok && (
                             <a
                               href={
@@ -1338,6 +1361,7 @@ const PrivateChannels = () => {
                               <SiTiktok className="social-profile-icon s-tiktok" />
                             </a>
                           )}
+
                           {userInfo[0] && userInfo[0].snapchat && (
                             <a
                               href={
@@ -1351,6 +1375,7 @@ const PrivateChannels = () => {
                               <RiSnapchatLine className="social-profile-icon s-snapchat" />
                             </a>
                           )}
+
                           {userInfo[0] && userInfo[0].reddit && (
                             <a
                               href={
@@ -1364,6 +1389,7 @@ const PrivateChannels = () => {
                               <AiOutlineReddit className="social-profile-icon s-reddit" />
                             </a>
                           )}
+
                           {userInfo[0] && userInfo[0].pinterest && (
                             <a
                               href={
@@ -1377,6 +1403,7 @@ const PrivateChannels = () => {
                               <RiPinterestLine className="social-profile-icon s-pinterest" />
                             </a>
                           )}
+
                           {userInfo[0] && userInfo[0].medium && (
                             <a
                               href={
@@ -1390,6 +1417,7 @@ const PrivateChannels = () => {
                               <AiOutlineMedium className="social-profile-icon s-medium" />
                             </a>
                           )}
+
                           {userInfo[0] && userInfo[0].tumblr && (
                             <a
                               href={
@@ -1404,6 +1432,7 @@ const PrivateChannels = () => {
                             </a>
                           )}
                         </div>
+
                         {/* channel info */}
                         <div>
                           {userInfo[0] && userInfo[0].communityClub == 1 ? (
@@ -1418,6 +1447,7 @@ const PrivateChannels = () => {
                               >
                                 Club Tools
                               </div>
+
                               <div className="control">
                                 <button>Marketplace</button>
 
@@ -1435,6 +1465,7 @@ const PrivateChannels = () => {
                               </div>
                             </div>
                           ) : null}
+
                           {userInformation.username !== username ? (
                             <div>
                               <div className="live-header" style={{
@@ -1476,6 +1507,7 @@ const PrivateChannels = () => {
                                 >
                                   Video Meetings
                                 </button>
+
                                 <button style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
@@ -1509,8 +1541,8 @@ const PrivateChannels = () => {
                                 >
                                   eDocuments
                                 </button>
-                                <button style={{ minWidth: "208px" }}
 
+                                <button style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
                                       document.getElementById(
@@ -1543,7 +1575,9 @@ const PrivateChannels = () => {
                                 >
                                   MegaHoot Vault
                                 </button>
-                                <button style={{ minWidth: "208px" }} onClick={()=>{setScheduleBox(!scheduleBox)}} >Scheduler</button>
+
+                                <button style={{ minWidth: "208px" }} onClick={() => { setScheduleBox(!scheduleBox) }} >Scheduler</button>
+
                               </div>
                               <div
                                 className="live-header"
@@ -1662,6 +1696,7 @@ const PrivateChannels = () => {
                               </div>
                             </div>
                           ) : null}
+
                           {userInformation.username !== username &&
                             userInfo[0] && userInfo[0].communityClub !== 1 ? (
                             <div
@@ -1675,8 +1710,10 @@ const PrivateChannels = () => {
                               Request a Virtual Experience
                             </div>
                           ) : null}
+
                           {userInformation.username == username ? (
                             <div className="top-features-medium">
+                              {/* Membership label */}
                               <div
                                 className="live-header top-option-medium"
                                 style={{
@@ -1686,24 +1723,22 @@ const PrivateChannels = () => {
                               >
                                 Membership
                               </div>
+
                               <div className="control">
+                                {/* Membership button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showSubscribers) {
-                                      document.getElementById(
-                                        "slideM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideM"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slideM").style.transition = "2sec";
+                                      document.getElementById("slideM").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowSubscribers(false);
                                       }, 1000);
                                     } else {
-                                      setOnDemandMedia(false),
-                                        setShowRequest(false);
+                                      setOnDemandMedia(false);
+                                      setShowRequest(false);
                                       setShowFeed(false);
                                       setShowSubscribers(!showSubscribers);
                                       setShowPricingSetting(false);
@@ -1712,12 +1747,8 @@ const PrivateChannels = () => {
 
                                       setTimeout(() => {
                                         if (document.getElementById("slideM")) {
-                                          document.getElementById(
-                                            "slideM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideM"
-                                          ).style.right = "250px";
+                                          document.getElementById("slideM").style.transition = "1sec";
+                                          document.getElementById("slideM").style.right = "calc(100vw/5)";
                                         }
                                       }, 1);
                                     }
@@ -1726,6 +1757,7 @@ const PrivateChannels = () => {
                                   Membership
                                 </button>
 
+                                {/* Requests button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
@@ -2531,6 +2563,7 @@ const PrivateChannels = () => {
                         </div>
                       </div>
 
+                      {/* live events */}
                       <div className="channel-live-events">
                         <div
                           className="live-header live-events-medium"
@@ -2564,6 +2597,7 @@ const PrivateChannels = () => {
             </Fragment>
           </div>
 
+          {/* non owner user */}
           {userInformation.username !== username ? (
             <div className="channel-user-content" style={{ flex: '0.8' }} >
               <div
@@ -2785,7 +2819,6 @@ const PrivateChannels = () => {
                 </div>
               </div>
 
-
               {inviteBox ? <MyVerticallyCenteredModal
                 title={"Invitation"}
                 closeModal={() => setInviteBox(false)}
@@ -2798,18 +2831,20 @@ const PrivateChannels = () => {
                 show={inviteBox}
                 onHide={() => setInviteBox(false)}
               /> : null}
-               {scheduleBox ? <MyVerticallyCenteredScheduler
-                title={"Schedule an event"}
-                closeModal={() => setScheduleBox(false)}
-                clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
-                clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
-                username={userInformation.username}
+
+              {scheduleBox
+                ? <MyVerticallyCenteredScheduler
+                  title={"Schedule an event"}
+                  closeModal={() => setScheduleBox(false)}
+                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+                  username={userInformation.username}
 
 
 
-                show={scheduleBox}
-                onHide={() => setScheduleBox(false)}
-              /> : null}
+                  show={scheduleBox}
+                  onHide={() => setScheduleBox(false)}
+                /> : null}
 
               {showClubRules ? (
                 <SoapboxPrivateClubRules setShowClubRules={setShowClubRules} />
@@ -3456,6 +3491,7 @@ const PrivateChannels = () => {
                 </div>
               ) : null}
 
+              {/* channel-media */}
               {subscribe ? (
                 <div
                   className="channel-media"
@@ -3464,36 +3500,38 @@ const PrivateChannels = () => {
                 >
                   {clubFloor
                     ? uploads && (
-                      <InfiniteScroll
-                        dataLength={uploads.length}
-                        next={fetchMoreHoots}
-                        hasMore={hasMore}
-                      >
-                        {uploads.map((upload) => {
-                          return (
-                            <div key={upload}>
-                              <Post
-                                hootId={upload.id}
-                                username={upload.authorUsername}
-                                mimeType={upload.mimeType}
-                                hootImgId={upload.image}
-                                audioPoster={upload.audioPoster}
-                                likes={upload.likes}
-                                views={upload.views}
-                                followers={upload.followers}
-                                caption={upload.caption}
-                                link={upload.link}
-                                ephemeral={upload.ephemeral}
-                                privateHoot={upload.private}
-                                expiryDate={upload.expiryDate}
-                                timeStamp={upload.timeStamp}
-                                edited={upload.edited}
-                                editedTimeStamp={upload.editedTimeStamp}
-                              />
-                            </div>
-                          );
-                        })}
-                      </InfiniteScroll>
+                      <div style={{ flex: "0.5" }}>
+                        <InfiniteScroll
+                          dataLength={uploads.length}
+                          next={fetchMoreHoots}
+                          hasMore={hasMore}
+                        >
+                          {uploads.map((upload) => {
+                            return (
+                              <div key={upload}>
+                                <Post
+                                  hootId={upload.id}
+                                  username={upload.authorUsername}
+                                  mimeType={upload.mimeType}
+                                  hootImgId={upload.image}
+                                  audioPoster={upload.audioPoster}
+                                  likes={upload.likes}
+                                  views={upload.views}
+                                  followers={upload.followers}
+                                  caption={upload.caption}
+                                  link={upload.link}
+                                  ephemeral={upload.ephemeral}
+                                  privateHoot={upload.private}
+                                  expiryDate={upload.expiryDate}
+                                  timeStamp={upload.timeStamp}
+                                  edited={upload.edited}
+                                  editedTimeStamp={upload.editedTimeStamp}
+                                />
+                              </div>
+                            );
+                          })}
+                        </InfiniteScroll>
+                      </div>
                     ) : null}
 
                   {privateChat ? (
@@ -3836,7 +3874,8 @@ const PrivateChannels = () => {
                         backgroundColor: "#EDEDFF",
                         border: "2px solid #D9D2FA",
                         overflowX: "hidden",
-                        maxHeight: '80vh'
+                        maxHeight: '80vh',
+                        flex: clubFloor ? "0.5" : "1",
                       }}
                     >
                       <div
@@ -4653,8 +4692,10 @@ const PrivateChannels = () => {
             </div>
           ) : null}
 
+          {/* owner user */}
           {userInformation.username == username ? (
             <div className="channel-user-content" style={{ flex: '0.8' }} >
+              {/* Top tabs bar with options */}
               <div
                 onmousedown={(event) => {
                   event.preventDefault
@@ -4670,6 +4711,7 @@ const PrivateChannels = () => {
                 }}
               >
                 <div className="tabs" style={{ margin: "0 0.5rem" }}>
+                  {/* Hamburger menu */}
                   <SoapboxTooltip title={clubFloor ? "Hide Feeds" : "Show Feeds"} placement="bottom">
                     <div>
                       <HiMenuAlt2
@@ -4680,28 +4722,22 @@ const PrivateChannels = () => {
                           fontSize: "1.4rem",
                           marginTop: "0.2rem"
                         }}
-                        // className="GiHamburgerMenu"
-                        // data-tip={clubFloor ? "Hide Feeds" : "Show Feeds"}
                         onClick={() => {
                           if (privateChat == false) {
                             setClubFloor(!clubFloor);
                           } else {
                             toast.success("Please close Private chat to view feeds");
                           }
-                          //   if(document.getElementById('slideFeed')){
-
-                          //     document.getElementById('slideFeed').style.transition='1sec';
-                          //     document.getElementById('slideFeed').style.left=clubFloor?'-100vw':'30px';
-                          // }
                         }}
                       />
                     </div>
                   </SoapboxTooltip>
 
+                  {/* CLUB FLOOR tab  */}
                   <span
                     style={{
-                      backgroundColor: clubFloor ? "#8249A0" : "#A279BA",
                       borderRadius: "8px",
+                      fontSize: "14px"
                     }}
                     onClick={() => {
                       if (privateChat == false) {
@@ -4715,36 +4751,55 @@ const PrivateChannels = () => {
                       } else {
                         toast.success("Please close Private chat to view feeds");
                       }
-
                     }}
-                    style={{ fontSize: "14px" }}
                   >
                     CLUB FLOOR
                   </span>
-                  {/* <span
-                                        style={{ backgroundColor: showRequest ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
-                                        onClick={() => { setShowRequest(!showRequest);
-                                         setShowFeed(false); setShowSubscribers(false);
-                                          setShowPricingSetting(false); setShowNotification(false); 
-                                          setShowChatRoom(false) }} >Requests</span> */}
-                  {/* <span
-                                        style={{ backgroundColor: showSubscribers ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
-                                        onClick={() => { setShowRequest(false); setShowFeed(false); setShowSubscribers(!showSubscribers); setShowPricingSetting(false); setShowNotification(false); setShowChatRoom(false) }} >Memberships</span> */}
-                  {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
-                  {/* <span>Marketplace</span> */}
 
                   {/* <span 
-                                        onClick={() => {
-                                            history.push(
-                                                `/${uuidv4()}/RecordMessage/${uuidv4()}/${userInfo[0].name
-                                                }/${uuidv4()}/${uuidv4()}`
-                                            );
-                                        }}
-                                    >
-                                        <div className="channel-btn-icon">
-                                            Record Message
-                                        </div>
-                                    </span> */}
+                        style={{ backgroundColor: showRequest ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
+                        onClick={() => { 
+                          setShowRequest(!showRequest);
+                          setShowFeed(false); 
+                          setShowSubscribers(false);
+                          setShowPricingSetting(false); 
+                          setShowNotification(false); 
+                          setShowChatRoom(false) }} 
+                          >
+                            Requests
+                      </span> */}
+
+                  {/* <span 
+                        style={{ backgroundColor: showSubscribers ? "#8249A0" : '#A279BA', borderRadius: '8px' }}
+                        onClick={() => { 
+                          setShowRequest(false); 
+                          setShowFeed(false); 
+                          setShowSubscribers(!showSubscribers); 
+                          setShowPricingSetting(false); 
+                          setShowNotification(false); 
+                          setShowChatRoom(false) }} 
+                          >
+                            Memberships
+                      </span> */}
+
+                  {/* <span onClick={() => { 
+                        setShowRequest(false); 
+                        setShowSubscribers(false); 
+                        setShowPricingSetting(false); 
+                        setShowNotification(!showNotification) }} 
+                        >
+                          Notifications
+                      </span> */}
+
+                  {/* <span>Marketplace</span> */}
+
+                  {/* <span onClick={() => {history.push(`/${uuidv4()}/RecordMessage/${uuidv4()}/${userInfo[0].name}/${uuidv4()}/${uuidv4()}`);}}>
+                        <div className="channel-btn-icon">
+                          Record Message
+                        </div>
+                      </span> */}
+
+                  {/* CLUB CHAT tab (note: right now "display: none") */}
                   <span
                     id="chatRoomopen"
                     style={{
@@ -4770,9 +4825,10 @@ const PrivateChannels = () => {
                   >
                     CLUB CHAT
                   </span>
+
+                  {/* CLUB AMENITIES tab */}
                   <span
                     style={{
-                      // backgroundColor: "#652C90",
                       borderRadius: "8px",
                       fontSize: "14px ",
                     }}
@@ -4780,9 +4836,9 @@ const PrivateChannels = () => {
                     CLUB AMENITIES
                   </span>
 
+                  {/* EVENTS tab */}
                   <span
                     style={{
-                      // backgroundColor: "#652C90",
                       fontSize: "14px ",
                       borderRadius: "8px",
                     }}
@@ -4790,61 +4846,53 @@ const PrivateChannels = () => {
                   >
                     EVENTS
                   </span>
-                  {/*                                                                    
-                                                                       <span  style={{fontSize:'14px'}}
-                                        style={{ backgroundColor: '#A279BA', borderRadius: '8px',fontSize:'14px ' }}
-                                    >MARKETPLACE</span>
-                                     <span  style={{fontSize:'14px'}}
-                                        style={{ backgroundColor: '#A279BA', borderRadius: '8px',fontSize:'14px ' }}
-                                    >MESSAGES</span> */}
+
+                  {/* <span style={{ backgroundColor: '#A279BA', borderRadius: '8px', fontSize:'14px'}}>MARKETPLACE</span>
+                      <span style={{ backgroundColor: '#A279BA', borderRadius: '8px', fontSize:'14px'}}>MESSAGES</span> */}
+
+                  {/* MARKETPLACE tab */}
                   <span>
                     <SoapboxTooltip title={"MARKETPLACE"} placement="bottom" privateTooltip={true}>
                       <img src={marketplaceicon} width="30px" />
                     </SoapboxTooltip>
                   </span>
 
+                  {/* MESSAGES tab */}
                   <span>
                     <SoapboxTooltip title={"MESSAGES"} placement="bottom" privateTooltip={true}>
-                      <img src={messagesicon} width="30px" onClick={() => {
+                      <img
+                        width="30px"
+                        src={messagesicon}
+                        onClick={() => {
+                          if (!privateChatList) {
+                            setPrivateChatList(!privateChatList)
 
-                        if (!privateChatList) {
-                          setPrivateChatList(!privateChatList)
+                            setTimeout(() => {
+                              if (document.getElementById("privateChatList")) {
+                                document.getElementById("privateChatList").style.transition = "1sec";
+                                document.getElementById("privateChatList").style.right = "0.8rem";
+                              }
+                            }, 1);
+                          } else {
+                            document.getElementById("privateChatList").style.transition = "1sec";
+                            document.getElementById("privateChatList").style.right = "-100vw";
 
-                          setTimeout(() => {
-                            if (
-                              document.getElementById(
-                                "privateChatList"
-                              )
-                            ) {
-                              document.getElementById(
-                                "privateChatList"
-                              ).style.transition = "1sec";
-                              document.getElementById(
-                                "privateChatList"
-                              ).style.right = "0.8rem";
-                            }
-                          }, 1);
-                        } else {
-                          document.getElementById(
-                            "privateChatList"
-                          ).style.transition = "1sec";
-                          document.getElementById(
-                            "privateChatList"
-                          ).style.right = "-100vw";
-                          setTimeout(() => {
-                            setPrivateChatList(false)
-                          }, 200);
-                        }
-
-                      }} />
+                            setTimeout(() => {
+                              setPrivateChatList(false)
+                            }, 200);
+                          }
+                        }} />
                     </SoapboxTooltip>
                   </span>
 
+                  {/* Invite tab */}
                   <span onClick={() => setInviteBox(true)}>
                     <SoapboxTooltip title={"Invite"} placement="bottom" privateTooltip={true}>
                       <img src={inviteicon} width="30px" />
                     </SoapboxTooltip>
                   </span>
+
+                  {/* Club Rules tab */}
                   <span>
                     <SoapboxTooltip title={"Club Rules"} placement="bottom" privateTooltip={true}>
                       <img
@@ -4852,11 +4900,8 @@ const PrivateChannels = () => {
                         width="30px"
                         onClick={() => {
                           if (showClubRules) {
-                            document.getElementById(
-                              "slideCR"
-                            ).style.transition = "2sec";
-                            document.getElementById("slideCR").style.right =
-                              "-100vw";
+                            document.getElementById("slideCR").style.transition = "2sec";
+                            document.getElementById("slideCR").style.right = "-100vw";
 
                             setTimeout(() => {
                               setShowClubRules(false);
@@ -4874,11 +4919,8 @@ const PrivateChannels = () => {
 
                             setTimeout(() => {
                               if (document.getElementById("slideCR")) {
-                                document.getElementById(
-                                  "slideCR"
-                                ).style.transition = "1sec";
-                                document.getElementById("slideCR").style.right =
-                                  "150px";
+                                document.getElementById("slideCR").style.transition = "1sec";
+                                document.getElementById("slideCR").style.right = "150px";
                               }
                             }, 1);
                           }
@@ -4887,16 +4929,7 @@ const PrivateChannels = () => {
                     </SoapboxTooltip>
                   </span>
 
-                  {/* <button  style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}}>INVITE</button>
-                                    <button style={{fontSize:'14px',padding:'1px',paddingLeft:'2px',paddingRight:'2px',outline:'none',border:'none',borderRadius:'5px',borderRadius:'2px'}} >CLUB RULES</button> */}
-                  {/*                              
-                             <span>
-          <SoapboxTooltip title={
-                   "XMG Wallet"
-                } placement="left">
-                   <img src={xmgwallet} width="30px" />
-                </SoapboxTooltip>
-                </span> */}
+                  {/* Create Private Hoot tab */}
                   <span
                     onClick={() => {
                       if (showCreateHoot) {
@@ -4930,8 +4963,7 @@ const PrivateChannels = () => {
                     </SoapboxTooltip>
                   </span>
 
-
-
+                  {/* Create Breakoff Chat tab */}
                   <SoapboxTooltip title={"Create Breakoff Chat"} placement="bottom">
                     <span style={{
                       display: 'flex',
@@ -4944,8 +4976,7 @@ const PrivateChannels = () => {
                         if (userInfo[0].communityClub == 1) {
                           if (subscribe || userInformation.username == username) {
                             if (showBreakoffForm) {
-                              document.getElementById("showBreakoffFormId").style.transition =
-                                "2s";
+                              document.getElementById("showBreakoffFormId").style.transition = "2s";
                               document.getElementById("showBreakoffFormId").style.right = "-100vw";
 
                               setTimeout(() => {
@@ -4956,14 +4987,14 @@ const PrivateChannels = () => {
 
                               setTimeout(() => {
                                 if (document.getElementById("showBreakoffFormId")) {
-                                  document.getElementById("showBreakoffFormId").style.transition =
-                                    "1s";
-                                  document.getElementById("showBreakoffFormId").style.right =
-                                    "30%";
+                                  document.getElementById("showBreakoffFormId").style.transition = "1s";
+                                  document.getElementById("showBreakoffFormId").style.right = "30%";
                                 }
                               }, 1);
                             }
-                          } else { toast.success('Members Only Access') }
+                          } else {
+                            toast.success('Members Only Access');
+                          }
                         } else {
                           toast.success('BreakOff Chat can be accessible only in Community Clubs')
                         }
@@ -4974,13 +5005,20 @@ const PrivateChannels = () => {
                   </SoapboxTooltip>
                 </div>
 
-                {/* <span onClick={() => { setShowRequest(false); setShowSubscribers(false); setShowPricingSetting(false); setShowNotification(!showNotification) }} >Notifications</span> */}
+                {/* <span onClick={() => { 
+                  setShowRequest(false); 
+                  setShowSubscribers(false); 
+                  setShowPricingSetting(false); 
+                  setShowNotification(!showNotification) }}
+                  >
+                    Notifications
+                  </span> */}
 
                 {/* <FiSearch className="search-channel-content" /> */}
               </div>
-              {/* <ModelShow /> */}
-              {inviteBox
-                ? <MyVerticallyCenteredModal
+
+              {inviteBox ? (
+                <MyVerticallyCenteredModal
                   title={"Invitation"}
                   closeModal={() => setInviteBox(false)}
                   clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
@@ -4989,24 +5027,22 @@ const PrivateChannels = () => {
                   show={inviteBox}
                   onHide={() => setInviteBox(false)}
                 />
-                : null
-              }
+              ) : null}
 
-{scheduleBox ? <MyVerticallyCenteredScheduler
-                title={"Schedule an event"}
-                closeModal={() => setScheduleBox(false)}
-                clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
-                clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
-                username={userInformation.username}
+              {scheduleBox
+                ? <MyVerticallyCenteredScheduler
+                  title={"Schedule an event"}
+                  closeModal={() => setScheduleBox(false)}
+                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+                  username={userInformation.username}
 
+                  show={scheduleBox}
+                  onHide={() => setScheduleBox(false)}
+                /> : null}
 
-
-                show={scheduleBox}
-                onHide={() => setScheduleBox(false)}
-              /> : null}
-
-              {showRequest
-                ? (<div className="slide-container">
+              {showRequest ? (
+                <div className="slide-container">
                   <div
                     id="slideR"
                     style={{
@@ -5087,9 +5123,7 @@ const PrivateChannels = () => {
                     </div>
                   </div>
                 </div>
-                )
-                : null
-              }
+              ) : null}
 
               {showAllMyEvents?<div className="slide-container">
                   <div
@@ -5402,6 +5436,7 @@ const PrivateChannels = () => {
                   </div>{" "}
                 </div>
               ) : null}
+
               {showSubscribers ? (
                 <div className="slide-container">
                   <div
@@ -5416,35 +5451,39 @@ const PrivateChannels = () => {
                       alignItems: "center",
                       backgroundColor: "#D6C8E1",
                       margin: "1rem",
+                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                   >
                     <div
                       style={{
                         backgroundColor: "#8249A0",
-                        padding: "5px",
-                        width: "600px",
+                        // padding: "5px",
+                        width: "100%",
                         display: "flex",
                         flexDirection: "row",
                         justifyContent: "space-between",
                         alignItems: "center",
                         color: "white",
+                        padding: "0.5rem",
                       }}
                     >
-                      <h5>Memberships </h5>
-                      <FaWindowClose
-                        className="FaWindowClose"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          document.getElementById("slideM").style.transition =
-                            "2sec";
-                          document.getElementById("slideM").style.right =
-                            "-100vw";
+                      <h5 style={{ fontSize: "1.2rem", marginBottom: 0 }}>Memberships </h5>
+                      <SoapboxTooltip title="Close" placement="left">
+                        <span>
+                          <IoCloseCircle
+                            // className="FaWindowClose"
+                            style={{ cursor: "pointer", color: "#DCD5FA", fontSize: "1.7rem" }}
+                            onClick={() => {
+                              document.getElementById("slideM").style.transition = "2sec";
+                              document.getElementById("slideM").style.right = "-100vw";
 
-                          setTimeout(() => {
-                            setShowSubscribers(false);
-                          }, 1000);
-                        }}
-                      />
+                              setTimeout(() => {
+                                setShowSubscribers(false);
+                              }, 1000);
+                            }}
+                          />
+                        </span>
+                      </SoapboxTooltip>
                     </div>
 
                     <div
@@ -5468,11 +5507,10 @@ const PrivateChannels = () => {
                         </div>
                       ))}
                     </div>
-
-
                   </div>
                 </div>
               ) : null}
+
               {showCreateHoot ? (
                 <div className="slide-container">
                   <div id="slideH">
@@ -5492,6 +5530,7 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
+
               {showIframe ? (
                 <div className="slide-container">
                   <div
@@ -5539,31 +5578,31 @@ const PrivateChannels = () => {
                 </div>
               ) : null}
 
-              {showBreakoffForm ? <div className="showBreakoffForm" id="showBreakoffFormId">
-                <h5>Enter The Topic for BreakOff Chat</h5>
-                <div style={{ padding: '33px', position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}> <input placeholder="Enter Topic" value={breakOffInput} onChange={(e) => {
-                  setBreakOffInput(e.target.value);
-                }} />
-                  <button className="d-grid col-12 btn-main login-form-button" style={{ position: 'absolute', right: '0' }}
-                    onClick={() => {
-                      if (breakOffInput) { createBreakoff() } else {
-                        toast.success(
-                          "Please Enter Topic for Breakoff chat"
-                        );
-                      }
+              {showBreakoffForm ? (
+                <div className="showBreakoffForm" id="showBreakoffFormId">
+                  <h5>Enter The Topic for BreakOff Chat</h5>
+                  <div style={{ padding: '33px', position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}> <input placeholder="Enter Topic" value={breakOffInput} onChange={(e) => {
+                    setBreakOffInput(e.target.value);
+                  }} />
+                    <button className="d-grid col-12 btn-main login-form-button" style={{ position: 'absolute', right: '0' }}
+                      onClick={() => {
+                        if (breakOffInput) { createBreakoff() } else {
+                          toast.success(
+                            "Please Enter Topic for Breakoff chat"
+                          );
+                        }
 
 
-                    }}
-                  >Create Now</button>
+                      }}
+                    >Create Now</button>
+                  </div>
+
                 </div>
-
-              </div> : null}
-
+              ) : null}
 
               {showClubRules ? (
                 <SoapboxPrivateClubRules setShowClubRules={setShowClubRules} />
               ) : null}
-
 
               {showNotification ? (
                 <div
@@ -5582,63 +5621,47 @@ const PrivateChannels = () => {
                 </div>
               ) : null}
 
+              {/* channel-media */}
               <div
                 className="channel-media"
                 id="feed"
                 style={{ display: "flex", transition: "1s" }}
               >
-                {/* <GiHamburgerMenu
-                    className="GiHamburgerMenu"
-                    data-tip={clubFloor ? "Hide Feeds" : "Show Feeds"}
-                    onClick={() => {
-                      if (privateChat == false) {
-                        setClubFloor(!clubFloor);
-                      } else {
-                        toast.success("Please close Private chat to view feeds");
-                      }
-                      //   if(document.getElementById('slideFeed')){
-
-                      //     document.getElementById('slideFeed').style.transition='1sec';
-                      //     document.getElementById('slideFeed').style.left=clubFloor?'-100vw':'30px';
-                      // }
-                    }}
-                  /> */}
-
                 {clubFloor
                   ? uploads && (
-                    <InfiniteScroll
-                      dataLength={uploads.length}
-                      next={fetchMoreHoots}
-                      hasMore={hasMore}
-                    >
-                      {uploads.map((upload) => {
-                        return (
-                          <div key={upload}>
-                            <Post
-                              hootId={upload.id}
-                              username={upload.authorUsername}
-                              mimeType={upload.mimeType}
-                              hootImgId={upload.image}
-                              audioPoster={upload.audioPoster}
-                              likes={upload.likes}
-                              views={upload.views}
-                              followers={upload.followers}
-                              caption={upload.caption}
-                              link={upload.link}
-                              ephemeral={upload.ephemeral}
-                              privateHoot={upload.private}
-                              expiryDate={upload.expiryDate}
-                              timeStamp={upload.timeStamp}
-                              edited={upload.edited}
-                              editedTimeStamp={upload.editedTimeStamp}
-                            />
-                          </div>
-                        );
-                      })}
-                    </InfiniteScroll>
-                  )
-                  : null
-                }
+                    <div style={{ flex: "0.5" }}>
+                      <InfiniteScroll
+                        dataLength={uploads.length}
+                        next={fetchMoreHoots}
+                        hasMore={hasMore}
+                      >
+                        {uploads.map((upload) => {
+                          return (
+                            <div key={upload}>
+                              <Post
+                                hootId={upload.id}
+                                username={upload.authorUsername}
+                                mimeType={upload.mimeType}
+                                hootImgId={upload.image}
+                                audioPoster={upload.audioPoster}
+                                likes={upload.likes}
+                                views={upload.views}
+                                followers={upload.followers}
+                                caption={upload.caption}
+                                link={upload.link}
+                                ephemeral={upload.ephemeral}
+                                privateHoot={upload.private}
+                                expiryDate={upload.expiryDate}
+                                timeStamp={upload.timeStamp}
+                                edited={upload.edited}
+                                editedTimeStamp={upload.editedTimeStamp}
+                              />
+                            </div>
+                          );
+                        })}
+                      </InfiniteScroll>
+                    </div>
+                  ) : null}
 
                 {privateChat ? (
                   <div className="privateChat-club" id="privatechatslide">
@@ -5780,7 +5803,8 @@ const PrivateChannels = () => {
                                 {!e.isVideo && !e.isImage && !e.isPoll ? e.message : null}
                               </div>
                             </Linkify>
-                            {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
+                            {e.isPoll ?
+                             <div style={{ marginTop: '30px' }} className="pollFormDiv">
                               <Form onSubmit={(e) => e.preventDefault()}>
                                 <Form.Group className="mb-3" >
                                   <Form.Label>{e.pollData.Question}</Form.Label>
@@ -6019,9 +6043,7 @@ const PrivateChannels = () => {
                       </form>
                     </div>
                   </div>
-                )
-                  : null
-                }
+                ) : null}
 
                 {privateChatList
                   ? <div className="privateChatListBox" id="privateChatList">
@@ -6041,9 +6063,7 @@ const PrivateChannels = () => {
                       </h5>
                     </div>
                   </div>
-                  : null
-
-                }
+                  : null}
 
                 {/* ------------------- Chat Container newly style added here ------------------- */}
                 {showChatRoom ? (
@@ -6059,7 +6079,8 @@ const PrivateChannels = () => {
                       backgroundColor: "#EDEDFF",
                       border: "2px solid #D9D2FA",
                       overflowX: "hidden",
-                      maxHeight: '80vh'
+                      maxHeight: '80vh',
+                      flex: clubFloor ? "0.5" : "1",
                     }}
                   >
                     <div
@@ -6881,8 +6902,8 @@ const PrivateChannels = () => {
             </div>
           ) : null}
         </div>
-      </div >
-    </Fragment >
+      </div>
+    </Fragment>
   );
 };
 

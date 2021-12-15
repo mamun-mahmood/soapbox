@@ -219,7 +219,8 @@ p{
   color: var(--text-color);
   background-color: #dcd5fa;
   /* margin: 0.5rem; */
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
+  border-radius: 2px;
 }
 
 .live-cards {
@@ -374,7 +375,9 @@ p{
   
   z-index: 5;
   /* min-width: 300px; */
-  min-width: 50%;
+
+  /* min-width: 50%; */
+
   /* max-width: 800px; */
   max-width: 100%;
   transition: all 0.3s ease-in-out;
@@ -391,7 +394,7 @@ p{
   }
   
   .container {
-    min-width: 55%;
+    /* min-width: 55%; */
   }
 }
 
@@ -653,8 +656,8 @@ overflow-wrap: break-word;
 }
 
 .channel-media {
-  flex: 50%;
   display: flex;
+  /* flex: 50%; */
   /* justify-content: center; */
 }
 
