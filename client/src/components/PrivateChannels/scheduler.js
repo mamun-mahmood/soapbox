@@ -24,6 +24,7 @@ const [pollFormDataOC, setPollFormDataOC] = useState("")
 const [FormEditPoll, setFormEditPoll] = useState(true)
 const clubname=props.clubname
 const username=props.username
+const fullName=props.fullName
 const clublink=props.clublink
 const BaseURL = process.env.REACT_APP_API_URL;
 const handleKeyDown = (e) => {
@@ -154,7 +155,7 @@ const handleKeyDown = (e) => {
          {props.title}
           </Modal.Title>
           {/* <CloseButton variant="white"  title='X' className='FaWindowClose' onClick={()=>props.closeModal()} /> */}
-          <button style={{outline:'none',border:'none',padding:'3px',borderRadius:'5px'}} onClick={()=>{    if (showPollForm) {
+          <button style={{outline:'none',border:'none',padding:'3px',borderRadius:'3px',color:'whitesmoke',backgroundColor:'green'}}  className="button" onClick={()=>{    if (showPollForm) {
                                 document.getElementById("showPollFormId").style.transition = "2s";
                                 document.getElementById("showPollFormId").style.left = "200vw";
 
@@ -201,7 +202,7 @@ const handleKeyDown = (e) => {
                             }}
                           >
                             <h5>Create A Poll</h5>
-                            <FaWindowClose className="FaWindowClose" onClick={() => {
+                            <FaWindowClose  className="FaWindowClose" onClick={() => {
                               if (showPollForm) {
                                 document.getElementById("showPollFormId").style.transition = "2s";
                                 document.getElementById("showPollFormId").style.left = "200vw";
@@ -227,7 +228,7 @@ const handleKeyDown = (e) => {
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-evenly',
-                            backgroundColor:'#dbdbdba2'
+                            backgroundColor:'#E0E0E0'
                           }}>
 
                             {/* <input placeholder="Enter Question For Poll" value={breakOffInput}  onChange={(e) => {
@@ -273,8 +274,20 @@ const handleKeyDown = (e) => {
                                 {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Preview 
   </Button> */}
-                                <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
-                                  Submit
+                                <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={()=>{setFormEditPoll(!FormEditPoll);
+                                 setPollFormData({
+                                  Question: pollFormDataQ,
+                                  OptionA: pollFormDataOA,
+                                  OptionB: pollFormDataOB,
+                                  OptionC: pollFormDataOC,
+                                  createdBy: fullName,
+                                  threadId: uuidv4(),
+                                  pollA: 0,
+                                  pollB: 0,
+                                  pollC: 0
+                                })
+                                }} >
+                                  Save
                                 </Button>
                               </Form>
                               : <Form onSubmit={(e) => e.preventDefault()}>
@@ -303,7 +316,21 @@ const handleKeyDown = (e) => {
                                 <Button variant="primary" onClick={() => { setFormEditPoll(!FormEditPoll) }} >
                                   Edit
                                 </Button>
-                                <Button variant="primary" type="submit" style={{ marginLeft: '5px' }}>
+                                <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={()=>{
+                                  props.sumitChatData({
+        Question: pollFormDataQ,
+        OptionA: pollFormDataOA,
+        OptionB: pollFormDataOB,
+        OptionC: pollFormDataOC,
+        createdBy: fullName,
+        threadId: uuidv4(),
+        pollA: 0,
+        pollB: 0,
+        pollC: 0
+      });
+      toast.success('Created Poll Successfully!')
+      setShowPollForm(false)
+      }}>
                                   Submit
                                 </Button>
                               </Form>

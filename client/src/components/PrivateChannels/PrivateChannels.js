@@ -999,6 +999,10 @@ const PrivateChannels = () => {
     }
   }
 
+  const sumitChatDataFromScheduler=(data)=>{
+    sentPollMessageInChat(data)
+  }
+
   const sentPollMessageInChat = (pollFormData) => {
     let today = new Date();
 
@@ -2839,7 +2843,10 @@ const PrivateChannels = () => {
                   clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
                   username={userInformation.username}
+                  fullName={userFullName}
+                  
 
+                  sumitChatData={(data)=>{sumitChatDataFromScheduler(data)}}
 
 
                   show={scheduleBox}
@@ -4055,7 +4062,7 @@ const PrivateChannels = () => {
     Preview 
   </Button> */}
                                 <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={() => { handlePollFormSubmission(userFullName) }}>
-                                  Submit
+                                  Save
                                 </Button>
                               </Form>
                               : <Form onSubmit={(e) => e.preventDefault()}>
@@ -6276,7 +6283,7 @@ const PrivateChannels = () => {
                               </Form.Group>
 
                               <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={() => { handlePollFormSubmission(userFullName) }}>
-                                Submit
+                                Save
                               </Button>
                             </Form>
                             : <Form onSubmit={(e) => e.preventDefault()}>
