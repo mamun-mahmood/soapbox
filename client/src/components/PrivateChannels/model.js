@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import { SettingsSystemDaydream } from '@material-ui/icons';
 import { FaWindowClose } from "react-icons/fa";
+import { SoapboxTooltip } from '../SoapboxTooltip';
+import { IoCloseCircle } from 'react-icons/io5';
 function MyVerticallyCenteredModal(props) {
     const MyComponent = props.component
     const [emails, setEmails] = useState([])
@@ -129,8 +131,20 @@ function MyVerticallyCenteredModal(props) {
                     <Modal.Title id="contained-modal-title-vcenter">
                         {props.title}
                     </Modal.Title>
-                    <FaWindowClose
-                        className="FaWindowClose" style={{ color: 'red' }} onClick={() => props.closeModal()} />
+                    {/* <FaWindowClose
+                        className="FaWindowClose" 
+                        style={{ color: 'red' }} 
+                        onClick={() => props.closeModal()} 
+                    /> */}
+
+                    <SoapboxTooltip title="Close" placement="left">
+                        <span>
+                            <IoCloseCircle
+                                style={{ cursor: "pointer", color: "#8249A0", fontSize: "1.7rem" }}
+                                onClick={() => props.closeModal()}
+                            />
+                        </span>
+                    </SoapboxTooltip>
                 </Modal.Header>
                 <Modal.Body  >
                     <h5>Please Enter Email to Invite</h5>
