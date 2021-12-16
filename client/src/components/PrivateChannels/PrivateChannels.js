@@ -6,7 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
 import { FaRegTrashAlt, FaTumblr, FaWindowClose } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
-import { RiCalendarEventLine, RiLiveLine } from "react-icons/ri"
+import { RiCalendarEventLine, RiLiveLine ,RiBookmark3Fill} from "react-icons/ri"
 import { BsPlusCircleFill, BsTrash } from 'react-icons/bs'
 import { IoCloseCircle } from 'react-icons/io5'
 import {
@@ -3926,7 +3926,26 @@ const PrivateChannels = () => {
                         <span>
                           {userInfo[0].name}'s Club Chat
                         </span>
-
+                    <div style={{display:'flex',justifyContent:'space-between',
+                    width:'68px',flexDirection:'row'}}>  
+                      <SoapboxTooltip title={"Schedule Event"} placement="top">
+                          <span
+                          style={{  display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          cursor: 'pointer',
+                          backgroundColor: '#dcd5fa',
+                          color: "#8249A0",
+                          width: '26px',
+                          height: '26px',
+                          borderRadius: '50%',
+                          // marginLeft: '15px',
+                          fontSize: '1.1rem'}}
+                           onClick={() => { setScheduleBox(!scheduleBox) }}
+                          >
+                            <RiBookmark3Fill />
+                          </span>
+                        </SoapboxTooltip>
                         <SoapboxTooltip title={"Create Poll"} placement="top">
                           <span
                             onClick={() => {
@@ -3975,7 +3994,7 @@ const PrivateChannels = () => {
                           >
                             <RiCalendarEventLine />
                           </span>
-                        </SoapboxTooltip>
+                        </SoapboxTooltip></div>
                       </div>
 
                       {showPollForm
@@ -6156,8 +6175,25 @@ const PrivateChannels = () => {
                             <RiLiveLine />
                           </span>
                         </SoapboxTooltip>
-
-                        <SoapboxTooltip title={"Create Poll"} placement="bottom">
+                   <div style={{display:'flex',justifyContent:'space-between',width:'68px',flexDirection:'row'}}>     
+                   <SoapboxTooltip title={"Schedule Event"} placement="top">
+                          <span style={{  display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              cursor: 'pointer',
+                              backgroundColor: '#dcd5fa',
+                              color: "#8249A0",
+                              width: '26px',
+                              height: '26px',
+                              borderRadius: '50%',
+                              // marginLeft: '15px',
+                              fontSize: '1.1rem'}}
+                          onClick={() => { setScheduleBox(!scheduleBox) }}
+                          >
+                            <RiBookmark3Fill />
+                          </span>
+                        </SoapboxTooltip>
+                        <SoapboxTooltip title={"Create Poll"} placement="top">
                           <span style={{
                             display: 'flex',
                             justifyContent: 'center',
@@ -6193,7 +6229,7 @@ const PrivateChannels = () => {
                           >
                             <RiCalendarEventLine />
                           </span>
-                        </SoapboxTooltip>
+                        </SoapboxTooltip></div>
 
                         {userInfo[0].communityClub == 1
                           ? null
