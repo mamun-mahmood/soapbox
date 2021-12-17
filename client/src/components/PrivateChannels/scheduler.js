@@ -155,23 +155,7 @@ const handleKeyDown = (e) => {
          {props.title}
           </Modal.Title>
           {/* <CloseButton variant="white"  title='X' className='FaWindowClose' onClick={()=>props.closeModal()} /> */}
-          <button style={{outline:'none',border:'none',padding:'3px',borderRadius:'3px',color:'whitesmoke',backgroundColor:'green'}}  className="button" onClick={()=>{    if (showPollForm) {
-                                document.getElementById("showPollFormId").style.transition = "2s";
-                                document.getElementById("showPollFormId").style.left = "200vw";
-
-                                setTimeout(() => {
-                                  setShowPollForm(false);
-                                }, 1000);
-                              } else {
-                                setShowPollForm(true);
-
-                                setTimeout(() => {
-                                  if (document.getElementById("showPollFormId")) {
-                                    document.getElementById("showPollFormId").style.transition = "1s";
-                                    document.getElementById("showPollFormId").style.left = "70px";
-                                  }
-                                }, 1);
-                              }}}>Create Poll</button>
+         
      <FaWindowClose
                         className="FaWindowClose" style={{color:'red'}} onClick={()=>props.closeModal()} />
 
@@ -359,6 +343,29 @@ const handleKeyDown = (e) => {
        {error &&<p className="error">{error}</p>}
         </Modal.Body>
         <Modal.Footer>
+        {/* <button style={{outline:'none',border:'none',padding:'3px',borderRadius:'3px',color:'whitesmoke',backgroundColor:'green'}}  className="button" onClick={()=>{    if (showPollForm) {
+                                document.getElementById("showPollFormId").style.transition = "2s";
+                                document.getElementById("showPollFormId").style.left = "200vw";
+
+                                setTimeout(() => {
+                                  setShowPollForm(false);
+                                }, 1000);
+                              } else {
+                                setShowPollForm(true);
+
+                                setTimeout(() => {
+                                  if (document.getElementById("showPollFormId")) {
+                                    document.getElementById("showPollFormId").style.transition = "1s";
+                                    document.getElementById("showPollFormId").style.left = "70px";
+                                  }
+                                }, 1);
+                              }}}>Show Event In Chat</button> */}
+                                 <Button disabled={(emails.length&& eventDate && eventTitle &&eventTime)?false:true} onClick={()=>{
+                                        props.sumitChatData({
+                                          eventTitle,eventDesc,eventDate,eventTime,fullName
+                                        })
+
+                                 }} >Show Event In Chat</Button>
           <Button onClick={inviteHandler} >Invite</Button>
         </Modal.Footer>
       </Modal>

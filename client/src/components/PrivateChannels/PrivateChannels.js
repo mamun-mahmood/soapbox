@@ -196,7 +196,8 @@ const PrivateChannels = () => {
     isVideo,
     isImage,
     isPoll,
-    timestamp
+    timestamp,
+    isEvent
   ) => {
     if (isPoll) {
       let pollData = JSON.parse(message)
@@ -205,7 +206,15 @@ const PrivateChannels = () => {
         ...e,
         { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp },
       ]);
-    } else {
+    }else if(isEvent){
+      let event = JSON.parse(message)
+
+      setChatData((e) => [
+        ...e,
+        { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent },
+      ]);
+    }
+     else {
       setChatData((e) => [
         ...e,
         { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp },
@@ -360,7 +369,8 @@ const PrivateChannels = () => {
           "",
           "",
           "",
-          data.timestamp
+          data.timestamp,
+
         );
       } else {
         append(
@@ -372,7 +382,8 @@ const PrivateChannels = () => {
           data.isVideo,
           data.isImage,
           data.isPoll,
-          data.timeStamp
+          data.timeStamp,
+          data.isEvent
         );
       }
     });
@@ -506,7 +517,8 @@ const PrivateChannels = () => {
             isVideo = i.chat.isVideo,
             isImage = i.chat.isImage,
             isPoll = i.chat.isPoll,
-            timestamp = i.chat.timestamp
+            timestamp = i.chat.timestamp,
+            isEvent = i.chat.isEvent
 
 
           if (isPoll) {
@@ -514,14 +526,24 @@ const PrivateChannels = () => {
 
             setChatData((e) => [
               ...e,
-              { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp },
+              { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent },
 
             ]);
 
-          } else {
+          }else if (isEvent) {
+            let event = JSON.parse(message)
+
             setChatData((e) => [
               ...e,
-              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp },
+              { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent },
+
+            ]);
+
+          }
+           else {
+            setChatData((e) => [
+              ...e,
+              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent },
             ]);
 
           }
@@ -1000,7 +1022,44 @@ const PrivateChannels = () => {
   }
 
   const sumitChatDataFromScheduler=(data)=>{
-    sentPollMessageInChat(data)
+    sentEventMessageInChat(data)
+  }
+  const sentEventMessageInChat = (data) => {
+    let today = new Date();
+
+    let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+    append(
+      userFullName,
+      `${JSON.stringify(data)}`,
+      "right",
+      `${BaseURL}/profile-pictures/${userProfilePic}`,
+      false,
+      "",
+      "",
+      false,
+      timestamp,
+      true
+    );
+
+    let isCommunity = userInfo[0].communityClub
+    let isClub = userInfo[0].communityClub == 1 ? 0 : 1
+    let Eventdata = JSON.stringify(data);
+    let threadId = uuidv4()
+    socket.emit("send", {
+      name: userFullName,
+      isClub: isClub,
+      isPrivate: 0,
+      isCommunity: isCommunity,
+      message: Eventdata,
+      profilePic: userProfilePic,
+      isEmoji: false,
+      isVideo: "",
+      isImage: "",
+      isPoll: false,
+      timestamp: timestamp,
+      isEvent:true,
+      threadId: threadId,
+    });
   }
 
   const sentPollMessageInChat = (pollFormData) => {
@@ -4225,7 +4284,7 @@ const PrivateChannels = () => {
                                       : "message"
                                   }
                                 >
-                                  {!e.isVideo && !e.isImage && !e.isPoll
+                                  {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent
                                     ? e.message
                                     : null}
                                 </div>
@@ -4306,6 +4365,14 @@ const PrivateChannels = () => {
                                   </Button>
                                 </Form>
                               </div> : null}
+
+                              {e.isEvent?<div style={{ marginTop: '30px' }} className="EventFormDiv">
+                               <h5 style={{fontSize:'15px'}}>Event Created by {e.event.fullName}</h5>
+                                <p>Event Title : {e.event.eventTitle}</p>
+                             {e.event.eventDesc? <p>Event Description : {e.event.eventDesc}</p>:null}  
+                                <p>Event Date : {e.event.eventDate}</p>
+                                <p>Event Time : {e.event.eventTime}</p>
+                              </div>:null}
 
                               {e.isVideo ? (
                                 <video
@@ -5062,8 +5129,9 @@ const PrivateChannels = () => {
                   clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
                   username={userInformation.username}
-
+                  sumitChatData={(data)=>{sumitChatDataFromScheduler(data)}}
                   show={scheduleBox}
+                  fullName={userFullName}
                   onHide={() => setScheduleBox(false)}
                 /> : null}
 
@@ -5214,7 +5282,7 @@ const PrivateChannels = () => {
                             flexDirection: 'column'
                           }}
                         >
-                          <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Title: {event.eventTitle}</p>
+                          <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Title : {event.eventTitle}</p>
                           <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Date : {event.eventDate}</p>
                           <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Time :{event.eventTime}</p>
                          {event.eventDesc? <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Description :{event.eventDesc}</p>
@@ -5826,7 +5894,7 @@ const PrivateChannels = () => {
                                   e.isEmoji ? "message-emoji" : "message"
                                 }
                               >
-                                {!e.isVideo && !e.isImage && !e.isPoll ? e.message : null}
+                                {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent ? e.message : null}
                               </div>
                             </Linkify>
                             {e.isPoll ?
@@ -5905,6 +5973,13 @@ const PrivateChannels = () => {
                                 </Button>
                               </Form>
                             </div> : null}
+                            {e.isEvent?<div style={{ marginTop: '30px' }} className="EventFormDiv">
+                               <h5 style={{fontSize:'15px'}}>Event Created by {e.event.fullName}</h5>
+                                <p>Event Title : {e.event.eventTitle}</p>
+                             {e.event.eventDesc? <p>Event Description : {e.event.eventDesc}</p>:null}  
+                                <p>Event Date : {e.event.eventDate}</p>
+                                <p>Event Time : {e.event.eventTime}</p>
+                              </div>:null}
                             {e.isVideo ? (
                               <video
                                 onDragStart={(e) => e.preventDefault()}
@@ -6457,7 +6532,7 @@ const PrivateChannels = () => {
                                   e.isEmoji ? "message-emoji" : "message"
                                 }
                               >
-                                {!e.isVideo && !e.isImage && !e.isPoll
+                                {!e.isVideo && !e.isImage && !e.isPoll &&!e.isEvent
                                   ? e.message
                                   : null}
                               </div>
@@ -6537,6 +6612,13 @@ const PrivateChannels = () => {
                                 </Button>
                               </Form>
                             </div> : null}
+                            {e.isEvent?<div style={{ marginTop: '30px' }} className="EventFormDiv">
+                               <h5 style={{fontSize:'15px'}}>Event Created by {e.event.fullName}</h5>
+                                <p>Event Title : {e.event.eventTitle}</p>
+                             {e.event.eventDesc? <p>Event Description : {e.event.eventDesc}</p>:null}  
+                                <p>Event Date : {e.event.eventDate}</p>
+                                <p>Event Time : {e.event.eventTime}</p>
+                              </div>:null}
                             {e.isVideo ? (
                               <video
                                 onDragStart={(e) => e.preventDefault()}
