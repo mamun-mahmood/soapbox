@@ -104,9 +104,9 @@ const PrivateChannels = () => {
   const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0);
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [emojiPickerPrivate, setEmojiPickerPrivate] = useState(false);
-  const [AllMyEvents,setAllMyEvents] = useState([])
-  const [showAllMyEvents,setShowAllMyEvents] = useState(false)
- 
+  const [AllMyEvents, setAllMyEvents] = useState([])
+  const [showAllMyEvents, setShowAllMyEvents] = useState(false)
+
   const [showFeed, setShowFeed] = useState(true);
   const [clubFloor, setClubFloor] = useState(true);
   const [showCreateHoot, setShowCreateHoot] = useState(false);
@@ -321,32 +321,32 @@ const PrivateChannels = () => {
     }
   };
 
+  const getAllEvents = (username) => {
+    axios.post(`${BaseURL}/upload/getMyEvents`, {
+      username: username
+    })
+      .then(res => {
+        setAllMyEvents(res.data)
+        setShowAllMyEvents(true)
 
-  const getAllEvents=(username)=>{
-    axios.post(`${BaseURL}/upload/getMyEvents`,{
-      username:username
-    })
-    .then(res=>{
-      setAllMyEvents(res.data)
-      setShowAllMyEvents(true)
-      
-      setTimeout(() => {
-        if (document.getElementById("slideE")) {
-          document.getElementById(
-            "slideE"
-          ).style.transition = "1sec";
-          document.getElementById(
-            "slideE"
-          ).style.right = "250px";
-        }
-      }, 1);
-    })
+        setTimeout(() => {
+          if (document.getElementById("slideE")) {
+            document.getElementById(
+              "slideE"
+            ).style.transition = "1sec";
+            document.getElementById(
+              "slideE"
+            ).style.right = "250px";
+          }
+        }, 1);
+      })
   }
 
 
   // useEffect(() => {
   //  getAllEvents(username)
   // }, [username])
+
   useEffect(() => {
     socket.on("user-joined", (name) => {
       append(
@@ -1208,7 +1208,7 @@ const PrivateChannels = () => {
         privateUserImage={`${BaseURL}/profile-pictures/${userInfo[0] && userInfo[0].profilePic}`}
       />
 
-      <div className="private-channels" style={{ userSelect: "none" }}>
+      <div className="private-channels" style={{ userSelect: "none", overflowX: "clip" }}>
         <div className="channel-content" >
           {/* Sidebar Drawer which includes Private User Profile and other Extra Features... */}
           <div style={{ flex: '0.2' }}  >
@@ -1500,6 +1500,7 @@ const PrivateChannels = () => {
                         <div>
                           {userInfo[0] && userInfo[0].communityClub == 1 ? (
                             <div>
+                              {/* Club Tools label */}
                               <div
                                 className="live-header"
                                 style={{
@@ -1511,9 +1512,14 @@ const PrivateChannels = () => {
                                 Club Tools
                               </div>
 
+                              {/* Club Tools buttons */}
                               <div className="control">
-                                <button>Marketplace</button>
+                                {/* Marketplace button */}
+                                <button>
+                                  Marketplace
+                                </button>
 
+                                {/* Get Membership/Membership button */}
                                 <button
                                   onClick={() => {
                                     subscribe
@@ -1531,38 +1537,37 @@ const PrivateChannels = () => {
 
                           {userInformation.username !== username ? (
                             <div>
-                              <div className="live-header" style={{
-                                backgroundColor: "#8249A0",
-                                color: "white",
-                                borderRadius: "3px",
-                              }}>Member Tools</div>
+                              {/* Member Tools label */}
+                              <div
+                                className="live-header"
+                                style={{
+                                  backgroundColor: "#8249A0",
+                                  color: "white",
+                                  borderRadius: "3px",
+                                }}
+                              >
+                                Member Tools
+                              </div>
+
                               <div className="control">
-                                <button style={{ minWidth: "208px" }}
+                                {/* Video Meetings button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.verohive.net', title: 'VeroHive' })
-                                      setShowIframe(true)
+                                      setIframeBox({ src: 'https://www.verohive.net', title: 'VeroHive' });
+                                      setShowIframe(true);
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -1571,32 +1576,24 @@ const PrivateChannels = () => {
                                   Video Meetings
                                 </button>
 
-                                <button style={{ minWidth: "208px" }}
+                                {/* eDocuments button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.documega.com/enterprise-solutions/documega/', title: 'DocuMega' })
-                                      setShowIframe(true)
+                                      setIframeBox({ src: 'https://www.documega.com/enterprise-solutions/documega/', title: 'DocuMega' });
+                                      setShowIframe(true);
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -1605,32 +1602,25 @@ const PrivateChannels = () => {
                                   eDocuments
                                 </button>
 
-                                <button style={{ minWidth: "208px" }}
+                                {/* MegaHoot Vault button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahoot.com/vault/megahoot-vault/', title: 'MegaHoot Vault' })
-                                      setShowIframe(true)
+                                      setIframeBox({ src: 'https://www.megahoot.com/vault/megahoot-vault/', title: 'MegaHoot Vault' });
+                                      setShowIframe(true);
+
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -1639,9 +1629,16 @@ const PrivateChannels = () => {
                                   MegaHoot Vault
                                 </button>
 
-                                <button style={{ minWidth: "208px" }} onClick={() => { setScheduleBox(!scheduleBox) }} >Scheduler</button>
-
+                                {/* Scheduler button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
+                                  onClick={() => { setScheduleBox(!scheduleBox) }}
+                                >
+                                  Scheduler
+                                </button>
                               </div>
+
+                              {/* Crypto Tools label */}
                               <div
                                 className="live-header"
                                 style={{
@@ -1652,34 +1649,28 @@ const PrivateChannels = () => {
                               >
                                 Crypto Tools
                               </div>
-                              <div className="control">
-                                <button style={{ minWidth: "208px" }}
 
+                              {/* Crypto Tools buttons */}
+                              <div className="control">
+                                {/* Buy XMG Coins button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 500);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/', title: 'XMG Wallet' })
-                                      setShowIframe(true)
+                                      setIframeBox({ src: 'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/', title: 'XMG Wallet' });
+                                      setShowIframe(true);
+
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -1687,67 +1678,52 @@ const PrivateChannels = () => {
                                 >
                                   Buy XMG Coins
                                 </button>
-                                <button style={{ minWidth: "208px" }}
+
+                                {/* Pecu Novus Wallet button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://pecunovus.org/login/', title: 'Pecu Novus Wallet' })
-                                      setShowIframe(true)
+                                      setIframeBox({ src: 'https://pecunovus.org/login/', title: 'Pecu Novus Wallet' });
+                                      setShowIframe(true);
+
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
                                   }}
                                 >
                                   Pecu Novus Wallet
-
                                 </button>
 
-                                <button style={{ minWidth: "208px" }}
+                                {/* Crypto Index button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahootvault.com/', title: 'Crypto Index' })
-                                      setShowIframe(true)
+                                      setIframeBox({ src: 'https://www.megahootvault.com/', title: 'Crypto Index' });
+                                      setShowIframe(true);
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -1755,7 +1731,6 @@ const PrivateChannels = () => {
                                 >
                                   Crypto Index
                                 </button>
-
                               </div>
                             </div>
                           ) : null}
@@ -1787,6 +1762,7 @@ const PrivateChannels = () => {
                                 Membership
                               </div>
 
+                              {/* Membership bottons */}
                               <div className="control">
                                 {/* Membership button */}
                                 <button
@@ -1851,7 +1827,7 @@ const PrivateChannels = () => {
                                           ).style.transition = "1sec";
                                           document.getElementById(
                                             "slideR"
-                                          ).style.right = "250px";
+                                          ).style.right = "calc(100vw/5)";
                                         }
                                       }, 1);
                                     }
@@ -1861,37 +1837,37 @@ const PrivateChannels = () => {
                                 </button>
                               </div>
 
-                              <div className="live-header top-option-medium" style={{
-                                backgroundColor: "#8249A0",
-                                color: "white",
-                              }}>Member Tools</div>
+                              {/* Member Tools label */}
+                              <div
+                                className="live-header top-option-medium"
+                                style={{
+                                  backgroundColor: "#8249A0",
+                                  color: "white",
+                                }}
+                              >
+                                Member Tools
+                              </div>
+
+                              {/* Member Tools buttons */}
                               <div className="control">
-                                <button style={{ minWidth: "208px" }}
+                                {/* Video Meetings button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.verohive.net', title: 'VeroHive' })
-                                      setShowIframe(true)
+                                      setIframeBox({ src: 'https://www.verohive.net', title: 'VeroHive' });
+                                      setShowIframe(true);
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -1899,32 +1875,25 @@ const PrivateChannels = () => {
                                 >
                                   Video Meetings
                                 </button>
-                                <button style={{ minWidth: "208px" }}
+
+                                {/* eDocuments button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.documega.com/enterprise-solutions/documega/', title: 'DocuMega' })
-                                      setShowIframe(true)
+                                      setIframeBox({ src: 'https://www.documega.com/enterprise-solutions/documega/', title: 'DocuMega' });
+                                      setShowIframe(true);
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -1932,33 +1901,25 @@ const PrivateChannels = () => {
                                 >
                                   eDocuments
                                 </button>
-                                <button style={{ minWidth: "208px" }}
 
+                                {/* MegaHoot Vault button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahoot.com/vault/megahoot-vault/', title: 'MegaHoot Vault' })
-                                      setShowIframe(true)
+                                      setIframeBox({ src: 'https://www.megahoot.com/vault/megahoot-vault/', title: 'MegaHoot Vault' });
+                                      setShowIframe(true);
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -1966,8 +1927,17 @@ const PrivateChannels = () => {
                                 >
                                   MegaHoot Vault
                                 </button>
-                            
+
+                                {/* Scheduler button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
+                                  onClick={() => { setScheduleBox(!scheduleBox) }}
+                                >
+                                  Scheduler
+                                </button>
                               </div>
+
+                              {/* Crypto Tools label */}
                               <div
                                 className="live-header top-option-medium"
                                 style={{
@@ -1977,36 +1947,30 @@ const PrivateChannels = () => {
                               >
                                 Crypto Tools
                               </div>
-                              <div className="control">
-                                <button style={{ minWidth: "208px" }}
 
+                              {/* Crypto Tools buttons */}
+                              <div className="control">
+                                {/* Buy XMG Coins button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
-                                      setClubFloor(true)
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
+
+                                      setClubFloor(true);
                                       setTimeout(() => {
                                         setShowIframe(false);
-
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/', title: 'XMG Wallet' })
-                                      setShowIframe(true)
-                                      setClubFloor(false)
+                                      setIframeBox({ src: 'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/', title: 'XMG Wallet' });
+                                      setShowIframe(true);
+                                      setClubFloor(false);
+
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2014,104 +1978,57 @@ const PrivateChannels = () => {
                                 >
                                   Buy XMG Coins
                                 </button>
-                                <button style={{ minWidth: "208px" }}
+
+                                {/* Pecu Novus Wallet button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
-                                      setClubFloor(true)
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
+
+                                      setClubFloor(true);
                                       setTimeout(() => {
                                         setShowIframe(false);
-
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://pecunovus.org/login/', title: 'Pecu Novus Wallet' })
-                                      setShowIframe(true)
-                                      setClubFloor(false)
+                                      setIframeBox({ src: 'https://pecunovus.org/login/', title: 'Pecu Novus Wallet' });
+                                      setShowIframe(true);
+                                      setClubFloor(false);
+
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
                                   }}
                                 >
                                   Pecu Novus Wallet
-
                                 </button>
-                                {/* <button style={{ minWidth: "208px" }}
-                               
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
-                                    setClubFloor(true)
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    }, 1000);
-                                  } else {
-                                    setIframeBox({src:'https://megahootvault.org/login/',title:'MegaHoot Vault'})
-                                   setShowIframe(true)
-                                   setClubFloor(false)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "-15px";
-                                      }
-                                    }, 1);
-                                  }
-                                }}
-                                >
-                                  MegaHoot Vault
-                                </button> */}
-                                <button style={{ minWidth: "208px" }}
+
+                                {/* Crypto Index button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slideIFM"
-                                      ).style.right = "-100vw";
-                                      setClubFloor(true)
+                                      document.getElementById("slideIFM").style.transition = "2sec";
+                                      document.getElementById("slideIFM").style.right = "-100vw";
+
+                                      setClubFloor(true);
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahootvault.com/', title: 'Crypto Index' })
-                                      setShowIframe(true)
-                                      setClubFloor(false)
+                                      setIframeBox({ src: 'https://www.megahootvault.com/', title: 'Crypto Index' });
+                                      setShowIframe(true);
+                                      setClubFloor(false);
+
                                       setTimeout(() => {
-                                        if (
-                                          document.getElementById("slideIFM")
-                                        ) {
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slideIFM"
-                                          ).style.right = "-15px";
+                                        if (document.getElementById("slideIFM")) {
+                                          document.getElementById("slideIFM").style.transition = "1sec";
+                                          document.getElementById("slideIFM").style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2119,41 +2036,9 @@ const PrivateChannels = () => {
                                 >
                                   Crypto Index
                                 </button>
-                                {/* <button style={{ minWidth: "208px" }}
-                                onClick={() => {
-                                  if (showIframe) {
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.transition = "2sec";
-                                    document.getElementById(
-                                      "slideIFM"
-                                    ).style.right = "-100vw";
-                                    setClubFloor(true)
-                                    setTimeout(() => {
-                                      setShowIframe(false);
-                                    }, 1000);
-                                  } else {
-                                    setIframeBox({src:'https://www.verotownhall.com',title:'VeroHive'})
-                                   setShowIframe(true)
-                                   setClubFloor(false)
-                                    setTimeout(() => {
-                                      if (
-                                        document.getElementById("slideIFM")
-                                      ) {
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.transition = "1sec";
-                                        document.getElementById(
-                                          "slideIFM"
-                                        ).style.right = "-15px";
-                                      }
-                                    }, 1);
-                                  }
-                                }}
-                                >
-                                  TownHall
-                                </button> */}
                               </div>
+
+                              {/* Club Toolbox label */}
                               <div
                                 className="live-header top-option-medium"
                                 style={{
@@ -2163,14 +2048,30 @@ const PrivateChannels = () => {
                               >
                                 Club Toolbox
                               </div>
-                              <div className="control">
-                              <button style={{ minWidth: "208px" }} onClick={()=>{setScheduleBox(!scheduleBox)}} >Schedule An Event</button>
-                      
 
+                              {/* Club Toolbox buttons */}
+                              <div className="control">
+                                {/* Schedule a Virtual Experience button
+                                <button
+                                  style={{ minWidth: "208px" }}
+                                >
+                                  Schedule a Virtual Experience
+                                </button> */}
+
+                                {/* Schedule An Event button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
+                                  onClick={() => { setScheduleBox(!scheduleBox) }}
+                                >
+                                  Schedule An Event
+                                </button>
+
+                                {/* Make a Vero Audio Call button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     const Id = uuidv4();
+
                                     history.push({
                                       pathname: `/${uuidv4()}/AudioHall/${uuidv4()}`,
                                       state: {
@@ -2185,10 +2086,13 @@ const PrivateChannels = () => {
                                 >
                                   Make a Vero Audio Call
                                 </button>
+
+                                {/* Make a Vero Video Call button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     const Id = uuidv4();
+
                                     history.push({
                                       pathname: `/${uuidv4()}/SoapboxHall/${uuidv4()}`,
                                       state: {
@@ -2203,60 +2107,31 @@ const PrivateChannels = () => {
                                   Make a Vero Video Call
                                 </button>
 
-                                {/* <button style={{ minWidth: '208px' }}
-                                                                    onClick={() => {
-                                                                        setShowRequest(false);
-                                                                        setShowSubscribers(false);
-                                                                        setShowPricingSetting(!showPricingSetting);
-                                                                        setShowNotification(false);
-                                                                        setShowFeed(false);
-                                                                        setShowChatRoom(false);
-                                                                        setOnDemandMedia(false);
-
-                                                                        setTimeout(() => {
-                                                                            if(document.getElementById('slide')){
-
-                                                                                document.getElementById('slide').style.transition='1sec';
-                                                                                document.getElementById('slide').style.right='250px';
-                                                                            }
-                                                                          
-                                                                        }, 1)
-                                                                    }}
-                                                                >Price Settings</button> */}
+                                {/* Price Settings button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showPricingSetting) {
-                                      document.getElementById(
-                                        "slide"
-                                      ).style.transition = "2sec";
-                                      document.getElementById(
-                                        "slide"
-                                      ).style.right = "-100vw";
+                                      document.getElementById("slide").style.transition = "2sec";
+                                      document.getElementById("slide").style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowPricingSetting(false);
                                       }, 1000);
                                     } else {
-                                      setOnDemandMedia(false),
-                                        setShowRequest(false);
+                                      setOnDemandMedia(false);
+                                      setShowRequest(false);
                                       setShowFeed(false);
                                       setShowSubscribers(false);
-                                      setShowPricingSetting(
-                                        !showPricingSetting
-                                      );
+                                      setShowPricingSetting(!showPricingSetting);
                                       setShowNotification(false);
                                       setShowChatRoom(true);
                                       setPrivateChat(false);
 
                                       setTimeout(() => {
                                         if (document.getElementById("slide")) {
-                                          document.getElementById(
-                                            "slide"
-                                          ).style.transition = "1sec";
-                                          document.getElementById(
-                                            "slide"
-                                          ).style.right = "250px";
+                                          document.getElementById("slide").style.transition = "1sec";
+                                          document.getElementById("slide").style.right = "calc(100vw/5)";
                                         }
                                       }, 1);
                                     }
@@ -2264,10 +2139,15 @@ const PrivateChannels = () => {
                                 >
                                   Price Settings
                                 </button>
-                                <button style={{ minWidth: "208px" }}>
+
+                                {/* Podcasts button */}
+                                <button
+                                  style={{ minWidth: "208px" }}
+                                >
                                   Podcasts
                                 </button>
 
+                                {/* On-demand Audio button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
@@ -2287,6 +2167,7 @@ const PrivateChannels = () => {
                                   On-demand Audio
                                 </button>
 
+                                {/* On-demand Video button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
@@ -2306,6 +2187,7 @@ const PrivateChannels = () => {
                                   On-demand Video
                                 </button>
 
+                                {/* On-demand Photos button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
@@ -2326,8 +2208,9 @@ const PrivateChannels = () => {
                                 </button>
                               </div>
 
-                              <br></br>
+                              <br />
 
+                              {/* Pay Per View Event label */}
                               <div
                                 className="live-header top-option-medium"
                                 style={{
@@ -2337,13 +2220,20 @@ const PrivateChannels = () => {
                               >
                                 Pay Per View Event
                               </div>
+
+                              {/* Pay Per View Event buttons */}
                               <div className="control">
+                                {/* Schedule Pay Per View button */}
                                 <button style={{ minWidth: "208px" }}>
                                   Schedule Pay Per View
                                 </button>
+
+                                {/* Broadcast Vero Live PPV button */}
                                 <button style={{ minWidth: "208px" }}>
                                   Broadcast Vero Live PPV
                                 </button>
+
+                                {/* Broadcast Vero Pre-recorded PPV button */}
                                 <button style={{ minWidth: "208px" }}>
                                   Broadcast Vero Pre-recorded PPV
                                 </button>
@@ -2353,21 +2243,12 @@ const PrivateChannels = () => {
                             <div>
                               {userInfo[0] && userInfo[0].communityClub !== 1 ? (
                                 <div className="control">
-                                  {/* <button>
-                              {callRequest
-                                ? "Virtual Experiences"
-                                : "Virtual Experiences"}
-                            </button> */}
-
+                                  {/* 1 on 1 call button */}
                                   <button
                                     onClick={() => {
                                       if (oneOnOnecall) {
-                                        document.getElementById(
-                                          "slideOOC"
-                                        ).style.transition = "2sec";
-                                        document.getElementById(
-                                          "slideOOC"
-                                        ).style.right = "-100vw";
+                                        document.getElementById("slideOOC").style.transition = "2sec";
+                                        document.getElementById("slideOOC").style.right = "-100vw";
 
                                         setTimeout(() => {
                                           setOneOnOneCall(false);
@@ -2379,16 +2260,11 @@ const PrivateChannels = () => {
                                         setVerifiedAutograph(false);
                                         setShowFeed(false);
                                         setShowSubscribeButton(false);
+
                                         setTimeout(() => {
-                                          if (
-                                            document.getElementById("slideOOC")
-                                          ) {
-                                            document.getElementById(
-                                              "slideOOC"
-                                            ).style.transition = "1sec";
-                                            document.getElementById(
-                                              "slideOOC"
-                                            ).style.right = "250px";
+                                          if (document.getElementById("slideOOC")) {
+                                            document.getElementById("slideOOC").style.transition = "1sec";
+                                            document.getElementById("slideOOC").style.right = "calc(100vw/5)";
                                           }
                                         }, 1);
                                       }
@@ -2396,15 +2272,13 @@ const PrivateChannels = () => {
                                   >
                                     1 on 1 call
                                   </button>
+
+                                  {/* Group call button */}
                                   <button
                                     onClick={() => {
                                       if (groupCall) {
-                                        document.getElementById(
-                                          "slidegC"
-                                        ).style.transition = "2sec";
-                                        document.getElementById(
-                                          "slidegC"
-                                        ).style.right = "-100vw";
+                                        document.getElementById("slidegC").style.transition = "2sec";
+                                        document.getElementById("slidegC").style.right = "-100vw";
 
                                         setTimeout(() => {
                                           setGroupCall(false);
@@ -2418,15 +2292,9 @@ const PrivateChannels = () => {
                                         setShowSubscribeButton(false);
 
                                         setTimeout(() => {
-                                          if (
-                                            document.getElementById("slidegC")
-                                          ) {
-                                            document.getElementById(
-                                              "slidegC"
-                                            ).style.transition = "1sec";
-                                            document.getElementById(
-                                              "slidegC"
-                                            ).style.right = "250px";
+                                          if (document.getElementById("slidegC")) {
+                                            document.getElementById("slidegC").style.transition = "1sec";
+                                            document.getElementById("slidegC").style.right = "calc(100vw/5)";
                                           }
                                         }, 1);
                                       }
@@ -2434,15 +2302,13 @@ const PrivateChannels = () => {
                                   >
                                     {callRequest ? "Group call" : "Group call"}
                                   </button>
+
+                                  {/* Message button */}
                                   <button
                                     onClick={() => {
                                       if (requestMessage) {
-                                        document.getElementById(
-                                          "slideRM"
-                                        ).style.transition = "2sec";
-                                        document.getElementById(
-                                          "slideRM"
-                                        ).style.right = "-100vw";
+                                        document.getElementById("slideRM").style.transition = "2sec";
+                                        document.getElementById("slideRM").style.right = "-100vw";
 
                                         setTimeout(() => {
                                           setRequestMessage(false);
@@ -2456,15 +2322,9 @@ const PrivateChannels = () => {
                                         setShowSubscribeButton(false);
 
                                         setTimeout(() => {
-                                          if (
-                                            document.getElementById("slideRM")
-                                          ) {
-                                            document.getElementById(
-                                              "slideRM"
-                                            ).style.transition = "1sec";
-                                            document.getElementById(
-                                              "slideRM"
-                                            ).style.right = "250px";
+                                          if (document.getElementById("slideRM")) {
+                                            document.getElementById("slideRM").style.transition = "1sec";
+                                            document.getElementById("slideRM").style.right = "250px";
                                           }
                                         }, 1);
                                       }
@@ -2472,15 +2332,13 @@ const PrivateChannels = () => {
                                   >
                                     Message
                                   </button>
+
+                                  {/* Autograph button */}
                                   <button
                                     onClick={() => {
                                       if (verifiedAutograph) {
-                                        document.getElementById(
-                                          "slideVA"
-                                        ).style.transition = "2sec";
-                                        document.getElementById(
-                                          "slideVA"
-                                        ).style.right = "-100vw";
+                                        document.getElementById("slideVA").style.transition = "2sec";
+                                        document.getElementById("slideVA").style.right = "-100vw";
 
                                         setTimeout(() => {
                                           setVerifiedAutograph(false);
@@ -2489,22 +2347,14 @@ const PrivateChannels = () => {
                                         setOneOnOneCall(false);
                                         setGroupCall(false);
                                         setRequestMessage(false);
-                                        setVerifiedAutograph(
-                                          !verifiedAutograph
-                                        );
+                                        setVerifiedAutograph(!verifiedAutograph);
                                         setShowFeed(false);
                                         setShowSubscribeButton(false);
 
                                         setTimeout(() => {
-                                          if (
-                                            document.getElementById("slideVA")
-                                          ) {
-                                            document.getElementById(
-                                              "slideVA"
-                                            ).style.transition = "1sec";
-                                            document.getElementById(
-                                              "slideVA"
-                                            ).style.right = "250px";
+                                          if (document.getElementById("slideVA")) {
+                                            document.getElementById("slideVA").style.transition = "1sec";
+                                            document.getElementById("slideVA").style.right = "250px";
                                           }
                                         }, 1);
                                       }
@@ -2512,8 +2362,13 @@ const PrivateChannels = () => {
                                   >
                                     Autograph
                                   </button>
-                                  <button>Marketplace</button>
 
+                                  {/* Marketplace button */}
+                                  <button>
+                                    Marketplace
+                                  </button>
+
+                                  {/* Get Membership/Membership button */}
                                   <button
                                     onClick={() => {
                                       subscribe
@@ -2528,7 +2383,7 @@ const PrivateChannels = () => {
                                 </div>
                               ) : null}
 
-
+                              {/* On-demand Media buttons */}
                               <div
                                 className="live-header"
                                 style={{
@@ -2539,28 +2394,9 @@ const PrivateChannels = () => {
                               >
                                 On-demand Media
                               </div>
-                              <div className="control">
-                                {/* <button style={{ minWidth: '208px' }} >Schedule a Virtual Experience</button>
-                                                            <button style={{ minWidth: '208px' }} >Schedule Pay Per View</button>
-                                                               
-                                                                <button style={{ minWidth: '208px' }} >Make a Vero Audio Call</button>
-                                                                <button style={{ minWidth: '208px' }} >Make a Vero Video Call</button>
-                                                               
-                                                                <button style={{ minWidth: '208px' }} 
-                                                                  onClick={() => {
-                                                                    setShowRequest(false);
-                                                                    setShowSubscribers(false);
-                                                                    setShowPricingSetting(!showPricingSetting);
-                                                                    setShowNotification(false);
-                                                                    setShowFeed(false);
-                                                                    setShowChatRoom(false);
-                                                                }}
-                                                                >Price Settings</button> */}
-                                {/* <button style={{ minWidth: '208px' }} >Podcasts</button> */}
-                                {/* <button style={{ minWidth: '208px' }} >Audio</button>
-                                                                <button style={{ minWidth: '208px' }} >Video</button>
-                                                                <button style={{ minWidth: '208px' }} >Photos</button> */}
 
+                              <div className="control">
+                                {/* On-demand Audio button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
@@ -2581,6 +2417,7 @@ const PrivateChannels = () => {
                                   On-demand Audio
                                 </button>
 
+                                {/* On-demand Video button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
@@ -2601,6 +2438,7 @@ const PrivateChannels = () => {
                                   On-demand Video
                                 </button>
 
+                                {/* On-demand Photos button */}
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
@@ -2725,8 +2563,8 @@ const PrivateChannels = () => {
                     CLUB FLOOR
                   </span>
 
-                  <span style={{ fontSize: "14px" }} >CLUB AMENITIES</span>
-                  <span style={{ fontSize: "14px" }} >EVENTS</span>
+                  <span style={{ fontSize: "14px" }}>CLUB AMENITIES</span>
+                  <span style={{ fontSize: "14px" }}>EVENTS</span>
 
                   <span>
                     <SoapboxTooltip title={"MARKETPLACE"} placement="bottom" privateTooltip={true}>
@@ -2882,18 +2720,17 @@ const PrivateChannels = () => {
                 </div>
               </div>
 
-              {inviteBox ? <MyVerticallyCenteredModal
-                title={"Invitation"}
-                closeModal={() => setInviteBox(false)}
-                clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
-                clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
-                username={userInformation.username}
-
-
-
-                show={inviteBox}
-                onHide={() => setInviteBox(false)}
-              /> : null}
+              {inviteBox
+                ? <MyVerticallyCenteredModal
+                  title={"Invitation"}
+                  closeModal={() => setInviteBox(false)}
+                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+                  username={userInformation.username}
+                  show={inviteBox}
+                  onHide={() => setInviteBox(false)}
+                />
+                : null}
 
               {scheduleBox
                 ? <MyVerticallyCenteredScheduler
@@ -2903,11 +2740,7 @@ const PrivateChannels = () => {
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
                   username={userInformation.username}
                   fullName={userFullName}
-                  
-
-                  sumitChatData={(data)=>{sumitChatDataFromScheduler(data)}}
-
-
+                  sumitChatData={(data) => { sumitChatDataFromScheduler(data) }}
                   show={scheduleBox}
                   onHide={() => setScheduleBox(false)}
                 /> : null}
@@ -2916,24 +2749,26 @@ const PrivateChannels = () => {
                 <SoapboxPrivateClubRules setShowClubRules={setShowClubRules} />
               ) : null}
 
-              {showBreakoffForm ? <div className="showBreakoffForm" id="showBreakoffFormId">
-                <h5>Enter The Topic for BreakOff Chat</h5>
-                <div style={{ padding: '33px', position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}> <input placeholder="Enter Topic" value={breakOffInput} onChange={(e) => {
-                  setBreakOffInput(e.target.value);
-                }} />
-                  <button className="d-grid col-12 btn-main login-form-button" style={{ position: 'absolute', right: '0' }}
-                    onClick={() => {
-                      if (breakOffInput) { createBreakoff() } else {
-                        toast.success(
-                          "Please Enter Topic for Breakoff chat"
-                        );
-                      }
+              {showBreakoffForm
+                ? <div className="showBreakoffForm" id="showBreakoffFormId">
+                  <h5>Enter The Topic for BreakOff Chat</h5>
+                  <div style={{ padding: '33px', position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}> <input placeholder="Enter Topic" value={breakOffInput} onChange={(e) => {
+                    setBreakOffInput(e.target.value);
+                  }} />
+                    <button className="d-grid col-12 btn-main login-form-button" style={{ position: 'absolute', right: '0' }}
+                      onClick={() => {
+                        if (breakOffInput) { createBreakoff() } else {
+                          toast.success(
+                            "Please Enter Topic for Breakoff chat"
+                          );
+                        }
 
-                    }}
-                  >Create Now</button>
+                      }}
+                    >Create Now</button>
+                  </div>
+
                 </div>
-
-              </div> : null}
+                : null}
 
               {oneOnOnecall ? (
                 <div className="slide-container">
@@ -2947,37 +2782,52 @@ const PrivateChannels = () => {
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
+                      borderRadius: "0.5rem",
+                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
+                    className="slideOOC-class"
                   >
-                    <FaWindowClose
-                      style={{
-                        cursor: "pointer",
-                        position: "absolute",
-                        right: "0px",
-                        color: "red",
-                        top: "0px",
-                      }}
-                      className="FaWindowClose"
-                      onClick={() => {
-                        document.getElementById("slideOOC").style.transition =
-                          "2sec";
-                        document.getElementById("slideOOC").style.right =
-                          "-100vw";
+                    <span>
+                      <IoCloseCircle
+                        style={{
+                          cursor: "pointer",
+                          color: "#8249A0",
+                          fontSize: "1.7rem",
+                          position: "absolute",
+                          right: "0px",
+                          top: "0px",
+                          margin: "0.5rem"
+                        }}
+                        onClick={() => {
+                          document.getElementById("slideOOC").style.transition = "2sec";
+                          document.getElementById("slideOOC").style.right = "-100vw";
 
-                        setTimeout(() => {
-                          setShowSubscribeButton(false);
-                        }, 1000);
-                      }}
-                    />
-                    <div>
+                          setTimeout(() => {
+                            setShowSubscribeButton(false);
+                            setOneOnOneCall(false);
+                          }, 1000);
+                        }}
+                      />
+                    </span>
+
+                    <div style={{ flex: "0.7" }}>
                       {" "}
-                      <img src={oneonone} width="400px" />
+                      <img
+                        src={oneonone}
+                        width="100%"
+                        style={{
+                          borderRadius: "0.5rem",
+                          boxShadow: "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px"
+                        }}
+                      />
+
                       <p
                         style={{
                           maxWidth: "390px",
-                          lineHeight: "25px",
+                          lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify'
+                          textAlign: 'justify',
+                          marginTop: "0.5rem"
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -2988,10 +2838,11 @@ const PrivateChannels = () => {
                         XMG Wallet at www.megahoot.org. If you do not have one
                         it's very simple to create your XMG Wallet.
                       </p>
+
                       <p
                         style={{
                           maxWidth: "390px",
-                          lineHeight: "25px",
+                          lineHeight: "1.6rem",
                           fontSize: "smaller",
                           textAlign: 'justify'
                         }}
@@ -3001,7 +2852,10 @@ const PrivateChannels = () => {
                         partners Stripe for convenience.
                       </p>
                     </div>
-                    <Form className="login-form mx-auto p-4 pb-0">
+
+                    <Form style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
+                      className="login-form mx-auto p-4 pb-0"
+                    >
                       <p
                         className="text-center mb-1 signup-head"
                         style={{ fontSize: "smaller" }}
@@ -3037,31 +2891,38 @@ const PrivateChannels = () => {
                       width: '100%',
                       overflowY: 'scroll',
                       height: '100vh',
-
                     }}
                   >
-                    <FaWindowClose
-                      style={{
-                        cursor: "pointer",
-                        position: "absolute",
-                        right: "0px",
-                        color: "red",
-                        top: "0px",
-                      }}
-                      className="FaWindowClose"
-                      onClick={() => {
-                        document.getElementById("slideIFM").style.transition =
-                          "2sec";
-                        document.getElementById("slideIFM").style.right =
-                          "-100vw";
-                        setClubFloor(true)
-                        setTimeout(() => {
-                          setShowIframe(false);
-                        }, 500);
-                      }}
-                    />
-                    <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
-                      title={iframeBox.title} width="100%" height="100%"></iframe>
+                    <span>
+                      <IoCloseCircle
+                        style={{
+                          cursor: "pointer",
+                          color: "#8249A0",
+                          fontSize: "1.7rem",
+                          position: "absolute",
+                          right: "0px",
+                          top: "0px",
+                        }}
+                        onClick={() => {
+                          document.getElementById("slideIFM").style.transition = "2sec";
+                          document.getElementById("slideIFM").style.right = "-100vw";
+
+                          setClubFloor(true);
+                          setTimeout(() => {
+                            setShowIframe(false);
+                          }, 500);
+                        }}
+                      />
+                    </span>
+
+                    <iframe
+                      src={iframeBox.src}
+                      allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
+                      title={iframeBox.title}
+                      width="100%"
+                      height="100%"
+                    >
+                    </iframe>
                   </div>
                 </div>
               ) : null}
@@ -3078,40 +2939,54 @@ const PrivateChannels = () => {
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
+                      borderRadius: "0.5rem",
+                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
+                    className="slideSSB-class"
                   >
-                    <FaWindowClose
-                      style={{
-                        cursor: "pointer",
-                        position: "absolute",
-                        right: "5px",
-                        color: "red",
-                        top: "5px",
-                      }}
-                      className="FaWindowClose"
-                      onClick={() => {
-                        document.getElementById("slideSSB").style.transition =
-                          "2sec";
-                        document.getElementById("slideSSB").style.right =
-                          "-100vw";
+                    <span>
+                      <IoCloseCircle
+                        style={{
+                          cursor: "pointer",
+                          color: "#8249A0",
+                          fontSize: "1.7rem",
+                          position: "absolute",
+                          right: "0px",
+                          top: "0px",
+                          margin: "0.5rem"
+                        }}
+                        onClick={() => {
+                          document.getElementById("slideSSB").style.transition = "2sec";
+                          document.getElementById("slideSSB").style.right = "-100vw";
 
-                        setTimeout(() => {
-                          setShowSubscribeButton(false);
-                        }, 1000);
-                      }}
-                    />
-                    <div>
+                          setTimeout(() => {
+                            setShowSubscribeButton(false);
+                          }, 1000);
+                        }}
+                      />
+                    </span>
+
+                    <div style={{ flex: "0.7" }}>
                       {" "}
-                      <img src={membershipGraphic} width="400px" />
+                      <img
+                        src={membershipGraphic}
+                        width="100%"
+                        style={{
+                          borderRadius: "0.5rem",
+                          maxWidth: "400px",
+                          boxShadow: "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px"
+                        }}
+                      />
+
                       {!subscribe ? (
                         <div>
                           <p
                             style={{
                               maxWidth: "390px",
-                              lineHeight: "25px",
+                              lineHeight: "1.6rem",
                               fontSize: "smaller",
-                              textAlign: 'justify'
-
+                              textAlign: 'justify',
+                              marginTop: "0.5rem"
                             }}
                           >
                             MegaHoot Soapbox recommends that members use the XMG
@@ -3123,10 +2998,11 @@ const PrivateChannels = () => {
                             not have one it's very simple to create your XMG
                             Wallet.
                           </p>
+
                           <p
                             style={{
                               maxWidth: "390px",
-                              lineHeight: "25px",
+                              lineHeight: "1.6rem",
                               fontSize: "smaller",
                               textAlign: 'justify'
                             }}
@@ -3140,7 +3016,7 @@ const PrivateChannels = () => {
                     </div>
 
                     {!subscribe ? (
-                      <Form
+                      <Form style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
                         className="login-form mx-auto p-4 pb-0"
                         onSubmit={(e) => e.preventDefault()}
                       >
@@ -3163,29 +3039,35 @@ const PrivateChannels = () => {
                             name="mid"
                             value="SB7MQws35cr7x4tDnAdyKyx0grdOx3yEWi736OKuExjPXVrPF9TKYTvOLxJJl6UyrMz4yFSBahDVF1l3eKgZHf4W1k4TM34hAak1GDnM6RgcN6VqaTJreY8vL8NV7ewvEAf14Voigb3U"
                           />
+
                           <input
                             type="hidden"
                             name="inv"
                             value={currentInvoice}
                           />
+
                           <input
                             type="hidden"
                             name="subtotal"
                             value={subscribePrice}
                           />
+
                           <input type="hidden" name="curr" value="XMG" />
 
                           <input type="hidden" name="tp[]" value="1" />
+
                           <input
                             type="hidden"
                             name="name[]"
                             value={`${userInfo[0].name}'s Club Membership`}
                           />
+
                           <input
                             type="hidden"
                             name="amount[]"
                             value={subscribePrice}
                           />
+
                           <input type="hidden" name="q[]" value="1" />
 
                           <input
@@ -3231,6 +3113,7 @@ const PrivateChannels = () => {
                             </button>
 
                             <br></br>
+
                             <button
                               onClick={() => {
                                 verifyOrder(username);
@@ -3243,7 +3126,9 @@ const PrivateChannels = () => {
                                 ? `Activate Services If Paid Already`
                                 : `Already a Member`}
                             </button>
-                            <p style={{ textAlign: "center" }}>Or</p>
+
+                            <p className="get-membership-or">Or</p>
+
                             <button
                               onClick={() => {
                                 history.push({
@@ -3294,37 +3179,52 @@ const PrivateChannels = () => {
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
+                      borderRadius: "0.5rem",
+                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
+                    className="slidegC-class"
                   >
-                    <FaWindowClose
-                      style={{
-                        cursor: "pointer",
-                        position: "absolute",
-                        right: "0px",
-                        color: "red",
-                        top: "0px",
-                      }}
-                      className="FaWindowClose"
-                      onClick={() => {
-                        document.getElementById("slidegC").style.transition =
-                          "2sec";
-                        document.getElementById("slidegC").style.right =
-                          "-100vw";
+                    <span>
+                      <IoCloseCircle
+                        style={{
+                          cursor: "pointer",
+                          color: "#8249A0",
+                          fontSize: "1.7rem",
+                          position: "absolute",
+                          right: "0px",
+                          top: "0px",
+                          margin: "0.5rem"
+                        }}
+                        onClick={() => {
+                          document.getElementById("slidegC").style.transition = "2sec";
+                          document.getElementById("slidegC").style.right = "-100vw";
 
-                        setTimeout(() => {
-                          setShowSubscribeButton(false);
-                        }, 1000);
-                      }}
-                    />
-                    <div>
+                          setTimeout(() => {
+                            setShowSubscribeButton(false);
+                            setGroupCall(false);
+                          }, 1000);
+                        }}
+                      />
+                    </span>
+
+                    <div style={{ flex: "0.7" }}>
                       {" "}
-                      <img src={groupcall} width="400px" />
+                      <img
+                        src={groupcall}
+                        width="100%"
+                        style={{
+                          borderRadius: "0.5rem",
+                          boxShadow: "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px"
+                        }}
+                      />
+
                       <p
                         style={{
                           maxWidth: "390px",
-                          lineHeight: "25px",
+                          lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify'
+                          textAlign: 'justify',
+                          marginTop: "0.5rem"
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3335,10 +3235,11 @@ const PrivateChannels = () => {
                         XMG Wallet at www.megahoot.org. If you do not have one
                         it's very simple to create your XMG Wallet.
                       </p>
+
                       <p
                         style={{
                           maxWidth: "390px",
-                          lineHeight: "25px",
+                          lineHeight: "1.6rem",
                           fontSize: "smaller",
                           textAlign: 'justify'
                         }}
@@ -3348,7 +3249,10 @@ const PrivateChannels = () => {
                         partners Stripe for convenience.
                       </p>
                     </div>
-                    <Form className="login-form mx-auto p-4 pb-0">
+
+                    <Form style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
+                      className="login-form mx-auto p-4 pb-0"
+                    >
                       <p
                         className="text-center mb-1 signup-head"
                         style={{ fontSize: "smaller" }}
@@ -3356,7 +3260,6 @@ const PrivateChannels = () => {
                         Request Group call
                       </p>
 
-                      {/* <p>Cost: {groupCallPrice} XMG</p> */}
                       <button
                         disabled={groupCallPrice == 0 ? true : false}
                         className="d-grid col-12 btn-main login-form-button"
@@ -3366,7 +3269,6 @@ const PrivateChannels = () => {
                         Request Now for {groupCallPrice} XMG
                       </button>
                     </Form>{" "}
-                    {/* <div className="btns"> <button>Request</button></div> */}
                   </div>
                 </div>
               ) : null}
@@ -3383,43 +3285,51 @@ const PrivateChannels = () => {
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
+                      borderRadius: "0.5rem",
+                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
+                    className="slideRM-class"
                   >
-                    {/* <h5>Request Personal Message</h5>
-                                
-                                <img src={personalmessage} width="400px" />
-                                <p>Cost: {requestMessagePrice} XMG</p>
-                                <input placeholder="Type Message" /> */}
-                    {/* <div className="btns"> <button>Request</button></div> */}
+                    <span>
+                      <IoCloseCircle
+                        style={{
+                          cursor: "pointer",
+                          color: "#8249A0",
+                          fontSize: "1.7rem",
+                          position: "absolute",
+                          right: "0px",
+                          top: "0px",
+                          margin: "0.5rem"
+                        }}
+                        onClick={() => {
+                          document.getElementById("slideRM").style.transition = "2sec";
+                          document.getElementById("slideRM").style.right = "-100vw";
 
-                    <FaWindowClose
-                      style={{
-                        cursor: "pointer",
-                        position: "absolute",
-                        right: "0px",
-                        color: "red",
-                        top: "0px",
-                      }}
-                      className="FaWindowClose"
-                      onClick={() => {
-                        document.getElementById("slideRM").style.transition =
-                          "2sec";
-                        document.getElementById("slideRM").style.right =
-                          "-100vw";
+                          setTimeout(() => {
+                            setShowSubscribeButton(false);
+                            setRequestMessage(0);
+                          }, 1000);
+                        }}
+                      />
+                    </span>
 
-                        setTimeout(() => {
-                          setShowSubscribeButton(false);
-                        }, 1000);
-                      }}
-                    />
-                    <div>
-                      <img src={personalmessage} width="400px" />
+                    <div style={{ flex: "0.7" }}>
+                      <img
+                        src={personalmessage}
+                        width="100%"
+                        style={{
+                          borderRadius: "0.5rem",
+                          boxShadow: "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px"
+                        }}
+                      />
+
                       <p
                         style={{
                           maxWidth: "390px",
-                          lineHeight: "25px",
+                          lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify'
+                          textAlign: 'justify',
+                          marginTop: "0.5rem"
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3433,7 +3343,7 @@ const PrivateChannels = () => {
                       <p
                         style={{
                           maxWidth: "390px",
-                          lineHeight: "25px",
+                          lineHeight: "1.6rem",
                           fontSize: "smaller",
                           textAlign: 'justify'
                         }}
@@ -3443,7 +3353,10 @@ const PrivateChannels = () => {
                         partners Stripe for convenience.
                       </p>
                     </div>
-                    <Form className="login-form mx-auto p-4 pb-0">
+
+                    <Form style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
+                      className="login-form mx-auto p-4 pb-0"
+                    >
                       <p
                         className="text-center mb-1 signup-head"
                         style={{ fontSize: "smaller" }}
@@ -3451,7 +3364,6 @@ const PrivateChannels = () => {
                         Request Personal Message
                       </p>
 
-                      {/* <p>Cost: {groupCallPrice} XMG</p> */}
                       <button
                         disabled={requestMessagePrice == 0 ? true : false}
                         className="d-grid col-12 btn-main login-form-button"
@@ -3477,40 +3389,51 @@ const PrivateChannels = () => {
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
+                      borderRadius: "0.5rem",
+                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
+                    className="slideVA-class"
                   >
-                    {/* <h5>Verified Autograph</h5>
-                                <p>Cost: {verifiedAutographPrice} XMG</p>
-                                <div className="btns"> <button>Request</button></div> */}
+                    <span>
+                      <IoCloseCircle
+                        style={{
+                          cursor: "pointer",
+                          color: "#8249A0",
+                          fontSize: "1.7rem",
+                          position: "absolute",
+                          right: "0px",
+                          top: "0px",
+                          margin: "0.5rem"
+                        }}
+                        onClick={() => {
+                          document.getElementById("slideVA").style.transition = "2sec";
+                          document.getElementById("slideVA").style.right = "-100vw";
 
-                    <FaWindowClose
-                      style={{
-                        cursor: "pointer",
-                        position: "absolute",
-                        right: "0px",
-                        color: "red",
-                        top: "0px",
-                      }}
-                      className="FaWindowClose"
-                      onClick={() => {
-                        document.getElementById("slideVA").style.transition =
-                          "2sec";
-                        document.getElementById("slideVA").style.right =
-                          "-100vw";
+                          setTimeout(() => {
+                            setShowSubscribeButton(false);
+                            setVerifiedAutograph(0);
+                          }, 1000);
+                        }}
+                      />
+                    </span>
 
-                        setTimeout(() => {
-                          setShowSubscribeButton(false);
-                        }, 1000);
-                      }}
-                    />
-                    <div>
-                      <img src={groupcall} width="400px" />
+                    <div style={{ flex: "0.7" }}>
+                      <img
+                        src={groupcall}
+                        width="100%"
+                        style={{
+                          borderRadius: "0.5rem",
+                          boxShadow: "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px"
+                        }}
+                      />
+
                       <p
                         style={{
                           maxWidth: "390px",
-                          lineHeight: "25px",
+                          lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify'
+                          textAlign: 'justify',
+                          marginTop: "0.5rem"
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3524,7 +3447,7 @@ const PrivateChannels = () => {
                       <p
                         style={{
                           maxWidth: "390px",
-                          lineHeight: "25px",
+                          lineHeight: "1.6rem",
                           fontSize: "smaller",
                           textAlign: 'justify'
                         }}
@@ -3535,7 +3458,9 @@ const PrivateChannels = () => {
                       </p>
                     </div>
 
-                    <Form className="login-form mx-auto p-4 pb-0">
+                    <Form style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
+                      className="login-form mx-auto p-4 pb-0"
+                    >
                       <h5
                         className="text-center mb-1 signup-head"
                         style={{ fontSize: "smaller" }}
@@ -3543,7 +3468,6 @@ const PrivateChannels = () => {
                         Request Verified Autograph
                       </h5>
 
-                      {/* <p>Cost: {groupCallPrice} XMG</p> */}
                       <button
                         disabled={verifiedAutographPrice == 0 ? true : false}
                         className="d-grid col-12 btn-main login-form-button"
@@ -4935,7 +4859,7 @@ const PrivateChannels = () => {
                       fontSize: "14px ",
                       borderRadius: "8px",
                     }}
-                    onClick={()=>getAllEvents(username)}
+                    onClick={() => getAllEvents(username)}
                   >
                     EVENTS
                   </span>
@@ -5140,41 +5064,48 @@ const PrivateChannels = () => {
                   <div
                     id="slideR"
                     style={{
+                      borderRadius: "10px",
+                      minWidth: "600px",
+                      minHeight: "400px",
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "flex-start",
                       alignItems: "center",
                       backgroundColor: "#D6C8E1",
                       margin: "1rem",
-                      minWidth: "600px",
-                      minHeight: "400px",
+                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
+                    className="slideR-class"
                   >
                     <div
                       style={{
                         backgroundColor: "#8249A0",
-                        padding: "5px",
-                        width: "600px",
+                        // padding: "5px",
+                        width: "100%",
                         display: "flex",
                         flexDirection: "row",
                         justifyContent: "space-between",
                         alignItems: "center",
                         color: "white",
+                        padding: "0.5rem",
                       }}
                     >
-                      <h5>Club Requests</h5>
-                      <FaWindowClose
-                        className="FaWindowClose"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          document.getElementById("slideR").style.transition = "2sec";
-                          document.getElementById("slideR").style.right = "-100vw";
+                      <h5 style={{ fontSize: "1.2rem", marginBottom: 0 }}>Club Requests </h5>
+                      <SoapboxTooltip title="Close" placement="left">
+                        <span>
+                          <IoCloseCircle
+                            style={{ cursor: "pointer", color: "#DCD5FA", fontSize: "1.7rem" }}
+                            onClick={() => {
+                              document.getElementById("slideR").style.transition = "2sec";
+                              document.getElementById("slideR").style.right = "-100vw";
 
-                          setTimeout(() => {
-                            setShowRequest(false);
-                          }, 1000);
-                        }}
-                      />
+                              setTimeout(() => {
+                                setShowRequest(false);
+                              }, 1000);
+                            }}
+                          />
+                        </span>
+                      </SoapboxTooltip>
 
                     </div>
                     {/* <p>No Requests</p> */}
@@ -5219,7 +5150,229 @@ const PrivateChannels = () => {
                 </div>
               ) : null}
 
-              {showAllMyEvents?<div className="slide-container">
+              {showPricingSetting ? (
+                <div className="slide-container">
+                  <div
+                    id="slide"
+                    style={{
+                      borderRadius: "10px",
+                      minWidth: "600px",
+                      minHeight: "400px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: "#D6C8E1",
+                      margin: "1rem",
+                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                    }}
+                    className="slide-class"
+                  >
+                    <div
+                      style={{
+                        backgroundColor: "#8249A0",
+                        // padding: "5px",
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        color: "white",
+                        padding: "0.5rem",
+                      }}
+                    >
+                      <h5 style={{ fontSize: "1.2rem", marginBottom: 0 }}>Set Service Price </h5>
+                      <SoapboxTooltip title="Close" placement="left">
+                        <span>
+                          <IoCloseCircle
+                            style={{ cursor: "pointer", color: "#DCD5FA", fontSize: "1.7rem" }}
+                            onClick={() => {
+                              document.getElementById("slide").style.transition = "2sec";
+                              document.getElementById("slide").style.right = "-100vw";
+
+                              setTimeout(() => {
+                                setShowPricingSetting(false);
+                              }, 1000);
+                            }}
+                          />
+                        </span>
+                      </SoapboxTooltip>
+                    </div>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        margin: "1rem",
+                        alignItems: "center",
+                      }}
+                    >
+                      {" "}
+                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>1 on 1 call:{" "}</label>
+                      <input
+                        style={{
+                          borderRadius: "8px",
+                          padding: "4px",
+                          border: "none",
+                          borderBottom: "3px solid grey",
+                          marginRight: "5px",
+                          outline: "none",
+                        }}
+                        type="number"
+                        value={oneOnOnecallPrice}
+                        placeholder="Amount XMG"
+                        min={5}
+                        max={100}
+                        onChange={(e) => {
+                          setOneOnOneCallPrice(e.target.value);
+                        }}
+                      />
+                      XMG
+                    </div>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        margin: "1rem",
+                        alignItems: "center",
+                      }}
+                    >
+                      {" "}
+                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>Group call:{" "}</label>
+                      <input
+                        style={{
+                          borderRadius: "8px",
+                          padding: "4px",
+                          border: "none",
+                          borderBottom: "3px solid grey",
+                          marginRight: "5px",
+                          outline: "none",
+                        }}
+                        type="number"
+                        value={groupCallPrice}
+                        placeholder="Amount XMG"
+                        min={5}
+                        max={100}
+                        onChange={(e) => {
+                          setGroupCallPrice(e.target.value);
+                        }}
+                      />
+                      XMG
+                    </div>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        margin: "1rem",
+                        alignItems: "center",
+                      }}
+                    >
+                      {" "}
+                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>Personal Message:{" "}</label>
+                      <input
+                        style={{
+                          borderRadius: "8px",
+                          padding: "4px",
+                          border: "none",
+                          borderBottom: "3px solid grey",
+                          marginRight: "5px",
+                          outline: "none",
+                        }}
+                        type="number"
+                        value={requestMessagePrice}
+                        placeholder="Amount XMG"
+                        min={5}
+                        max={100}
+                        onChange={(e) => {
+                          setRequestMessagePrice(e.target.value);
+                        }}
+                      />
+                      XMG
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        margin: "1rem",
+                        alignItems: "center",
+                      }}
+                    >
+                      {" "}
+                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>Verified Autograph Price:{" "}</label>
+                      <input
+                        style={{
+                          borderRadius: "8px",
+                          padding: "4px",
+                          border: "none",
+                          borderBottom: "3px solid grey",
+                          marginRight: "5px",
+                          outline: "none",
+                        }}
+                        type="number"
+                        value={verifiedAutographPrice}
+                        placeholder="Amount XMG"
+                        min={5}
+                        max={100}
+                        onChange={(e) => {
+                          setVerifiedAutographPrice(e.target.value);
+                        }}
+                      />
+                      XMG
+                    </div>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        margin: "1rem",
+                        alignItems: "center",
+                      }}
+                    >
+                      {" "}
+                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>Membership:{" "}</label>
+                      <input
+                        style={{
+                          borderRadius: "8px",
+                          padding: "4px",
+                          border: "none",
+                          borderBottom: "3px solid grey",
+                          marginRight: "5px",
+                          outline: "none",
+                        }}
+                        type="number"
+                        value={subscribePrice}
+                        placeholder="Amount XMG"
+                        min={5}
+                        max={100}
+                        onChange={(e) => {
+                          setSubscribePrice(e.target.value);
+                        }}
+                      />
+                      XMG
+                    </div>
+
+                    <div className="btns">
+                      <button
+                        onClick={() => {
+                          updatePricing();
+                        }}
+                        style={{
+                          minWidth: "30vw",
+                          backgroundColor: "#8249A0",
+                        }}
+                      >
+                        Update Changes
+                      </button>
+                    </div>
+                    <p style={{ padding: "0.5rem", textAlign: "center !important" }}>Note: The minimum amount for service price is 5 XMG</p>
+                  </div>{" "}
+                </div>
+              ) : null}
+
+              {showAllMyEvents
+                ? <div className="slide-container">
                   <div
                     id="slideE"
                     style={{
@@ -5243,7 +5396,7 @@ const PrivateChannels = () => {
                         justifyContent: "space-between",
                         alignItems: "center",
                         color: "white",
-                        
+
                       }}
                     >
                       <h5>My Scheduled Events</h5>
@@ -5282,11 +5435,11 @@ const PrivateChannels = () => {
                             flexDirection: 'column'
                           }}
                         >
-                          <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Title : {event.eventTitle}</p>
-                          <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Date : {event.eventDate}</p>
-                          <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Time :{event.eventTime}</p>
-                         {event.eventDesc? <p style={{fontSize:'14px',marginLeft:'1rem'}}>Event Description :{event.eventDesc}</p>
-                      :null}
+                          <p style={{ fontSize: '14px', marginLeft: '1rem' }}>Event Title: {event.eventTitle}</p>
+                          <p style={{ fontSize: '14px', marginLeft: '1rem' }}>Event Date : {event.eventDate}</p>
+                          <p style={{ fontSize: '14px', marginLeft: '1rem' }}>Event Time :{event.eventTime}</p>
+                          {event.eventDesc ? <p style={{ fontSize: '14px', marginLeft: '1rem' }}>Event Description :{event.eventDesc}</p>
+                            : null}
                           {/* <SubscribedUser username={user.username} /> */}
                           {/* <button
                             className="Approve-request"
@@ -5294,7 +5447,6 @@ const PrivateChannels = () => {
                           >
                             Approve
                           </button>
-
                           <button
                             className="Delete-request"
                             onClick={() => deleteClubRequest(user)}
@@ -5305,231 +5457,8 @@ const PrivateChannels = () => {
                       ))}
                     </div>
                   </div>
-                </div>:null}
-
-              {showPricingSetting ? (
-                <div className="slide-container">
-                  <div
-                    id="slide"
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#D6C8E1",
-                      margin: "1rem",
-                      minWidth: "600px",
-                      minHeight: "400px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        backgroundColor: "#8249A0",
-                        padding: "5px",
-                        width: "600px",
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        color: "white",
-                      }}
-                    >
-                      <h5>Set Service Price</h5>
-
-                      <FaWindowClose
-                        className="FaWindowClose"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          document.getElementById("slide").style.transition =
-                            "2sec";
-                          document.getElementById("slide").style.right =
-                            "-100vw";
-
-                          setTimeout(() => {
-                            setShowPricingSetting(false);
-                          }, 1000);
-                        }}
-                      />
-                    </div>
-
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-evenly",
-                        margin: "1rem",
-                        alignItems: "center",
-                      }}
-                    >
-                      {" "}
-                      <label style={{ minWidth: "300px" }}>
-                        1 on 1 call :{" "}
-                      </label>
-                      <input
-                        style={{
-                          borderRadius: "10px",
-                          padding: "4px",
-                          border: "none",
-                          borderBottom: "3px solid grey",
-                          marginRight: "5px",
-                          outline: "none",
-                        }}
-                        type="number"
-                        value={oneOnOnecallPrice}
-                        placeholder="Amount XMG"
-                        min={5}
-                        max={100}
-                        onChange={(e) => {
-                          setOneOnOneCallPrice(e.target.value);
-                        }}
-                      />
-                      XMG
-                    </div>
-
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-evenly",
-                        margin: "1rem",
-                        alignItems: "center",
-                      }}
-                    >
-                      {" "}
-                      <label style={{ minWidth: "300px" }}>Group call : </label>
-                      <input
-                        style={{
-                          borderRadius: "10px",
-                          padding: "4px",
-                          border: "none",
-                          borderBottom: "3px solid grey",
-                          marginRight: "5px",
-                          outline: "none",
-                        }}
-                        type="number"
-                        value={groupCallPrice}
-                        placeholder="Amount XMG"
-                        min={5}
-                        max={100}
-                        onChange={(e) => {
-                          setGroupCallPrice(e.target.value);
-                        }}
-                      />
-                      XMG
-                    </div>
-
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-evenly",
-                        margin: "1rem",
-                        alignItems: "center",
-                      }}
-                    >
-                      {" "}
-                      <label style={{ minWidth: "300px" }}>
-                        Personal Message :{" "}
-                      </label>
-                      <input
-                        style={{
-                          borderRadius: "10px",
-                          padding: "4px",
-                          border: "none",
-                          borderBottom: "3px solid grey",
-                          marginRight: "5px",
-                          outline: "none",
-                        }}
-                        type="number"
-                        value={requestMessagePrice}
-                        placeholder="Amount XMG"
-                        min={5}
-                        max={100}
-                        onChange={(e) => {
-                          setRequestMessagePrice(e.target.value);
-                        }}
-                      />
-                      XMG
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-evenly",
-                        margin: "1rem",
-                        alignItems: "center",
-                      }}
-                    >
-                      {" "}
-                      <label style={{ minWidth: "300px" }}>
-                        verified Autograph Price :{" "}
-                      </label>
-                      <input
-                        style={{
-                          borderRadius: "10px",
-                          padding: "4px",
-                          border: "none",
-                          borderBottom: "3px solid grey",
-                          marginRight: "5px",
-                          outline: "none",
-                        }}
-                        type="number"
-                        value={verifiedAutographPrice}
-                        placeholder="Amount XMG"
-                        min={5}
-                        max={100}
-                        onChange={(e) => {
-                          setVerifiedAutographPrice(e.target.value);
-                        }}
-                      />
-                      XMG
-                    </div>
-
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-evenly",
-                        margin: "1rem",
-                        alignItems: "center",
-                      }}
-                    >
-                      {" "}
-                      <label style={{ minWidth: "300px" }}>Membership : </label>
-                      <input
-                        style={{
-                          borderRadius: "10px",
-                          padding: "4px",
-                          border: "none",
-                          borderBottom: "3px solid grey",
-                          marginRight: "5px",
-                          outline: "none",
-                        }}
-                        type="number"
-                        value={subscribePrice}
-                        placeholder="Amount XMG"
-                        min={5}
-                        max={100}
-                        onChange={(e) => {
-                          setSubscribePrice(e.target.value);
-                        }}
-                      />
-                      XMG
-                    </div>
-
-                    <div className="btns">
-                      <button
-                        onClick={() => {
-                          updatePricing();
-                        }}
-                        style={{
-                          minWidth: "400px",
-                          borderRadius: "8px",
-                          backgroundColor: "#8249A0",
-                        }}
-                      >
-                        Update Changes
-                      </button>
-                    </div>
-                    <p>Note: The minimum amount for service price is 5 XMG</p>
-                  </div>{" "}
                 </div>
-              ) : null}
+                : null}
 
               {showSubscribers ? (
                 <div className="slide-container">
@@ -5547,6 +5476,7 @@ const PrivateChannels = () => {
                       margin: "1rem",
                       boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
+                    className="slideM-class"
                   >
                     <div
                       style={{
@@ -5639,35 +5569,38 @@ const PrivateChannels = () => {
                       margin: "1rem",
                       width: '100%',
                       height: '100vh',
-
-
-
                     }}
                   >
-                    <FaWindowClose
-                      style={{
-                        cursor: "pointer",
-                        position: "absolute",
-                        right: "0px",
-                        color: "red",
-                        top: "0px",
-                      }}
-                      className="FaWindowClose"
-                      onClick={() => {
-                        document.getElementById("slideIFM").style.transition =
-                          "2sec";
-                        document.getElementById("slideIFM").style.right =
-                          "-100vw";
-                        setClubFloor(true)
-                        setTimeout(() => {
-                          setShowIframe(false);
-                        }, 500);
-                      }}
-                    />
-                    <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
-                      title={iframeBox.title} width="100%" height="100%"></iframe>
-                    {/* <p>Cost: {oneOnOnecallPrice}XMG</p>
-                                <div className="btns"> <button>Request</button></div> */}
+                    <span>
+                      <IoCloseCircle
+                        style={{
+                          cursor: "pointer",
+                          color: "#8249A0",
+                          fontSize: "1.7rem",
+                          position: "absolute",
+                          right: "0px",
+                          top: "0px",
+                        }}
+                        onClick={() => {
+                          document.getElementById("slideIFM").style.transition = "2sec";
+                          document.getElementById("slideIFM").style.right = "-100vw";
+
+                          setClubFloor(true);
+                          setTimeout(() => {
+                            setShowIframe(false);
+                          }, 500);
+                        }}
+                      />
+                    </span>
+
+                    <iframe
+                      src={iframeBox.src}
+                      allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
+                      title={iframeBox.title}
+                      width="100%"
+                      height="100%"
+                    >
+                    </iframe>
                   </div>
                 </div>
               ) : null}
@@ -5897,8 +5830,7 @@ const PrivateChannels = () => {
                                 {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent ? e.message : null}
                               </div>
                             </Linkify>
-                            {e.isPoll ?
-                             <div style={{ marginTop: '30px' }} className="pollFormDiv">
+                            {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
                               <Form onSubmit={(e) => e.preventDefault()}>
                                 <Form.Group className="mb-3" >
                                   <Form.Label>{e.pollData.Question}</Form.Label>

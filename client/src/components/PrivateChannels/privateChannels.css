@@ -786,7 +786,7 @@ overflow-wrap: break-word;
 
 #slideIFM{
   position: absolute;
- top:-67px;
+  top:-62px;
   transition: 1s;
   z-index: 20;
   right: -100vw;
@@ -799,10 +799,10 @@ overflow-wrap: break-word;
 #slideM,
 #slideRM,
 #slideOOC,
+#slideE,
 #slideSSB,
 #slidegC,
 #slideVA,
-#slideE,
 #slideCR {
   position: absolute;
   right: -100vw;
@@ -844,8 +844,6 @@ overflow-wrap: break-word;
 
   transition: 1s;
 }
-
-
 
 .showBreakoffForm{
   display: flex;
@@ -1027,6 +1025,11 @@ cursor: pointer;
   color: tomato;
 }
 
+.get-membership-or {
+  text-align: center !important;
+  margin: 0.5rem !important;
+}
+
 .tag-item {
   background-color: #d4d5d6;
   display: inline-block;
@@ -1087,4 +1090,44 @@ cursor: pointer;
   padding: 2rem;
   border-radius: 15px;
   background-color: #dcd5fa;
+}
+@media (max-width: 930px) {
+  .slideM-class, 
+  .slideR-class, 
+  .slide-class, 
+  .slideOOC-class,
+  .slidegC-class,
+  .slideRM-class,
+  .slideVA-class,
+  .slideSSB-class {
+    min-width: 70vw !important;
+    right: 5vw !important;
+    left: 5vw !important;
+  }
+}
+
+@media (max-width: 756px) {
+  .slideOOC-class, 
+  .slidegC-class, 
+  .slideRM-class,
+  .slideVA-class,
+  .slideSSB-class {
+    flex-direction: column-reverse !important;
+    gap: 2rem !important;
+    align-items: center !important;
+  }
+}
+
+@media (max-width: 530px) {
+  .slideM-class, 
+  .slideR-class, 
+  .slide-class, 
+  .slideOOC-class,
+  .slidegC-class,
+  .slideRM-class,
+  .slideVA-class,
+  .slideSSB-class {
+    right: 1vw !important;
+    left: 1vw !important;
+  }
 }
