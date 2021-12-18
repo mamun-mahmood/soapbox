@@ -6,7 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
 import { FaRegTrashAlt, FaTumblr, FaWindowClose } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
-import { RiCalendarEventLine, RiLiveLine ,RiBookmark3Fill} from "react-icons/ri"
+import { RiCalendarEventLine, RiLiveLine ,RiBookmark3Fill, RiBookmark3Line} from "react-icons/ri"
 import { BsPlusCircleFill, BsTrash } from 'react-icons/bs'
 import { IoCloseCircle } from 'react-icons/io5'
 import {
@@ -187,7 +187,17 @@ const PrivateChannels = () => {
     className: "link-content",
   });
 
-  const append = (
+  const verifyExpiration=(data)=>{
+    let threadId=data.threadId
+    axios.post(`${BaseURL}/upload/verifyExpiration`,{
+      threadId:threadId
+    })
+    .then((res)=>{
+     console.log("success")
+    })
+  };
+
+  const append =async (
     chatname,
     message,
     position,
@@ -201,11 +211,13 @@ const PrivateChannels = () => {
   ) => {
     if (isPoll) {
       let pollData = JSON.parse(message)
-
+      verifyExpiration(pollData)
       setChatData((e) => [
         ...e,
         { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp },
       ]);
+      
+    
     }else if(isEvent){
       let event = JSON.parse(message)
 
@@ -254,6 +266,10 @@ const PrivateChannels = () => {
       return false;
     }
   }
+
+
+
+
 
   const messagesubmit = (e) => {
     e.preventDefault();
@@ -523,12 +539,15 @@ const PrivateChannels = () => {
 
           if (isPoll) {
             let pollData = JSON.parse(message)
+            verifyExpiration(pollData)
 
             setChatData((e) => [
               ...e,
               { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent },
 
             ]);
+
+           
 
           }else if (isEvent) {
             let event = JSON.parse(message)
@@ -3910,7 +3929,7 @@ const PrivateChannels = () => {
                           {userInfo[0].name}'s Club Chat
                         </span>
                     <div style={{display:'flex',justifyContent:'space-between',
-                    width:'68px',flexDirection:'row'}}>  
+                    width:'58px',flexDirection:'row'}}>  
                       <SoapboxTooltip title={"Schedule Event"} placement="top">
                           <span
                           style={{  display: 'flex',
@@ -3926,7 +3945,7 @@ const PrivateChannels = () => {
                           fontSize: '1.1rem'}}
                            onClick={() => { setScheduleBox(!scheduleBox) }}
                           >
-                            <RiBookmark3Fill />
+                            <RiCalendarEventLine />
                           </span>
                         </SoapboxTooltip>
                         <SoapboxTooltip title={"Create Poll"} placement="top">
@@ -3975,7 +3994,7 @@ const PrivateChannels = () => {
                               fontSize: '1.1rem'
                             }}
                           >
-                            <RiCalendarEventLine />
+                            <RiBookmark3Line />
                           </span>
                         </SoapboxTooltip></div>
                       </div>
@@ -4336,6 +4355,7 @@ const PrivateChannels = () => {
                                   }}
                                 />
                               ) : null}
+                            {e.isPoll? <p>Note:The Poll will be expired after 24 hours</p>:null} 
                             </div>
                           ))
                           : null}
@@ -5945,6 +5965,7 @@ const PrivateChannels = () => {
                                 }}
                               />
                             ) : null}
+                              {e.isPoll? <p>Note:The Poll will be expired after 24 hours</p>:null} 
                           </div>
                         ))
                         : null}
@@ -6182,7 +6203,7 @@ const PrivateChannels = () => {
                             <RiLiveLine />
                           </span>
                         </SoapboxTooltip>
-                   <div style={{display:'flex',justifyContent:'space-between',width:'68px',flexDirection:'row'}}>     
+                   <div style={{display:'flex',justifyContent:'space-between',width:'58px',flexDirection:'row'}}>     
                    <SoapboxTooltip title={"Schedule Event"} placement="top">
                           <span style={{  display: 'flex',
                               justifyContent: 'center',
@@ -6197,7 +6218,7 @@ const PrivateChannels = () => {
                               fontSize: '1.1rem'}}
                           onClick={() => { setScheduleBox(!scheduleBox) }}
                           >
-                            <RiBookmark3Fill />
+                            <RiCalendarEventLine />
                           </span>
                         </SoapboxTooltip>
                         <SoapboxTooltip title={"Create Poll"} placement="top">
@@ -6234,7 +6255,7 @@ const PrivateChannels = () => {
                               }
                             }}
                           >
-                            <RiCalendarEventLine />
+                            <RiBookmark3Line />
                           </span>
                         </SoapboxTooltip></div>
 
@@ -6584,6 +6605,7 @@ const PrivateChannels = () => {
                                 }}
                               />
                             ) : null}
+                              {e.isPoll? <p>Note:The Poll will be expired after 24 hours</p>:null} 
                           </div>
                         ))
                         : null}
