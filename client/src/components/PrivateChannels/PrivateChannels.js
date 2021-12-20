@@ -187,17 +187,26 @@ const PrivateChannels = () => {
     className: "link-content",
   });
 
-  const verifyExpiration=(data)=>{
+  const verifyExpiration=async(data)=>{
+    var resultTimeExp;
     let threadId=data.threadId
-    axios.post(`${BaseURL}/upload/verifyExpiration`,{
+    axios.post(`http://localhost:3001/upload/verifyExpiration`,{
       threadId:threadId
     })
     .then((res)=>{
      console.log("success")
+     resultTimeExp=res.data
+    
+    }).then(()=>{
+      if(resultTimeExp){
+          return(resultTimeExp)
+      }
+    
     })
+   
   };
 
-  const append =async (
+  const append =(
     chatname,
     message,
     position,
@@ -211,11 +220,28 @@ const PrivateChannels = () => {
   ) => {
     if (isPoll) {
       let pollData = JSON.parse(message)
-      verifyExpiration(pollData)
-      setChatData((e) => [
-        ...e,
-        { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp },
-      ]);
+  
+    // let expiryTime= verifyExpiration(pollData)
+
+    //   setChatData((e) => [
+    //     ...e,
+    //     { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,expiryTime },
+    //   ]);
+
+
+      let expiryTime;
+      axios.post(`${BaseURL}/upload/verifyExpiration`,{
+        threadId:pollData.threadId
+      }).then((res)=>{
+          expiryTime= res.data
+        
+        setChatData((e) => [
+          ...e,
+          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent,expiryTime },
+
+        ]);
+      })
+    
       
     
     }else if(isEvent){
@@ -516,7 +542,7 @@ const PrivateChannels = () => {
     // })
   }
 
-  const getChatData = (username) => {
+  const getChatData =  (username) => {
     axios
       .post(`${BaseURL}/upload/getChatData`, {
         roomname: username,
@@ -524,7 +550,7 @@ const PrivateChannels = () => {
       .then((res) => {
         console.log(chatData, "sky5");
 
-        res.data.forEach((i) => {
+        res.data.forEach(async (i)  => {
           let chatname = i.chat.name,
             message = i.chat.message,
             position = i.chat.position,
@@ -539,13 +565,19 @@ const PrivateChannels = () => {
 
           if (isPoll) {
             let pollData = JSON.parse(message)
-            verifyExpiration(pollData)
-
-            setChatData((e) => [
-              ...e,
-              { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent },
-
-            ]);
+            let expiryTime;
+            axios.post(`${BaseURL}/upload/verifyExpiration`,{
+              threadId:pollData.threadId
+            }).then((res)=>{
+                expiryTime= res.data
+              
+              setChatData((e) => [
+                ...e,
+                { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent,expiryTime },
+  
+              ]);
+            })
+          
 
            
 
@@ -4235,6 +4267,7 @@ const PrivateChannels = () => {
 
                               {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
                                 <Form onSubmit={(e) => e.preventDefault()}>
+                                 
                                   <Form.Group className="mb-3" >
                                     <Form.Label>{e.pollData.Question}</Form.Label>
 
@@ -4355,7 +4388,8 @@ const PrivateChannels = () => {
                                   }}
                                 />
                               ) : null}
-                            {e.isPoll? <p>Note:The Poll will be expired after 24 hours</p>:null} 
+                          
+                            {e.isPoll? <p style={{fontSize:'12px'}}>{`Note:The Poll will expire in ${e.expiryTime}`}</p>:null} 
                             </div>
                           ))
                           : null}
@@ -5852,6 +5886,7 @@ const PrivateChannels = () => {
                             </Linkify>
                             {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
                               <Form onSubmit={(e) => e.preventDefault()}>
+                            
                                 <Form.Group className="mb-3" >
                                   <Form.Label>{e.pollData.Question}</Form.Label>
 
@@ -5965,7 +6000,8 @@ const PrivateChannels = () => {
                                 }}
                               />
                             ) : null}
-                              {e.isPoll? <p>Note:The Poll will be expired after 24 hours</p>:null} 
+                            
+                              {e.isPoll? <p style={{fontSize:'12px'}}>{`Note:The Poll will expire in ${e.expiryTime}`}</p>:null} 
                           </div>
                         ))
                         : null}
@@ -6492,6 +6528,7 @@ const PrivateChannels = () => {
                             </Linkify>
                             {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
                               <Form onSubmit={(e) => e.preventDefault()}>
+                            
                                 <Form.Group className="mb-3" >
                                   <Form.Label>{e.pollData.Question}</Form.Label>
 
@@ -6605,7 +6642,8 @@ const PrivateChannels = () => {
                                 }}
                               />
                             ) : null}
-                              {e.isPoll? <p>Note:The Poll will be expired after 24 hours</p>:null} 
+                            
+                            {e.isPoll? <p style={{fontSize:'12px'}}>{`Note:The Poll will expire in ${e.expiryTime}`}</p>:null} 
                           </div>
                         ))
                         : null}

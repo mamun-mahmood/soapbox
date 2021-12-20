@@ -327,7 +327,7 @@ function MyVerticallyCenteredScheduler(props) {
                     {error && <p className="error">{error}</p>}
                 </Modal.Body>
                 <Modal.Footer>
-                <Button disabled={(emails.length&& eventDate && eventTitle &&eventTime)?false:true} onClick={()=>{
+                <Button disabled={(eventDate && eventTitle &&eventTime)?false:true} onClick={()=>{
                                         props.sumitChatData({
                                           eventTitle,eventDesc,eventDate,eventTime,fullName
                                         })
