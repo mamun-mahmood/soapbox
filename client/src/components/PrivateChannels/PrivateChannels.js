@@ -68,6 +68,7 @@ import SoapboxPrivateClubRules from "./SoapboxPrivateClubRules";
 import Media from 'react-media';
 import NavBar from "../NavBar/NavBar";
 import MyVerticallyCenteredScheduler from "./scheduler";
+import { Share } from "@material-ui/icons";
 
 const stripe = loadStripe(
   "pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz"
@@ -232,7 +233,7 @@ const PrivateChannels = () => {
       let expiryTime;
       axios.post(`${BaseURL}/upload/verifyExpiration`,{
         threadId:pollData.threadId,
-        username:username
+        username:userInformation.username
       }).then((res)=>{
           expiryTime= res.data.expiryTime
           pollData.isVoted=res.data.isVoted
@@ -295,9 +296,13 @@ const PrivateChannels = () => {
     }
   }
 
-const getVotingPercentage=(num,a,b)=>{
-  let total=num+a+b;
-  let numPercentage=Math.floor((num/total)*100)
+const getVotingPercentage=(num,num1,num2)=>{
+
+  var total=num+num1+num2;
+  var numPercentage=Math.floor((num/total))*100
+
+  return Math.floor((num/total)*100);
+
 
 }
 
@@ -574,7 +579,7 @@ const getVotingPercentage=(num,a,b)=>{
             let expiryTime;
             axios.post(`${BaseURL}/upload/verifyExpiration`,{
               threadId:pollData.threadId,
-              username:username
+              username:userInformation.username
             }).then((res)=>{
                 expiryTime= res.data.expiryTime
                 pollData.isVoted=res.data.isVoted
@@ -3978,10 +3983,29 @@ const getVotingPercentage=(num,a,b)=>{
                       >
                         {" "}
                         <span>
-                          {userInfo[0].name}'s Club Chat
+                          {userInfo[0]&&userInfo[0].name}'s Club Chat
                         </span>
                     <div style={{display:'flex',justifyContent:'space-between',
-                    width:'58px',flexDirection:'row'}}>  
+                    width:'88px',flexDirection:'row'}}>  
+                    <SoapboxTooltip title={"Invite"} placement="bottom">
+                          <span style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            backgroundColor: '#dcd5fa',
+                            color: "#8249A0",
+                            width: '26px',
+                            height: '26px',
+                            borderRadius: '50%',
+                            // marginLeft: '15px',
+                            fontSize: '1rem'
+                          }}
+                          onClick={() => setInviteBox(true)}
+                          >
+                            <Share />
+                          </span>
+                        </SoapboxTooltip>
                       <SoapboxTooltip title={"Schedule Event"} placement="top">
                           <span
                           style={{  display: 'flex',
@@ -4313,7 +4337,7 @@ const getVotingPercentage=(num,a,b)=>{
                                         updatePollData(e)
                                       }}
                                     />
-                                    <ProgressBar now={e.pollData.pollA} />
+                                    <ProgressBar now={getVotingPercentage(e.pollData.pollA,e.pollData.pollB,e.pollData.pollC)} />
                                   </Form.Group>
 
                                   <Form.Group className="mb-3" >
@@ -4340,7 +4364,7 @@ const getVotingPercentage=(num,a,b)=>{
                                       setChatData((chat) => [...chat, e])
                                       updatePollData(e)
                                     }} />
-                                    <ProgressBar now={e.pollData.pollB} />
+                                    <ProgressBar now={getVotingPercentage(e.pollData.pollB,e.pollData.pollA,e.pollData.pollC)} />
                                   </Form.Group>
 
                                   <Form.Group className="mb-3" >
@@ -4364,7 +4388,7 @@ const getVotingPercentage=(num,a,b)=>{
                                         updatePollData(e)
                                       }}
                                     />
-                                    <ProgressBar now={e.pollData.pollC} />
+                                    <ProgressBar now={getVotingPercentage(e.pollData.pollC,e.pollData.pollA,e.pollData.pollB)} />
                                   </Form.Group>
                                   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
@@ -5945,7 +5969,7 @@ const getVotingPercentage=(num,a,b)=>{
                                       updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={e.pollData.pollA} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA,e.pollData.pollB,e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -5969,7 +5993,7 @@ const getVotingPercentage=(num,a,b)=>{
                                     setChatData((chat) => [...chat, e])
                                     updatePollData(e)
                                   }} />
-                                  <ProgressBar now={e.pollData.pollB} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB,e.pollData.pollA,e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -5994,7 +6018,7 @@ const getVotingPercentage=(num,a,b)=>{
                                       updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={e.pollData.pollC} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC,e.pollData.pollA,e.pollData.pollB)} />
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
@@ -6262,6 +6286,25 @@ const getVotingPercentage=(num,a,b)=>{
                                   setBroadcastStream(true);
                                 }}
                               /> */}
+                                <SoapboxTooltip title={"Invite"} placement="bottom">
+                          <span style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            backgroundColor: '#dcd5fa',
+                            color: "#8249A0",
+                            width: '26px',
+                            height: '26px',
+                            borderRadius: '50%',
+                            // marginLeft: '15px',
+                            fontSize: '1rem'
+                          }}
+                          onClick={() => setInviteBox(true)}
+                          >
+                            <Share />
+                          </span>
+                        </SoapboxTooltip>
                         <SoapboxTooltip title={"Stream Live"} placement="bottom">
                           <span style={{
                             display: 'flex',
@@ -6598,7 +6641,7 @@ const getVotingPercentage=(num,a,b)=>{
                                       updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={e.pollData.pollA} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA,e.pollData.pollB,e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6621,7 +6664,7 @@ const getVotingPercentage=(num,a,b)=>{
                                     setChatData((chat) => [...chat, e])
                                     updatePollData(e)
                                   }} />
-                                  <ProgressBar now={e.pollData.pollB} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB,e.pollData.pollA,e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6646,7 +6689,7 @@ const getVotingPercentage=(num,a,b)=>{
                                       updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={e.pollData.pollC} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC,e.pollData.pollA,e.pollData.pollB)} />
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
