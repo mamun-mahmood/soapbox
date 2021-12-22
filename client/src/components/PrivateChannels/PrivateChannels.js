@@ -190,7 +190,7 @@ const PrivateChannels = () => {
   const verifyExpiration=async(data)=>{
     var resultTimeExp;
     let threadId=data.threadId
-    axios.post(`http://localhost:3001/upload/verifyExpiration`,{
+    axios.post(`${BaseURL}/upload/verifyExpiration`,{
       threadId:threadId
     })
     .then((res)=>{
@@ -230,7 +230,7 @@ const PrivateChannels = () => {
 
 
       let expiryTime;
-      axios.post(`http://localhost:3001/upload/verifyExpiration`,{
+      axios.post(`${BaseURL}/upload/verifyExpiration`,{
         threadId:pollData.threadId,
         username:username
       }).then((res)=>{
@@ -572,7 +572,7 @@ const getVotingPercentage=(num,a,b)=>{
           if (isPoll) {
             let pollData = JSON.parse(message)
             let expiryTime;
-            axios.post(`http://localhost:3001/upload/verifyExpiration`,{
+            axios.post(`${BaseURL}/upload/verifyExpiration`,{
               threadId:pollData.threadId,
               username:username
             }).then((res)=>{
@@ -1082,7 +1082,7 @@ const getVotingPercentage=(num,a,b)=>{
 
   const uploadPollResponse=(e)=>{
  
-    axios.post(`http://localhost:3001/upload/uploadPollResponse`,{
+    axios.post(`${BaseURL}/upload/uploadPollResponse`,{
       threadId:e.pollData.threadId,
       pollA:e.pollData.pollA,
       pollB:e.pollData.pollB,
