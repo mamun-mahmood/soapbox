@@ -230,11 +230,13 @@ const PrivateChannels = () => {
 
 
       let expiryTime;
-      axios.post(`${BaseURL}/upload/verifyExpiration`,{
-        threadId:pollData.threadId
+      axios.post(`http://localhost:3001/upload/verifyExpiration`,{
+        threadId:pollData.threadId,
+        username:username
       }).then((res)=>{
-          expiryTime= res.data
-        
+          expiryTime= res.data.expiryTime
+          pollData.isVoted=res.data.isVoted
+
         setChatData((e) => [
           ...e,
           { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent,expiryTime },
@@ -293,7 +295,11 @@ const PrivateChannels = () => {
     }
   }
 
+const getVotingPercentage=(num,a,b)=>{
+  let total=num+a+b;
+  let numPercentage=Math.floor((num/total)*100)
 
+}
 
 
 
@@ -566,11 +572,13 @@ const PrivateChannels = () => {
           if (isPoll) {
             let pollData = JSON.parse(message)
             let expiryTime;
-            axios.post(`${BaseURL}/upload/verifyExpiration`,{
-              threadId:pollData.threadId
+            axios.post(`http://localhost:3001/upload/verifyExpiration`,{
+              threadId:pollData.threadId,
+              username:username
             }).then((res)=>{
-                expiryTime= res.data
-              
+                expiryTime= res.data.expiryTime
+                pollData.isVoted=res.data.isVoted
+            
               setChatData((e) => [
                 ...e,
                 { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent,expiryTime },
@@ -1055,7 +1063,7 @@ const PrivateChannels = () => {
 
   const handlePollFormSubmission = (user) => {
     if (pollFormDataQ && (pollFormDataOA || pollFormDataOB || pollFormDataOC)) {
-      toast.success('Created Poll Successfully!')
+     
       let threadId = uuidv4()
       setPollFormData({
         Question: pollFormDataQ,
@@ -1064,12 +1072,23 @@ const PrivateChannels = () => {
         OptionC: pollFormDataOC,
         createdBy: user,
         threadId: threadId,
-        pollA: 0,
-        pollB: 0,
-        pollC: 0
+        pollA: 1,
+        pollB: 1,
+        pollC: 1
       })
       setFormEditPoll(!FormEditPoll)
     }
+  }
+
+  const uploadPollResponse=(e)=>{
+ 
+    axios.post(`http://localhost:3001/upload/uploadPollResponse`,{
+      threadId:e.pollData.threadId,
+      pollA:e.pollData.pollA,
+      pollB:e.pollData.pollB,
+      pollC:e.pollData.pollC,
+      username:username
+    }).then(()=>{console.log("done")})
   }
 
   const sumitChatDataFromScheduler=(data)=>{
@@ -1146,6 +1165,7 @@ const PrivateChannels = () => {
       isPoll: true,
       timestamp: timestamp
     });
+     toast.success('Created Poll Successfully!')
   }
 
   const getAllSubscribedMembers = () => {
@@ -4280,10 +4300,11 @@ const PrivateChannels = () => {
 
                                         // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                         // chatData[chatData.indexOf(e)]
-                                        e.pollData.pollA = 100
-                                        e.pollData.pollB = 0
-                                        e.pollData.pollC = 0
 
+                                        e.pollData.pollA = e.pollData.pollA+1
+                                        e.pollData.pollB = e.pollData.pollB
+                                        e.pollData.pollC = e.pollData.pollC
+  
                                         let messageContainer = document.querySelector(".chatarea");
 
                                         messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -4300,9 +4321,18 @@ const PrivateChannels = () => {
 
                                       // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                       // chatData[chatData.indexOf(e)]
-                                      e.pollData.pollB = 100
-                                      e.pollData.pollA = 0
-                                      e.pollData.pollC = 0
+
+
+
+                                      
+                                      // e.pollData.pollB = 100
+                                      // e.pollData.pollA = 0
+                                      // e.pollData.pollC = 0
+                                      e.pollData.pollA = e.pollData.pollA
+                                      e.pollData.pollB = e.pollData.pollB+1
+                                      e.pollData.pollC = e.pollData.pollC
+
+  
                                       let messageContainer = document.querySelector(".chatarea");
 
                                       messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -4320,9 +4350,12 @@ const PrivateChannels = () => {
                                         // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                         // chatData[chatData.indexOf(e)]
 
-                                        e.pollData.pollC = 100
-                                        e.pollData.pollA = 0
-                                        e.pollData.pollB = 0
+                                        // e.pollData.pollC = 100
+                                        // e.pollData.pollA = 0
+                                        // e.pollData.pollB = 0
+                                        e.pollData.pollC =  e.pollData.pollC+1
+                                        e.pollData.pollA =e.pollData.pollA
+                                        e.pollData.pollB = e.pollData.pollB
                                         let messageContainer = document.querySelector(".chatarea");
 
                                         messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -4336,7 +4369,7 @@ const PrivateChannels = () => {
                                   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                  <Button variant="primary" type="submit" id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true }}>
+                                  <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true;uploadPollResponse }}>
                                     Vote
                                   </Button>
                                 </Form>
@@ -5899,9 +5932,10 @@ const PrivateChannels = () => {
 
                                       // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                       // chatData[chatData.indexOf(e)]
-                                      e.pollData.pollA = 100
-                                      e.pollData.pollB = 0
-                                      e.pollData.pollC = 0
+                                      e.pollData.pollA = e.pollData.pollA+1
+                                      e.pollData.pollB = e.pollData.pollB
+                                      e.pollData.pollC = e.pollData.pollC
+
 
                                       let messageContainer = document.querySelector(".chatarea");
 
@@ -5919,9 +5953,15 @@ const PrivateChannels = () => {
 
                                     // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                     // chatData[chatData.indexOf(e)]
-                                    e.pollData.pollB = 100
-                                    e.pollData.pollA = 0
-                                    e.pollData.pollC = 0
+                                    // e.pollData.pollB = 100
+                                    // e.pollData.pollA = 0
+                                    // e.pollData.pollC = 0
+
+                                    e.pollData.pollA = e.pollData.pollA
+                                    e.pollData.pollB = e.pollData.pollB+1
+                                    e.pollData.pollC = e.pollData.pollC
+
+
                                     let messageContainer = document.querySelector(".chatarea");
 
                                     messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -5939,9 +5979,13 @@ const PrivateChannels = () => {
                                       // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                       // chatData[chatData.indexOf(e)]
 
-                                      e.pollData.pollC = 100
-                                      e.pollData.pollA = 0
-                                      e.pollData.pollB = 0
+                                      // e.pollData.pollC = 100
+                                      // e.pollData.pollA = 0
+                                      // e.pollData.pollB = 0
+                                       e.pollData.pollC =  e.pollData.pollC+1
+                                       e.pollData.pollA =e.pollData.pollA
+                                       e.pollData.pollB = e.pollData.pollB
+                                    
                                       let messageContainer = document.querySelector(".chatarea");
 
                                       messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -5955,7 +5999,7 @@ const PrivateChannels = () => {
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true }}>
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true;uploadPollResponse }}>
                                   Vote
                                 </Button>
                               </Form>
@@ -6541,9 +6585,10 @@ const PrivateChannels = () => {
 
                                       // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                       // chatData[chatData.indexOf(e)]
-                                      e.pollData.pollA = 100
-                                      e.pollData.pollB = 0
-                                      e.pollData.pollC = 0
+                                      e.pollData.pollA = e.pollData.pollA+1
+                                      e.pollData.pollB = e.pollData.pollB
+                                      e.pollData.pollC = e.pollData.pollC
+
 
                                       let messageContainer = document.querySelector(".chatarea");
 
@@ -6561,9 +6606,14 @@ const PrivateChannels = () => {
 
                                     // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                     // chatData[chatData.indexOf(e)]
-                                    e.pollData.pollB = 100
-                                    e.pollData.pollA = 0
-                                    e.pollData.pollC = 0
+                                    // e.pollData.pollB = 100
+                                    // e.pollData.pollA = 0
+                                    // e.pollData.pollC = 0
+                                    e.pollData.pollA = e.pollData.pollA
+                                    e.pollData.pollB = e.pollData.pollB+1
+                                    e.pollData.pollC = e.pollData.pollC
+
+
                                     let messageContainer = document.querySelector(".chatarea");
 
                                     messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -6581,9 +6631,13 @@ const PrivateChannels = () => {
                                       // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                       // chatData[chatData.indexOf(e)]
 
-                                      e.pollData.pollC = 100
-                                      e.pollData.pollA = 0
-                                      e.pollData.pollB = 0
+                                      // e.pollData.pollC = 100
+                                      // e.pollData.pollA = 0
+                                      // e.pollData.pollB = 0
+
+                                      e.pollData.pollC =  e.pollData.pollC+1
+                                      e.pollData.pollA =e.pollData.pollA
+                                      e.pollData.pollB = e.pollData.pollB
                                       let messageContainer = document.querySelector(".chatarea");
 
                                       messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -6597,7 +6651,7 @@ const PrivateChannels = () => {
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true }}>
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true;uploadPollResponse(e) }}>
                                   Vote
                                 </Button>
                               </Form>
