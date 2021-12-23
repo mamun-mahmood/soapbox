@@ -300,6 +300,9 @@ const PrivateChannels = () => {
 const getVotingPercentage=(num,num1,num2)=>{
 
   var total=num+num1+num2;
+  if(total==0){
+    total=1
+  }
   var numPercentage=Math.floor((num/total))*100
 
   return Math.floor((num/total)*100);
@@ -1079,9 +1082,9 @@ const getVotingPercentage=(num,num1,num2)=>{
         pollFormExpiry:pollFormExpiry,
         createdBy: user,
         threadId: threadId,
-        pollA: 1,
-        pollB: 1,
-        pollC: 1
+        pollA: 0,
+        pollB: 0,
+        pollC: 0
       })
       setFormEditPoll(!FormEditPoll)
     }
