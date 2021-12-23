@@ -6,7 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
 import { FaRegTrashAlt, FaTumblr, FaWindowClose } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
-import { RiCalendarEventLine, RiLiveLine ,RiBookmark3Fill, RiBookmark3Line} from "react-icons/ri"
+import { RiCalendarEventLine, RiLiveLine, RiBookmark3Fill, RiBookmark3Line } from "react-icons/ri"
 import { BsPlusCircleFill, BsTrash } from 'react-icons/bs'
 import { IoCloseCircle } from 'react-icons/io5'
 import {
@@ -151,7 +151,7 @@ const PrivateChannels = () => {
   const [showPollForm, setShowPollForm] = useState(false)
   const [pollFormData, setPollFormData] = useState({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA: 90, pollB: 50, pollC: 60 })
   const [pollFormDataQ, setPollFormDataQ] = useState("")
-  const [pollFormExpiry,setPollFormExpiry] = useState("24")
+  const [pollFormExpiry, setPollFormExpiry] = useState("24")
   const [pollFormDataOA, setPollFormDataOA] = useState("")
   const [pollFormDataOB, setPollFormDataOB] = useState("")
   const [pollFormDataOC, setPollFormDataOC] = useState("")
@@ -189,26 +189,26 @@ const PrivateChannels = () => {
     className: "link-content",
   });
 
-  const verifyExpiration=async(data)=>{
+  const verifyExpiration = async (data) => {
     var resultTimeExp;
-    let threadId=data.threadId
-    axios.post(`${BaseURL}/upload/verifyExpiration`,{
-      threadId:threadId
+    let threadId = data.threadId
+    axios.post(`${BaseURL}/upload/verifyExpiration`, {
+      threadId: threadId
     })
-    .then((res)=>{
-     console.log("success")
-     resultTimeExp=res.data
-    
-    }).then(()=>{
-      if(resultTimeExp){
-          return(resultTimeExp)
-      }
-    
-    })
-   
+      .then((res) => {
+        console.log("success")
+        resultTimeExp = res.data
+
+      }).then(() => {
+        if (resultTimeExp) {
+          return (resultTimeExp)
+        }
+
+      })
+
   };
 
-  const append =(
+  const append = (
     chatname,
     message,
     position,
@@ -222,41 +222,41 @@ const PrivateChannels = () => {
   ) => {
     if (isPoll) {
       let pollData = JSON.parse(message)
-  
-    // let expiryTime= verifyExpiration(pollData)
 
-    //   setChatData((e) => [
-    //     ...e,
-    //     { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,expiryTime },
-    //   ]);
+      // let expiryTime= verifyExpiration(pollData)
+
+      //   setChatData((e) => [
+      //     ...e,
+      //     { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,expiryTime },
+      //   ]);
 
 
       let expiryTime;
-      axios.post(`${BaseURL}/upload/verifyExpiration`,{
-        threadId:pollData.threadId,
-        username:userInformation.username
-      }).then((res)=>{
-          expiryTime= res.data.expiryTime
-          pollData.isVoted=res.data.isVoted
+      axios.post(`${BaseURL}/upload/verifyExpiration`, {
+        threadId: pollData.threadId,
+        username: userInformation.username
+      }).then((res) => {
+        expiryTime = res.data.expiryTime
+        pollData.isVoted = res.data.isVoted
 
         setChatData((e) => [
           ...e,
-          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent,expiryTime },
+          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime },
 
         ]);
       })
-    
-      
-    
-    }else if(isEvent){
+
+
+
+    } else if (isEvent) {
       let event = JSON.parse(message)
 
       setChatData((e) => [
         ...e,
-        { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent },
+        { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent },
       ]);
     }
-     else {
+    else {
       setChatData((e) => [
         ...e,
         { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp },
@@ -297,18 +297,18 @@ const PrivateChannels = () => {
     }
   }
 
-const getVotingPercentage=(num,num1,num2)=>{
+  const getVotingPercentage = (num, num1, num2) => {
 
-  var total=num+num1+num2;
-  if(total==0){
-    total=1
+    var total = num + num1 + num2;
+    if (total == 0) {
+      total = 1
+    }
+    var numPercentage = Math.floor((num / total)) * 100
+
+    return Math.floor((num / total) * 100);
+
+
   }
-  var numPercentage=Math.floor((num/total))*100
-
-  return Math.floor((num/total)*100);
-
-
-}
 
 
 
@@ -557,7 +557,7 @@ const getVotingPercentage=(num,num1,num2)=>{
     // })
   }
 
-  const getChatData =  (username) => {
+  const getChatData = (username) => {
     axios
       .post(`${BaseURL}/upload/getChatData`, {
         roomname: username,
@@ -565,7 +565,7 @@ const getVotingPercentage=(num,num1,num2)=>{
       .then((res) => {
         console.log(chatData, "sky5");
 
-        res.data.forEach(async (i)  => {
+        res.data.forEach(async (i) => {
           let chatname = i.chat.name,
             message = i.chat.message,
             position = i.chat.position,
@@ -581,37 +581,37 @@ const getVotingPercentage=(num,num1,num2)=>{
           if (isPoll) {
             let pollData = JSON.parse(message)
             let expiryTime;
-            axios.post(`${BaseURL}/upload/verifyExpiration`,{
-              threadId:pollData.threadId,
-              username:userInformation.username
-            }).then((res)=>{
-                expiryTime= res.data.expiryTime
-                pollData.isVoted=res.data.isVoted
-            
+            axios.post(`${BaseURL}/upload/verifyExpiration`, {
+              threadId: pollData.threadId,
+              username: userInformation.username
+            }).then((res) => {
+              expiryTime = res.data.expiryTime
+              pollData.isVoted = res.data.isVoted
+
               setChatData((e) => [
                 ...e,
-                { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent,expiryTime },
-  
+                { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime },
+
               ]);
             })
-          
 
-           
 
-          }else if (isEvent) {
+
+
+          } else if (isEvent) {
             let event = JSON.parse(message)
 
             setChatData((e) => [
               ...e,
-              { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent },
+              { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent },
 
             ]);
 
           }
-           else {
+          else {
             setChatData((e) => [
               ...e,
-              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isEvent },
+              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent },
             ]);
 
           }
@@ -1072,14 +1072,14 @@ const getVotingPercentage=(num,num1,num2)=>{
 
   const handlePollFormSubmission = (user) => {
     if (pollFormDataQ && (pollFormDataOA || pollFormDataOB || pollFormDataOC)) {
-     
+
       let threadId = uuidv4()
       setPollFormData({
         Question: pollFormDataQ,
         OptionA: pollFormDataOA,
         OptionB: pollFormDataOB,
         OptionC: pollFormDataOC,
-        pollFormExpiry:pollFormExpiry,
+        pollFormExpiry: pollFormExpiry,
         createdBy: user,
         threadId: threadId,
         pollA: 0,
@@ -1090,18 +1090,18 @@ const getVotingPercentage=(num,num1,num2)=>{
     }
   }
 
-  const uploadPollResponse=(e)=>{
- 
-    axios.post(`${BaseURL}/upload/uploadPollResponse`,{
-      threadId:e.pollData.threadId,
-      pollA:e.pollData.pollA,
-      pollB:e.pollData.pollB,
-      pollC:e.pollData.pollC,
-      username:username
-    }).then(()=>{console.log("done")})
+  const uploadPollResponse = (e) => {
+
+    axios.post(`${BaseURL}/upload/uploadPollResponse`, {
+      threadId: e.pollData.threadId,
+      pollA: e.pollData.pollA,
+      pollB: e.pollData.pollB,
+      pollC: e.pollData.pollC,
+      username: username
+    }).then(() => { console.log("done") })
   }
 
-  const sumitChatDataFromScheduler=(data)=>{
+  const sumitChatDataFromScheduler = (data) => {
     sentEventMessageInChat(data)
   }
   const sentEventMessageInChat = (data) => {
@@ -1137,7 +1137,7 @@ const getVotingPercentage=(num,num1,num2)=>{
       isImage: "",
       isPoll: false,
       timestamp: timestamp,
-      isEvent:true,
+      isEvent: true,
       threadId: threadId,
     });
   }
@@ -1175,7 +1175,7 @@ const getVotingPercentage=(num,num1,num2)=>{
       isPoll: true,
       timestamp: timestamp
     });
-     toast.success('Created Poll Successfully!')
+    toast.success('Created Poll Successfully!')
   }
 
   const getAllSubscribedMembers = () => {
@@ -3988,80 +3988,14 @@ const getVotingPercentage=(num,num1,num2)=>{
                       >
                         {" "}
                         <span>
-                          {userInfo[0]&&userInfo[0].name}'s Club Chat
+                          {userInfo[0] && userInfo[0].name}'s Club Chat
                         </span>
-                    <div style={{display:'flex',justifyContent:'space-between',
-                    width:'88px',flexDirection:'row'}}>  
-                    <SoapboxTooltip title={"Invite"} placement="bottom">
-                          <span style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            cursor: 'pointer',
-                            backgroundColor: '#dcd5fa',
-                            color: "#8249A0",
-                            width: '26px',
-                            height: '26px',
-                            borderRadius: '50%',
-                            // marginLeft: '15px',
-                            fontSize: '1rem'
-                          }}
-                          onClick={() => setInviteBox(true)}
-                          >
-                            <Share />
-                          </span>
-                        </SoapboxTooltip>
-                      <SoapboxTooltip title={"Schedule Event"} placement="top">
-                          <span
-                          style={{  display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          cursor: 'pointer',
-                          backgroundColor: '#dcd5fa',
-                          color: "#8249A0",
-                          width: '26px',
-                          height: '26px',
-                          borderRadius: '50%',
-                          // marginLeft: '15px',
-                          fontSize: '1.1rem'}}
-                           onClick={() => { setScheduleBox(!scheduleBox) }}
-                          >
-                            <RiCalendarEventLine />
-                          </span>
-                        </SoapboxTooltip>
-                        <SoapboxTooltip title={"Create Poll"} placement="top">
-                          <span
-                            onClick={() => {
-                              if (showPollForm) {
-                                document.getElementById("showPollFormId").style.transition = "2s";
-                                document.getElementById("showPollFormId").style.left = "200vw";
-
-                                setTimeout(() => {
-                                  setShowPollForm(false);
-                                }, 1000);
-                              } else {
-                                setShowPollForm(true);
-
-                                setTimeout(() => {
-                                  if (document.getElementById("showPollFormId")) {
-                                    document.getElementById("showPollFormId").style.transition = "1s";
-                                    document.getElementById("showPollFormId").style.left = "70px";
-                                  }
-                                }, 1);
-                              }
-                            }}
-                            style={{
-                              // display: 'flex', 
-                              // justifyContent: 'center',
-                              // alignItems: 'center', 
-                              // cursor: 'pointer', 
-                              // backgroundColor: '#CF2128', 
-                              // width: '22px', 
-                              // height: '22px', 
-                              // borderRadius: '27px', 
-                              // marginLeft: '15px',
-                              // fontSize: '18px'
-
+                        <div style={{
+                          display: 'flex', justifyContent: 'space-between',
+                          width: '88px', flexDirection: 'row'
+                        }}>
+                          <SoapboxTooltip title={"Invite"} placement="bottom">
+                            <span style={{
                               display: 'flex',
                               justifyContent: 'center',
                               alignItems: 'center',
@@ -4072,12 +4006,82 @@ const getVotingPercentage=(num,num1,num2)=>{
                               height: '26px',
                               borderRadius: '50%',
                               // marginLeft: '15px',
-                              fontSize: '1.1rem'
+                              fontSize: '1rem'
                             }}
-                          >
-                            <RiBookmark3Line />
-                          </span>
-                        </SoapboxTooltip></div>
+                              onClick={() => setInviteBox(true)}
+                            >
+                              <Share />
+                            </span>
+                          </SoapboxTooltip>
+                          <SoapboxTooltip title={"Schedule Event"} placement="top">
+                            <span
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                cursor: 'pointer',
+                                backgroundColor: '#dcd5fa',
+                                color: "#8249A0",
+                                width: '26px',
+                                height: '26px',
+                                borderRadius: '50%',
+                                // marginLeft: '15px',
+                                fontSize: '1.1rem'
+                              }}
+                              onClick={() => { setScheduleBox(!scheduleBox) }}
+                            >
+                              <RiCalendarEventLine />
+                            </span>
+                          </SoapboxTooltip>
+                          <SoapboxTooltip title={"Create Poll"} placement="top">
+                            <span
+                              onClick={() => {
+                                if (showPollForm) {
+                                  document.getElementById("showPollFormId").style.transition = "2s";
+                                  document.getElementById("showPollFormId").style.left = "200vw";
+
+                                  setTimeout(() => {
+                                    setShowPollForm(false);
+                                  }, 1000);
+                                } else {
+                                  setShowPollForm(true);
+
+                                  setTimeout(() => {
+                                    if (document.getElementById("showPollFormId")) {
+                                      document.getElementById("showPollFormId").style.transition = "1s";
+                                      document.getElementById("showPollFormId").style.left = "70px";
+                                    }
+                                  }, 1);
+                                }
+                              }}
+                              style={{
+                                // display: 'flex', 
+                                // justifyContent: 'center',
+                                // alignItems: 'center', 
+                                // cursor: 'pointer', 
+                                // backgroundColor: '#CF2128', 
+                                // width: '22px', 
+                                // height: '22px', 
+                                // borderRadius: '27px', 
+                                // marginLeft: '15px',
+                                // fontSize: '18px'
+
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                cursor: 'pointer',
+                                backgroundColor: '#dcd5fa',
+                                color: "#8249A0",
+                                width: '26px',
+                                height: '26px',
+                                borderRadius: '50%',
+                                // marginLeft: '15px',
+                                fontSize: '1.1rem'
+                              }}
+                            >
+                              <RiBookmark3Line />
+                            </span>
+                          </SoapboxTooltip></div>
                       </div>
 
                       {showPollForm
@@ -4138,18 +4142,18 @@ const getVotingPercentage=(num,num1,num2)=>{
                      */}
                             {FormEditPoll ?
                               <Form onSubmit={(e) => e.preventDefault()}>
-                               <Form.Group className="mb-3" >
-                                <Form.Label>Poll Expiry Duration</Form.Label>
-                              <Form.Control as="select" onChange={(e)=>setPollFormExpiry(e.target.value)} aria-label="Default select example">
-  <option value="24">24 Hours</option>
-  <option value="48">2 Days</option>
-  <option value="72">3 Days</option>
-  <option value="96">4 Days</option>
-  <option value="120">5 Days</option>
-  <option value="144">6 Days</option>
-  <option value="168">7 Days</option>
-</Form.Control>
-                              </Form.Group>
+                                <Form.Group className="mb-3" >
+                                  <Form.Label>Poll Expiry Duration</Form.Label>
+                                  <Form.Control as="select" onChange={(e) => setPollFormExpiry(e.target.value)} aria-label="Default select example">
+                                    <option value="24">24 Hours</option>
+                                    <option value="48">2 Days</option>
+                                    <option value="72">3 Days</option>
+                                    <option value="96">4 Days</option>
+                                    <option value="120">5 Days</option>
+                                    <option value="144">6 Days</option>
+                                    <option value="168">7 Days</option>
+                                  </Form.Control>
+                                </Form.Group>
                                 <Form.Group className="mb-3" >
                                   <Form.Label>Enter Question For Poll</Form.Label>
                                   <Form.Control type="text" value={pollFormDataQ}
@@ -4328,7 +4332,7 @@ const getVotingPercentage=(num,num1,num2)=>{
 
                               {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
                                 <Form onSubmit={(e) => e.preventDefault()}>
-                                 
+
                                   <Form.Group className="mb-3" >
                                     <Form.Label>{e.pollData.Question}</Form.Label>
 
@@ -4342,10 +4346,10 @@ const getVotingPercentage=(num,num1,num2)=>{
                                         // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                         // chatData[chatData.indexOf(e)]
 
-                                        e.pollData.pollA = e.pollData.pollA+1
+                                        e.pollData.pollA = e.pollData.pollA + 1
                                         e.pollData.pollB = e.pollData.pollB
                                         e.pollData.pollC = e.pollData.pollC
-  
+
                                         let messageContainer = document.querySelector(".chatarea");
 
                                         messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -4354,7 +4358,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                                         updatePollData(e)
                                       }}
                                     />
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollA,e.pollData.pollB,e.pollData.pollC)} />
+                                    <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
                                   </Form.Group>
 
                                   <Form.Group className="mb-3" >
@@ -4365,15 +4369,15 @@ const getVotingPercentage=(num,num1,num2)=>{
 
 
 
-                                      
+
                                       // e.pollData.pollB = 100
                                       // e.pollData.pollA = 0
                                       // e.pollData.pollC = 0
                                       e.pollData.pollA = e.pollData.pollA
-                                      e.pollData.pollB = e.pollData.pollB+1
+                                      e.pollData.pollB = e.pollData.pollB + 1
                                       e.pollData.pollC = e.pollData.pollC
 
-  
+
                                       let messageContainer = document.querySelector(".chatarea");
 
                                       messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -4381,7 +4385,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                                       setChatData((chat) => [...chat, e])
                                       updatePollData(e)
                                     }} />
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollB,e.pollData.pollA,e.pollData.pollC)} />
+                                    <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
                                   </Form.Group>
 
                                   <Form.Group className="mb-3" >
@@ -4394,8 +4398,8 @@ const getVotingPercentage=(num,num1,num2)=>{
                                         // e.pollData.pollC = 100
                                         // e.pollData.pollA = 0
                                         // e.pollData.pollB = 0
-                                        e.pollData.pollC =  e.pollData.pollC+1
-                                        e.pollData.pollA =e.pollData.pollA
+                                        e.pollData.pollC = e.pollData.pollC + 1
+                                        e.pollData.pollA = e.pollData.pollA
                                         e.pollData.pollB = e.pollData.pollB
                                         let messageContainer = document.querySelector(".chatarea");
 
@@ -4405,24 +4409,24 @@ const getVotingPercentage=(num,num1,num2)=>{
                                         updatePollData(e)
                                       }}
                                     />
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollC,e.pollData.pollA,e.pollData.pollB)} />
+                                    <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
                                   </Form.Group>
                                   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                  <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true;uploadPollResponse }}>
+                                  <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse }}>
                                     Vote
                                   </Button>
                                 </Form>
                               </div> : null}
 
-                              {e.isEvent?<div style={{ marginTop: '30px' }} className="EventFormDiv">
-                               <h5 style={{fontSize:'15px'}}>Event Created by {e.event.fullName}</h5>
+                              {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
+                                <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
                                 <p>Event Title : {e.event.eventTitle}</p>
-                             {e.event.eventDesc? <p>Event Description : {e.event.eventDesc}</p>:null}  
+                                {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
                                 <p>Event Date : {e.event.eventDate}</p>
                                 <p>Event Time : {e.event.eventTime}</p>
-                              </div>:null}
+                              </div> : null}
 
                               {e.isVideo ? (
                                 <video
@@ -4462,8 +4466,8 @@ const getVotingPercentage=(num,num1,num2)=>{
                                   }}
                                 />
                               ) : null}
-                          
-                            {e.isPoll? <p style={{fontSize:'12px'}}>{`Note:The Poll will expire in ${e.expiryTime}`}</p>:null} 
+
+                              {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll will expire in ${e.expiryTime}`}</p> : null}
                             </div>
                           ))
                           : null}
@@ -5181,7 +5185,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                   clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
                   username={userInformation.username}
-                  sumitChatData={(data)=>{sumitChatDataFromScheduler(data)}}
+                  sumitChatData={(data) => { sumitChatDataFromScheduler(data) }}
                   show={scheduleBox}
                   fullName={userFullName}
                   onHide={() => setScheduleBox(false)}
@@ -5960,7 +5964,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                             </Linkify>
                             {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
                               <Form onSubmit={(e) => e.preventDefault()}>
-                            
+
                                 <Form.Group className="mb-3" >
                                   <Form.Label>{e.pollData.Question}</Form.Label>
 
@@ -5973,7 +5977,7 @@ const getVotingPercentage=(num,num1,num2)=>{
 
                                       // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                       // chatData[chatData.indexOf(e)]
-                                      e.pollData.pollA = e.pollData.pollA+1
+                                      e.pollData.pollA = e.pollData.pollA + 1
                                       e.pollData.pollB = e.pollData.pollB
                                       e.pollData.pollC = e.pollData.pollC
 
@@ -5986,7 +5990,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                                       updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA,e.pollData.pollB,e.pollData.pollC)} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -5999,7 +6003,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                                     // e.pollData.pollC = 0
 
                                     e.pollData.pollA = e.pollData.pollA
-                                    e.pollData.pollB = e.pollData.pollB+1
+                                    e.pollData.pollB = e.pollData.pollB + 1
                                     e.pollData.pollC = e.pollData.pollC
 
 
@@ -6010,7 +6014,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                                     setChatData((chat) => [...chat, e])
                                     updatePollData(e)
                                   }} />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB,e.pollData.pollA,e.pollData.pollC)} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6023,10 +6027,10 @@ const getVotingPercentage=(num,num1,num2)=>{
                                       // e.pollData.pollC = 100
                                       // e.pollData.pollA = 0
                                       // e.pollData.pollB = 0
-                                       e.pollData.pollC =  e.pollData.pollC+1
-                                       e.pollData.pollA =e.pollData.pollA
-                                       e.pollData.pollB = e.pollData.pollB
-                                    
+                                      e.pollData.pollC = e.pollData.pollC + 1
+                                      e.pollData.pollA = e.pollData.pollA
+                                      e.pollData.pollB = e.pollData.pollB
+
                                       let messageContainer = document.querySelector(".chatarea");
 
                                       messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -6035,23 +6039,23 @@ const getVotingPercentage=(num,num1,num2)=>{
                                       updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC,e.pollData.pollA,e.pollData.pollB)} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true;uploadPollResponse }}>
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse }}>
                                   Vote
                                 </Button>
                               </Form>
                             </div> : null}
-                            {e.isEvent?<div style={{ marginTop: '30px' }} className="EventFormDiv">
-                               <h5 style={{fontSize:'15px'}}>Event Created by {e.event.fullName}</h5>
-                                <p>Event Title : {e.event.eventTitle}</p>
-                             {e.event.eventDesc? <p>Event Description : {e.event.eventDesc}</p>:null}  
-                                <p>Event Date : {e.event.eventDate}</p>
-                                <p>Event Time : {e.event.eventTime}</p>
-                              </div>:null}
+                            {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
+                              <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
+                              <p>Event Title : {e.event.eventTitle}</p>
+                              {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
+                              <p>Event Date : {e.event.eventDate}</p>
+                              <p>Event Time : {e.event.eventTime}</p>
+                            </div> : null}
                             {e.isVideo ? (
                               <video
                                 onDragStart={(e) => e.preventDefault()}
@@ -6085,8 +6089,8 @@ const getVotingPercentage=(num,num1,num2)=>{
                                 }}
                               />
                             ) : null}
-                            
-                              {e.isPoll? <p style={{fontSize:'12px'}}>{`Note:The Poll will expire in ${e.expiryTime}`}</p>:null} 
+
+                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll will expire in ${e.expiryTime}`}</p> : null}
                           </div>
                         ))
                         : null}
@@ -6303,7 +6307,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                                   setBroadcastStream(true);
                                 }}
                               /> */}
-                                <SoapboxTooltip title={"Invite"} placement="bottom">
+                        <SoapboxTooltip title={"Invite"} placement="bottom">
                           <span style={{
                             display: 'flex',
                             justifyContent: 'center',
@@ -6317,7 +6321,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                             // marginLeft: '15px',
                             fontSize: '1rem'
                           }}
-                          onClick={() => setInviteBox(true)}
+                            onClick={() => setInviteBox(true)}
                           >
                             <Share />
                           </span>
@@ -6343,9 +6347,10 @@ const getVotingPercentage=(num,num1,num2)=>{
                             <RiLiveLine />
                           </span>
                         </SoapboxTooltip>
-                   <div style={{display:'flex',justifyContent:'space-between',width:'58px',flexDirection:'row'}}>     
-                   <SoapboxTooltip title={"Schedule Event"} placement="top">
-                          <span style={{  display: 'flex',
+                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '58px', flexDirection: 'row' }}>
+                          <SoapboxTooltip title={"Schedule Event"} placement="top">
+                            <span style={{
+                              display: 'flex',
                               justifyContent: 'center',
                               alignItems: 'center',
                               cursor: 'pointer',
@@ -6355,49 +6360,50 @@ const getVotingPercentage=(num,num1,num2)=>{
                               height: '26px',
                               borderRadius: '50%',
                               // marginLeft: '15px',
-                              fontSize: '1.1rem'}}
-                          onClick={() => { setScheduleBox(!scheduleBox) }}
-                          >
-                            <RiCalendarEventLine />
-                          </span>
-                        </SoapboxTooltip>
-                        <SoapboxTooltip title={"Create Poll"} placement="top">
-                          <span style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            cursor: 'pointer',
-                            backgroundColor: '#dcd5fa',
-                            color: "#8249A0",
-                            width: '26px',
-                            height: '26px',
-                            borderRadius: '50%',
-                            // marginLeft: '15px',
-                            fontSize: '1.1rem'
-                          }}
-                            onClick={() => {
-                              if (showPollForm) {
-                                document.getElementById("showPollFormId").style.transition = "2s";
-                                document.getElementById("showPollFormId").style.left = "200vw";
-
-                                setTimeout(() => {
-                                  setShowPollForm(false);
-                                }, 1000);
-                              } else {
-                                setShowPollForm(true);
-
-                                setTimeout(() => {
-                                  if (document.getElementById("showPollFormId")) {
-                                    document.getElementById("showPollFormId").style.transition = "1s";
-                                    document.getElementById("showPollFormId").style.left = "70px";
-                                  }
-                                }, 1);
-                              }
+                              fontSize: '1.1rem'
                             }}
-                          >
-                            <RiBookmark3Line />
-                          </span>
-                        </SoapboxTooltip></div>
+                              onClick={() => { setScheduleBox(!scheduleBox) }}
+                            >
+                              <RiCalendarEventLine />
+                            </span>
+                          </SoapboxTooltip>
+                          <SoapboxTooltip title={"Create Poll"} placement="top">
+                            <span style={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              cursor: 'pointer',
+                              backgroundColor: '#dcd5fa',
+                              color: "#8249A0",
+                              width: '26px',
+                              height: '26px',
+                              borderRadius: '50%',
+                              // marginLeft: '15px',
+                              fontSize: '1.1rem'
+                            }}
+                              onClick={() => {
+                                if (showPollForm) {
+                                  document.getElementById("showPollFormId").style.transition = "2s";
+                                  document.getElementById("showPollFormId").style.left = "200vw";
+
+                                  setTimeout(() => {
+                                    setShowPollForm(false);
+                                  }, 1000);
+                                } else {
+                                  setShowPollForm(true);
+
+                                  setTimeout(() => {
+                                    if (document.getElementById("showPollFormId")) {
+                                      document.getElementById("showPollFormId").style.transition = "1s";
+                                      document.getElementById("showPollFormId").style.left = "70px";
+                                    }
+                                  }, 1);
+                                }
+                              }}
+                            >
+                              <RiBookmark3Line />
+                            </span>
+                          </SoapboxTooltip></div>
 
                         {userInfo[0].communityClub == 1
                           ? null
@@ -6462,25 +6468,25 @@ const getVotingPercentage=(num,num1,num2)=>{
                           display: 'flex',
                           flexDirection: 'column',
                           justifyContent: 'space-evenly',
-                          paddingTop:'0px',
-                          paddingBottom:'0px'
+                          paddingTop: '0px',
+                          paddingBottom: '0px'
                         }}>
 
                           {FormEditPoll ?
                             <Form onSubmit={(e) => e.preventDefault()}>
-                                <Form.Group className="mb-3" >
+                              <Form.Group className="mb-3" >
                                 <Form.Label>Poll Expiry Duration</Form.Label>
-                              <Form.Control as="select" onChange={(e)=>setPollFormExpiry(e.target.value)} aria-label="Default select example">
-  <option value="24">24 Hours</option>
-  <option value="48">2 Days</option>
-  <option value="72">3 Days</option>
-  <option value="96">4 Days</option>
-  <option value="120">5 Days</option>
-  <option value="144">6 Days</option>
-  <option value="168">7 Days</option>
-</Form.Control>
+                                <Form.Control as="select" onChange={(e) => setPollFormExpiry(e.target.value)} aria-label="Default select example">
+                                  <option value="24">24 Hours</option>
+                                  <option value="48">2 Days</option>
+                                  <option value="72">3 Days</option>
+                                  <option value="96">4 Days</option>
+                                  <option value="120">5 Days</option>
+                                  <option value="144">6 Days</option>
+                                  <option value="168">7 Days</option>
+                                </Form.Control>
                               </Form.Group>
-                               
+
                               <Form.Group className="mb-3" >
                                 <Form.Label>Enter Question For Poll</Form.Label>
                                 <Form.Control type="text" value={pollFormDataQ}
@@ -6640,14 +6646,14 @@ const getVotingPercentage=(num,num1,num2)=>{
                                   e.isEmoji ? "message-emoji" : "message"
                                 }
                               >
-                                {!e.isVideo && !e.isImage && !e.isPoll &&!e.isEvent
+                                {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent
                                   ? e.message
                                   : null}
                               </div>
                             </Linkify>
                             {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
                               <Form onSubmit={(e) => e.preventDefault()}>
-                            
+
                                 <Form.Group className="mb-3" >
                                   <Form.Label>{e.pollData.Question}</Form.Label>
 
@@ -6660,7 +6666,7 @@ const getVotingPercentage=(num,num1,num2)=>{
 
                                       // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                       // chatData[chatData.indexOf(e)]
-                                      e.pollData.pollA = e.pollData.pollA+1
+                                      e.pollData.pollA = e.pollData.pollA + 1
                                       e.pollData.pollB = e.pollData.pollB
                                       e.pollData.pollC = e.pollData.pollC
 
@@ -6673,7 +6679,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                                       updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA,e.pollData.pollB,e.pollData.pollC)} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6685,7 +6691,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                                     // e.pollData.pollA = 0
                                     // e.pollData.pollC = 0
                                     e.pollData.pollA = e.pollData.pollA
-                                    e.pollData.pollB = e.pollData.pollB+1
+                                    e.pollData.pollB = e.pollData.pollB + 1
                                     e.pollData.pollC = e.pollData.pollC
 
 
@@ -6696,7 +6702,7 @@ const getVotingPercentage=(num,num1,num2)=>{
                                     setChatData((chat) => [...chat, e])
                                     updatePollData(e)
                                   }} />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB,e.pollData.pollA,e.pollData.pollC)} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6710,8 +6716,8 @@ const getVotingPercentage=(num,num1,num2)=>{
                                       // e.pollData.pollA = 0
                                       // e.pollData.pollB = 0
 
-                                      e.pollData.pollC =  e.pollData.pollC+1
-                                      e.pollData.pollA =e.pollData.pollA
+                                      e.pollData.pollC = e.pollData.pollC + 1
+                                      e.pollData.pollA = e.pollData.pollA
                                       e.pollData.pollB = e.pollData.pollB
                                       let messageContainer = document.querySelector(".chatarea");
 
@@ -6721,23 +6727,23 @@ const getVotingPercentage=(num,num1,num2)=>{
                                       updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC,e.pollData.pollA,e.pollData.pollB)} />
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true;uploadPollResponse(e) }}>
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e) }}>
                                   Vote
                                 </Button>
                               </Form>
                             </div> : null}
-                            {e.isEvent?<div style={{ marginTop: '30px' }} className="EventFormDiv">
-                               <h5 style={{fontSize:'15px'}}>Event Created by {e.event.fullName}</h5>
-                                <p>Event Title : {e.event.eventTitle}</p>
-                             {e.event.eventDesc? <p>Event Description : {e.event.eventDesc}</p>:null}  
-                                <p>Event Date : {e.event.eventDate}</p>
-                                <p>Event Time : {e.event.eventTime}</p>
-                              </div>:null}
+                            {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
+                              <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
+                              <p>Event Title : {e.event.eventTitle}</p>
+                              {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
+                              <p>Event Date : {e.event.eventDate}</p>
+                              <p>Event Time : {e.event.eventTime}</p>
+                            </div> : null}
                             {e.isVideo ? (
                               <video
                                 onDragStart={(e) => e.preventDefault()}
@@ -6771,8 +6777,8 @@ const getVotingPercentage=(num,num1,num2)=>{
                                 }}
                               />
                             ) : null}
-                            
-                            {e.isPoll? <p style={{fontSize:'12px'}}>{`Note:The Poll will expire in ${e.expiryTime}`}</p>:null} 
+
+                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll will expire in ${e.expiryTime}`}</p> : null}
                           </div>
                         ))
                         : null}

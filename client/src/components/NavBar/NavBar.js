@@ -7,11 +7,14 @@ import { HiMenuAlt3 } from 'react-icons/hi';
 import './navbar.css';
 import axios from 'axios';
 import { SoapboxTooltip } from '../SoapboxTooltip';
+import CreatePrivateHoot from '../../pages/CreatePrivateHoot';
+import CreatePublicHoot from '../../pages/CreatePublicHoot';
 
 const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, setShowExtraFeatures }) => {
     const history = useHistory();
     const [showLinks, setShowLinks] = useState(false);
     const [userData, setUserData] = useState([]);
+    const [showCreatePublicHoot, setShowCreatePublicHoot] = useState(false);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -107,24 +110,65 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
 
                             {userData && userData.privateChannel && header
                                 ? null
-                                : <NavLink
-                                    activeClassName="nav-link-active"
+                                : <Link
+                                    // activeClassName="nav-link-active"
+                                    activeClassName=""
                                     className="nav-link main-title"
                                     to={window.location.pathname === "/create-private"
                                         ? "/create-private"
                                         : userData.privateChannel && header
                                             ? "/create-private"
-                                            : "/create"
+                                            : "#create-hoot"
                                     }
                                 >
                                     {window.location.pathname === "/create-private"
                                         ? "Create Private Hoot"
                                         : userData.privateChannel && header
                                             ? "Create Private Hoot"
-                                            : "Create Hoot"
+                                            : <span
+                                                onClick={() => {
+                                                    if (showCreatePublicHoot) {
+                                                        document.getElementById("slideH").style.transition = "2sec";
+                                                        document.getElementById("slideH").style.left = "-200vw";
+
+                                                        setTimeout(() => {
+                                                            setShowCreatePublicHoot(false);
+                                                        }, 1000);
+                                                    } else {
+                                                        setTimeout(() => {
+                                                            setShowCreatePublicHoot(true);
+
+                                                            if (document.getElementById("slideH")) {
+                                                                document.getElementById("slideH").style.transition = "2sec";
+                                                                document.getElementById("slideH").style.left = "-45vw";
+                                                            }
+                                                        }, 1);
+                                                    }
+                                                }}
+                                            >
+                                                Create Hoot
+                                            </span>
                                     }
-                                </NavLink>
+                                </Link>
                             }
+
+                            {showCreatePublicHoot ? (
+                                <div className="slide-container">
+                                    <div id="slideH" style={{ top: "7rem" }}>
+                                        <CreatePublicHoot
+                                            closeHoot={() => {
+                                                document.getElementById("slideH").style.transition = "1sec";
+                                                document.getElementById("slideH").style.right = "-200vw";
+
+                                                setTimeout(() => {
+                                                    setShowCreatePublicHoot(false);
+                                                    window.location.reload(false);
+                                                }, 1000);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            ) : null}
 
                             <NavLink
                                 activeClassName="nav-link-active"
