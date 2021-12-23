@@ -151,6 +151,7 @@ const PrivateChannels = () => {
   const [showPollForm, setShowPollForm] = useState(false)
   const [pollFormData, setPollFormData] = useState({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA: 90, pollB: 50, pollC: 60 })
   const [pollFormDataQ, setPollFormDataQ] = useState("")
+  const [pollFormExpiry,setPollFormExpiry] = useState("24")
   const [pollFormDataOA, setPollFormDataOA] = useState("")
   const [pollFormDataOB, setPollFormDataOB] = useState("")
   const [pollFormDataOC, setPollFormDataOC] = useState("")
@@ -1075,6 +1076,7 @@ const getVotingPercentage=(num,num1,num2)=>{
         OptionA: pollFormDataOA,
         OptionB: pollFormDataOB,
         OptionC: pollFormDataOC,
+        pollFormExpiry:pollFormExpiry,
         createdBy: user,
         threadId: threadId,
         pollA: 1,
@@ -4133,6 +4135,18 @@ const getVotingPercentage=(num,num1,num2)=>{
                      */}
                             {FormEditPoll ?
                               <Form onSubmit={(e) => e.preventDefault()}>
+                               <Form.Group className="mb-3" >
+                                <Form.Label>Poll Expiry Duration</Form.Label>
+                              <Form.Control as="select" onChange={(e)=>setPollFormExpiry(e.target.value)} aria-label="Default select example">
+  <option value="24">24 Hours</option>
+  <option value="48">2 Days</option>
+  <option value="72">3 Days</option>
+  <option value="96">4 Days</option>
+  <option value="120">5 Days</option>
+  <option value="144">6 Days</option>
+  <option value="168">7 Days</option>
+</Form.Control>
+                              </Form.Group>
                                 <Form.Group className="mb-3" >
                                   <Form.Label>Enter Question For Poll</Form.Label>
                                   <Form.Control type="text" value={pollFormDataQ}
@@ -6444,11 +6458,26 @@ const getVotingPercentage=(num,num1,num2)=>{
                           width: '100%',
                           display: 'flex',
                           flexDirection: 'column',
-                          justifyContent: 'space-evenly'
+                          justifyContent: 'space-evenly',
+                          paddingTop:'0px',
+                          paddingBottom:'0px'
                         }}>
 
                           {FormEditPoll ?
                             <Form onSubmit={(e) => e.preventDefault()}>
+                                <Form.Group className="mb-3" >
+                                <Form.Label>Poll Expiry Duration</Form.Label>
+                              <Form.Control as="select" onChange={(e)=>setPollFormExpiry(e.target.value)} aria-label="Default select example">
+  <option value="24">24 Hours</option>
+  <option value="48">2 Days</option>
+  <option value="72">3 Days</option>
+  <option value="96">4 Days</option>
+  <option value="120">5 Days</option>
+  <option value="144">6 Days</option>
+  <option value="168">7 Days</option>
+</Form.Control>
+                              </Form.Group>
+                               
                               <Form.Group className="mb-3" >
                                 <Form.Label>Enter Question For Poll</Form.Label>
                                 <Form.Control type="text" value={pollFormDataQ}
