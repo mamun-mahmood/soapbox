@@ -69,6 +69,7 @@ import Media from 'react-media';
 import NavBar from "../NavBar/NavBar";
 import MyVerticallyCenteredScheduler from "./scheduler";
 import { Share } from "@material-ui/icons";
+import stickerIcon from '../../assets/stickerIcon.png'
 
 const stripe = loadStripe(
   "pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz"
@@ -104,6 +105,8 @@ const PrivateChannels = () => {
   const [requestMessagePrice, setRequestMessagePrice] = useState(0);
   const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0);
   const [emojiPicker, setEmojiPicker] = useState(false);
+  const [stickerPicker, setStickerPicker] = useState(false);
+  
   const [emojiPickerPrivate, setEmojiPickerPrivate] = useState(false);
   const [AllMyEvents, setAllMyEvents] = useState([])
   const [showAllMyEvents, setShowAllMyEvents] = useState(false)
@@ -162,7 +165,21 @@ const PrivateChannels = () => {
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
   const form = document.getElementById("send-container");
   const messageInput = document.getElementById("messageInp");
-
+const stickersImages =["https://soapboxapi.megahoot.net/stickers/sticker1.png",
+"https://soapboxapi.megahoot.net/stickers/sticker2.png",
+"https://soapboxapi.megahoot.net/stickers/sticker3.png",
+"https://soapboxapi.megahoot.net/stickers/sticker4.png",
+"https://soapboxapi.megahoot.net/stickers/sticker5.png",
+"https://soapboxapi.megahoot.net/stickers/sticker6.png",
+"https://soapboxapi.megahoot.net/stickers/sticker7.png",
+"https://soapboxapi.megahoot.net/stickers/sticker8.png",
+"https://soapboxapi.megahoot.net/stickers/sticker9.png",
+"https://soapboxapi.megahoot.net/stickers/sticker10.png",
+"https://soapboxapi.megahoot.net/stickers/sticker11.png",
+"https://soapboxapi.megahoot.net/stickers/sticker12.png",
+"https://soapboxapi.megahoot.net/stickers/sticker13.png",
+"https://soapboxapi.megahoot.net/stickers/sticker14.png",
+]
   var totalViews = 0;
   var totalLikes = 0;
 
@@ -3868,6 +3885,15 @@ const PrivateChannels = () => {
                               width="27px"
                             />
                           </SoapboxTooltip>
+                          <SoapboxTooltip title={"Stickers"} placement="top">
+                            <img
+                              src={stickerIcon}
+                              style={{width:'25px',padding:'3px',borderRadius:'15px', margin: "5px", cursor: "pointer",backgroundColor:'#8249A0' }}
+                              onClick={() => {
+                                setStickerPicker(!stickerPicker);
+                              }}
+                            />
+                          </SoapboxTooltip>
 
                           <SoapboxTooltip title={"Emoji"} placement="top">
                             <img
@@ -4121,7 +4147,9 @@ const PrivateChannels = () => {
                             width: '100%',
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'space-evenly'
+                            justifyContent: 'space-evenly',
+                            paddingTop: '0px',
+                            paddingBottom: '0px'
                           }}>
 
                             {/* <input placeholder="Enter Question For Poll" value={breakOffInput}  onChange={(e) => {
@@ -4505,6 +4533,40 @@ const PrivateChannels = () => {
                           </div>
                         </ClickAwayListener>
                       )}
+                       {stickerPicker?<div style={{ 
+                      position: "absolute",
+                              bottom: "3rem",
+                              left: "0.5rem",
+                              backgroundColor:'#652C90',
+                              borderRadius:'5px',
+                              padding:'8px',
+                              zIndex: "1111",display:'flex',flexDirection:'row',justifyContent:'space-evenly',alignItems:'center',flexWrap:'wrap'}}>
+{stickersImages.map((image)=><img src={image}
+onClick={()=>{
+
+  append(
+    userFullName,
+    `${image}`,
+    "left",
+    `${BaseURL}/profile-pictures/${userProfilePic}`,
+    false,
+    false,
+    true
+  );
+  socket.emit("send", {
+    name: userFullName,
+    message: `${image}`,
+    profilePic: userProfilePic,
+    isEmoji: false,
+    isVideo: false,
+    isImage: true,
+  });
+  setStickerPicker(false)
+}}
+style={{width:'70px',minWidth:'70px',minHeight:'70px',margin:'5px',cursor:'pointer',backgroundColor:'whitesmoke',padding:'5px'}} />)}
+                      </div>:null
+                      }
+
 
                       {src && mimeType.substr(0, 5) == "image" ? (
                         <div className="messageBox">
@@ -4626,6 +4688,15 @@ const PrivateChannels = () => {
                                 width="27px"
                               />
                             </SoapboxTooltip>
+                            <SoapboxTooltip title={"Stickers"} placement="top">
+                            <img
+                              src={stickerIcon}
+                              style={{width:'25px',padding:'3px',borderRadius:'15px', margin: "5px", cursor: "pointer",backgroundColor:'#8249A0' }}
+                              onClick={() => {
+                                setStickerPicker(!stickerPicker);
+                              }}
+                            />
+                          </SoapboxTooltip>
                           </div>
 
                           <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
@@ -6182,6 +6253,15 @@ const PrivateChannels = () => {
                             width="27px"
                           />
                         </SoapboxTooltip>
+                        <SoapboxTooltip title={"Stickers"} placement="top">
+                            <img
+                              src={stickerIcon}
+                              style={{width:'25px',padding:'3px',borderRadius:'15px', margin: "5px", cursor: "pointer",backgroundColor:'#8249A0' }}
+                              onClick={() => {
+                                setStickerPicker(!stickerPicker);
+                              }}
+                            />
+                          </SoapboxTooltip>
 
                         <SoapboxTooltip title={"Emoji"} placement="top">
                           <img
@@ -6816,6 +6896,41 @@ const PrivateChannels = () => {
                         </div>
                       </ClickAwayListener>
                     )}
+
+                    {stickerPicker?<div style={{ 
+                      position: "absolute",
+                              bottom: "3rem",
+                              left: "0.5rem",
+                              backgroundColor:'#652C90',
+                              borderRadius:'5px',
+                              padding:'8px',
+                              zIndex: "1111",display:'flex',flexDirection:'row',justifyContent:'space-evenly',alignItems:'center',flexWrap:'wrap'}}>
+{stickersImages.map((image)=><img src={image}
+onClick={()=>{
+
+  append(
+    userFullName,
+    `${image}`,
+    "left",
+    `${BaseURL}/profile-pictures/${userProfilePic}`,
+    false,
+    false,
+    true
+  );
+  socket.emit("send", {
+    name: userFullName,
+    message: `${image}`,
+    profilePic: userProfilePic,
+    isEmoji: false,
+    isVideo: false,
+    isImage: true,
+  });
+  setStickerPicker(false)
+}}
+style={{width:'70px',minWidth:'70px',minHeight:'70px',margin:'5px',cursor:'pointer',backgroundColor:'whitesmoke',padding:'5px'}} />)}
+                      </div>:null
+                      }
+
                     {src && mimeType.substr(0, 5) == "image" ? (
                       <div className="messageBox">
                         <img
@@ -6938,6 +7053,15 @@ const PrivateChannels = () => {
                               src={filechat}
                               style={{ margin: "5px", cursor: "pointer" }}
                               width="27px"
+                            />
+                          </SoapboxTooltip>
+                          <SoapboxTooltip title={"Stickers"} placement="top">
+                            <img
+                              src={stickerIcon}
+                              style={{width:'25px',padding:'3px',borderRadius:'15px', margin: "5px", cursor: "pointer",backgroundColor:'#8249A0' }}
+                              onClick={() => {
+                                setStickerPicker(!stickerPicker);
+                              }}
                             />
                           </SoapboxTooltip>
                         </div>
