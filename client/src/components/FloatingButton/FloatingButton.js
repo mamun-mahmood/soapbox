@@ -48,7 +48,7 @@ const FloatingButton = () => {
 
             {showFloatingCreatePublicHoot ? (
                 <div className="slide-container">
-                    <div id="slideH" style={{ top: "-40rem", left: "-200vw", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
+                    <div id="slideH" style={{ top: "-35rem", left: "-200vw", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
                         <CreatePublicHoot
                             closeHoot={() => {
                                 document.getElementById("slideH").style.transition = "1sec";
