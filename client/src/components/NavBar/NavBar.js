@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { IoCloseOutline } from 'react-icons/io5';
@@ -7,14 +7,25 @@ import { HiMenuAlt3 } from 'react-icons/hi';
 import './navbar.css';
 import axios from 'axios';
 import { SoapboxTooltip } from '../SoapboxTooltip';
-import CreatePrivateHoot from '../../pages/CreatePrivateHoot';
 import CreatePublicHoot from '../../pages/CreatePublicHoot';
+import { MyPublicHootBox } from '../../context/MyPublicHootBoxContext';
 
 const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, setShowExtraFeatures }) => {
     const history = useHistory();
     const [showLinks, setShowLinks] = useState(false);
     const [userData, setUserData] = useState([]);
-    const [showCreatePublicHoot, setShowCreatePublicHoot] = useState(false);
+
+    const {
+        showNavCreatePublicHoot,
+        setShowNavCreatePublicHoot,
+        setShowFloatingCreatePublicHoot
+    } = useContext(MyPublicHootBox);
+
+    useEffect(() => {
+        if (showNavCreatePublicHoot) {
+            setShowFloatingCreatePublicHoot(false);
+        }
+    }, [showNavCreatePublicHoot]);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -127,20 +138,20 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
                                             ? "Create Private Hoot"
                                             : <span
                                                 onClick={() => {
-                                                    if (showCreatePublicHoot) {
+                                                    if (showNavCreatePublicHoot) {
                                                         document.getElementById("slideH").style.transition = "2sec";
                                                         document.getElementById("slideH").style.left = "-200vw";
 
                                                         setTimeout(() => {
-                                                            setShowCreatePublicHoot(false);
+                                                            setShowNavCreatePublicHoot(false);
                                                         }, 1000);
                                                     } else {
                                                         setTimeout(() => {
-                                                            setShowCreatePublicHoot(true);
+                                                            setShowNavCreatePublicHoot(true);
 
                                                             if (document.getElementById("slideH")) {
                                                                 document.getElementById("slideH").style.transition = "2sec";
-                                                                document.getElementById("slideH").style.left = "-45vw";
+                                                                document.getElementById("slideH").style.left = "-40vw";
                                                             }
                                                         }, 1);
                                                     }
@@ -152,16 +163,16 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
                                 </Link>
                             }
 
-                            {showCreatePublicHoot ? (
+                            {showNavCreatePublicHoot ? (
                                 <div className="slide-container">
-                                    <div id="slideH" style={{ top: "7rem" }}>
+                                    <div id="slideH" style={{ top: "5.9rem", left: "-200vw", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
                                         <CreatePublicHoot
                                             closeHoot={() => {
                                                 document.getElementById("slideH").style.transition = "1sec";
                                                 document.getElementById("slideH").style.right = "-200vw";
 
                                                 setTimeout(() => {
-                                                    setShowCreatePublicHoot(false);
+                                                    setShowNavCreatePublicHoot(false);
                                                     window.location.reload(false);
                                                 }, 1000);
                                             }}
