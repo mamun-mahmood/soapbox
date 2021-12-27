@@ -235,7 +235,8 @@ const PrivateChannels = () => {
     isImage,
     isPoll,
     timestamp,
-    isEvent
+    isEvent,
+    isSticker
   ) => {
     if (isPoll) {
       let pollData = JSON.parse(message)
@@ -258,7 +259,7 @@ const PrivateChannels = () => {
 
         setChatData((e) => [
           ...e,
-          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime },
+          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent,isSticker },
 
         ]);
       })
@@ -270,13 +271,13 @@ const PrivateChannels = () => {
 
       setChatData((e) => [
         ...e,
-        { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent },
+        { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent,isSticker },
       ]);
     }
     else {
       setChatData((e) => [
         ...e,
-        { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp },
+        { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isSticker },
       ]);
     }
 
@@ -592,7 +593,8 @@ const PrivateChannels = () => {
             isImage = i.chat.isImage,
             isPoll = i.chat.isPoll,
             timestamp = i.chat.timestamp,
-            isEvent = i.chat.isEvent
+            isEvent = i.chat.isEvent,
+            isSticker = i.chat.isSticker
 
 
           if (isPoll) {
@@ -607,7 +609,7 @@ const PrivateChannels = () => {
 
               setChatData((e) => [
                 ...e,
-                { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime },
+                { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime,isSticker },
 
               ]);
             })
@@ -620,7 +622,7 @@ const PrivateChannels = () => {
 
             setChatData((e) => [
               ...e,
-              { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent },
+              { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent,isSticker },
 
             ]);
 
@@ -628,7 +630,7 @@ const PrivateChannels = () => {
           else {
             setChatData((e) => [
               ...e,
-              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent },
+              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent ,isSticker},
             ]);
 
           }
@@ -3788,7 +3790,7 @@ const PrivateChannels = () => {
                                       : (event.returnValue = false);
                                   }}
                                   style={{
-                                    maxWidth: "200px",
+                                    maxWidth:e.isSticker?"60px":"200px",
                                     marginTop: "20px",
                                     borderRadius: "5px",
                                   }}
@@ -4488,7 +4490,8 @@ const PrivateChannels = () => {
                                       : (event.returnValue = false);
                                   }}
                                   style={{
-                                    maxWidth: "200px",
+                                   
+                                    maxWidth:e.isSticker?"60px":"200px",
                                     marginTop: "20px",
                                     borderRadius: "5px",
                                   }}
@@ -4552,8 +4555,11 @@ const PrivateChannels = () => {
                               `${BaseURL}/profile-pictures/${userProfilePic}`,
                               false,
                               false,
-                              true
+                              true,"","","",true
                             );
+
+
+                            
                             socket.emit("send", {
                               name: userFullName,
                               message: `${image}`,
@@ -4561,6 +4567,8 @@ const PrivateChannels = () => {
                               isEmoji: false,
                               isVideo: false,
                               isImage: true,
+                              isSticker: true
+                              
                             });
                             setStickerPicker(false)
                           }}
@@ -6155,7 +6163,7 @@ const PrivateChannels = () => {
                                     : (event.returnValue = false);
                                 }}
                                 style={{
-                                  maxWidth: "200px",
+                                  maxWidth:e.isSticker?"60px":"200px",
                                   marginTop: "20px",
                                   borderRadius: "5px",
                                 }}
@@ -6852,7 +6860,7 @@ const PrivateChannels = () => {
                                     : (event.returnValue = false);
                                 }}
                                 style={{
-                                  maxWidth: "200px",
+                                  maxWidth:e.isSticker?"60px":"200px",
                                   marginTop: "20px",
                                   borderRadius: "5px",
                                 }}
@@ -6917,7 +6925,7 @@ const PrivateChannels = () => {
                             `${BaseURL}/profile-pictures/${userProfilePic}`,
                             false,
                             false,
-                            true
+                            true,"","","",true
                           );
                           socket.emit("send", {
                             name: userFullName,
@@ -6926,6 +6934,8 @@ const PrivateChannels = () => {
                             isEmoji: false,
                             isVideo: false,
                             isImage: true,
+                            isSticker: true
+                              
                           });
                           setStickerPicker(false)
                         }}
