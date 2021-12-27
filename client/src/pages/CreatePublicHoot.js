@@ -53,6 +53,7 @@ const CreatePrivateHoot = (props) => {
     const [showLinkPreview, setShowLinkPreview] = useState(false);
     // const [links, setLinks] = useState([{ link: "" }]);
     const [linkModalOpen, setLinkModalOpen] = useState(false);
+    const [onDemandMedia, setOnDemandMedia] = useState(false);
 
     const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -88,7 +89,7 @@ const CreatePrivateHoot = (props) => {
         formData.append("private", privateCheck ? 1 : 0)
         formData.append("expiryDate", ephemeralCheck ? expiryDate : 0)
         formData.append("authorEmail", email)
-        formData.append("onDemandMedia", 0);
+        formData.append("onDemandMedia", onDemandMedia ? 1 : 0);
         formData.append("file", file);
         formData.append("audioPoster", audioPoster);
 
@@ -254,6 +255,316 @@ const CreatePrivateHoot = (props) => {
     const emojis = ["😍", "🦉", "😂", "👏🏻", "💖", "😜", "🤯", "🤓", "🥰", "😎", "😋"];
     const [defaultEmoji, setDefaultEmoji] = useState("😄");
 
+    const videoRef = useRef(null);
+    const canvasRef = useRef(null);
+    const downloadRef = useRef(null);
+    const videoDownloadRef = useRef(null);
+
+    const [hasPhoto, setHasPhoto] = useState(false);
+    const [extraFeatures, setExtraFeatures] = useState(false);
+    const [showRecordBtn, setShowRecordBtn] = useState(true);
+
+    const [liveStream, setLiveStream] = useState(false);
+    const [livePhoto, setLivePhoto] = useState(false);
+    const [liveVideo, setLiveVideo] = useState(false);
+    const [liveAudio, setLiveAudio] = useState(false);
+
+    const [recordedVideoUrl, setRecordedVideoUrl] = useState(null);
+    const { startRecording, stopRecording, register, status } = useRecorder();
+    const { setMyStream, setHookStream } = useContext(MyStream);
+
+    const onDemandPhoto = () => {
+        setOnDemandMedia(true);
+        setLiveVideo(false);
+        setLiveAudio(false);
+        if (userData.privateChannel) {
+            // setPrivateCheck(true);
+            setLivePhoto(true);
+
+            setRecordedVideoUrl(null);
+
+            setLiveVideo(false);
+            setLiveAudio(false);
+
+            getVideo();
+            // setTimeout(() => {
+            //     window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+            // }, 1000);
+        } else {
+            toast.info("Requires Private Club")
+        }
+    }
+
+    const onDemandVideo = () => {
+        setOnDemandMedia(true);
+        setLivePhoto(false);
+        setLiveAudio(false);
+        if (userData.privateChannel) {
+            // setPrivateCheck(true);
+            setLiveVideo(true);
+            setExtraFeatures(true);
+
+            setRecordedVideoUrl(null);
+            setShowRecordBtn(true);
+
+            setLivePhoto(false);
+            setLiveAudio(false);
+
+            // if (liveVideo) {
+            //     const hookVideo = document.getElementById('hookVideo');
+            //     if (hookVideo.srcObject !== null) {
+            //         setHookStream(hookVideo.srcObject);
+            //     }
+            // }
+
+            // setTimeout(() => {
+            //     window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+            // }, 1000);
+        } else {
+            toast.info("Requires Private Club")
+        }
+    }
+
+    if (liveVideo) {
+        const hookVideo = document.getElementById('hookVideo');
+        if (hookVideo !== null) {
+            setHookStream(hookVideo.srcObject);
+        }
+    }
+
+    const onDemandAudio = () => {
+        setOnDemandMedia(true);
+        setLivePhoto(false);
+        setLiveVideo(false);
+        if (userData.privateChannel) {
+            setLivePhoto(false);
+            setLiveVideo(false);
+        } else {
+            toast.info("Requires Private Club")
+        }
+    }
+
+    const getVideo = () => {
+        setExtraFeatures(true);
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                width: 1920,
+                height: 1080
+            },
+            audio: false
+        }).then(stream => {
+            setMyStream(stream);
+
+            const video = videoRef.current;
+            video.srcObject = stream;
+
+            video.play();
+        }).catch(err => console.log(err))
+    }
+
+    const takePhoto = () => {
+        const clickAudio = new Audio(shutterClick);
+        clickAudio.play();
+
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+
+        // Get the exact size of the video element.
+        const videoWidth = video.videoWidth;
+        const videoHeight = video.videoHeight;
+
+        // Set the canvas to the same dimensions as the video.
+        canvas.width = videoWidth;
+        canvas.height = videoHeight;
+
+        // get the context object of canvas
+        const ctx = canvas.getContext('2d');
+
+        // Draw the current frame from the video on the canvas.
+        ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+
+        canvas.toBlob(function (blob) {
+            const photoFile = new File([blob], `${userData.name}'s On Demand Photo on MegaHoot Soapbox.jpeg`, {
+                type: blob.type,
+            });
+
+            downloadRef.current.href = URL.createObjectURL(blob);
+            downloadRef.current.download = `${userData.name}'s On Demand Photo on MegaHoot Soapbox.jpeg`;
+
+            setFile(photoFile);
+        }, 'image/jpeg')
+
+        setHasPhoto(true);
+        setLiveStream(false);
+
+        setTimeout(() => {
+            const stream = video.srcObject;
+            const tracks = stream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+            setMyStream(null);
+        }, 1000);
+    }
+
+    const closePhoto = () => {
+        // setTimeout(() => {
+        //     window.scrollTo({ top: 0, behavior: "smooth" });
+        // }, 0);
+
+        const video = videoRef.current;
+
+        if (video) {
+            const stream = video.srcObject;
+            const tracks = stream.getTracks();
+            tracks.forEach((track) => {
+                track.stop();
+            });
+        }
+
+        if (hasPhoto) {
+            const canvas = canvasRef.current;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        setFile([]);
+        // setPrivateCheck(false);
+        setExtraFeatures(false);
+        setHasPhoto(false);
+        setLiveStream(false);
+        setLivePhoto(false);
+        setLiveVideo(false);
+        setLiveAudio(false);
+        setMyStream(null);
+    }
+
+    const closeOnDemand = () => {
+        // closePhoto();
+
+        // setFile([]);
+        // setRecordedVideoUrl(null);
+        // setShowRecordBtn(true);
+        // setHasPhoto(false);
+        // setLiveStream(false);
+        // setLivePhoto(false);
+        // setLiveVideo(false);
+        // setLiveAudio(false);
+
+        setOnDemandMedia(false);
+
+        if (livePhoto) {
+            if (videoRef !== null) {
+                const video = videoRef.current;
+                const stream = video.srcObject;
+                const tracks = stream.getTracks();
+                tracks.forEach((track) => {
+                    track.stop();
+                });
+            }
+        }
+
+        if (liveVideo) {
+            const hookVideo = document.getElementById('hookVideo');
+            if (hookVideo !== null) {
+                const hookStream = hookVideo.srcObject;
+                const tracks = hookStream.getTracks();
+                tracks.forEach((track) => {
+                    track.stop();
+                });
+            }
+            window.location.reload();
+        }
+
+
+        // setTimeout(() => {
+        setExtraFeatures(false);
+        // }, 1000);
+    }
+
+    const reTakePhoto = () => {
+        setRecordedVideoUrl(null);
+        setExtraFeatures(true);
+        setHasPhoto(false);
+
+        getVideo();
+    }
+
+    const onVideoRecordingStart = () => {
+        setLiveStream(true);
+        setRecordedVideoUrl(null);
+        if (status !== "recording") {
+            startRecording();
+        }
+        setShowRecordBtn(false);
+    }
+
+    const onVideoRecordingStop = useCallback((blob, blobUrl) => {
+        setRecordedVideoUrl(blobUrl);
+        const videoFile = new File([blob], `On Demand Video on MegaHoot Soapbox`, {
+            type: blob.type,
+        });
+        setFile(videoFile);
+
+        videoDownloadRef.current.href = blobUrl;
+        videoDownloadRef.current.download = `On Demand Video on MegaHoot Soapbox`;
+
+        setLiveStream(false);
+
+        const hookVideo = document.getElementById('hookVideo');
+        const hookStream = hookVideo.srcObject;
+        const tracks = hookStream.getTracks();
+        tracks.forEach((track) => {
+            track.stop();
+        });
+    }, []);
+
+    const reTakeVideo = () => {
+        setFile([]);
+        setRecordedVideoUrl(null);
+        setExtraFeatures(true);
+        setShowRecordBtn(true);
+        setLiveStream(false);
+
+        stopRecording();
+    }
+
+    // const stopVideoStream = () => {
+    //     return new Promise(resolve => {
+    //         const hookVideo = document.getElementById('hookVideo');
+    //         const hookStream = hookVideo.srcObject;
+    //         const tracks = hookStream.getTracks();
+    //         tracks.forEach((track) => {
+    //             track.stop();
+    //         });
+    //         resolve("hook stream cleared");
+    //     });
+    // }
+
+    const closeVideo = async () => {
+        // setTimeout(() => {
+        //     window.scrollTo({ top: 0, behavior: "smooth" });
+        // }, 0);
+
+        setFile([]);
+        setRecordedVideoUrl(null);
+        setShowRecordBtn(true);
+        setHasPhoto(false);
+        setLiveStream(false);
+        setLivePhoto(false);
+        setLiveAudio(false);
+        setExtraFeatures(false);
+
+        // const result = await stopVideoStream();
+        // if (result) {
+        //     setExtraFeatures(false);
+        // }
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 0);
+    }
+
     const closePreview = () => {
         setMimeType("");
         setSrc(null);
@@ -263,57 +574,178 @@ const CreatePrivateHoot = (props) => {
 
     return (
         <Fragment>
+            {/* <NavBar /> */}
             <div className="upload-post-private">
-                <div className="record-on-create-hoot">
-                    <div className="media-preview-private">
-                        {!showLinkPreview ?
-                            link ?
-                                <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all", marginTop: "-0.5rem" }}>
-                                    <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
-                                </div>
-                                : null
-                            : null}
+                {/* <div className="back-to-home">
+                        <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
+                            <FiArrowLeft className="left-arrow" />
+                        </Link>
+                        <span>
+                            Back
+                        </span>
+                    </div> */}
 
-                        {mimeType === "" && !showLinkPreview && !link && <p>Upload Preview</p>}
-
-                        {mimeType !== "" &&
-                            <IoCloseOutline className="close-preview" onClick={closePreview} />
-                        }
-
-                        {mimeType.match(/image/gi) == "image" &&
-                            <img
-                                src={src}
-                                alt="soapbox-img"
-                                className="hoot-img"
+                {/* <div className="post-caption d-flex flex-wrap">
+                        <div className="avatar-wraper">
+                            <Avatar
+                                size={50}
+                                round={true}
+                                name={userData.name}
+                                src={profilePicPath}
+                                className={userData.profilePic === null ? null : "skeleton-img"}
                             />
-                        }
+                        </div>
+                          <div className="name avatar_name">{userData.name}</div>
+                    </div> */}
 
-                        {mimeType.match(/video/gi) == "video" &&
-                            <video
-                                width="400"
-                                className="hoot-img"
-                                controls
+                <div className="record-on-create-hoot">
+                    {extraFeatures
+                        ? <div className="extra-media-preview">
+                            {/* for on demand photo  */}
+                            <canvas
+                                onContextMenu={(e) => e.preventDefault()}
+                                className="hoot-extra-features"
+                                ref={canvasRef}
+                                style={{ display: hasPhoto ? "" : "none" }}
+                            ></canvas>
+
+                            {/* for on demand photo  */}
+                            <div
+                                onContextMenu={(e) => e.preventDefault()}
+                                className="click-on-demand-photo"
+                                style={{ display: hasPhoto ? "" : "none" }}
                             >
-                                <source src={src} />
-                                Your browser does not support HTML video.
-                            </video>
-                        }
+                                Clicked
+                            </div>
 
-                        {mimeType.match(/audio/gi) == "audio" &&
+                            {/* for on demand photo  */}
                             <video
-                                poster={audioPoster.length !== 0 ? URL.createObjectURL(audioPoster) : profilePicPath}
-                                className="hoot-vdo-private"
-                                controls
-                            >
-                                <source src={src} />
-                                Your browser does not support the audio element.
-                            </video>
-                        }
-                    </div>
+                                ref={videoRef}
+                                className="hoot-extra-features"
+                                style={{ display: hasPhoto || liveVideo ? "none" : "" }}
+                            ></video>
 
-                    <div className="extra-features" style={{ height: 370 }}>
+                            {/* for on demand video */}
+                            <video
+                                ref={liveVideo ? register : null}
+                                id="hookVideo"
+                                autoPlay
+                                muted
+                                playsInline
+                                className="hoot-extra-features"
+                                style={{ display: liveVideo && recordedVideoUrl === null ? "" : "none" }}
+                            ></video>
+
+                            {/* recorded vedio  */}
+                            <video
+                                src={recordedVideoUrl}
+                                controls
+                                className="hoot-extra-features"
+                                style={{ display: liveVideo && recordedVideoUrl !== null ? "" : "none" }}
+                            ></video>
+
+                            {/* if stream is on */}
+                            {liveStream &&
+                                <IoRadioButtonOn
+                                    onContextMenu={(e) => e.preventDefault()}
+                                    className="live-on-demand-video"
+                                    style={{ display: status === "recording" ? "" : "none" }}
+                                />
+                            }
+                        </div>
+                        : <div className="media-preview-private">
+                            {!showLinkPreview ?
+                                link ?
+                                    <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all", marginTop: "-0.5rem" }}>
+                                        <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                    </div>
+                                    : null
+                                : null}
+
+                            {mimeType === "" && !showLinkPreview && !link && <p>Upload Preview</p>}
+
+                            {mimeType !== "" &&
+                                <IoCloseOutline className="close-preview" onClick={closePreview} />
+                            }
+
+                            {mimeType.match(/image/gi) == "image" &&
+                                <img
+                                    src={src}
+                                    alt="soapbox-img"
+                                    className="hoot-img"
+                                />
+                            }
+
+                            {mimeType.match(/video/gi) == "video" &&
+                                <video
+                                    width="400"
+                                    className="hoot-img"
+                                    controls
+                                >
+                                    <source src={src} />
+                                    Your browser does not support HTML video.
+                                </video>
+                            }
+
+                            {mimeType.match(/audio/gi) == "audio" &&
+                                <video
+                                    poster={audioPoster.length !== 0 ? URL.createObjectURL(audioPoster) : profilePicPath}
+                                    className="hoot-vdo-private"
+                                    controls
+                                >
+                                    <source src={src} />
+                                    Your browser does not support the audio element.
+                                </video>
+                            }
+                        </div>
+                    }
+
+                    <div className="extra-features">
+                        {/* Capture Photo */}
+                        <SoapboxTooltip title="Capture Photo" placement="right">
+                            {/* <div className="extra-outer" onClick={onDemandPhoto}>
+                                        <FiCamera className="extra-fi" />
+                                    </div> */}
+                            <img
+                                title='Capture Photo'
+                                className="emoji-hover"
+                                src={imagerecord}
+                                onClick={onDemandPhoto}
+                                style={{ cursor: 'pointer' }}
+                                width="35px"
+                            />
+                        </SoapboxTooltip>
+
+                        {/* Record Video */}
+                        <SoapboxTooltip title="Record Video" placement="right">
+                            {/* <div className="extra-outer" onClick={onDemandVideo}>
+                                        <FiVideo className="extra-fi" />
+                                    </div> */}
+                            <img
+                                className="emoji-hover"
+                                src={videorecord}
+                                style={{ cursor: 'pointer' }}
+                                onClick={onDemandVideo}
+                                width="35px"
+                            />
+                        </SoapboxTooltip>
+
+                        {/* Record Audio */}
+                        <SoapboxTooltip title="Record Audio" placement="right">
+                            {/* <div className="extra-outer" onClick={onDemandAudio}>
+                                        <AiOutlineAudio className="extra-fi" />
+                                    </div> */}
+                            <img
+                                className="emoji-hover"
+                                src={audiorecord}
+                                style={{ cursor: 'pointer' }}
+                                onClick={onDemandAudio}
+                                width="35px"
+                            />
+                        </SoapboxTooltip>
+
                         {/* upload image */}
-                        <label htmlFor="post-image">
+                        <label htmlFor="post-image" onClick={closeOnDemand}>
                             <SoapboxTooltip title="upload image" placement="right">
                                 <img
                                     className="emoji-hover"
@@ -333,7 +765,7 @@ const CreatePrivateHoot = (props) => {
                         />
 
                         {/* upload video */}
-                        <label htmlFor="post-video">
+                        <label htmlFor="post-video" onClick={closeOnDemand}>
                             <SoapboxTooltip title="upload video" placement="right">
                                 <img
                                     className="emoji-hover"
@@ -353,7 +785,7 @@ const CreatePrivateHoot = (props) => {
                         />
 
                         {/* upload audio */}
-                        <label htmlFor="post-audio">
+                        <label htmlFor="post-audio" onClick={closeOnDemand}>
                             <SoapboxTooltip title="upload audio" placement="right">
                                 <img
                                     className="emoji-hover"
@@ -376,6 +808,17 @@ const CreatePrivateHoot = (props) => {
                             className="emoji-hover"
                             onClick={() => { setEmojiPicker(!emojiPicker) }}
                         >
+                            {/* <span
+                                        onMouseEnter={
+                                            () => { 
+                                                emojiPicker || 
+                                                setDefaultEmoji(emojis[Math.floor(Math.random() * emojis.length)]) 
+                                                }}
+                                    >
+                                        {defaultEmoji}
+                                    </span> */}
+
+                            {/* Emoji icon*/}
                             <SoapboxTooltip title="Emoji" placement="right">
                                 <img
                                     className="emoji-hover"
@@ -400,6 +843,15 @@ const CreatePrivateHoot = (props) => {
                                 </div>
                             </ClickAwayListener>
                         )}
+
+                        {/* data-tip="Insert Link" data-text-color="#8249A0" data-background-color="#D9D2FA" */}
+                        {/* <SoapboxTooltip title="Insert Link" placement="right">
+                                    <div>
+                                        <FiLink2 className="insert-link" onClick={() => { setLinkModalOpen(true) }} />
+                                    </div>
+                            </SoapboxTooltip> */}
+
+                        {/* Insert Link */}
                         <SoapboxTooltip title="Insert Link" placement="right">
                             <img className="emoji-hover" src={addlink} style={{ cursor: 'pointer' }} onClick={() => { setLinkModalOpen(true) }} width="35px" />
                         </SoapboxTooltip>
@@ -417,6 +869,15 @@ const CreatePrivateHoot = (props) => {
                             paddingLeft: '5px'
                         }}
                     >
+                        {/* <Button
+                                variant="primary mx-1"
+                                className="btn-create-hoot"
+                                onClick={upload}
+                                disabled={!ReactPlayer.canPlay(link) && file.length === 0}
+                            >
+                                Hoot
+                            </Button>{' '} */}
+
                         <div className="ephemeral">
                             <input
                                 type="checkbox"
@@ -453,6 +914,98 @@ const CreatePrivateHoot = (props) => {
                     </div>
                 </div>
 
+                {extraFeatures ?
+                    <div className="extra-features-options">
+                        {/* photo re take */}
+                        {livePhoto && hasPhoto &&
+                            <SoapboxTooltip title="Re take" placement="bottom">
+                                <button onClick={reTakePhoto} className="extra-outer">
+                                    <VscDebugRestart className="extra-fi" />
+                                </button>
+                            </SoapboxTooltip>
+                        }
+
+                        {/* photo re take */}
+                        {liveVideo && !showRecordBtn &&
+                            <SoapboxTooltip title="Re take" placement="bottom">
+                                <button onClick={reTakeVideo} className="extra-outer">
+                                    <VscDebugRestart className="extra-fi" />
+                                </button>
+                            </SoapboxTooltip>
+                        }
+
+                        {/* photo capture */}
+                        {livePhoto && !hasPhoto &&
+                            <SoapboxTooltip title="Capture" placement="bottom">
+                                <button onClick={takePhoto} className="extra-outer">
+                                    <IoRadioButtonOn className="extra-fi" />
+                                </button>
+                            </SoapboxTooltip>
+                        }
+
+                        {/* start video recording */}
+                        {liveVideo && showRecordBtn &&
+                            <SoapboxTooltip title="Start Recording" placement="bottom">
+                                <button
+                                    onClick={onVideoRecordingStart}
+                                    className="extra-outer"
+                                >
+                                    <IoRadioButtonOn className="extra-fi" />
+                                </button>
+                            </SoapboxTooltip>
+                        }
+
+                        {/* stop video recording */}
+                        {liveVideo && !showRecordBtn && !recordedVideoUrl &&
+                            <SoapboxTooltip title="Stop Recording" placement="bottom">
+                                <button
+                                    onClick={stopRecording(onVideoRecordingStop)}
+                                    className="extra-outer"
+                                >
+                                    <FaStopCircle className="extra-fi" />
+                                </button>
+                            </SoapboxTooltip>
+                        }
+
+                        {/* download photo */}
+                        <a download ref={downloadRef} style={{ display: hasPhoto ? "" : "none" }}>
+                            <SoapboxTooltip title="Download" placement="bottom">
+                                <button className="extra-outer">
+                                    <FiDownload className="extra-fi" />
+                                </button>
+                            </SoapboxTooltip>
+                        </a>
+
+                        {/* download video  */}
+                        <a download ref={videoDownloadRef} style={{ display: recordedVideoUrl !== null ? "" : "none" }}>
+                            <SoapboxTooltip title="Download" placement="bottom">
+                                <button className="extra-outer">
+                                    <FiDownload className="extra-fi" />
+                                </button>
+                            </SoapboxTooltip>
+                        </a>
+
+                        {/* close photo live stream */}
+                        {livePhoto &&
+                            <SoapboxTooltip title="Close" placement="bottom">
+                                <button onClick={closePhoto} className="extra-outer">
+                                    <IoMdCloseCircleOutline className="extra-fi" />
+                                </button>
+                            </SoapboxTooltip>
+                        }
+
+                        {/* close video live stream */}
+                        {liveVideo &&
+                            <SoapboxTooltip title="Close" placement="bottom">
+                                <button onClick={closeVideo} className="extra-outer">
+                                    <IoMdCloseCircleOutline className="extra-fi" />
+                                </button>
+                            </SoapboxTooltip>
+                        }
+                    </div>
+                    : null
+                }
+
                 <div className="post-caption d-flex flex-wrap">
                     <div className="post-content">
                         <textarea
@@ -468,12 +1021,33 @@ const CreatePrivateHoot = (props) => {
                         >
                         </textarea>
 
+                        {/* <h6 className={caption.length > 2120 && "text-danger"}>
+                                {" "}
+                                {caption.length}/2200
+                            </h6> */}
                         <div className="caption-count-private">
                             <h6 className={caption.length > 280 && "text-danger"} style={{ marginBottom: 0, color: "white" }}>
                                 {" "}
                                 {caption.length}/300
                             </h6>
                         </div>
+
+                        {/* inserted links  */}
+                        {/* {link &&
+                                <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all" }}>
+                                    <a href={link} target="_blank" rel="noopener noreferrer" className="link-content">{link}</a>
+                                </div>
+                            } */}
+
+                        {/* <div style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>
+                                {formValues.map((link, index) => {
+                                    return (
+                                        <div key={index} style={{ padding: "0rem 0.5rem 0rem 0.5rem", wordBreak: "break-all" }}>
+                                            <a href={link.name} target="_blank" rel="noopener noreferrer" className="link-content">{link.name}</a>
+                                        </div>
+                                    )
+                                })}
+                            </div> */}
 
                         <div className="d-flex justify-content-between m-1 btn-caption-top">
                             <form action="">
@@ -497,7 +1071,30 @@ const CreatePrivateHoot = (props) => {
                                                 onChange={(event) => { setLink(event.target.value) }}
                                             />
 
+                                            {/* <form onSubmit={handleSubmit}> */}
+                                            {/* <div>
+                                                    {formValues.map((element, index) => (
+                                                        <div className="form-inline" key={index}>
+                                                            <input
+                                                                type="text"
+                                                                name="name"
+                                                                value={element.name || ""}
+                                                                onChange={e => handleChange(index, e)}
+                                                                placeholder="link to"
+                                                                autoFocus
+                                                            />
+                                                            {index ?
+                                                                <AiFillMinusCircle className="btn-minus-link" onClick={() => removeFormFields(index)} />
+                                                                : null
+                                                            }
+                                                        </div>
+                                                    ))}
+                                                </div> */}
+
                                             <div className="btn-post mt-2 link-info">
+                                                {/* <button className="btn-add-link" type="button" onClick={() => addFormFields()}>
+                                                        Add
+                                                    </button> */}
                                                 <button
                                                     className="btn-insert-link"
                                                     onClick={insertLink}
@@ -510,6 +1107,41 @@ const CreatePrivateHoot = (props) => {
                                     </ClickAwayListener>
                                 </Fragment>
                             }
+
+                            {/* <div className="btn-post my-2">
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={privateCheck}
+                                    disabled
+                                />
+                                <span>Private{" "}</span>
+                                <small>
+                                    {userData.privateChannel === 0 ? "(Requires Private Club, Please go to Profile and add Private Club)" : null}
+                                </small>
+                            </div>
+
+                            <SoapboxTooltip title="Hoot's lifetime will be 7 days" placement="left">
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={ephemeralCheck}
+                                    onChange={makeEphemeral} />
+                                <span>
+                                    Ephemeral{" "}
+                                </span>
+                               
+                            </div>
+                            </SoapboxTooltip>
+                                      <SoapboxTooltip title="Hoot" placement="right">
+                                      <img src={hooticon} 
+                                       onClick={upload}
+                                       disabled={!ReactPlayer.canPlay(link) && file.length === 0}
+                                      style={{cursor:'pointer'}}  width="50px" />
+                                </SoapboxTooltip>
+                                </div> */}
                         </div>
 
 
@@ -567,6 +1199,34 @@ const CreatePrivateHoot = (props) => {
                             </small>
                             : null
                         }
+
+                        <div style={{ marginTop: '-20px', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                            {/* 
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={privateCheck}
+                                    // onChange={makePrivate}
+                                    disabled
+                                />
+                                <span>Private{" "}</span>
+                                <small>
+                                    {userData.privateChannel === 0 ? "(Requires Private Club, Please go to Profile and add Private Club)" : null}
+                                </small>
+                            </div>
+                            <div className="ephemeral">
+                                <input
+                                    type="checkbox"
+                                    className="ephemeral-toggle"
+                                    checked={ephemeralCheck}
+                                    onChange={makeEphemeral} />
+                                <span>
+                                    Ephemeral{" "}
+                                </span>
+                                <small>(Hoot's lifetime will be 7 days)</small>
+                            </div> */}
+                        </div>
 
                         {file.length !== 0 &&
                             file.type.match(/audio/gi) == "audio"

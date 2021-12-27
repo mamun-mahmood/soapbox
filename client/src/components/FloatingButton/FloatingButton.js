@@ -25,25 +25,27 @@ const FloatingButton = () => {
     return (
         <div className="float">
             <SoapboxTooltip title="Create Hoot" placement="left" TransitionComponent={Fade}>
-                <img src={hooticon} className="hooticon" width="40px" onClick={() => {
-                    if (showFloatingCreatePublicHoot) {
-                        document.getElementById("slideH").style.transition = "2sec";
-                        document.getElementById("slideH").style.left = "-200vw";
+                <Link to="#create-hoot">
+                    <img src={hooticon} className="hooticon" width="40px" onClick={() => {
+                        if (showFloatingCreatePublicHoot) {
+                            document.getElementById("slideH").style.transition = "2sec";
+                            document.getElementById("slideH").style.left = "-200vw";
 
-                        setTimeout(() => {
-                            setShowFloatingCreatePublicHoot(false);
-                        }, 1000);
-                    } else {
-                        setTimeout(() => {
-                            setShowFloatingCreatePublicHoot(true);
+                            setTimeout(() => {
+                                setShowFloatingCreatePublicHoot(false);
+                            }, 1000);
+                        } else {
+                            setTimeout(() => {
+                                setShowFloatingCreatePublicHoot(true);
 
-                            if (document.getElementById("slideH")) {
-                                document.getElementById("slideH").style.transition = "2sec";
-                                document.getElementById("slideH").style.left = "-65vw";
-                            }
-                        }, 1);
-                    }
-                }} />
+                                if (document.getElementById("slideH")) {
+                                    document.getElementById("slideH").style.transition = "2sec";
+                                    document.getElementById("slideH").style.left = "-65vw";
+                                }
+                            }, 1);
+                        }
+                    }} />
+                </Link>
             </SoapboxTooltip>
 
             {showFloatingCreatePublicHoot ? (
