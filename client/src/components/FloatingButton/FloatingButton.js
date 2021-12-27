@@ -23,9 +23,9 @@ const FloatingButton = () => {
     }, [showFloatingCreatePublicHoot]);
 
     return (
-        <div className="float">
-            <SoapboxTooltip title="Create Hoot" placement="left" TransitionComponent={Fade}>
-                <Link to="#create-hoot">
+        <div className="float" style={{ width: "100%" }}>
+            <Link to="#create-hoot">
+                <SoapboxTooltip title="Create Hoot" placement="left" TransitionComponent={Fade}>
                     <img src={hooticon} className="hooticon" width="40px" onClick={() => {
                         if (showFloatingCreatePublicHoot) {
                             document.getElementById("slideH").style.transition = "2sec";
@@ -40,17 +40,20 @@ const FloatingButton = () => {
 
                                 if (document.getElementById("slideH")) {
                                     document.getElementById("slideH").style.transition = "2sec";
-                                    document.getElementById("slideH").style.left = "-65vw";
+                                    // document.getElementById("slideH").style.left = "-65vw";
+                                    document.getElementById("slideH").style.left = "51%";
+                                    document.getElementById("slideH").style.top = `${window.innerHeight > 740 ? "-27" : window.innerHeight < 640 ? "-18" : "-20"}rem`;
+                                    document.getElementById("slideH").style.transform = "translate(-50%, -50%)";
                                 }
                             }, 1);
                         }
                     }} />
-                </Link>
-            </SoapboxTooltip>
+                </SoapboxTooltip>
+            </Link>
 
             {showFloatingCreatePublicHoot ? (
                 <div className="slide-container">
-                    <div id="slideH" style={{ top: "-35rem", left: "-200vw", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
+                    <div id="slideH" className='sH-responsive' style={{ top: "-35rem", left: "-200vw", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
                         <CreatePublicHoot
                             closeHoot={() => {
                                 document.getElementById("slideH").style.transition = "1sec";

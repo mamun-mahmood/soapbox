@@ -8,7 +8,7 @@
 
 .float a {
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
     border-radius: 50%;
     text-decoration: none;

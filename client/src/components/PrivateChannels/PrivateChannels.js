@@ -259,7 +259,7 @@ const PrivateChannels = () => {
 
         setChatData((e) => [
           ...e,
-          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent,isSticker },
+          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, isSticker },
 
         ]);
       })
@@ -271,13 +271,13 @@ const PrivateChannels = () => {
 
       setChatData((e) => [
         ...e,
-        { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent,isSticker },
+        { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, isSticker },
       ]);
     }
     else {
       setChatData((e) => [
         ...e,
-        { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,isSticker },
+        { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker },
       ]);
     }
 
@@ -609,7 +609,7 @@ const PrivateChannels = () => {
 
               setChatData((e) => [
                 ...e,
-                { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime,isSticker },
+                { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime, isSticker },
 
               ]);
             })
@@ -622,7 +622,7 @@ const PrivateChannels = () => {
 
             setChatData((e) => [
               ...e,
-              { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent,isSticker },
+              { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, isSticker },
 
             ]);
 
@@ -630,7 +630,7 @@ const PrivateChannels = () => {
           else {
             setChatData((e) => [
               ...e,
-              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent ,isSticker},
+              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, isSticker },
             ]);
 
           }
@@ -3790,7 +3790,7 @@ const PrivateChannels = () => {
                                       : (event.returnValue = false);
                                   }}
                                   style={{
-                                    maxWidth:e.isSticker?"60px":"200px",
+                                    maxWidth: e.isSticker ? "60px" : "200px",
                                     marginTop: "20px",
                                     borderRadius: "5px",
                                   }}
@@ -4490,8 +4490,7 @@ const PrivateChannels = () => {
                                       : (event.returnValue = false);
                                   }}
                                   style={{
-                                   
-                                    maxWidth:e.isSticker?"60px":"200px",
+                                    maxWidth: e.isSticker ? "60px" : "200px",
                                     marginTop: "20px",
                                     borderRadius: "5px",
                                   }}
@@ -4555,11 +4554,8 @@ const PrivateChannels = () => {
                               `${BaseURL}/profile-pictures/${userProfilePic}`,
                               false,
                               false,
-                              true,"","","",true
+                              true, "", "", "", true
                             );
-
-
-                            
                             socket.emit("send", {
                               name: userFullName,
                               message: `${image}`,
@@ -4568,7 +4564,6 @@ const PrivateChannels = () => {
                               isVideo: false,
                               isImage: true,
                               isSticker: true
-                              
                             });
                             setStickerPicker(false)
                           }}
@@ -5169,9 +5164,9 @@ const PrivateChannels = () => {
                           setShowCreateHoot(false);
                         }, 1000);
                       } else {
-                        setOnDemandMedia(false),
-                          setShowCreateHoot(true),
-                          setShowRequest(false);
+                        setOnDemandMedia(false);
+                        setShowCreateHoot(true);
+                        setShowRequest(false);
                         setShowFeed(false);
                         setShowSubscribers(false);
                         setShowPricingSetting(false);
@@ -5181,7 +5176,11 @@ const PrivateChannels = () => {
                         setTimeout(() => {
                           if (document.getElementById("slideH")) {
                             document.getElementById("slideH").style.transition = "1sec";
-                            document.getElementById("slideH").style.left = "150px";
+                            // document.getElementById("slideH").style.left = "150px";
+
+                            document.getElementById("slideH").style.left = "50%";
+                            document.getElementById("slideH").style.top = "14.5rem";
+                            document.getElementById("slideH").style.transform = "translate(-50%, -50%)";
                           }
                         }, 1);
                       }
@@ -5749,7 +5748,7 @@ const PrivateChannels = () => {
 
               {showCreateHoot ? (
                 <div className="slide-container">
-                  <div id="slideH">
+                  <div id="slideH" className='sH-responsive'>
                     <CreatePrivateHoot
                       closeHoot={() => {
                         document.getElementById("slideH").style.transition =
@@ -6163,7 +6162,7 @@ const PrivateChannels = () => {
                                     : (event.returnValue = false);
                                 }}
                                 style={{
-                                  maxWidth:e.isSticker?"60px":"200px",
+                                  maxWidth: e.isSticker ? "60px" : "200px",
                                   marginTop: "20px",
                                   borderRadius: "5px",
                                 }}
@@ -6860,7 +6859,7 @@ const PrivateChannels = () => {
                                     : (event.returnValue = false);
                                 }}
                                 style={{
-                                  maxWidth:e.isSticker?"60px":"200px",
+                                  maxWidth: e.isSticker ? "60px" : "200px",
                                   marginTop: "20px",
                                   borderRadius: "5px",
                                 }}
@@ -6925,7 +6924,7 @@ const PrivateChannels = () => {
                             `${BaseURL}/profile-pictures/${userProfilePic}`,
                             false,
                             false,
-                            true,"","","",true
+                            true, "", "", "", true
                           );
                           socket.emit("send", {
                             name: userFullName,
@@ -6935,7 +6934,6 @@ const PrivateChannels = () => {
                             isVideo: false,
                             isImage: true,
                             isSticker: true
-                              
                           });
                           setStickerPicker(false)
                         }}

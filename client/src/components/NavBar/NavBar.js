@@ -151,7 +151,9 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
 
                                                             if (document.getElementById("slideH")) {
                                                                 document.getElementById("slideH").style.transition = "2sec";
-                                                                document.getElementById("slideH").style.left = "-40vw";
+                                                                document.getElementById("slideH").style.left = "50%";
+                                                                document.getElementById("slideH").style.top = "14.5rem";
+                                                                document.getElementById("slideH").style.transform = "translate(-50%, -50%)";
                                                             }
                                                         }, 1);
                                                     }
@@ -162,24 +164,6 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
                                     }
                                 </Link>
                             }
-
-                            {showNavCreatePublicHoot ? (
-                                <div className="slide-container">
-                                    <div id="slideH" style={{ top: "5.9rem", left: "-200vw", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
-                                        <CreatePublicHoot
-                                            closeHoot={() => {
-                                                document.getElementById("slideH").style.transition = "1sec";
-                                                document.getElementById("slideH").style.right = "-200vw";
-
-                                                setTimeout(() => {
-                                                    setShowNavCreatePublicHoot(false);
-                                                    window.location.reload(false);
-                                                }, 1000);
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            ) : null}
 
                             <NavLink
                                 activeClassName="nav-link-active"
@@ -246,7 +230,25 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
                     : <HiMenuAlt3 className="main-nav-menu" onClick={() => setShowLinks(!showLinks)} />
                 }
             </div>
-        </nav >
+
+            {showNavCreatePublicHoot ? (
+                <div className="slide-container">
+                    <div id="slideH" className='sH-responsive' style={{ top: "14.5rem", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
+                        <CreatePublicHoot
+                            closeHoot={() => {
+                                document.getElementById("slideH").style.transition = "1sec";
+                                document.getElementById("slideH").style.right = "-200vw";
+
+                                setTimeout(() => {
+                                    setShowNavCreatePublicHoot(false);
+                                    window.location.reload(false);
+                                }, 1000);
+                            }}
+                        />
+                    </div>
+                </div>
+            ) : null}
+        </nav>
     )
 }
 

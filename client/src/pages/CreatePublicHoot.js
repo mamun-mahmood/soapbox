@@ -575,7 +575,7 @@ const CreatePrivateHoot = (props) => {
     return (
         <Fragment>
             {/* <NavBar /> */}
-            <div className="upload-post-private">
+            <div className="upload-post-private upp-responsive">
                 {/* <div className="back-to-home">
                         <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
                             <FiArrowLeft className="left-arrow" />
@@ -598,7 +598,7 @@ const CreatePrivateHoot = (props) => {
                           <div className="name avatar_name">{userData.name}</div>
                     </div> */}
 
-                <div className="record-on-create-hoot">
+                <div className="record-on-create-hoot roch-responsive">
                     {extraFeatures
                         ? <div className="extra-media-preview">
                             {/* for on demand photo  */}
@@ -653,7 +653,7 @@ const CreatePrivateHoot = (props) => {
                                 />
                             }
                         </div>
-                        : <div className="media-preview-private">
+                        : <div className="media-preview-private mpp-responsive">
                             {!showLinkPreview ?
                                 link ?
                                     <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all", marginTop: "-0.5rem" }}>
@@ -700,7 +700,7 @@ const CreatePrivateHoot = (props) => {
                         </div>
                     }
 
-                    <div className="extra-features">
+                    <div className="extra-features ef-responsive">
                         {/* Capture Photo */}
                         <SoapboxTooltip title="Capture Photo" placement="right">
                             {/* <div className="extra-outer" onClick={onDemandPhoto}>
@@ -858,14 +858,15 @@ const CreatePrivateHoot = (props) => {
                     </div>
 
                     <div
-                        className="btn-post my-2"
+                        className="btn-post my-2 tbn-responsive"
                         style={{
                             backgroundColor: 'whitesmoke',
                             display: 'flex',
                             minWidth: 150,
                             flexDirection: 'column',
                             justifyContent: 'space-evenly',
-                            border: '2px dashed #8249A0',
+                            // border: '2px dashed #8249A0',
+                            borderRadius: "0.3rem",
                             paddingLeft: '5px'
                         }}
                     >
@@ -909,7 +910,7 @@ const CreatePrivateHoot = (props) => {
                             <img src={hooticon} className="emoji-hover"
                                 onClick={upload}
                                 disabled={!ReactPlayer.canPlay(link) && file.length === 0}
-                                style={{ cursor: 'pointer' }} width="60px" style={{ margin: "0 auto" }} />
+                                style={{ cursor: 'pointer' }} width="60px" height="35px" style={{ margin: "0 auto" }} />
                         </SoapboxTooltip>
                     </div>
                 </div>
@@ -1010,8 +1011,8 @@ const CreatePrivateHoot = (props) => {
                     <div className="post-content">
                         <textarea
                             autoFocus
-                            maxLength="2200"
-                            className="textarea-style-private"
+                            maxLength="300"
+                            className="textarea-style-private tsp-responsive added-textarea-style"
                             placeholder="Share Your World. Hoot Hoot! (optional)"
                             value={caption}
                             onChange={(event) => {
@@ -1025,7 +1026,7 @@ const CreatePrivateHoot = (props) => {
                                 {" "}
                                 {caption.length}/2200
                             </h6> */}
-                        <div className="caption-count-private">
+                        <div className="caption-count-private ccp-responsive">
                             <h6 className={caption.length > 280 && "text-danger"} style={{ marginBottom: 0, color: "white" }}>
                                 {" "}
                                 {caption.length}/300

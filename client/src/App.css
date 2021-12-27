@@ -860,8 +860,8 @@ hr {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px dashed var(--primary-color);
-  border-radius: 0.5rem;
+  /* border: 2px dashed var(--primary-color); */
+  border-radius: 0.3rem;
   color: #374151;
   font-size: 2rem;
   background-color: whitesmoke;
@@ -2117,6 +2117,23 @@ position: relative;
   padding: 0.5rem;
   outline: none;
 }
+
+.added-textarea-style {
+  border: none !important;
+  outline: none !important;
+  border-radius: 0.3rem !important;
+}
+
+.added-textarea-style:hover {
+  border: none !important;
+  outline: none !important;
+}
+
+.added-textarea-style:focus {
+  border: none !important;
+  outline: none !important;
+}
+
 .textarea-style:hover {
   border: 2px solid var(--primary-color);
 }
@@ -2930,4 +2947,69 @@ left: 10;
   line-height: 30px;
   font-size: 14px;
   width: 100%;
+}
+
+.roch-responsive,
+.tsp-responsive,
+.ef-responsive,
+.sH-responsive,
+.upp-responsive,
+.ccp-responsive,
+.vb-responsive,
+.tbn-responsive,
+.mpp-responsive {
+  transition: 0.3s all;
+}
+
+.upp-responsive {
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 786px) {  
+  .roch-responsive{
+    flex-direction: column;
+  }
+
+  .tsp-responsive {
+    bottom: auto;
+    width: 86%;
+  }
+
+  .ef-responsive {
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 300px;
+  }
+
+  .sH-responsive {
+    top: -22rem !important;
+    padding: 0;
+  }
+
+  .upp-responsive {
+    min-height: 585px !important;
+  }
+
+  .ccp-responsive {
+    position: absolute;
+    bottom: -1rem;
+  }
+
+  .ccp-responsive h6 {
+    padding-bottom: 0.4rem;
+  }
+
+  .vb-responsive {
+    height: 30px;
+    display: block !important;
+  }
+
+  .tbn-responsive{
+    flex-direction: row !important;
+    align-items: center;
+  }
+
+  .mpp-responsive{
+    min-width: auto;
+  }
 }

@@ -579,7 +579,7 @@ const CreatePrivateHoot = (props) => {
     return (
         <Fragment>
             {/* <NavBar /> */}
-            <div className="upload-post-private">
+            <div className="upload-post-private upp-responsive">
                 {/* <div className="back-to-home">
                         <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
                             <FiArrowLeft className="left-arrow" />
@@ -602,7 +602,7 @@ const CreatePrivateHoot = (props) => {
                           <div className="name avatar_name">{userData.name}</div>
                     </div> */}
 
-                <div className="record-on-create-hoot">
+                <div className="record-on-create-hoot roch-responsive">
                     {extraFeatures
                         ? <div className="extra-media-preview">
                             {/* for on demand photo  */}
@@ -657,7 +657,7 @@ const CreatePrivateHoot = (props) => {
                                 />
                             }
                         </div>
-                        : <div className="media-preview-private">
+                        : <div className="media-preview-private mpp-responsive">
                             {!showLinkPreview ?
                                 link ?
                                     <div style={{ padding: "0rem 0.5rem 1rem 0.5rem", wordBreak: "break-all", marginTop: "-0.5rem" }}>
@@ -705,7 +705,7 @@ const CreatePrivateHoot = (props) => {
                     }
 
                     {userData.privateChannel
-                        ? <div className="extra-features">
+                        ? <div className="extra-features ef-responsive">
                             {/* Capture Photo */}
                             <SoapboxTooltip title="Capture Photo" placement="right">
                                 {/* <div className="extra-outer" onClick={onDemandPhoto}>
@@ -864,13 +864,14 @@ const CreatePrivateHoot = (props) => {
                     }
 
                     <div
-                        className="btn-post my-2"
+                        className="btn-post my-2 tbn-responsive"
                         style={{
                             backgroundColor: 'whitesmoke',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-evenly',
-                            border: '2px dashed #8249A0',
+                            // border: '2px dashed #8249A0',
+                            borderRadius: "0.3rem",
                             paddingLeft: '5px'
                         }}
                     >
@@ -1016,7 +1017,7 @@ const CreatePrivateHoot = (props) => {
                         <textarea
                             autoFocus
                             maxLength="2200"
-                            className="textarea-style-private"
+                            className="textarea-style-private tsp-responsive added-textarea-style"
                             placeholder="Share Your World. Hoot Hoot! (optional)"
                             value={caption}
                             onChange={(event) => {
@@ -1030,7 +1031,7 @@ const CreatePrivateHoot = (props) => {
                                 {" "}
                                 {caption.length}/2200
                             </h6> */}
-                        <div className="caption-count-private">
+                        <div className="caption-count-private ccp-responsive">
                             <h6 className={caption.length > 2120 && "text-danger"} style={{ color: "white" }}>
                                 {" "}
                                 {caption.length}/2200
