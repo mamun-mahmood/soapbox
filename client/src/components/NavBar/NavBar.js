@@ -129,7 +129,7 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
                                         ? "/create-private"
                                         : userData.privateChannel && header
                                             ? "/create-private"
-                                            : "#create-hoot"
+                                            : showNavCreatePublicHoot ? "#" : "#create-hoot"
                                     }
                                 >
                                     {window.location.pathname === "/create-private"
@@ -233,7 +233,7 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
 
             {showNavCreatePublicHoot ? (
                 <div className="slide-container">
-                    <div id="slideH" className='sH-responsive' style={{ top: "14.5rem", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
+                    <div id="slideH" className='sHn-responsive' style={{ top: "14.5rem", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
                         <CreatePublicHoot
                             closeHoot={() => {
                                 document.getElementById("slideH").style.transition = "1sec";

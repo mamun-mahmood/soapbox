@@ -24,7 +24,7 @@ const FloatingButton = () => {
 
     return (
         <div className="float" style={{ width: "100%" }}>
-            <Link to="#create-hoot">
+            <Link to={showFloatingCreatePublicHoot ? "#" : "#create-hoot"}>
                 <SoapboxTooltip title="Create Hoot" placement="left" TransitionComponent={Fade}>
                     <img src={hooticon} className="hooticon" width="40px" onClick={() => {
                         if (showFloatingCreatePublicHoot) {
@@ -53,7 +53,7 @@ const FloatingButton = () => {
 
             {showFloatingCreatePublicHoot ? (
                 <div className="slide-container">
-                    <div id="slideH" className='sH-responsive' style={{ top: "-35rem", left: "-200vw", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
+                    <div id="slideH" className='sHb-responsive' style={{ top: "-35rem", left: "-200vw", boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;" }}>
                         <CreatePublicHoot
                             closeHoot={() => {
                                 document.getElementById("slideH").style.transition = "1sec";

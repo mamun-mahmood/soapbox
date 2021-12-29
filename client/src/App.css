@@ -2952,7 +2952,8 @@ left: 10;
 .roch-responsive,
 .tsp-responsive,
 .ef-responsive,
-.sH-responsive,
+.sHn-responsive,
+.sHb-responsive,
 .upp-responsive,
 .ccp-responsive,
 .vb-responsive,
@@ -2973,6 +2974,7 @@ left: 10;
   .tsp-responsive {
     bottom: auto;
     width: 86%;
+    margin-top: 0;
   }
 
   .ef-responsive {
@@ -2981,7 +2983,12 @@ left: 10;
     min-width: 300px;
   }
 
-  .sH-responsive {
+  .sHn-responsive {
+    top: 20rem !important;
+    padding: 0;
+  }
+
+  .sHb-responsive {
     top: -22rem !important;
     padding: 0;
   }
