@@ -129,7 +129,7 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
                                         ? "/create-private"
                                         : userData.privateChannel && header
                                             ? "/create-private"
-                                            : showNavCreatePublicHoot ? "#" : "#create-hoot"
+                                            : window.innerWidth < 786 ? "/create" : showNavCreatePublicHoot ? "#" : "#create-hoot"
                                     }
                                 >
                                     {window.location.pathname === "/create-private"
@@ -138,24 +138,26 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
                                             ? "Create Private Hoot"
                                             : <span
                                                 onClick={() => {
-                                                    if (showNavCreatePublicHoot) {
-                                                        document.getElementById("slideH").style.transition = "2sec";
-                                                        document.getElementById("slideH").style.left = "-200vw";
+                                                    if (window.innerWidth > 786) {
+                                                        if (showNavCreatePublicHoot) {
+                                                            document.getElementById("slideH").style.transition = "2sec";
+                                                            document.getElementById("slideH").style.left = "-200vw";
 
-                                                        setTimeout(() => {
-                                                            setShowNavCreatePublicHoot(false);
-                                                        }, 1000);
-                                                    } else {
-                                                        setTimeout(() => {
-                                                            setShowNavCreatePublicHoot(true);
+                                                            setTimeout(() => {
+                                                                setShowNavCreatePublicHoot(false);
+                                                            }, 1000);
+                                                        } else {
+                                                            setTimeout(() => {
+                                                                setShowNavCreatePublicHoot(true);
 
-                                                            if (document.getElementById("slideH")) {
-                                                                document.getElementById("slideH").style.transition = "2sec";
-                                                                document.getElementById("slideH").style.left = "50%";
-                                                                document.getElementById("slideH").style.top = "14.5rem";
-                                                                document.getElementById("slideH").style.transform = "translate(-50%, -50%)";
-                                                            }
-                                                        }, 1);
+                                                                if (document.getElementById("slideH")) {
+                                                                    document.getElementById("slideH").style.transition = "2sec";
+                                                                    document.getElementById("slideH").style.left = "50%";
+                                                                    document.getElementById("slideH").style.top = "14.5rem";
+                                                                    document.getElementById("slideH").style.transform = "translate(-50%, -50%)";
+                                                                }
+                                                            }, 1);
+                                                        }
                                                     }
                                                 }}
                                             >

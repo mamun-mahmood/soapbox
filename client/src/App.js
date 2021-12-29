@@ -41,6 +41,8 @@ import ReceptionAudio from './components/VideoAudioCall/audioReception';
 import StripePage from './components/Stripe/StripePage';
 import RequestPrivateClubPage from './pages/RequestPrivateClubPage';
 
+import CreateHootBoxMobile from './pages/CreateHootBoxMobile';
+
 function App() {
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
   return (
@@ -119,8 +121,13 @@ function App() {
         </Route> */}
 
         <Route exact path="/create">
-          <ProtectedRoute page={CreateHoot} />
+          {/* <ProtectedRoute page={CreateHoot} /> */}
+          <ProtectedRoute page={CreateHootBoxMobile} />
         </Route>
+
+        {/* <Route exact path="/create-hoot">
+          <ProtectedRoute page={CreateHoot} />
+        </Route> */}
 
         <Route path="/user/:username">
           {/* <ProtectedRoute page={PublicProfilePage} /> */}

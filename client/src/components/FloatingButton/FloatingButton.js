@@ -24,7 +24,7 @@ const FloatingButton = () => {
 
     return (
         <div className="float" style={{ width: "100%" }}>
-            <Link to={showFloatingCreatePublicHoot ? "#" : "#create-hoot"}>
+            <Link to={window.innerWidth < 786 ? "/create" : showFloatingCreatePublicHoot ? "#" : "#create-hoot"}>
                 <SoapboxTooltip title="Create Hoot" placement="left" TransitionComponent={Fade}>
                     <img src={hooticon} className="hooticon" width="40px" onClick={() => {
                         if (showFloatingCreatePublicHoot) {

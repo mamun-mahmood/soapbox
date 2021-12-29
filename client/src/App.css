@@ -871,7 +871,7 @@ hr {
   width: 100%;
   max-width: 473px;
   max-height: 251.4px;
-  margin-top: 14px;
+  margin-top: 0.5rem;
   min-width: 473px;
 }
 
@@ -2108,7 +2108,8 @@ position: relative;
 .textarea-style-private {
   width:473px;
   height: 120px;
-  border: 2px solid #565E69;
+  /* border: 2px solid #565E69; */
+  border: 2px solid gainsboro;
   border-radius: 0.5rem;
   margin: 0.5rem;
  position: absolute;
@@ -2119,18 +2120,18 @@ position: relative;
 }
 
 .added-textarea-style {
-  border: none !important;
+  /* border: none !important; */
   outline: none !important;
   border-radius: 0.3rem !important;
 }
 
 .added-textarea-style:hover {
-  border: none !important;
+  /* border: none !important; */
   outline: none !important;
 }
 
 .added-textarea-style:focus {
-  border: none !important;
+  /* border: none !important; */
   outline: none !important;
 }
 
@@ -2962,13 +2963,31 @@ left: 10;
   transition: 0.3s all;
 }
 
+.tbn-responsive {
+  background-color: white !important;
+}
+
 .upp-responsive {
   overflow: hidden;
+}
+
+.upp-mobile {
+  height: auto;
+  transition: 0.3s all;
 }
 
 @media only screen and (max-width: 786px) {  
   .roch-responsive{
     flex-direction: column;
+  }
+
+  .hoot-box-mobile {
+    color: var(--primary-color)
+  }
+
+  .upp-mobile {
+    height: 100vh !important;
+    border-radius: 0;
   }
 
   .tsp-responsive {
@@ -2995,11 +3014,13 @@ left: 10;
 
   .upp-responsive {
     min-height: 585px !important;
+    box-shadow: none !important;
   }
 
   .ccp-responsive {
     position: absolute;
     bottom: -1rem;
+    display: none;
   }
 
   .ccp-responsive h6 {
