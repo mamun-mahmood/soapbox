@@ -432,6 +432,8 @@ const PrivateChannels = () => {
       );
     });
 
+
+
     socket.on("receive", (data) => {
       console.log("data");
       if (data.isEmoji) {
@@ -634,6 +636,13 @@ const PrivateChannels = () => {
             ]);
 
           }
+
+
+          if(document.querySelector(".chatarea")){
+          let messageContainer = document.querySelector(".chatarea");
+          messageContainer.scrollTop = messageContainer.scrollHeight;
+          }
+          
         });
 
         // setTimeout(() => {
@@ -4380,12 +4389,12 @@ const PrivateChannels = () => {
                                         e.pollData.pollB = e.pollData.pollB
                                         e.pollData.pollC = e.pollData.pollC
 
-                                        let messageContainer = document.querySelector(".chatarea");
+                                        // let messageContainer = document.querySelector(".chatarea");
 
-                                        messageContainer.scrollTop = messageContainer.scrollHeight;
-                                        setChatData(chatData.filter((chat) => chat !== e))
-                                        setChatData((chat) => [...chat, e])
-                                        updatePollData(e)
+                                        // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                        // setChatData(chatData.filter((chat) => chat !== e))
+                                        // setChatData((chat) => [...chat, e])
+                                        // updatePollData(e)
                                       }}
                                     />
                                     <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
@@ -4408,12 +4417,12 @@ const PrivateChannels = () => {
                                       e.pollData.pollC = e.pollData.pollC
 
 
-                                      let messageContainer = document.querySelector(".chatarea");
+                                      // let messageContainer = document.querySelector(".chatarea");
 
-                                      messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      setChatData(chatData.filter((chat) => chat !== e))
-                                      setChatData((chat) => [...chat, e])
-                                      updatePollData(e)
+                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                      // setChatData(chatData.filter((chat) => chat !== e))
+                                      // setChatData((chat) => [...chat, e])
+                                      // updatePollData(e)
                                     }} />
                                     <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
                                   </Form.Group>
@@ -4431,12 +4440,12 @@ const PrivateChannels = () => {
                                         e.pollData.pollC = e.pollData.pollC + 1
                                         e.pollData.pollA = e.pollData.pollA
                                         e.pollData.pollB = e.pollData.pollB
-                                        let messageContainer = document.querySelector(".chatarea");
+                                        // let messageContainer = document.querySelector(".chatarea");
 
-                                        messageContainer.scrollTop = messageContainer.scrollHeight;
-                                        setChatData(chatData.filter((chat) => chat !== e))
-                                        setChatData((chat) => [...chat, e])
-                                        updatePollData(e)
+                                        // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                        // setChatData(chatData.filter((chat) => chat !== e))
+                                        // setChatData((chat) => [...chat, e])
+                                        // updatePollData(e)
                                       }}
                                     />
                                     <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
@@ -4444,7 +4453,14 @@ const PrivateChannels = () => {
                                   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                  <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse }}>
+                                  <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse ;
+                                 let messageContainer = document.querySelector(".chatarea");
+
+                                 messageContainer.scrollTop = messageContainer.scrollHeight;
+                                 setChatData(chatData.filter((chat) => chat !== e))
+                                 setChatData((chat) => [...chat, e])
+                                 updatePollData(e)
+                                }}>
                                     Vote
                                   </Button>
                                 </Form>
@@ -6061,12 +6077,12 @@ const PrivateChannels = () => {
                                       e.pollData.pollC = e.pollData.pollC
 
 
-                                      let messageContainer = document.querySelector(".chatarea");
+                                      // let messageContainer = document.querySelector(".chatarea");
 
-                                      messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      setChatData(chatData.filter((chat) => chat !== e))
-                                      setChatData((chat) => [...chat, e])
-                                      updatePollData(e)
+                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                      // setChatData(chatData.filter((chat) => chat !== e))
+                                      // setChatData((chat) => [...chat, e])
+                                      // updatePollData(e)
                                     }}
                                   />
                                   <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
@@ -6086,12 +6102,12 @@ const PrivateChannels = () => {
                                     e.pollData.pollC = e.pollData.pollC
 
 
-                                    let messageContainer = document.querySelector(".chatarea");
+                                    // let messageContainer = document.querySelector(".chatarea");
 
-                                    messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    setChatData(chatData.filter((chat) => chat !== e))
-                                    setChatData((chat) => [...chat, e])
-                                    updatePollData(e)
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
                                   }} />
                                   <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
                                 </Form.Group>
@@ -6110,12 +6126,12 @@ const PrivateChannels = () => {
                                       e.pollData.pollA = e.pollData.pollA
                                       e.pollData.pollB = e.pollData.pollB
 
-                                      let messageContainer = document.querySelector(".chatarea");
+                                      // let messageContainer = document.querySelector(".chatarea");
 
-                                      messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      setChatData(chatData.filter((chat) => chat !== e))
-                                      setChatData((chat) => [...chat, e])
-                                      updatePollData(e)
+                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                      // setChatData(chatData.filter((chat) => chat !== e))
+                                      // setChatData((chat) => [...chat, e])
+                                      // updatePollData(e)
                                     }}
                                   />
                                   <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
@@ -6123,7 +6139,13 @@ const PrivateChannels = () => {
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse }}>
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse ;
+                               let messageContainer = document.querySelector(".chatarea");
+
+                               messageContainer.scrollTop = messageContainer.scrollHeight;
+                               setChatData(chatData.filter((chat) => chat !== e))
+                               setChatData((chat) => [...chat, e])
+                               updatePollData(e)}}>
                                   Vote
                                 </Button>
                               </Form>
@@ -6759,12 +6781,12 @@ const PrivateChannels = () => {
                                       e.pollData.pollC = e.pollData.pollC
 
 
-                                      let messageContainer = document.querySelector(".chatarea");
+                                      // let messageContainer = document.querySelector(".chatarea");
 
-                                      messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      setChatData(chatData.filter((chat) => chat !== e))
-                                      setChatData((chat) => [...chat, e])
-                                      updatePollData(e)
+                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                      // setChatData(chatData.filter((chat) => chat !== e))
+                                      // setChatData((chat) => [...chat, e])
+                                      // updatePollData(e)
                                     }}
                                   />
                                   <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
@@ -6783,12 +6805,12 @@ const PrivateChannels = () => {
                                     e.pollData.pollC = e.pollData.pollC
 
 
-                                    let messageContainer = document.querySelector(".chatarea");
+                                    // let messageContainer = document.querySelector(".chatarea");
 
-                                    messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    setChatData(chatData.filter((chat) => chat !== e))
-                                    setChatData((chat) => [...chat, e])
-                                    updatePollData(e)
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
                                   }} />
                                   <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
                                 </Form.Group>
@@ -6807,12 +6829,12 @@ const PrivateChannels = () => {
                                       e.pollData.pollC = e.pollData.pollC + 1
                                       e.pollData.pollA = e.pollData.pollA
                                       e.pollData.pollB = e.pollData.pollB
-                                      let messageContainer = document.querySelector(".chatarea");
+                                      // let messageContainer = document.querySelector(".chatarea");
 
-                                      messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      setChatData(chatData.filter((chat) => chat !== e))
-                                      setChatData((chat) => [...chat, e])
-                                      updatePollData(e)
+                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                      // setChatData(chatData.filter((chat) => chat !== e))
+                                      // setChatData((chat) => [...chat, e])
+                                      // updatePollData(e)
                                     }}
                                   />
                                   <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
@@ -6820,7 +6842,14 @@ const PrivateChannels = () => {
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e) }}>
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e) ;
+                               let messageContainer = document.querySelector(".chatarea");
+
+                                      messageContainer.scrollTop = messageContainer.scrollHeight;
+                                      setChatData(chatData.filter((chat) => chat !== e))
+                                      setChatData((chat) => [...chat, e])
+                                      updatePollData(e)
+                              }}>
                                   Vote
                                 </Button>
                               </Form>
