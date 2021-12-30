@@ -235,25 +235,28 @@ const SideBar = () => {
                         : null
                     }
 
-                    <SideBarOption
+                    {/* <SideBarOption
                         option="Private Clubs"
                         Icon={privateclub}
-                    // link={`/private/Club/${username}`}
                     />
 
                     <SideBarOption
                         option="Community Clubs"
                         Icon={communityclub}
-                    // link={`/private/Club/${username}`}
-                    />
-                    {userInfo?  <SideBarOption
-                        option="Request Private Club"
-                        Icon={requestprivateclub}
-                     link={`/request-private-club/${username}`}
-                    />
-                     :null}
-                  
+                    /> */}
 
+                    <SideBarOption
+                        option="Soapbox Clubs"
+                        Icon={privateclub}
+                    />
+
+                    {userInfo
+                        ? <SideBarOption
+                            option="Request Private Club"
+                            Icon={requestprivateclub}
+                            link={`/request-private-club/${username}`}
+                        />
+                        : null}
 
                     {userInfo
                         ? <SideBarOption
@@ -261,23 +264,19 @@ const SideBar = () => {
                             link={`/profile/${username}`}
                             Icon={profile}
                         />
-                        : null
-                    }
+                        : null}
 
-
-
-{/* <SideBarOption
+                    {/* <SideBarOption
                         option="XMG Wallet"
                         Icon={XMGWALLET}
                     // link={`/private/Club/${username}`}
                     /> */}
-                  
+
                     <SideBarOption
                         option="Explore"
                         link="/explore"
                         Icon={explore}
                     />
-
 
                     {/* <SideBarOption
                             option="Login"
@@ -291,8 +290,7 @@ const SideBar = () => {
                                 Login
                             </button>
                         </div>
-                        : null
-                    }
+                        : null}
 
                     {/* <SideBarOption
                         option="Hashtags"
