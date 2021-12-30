@@ -255,12 +255,12 @@ const PrivateChannels = () => {
         threadId: pollData.threadId,
         username: userInformation.username
       }).then((res) => {
-        expiryTime = "23:59:59 Hours"
+        expiryTime = res.data.expiryTime
         pollData.isVoted = res.data.isVoted
 
         setChatData((e) => [
           ...e,
-          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, isSticker },
+          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent,expiryTime,isSticker},
 
         ]);
       })
@@ -1207,6 +1207,12 @@ const PrivateChannels = () => {
       timestamp: timestamp
     });
     toast.success('Created Poll Successfully!')
+    setFormEditPoll(true)
+    setPollFormDataQ("");
+    setPollFormDataOA("");
+    setPollFormDataOB("");
+    setPollFormDataOC("");
+    setPollFormData({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA:0, pollB:0, pollC:0 })
    
   }
 
@@ -4517,7 +4523,7 @@ const PrivateChannels = () => {
                                 />
                               ) : null}
 
-                              {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll will expire in ${e.expiryTime}`}</p> : null}
+                              {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll Ends in ${e.expiryTime}`}</p> : null}
                             </div>
                           ))
                           : null}
@@ -6195,7 +6201,7 @@ const PrivateChannels = () => {
                               />
                             ) : null}
 
-                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll will expire in ${e.expiryTime}`}</p> : null}
+                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll Ends in ${e.expiryTime}`}</p> : null}
                           </div>
                         ))
                         : null}
@@ -6899,7 +6905,7 @@ const PrivateChannels = () => {
                               />
                             ) : null}
 
-                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll will expire in ${e.expiryTime}`}</p> : null}
+                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll Ends in ${e.expiryTime}`}</p> : null}
                           </div>
                         ))
                         : null}
