@@ -210,7 +210,8 @@ const PrivateChannels = () => {
     var resultTimeExp;
     let threadId = data.threadId
     axios.post(`${BaseURL}/upload/verifyExpiration`, {
-      threadId: threadId
+      threadId: threadId,
+      username: userInformation.username
     })
       .then((res) => {
         console.log("success")
@@ -254,7 +255,7 @@ const PrivateChannels = () => {
         threadId: pollData.threadId,
         username: userInformation.username
       }).then((res) => {
-        expiryTime = res.data.expiryTime
+        expiryTime = "23:59:59 Hours"
         pollData.isVoted = res.data.isVoted
 
         setChatData((e) => [
@@ -614,6 +615,14 @@ const PrivateChannels = () => {
                 { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime, isSticker },
 
               ]);
+            }).finally(()=>{
+              setTimeout(() => {
+                if(document.querySelector(".chatarea")){
+               var messageContainer = document.querySelector(".chatarea");
+     
+               messageContainer.scrollTop = messageContainer.scrollHeight;
+             }
+             }, 3000);
             })
 
 
@@ -645,13 +654,7 @@ const PrivateChannels = () => {
           
         });
 
-        // setTimeout(() => {
-        //    if(document.querySelector(".chatarea")){
-        //   var messageContainer = document.querySelector(".chatarea");
-
-        //   messageContainer.scrollTop = messageContainer.scrollHeight;
-        // }
-        // }, 1000);
+      
 
 
       });
@@ -1204,6 +1207,7 @@ const PrivateChannels = () => {
       timestamp: timestamp
     });
     toast.success('Created Poll Successfully!')
+   
   }
 
   const getAllSubscribedMembers = () => {
