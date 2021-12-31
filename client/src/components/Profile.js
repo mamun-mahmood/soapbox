@@ -67,8 +67,8 @@ const Profile = ({
   const [page, setpage] = useState(2);
   const [privateC, setPrivateC] = useState(privateChannel);
   const history = useHistory();
-  const [showIframe,setShowIframe] = useState(false);
-  const [iframeBox,setIframeBox]=useState(null);
+  const [showIframe, setShowIframe] = useState(false);
+  const [iframeBox, setIframeBox] = useState(null);
   const LIMIT = 9;
 
   const BaseURL = process.env.REACT_APP_API_URL;
@@ -84,9 +84,9 @@ const Profile = ({
           .then((response) => {
             setMyUploads(response.data.results);
           }),
-        axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
-          setAllUploads(response.data);
-        }))
+          axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
+            setAllUploads(response.data);
+          }))
       ];
       setLoading(false);
     };
@@ -146,13 +146,13 @@ const Profile = ({
       ));
     }
   };
-  const createPrivateClubRequest=(privateC)=>{
-    if(!privateC){
-history.push(`/request-private-club/${username}`)
-    }else{
+  const createPrivateClubRequest = (privateC) => {
+    if (!privateC) {
+      history.push(`/request-private-club/${username}`)
+    } else {
       toast.error('You Can not request for another Private Club if you already have one!')
     }
-    
+
   }
 
   return (
@@ -165,8 +165,6 @@ history.push(`/request-private-club/${username}`)
 
       {!loading && !showIframe && (
         <div className="profile-page">
-
-            
           <div className="new-profile">
             <div className="profile-container">
               <div
@@ -221,7 +219,7 @@ history.push(`/request-private-club/${username}`)
                 ) : (
                   <button
                     className="btn-add-private-c"
-                    onClick={()=>{createPrivateClubRequest(privateC)}}
+                    onClick={() => { createPrivateClubRequest(privateC) }}
                   >
                     Request Private Club
                   </button>
@@ -397,24 +395,24 @@ history.push(`/request-private-club/${username}`)
                   </a>
                 )}
               </div>
-              <div className="live-header"  style={{
-                                  backgroundColor: "rgb(130 73 160 / 52%)",
-                                  color: "white",
-                                  borderRadius: "3px",
-                                  width:'100%',
-                                  fontWeight:'bold'
-                                }}>Member Tools</div>
-              <div className="social-profile-icon-links" style={{marginLeft:'35px',width:'90%'}}>
+              <div className="live-header" style={{
+                backgroundColor: "rgb(130 73 160 / 52%)",
+                color: "white",
+                borderRadius: "3px",
+                width: '100%',
+                fontWeight: 'bold'
+              }}>Member Tools</div>
+              <div className="social-profile-icon-links" style={{ marginLeft: '35px', width: '90%' }}>
                 <button
                   className="btn-add-private-c"
-                  style={{  minWidth: "165px", maxWidth: "166px !important",margin:'0px' }}
-                
+                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
+
                 >
                   My Memberships
                 </button>
                 <button
                   className="btn-add-private-c"
-                  style={{  minWidth: "165px", maxWidth: "166px !important",margin:'0px' }}
+                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
                   onClick={() => {
                     if (showIframe) {
                       document.getElementById(
@@ -428,8 +426,8 @@ history.push(`/request-private-club/${username}`)
                         setShowIframe(false);
                       }, 500);
                     } else {
-                        setIframeBox({src:'https://www.verohive.net',title:'VeroHive'})
-                     setShowIframe(true)
+                      setIframeBox({ src: 'https://www.verohive.net', title: 'VeroHive' })
+                      setShowIframe(true)
                       setTimeout(() => {
                         if (
                           document.getElementById("slideIFMP")
@@ -449,7 +447,7 @@ history.push(`/request-private-club/${username}`)
                 </button>
                 <button
                   className="btn-add-private-c"
-                  style={{  minWidth: "165px", maxWidth: "166px !important",margin:'0px' }}
+                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
                   onClick={() => {
                     if (showIframe) {
                       document.getElementById(
@@ -463,8 +461,8 @@ history.push(`/request-private-club/${username}`)
                         setShowIframe(false);
                       }, 500);
                     } else {
-                      setIframeBox({src:'https://www.documega.com/enterprise-solutions/documega/',title:'DocuMega'})
-                     setShowIframe(true)
+                      setIframeBox({ src: 'https://www.documega.com/enterprise-solutions/documega/', title: 'DocuMega' })
+                      setShowIframe(true)
                       setTimeout(() => {
                         if (
                           document.getElementById("slideIFMP")
@@ -482,17 +480,17 @@ history.push(`/request-private-club/${username}`)
                 >
                   eDocuments
                 </button>
-              </div>      <div className="live-header"  style={{
-                                  backgroundColor: "rgb(130 73 160 / 52%)",
-                                  color: "white",
-                                  borderRadius: "3px",
-                                  width:'100%',
-                                  fontWeight:'bold'
-                                }}>Crypto Tools</div>
-              <div className="social-profile-icon-links" style={{marginLeft:'35px',width:'90%'}}>
+              </div>      <div className="live-header" style={{
+                backgroundColor: "rgb(130 73 160 / 52%)",
+                color: "white",
+                borderRadius: "3px",
+                width: '100%',
+                fontWeight: 'bold'
+              }}>Crypto Tools</div>
+              <div className="social-profile-icon-links" style={{ marginLeft: '35px', width: '90%' }}>
                 <button
                   className="btn-add-private-c"
-                  style={{  minWidth: "165px", maxWidth: "166px !important",margin:'0px' }}
+                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
                   onClick={() => {
                     if (showIframe) {
                       document.getElementById(
@@ -506,9 +504,9 @@ history.push(`/request-private-club/${username}`)
                         setShowIframe(false);
                       }, 500);
                     } else {
-                        setIframeBox({src:'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/',title:'XMG Wallet'})
-                                   
-                     setShowIframe(true)
+                      setIframeBox({ src: 'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/', title: 'XMG Wallet' })
+
+                      setShowIframe(true)
                       setTimeout(() => {
                         if (
                           document.getElementById("slideIFMP")
@@ -528,7 +526,7 @@ history.push(`/request-private-club/${username}`)
                 </button>
                 <button
                   className="btn-add-private-c"
-                  style={{  minWidth: "165px", maxWidth: "166px !important",margin:'0px'}}
+                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
                   onClick={() => {
                     if (showIframe) {
                       document.getElementById(
@@ -542,10 +540,10 @@ history.push(`/request-private-club/${username}`)
                         setShowIframe(false);
                       }, 500);
                     } else {
-                        setIframeBox({src:'https://www.megahoot.com/vault/megahoot-vault/',title:'MegaHoot Vault'})
-                                
-                                
-                     setShowIframe(true)
+                      setIframeBox({ src: 'https://www.megahoot.com/vault/megahoot-vault/', title: 'MegaHoot Vault' })
+
+
+                      setShowIframe(true)
                       setTimeout(() => {
                         if (
                           document.getElementById("slideIFMP")
@@ -561,11 +559,11 @@ history.push(`/request-private-club/${username}`)
                     }
                   }}
                 >
-                 MegaHoot Vault
+                  MegaHoot Vault
                 </button>
                 <button
                   className="btn-add-private-c"
-                  style={{  minWidth: "165px", maxWidth: "166px !important",margin:'0px' }}
+                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
                   onClick={() => {
                     if (showIframe) {
                       document.getElementById(
@@ -579,9 +577,9 @@ history.push(`/request-private-club/${username}`)
                         setShowIframe(false);
                       }, 500);
                     } else {
-                        setIframeBox({src:'https://www.megahootvault.com/',title:'Crypto Index'})
-                                
-                     setShowIframe(true)
+                      setIframeBox({ src: 'https://www.megahootvault.com/', title: 'Crypto Index' })
+
+                      setShowIframe(true)
                       setTimeout(() => {
                         if (
                           document.getElementById("slideIFMP")
@@ -652,11 +650,11 @@ history.push(`/request-private-club/${username}`)
                             >
                               {(ReactPlayer.canPlay(upload.link) &&
                                 upload.link.endsWith(".mp4")) ||
-                              upload.link.endsWith(".mkv") ||
-                              upload.link.endsWith(".mov") ||
-                              upload.link.endsWith(".ogv") ||
-                              upload.link.endsWith(".webm") ||
-                              upload.link.endsWith(".mpg") ? (
+                                upload.link.endsWith(".mkv") ||
+                                upload.link.endsWith(".mov") ||
+                                upload.link.endsWith(".ogv") ||
+                                upload.link.endsWith(".webm") ||
+                                upload.link.endsWith(".mpg") ? (
                                 <div className="vdo-container">
                                   <video
                                     muted
@@ -736,27 +734,27 @@ history.push(`/request-private-club/${username}`)
           </div>
         </div>
       )}
-       {showIframe?
-           <div id="slideIFMP">
-                 <div className="header-iframe">
-                   {/* <div>{iframeBox.title}</div> */}
-                 <button 
-                onClick={() => {
-                    document.getElementById("slideIFMP").style.transition =
-                      "2sec";
-                    document.getElementById("slideIFMP").style.left =
-                      "200vw";
-               
-                    setTimeout(() => {
-                      setShowIframe(false);
-                    }, 500);
-                  }}
-                 
-                 className="close-button-iframe">X</button></div>
-              <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
-                   title={iframeBox.title} width="100%" height="100%"></iframe>
-              </div>
-           :null}
+      {showIframe ?
+        <div id="slideIFMP">
+          <div className="header-iframe">
+            {/* <div>{iframeBox.title}</div> */}
+            <button
+              onClick={() => {
+                document.getElementById("slideIFMP").style.transition =
+                  "2sec";
+                document.getElementById("slideIFMP").style.left =
+                  "200vw";
+
+                setTimeout(() => {
+                  setShowIframe(false);
+                }, 500);
+              }}
+
+              className="close-button-iframe">X</button></div>
+          <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
+            title={iframeBox.title} width="100%" height="100%"></iframe>
+        </div>
+        : null}
     </div>
   );
 };

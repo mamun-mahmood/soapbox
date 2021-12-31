@@ -42,6 +42,7 @@ import StripePage from './components/Stripe/StripePage';
 import RequestPrivateClubPage from './pages/RequestPrivateClubPage';
 
 import CreateHootBoxMobile from './pages/CreateHootBoxMobile';
+import SoapboxClubs from './pages/SoapboxClubs';
 
 function App() {
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
@@ -80,6 +81,10 @@ function App() {
         <Route exact path="/All-Hoots">
           {/* <ProtectedRoute page={Home} /> */}
           <Home />
+        </Route>
+
+        <Route exact path="/soapboxclubs">
+          <SoapboxClubs />
         </Route>
 
         <Route path="/:FakeData/SoapboxHall/:randomFakeKey?">

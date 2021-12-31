@@ -248,6 +248,7 @@ const SideBar = () => {
                     <SideBarOption
                         option="Soapbox Clubs"
                         Icon={privateclub}
+                        link="/soapboxclubs"
                     />
 
                     {userInfo

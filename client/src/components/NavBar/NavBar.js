@@ -86,7 +86,7 @@ const NavBar = ({ width, header, height, privateUserImage, showExtraFeatures, se
                         >
                             <img
                                 src={privateUserImage}
-                                alt={userData.username}
+                                alt=""
                             />
                         </div>
                     </SoapboxTooltip>

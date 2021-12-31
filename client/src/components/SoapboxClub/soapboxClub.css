@@ -1,0 +1,154 @@
+.s-club {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    padding: 5.5rem 0 1rem 0;
+}
+
+.creator-private-club {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+   
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid #ebedf2;
+    border-radius: 0.5rem;
+
+    width: 230px;
+    height: 320px;
+
+    background-color: rgb(253, 253, 255, 0.6);
+    box-shadow: rgb(0 0 0 / 0%) 0px 1px 3px 0px, rgb(0 0 0 / 5%) 0px 1px 2px 0px;
+}
+
+.cpc-c1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+.cpc-profile-pic {
+    border-radius: 50%;
+    padding: 0.5rem;
+    cursor: pointer;
+    filter: drop-shadow(rgba(0, 0, 0, 0.08) 1px 1px 2px);
+}
+
+.cpc-verifed {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+}
+
+.cpc-username {
+    margin-top: -0.3rem;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.cpc-name {
+    color: rgb(55, 65, 81, .9);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.cpc-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cpc-line-dash {
+    width: 3rem;
+    height: 0.3rem;
+    background-color: var(--primary-color);
+    margin: 0.2rem;
+    border-radius: 0.2rem;
+}
+
+.cpc-bg {
+    background-color: #d9d1f8;
+}
+
+.cpc-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.cpc-stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.cpc-count {
+    font-size: 1rem;
+    color: rgb(51, 65, 85, .9);
+}
+
+.cpc-label {
+    font-size: 1rem;
+    color: rgb(51, 65, 85, .9);
+    margin-top: -0.2rem;
+}
+
+.cpc-c2 {
+    padding: 0.5rem;
+    padding-bottom: 0.8rem;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cpc-c2 a {
+    color: #FFFFFF;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 600;
+    background-color: rgb(154, 105, 189, .9);
+    padding: 0.3rem 1rem;
+    border-radius: 10rem;
+    box-shadow: rgb(0 0 0 / 5%) 0px 1px 4px;
+    transition: 0.2s all;
+}
+
+.cpc-c2 a:hover {
+    background-color: var(--on-hover);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.cpc-badge {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 1;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+.creator-private-club:hover .cpc-badge{
+    opacity: 0.9;
+    transform: translateX(0px);
+    left: 0.5rem;
+}
+
