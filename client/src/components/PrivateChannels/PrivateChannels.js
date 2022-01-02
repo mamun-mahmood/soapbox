@@ -260,7 +260,7 @@ const PrivateChannels = () => {
 
         setChatData((e) => [
           ...e,
-          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime, isSticker },
+          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent,expiryTime,isSticker},
 
         ]);
       })
@@ -615,14 +615,14 @@ const PrivateChannels = () => {
                 { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime, isSticker },
 
               ]);
-            }).finally(() => {
+            }).finally(()=>{
               setTimeout(() => {
-                if (document.querySelector(".chatarea")) {
-                  var messageContainer = document.querySelector(".chatarea");
-
-                  messageContainer.scrollTop = messageContainer.scrollHeight;
-                }
-              }, 3000);
+                if(document.querySelector(".chatarea")){
+               var messageContainer = document.querySelector(".chatarea");
+     
+               messageContainer.scrollTop = messageContainer.scrollHeight;
+             }
+             }, 3000);
             })
 
 
@@ -647,14 +647,14 @@ const PrivateChannels = () => {
           }
 
 
-          if (document.querySelector(".chatarea")) {
-            let messageContainer = document.querySelector(".chatarea");
-            messageContainer.scrollTop = messageContainer.scrollHeight;
+          if(document.querySelector(".chatarea")){
+          let messageContainer = document.querySelector(".chatarea");
+          messageContainer.scrollTop = messageContainer.scrollHeight;
           }
-
+          
         });
 
-
+      
 
 
       });
@@ -1212,8 +1212,8 @@ const PrivateChannels = () => {
     setPollFormDataOA("");
     setPollFormDataOB("");
     setPollFormDataOC("");
-    setPollFormData({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA: 0, pollB: 0, pollC: 0 })
-
+    setPollFormData({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA:0, pollB:0, pollC:0 })
+   
   }
 
   const getAllSubscribedMembers = () => {
@@ -4463,15 +4463,14 @@ const PrivateChannels = () => {
                                   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                  <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                    toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse;
-                                    let messageContainer = document.querySelector(".chatarea");
+                                  <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse ;
+                                 let messageContainer = document.querySelector(".chatarea");
 
-                                    messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    setChatData(chatData.filter((chat) => chat !== e))
-                                    setChatData((chat) => [...chat, e])
-                                    updatePollData(e)
-                                  }}>
+                                 messageContainer.scrollTop = messageContainer.scrollHeight;
+                                 setChatData(chatData.filter((chat) => chat !== e))
+                                 setChatData((chat) => [...chat, e])
+                                 updatePollData(e)
+                                }}>
                                     Vote
                                   </Button>
                                 </Form>
@@ -6150,15 +6149,13 @@ const PrivateChannels = () => {
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                  toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse;
-                                  let messageContainer = document.querySelector(".chatarea");
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse ;
+                               let messageContainer = document.querySelector(".chatarea");
 
-                                  messageContainer.scrollTop = messageContainer.scrollHeight;
-                                  setChatData(chatData.filter((chat) => chat !== e))
-                                  setChatData((chat) => [...chat, e])
-                                  updatePollData(e)
-                                }}>
+                               messageContainer.scrollTop = messageContainer.scrollHeight;
+                               setChatData(chatData.filter((chat) => chat !== e))
+                               setChatData((chat) => [...chat, e])
+                               updatePollData(e)}}>
                                   Vote
                                 </Button>
                               </Form>
@@ -6855,15 +6852,14 @@ const PrivateChannels = () => {
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                  toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
-                                  let messageContainer = document.querySelector(".chatarea");
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e) ;
+                               let messageContainer = document.querySelector(".chatarea");
 
-                                  messageContainer.scrollTop = messageContainer.scrollHeight;
-                                  setChatData(chatData.filter((chat) => chat !== e))
-                                  setChatData((chat) => [...chat, e])
-                                  updatePollData(e)
-                                }}>
+                                      messageContainer.scrollTop = messageContainer.scrollHeight;
+                                      setChatData(chatData.filter((chat) => chat !== e))
+                                      setChatData((chat) => [...chat, e])
+                                      updatePollData(e)
+                              }}>
                                   Vote
                                 </Button>
                               </Form>
