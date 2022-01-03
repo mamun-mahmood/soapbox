@@ -4523,7 +4523,7 @@ const PrivateChannels = () => {
                                 />
                               ) : null}
 
-                              {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll Ends in ${e.expiryTime}`}</p> : null}
+                              {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Voting Ends in ${e.expiryTime}`}</p> : null}
                             </div>
                           ))
                           : null}
@@ -6201,7 +6201,7 @@ const PrivateChannels = () => {
                               />
                             ) : null}
 
-                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll Ends in ${e.expiryTime}`}</p> : null}
+                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Voting Ends in ${e.expiryTime}`}</p> : null}
                           </div>
                         ))
                         : null}
@@ -6905,7 +6905,7 @@ const PrivateChannels = () => {
                               />
                             ) : null}
 
-                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Poll Ends in ${e.expiryTime}`}</p> : null}
+                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Voting Ends in ${e.expiryTime}`}</p> : null}
                           </div>
                         ))
                         : null}
