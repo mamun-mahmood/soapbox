@@ -38,7 +38,7 @@ import emojiupload from '../assets/emoji.png';
 import addlink from '../assets/addlink.png';
 import hooticon from '../assets/hooticon.png';
 
-const CreateHootBoxMobile = (props) => {
+const CreateHootBoxMobile = () => {
     const [caption, setCaption] = useState("");
     const [file, setFile] = useState([]);
     const [audioPoster, setAudioPoster] = useState([]);
@@ -108,7 +108,6 @@ const CreateHootBoxMobile = (props) => {
                 })
             ]).then(axios.spread((res1, res2) => {
                 if (res1) {
-                    props.closeHoot()
                     setTimeout(() => {
                         history.push("/All-Hoots");
                     }, 500);
