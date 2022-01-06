@@ -1,8 +1,7 @@
 import LazyLoad from 'react-lazyload'
+import LandingCarousel from './Carousel'
 import { Box, Button, Divider, makeStyles, Typography, withStyles } from '@material-ui/core';
-import LandingCarousel from './Carousel';
 import React from 'react';
-import './style.scss'
 
 const useStyles = makeStyles(theme => ({
     component: {
@@ -38,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const MarketplaceCarousel = ({ products }) => {
+const SoapBoxClubs = ({ products }) => {
     const classes = useStyles();
 
     const CustomButton = withStyles((theme) => ({
@@ -60,11 +59,10 @@ const MarketplaceCarousel = ({ products }) => {
     return (
         <Box className={classes.component} >
             <Box className={classes.deal}>
-                <Typography className={classes.dealText}>
-                    VeroHive Backgrounds
-                </Typography>
+                <Typography className={classes.dealText}>SoapBox Clubs</Typography>
+                {/* <BsFillHandbagFill style={{ fontSize: "2rem", color: "#EF4444", opacity: 0.9, marginRight: 10 }} /> */}
 
-                <a href="https://fortisab.com/category/VeroHive%20Backgrounds"
+                <a href="https://fortisab.com/category/SoapBox Clubs"
                     target="_blank" rel="noopener noreferrer"
                     style={{
                         color: 'white',
@@ -87,7 +85,7 @@ const MarketplaceCarousel = ({ products }) => {
                 <LazyLoad>
                     <LandingCarousel
                         data={products.filter((data) =>
-                            data.category == "VeroHive Backgrounds"
+                            data.category == "SoapBox Clubs"
                         )}
                     />
                 </LazyLoad>
@@ -96,4 +94,6 @@ const MarketplaceCarousel = ({ products }) => {
     )
 }
 
-export default MarketplaceCarousel
+export default SoapBoxClubs
+
+

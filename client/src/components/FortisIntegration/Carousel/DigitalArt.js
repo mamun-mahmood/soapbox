@@ -1,8 +1,8 @@
+
 import LazyLoad from 'react-lazyload'
-import { Box, Button, Divider, makeStyles, Typography, withStyles } from '@material-ui/core';
 import LandingCarousel from './Carousel';
 import React from 'react';
-import './style.scss'
+import { Box, Button, Divider, makeStyles, Typography, withStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     component: {
@@ -10,8 +10,8 @@ const useStyles = makeStyles(theme => ({
     },
     deal: {
         display: 'flex',
-        justifyContent: "space-between",
         alignItems: 'center',
+        justifyContent: "space-between",
         padding: 10,
     },
     dealText: {
@@ -37,16 +37,15 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-
-const MarketplaceCarousel = ({ products }) => {
+const DIgitalArt = ({ products }) => {
     const classes = useStyles();
 
     const CustomButton = withStyles((theme) => ({
         root: {
             color: '#FFF',
             backgroundColor: '#8249a0',
-            marginRight: 10,
             borderRadius: 4,
+            marginRight: 10,
             boxShadow: 'rgba(99, 99, 99, 0.12) 0px 2px 8px 0px;',
             '&:hover': {
                 backgroundColor: '#8249a0',
@@ -60,15 +59,13 @@ const MarketplaceCarousel = ({ products }) => {
     return (
         <Box className={classes.component} >
             <Box className={classes.deal}>
-                <Typography className={classes.dealText}>
-                    VeroHive Backgrounds
-                </Typography>
+                <Typography className={classes.dealText}>Original Art Showcase</Typography>
 
-                <a href="https://fortisab.com/category/VeroHive%20Backgrounds"
+                <a href='https://fortisab.com/category/Original Art Showcase'
                     target="_blank" rel="noopener noreferrer"
                     style={{
                         color: 'white',
-                        //  marginLeft: "auto",
+                        // marginLeft: "auto",
                         textDecoration: "none"
                     }}
                 >
@@ -87,7 +84,7 @@ const MarketplaceCarousel = ({ products }) => {
                 <LazyLoad>
                     <LandingCarousel
                         data={products.filter((data) =>
-                            data.category == "VeroHive Backgrounds"
+                            data.category == "Original Art Showcase"
                         )}
                     />
                 </LazyLoad>
@@ -96,4 +93,4 @@ const MarketplaceCarousel = ({ products }) => {
     )
 }
 
-export default MarketplaceCarousel
+export default DIgitalArt

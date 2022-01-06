@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import DIgitalArt from './Carousel/DigitalArt';
 import LiveAuctionsCarousel from './Carousel/LiveAuctionsCarousel';
 import MarketplaceCarousel from './Carousel/MarketplaceCarousel';
+import SoapBoxClubs from './Carousel/SoapBoxClubs';
 import MarketplcaeNavBar from './MarketplcaeNavBar';
 import NewLoadingBox from './NewLoadingBox';
 
@@ -33,6 +35,8 @@ const MarketplaceProducts = ({ fortisUserInfo, setSignedIn }) => {
                     <MarketplcaeNavBar fortisUserInfo={fortisUserInfo} setSignedIn={setSignedIn} />
                     <LiveAuctionsCarousel products={products} />
                     <MarketplaceCarousel products={products} />
+                    <DIgitalArt products={products} />
+                    <SoapBoxClubs products={products} />
                 </div>
             }
         </div>

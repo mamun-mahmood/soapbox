@@ -43,7 +43,7 @@ export default function LandingCarousel(props) {
                 infiniteLoop={true}
                 showThumbs={false}
                 showStatus={false}
-                autoPlay={false}
+                autoPlay={true}
                 showIndicators={false}
                 renderArrowPrev={(onClickHandler, hasPrev, label) =>
                     hasPrev && (

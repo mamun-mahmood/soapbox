@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: "1rem",
         lineHeight: '32px',
         fontWeight: 600,
-        color: '#374151',
+        color: '#47566e',
         padding: '0px 10px',
         [`@media (max-width: 768px)`]: {
             fontSize: 16,
@@ -45,6 +45,7 @@ const LiveAuctionsCarousel = ({ products }) => {
             color: '#FFF',
             backgroundColor: '#8249a0',
             marginRight: 10,
+            borderRadius: 4,
             boxShadow: 'rgba(99, 99, 99, 0.12) 0px 2px 8px 0px;',
             '&:hover': {
                 backgroundColor: '#8249a0',

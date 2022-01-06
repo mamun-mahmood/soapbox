@@ -206,7 +206,7 @@ export default function Product(props) {
                     <div className="card-title" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <h2
                             style={{
-                                width: "185px",
+                                width: "-webkit-fill-available",
                                 textOverflow: "ellipsis",
                                 overflow: "hidden",
                                 whiteSpace: "nowrap",
