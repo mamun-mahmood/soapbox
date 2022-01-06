@@ -4523,7 +4523,8 @@ const PrivateChannels = () => {
                                 />
                               ) : null}
 
-                              {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Voting Ends in ${e.expiryTime}`}</p> : null}
+                              {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
+                              {e.message ||e.isPoll || e.isEvent ||e.isEmoji ||e.isVideo || e.isImage?<button className="reply-button">Reply</button>:null}
                             </div>
                           ))
                           : null}
@@ -6201,7 +6202,8 @@ const PrivateChannels = () => {
                               />
                             ) : null}
 
-                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Voting Ends in ${e.expiryTime}`}</p> : null}
+                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
+                            {e.message ||e.isPoll || e.isEvent ||e.isEmoji ||e.isVideo || e.isImage?<button className="reply-button">Reply</button>:null}
                           </div>
                         ))
                         : null}
@@ -6905,7 +6907,8 @@ const PrivateChannels = () => {
                               />
                             ) : null}
 
-                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Note:The Voting Ends in ${e.expiryTime}`}</p> : null}
+                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
+                            {e.message ||e.isPoll || e.isEvent ||e.isEmoji ||e.isVideo || e.isImage?<button className="reply-button">Reply</button>:null}    
                           </div>
                         ))
                         : null}

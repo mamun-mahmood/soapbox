@@ -1131,3 +1131,20 @@ cursor: pointer;
     left: 1vw !important;
   }
 }
+
+
+.reply-button{
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  margin: 5px;
+  border: none;
+  font-size: 10px;
+  padding: 2px;
+  border-radius: 5px;
+
+}
+
+.reply-button:hover{
+  background-color: #DCD5FA;
+}
