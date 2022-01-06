@@ -4399,10 +4399,10 @@ const PrivateChannels = () => {
 
                                         // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                         // chatData[chatData.indexOf(e)]
-
                                         e.pollData.pollA = e.pollData.pollA + 1
                                         e.pollData.pollB = e.pollData.pollB
                                         e.pollData.pollC = e.pollData.pollC
+
 
                                         // let messageContainer = document.querySelector(".chatarea");
 
@@ -4412,7 +4412,11 @@ const PrivateChannels = () => {
                                         // updatePollData(e)
                                       }}
                                     />
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                      <ProgressBar style={{ width: '95%' }} now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                      <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
+
+
                                   </Form.Group>
 
                                   <Form.Group className="mb-3" >
@@ -4420,10 +4424,6 @@ const PrivateChannels = () => {
 
                                       // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                       // chatData[chatData.indexOf(e)]
-
-
-
-
                                       // e.pollData.pollB = 100
                                       // e.pollData.pollA = 0
                                       // e.pollData.pollC = 0
@@ -4439,7 +4439,10 @@ const PrivateChannels = () => {
                                       // setChatData((chat) => [...chat, e])
                                       // updatePollData(e)
                                     }} />
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                      <ProgressBar style={{ width: '95%' }} now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                      <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
+
                                   </Form.Group>
 
                                   <Form.Group className="mb-3" >
@@ -4452,6 +4455,7 @@ const PrivateChannels = () => {
                                         // e.pollData.pollC = 100
                                         // e.pollData.pollA = 0
                                         // e.pollData.pollB = 0
+
                                         e.pollData.pollC = e.pollData.pollC + 1
                                         e.pollData.pollA = e.pollData.pollA
                                         e.pollData.pollB = e.pollData.pollB
@@ -4463,13 +4467,18 @@ const PrivateChannels = () => {
                                         // updatePollData(e)
                                       }}
                                     />
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+
+                                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                      <ProgressBar style={{ width: '95%' }} now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                      <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
+
+
                                   </Form.Group>
                                   {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="radio" name="radio" label="Check me out" />
-  </Form.Group> */}
+<Form.Check type="radio" name="radio" label="Check me out" />
+</Form.Group> */}
                                   <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                    toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse;
+                                    toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
                                     let messageContainer = document.querySelector(".chatarea");
 
                                     messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -6132,7 +6141,9 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <ProgressBar style={{ width: '95%' }} now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6156,7 +6167,9 @@ const PrivateChannels = () => {
                                     // setChatData((chat) => [...chat, e])
                                     // updatePollData(e)
                                   }} />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <ProgressBar style={{ width: '95%' }} now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6181,13 +6194,15 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <ProgressBar style={{ width: '95%' }} now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
                                 <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                  toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse;
+                                  toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
                                   let messageContainer = document.querySelector(".chatarea");
 
                                   messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -6839,7 +6854,9 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <ProgressBar style={{ width: '95%' }} now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6862,7 +6879,9 @@ const PrivateChannels = () => {
                                     // setChatData((chat) => [...chat, e])
                                     // updatePollData(e)
                                   }} />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <ProgressBar style={{ width: '95%' }} now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6887,7 +6906,9 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <ProgressBar style={{ width: '95%' }} now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />

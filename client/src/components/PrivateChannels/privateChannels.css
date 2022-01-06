@@ -1132,7 +1132,6 @@ cursor: pointer;
   }
 }
 
-
 .reply-button{
   position: absolute;
   bottom: 0px;
@@ -1142,9 +1141,13 @@ cursor: pointer;
   font-size: 10px;
   padding: 2px;
   border-radius: 5px;
-
 }
 
 .reply-button:hover{
   background-color: #DCD5FA;
+}
+
+.votingPercentage{
+  font-size: 10px;
+
 }
