@@ -70,6 +70,8 @@ import NavBar from "../NavBar/NavBar";
 import MyVerticallyCenteredScheduler from "./scheduler";
 import { Share } from "@material-ui/icons";
 import stickerIcon from '../../assets/stickerIcon.png'
+import FortisSignIn from "../FortisIntegration/FortisSignIn";
+import FortisMarketplaceArea from "../FortisIntegration/FortisMarketplaceArea";
 
 const stripe = loadStripe(
   "pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz"
@@ -162,6 +164,8 @@ const PrivateChannels = () => {
   const [src, setSrc] = useState(null);
   const [mimeType, setMimeType] = useState("");
   const [currentInvoice, setCurrentInvoice] = useState("");
+  const [marketPlaceArea, setMarketPlaceArea] = useState(false);
+
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
   const form = document.getElementById("send-container");
   const messageInput = document.getElementById("messageInp");
@@ -260,7 +264,7 @@ const PrivateChannels = () => {
 
         setChatData((e) => [
           ...e,
-          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent,expiryTime,isSticker},
+          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime, isSticker },
 
         ]);
       })
@@ -615,14 +619,14 @@ const PrivateChannels = () => {
                 { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime, isSticker },
 
               ]);
-            }).finally(()=>{
+            }).finally(() => {
               setTimeout(() => {
-                if(document.querySelector(".chatarea")){
-               var messageContainer = document.querySelector(".chatarea");
-     
-               messageContainer.scrollTop = messageContainer.scrollHeight;
-             }
-             }, 3000);
+                if (document.querySelector(".chatarea")) {
+                  var messageContainer = document.querySelector(".chatarea");
+
+                  messageContainer.scrollTop = messageContainer.scrollHeight;
+                }
+              }, 3000);
             })
 
 
@@ -647,14 +651,14 @@ const PrivateChannels = () => {
           }
 
 
-          if(document.querySelector(".chatarea")){
-          let messageContainer = document.querySelector(".chatarea");
-          messageContainer.scrollTop = messageContainer.scrollHeight;
+          if (document.querySelector(".chatarea")) {
+            let messageContainer = document.querySelector(".chatarea");
+            messageContainer.scrollTop = messageContainer.scrollHeight;
           }
-          
+
         });
 
-      
+
 
 
       });
@@ -1212,8 +1216,8 @@ const PrivateChannels = () => {
     setPollFormDataOA("");
     setPollFormDataOB("");
     setPollFormDataOC("");
-    setPollFormData({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA:0, pollB:0, pollC:0 })
-   
+    setPollFormData({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA: 0, pollB: 0, pollC: 0 })
+
   }
 
   const getAllSubscribedMembers = () => {
@@ -2649,6 +2653,7 @@ const PrivateChannels = () => {
                           onClick={() => {
                             if (privateChat == false) {
                               setClubFloor(!clubFloor);
+                              setMarketPlaceArea(false);
                             } else {
                               toast.success("Please close Private chat to view feeds");
                             }
@@ -4380,22 +4385,50 @@ const PrivateChannels = () => {
                               </Linkify>
 
                               {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
-                              <Form onSubmit={(e) => e.preventDefault()}>
+                                <Form onSubmit={(e) => e.preventDefault()}>
 
-                                <Form.Group className="mb-3" >
-                                  <Form.Label>{e.pollData.Question}</Form.Label>
+                                  <Form.Group className="mb-3" >
+                                    <Form.Label>{e.pollData.Question}</Form.Label>
 
-                                </Form.Group>
+                                  </Form.Group>
 
-                                <Form.Group className="mb-3" >
+                                  <Form.Group className="mb-3" >
 
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
-                                    onChange={() => {
+                                    <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
+                                      onChange={() => {
+
+                                        // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                        // chatData[chatData.indexOf(e)]
+
+                                        e.pollData.pollA = e.pollData.pollA + 1
+                                        e.pollData.pollB = e.pollData.pollB
+                                        e.pollData.pollC = e.pollData.pollC
+
+                                        // let messageContainer = document.querySelector(".chatarea");
+
+                                        // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                        // setChatData(chatData.filter((chat) => chat !== e))
+                                        // setChatData((chat) => [...chat, e])
+                                        // updatePollData(e)
+                                      }}
+                                    />
+                                    <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                  </Form.Group>
+
+                                  <Form.Group className="mb-3" >
+                                    <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
 
                                       // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                       // chatData[chatData.indexOf(e)]
-                                      e.pollData.pollA = e.pollData.pollA + 1
-                                      e.pollData.pollB = e.pollData.pollB
+
+
+
+
+                                      // e.pollData.pollB = 100
+                                      // e.pollData.pollA = 0
+                                      // e.pollData.pollC = 0
+                                      e.pollData.pollA = e.pollData.pollA
+                                      e.pollData.pollB = e.pollData.pollB + 1
                                       e.pollData.pollC = e.pollData.pollC
 
 
@@ -4405,85 +4438,49 @@ const PrivateChannels = () => {
                                       // setChatData(chatData.filter((chat) => chat !== e))
                                       // setChatData((chat) => [...chat, e])
                                       // updatePollData(e)
-                                    }}
-                                  />
-                                   <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                                       <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
-                                
-                              
-                                </Form.Group>
+                                    }} />
+                                    <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                  </Form.Group>
 
-                                <Form.Group className="mb-3" >
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+                                  <Form.Group className="mb-3" >
+                                    <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
+                                      onChange={() => {
 
-                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                    // chatData[chatData.indexOf(e)]
-                                    // e.pollData.pollB = 100
-                                    // e.pollData.pollA = 0
-                                    // e.pollData.pollC = 0
-                                    e.pollData.pollA = e.pollData.pollA
-                                    e.pollData.pollB = e.pollData.pollB + 1
-                                    e.pollData.pollC = e.pollData.pollC
+                                        // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                        // chatData[chatData.indexOf(e)]
 
+                                        // e.pollData.pollC = 100
+                                        // e.pollData.pollA = 0
+                                        // e.pollData.pollB = 0
+                                        e.pollData.pollC = e.pollData.pollC + 1
+                                        e.pollData.pollA = e.pollData.pollA
+                                        e.pollData.pollB = e.pollData.pollB
+                                        // let messageContainer = document.querySelector(".chatarea");
 
-                                    // let messageContainer = document.querySelector(".chatarea");
-
-                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    // setChatData(chatData.filter((chat) => chat !== e))
-                                    // setChatData((chat) => [...chat, e])
-                                    // updatePollData(e)
-                                  }} />
-                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
-                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
-                                
-                                </Form.Group>
-
-                                <Form.Group className="mb-3" >
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
-                                    onChange={() => {
-
-                                      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                      // chatData[chatData.indexOf(e)]
-
-                                      // e.pollData.pollC = 100
-                                      // e.pollData.pollA = 0
-                                      // e.pollData.pollB = 0
-
-                                      e.pollData.pollC = e.pollData.pollC + 1
-                                      e.pollData.pollA = e.pollData.pollA
-                                      e.pollData.pollB = e.pollData.pollB
-                                      // let messageContainer = document.querySelector(".chatarea");
-
-                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      // setChatData(chatData.filter((chat) => chat !== e))
-                                      // setChatData((chat) => [...chat, e])
-                                      // updatePollData(e)
-                                    }}
-                                  />
-                                
-                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
-                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
-                                
-                               
-                                </Form.Group>
-                                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                        // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                        // setChatData(chatData.filter((chat) => chat !== e))
+                                        // setChatData((chat) => [...chat, e])
+                                        // updatePollData(e)
+                                      }}
+                                    />
+                                    <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                  </Form.Group>
+                                  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e) ;
-                               let messageContainer = document.querySelector(".chatarea");
+                                  <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
+                                    toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse;
+                                    let messageContainer = document.querySelector(".chatarea");
 
-                                      messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      setChatData(chatData.filter((chat) => chat !== e))
-                                      setChatData((chat) => [...chat, e])
-                                      updatePollData(e)
-                              }}>
-                                  Vote
-                                </Button>
-                              </Form>
-                            </div> : null}
+                                    messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    setChatData(chatData.filter((chat) => chat !== e))
+                                    setChatData((chat) => [...chat, e])
+                                    updatePollData(e)
+                                  }}>
+                                    Vote
+                                  </Button>
+                                </Form>
+                              </div> : null}
 
                               {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
                                 <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
@@ -4533,7 +4530,7 @@ const PrivateChannels = () => {
                               ) : null}
 
                               {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                              {e.message ||e.isPoll || e.isEvent ||e.isEmoji ||e.isVideo || e.isImage?<button className="reply-button">Reply</button>:null}
+                              {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button">Reply</button> : null}
                             </div>
                           ))
                           : null}
@@ -4985,6 +4982,7 @@ const PrivateChannels = () => {
                         onClick={() => {
                           if (privateChat == false) {
                             setClubFloor(!clubFloor);
+                            setMarketPlaceArea(false);
                           } else {
                             toast.success("Please close Private chat to view feeds");
                           }
@@ -5001,6 +4999,7 @@ const PrivateChannels = () => {
                     }}
                     onClick={() => {
                       if (privateChat == false) {
+                        setMarketPlaceArea(false);
                         setShowRequest(false);
                         setClubFloor(true);
                         setShowSubscribers(false);
@@ -5068,6 +5067,7 @@ const PrivateChannels = () => {
                       borderRadius: "8px",
                     }}
                     onClick={() => {
+                      setMarketPlaceArea(false);
                       setShowRequest(false);
                       setShowSubscribers(false);
                       setShowPricingSetting(false);
@@ -5113,7 +5113,30 @@ const PrivateChannels = () => {
                   {/* MARKETPLACE tab */}
                   <span>
                     <SoapboxTooltip title={"MARKETPLACE"} placement="bottom" privateTooltip={true}>
-                      <img src={marketplaceicon} width="30px" />
+                      <img
+                        src={marketplaceicon}
+                        width="30px"
+                        onClick={() => {
+                          setInviteBox(false);
+                          setScheduleBox(false);
+                          setShowRequest(false);
+                          setShowPricingSetting(false);
+                          setAllMyEvents(false);
+                          setShowSubscribers(false);
+                          setShowCreateHoot(false);
+                          setShowIframe(false);
+                          setShowBreakoffForm(false);
+                          setShowClubRules(false);
+                          setShowNotification(false);
+                          setClubFloor(false);
+                          setShowFeed(false);
+                          setShowChatRoom(false);
+                          setPrivateChat(false);
+                          setOnDemandMedia(false);
+
+                          setMarketPlaceArea(true);
+                        }}
+                      />
                     </SoapboxTooltip>
                   </span>
 
@@ -5280,6 +5303,10 @@ const PrivateChannels = () => {
 
                 {/* <FiSearch className="search-channel-content" /> */}
               </div>
+
+              {marketPlaceArea ? (
+                <FortisMarketplaceArea />
+              ) : null}
 
               {inviteBox ? (
                 <MyVerticallyCenteredModal
@@ -6105,11 +6132,7 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                   <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                                       <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
-                                
-                              
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6120,6 +6143,7 @@ const PrivateChannels = () => {
                                     // e.pollData.pollB = 100
                                     // e.pollData.pollA = 0
                                     // e.pollData.pollC = 0
+
                                     e.pollData.pollA = e.pollData.pollA
                                     e.pollData.pollB = e.pollData.pollB + 1
                                     e.pollData.pollC = e.pollData.pollC
@@ -6132,10 +6156,7 @@ const PrivateChannels = () => {
                                     // setChatData((chat) => [...chat, e])
                                     // updatePollData(e)
                                   }} />
-                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
-                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
-                                
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6148,10 +6169,10 @@ const PrivateChannels = () => {
                                       // e.pollData.pollC = 100
                                       // e.pollData.pollA = 0
                                       // e.pollData.pollB = 0
-
                                       e.pollData.pollC = e.pollData.pollC + 1
                                       e.pollData.pollA = e.pollData.pollA
                                       e.pollData.pollB = e.pollData.pollB
+
                                       // let messageContainer = document.querySelector(".chatarea");
 
                                       // messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -6160,24 +6181,20 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                
-                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
-                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
-                                
-                               
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e) ;
-                               let messageContainer = document.querySelector(".chatarea");
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
+                                  toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse;
+                                  let messageContainer = document.querySelector(".chatarea");
 
-                                      messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      setChatData(chatData.filter((chat) => chat !== e))
-                                      setChatData((chat) => [...chat, e])
-                                      updatePollData(e)
-                              }}>
+                                  messageContainer.scrollTop = messageContainer.scrollHeight;
+                                  setChatData(chatData.filter((chat) => chat !== e))
+                                  setChatData((chat) => [...chat, e])
+                                  updatePollData(e)
+                                }}>
                                   Vote
                                 </Button>
                               </Form>
@@ -6224,7 +6241,7 @@ const PrivateChannels = () => {
                             ) : null}
 
                             {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                            {e.message ||e.isPoll || e.isEvent ||e.isEmoji ||e.isVideo || e.isImage?<button className="reply-button">Reply</button>:null}
+                            {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button">Reply</button> : null}
                           </div>
                         ))
                         : null}
@@ -6822,11 +6839,7 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                   <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                                       <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
-                                
-                              
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6849,10 +6862,7 @@ const PrivateChannels = () => {
                                     // setChatData((chat) => [...chat, e])
                                     // updatePollData(e)
                                   }} />
-                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
-                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
-                                
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6877,24 +6887,20 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                
-                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
-                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
-                                
-                               
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e) ;
-                               let messageContainer = document.querySelector(".chatarea");
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
+                                  toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
+                                  let messageContainer = document.querySelector(".chatarea");
 
-                                      messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      setChatData(chatData.filter((chat) => chat !== e))
-                                      setChatData((chat) => [...chat, e])
-                                      updatePollData(e)
-                              }}>
+                                  messageContainer.scrollTop = messageContainer.scrollHeight;
+                                  setChatData(chatData.filter((chat) => chat !== e))
+                                  setChatData((chat) => [...chat, e])
+                                  updatePollData(e)
+                                }}>
                                   Vote
                                 </Button>
                               </Form>
@@ -6941,7 +6947,7 @@ const PrivateChannels = () => {
                             ) : null}
 
                             {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                            {e.message ||e.isPoll || e.isEvent ||e.isEmoji ||e.isVideo || e.isImage?<button className="reply-button">Reply</button>:null}    
+                            {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button">Reply</button> : null}
                           </div>
                         ))
                         : null}

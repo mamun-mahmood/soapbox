@@ -35,7 +35,7 @@
 }
 
 .edit-hr {
-    width: 100%;
+    width: 90%;
 }
 
 .edit-contents {
@@ -54,6 +54,8 @@
 
     width: 500px;
     padding: 0.5rem 1rem;
+
+    transition: all 0.3s ease-in-out;
 }
 
 .edit-parameter {
