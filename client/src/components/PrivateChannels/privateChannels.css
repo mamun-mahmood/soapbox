@@ -1148,3 +1148,8 @@ cursor: pointer;
 .reply-button:hover{
   background-color: #DCD5FA;
 }
+
+.votingPercentage{
+  font-size: 10px;
+  
+}

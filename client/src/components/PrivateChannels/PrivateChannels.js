@@ -4380,50 +4380,22 @@ const PrivateChannels = () => {
                               </Linkify>
 
                               {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
-                                <Form onSubmit={(e) => e.preventDefault()}>
+                              <Form onSubmit={(e) => e.preventDefault()}>
 
-                                  <Form.Group className="mb-3" >
-                                    <Form.Label>{e.pollData.Question}</Form.Label>
+                                <Form.Group className="mb-3" >
+                                  <Form.Label>{e.pollData.Question}</Form.Label>
 
-                                  </Form.Group>
+                                </Form.Group>
 
-                                  <Form.Group className="mb-3" >
+                                <Form.Group className="mb-3" >
 
-                                    <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
-                                      onChange={() => {
-
-                                        // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                        // chatData[chatData.indexOf(e)]
-
-                                        e.pollData.pollA = e.pollData.pollA + 1
-                                        e.pollData.pollB = e.pollData.pollB
-                                        e.pollData.pollC = e.pollData.pollC
-
-                                        // let messageContainer = document.querySelector(".chatarea");
-
-                                        // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                        // setChatData(chatData.filter((chat) => chat !== e))
-                                        // setChatData((chat) => [...chat, e])
-                                        // updatePollData(e)
-                                      }}
-                                    />
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                                  </Form.Group>
-
-                                  <Form.Group className="mb-3" >
-                                    <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
+                                    onChange={() => {
 
                                       // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
                                       // chatData[chatData.indexOf(e)]
-
-
-
-
-                                      // e.pollData.pollB = 100
-                                      // e.pollData.pollA = 0
-                                      // e.pollData.pollC = 0
-                                      e.pollData.pollA = e.pollData.pollA
-                                      e.pollData.pollB = e.pollData.pollB + 1
+                                      e.pollData.pollA = e.pollData.pollA + 1
+                                      e.pollData.pollB = e.pollData.pollB
                                       e.pollData.pollC = e.pollData.pollC
 
 
@@ -4433,48 +4405,85 @@ const PrivateChannels = () => {
                                       // setChatData(chatData.filter((chat) => chat !== e))
                                       // setChatData((chat) => [...chat, e])
                                       // updatePollData(e)
-                                    }} />
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                                  </Form.Group>
+                                    }}
+                                  />
+                                   <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                                       <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
+                                
+                              
+                                </Form.Group>
 
-                                  <Form.Group className="mb-3" >
-                                    <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
-                                      onChange={() => {
+                                <Form.Group className="mb-3" >
+                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
 
-                                        // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                        // chatData[chatData.indexOf(e)]
+                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                    // chatData[chatData.indexOf(e)]
+                                    // e.pollData.pollB = 100
+                                    // e.pollData.pollA = 0
+                                    // e.pollData.pollC = 0
+                                    e.pollData.pollA = e.pollData.pollA
+                                    e.pollData.pollB = e.pollData.pollB + 1
+                                    e.pollData.pollC = e.pollData.pollC
 
-                                        // e.pollData.pollC = 100
-                                        // e.pollData.pollA = 0
-                                        // e.pollData.pollB = 0
-                                        e.pollData.pollC = e.pollData.pollC + 1
-                                        e.pollData.pollA = e.pollData.pollA
-                                        e.pollData.pollB = e.pollData.pollB
-                                        // let messageContainer = document.querySelector(".chatarea");
 
-                                        // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                        // setChatData(chatData.filter((chat) => chat !== e))
-                                        // setChatData((chat) => [...chat, e])
-                                        // updatePollData(e)
-                                      }}
-                                    />
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                                  </Form.Group>
-                                  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                    // let messageContainer = document.querySelector(".chatarea");
+
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
+                                  }} />
+                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
+                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
+                                
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" >
+                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
+                                    onChange={() => {
+
+                                      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                      // chatData[chatData.indexOf(e)]
+
+                                      // e.pollData.pollC = 100
+                                      // e.pollData.pollA = 0
+                                      // e.pollData.pollB = 0
+
+                                      e.pollData.pollC = e.pollData.pollC + 1
+                                      e.pollData.pollA = e.pollData.pollA
+                                      e.pollData.pollB = e.pollData.pollB
+                                      // let messageContainer = document.querySelector(".chatarea");
+
+                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                      // setChatData(chatData.filter((chat) => chat !== e))
+                                      // setChatData((chat) => [...chat, e])
+                                      // updatePollData(e)
+                                    }}
+                                  />
+                                
+                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
+                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
+                                
+                               
+                                </Form.Group>
+                                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                  <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse ;
-                                 let messageContainer = document.querySelector(".chatarea");
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e) ;
+                               let messageContainer = document.querySelector(".chatarea");
 
-                                 messageContainer.scrollTop = messageContainer.scrollHeight;
-                                 setChatData(chatData.filter((chat) => chat !== e))
-                                 setChatData((chat) => [...chat, e])
-                                 updatePollData(e)
-                                }}>
-                                    Vote
-                                  </Button>
-                                </Form>
-                              </div> : null}
+                                      messageContainer.scrollTop = messageContainer.scrollHeight;
+                                      setChatData(chatData.filter((chat) => chat !== e))
+                                      setChatData((chat) => [...chat, e])
+                                      updatePollData(e)
+                              }}>
+                                  Vote
+                                </Button>
+                              </Form>
+                            </div> : null}
 
                               {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
                                 <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
@@ -6096,7 +6105,11 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                   <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                                       <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
+                                
+                              
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6107,7 +6120,6 @@ const PrivateChannels = () => {
                                     // e.pollData.pollB = 100
                                     // e.pollData.pollA = 0
                                     // e.pollData.pollC = 0
-
                                     e.pollData.pollA = e.pollData.pollA
                                     e.pollData.pollB = e.pollData.pollB + 1
                                     e.pollData.pollC = e.pollData.pollC
@@ -6120,7 +6132,10 @@ const PrivateChannels = () => {
                                     // setChatData((chat) => [...chat, e])
                                     // updatePollData(e)
                                   }} />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
+                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
+                                
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6133,10 +6148,10 @@ const PrivateChannels = () => {
                                       // e.pollData.pollC = 100
                                       // e.pollData.pollA = 0
                                       // e.pollData.pollB = 0
+
                                       e.pollData.pollC = e.pollData.pollC + 1
                                       e.pollData.pollA = e.pollData.pollA
                                       e.pollData.pollB = e.pollData.pollB
-
                                       // let messageContainer = document.querySelector(".chatarea");
 
                                       // messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -6145,18 +6160,24 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                
+                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
+                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
+                                
+                               
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse ;
+                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => { toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e) ;
                                let messageContainer = document.querySelector(".chatarea");
 
-                               messageContainer.scrollTop = messageContainer.scrollHeight;
-                               setChatData(chatData.filter((chat) => chat !== e))
-                               setChatData((chat) => [...chat, e])
-                               updatePollData(e)}}>
+                                      messageContainer.scrollTop = messageContainer.scrollHeight;
+                                      setChatData(chatData.filter((chat) => chat !== e))
+                                      setChatData((chat) => [...chat, e])
+                                      updatePollData(e)
+                              }}>
                                   Vote
                                 </Button>
                               </Form>
@@ -6801,7 +6822,11 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                   <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                                       <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
+                                
+                              
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6824,7 +6849,10 @@ const PrivateChannels = () => {
                                     // setChatData((chat) => [...chat, e])
                                     // updatePollData(e)
                                   }} />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
+                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
+                                
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
@@ -6849,7 +6877,12 @@ const PrivateChannels = () => {
                                       // updatePollData(e)
                                     }}
                                   />
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                
+                                  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}> 
+                                   <ProgressBar style={{width:'95%'}} now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
+                                
+                               
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
