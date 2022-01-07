@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import CreateMarketplaceProduct from './CreateMarketplaceProduct';
 import FortisSignIn from './FortisSignIn';
 import MarketplaceProducts from './MarketplaceProducts';
 
 const FortisMarketplaceArea = () => {
     const fortisUserInfo = JSON.parse(localStorage.getItem("Marketplace"));
     const [signedIn, setSignedIn] = useState(fortisUserInfo ? true : false);
+    const [openCreateProduct, setOpenCreateProduct] = useState(false);
 
     const handleChange = (value) => {
         setSignedIn(value);
@@ -13,7 +15,9 @@ const FortisMarketplaceArea = () => {
     return (
         <div >
             {signedIn
-                ? <MarketplaceProducts fortisUserInfo={fortisUserInfo} setSignedIn={setSignedIn} />
+                ? openCreateProduct
+                    ? <CreateMarketplaceProduct fortisUserInfo={fortisUserInfo} setSignedIn={setSignedIn} setOpenCreateProduct={setOpenCreateProduct} />
+                    : <MarketplaceProducts fortisUserInfo={fortisUserInfo} setSignedIn={setSignedIn} setOpenCreateProduct={setOpenCreateProduct} />
                 : <FortisSignIn handleChange={handleChange} setSignedIn={setSignedIn} />
             }
         </div>
