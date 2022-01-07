@@ -14,7 +14,7 @@ const MarketplcaeNavBar = ({ fortisUserInfo, setSignedIn }) => {
         <div className="m-nav-pclub">
             <span className="m-brand">
                 <img src={FORTIS_LOGO} alt="Fortis logo" width="30" height="30" />
-                Fortis Marketplace
+                FortisAB Marketplace
             </span>
             <div className="m-userInfo">
                 {fortisUserInfo.isSeller && <button className="m-cap">Create a product</button>}

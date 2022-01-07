@@ -11,7 +11,7 @@ const FortisMarketplaceArea = () => {
     }
 
     return (
-        <div>
+        <div >
             {signedIn
                 ? <MarketplaceProducts fortisUserInfo={fortisUserInfo} setSignedIn={setSignedIn} />
                 : <FortisSignIn handleChange={handleChange} setSignedIn={setSignedIn} />
