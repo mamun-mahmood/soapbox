@@ -235,7 +235,7 @@ export default function Product(props) {
                                 <p style={{
                                     fontSize: "0.9rem",
                                     fontWeight: "bold",
-                                    color: "mediumpurple",
+                                    color: "#8249A0",
                                     marginBottom: "0"
                                 }}>
                                     ${product.price} {product.currency ? "USD" : 'USD'}</p>

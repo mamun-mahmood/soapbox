@@ -7,7 +7,7 @@ import SoapBoxClubs from './Carousel/SoapBoxClubs';
 import MarketplcaeNavBar from './MarketplcaeNavBar';
 import NewLoadingBox from './NewLoadingBox';
 
-const MarketplaceProducts = ({ fortisUserInfo, setSignedIn }) => {
+const MarketplaceProducts = ({ fortisUserInfo, setSignedIn, setOpenCreateProduct }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -32,7 +32,7 @@ const MarketplaceProducts = ({ fortisUserInfo, setSignedIn }) => {
                 ? <NewLoadingBox />
                 : products.length !== 0 &&
                 <div>
-                    <MarketplcaeNavBar fortisUserInfo={fortisUserInfo} setSignedIn={setSignedIn} />
+                    <MarketplcaeNavBar fortisUserInfo={fortisUserInfo} setSignedIn={setSignedIn} setOpenCreateProduct={setOpenCreateProduct} />
                     <LiveAuctionsCarousel products={products} />
                     <MarketplaceCarousel products={products} />
                     <DIgitalArt products={products} />

@@ -14,20 +14,25 @@ const FortisSignIn = ({ handleChange, setSignedIn }) => {
         event.preventDefault()
 
         const fortisSignin = async () => {
-            await axios.post(`https://fortisab.com/api/users/signin`, {
-                email,
-                password,
-            }).then((response) => {
-                if (response.data) {
-                    localStorage.setItem("Marketplace", JSON.stringify(response.data));
-                    toast.success("Marketplace Sign In Successful!");
-                    setSignedIn(true);
-                    setTimeout(() => {
-                        handleChange(true);
-                    }, 1000);
-                    setSaveLoading(false);
-                }
-            })
+            try {
+                await axios.post(`https://fortisab.com/api/users/signin`, {
+                    email,
+                    password,
+                }).then((response) => {
+                    if (response.data) {
+                        localStorage.setItem("Marketplace", JSON.stringify(response.data));
+                        toast.success("Signed In successful!");
+                        setSignedIn(true);
+                        setTimeout(() => {
+                            handleChange(true);
+                        }, 1000);
+                        setSaveLoading(false);
+                    }
+                })
+            } catch (e) {
+                toast.error("Sign In failed!");
+                setSaveLoading(false);
+            }
         };
 
         fortisSignin();

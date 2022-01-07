@@ -1,7 +1,7 @@
 /* Form */
 
 .form {
-	max-width: 40rem;
+	max-width: 35rem;
 	margin: 0 auto;
 	margin-bottom: 5rem;
 }
@@ -168,6 +168,7 @@ img.large {
 	justify-content: flex-start;
 	align-items: center;
 	gap: 0.5rem;
+	cursor: pointer;
 }
 
 .m-userInfo {
