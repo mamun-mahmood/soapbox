@@ -411,14 +411,15 @@ const PrivateChannels = () => {
 
         setTimeout(() => {
           if (document.getElementById("slideE")) {
-            document.getElementById(
-              "slideE"
-            ).style.transition = "1sec";
-            document.getElementById(
-              "slideE"
-            ).style.right = "250px";
+            // document.getElementById("slideE").style.transition = "1sec";
+            // document.getElementById("slideE").style.right = "250px";
+
+            // document.getElementById("slideE").style.transition = "2sec";
+            // document.getElementById("slideE").style.left = "50%";
+            // document.getElementById("slideE").style.top = "50%";
+            // document.getElementById("slideE").style.transform = "translate(-50%, -50%)";
           }
-        }, 1);
+        }, 0);
       })
   }
 
@@ -5664,8 +5665,10 @@ const PrivateChannels = () => {
                       justifyContent: "flex-start",
                       alignItems: "center",
                       backgroundColor: "#D6C8E1",
-                      margin: "1rem",
-                      minWidth: "600px",
+                      // margin: "1rem",
+                      // minWidth: "600px",
+                      width: "90%",
+                      maxWidth: "600px",
                       minHeight: "400px",
                     }}
                   >
@@ -5673,7 +5676,7 @@ const PrivateChannels = () => {
                       style={{
                         backgroundColor: "#8249A0",
                         padding: "5px",
-                        width: "600px",
+                        width: "100%",
                         display: "flex",
                         flexDirection: "row",
                         justifyContent: "space-between",
@@ -5687,12 +5690,12 @@ const PrivateChannels = () => {
                         className="FaWindowClose"
                         style={{ cursor: "pointer" }}
                         onClick={() => {
-                          document.getElementById("slideE").style.transition = "2sec";
-                          document.getElementById("slideE").style.right = "-100vw";
+                          // document.getElementById("slideE").style.transition = "1sec";
+                          // document.getElementById("slideE").style.right = "-200vw";
 
                           setTimeout(() => {
                             setShowAllMyEvents(false);
-                          }, 1000);
+                          }, 100);
                         }}
                       />
 
