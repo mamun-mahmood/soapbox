@@ -3,8 +3,16 @@ import FORTIS_LOGO from '../../assets/fortisFavicon.png';
 import { IoPersonCircleOutline } from "react-icons/io5";
 import ClickAwayListener from 'react-click-away-listener';
 import { toast } from 'react-toastify';
+import SearchMarketplace from './SearchMarketplace';
 
-const MarketplcaeNavBar = ({ fortisUserInfo, setSignedIn, setOpenCreateProduct }) => {
+const MarketplcaeNavBar = ({
+    searchTerm,
+    setSignedIn,
+    setSearchTerm,
+    fortisUserInfo,
+    setFinalSearchTerm,
+    setOpenCreateProduct,
+}) => {
     const [openProfile, setOpenProfile] = useState(false);
 
     const marketplaceSignOut = () => {
@@ -17,11 +25,24 @@ const MarketplcaeNavBar = ({ fortisUserInfo, setSignedIn, setOpenCreateProduct }
         <div className="m-nav-pclub">
             <span className="m-brand" onClick={() => { setOpenCreateProduct(false) }}>
                 <img src={FORTIS_LOGO} alt="Fortis logo" width="30" height="30" />
-                Fortis Marketplace
+                <span className="m-brand-text">
+                    Fortis Marketplace
+                </span>
             </span>
 
+            <SearchMarketplace
+            // searchTerm={searchTerm}
+            // setSearchTerm={setSearchTerm}
+            // setFinalSearchTerm={setFinalSearchTerm}
+            />
+
             <div className="m-userInfo">
-                {fortisUserInfo.isSeller && <button className="m-cap" onClick={() => { setOpenCreateProduct(true) }}>Create a product</button>}
+                {fortisUserInfo.isSeller &&
+                    <button className="m-cap" onClick={() => { setOpenCreateProduct(true) }}>
+                        Create a product
+                    </button>
+                }
+
                 <IoPersonCircleOutline
                     className="m-profile"
                     onClick={() => { setOpenProfile(!openProfile) }}
@@ -30,9 +51,15 @@ const MarketplcaeNavBar = ({ fortisUserInfo, setSignedIn, setOpenCreateProduct }
                         borderRadius: "50%"
                     }}
                 />
+
                 {openProfile &&
                     <ClickAwayListener onClickAway={() => { setOpenProfile(false) }}>
                         <div className="m-profile-details">
+                            {fortisUserInfo.isSeller &&
+                                <button className="m-cap-profile" onClick={() => { setOpenCreateProduct(true) }}>
+                                    Create a product
+                                </button>
+                            }
                             <span className="m-sign-out">{fortisUserInfo.name}</span>
                             <span className="m-sign-out" onClick={marketplaceSignOut}>Sign Out</span>
                         </div>

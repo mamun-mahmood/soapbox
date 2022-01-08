@@ -229,7 +229,7 @@ img.large {
 	gap: 0.5rem;
 	position: absolute;
 	min-width: 120px;
-	max-width: 300;
+	max-width: 300px;
 	word-break: break-all;
 	top: 3.2rem;
 	right: -0.5rem;
@@ -274,8 +274,86 @@ img.large {
 		max-width: 75.5%;
 	}
 }
+
+.m-cap-profile {
+	padding: 0.4rem 0.8rem;
+	font-size: 1rem;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	margin: 0 0.5rem;
+	margin-left: 0rem;
+	color: #FFF;
+	background-color: #8249a0;
+	border: none;
+	border-radius: 4px;
+	transition: 0.3s all;
+}
+
+.m-cap-profile:hover {
+	opacity: 0.9;
+}
+
 @media only screen and (max-width: 930px) {
 	.m-width-fix { 
 		max-width: 100%;
+	}
+}
+
+.m-searchbar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.m-s {
+	width: 30vw;
+}
+
+.m-s-i {
+	font-size: 1.5rem;
+	margin: 0 0.2rem;
+	color: #8249a0;
+	cursor: pointer;
+}
+
+@media only screen and (max-width: 1140px) {
+	.m-brand-text {
+		display: none;
+	}
+
+	.m-s {
+		width: 35vw;
+	}
+
+	.m-cap {
+		display: none;
+	}
+
+	.m-cap-profile {
+		display: flex;
+	}
+
+	.m-profile-details {
+		min-width: 180px;
+	}
+}
+
+@media only screen and (max-width: 930px) {
+	.m-brand-text {
+		display: none;
+	}
+
+	.m-s {
+		width: 60vw;
+	}
+
+	.m-cap {
+		display: none;
+	}
+
+	.m-cap-profile {
+		display: block;
 	}
 }
