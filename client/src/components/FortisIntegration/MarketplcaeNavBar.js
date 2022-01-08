@@ -25,13 +25,7 @@ const MarketplcaeNavBar = ({
         <div className="m-nav-pclub">
             <span className="m-brand" onClick={() => { setOpenCreateProduct(false) }}>
                 <img src={FORTIS_LOGO} alt="Fortis logo" width="30" height="30" />
-<<<<<<< HEAD
                 FortisAB Marketplace
-=======
-                <span className="m-brand-text">
-                    Fortis Marketplace
-                </span>
->>>>>>> afc063b340c6a6f56be3e2f8193bfdcf066d6e9c
             </span>
 
             <SearchMarketplace
