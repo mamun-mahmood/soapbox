@@ -799,7 +799,6 @@ overflow-wrap: break-word;
 #slideM,
 #slideRM,
 #slideOOC,
-#slideE,
 #slideSSB,
 #slidegC,
 #slideVA,
@@ -808,6 +807,15 @@ overflow-wrap: break-word;
   right: -100vw;
 
   transition: 1s;
+  z-index: 20;
+}
+
+#slideE {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.2s;
   z-index: 20;
 }
 
