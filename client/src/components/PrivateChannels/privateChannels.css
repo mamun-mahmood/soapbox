@@ -1180,8 +1180,8 @@ cursor: pointer;
 }
 
 
-.reply-box{
-  /* min-height: 200px;
-  min-width: 100%;
-  background-color: #854ca3; */
+
+.reply-body{
+max-height: 300px;
+overflow-y: auto;
 }

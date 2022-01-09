@@ -232,6 +232,14 @@ const PrivateChannels = () => {
 
   };
 
+  useEffect(() => {
+    if (document.querySelector(".chatarea")) {
+      var messageContainer = document.querySelector(".chatarea");
+
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+  }, [chatData])
+
   const append = (
     chatname,
     message,
@@ -4545,7 +4553,13 @@ e.pollData.pollC = e.pollData.pollC
                               ) : null}
 
                               {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                              {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button" onClick={()=>{setReplyData(e);setShowReply(!showReply)}}>{showReply?"Close":"Reply"}</button> : null}
+                              {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button 
+                              className="reply-button" 
+                              onClick={()=>{
+                                setReplyData({chatData:e,user:{
+                                name: userFullName,
+                                profilePic: userProfilePic,
+                              }});setShowReply(!showReply)}}>{showReply?"Close":"Reply"}</button> : null}
                            <div className="reply-box"></div>
                             </div>
                           ))
@@ -6272,7 +6286,14 @@ e.pollData.pollC = e.pollData.pollC
                             ) : null}
 
                             {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                            {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button" onClick={()=>{setReplyData(e);setShowReply(!showReply)}}>{showReply?"Close":"Reply"}</button> : null}
+                            {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button" 
+                       
+                       onClick={()=>{
+                        setReplyData({chatData:e,user:{
+                        name: userFullName,
+                        profilePic: userProfilePic,
+                      }});setShowReply(!showReply)}}
+              >{showReply?"Close":"Reply"}</button> : null}
                             <div className="reply-box"></div>
                           </div>
                         ))
@@ -6991,7 +7012,12 @@ e.pollData.pollC = e.pollData.pollC
                             ) : null}
 
                             {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                            {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button" onClick={()=>{setReplyData(e);setShowReply(!showReply)}}>{showReply?"Close":"Reply"}</button> : null}
+                            {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button" 
+            onClick={()=>{
+              setReplyData({chatData:e,user:{
+              name: userFullName,
+              profilePic: userProfilePic,
+            }});setShowReply(!showReply)}}>{showReply?"Close":"Reply"}</button> : null}
                             <div className="reply-box"></div>
                           </div>
                         ))
