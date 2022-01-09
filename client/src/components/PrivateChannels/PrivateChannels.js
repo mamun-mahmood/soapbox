@@ -68,6 +68,7 @@ import SoapboxPrivateClubRules from "./SoapboxPrivateClubRules";
 import Media from 'react-media';
 import NavBar from "../NavBar/NavBar";
 import MyVerticallyCenteredScheduler from "./scheduler";
+import ReplyModal from './reply';
 import { Share } from "@material-ui/icons";
 import stickerIcon from '../../assets/stickerIcon.png'
 import FortisSignIn from "../FortisIntegration/FortisSignIn";
@@ -165,7 +166,8 @@ const PrivateChannels = () => {
   const [mimeType, setMimeType] = useState("");
   const [currentInvoice, setCurrentInvoice] = useState("");
   const [marketPlaceArea, setMarketPlaceArea] = useState(false);
-
+  const [showReply,setShowReply]= useState(false);
+  const [replyData,setReplyData] = useState([]);
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
   const form = document.getElementById("send-container");
   const messageInput = document.getElementById("messageInp");
@@ -343,7 +345,7 @@ const PrivateChannels = () => {
       let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
       const message = messageInboxValue;
       let emojiValidator = isEmoji(message);
-
+      let threadId = uuidv4()
       append(
         userFullName,
         `${message}`,
@@ -355,6 +357,7 @@ const PrivateChannels = () => {
       let isCommunity = userInfo[0].communityClub
       let isClub = userInfo[0].communityClub == 1 ? 0 : 1
       socket.emit("send", {
+        threadId:threadId,
         name: userFullName,
         isClub: isClub,
         isPrivate: 0,
@@ -2870,6 +2873,8 @@ const PrivateChannels = () => {
                   onHide={() => setScheduleBox(false)}
                 /> : null}
 
+{showReply?<ReplyModal data={replyData} onHide={() => setShowReply(false)} show={showReply} />:null}
+
               {showClubRules ? (
                 <SoapboxPrivateClubRules setShowClubRules={setShowClubRules} />
               ) : null}
@@ -4540,7 +4545,7 @@ e.pollData.pollC = e.pollData.pollC
                               ) : null}
 
                               {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                              {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button">Reply</button> : null}
+                              {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button" onClick={()=>{setReplyData(e);setShowReply(!showReply)}}>{showReply?"Close":"Reply"}</button> : null}
                            <div className="reply-box"></div>
                             </div>
                           ))
@@ -5344,6 +5349,8 @@ e.pollData.pollC = e.pollData.pollC
                   onHide={() => setScheduleBox(false)}
                 /> : null}
 
+                {showReply?<ReplyModal data={replyData} onHide={() => setShowReply(false)} show={showReply} />:null}
+  
               {showRequest ? (
                 <div className="slide-container">
                   <div
@@ -6265,7 +6272,7 @@ e.pollData.pollC = e.pollData.pollC
                             ) : null}
 
                             {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                            {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button">Reply</button> : null}
+                            {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button" onClick={()=>{setReplyData(e);setShowReply(!showReply)}}>{showReply?"Close":"Reply"}</button> : null}
                             <div className="reply-box"></div>
                           </div>
                         ))
@@ -6984,7 +6991,7 @@ e.pollData.pollC = e.pollData.pollC
                             ) : null}
 
                             {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                            {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button">Reply</button> : null}
+                            {e.message || e.isPoll || e.isEvent || e.isEmoji || e.isVideo || e.isImage ? <button className="reply-button" onClick={()=>{setReplyData(e);setShowReply(!showReply)}}>{showReply?"Close":"Reply"}</button> : null}
                             <div className="reply-box"></div>
                           </div>
                         ))

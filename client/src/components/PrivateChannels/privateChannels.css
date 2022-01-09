@@ -756,6 +756,15 @@ overflow-wrap: break-word;
   padding: 5px;
 }
 
+.messageInputBox {
+  background-color: #a09ba356;
+  border: none;
+  border-radius: 6px;
+  height: 34px;
+  width: 90%;
+  outline: none;
+  padding: 5px;
+}
 .icon-text {
   font-size: 30px;
   background-color: #e1b8f886;
