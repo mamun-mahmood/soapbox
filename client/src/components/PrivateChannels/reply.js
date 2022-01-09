@@ -9,18 +9,38 @@ import { Button, ProgressBar, CloseButton, Modal } from "react-bootstrap";
 import { SoapboxTooltip } from '../SoapboxTooltip';
 import { IoCloseCircle } from 'react-icons/io5';
 import Form from "react-bootstrap/Form";
-
+import BeatLoader from "react-spinners/BeatLoader";
 function ReplyModal(props) {
-  
+    const threadId=props.data.chatData.threadId
     const BaseURL = process.env.REACT_APP_API_URL;
    const [replyInput,setReplyInput]=useState('')
    const [allReply,setAllReply]= useState([])
+   const [loading,setLoading]= useState(true)
+
+   useEffect(() => {
+    axios.post(`${BaseURL}/upload/get-reply`,{
+      threadId:threadId
+    }).then(res=>{
+     res.data.forEach(e=>{
+      setAllReply(oldData=>[...oldData,e])
+     })
+     
+        setLoading(false)
+    }).catch((err)=>{console.log(err);setLoading(false)})
+   }, [])
   const submitHandler=(replyInput)=>{
       if(replyInput!==''){
            let today = new Date();
 
     let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
     setAllReply(oldData=>[...oldData,{username:props.data.user.name,profilePic:props.data.user.profilePic,reply:replyInput,timestamp:timestamp}])
+    axios.post(`${BaseURL}/upload/add-reply`,{
+      threadId:threadId,
+       reply:JSON.stringify({username:props.data.user.name,profilePic:props.data.user.profilePic,reply:replyInput,timestamp:timestamp})
+    }).then((res)=>{console.log('success')})
+    .catch((err)=>{console.log(err)})
+    
+    
     setReplyInput('')
     // setTimeout(() => {
     //     let replyContainer = document.querySelector(".reply-body");
@@ -66,7 +86,13 @@ function ReplyModal(props) {
 
                 </Modal.Header>
                 <Modal.Body  >
-                    <div className='reply-body' >     {allReply.length>0?
+                  {/* {props.data.chatData.threadId} */}
+                    <div className='reply-body' >
+                    {loading
+                        ? <BeatLoader color={"#8249A0"} size={18} />
+                        :null
+                    }
+                           {allReply.length>0?
              allReply.map((e)=><div
                 className="messageBox"
                
@@ -83,7 +109,9 @@ function ReplyModal(props) {
                 {e.reply}
                 </div>
              )
-             :<p>Wow!!,You are first to reply on this chat </p>}</div>
+             :null}
+             {(allReply.length==0 && loading==false)?<p>Wow!!,You are first to reply on this chat </p>:null}
+             </div>
              
         
              
