@@ -37,7 +37,15 @@ function ReplyModal(props) {
     axios.post(`${BaseURL}/upload/add-reply`,{
       threadId:threadId,
        reply:JSON.stringify({username:props.data.user.name,profilePic:props.data.user.profilePic,reply:replyInput,timestamp:timestamp})
-    }).then((res)=>{console.log('success')})
+    }).then((res)=>{console.log('success');
+  props.sendReplyToChat({chatname:props.data.user.name,
+    profilePic:props.data.user.profilePic,
+    reply:replyInput,
+    timestamp:timestamp,
+    parentChat:props.data.chatData
+
+  })
+  })
     .catch((err)=>{console.log(err)})
     
     

@@ -231,8 +231,64 @@ const PrivateChannels = () => {
       })
 
   };
+const sendReplyToChat=(data)=>{
+  let chatname=data.chatname;
+  let pollData = "";
+  let position="left";
+  let imgSrc= `${BaseURL}/profile-pictures/${data.profilePic}` ;
+  let isEmoji=false;
+  let timestamp=data.timestamp;
+  let isImage=false;
+  let isVideo=false;
+  let isPoll=false;
+  let isEvent=false;
+  let expiryTime="";
+  let isSticker=false;
+  let message=data.reply;
+  let isReply=true;
+  // setChatData((e) => [
+  //   ...e,
+  //   data.parentChat,
+  // ]);
+let parentChat=data.parentChat;
+  setChatData((e) => [
+    ...e,
+    { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker,isReply,parentChat },
+  ]);
 
- 
+
+   
+      let threadId = uuidv4()
+    
+      // socket.emit('send',message);
+      let isCommunity = userInfo[0].communityClub
+      let isClub = userInfo[0].communityClub == 1 ? 0 : 1
+
+  socket.emit("send", {
+        threadId:threadId,
+        name: userFullName,
+        isClub: isClub,
+        isPrivate: 0,
+        isCommunity: isCommunity,
+        message: message,
+        profilePic: userProfilePic,
+        isEmoji: false,
+        timestamp: timestamp,
+        isReply:true,
+        parentChat:parentChat
+      });
+
+  setTimeout(() => {
+    if (document.querySelector(".chatarea")) {
+      var messageContainer = document.querySelector(".chatarea");
+
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+  }, 2000);
+
+
+
+}
 
   const append = (
     chatname,
@@ -245,7 +301,9 @@ const PrivateChannels = () => {
     isPoll,
     timestamp,
     isEvent,
-    isSticker
+    isSticker,
+    isReply,
+    parentChat
   ) => {
     if (isPoll) {
       let pollData = JSON.parse(message)
@@ -281,6 +339,11 @@ const PrivateChannels = () => {
       setChatData((e) => [
         ...e,
         { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, isSticker },
+      ]);
+    }else if(isReply){
+      setChatData((e) => [
+        ...e,
+        { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker,isReply,parentChat },
       ]);
     }
     else {
@@ -460,6 +523,24 @@ const PrivateChannels = () => {
           data.timestamp,
 
         );
+      }else if(data.isReply){
+        append(
+          data.name,
+          `${data.message}`,
+          "left",
+          `${BaseURL}/profile-pictures/${data.profilePic}`,
+          data.isEmoji,
+          data.isVideo,
+          data.isImage,
+          data.isPoll,
+          data.timeStamp,
+          data.isEvent,
+          "",
+          data.isReply,
+          data.parentChat
+
+
+        );
       } else {
         append(
           data.name,
@@ -608,7 +689,9 @@ const PrivateChannels = () => {
             timestamp = i.chat.timestamp,
             isEvent = i.chat.isEvent,
             isSticker = i.chat.isSticker,
-            threadId=i.chat.threadId
+            threadId=i.chat.threadId,
+            isReply=i.chat.isReply,
+            parentChat=i.chat.parentChat
 
 
           if (isPoll) {
@@ -648,6 +731,12 @@ const PrivateChannels = () => {
 
             ]);
 
+          }else if(isReply){
+          
+            setChatData((e) => [
+              ...e,
+              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker,isReply,parentChat },
+            ]);
           }
           else {
             setChatData((e) => [
@@ -668,7 +757,15 @@ const PrivateChannels = () => {
 
 
 
-      });
+      }).finally(() => {
+        setTimeout(() => {
+          if (document.querySelector(".chatarea")) {
+            var messageContainer = document.querySelector(".chatarea");
+
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+          }
+        }, 3000);
+      })
   };
 
   useEffect(() => {
@@ -2876,7 +2973,7 @@ const PrivateChannels = () => {
                   onHide={() => setScheduleBox(false)}
                 /> : null}
 
-{showReply?<ReplyModal data={replyData} onHide={() => setShowReply(false)} show={showReply} />:null}
+{showReply?<ReplyModal sendReplyToChat={(data)=>{sendReplyToChat(data)}} data={replyData} onHide={() => setShowReply(false)} show={showReply} />:null}
 
               {showClubRules ? (
                 <SoapboxPrivateClubRules setShowClubRules={setShowClubRules} />
@@ -4311,89 +4408,540 @@ const PrivateChannels = () => {
                           overflow: "auto",
                         }}
                       >
-                        {chatData.length
-                          ? chatData.map((e) => (
-                            <div
-                              className="messageBox"
-                              style={{
-                                maxWidth:
-                                  e.isVideo || e.isImage ? "200px" : "100%",
-                              }}
-                            
-                            >
-                              <div className="ProfileBox"  onClick={() => {
-                                if (e.chatname !== userFullName && !e.isPoll) {
-                                  toast.success(
-                                    `Opening Private Chat with ${e.chatname}`
-                                  );
-                                  setPrivateChatPerson({
-                                    name: e.chatname,
-                                    profilePic: e.imgSrc,
-                                  });
-                                  setPrivateChat(true);
-                                  setClubFloor(false);
-                                  // socket.emit("room", userInfo[0].username+userInformation.username);
-                                  getChatDataPrivate(e.chatname, userFullName)
-                                  // socket.emit("new-user-joined", {
-                                  //     name: userFullName,
-                                  //     profilePic: userProfilePic,
-                                  //   });
-
-                                  setTimeout(() => {
-                                    if (
-                                      document.getElementById(
-                                        "privatechatslide"
-                                      )
-                                    ) {
-                                      document.getElementById(
-                                        "privatechatslide"
-                                      ).style.transition = "1sec";
-                                      document.getElementById(
-                                        "privatechatslide"
-                                      ).style.right = "30px";
-                                    }
-                                  }, 1);
-                                }
-
-                              }}>
-                                <img
-                                  className="chat-profile"
-                                  src={e.imgSrc ? e.imgSrc : null}
-                                />
-                                <p>{e.chatname}</p>
-                                <p className="timestamp"> {e.timestamp}</p>
-                              </div>
-
-                              <Linkify
-                                componentDecorator={(
-                                  decoratedHref,
-                                  decoratedText,
-                                  key
-                                ) => (
-                                  <a
-                                    target="blank"
-                                    href={decoratedHref}
-                                    key={key}
-                                  >
-                                    {decoratedText}
-                                  </a>
-                                )}
+                      {chatData.length
+                        ? chatData.map((e) => (
+                          e.isReply?   
+                          <div
+                          className="messageBox"
+                          style={{
+                            maxWidth:
+                              e.isVideo || e.isImage ? "200px" : "100%",
+                            // width: "max-content",
+                            // maxWidth: "fit-content",
+                            // marginLeft: "auto",
+                            // position: "relative",
+                            // left: "3rem",
+                            // marginRight: "3.5rem"
+                          }}
+                       
+                        >
+                             <div
+                          className="messageBox"
+                          style={{
+                            maxWidth:
+                              e.parentChat.isVideo || e.parentChat.isImage ? "200px" : "100%",
+                              backgroundColor:'#D3D3D3',
+                              margin:'0px',
+                              marginBottom:'8px'
+                            // width: "max-content",
+                            // maxWidth: "fit-content",
+                            // marginLeft: "auto",
+                            // position: "relative",
+                            // left: "3rem",
+                            // marginRight: "3.5rem"
+                          }}
+                       
+                        >
+                          <div className="ProfileBox"   
+                         >
+                            <img
+                              className="chat-profile"
+                              src={e.parentChat.imgSrc ? e.parentChat.imgSrc : null}
+                            />
+                            <p>{e.parentChat.chatname}</p>
+                            {/* <p className="timestamp"> {e.parentChat.timestamp}</p> */}
+                          </div>
+                          <Linkify
+                            componentDecorator={(
+                              decoratedHref,
+                              decoratedText,
+                              key
+                            ) => (
+                              <a
+                                target="blank"
+                                href={decoratedHref}
+                                key={key}
                               >
-                                {" "}
-                                <div
-                                  className={
-                                    e.isEmoji
-                                      ? "message-emoji"
-                                      : "message"
-                                  }
-                                >
-                                  {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent
-                                    ? e.message
-                                    : null}
-                                </div>
-                              </Linkify>
+                                {decoratedText}
+                              </a>
+                            )}
+                          >
+                            {" "}
+                            <div
+                              className={
+                                e.parentChat.isEmoji ? "message-emoji" : "message"
+                              }
+                            >
+                              {!e.parentChat.isVideo && !e.parentChat.isImage && !e.parentChat.isPoll && !e.parentChat.isEvent
+                                ? e.parentChat.message
+                                : null}
+                            </div>
+                          </Linkify>
+                          {e.parentChat.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
+                            <Form onSubmit={(e) => e.preventDefault()}>
 
-                              {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
+                              <Form.Group className="mb-3" >
+                                <Form.Label>{e.pollData.Question}</Form.Label>
+
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                 
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
+                                  onChange={() => {
+
+                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                    // chatData[chatData.indexOf(e)]
+                                    e.pollData.pollA = e.pollData.pollA + 1
+                                    e.pollData.pollB = e.pollData.pollB
+                                    e.pollData.pollC = e.pollData.pollC
+
+
+                                    // let messageContainer = document.querySelector(".chatarea");
+
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
+                                  }}
+                                />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                              
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                 
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+
+// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+// chatData[chatData.indexOf(e)]
+// e.pollData.pollB = 100
+// e.pollData.pollA = 0
+// e.pollData.pollC = 0
+e.pollData.pollA = e.pollData.pollA
+e.pollData.pollB = e.pollData.pollB + 1
+e.pollData.pollC = e.pollData.pollC
+
+
+// let messageContainer = document.querySelector(".chatarea");
+
+// messageContainer.scrollTop = messageContainer.scrollHeight;
+// setChatData(chatData.filter((chat) => chat !== e))
+// setChatData((chat) => [...chat, e])
+// updatePollData(e)
+}} />
+                                 
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
+                     
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                     </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                             
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
+                                  onChange={() => {
+
+                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                    // chatData[chatData.indexOf(e)]
+
+                                    // e.pollData.pollC = 100
+                                    // e.pollData.pollA = 0
+                                    // e.pollData.pollB = 0
+
+                                    e.pollData.pollC = e.pollData.pollC + 1
+                                    e.pollData.pollA = e.pollData.pollA
+                                    e.pollData.pollB = e.pollData.pollB
+                                    // let messageContainer = document.querySelector(".chatarea");
+
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
+                                  }}
+                                />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
+                                  <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                     </Form.Group>
+                              {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+  <Form.Check type="radio" name="radio" label="Check me out" />
+</Form.Group> */}
+                              <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
+                                toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
+                                let messageContainer = document.querySelector(".chatarea");
+
+                                messageContainer.scrollTop = messageContainer.scrollHeight;
+                                setChatData(chatData.filter((chat) => chat !== e))
+                                setChatData((chat) => [...chat, e])
+                                updatePollData(e)
+                              }}>
+                                Vote
+                              </Button>
+                            </Form>
+                          </div> : null}
+                          {e.parentChat.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
+                            <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
+                            <p>Event Title : {e.parentChat.event.eventTitle}</p>
+                            {e.event.eventDesc ? <p>Event Description : {e.parentChat.event.eventDesc}</p> : null}
+                            <p>Event Date : {e.parentChat.event.eventDate}</p>
+                            <p>Event Time : {e.parentChat.event.eventTime}</p>
+                          </div> : null}
+                          {e.parentChat.isVideo ? (
+                            <video
+                              onDragStart={(e) => e.preventDefault()}
+                              onmousedown={(event) => {
+                                event.preventDefault
+                                  ? event.preventDefault()
+                                  : (event.returnValue = false);
+                              }}
+                              style={{
+                                maxWidth: "200px",
+                                marginTop: "20px",
+                                borderRadius: "5px",
+                              }}
+                              controls={true}
+                              src={e.parentChat.message}
+                            ></video>
+                          ) : null}
+                          {e.parentChat.isImage ? (
+                            <img
+                              src={e.parentChat.message}
+                              onDragStart={(e) => e.preventDefault()}
+                              onmousedown={(event) => {
+                                event.preventDefault
+                                  ? event.preventDefault()
+                                  : (event.returnValue = false);
+                              }}
+                              style={{
+                                maxWidth: e.parentChat.isSticker ? "60px" : "200px",
+                                marginTop: "20px",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          ) : null}
+
+                          {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
+                          {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                            className="reply-button" 
+                            onClick={()=>{
+                              setReplyData({chatData:e,user:{
+                              name: userFullName,
+                              profilePic: userProfilePic,
+                            }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null}
+                          <div className="reply-box"></div> */}
+                        
+                        </div>
+                          <div className="ProfileBox"    onClick={() => {
+                            if (e.chatname !== userFullName && !e.isPoll) {
+                              toast.success(
+                                `Opening Private Chat with ${e.chatname}`
+                              );
+                              setPrivateChatPerson({
+                                name: e.chatname,
+                                profilePic: e.imgSrc,
+                              });
+                              setPrivateChat(true);
+                              setClubFloor(false);
+                              // socket.emit("room", userInfo[0].username+userInformation.username);
+                              getChatDataPrivate(e.chatname, userFullName)
+                              // socket.emit("new-user-joined", {
+                              //     name: userFullName,
+                              //     profilePic: userProfilePic,
+                              //   });
+
+                              setTimeout(() => {
+                                if (
+                                  document.getElementById(
+                                    "privatechatslide"
+                                  )
+                                ) {
+                                  document.getElementById(
+                                    "privatechatslide"
+                                  ).style.transition = "1sec";
+                                  document.getElementById(
+                                    "privatechatslide"
+                                  ).style.right = "30px";
+                                }
+                              }, 1);
+                            }
+                          }}>
+                            <img
+                              className="chat-profile"
+                              src={e.imgSrc ? e.imgSrc : null}
+                            />
+                            <p>{e.chatname}</p>
+                            <p className="timestamp"> {e.timestamp}</p>
+                          </div>
+                          <Linkify
+                            componentDecorator={(
+                              decoratedHref,
+                              decoratedText,
+                              key
+                            ) => (
+                              <a
+                                target="blank"
+                                href={decoratedHref}
+                                key={key}
+                              >
+                                {decoratedText}
+                              </a>
+                            )}
+                          >
+                            {" "}
+                            <div
+                              className={
+                                e.isEmoji ? "message-emoji" : "message"
+                              }
+                            >
+                              {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent
+                                ? e.message
+                                : null}
+                            </div>
+                          </Linkify>
+                          {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
+                            <Form onSubmit={(e) => e.preventDefault()}>
+
+                              <Form.Group className="mb-3" >
+                                <Form.Label>{e.pollData.Question}</Form.Label>
+
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                 
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
+                                  onChange={() => {
+
+                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                    // chatData[chatData.indexOf(e)]
+                                    e.pollData.pollA = e.pollData.pollA + 1
+                                    e.pollData.pollB = e.pollData.pollB
+                                    e.pollData.pollC = e.pollData.pollC
+
+
+                                    // let messageContainer = document.querySelector(".chatarea");
+
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
+                                  }}
+                                />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                              
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                 
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+
+// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+// chatData[chatData.indexOf(e)]
+// e.pollData.pollB = 100
+// e.pollData.pollA = 0
+// e.pollData.pollC = 0
+e.pollData.pollA = e.pollData.pollA
+e.pollData.pollB = e.pollData.pollB + 1
+e.pollData.pollC = e.pollData.pollC
+
+
+// let messageContainer = document.querySelector(".chatarea");
+
+// messageContainer.scrollTop = messageContainer.scrollHeight;
+// setChatData(chatData.filter((chat) => chat !== e))
+// setChatData((chat) => [...chat, e])
+// updatePollData(e)
+}} />
+                                 
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
+                     
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                     </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                             
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
+                                  onChange={() => {
+
+                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                    // chatData[chatData.indexOf(e)]
+
+                                    // e.pollData.pollC = 100
+                                    // e.pollData.pollA = 0
+                                    // e.pollData.pollB = 0
+
+                                    e.pollData.pollC = e.pollData.pollC + 1
+                                    e.pollData.pollA = e.pollData.pollA
+                                    e.pollData.pollB = e.pollData.pollB
+                                    // let messageContainer = document.querySelector(".chatarea");
+
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
+                                  }}
+                                />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
+                                  <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                     </Form.Group>
+                              {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+  <Form.Check type="radio" name="radio" label="Check me out" />
+</Form.Group> */}
+                              <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
+                                toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
+                                let messageContainer = document.querySelector(".chatarea");
+
+                                messageContainer.scrollTop = messageContainer.scrollHeight;
+                                setChatData(chatData.filter((chat) => chat !== e))
+                                setChatData((chat) => [...chat, e])
+                                updatePollData(e)
+                              }}>
+                                Vote
+                              </Button>
+                            </Form>
+                          </div> : null}
+                          {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
+                            <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
+                            <p>Event Title : {e.event.eventTitle}</p>
+                            {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
+                            <p>Event Date : {e.event.eventDate}</p>
+                            <p>Event Time : {e.event.eventTime}</p>
+                          </div> : null}
+                          {e.isVideo ? (
+                            <video
+                              onDragStart={(e) => e.preventDefault()}
+                              onmousedown={(event) => {
+                                event.preventDefault
+                                  ? event.preventDefault()
+                                  : (event.returnValue = false);
+                              }}
+                              style={{
+                                maxWidth: "200px",
+                                marginTop: "20px",
+                                borderRadius: "5px",
+                              }}
+                              controls={true}
+                              src={e.message}
+                            ></video>
+                          ) : null}
+                          {e.isImage ? (
+                            <img
+                              src={e.message}
+                              onDragStart={(e) => e.preventDefault()}
+                              onmousedown={(event) => {
+                                event.preventDefault
+                                  ? event.preventDefault()
+                                  : (event.returnValue = false);
+                              }}
+                              style={{
+                                maxWidth: e.isSticker ? "60px" : "200px",
+                                marginTop: "20px",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          ) : null}
+
+                          {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
+                          {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                            className="reply-button" 
+                            onClick={()=>{
+                              setReplyData({chatData:e,user:{
+                              name: userFullName,
+                              profilePic: userProfilePic,
+                            }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null} */}
+                          {/* <div className="reply-box"></div> */}
+                        </div>
+                       :
+                          <div
+                            className="messageBox"
+                            style={{
+                              maxWidth:
+                                e.isVideo || e.isImage ? "200px" : "100%",
+                              // width: "max-content",
+                              // maxWidth: "fit-content",
+                              // marginLeft: "auto",
+                              // position: "relative",
+                              // left: "3rem",
+                              // marginRight: "3.5rem"
+                            }}
+                         
+                          >
+                            <div className="ProfileBox"    onClick={() => {
+                              if (e.chatname !== userFullName && !e.isPoll) {
+                                toast.success(
+                                  `Opening Private Chat with ${e.chatname}`
+                                );
+                                setPrivateChatPerson({
+                                  name: e.chatname,
+                                  profilePic: e.imgSrc,
+                                });
+                                setPrivateChat(true);
+                                setClubFloor(false);
+                                // socket.emit("room", userInfo[0].username+userInformation.username);
+                                getChatDataPrivate(e.chatname, userFullName)
+                                // socket.emit("new-user-joined", {
+                                //     name: userFullName,
+                                //     profilePic: userProfilePic,
+                                //   });
+
+                                setTimeout(() => {
+                                  if (
+                                    document.getElementById(
+                                      "privatechatslide"
+                                    )
+                                  ) {
+                                    document.getElementById(
+                                      "privatechatslide"
+                                    ).style.transition = "1sec";
+                                    document.getElementById(
+                                      "privatechatslide"
+                                    ).style.right = "30px";
+                                  }
+                                }, 1);
+                              }
+                            }}>
+                              <img
+                                className="chat-profile"
+                                src={e.imgSrc ? e.imgSrc : null}
+                              />
+                              <p>{e.chatname}</p>
+                              <p className="timestamp"> {e.timestamp}</p>
+                            </div>
+                            <Linkify
+                              componentDecorator={(
+                                decoratedHref,
+                                decoratedText,
+                                key
+                              ) => (
+                                <a
+                                  target="blank"
+                                  href={decoratedHref}
+                                  key={key}
+                                >
+                                  {decoratedText}
+                                </a>
+                              )}
+                            >
+                              {" "}
+                              <div
+                                className={
+                                  e.isEmoji ? "message-emoji" : "message"
+                                }
+                              >
+                                {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent
+                                  ? e.message
+                                  : null}
+                              </div>
+                            </Linkify>
+                            {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
                               <Form onSubmit={(e) => e.preventDefault()}>
 
                                 <Form.Group className="mb-3" >
@@ -4499,66 +5047,59 @@ e.pollData.pollC = e.pollData.pollC
                                 </Button>
                               </Form>
                             </div> : null}
+                            {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
+                              <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
+                              <p>Event Title : {e.event.eventTitle}</p>
+                              {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
+                              <p>Event Date : {e.event.eventDate}</p>
+                              <p>Event Time : {e.event.eventTime}</p>
+                            </div> : null}
+                            {e.isVideo ? (
+                              <video
+                                onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event) => {
+                                  event.preventDefault
+                                    ? event.preventDefault()
+                                    : (event.returnValue = false);
+                                }}
+                                style={{
+                                  maxWidth: "200px",
+                                  marginTop: "20px",
+                                  borderRadius: "5px",
+                                }}
+                                controls={true}
+                                src={e.message}
+                              ></video>
+                            ) : null}
+                            {e.isImage ? (
+                              <img
+                                src={e.message}
+                                onDragStart={(e) => e.preventDefault()}
+                                onmousedown={(event) => {
+                                  event.preventDefault
+                                    ? event.preventDefault()
+                                    : (event.returnValue = false);
+                                }}
+                                style={{
+                                  maxWidth: e.isSticker ? "60px" : "200px",
+                                  marginTop: "20px",
+                                  borderRadius: "5px",
+                                }}
+                              />
+                            ) : null}
 
-                              {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
-                                <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
-                                <p>Event Title : {e.event.eventTitle}</p>
-                                {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
-                                <p>Event Date : {e.event.eventDate}</p>
-                                <p>Event Time : {e.event.eventTime}</p>
-                              </div> : null}
-
-                              {e.isVideo ? (
-                                <video
-                                  onDragStart={(e) =>
-                                    e.preventDefault()
-                                  }
-                                  onmousedown={(event) => {
-                                    event.preventDefault
-                                      ? event.preventDefault()
-                                      : (event.returnValue = false);
-                                  }}
-                                  style={{
-                                    maxWidth: "200px",
-                                    marginTop: "20px",
-                                    borderRadius: "5px",
-                                  }}
-                                  controls={true}
-                                  src={e.message}
-                                ></video>
-                              ) : null}
-
-                              {e.isImage ? (
-                                <img
-                                  src={e.message}
-                                  onDragStart={(e) =>
-                                    e.preventDefault()
-                                  }
-                                  onmousedown={(event) => {
-                                    event.preventDefault
-                                      ? event.preventDefault()
-                                      : (event.returnValue = false);
-                                  }}
-                                  style={{
-                                    maxWidth: e.isSticker ? "60px" : "200px",
-                                    marginTop: "20px",
-                                    borderRadius: "5px",
-                                  }}
-                                />
-                              ) : null}
-
-                              {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                              {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
+                            {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
                               className="reply-button" 
                               onClick={()=>{
                                 setReplyData({chatData:e,user:{
                                 name: userFullName,
                                 profilePic: userProfilePic,
                               }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null}
-                           <div className="reply-box"></div>
-                            </div>
-                          ))
-                          : null}
+                            <div className="reply-box"></div>
+                          </div>
+                        ))
+                        : null}
                       </div>
 
                       {emojiPicker && (
@@ -5358,7 +5899,7 @@ e.pollData.pollC = e.pollData.pollC
                   onHide={() => setScheduleBox(false)}
                 /> : null}
 
-                {showReply?<ReplyModal data={replyData} onHide={() => setShowReply(false)} show={showReply} />:null}
+                {showReply?<ReplyModal sendReplyToChat={(data)=>{sendReplyToChat(data)}} data={replyData} onHide={() => setShowReply(false)} show={showReply} />:null}
   
               {showRequest ? (
                 <div className="slide-container">
@@ -6777,6 +7318,456 @@ e.pollData.pollC = e.pollData.pollC
                     >
                       {chatData.length
                         ? chatData.map((e) => (
+                          e.isReply?   
+                          <div
+                          className="messageBox"
+                          style={{
+                            maxWidth:
+                              e.isVideo || e.isImage ? "200px" : "100%",
+                            // width: "max-content",
+                            // maxWidth: "fit-content",
+                            // marginLeft: "auto",
+                            // position: "relative",
+                            // left: "3rem",
+                            // marginRight: "3.5rem"
+                          }}
+                       
+                        >
+                             <div
+                          className="messageBox"
+                          style={{
+                            maxWidth:
+                              e.parentChat.isVideo || e.parentChat.isImage ? "200px" : "100%",
+                              backgroundColor:'#D3D3D3',
+                              margin:'0px',
+                              marginBottom:'8px'
+                            // width: "max-content",
+                            // maxWidth: "fit-content",
+                            // marginLeft: "auto",
+                            // position: "relative",
+                            // left: "3rem",
+                            // marginRight: "3.5rem"
+                          }}
+                       
+                        >
+                          <div className="ProfileBox"   
+                         >
+                            <img
+                              className="chat-profile"
+                              src={e.parentChat.imgSrc ? e.parentChat.imgSrc : null}
+                            />
+                            <p>{e.parentChat.chatname}</p>
+                            {/* <p className="timestamp"> {e.parentChat.timestamp}</p> */}
+                          </div>
+                          <Linkify
+                            componentDecorator={(
+                              decoratedHref,
+                              decoratedText,
+                              key
+                            ) => (
+                              <a
+                                target="blank"
+                                href={decoratedHref}
+                                key={key}
+                              >
+                                {decoratedText}
+                              </a>
+                            )}
+                          >
+                            {" "}
+                            <div
+                              className={
+                                e.parentChat.isEmoji ? "message-emoji" : "message"
+                              }
+                            >
+                              {!e.parentChat.isVideo && !e.parentChat.isImage && !e.parentChat.isPoll && !e.parentChat.isEvent
+                                ? e.parentChat.message
+                                : null}
+                            </div>
+                          </Linkify>
+                          {e.parentChat.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
+                            <Form onSubmit={(e) => e.preventDefault()}>
+
+                              <Form.Group className="mb-3" >
+                                <Form.Label>{e.pollData.Question}</Form.Label>
+
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                 
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
+                                  onChange={() => {
+
+                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                    // chatData[chatData.indexOf(e)]
+                                    e.pollData.pollA = e.pollData.pollA + 1
+                                    e.pollData.pollB = e.pollData.pollB
+                                    e.pollData.pollC = e.pollData.pollC
+
+
+                                    // let messageContainer = document.querySelector(".chatarea");
+
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
+                                  }}
+                                />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                              
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                 
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+
+// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+// chatData[chatData.indexOf(e)]
+// e.pollData.pollB = 100
+// e.pollData.pollA = 0
+// e.pollData.pollC = 0
+e.pollData.pollA = e.pollData.pollA
+e.pollData.pollB = e.pollData.pollB + 1
+e.pollData.pollC = e.pollData.pollC
+
+
+// let messageContainer = document.querySelector(".chatarea");
+
+// messageContainer.scrollTop = messageContainer.scrollHeight;
+// setChatData(chatData.filter((chat) => chat !== e))
+// setChatData((chat) => [...chat, e])
+// updatePollData(e)
+}} />
+                                 
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
+                     
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                     </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                             
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
+                                  onChange={() => {
+
+                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                    // chatData[chatData.indexOf(e)]
+
+                                    // e.pollData.pollC = 100
+                                    // e.pollData.pollA = 0
+                                    // e.pollData.pollB = 0
+
+                                    e.pollData.pollC = e.pollData.pollC + 1
+                                    e.pollData.pollA = e.pollData.pollA
+                                    e.pollData.pollB = e.pollData.pollB
+                                    // let messageContainer = document.querySelector(".chatarea");
+
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
+                                  }}
+                                />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
+                                  <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                     </Form.Group>
+                              {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+  <Form.Check type="radio" name="radio" label="Check me out" />
+</Form.Group> */}
+                              <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
+                                toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
+                                let messageContainer = document.querySelector(".chatarea");
+
+                                messageContainer.scrollTop = messageContainer.scrollHeight;
+                                setChatData(chatData.filter((chat) => chat !== e))
+                                setChatData((chat) => [...chat, e])
+                                updatePollData(e)
+                              }}>
+                                Vote
+                              </Button>
+                            </Form>
+                          </div> : null}
+                          {e.parentChat.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
+                            <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
+                            <p>Event Title : {e.parentChat.event.eventTitle}</p>
+                            {e.event.eventDesc ? <p>Event Description : {e.parentChat.event.eventDesc}</p> : null}
+                            <p>Event Date : {e.parentChat.event.eventDate}</p>
+                            <p>Event Time : {e.parentChat.event.eventTime}</p>
+                          </div> : null}
+                          {e.parentChat.isVideo ? (
+                            <video
+                              onDragStart={(e) => e.preventDefault()}
+                              onmousedown={(event) => {
+                                event.preventDefault
+                                  ? event.preventDefault()
+                                  : (event.returnValue = false);
+                              }}
+                              style={{
+                                maxWidth: "200px",
+                                marginTop: "20px",
+                                borderRadius: "5px",
+                              }}
+                              controls={true}
+                              src={e.parentChat.message}
+                            ></video>
+                          ) : null}
+                          {e.parentChat.isImage ? (
+                            <img
+                              src={e.parentChat.message}
+                              onDragStart={(e) => e.preventDefault()}
+                              onmousedown={(event) => {
+                                event.preventDefault
+                                  ? event.preventDefault()
+                                  : (event.returnValue = false);
+                              }}
+                              style={{
+                                maxWidth: e.parentChat.isSticker ? "60px" : "200px",
+                                marginTop: "20px",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          ) : null}
+
+                          {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
+                          {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                            className="reply-button" 
+                            onClick={()=>{
+                              setReplyData({chatData:e,user:{
+                              name: userFullName,
+                              profilePic: userProfilePic,
+                            }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null}
+                          <div className="reply-box"></div> */}
+                        
+                        </div>
+                          <div className="ProfileBox"    onClick={() => {
+                            if (e.chatname !== userFullName && !e.isPoll) {
+                              toast.success(
+                                `Opening Private Chat with ${e.chatname}`
+                              );
+                              setPrivateChatPerson({
+                                name: e.chatname,
+                                profilePic: e.imgSrc,
+                              });
+                              setPrivateChat(true);
+                              setClubFloor(false);
+                              // socket.emit("room", userInfo[0].username+userInformation.username);
+                              getChatDataPrivate(e.chatname, userFullName)
+                              // socket.emit("new-user-joined", {
+                              //     name: userFullName,
+                              //     profilePic: userProfilePic,
+                              //   });
+
+                              setTimeout(() => {
+                                if (
+                                  document.getElementById(
+                                    "privatechatslide"
+                                  )
+                                ) {
+                                  document.getElementById(
+                                    "privatechatslide"
+                                  ).style.transition = "1sec";
+                                  document.getElementById(
+                                    "privatechatslide"
+                                  ).style.right = "30px";
+                                }
+                              }, 1);
+                            }
+                          }}>
+                            <img
+                              className="chat-profile"
+                              src={e.imgSrc ? e.imgSrc : null}
+                            />
+                            <p>{e.chatname}</p>
+                            <p className="timestamp"> {e.timestamp}</p>
+                          </div>
+                          <Linkify
+                            componentDecorator={(
+                              decoratedHref,
+                              decoratedText,
+                              key
+                            ) => (
+                              <a
+                                target="blank"
+                                href={decoratedHref}
+                                key={key}
+                              >
+                                {decoratedText}
+                              </a>
+                            )}
+                          >
+                            {" "}
+                            <div
+                              className={
+                                e.isEmoji ? "message-emoji" : "message"
+                              }
+                            >
+                              {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent
+                                ? e.message
+                                : null}
+                            </div>
+                          </Linkify>
+                          {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
+                            <Form onSubmit={(e) => e.preventDefault()}>
+
+                              <Form.Group className="mb-3" >
+                                <Form.Label>{e.pollData.Question}</Form.Label>
+
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                 
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
+                                  onChange={() => {
+
+                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                    // chatData[chatData.indexOf(e)]
+                                    e.pollData.pollA = e.pollData.pollA + 1
+                                    e.pollData.pollB = e.pollData.pollB
+                                    e.pollData.pollC = e.pollData.pollC
+
+
+                                    // let messageContainer = document.querySelector(".chatarea");
+
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
+                                  }}
+                                />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                              
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                 
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+
+// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+// chatData[chatData.indexOf(e)]
+// e.pollData.pollB = 100
+// e.pollData.pollA = 0
+// e.pollData.pollC = 0
+e.pollData.pollA = e.pollData.pollA
+e.pollData.pollB = e.pollData.pollB + 1
+e.pollData.pollC = e.pollData.pollC
+
+
+// let messageContainer = document.querySelector(".chatarea");
+
+// messageContainer.scrollTop = messageContainer.scrollHeight;
+// setChatData(chatData.filter((chat) => chat !== e))
+// setChatData((chat) => [...chat, e])
+// updatePollData(e)
+}} />
+                                 
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
+                     
+                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
+                     </Form.Group>
+
+                              <Form.Group className="mb-3" >
+                             
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
+                                  onChange={() => {
+
+                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                    // chatData[chatData.indexOf(e)]
+
+                                    // e.pollData.pollC = 100
+                                    // e.pollData.pollA = 0
+                                    // e.pollData.pollB = 0
+
+                                    e.pollData.pollC = e.pollData.pollC + 1
+                                    e.pollData.pollA = e.pollData.pollA
+                                    e.pollData.pollB = e.pollData.pollB
+                                    // let messageContainer = document.querySelector(".chatarea");
+
+                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                    // setChatData(chatData.filter((chat) => chat !== e))
+                                    // setChatData((chat) => [...chat, e])
+                                    // updatePollData(e)
+                                  }}
+                                />
+                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
+                                  <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
+                     </Form.Group>
+                              {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+  <Form.Check type="radio" name="radio" label="Check me out" />
+</Form.Group> */}
+                              <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
+                                toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
+                                let messageContainer = document.querySelector(".chatarea");
+
+                                messageContainer.scrollTop = messageContainer.scrollHeight;
+                                setChatData(chatData.filter((chat) => chat !== e))
+                                setChatData((chat) => [...chat, e])
+                                updatePollData(e)
+                              }}>
+                                Vote
+                              </Button>
+                            </Form>
+                          </div> : null}
+                          {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
+                            <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
+                            <p>Event Title : {e.event.eventTitle}</p>
+                            {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
+                            <p>Event Date : {e.event.eventDate}</p>
+                            <p>Event Time : {e.event.eventTime}</p>
+                          </div> : null}
+                          {e.isVideo ? (
+                            <video
+                              onDragStart={(e) => e.preventDefault()}
+                              onmousedown={(event) => {
+                                event.preventDefault
+                                  ? event.preventDefault()
+                                  : (event.returnValue = false);
+                              }}
+                              style={{
+                                maxWidth: "200px",
+                                marginTop: "20px",
+                                borderRadius: "5px",
+                              }}
+                              controls={true}
+                              src={e.message}
+                            ></video>
+                          ) : null}
+                          {e.isImage ? (
+                            <img
+                              src={e.message}
+                              onDragStart={(e) => e.preventDefault()}
+                              onmousedown={(event) => {
+                                event.preventDefault
+                                  ? event.preventDefault()
+                                  : (event.returnValue = false);
+                              }}
+                              style={{
+                                maxWidth: e.isSticker ? "60px" : "200px",
+                                marginTop: "20px",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          ) : null}
+
+                          {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
+                          {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                            className="reply-button" 
+                            onClick={()=>{
+                              setReplyData({chatData:e,user:{
+                              name: userFullName,
+                              profilePic: userProfilePic,
+                            }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null} */}
+                          {/* <div className="reply-box"></div> */}
+                        </div>
+                       :
                           <div
                             className="messageBox"
                             style={{
