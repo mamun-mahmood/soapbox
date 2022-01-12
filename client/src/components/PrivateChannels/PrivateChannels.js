@@ -73,6 +73,7 @@ import { Share } from "@material-ui/icons";
 import stickerIcon from '../../assets/stickerIcon.png'
 import FortisSignIn from "../FortisIntegration/FortisSignIn";
 import FortisMarketplaceArea from "../FortisIntegration/FortisMarketplaceArea";
+import InboxMessage from "./inboxMessage";
 
 const stripe = loadStripe(
   "pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz"
@@ -290,6 +291,37 @@ let parentChat=data.parentChat;
 
 }
 
+
+const openPrivateChatfromInbox=(e)=>{
+  setPrivateChatPerson({
+    name: e.chatname,
+    profilePic: e.imgSrc,
+  });
+  setPrivateChat(true);
+  setClubFloor(false);
+  // socket.emit("room", userInfo[0].username+userInformation.username);
+  getChatDataPrivate(e.chatname, userFullName)
+  // socket.emit("new-user-joined", {
+  //     name: userFullName,
+  //     profilePic: userProfilePic,
+  //   });
+
+  setTimeout(() => {
+    if (
+      document.getElementById(
+        "privatechatslide"
+      )
+    ) {
+      document.getElementById(
+        "privatechatslide"
+      ).style.transition = "1sec";
+      document.getElementById(
+        "privatechatslide"
+      ).style.right = "30px";
+    }
+  }, 1);
+}
+
   const append = (
     chatname,
     message,
@@ -437,11 +469,12 @@ let parentChat=data.parentChat;
   };
 
   const messagesubmitPrivate = (e) => {
+
     e.preventDefault();
     if (messageInboxValuePrivate) {
       const message = messageInboxValuePrivate;
       let today = new Date();
-
+  let threadId = uuidv4()
       let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
       let emojiValidator = isEmoji(message);
 
@@ -454,6 +487,7 @@ let parentChat=data.parentChat;
       );
       // socket.emit('send',message);
       socket.emit("private-message-soapbox", {
+        threadId:threadId,
         to: privateChatPerson.name,
         from: userFullName,
         isClub: 0,
@@ -4070,7 +4104,7 @@ let parentChat=data.parentChat;
 
                   {privateChatList
                     ? <div className="privateChatListBox" id="privateChatList">
-                      <div>
+                      <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',width:'100%'}} >
                         <h5 style={{
                           textAlign: 'center',
                           fontSize: '0.93rem',
@@ -4082,9 +4116,29 @@ let parentChat=data.parentChat;
                           backgroundColor: "whitesmoke"
                         }}
                         >
-                          Private Messages
+                            Personal Inbox
                         </h5>
+                        <button className="closebtn" onClick={() => {
+                          if (!privateChatList) {
+                            setPrivateChatList(!privateChatList)
+
+                            setTimeout(() => {
+                              if (document.getElementById("privateChatList")) {
+                                document.getElementById("privateChatList").style.transition = "1sec";
+                                document.getElementById("privateChatList").style.right = "0.8rem";
+                              }
+                            }, 1);
+                          } else {
+                            document.getElementById("privateChatList").style.transition = "1sec";
+                            document.getElementById("privateChatList").style.right = "-100vw";
+
+                            setTimeout(() => {
+                              setPrivateChatList(false)
+                            }, 200);
+                          }
+                        }}>X</button>
                       </div>
+                      <InboxMessage username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
                     </div>
                     : null
                   }
@@ -6972,25 +7026,46 @@ e.pollData.pollC = e.pollData.pollC
                   </div>
                 ) : null}
 
-                {privateChatList
-                  ? <div className="privateChatListBox" id="privateChatList">
-                    <div>
-                      <h5 style={{
-                        textAlign: 'center',
-                        fontSize: '0.93rem',
-                        fontWeight: '600',
-                        margin: '0.5rem',
-                        borderRadius: '5px',
-                        padding: '0.5rem',
-                        width: '100%',
-                        backgroundColor: "whitesmoke"
-                      }}
-                      >
-                        Private Messages
-                      </h5>
+{privateChatList
+                    ? <div className="privateChatListBox" id="privateChatList">
+                      <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',width:'100%'}} >
+                        <h5 style={{
+                          textAlign: 'center',
+                          fontSize: '0.93rem',
+                          fontWeight: '600',
+                          margin: '0.5rem 0',
+                          borderRadius: '5px',
+                          padding: '0.5rem',
+                          width: '100%',
+                          backgroundColor: "whitesmoke"
+                        }}
+                        >
+                            Personal Inbox
+                        </h5>
+                        <button className="closebtn" onClick={() => {
+                          if (!privateChatList) {
+                            setPrivateChatList(!privateChatList)
+
+                            setTimeout(() => {
+                              if (document.getElementById("privateChatList")) {
+                                document.getElementById("privateChatList").style.transition = "1sec";
+                                document.getElementById("privateChatList").style.right = "0.8rem";
+                              }
+                            }, 1);
+                          } else {
+                            document.getElementById("privateChatList").style.transition = "1sec";
+                            document.getElementById("privateChatList").style.right = "-100vw";
+
+                            setTimeout(() => {
+                              setPrivateChatList(false)
+                            }, 200);
+                          }
+                        }}>X</button>
+                      </div>
+                      <InboxMessage username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
                     </div>
-                  </div>
-                  : null}
+                    : null
+                  }
 
                 {/* ------------------- Chat Container newly style added here ------------------- */}
                 {showChatRoom ? (

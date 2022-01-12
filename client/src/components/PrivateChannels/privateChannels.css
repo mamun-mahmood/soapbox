@@ -850,6 +850,26 @@ overflow-wrap: break-word;
   transform: scale(1.5);
 }
 
+.closebtn{
+  padding: 5px;
+  width: 35px;
+  height: 35px;
+  background-color: red;
+  color: whitesmoke;
+  border: none;
+  margin: 0.5rem 0;
+  font-size: 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+}
+
+.closebtn:hover{
+  background-color: rgb(158, 4, 4);
+}
 .clubRulesText p {
   line-height: 40px;
   max-width: 800px;
