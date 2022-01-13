@@ -593,8 +593,8 @@ padding: 33px;
   position: fixed;
   top: 8rem;
   right: -100vw;
-  min-width: 250px;
-  max-width: 250px;
+  min-width: 350px;
+  max-width: 350px;
   background-color: #08080869;
   transition: 1s;
   
@@ -724,6 +724,11 @@ overflow-wrap: break-word;
   bottom: 0rem;
   left: 0;
   width: 100%;
+}
+
+.send-private{
+  position: fixed;
+  bottom: 0;
 }
 
 #send-container {
@@ -1204,4 +1209,22 @@ cursor: pointer;
 .reply-body{
 max-height: 300px;
 overflow-y: auto;
+}
+
+.inbox-tab{
+  margin: 3px;
+  padding: 3px;
+  border-radius: 5px;
+  border: none;
+}
+
+.eclippse{
+  
+  white-space: nowrap; 
+  width: 80px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 14px;
+ 
 }

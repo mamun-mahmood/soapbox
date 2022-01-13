@@ -299,6 +299,7 @@ const openPrivateChatfromInbox=(e)=>{
   });
   setPrivateChat(true);
   setClubFloor(false);
+  setShowChatRoom(false);
   // socket.emit("room", userInfo[0].username+userInformation.username);
   getChatDataPrivate(e.chatname, userFullName)
   // socket.emit("new-user-joined", {
@@ -317,7 +318,7 @@ const openPrivateChatfromInbox=(e)=>{
       ).style.transition = "1sec";
       document.getElementById(
         "privatechatslide"
-      ).style.right = "30px";
+      ).style.right = "500px";
     }
   }, 1);
 }
@@ -404,8 +405,12 @@ const openPrivateChatfromInbox=(e)=>{
       { chatname, message, position, imgSrc, isEmoji, isVideo, isImage },
     ]);
 
-    var messageContainer = document.querySelector(".privateChat-club");
-    messageContainer.scrollTop = messageContainer.scrollHeight;
+    
+    if(document.querySelector(".privateChat-club")){
+      var messageContainer = document.querySelector(".privateChat-club");
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+   
   };
   function isEmoji(str) {
     var ranges = [
@@ -591,7 +596,7 @@ const openPrivateChatfromInbox=(e)=>{
       }
     });
     socket.on("receive-private-chat-soapbox", (data) => {
-
+         
       if (data.to == userFullName && data.from == privateChatPerson ? privateChatPerson.name : userInformation.username) {
 
         if (data.isEmoji) {
@@ -688,6 +693,11 @@ const openPrivateChatfromInbox=(e)=>{
         setUserFullName(res.data[0].name);
         setUserId(res.data[0].id);
         setUserEmail(res.data[0].email);
+
+        socket.emit("new-user-joined", {
+          name: res.data[0].name,
+          profilePic: res.data[0].profilePic,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -2970,10 +2980,7 @@ const openPrivateChatfromInbox=(e)=>{
                       setShowChatRoom(!showChatRoom);
                       setOnDemandMedia(false);
                       socket.emit("room", userInfo[0].username);
-                      socket.emit("new-user-joined", {
-                        name: userFullName,
-                        profilePic: userProfilePic,
-                      });
+                     
                     }}
                     style={{ display: "none" }}
                   >
@@ -3850,6 +3857,7 @@ const openPrivateChatfromInbox=(e)=>{
                               setTimeout(() => {
                                 setPrivateChat(false);
                                 setClubFloor(true);
+                                setShowChatRoom(true)
                               }, 200);
                             }}
                           />
@@ -3998,7 +4006,7 @@ const openPrivateChatfromInbox=(e)=>{
                         )}
                       </div>
 
-                      <div className="send">
+                      <div className="send-private" >
                         <ReactTooltip />
                         <form
                           action="#"
@@ -4116,12 +4124,12 @@ const openPrivateChatfromInbox=(e)=>{
                           backgroundColor: "whitesmoke"
                         }}
                         >
-                            Personal Inbox
+                            Soapbox Inbox
                         </h5>
                         <button className="closebtn" onClick={() => {
                           if (!privateChatList) {
                             setPrivateChatList(!privateChatList)
-
+                          
                             setTimeout(() => {
                               if (document.getElementById("privateChatList")) {
                                 document.getElementById("privateChatList").style.transition = "1sec";
@@ -4138,7 +4146,7 @@ const openPrivateChatfromInbox=(e)=>{
                           }
                         }}>X</button>
                       </div>
-                      <InboxMessage username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
+                      <InboxMessage socket={socket} username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
                     </div>
                     : null
                   }
@@ -6674,6 +6682,7 @@ e.pollData.pollC = e.pollData.pollC
                             setTimeout(() => {
                               setPrivateChat(false);
                               setClubFloor(true);
+                              setShowChatRoom(true)
                             }, 200);
                           }}
                         />
@@ -6922,7 +6931,7 @@ e.pollData.pollC = e.pollData.pollC
                       )}
                     </div>
 
-                    <div className="send">
+                    <div className="send-private">
                       <ReactTooltip />
                       <form
                         action="#"
@@ -7040,12 +7049,12 @@ e.pollData.pollC = e.pollData.pollC
                           backgroundColor: "whitesmoke"
                         }}
                         >
-                            Personal Inbox
+                            Soapbox Inbox
                         </h5>
                         <button className="closebtn" onClick={() => {
                           if (!privateChatList) {
                             setPrivateChatList(!privateChatList)
-
+                   
                             setTimeout(() => {
                               if (document.getElementById("privateChatList")) {
                                 document.getElementById("privateChatList").style.transition = "1sec";
@@ -7062,7 +7071,7 @@ e.pollData.pollC = e.pollData.pollC
                           }
                         }}>X</button>
                       </div>
-                      <InboxMessage username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
+                      <InboxMessage socket={socket} username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
                     </div>
                     : null
                   }
