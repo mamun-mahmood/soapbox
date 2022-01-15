@@ -817,7 +817,7 @@ overflow-wrap: break-word;
 #slidegC,
 #slideVA,
 #slideCR {
-  position: absolute;
+  position: fixed;
   right: -100vw;
 
   transition: 1s;
