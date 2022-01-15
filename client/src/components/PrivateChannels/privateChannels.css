@@ -1212,10 +1212,17 @@ overflow-y: auto;
 }
 
 .inbox-tab{
-  margin: 3px;
-  padding: 3px;
-  border-radius: 5px;
+
+  padding: 5px;
+ color: whitesmoke;
   border: none;
+  border-radius:15px 50px 30px;
+ 
+
+}
+
+.inbox-tab:hover{
+  transform: scale(1.1);
 }
 
 .eclippse{

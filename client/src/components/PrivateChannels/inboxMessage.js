@@ -6,7 +6,7 @@ export default function InboxMessage(props) {
 
     const username=props.username
     const [chatData,setChatData] = useState([]);
-    
+    const [tabColor,setTabColor] = useState("")
   const BaseURL = process.env.REACT_APP_API_URL;
   const appendPrivate = (
     chatFrom,
@@ -73,11 +73,11 @@ export default function InboxMessage(props) {
   
     })},[])
     return (
-        <div style={{maxHeight:'80vh',overflowY:'auto'}}>
-          <button className='inbox-tab'>Personal</button>
-          <button  className='inbox-tab'>Club</button>
-          <button  className='inbox-tab'>Promotion</button>
-          <button  className='inbox-tab'>Notifications</button>
+        <div style={{maxHeight:'80vh',overflowY:'auto',backgroundColor:tabColor,height:'100%'}}>
+          <button className='inbox-tab' style={{backgroundColor:'blue'}} onClick={()=>{setTabColor('blue')}}>Contacts</button>
+          <button  className='inbox-tab' style={{backgroundColor:'purple'}}  onClick={()=>{setTabColor('purple')}}>MyChats</button>
+          <button  className='inbox-tab' style={{backgroundColor:'pink'}}  onClick={()=>{setTabColor('pink')}}>Promos</button>
+          <button  className='inbox-tab' style={{backgroundColor:'green'}}  onClick={()=>{setTabColor('green')}}>Notifications</button>
          
           {chatData.length>0?chatData.map((e,index)=>(
               <div key={index}

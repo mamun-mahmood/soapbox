@@ -4124,7 +4124,7 @@ const openPrivateChatfromInbox=(e)=>{
                           backgroundColor: "whitesmoke"
                         }}
                         >
-                            Soapbox Inbox
+                            ChatHive
                         </h5>
                         <button className="closebtn" onClick={() => {
                           if (!privateChatList) {
@@ -4167,6 +4167,7 @@ const openPrivateChatfromInbox=(e)=>{
                         overflowX: "hidden",
                         maxHeight: '80vh',
                         flex: clubFloor ? "0.5" : "1",
+                        maxWidth:clubFloor ? "500px" : "60vw"
                       }}
                     >
                       <div
@@ -7049,7 +7050,7 @@ e.pollData.pollC = e.pollData.pollC
                           backgroundColor: "whitesmoke"
                         }}
                         >
-                            Soapbox Inbox
+                            ChatHive
                         </h5>
                         <button className="closebtn" onClick={() => {
                           if (!privateChatList) {
@@ -7092,6 +7093,7 @@ e.pollData.pollC = e.pollData.pollC
                       overflowX: "hidden",
                       maxHeight: '80vh',
                       flex: clubFloor ? "0.5" : "1",
+                      maxWidth:clubFloor ? "500px" : "60vw"
                     }}
                   >
                     <div
