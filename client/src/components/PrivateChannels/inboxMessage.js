@@ -3,11 +3,16 @@ import React, { useEffect,useState } from 'react'
 import moment from 'moment'
 import socket, { startSocket } from "../../socketChat";
 import {AiOutlineBell} from 'react-icons/ai'
+import { Contacts } from '@material-ui/icons';
 export default function InboxMessage(props) {
 
     const username=props.username
     const [chatData,setChatData] = useState([]);
-    const [tabColor,setTabColor] = useState("")
+    const [tabColor,setTabColor] = useState("purple");
+    const [showNotification,setShowNotification] = useState(false)
+    const [showContacts,setShowContacts] = useState(false)
+    const [showPromos,setShowPromos] = useState(false)
+    const [showMyChat,setShowMyChat] = useState(true)
   const BaseURL = process.env.REACT_APP_API_URL;
   const appendPrivate = (
     chatFrom,
@@ -75,12 +80,13 @@ export default function InboxMessage(props) {
     })},[])
     return (
         <div style={{maxHeight:'80vh',overflowY:'auto',backgroundColor:tabColor,height:'100%'}}>
-          <button className='inbox-tab' style={{backgroundColor:'blue'}} onClick={()=>{setTabColor('blue')}}>Contacts</button>
-          <button  className='inbox-tab' style={{backgroundColor:'purple'}}  onClick={()=>{setTabColor('purple')}}>MyChats</button>
-          <button  className='inbox-tab' style={{backgroundColor:'pink'}}  onClick={()=>{setTabColor('pink')}}>Promos</button>
-          <button  className='inbox-tab' style={{backgroundColor:'green',width:'30px'}}  onClick={()=>{setTabColor('green')}}><AiOutlineBell /></button>
+          <button className='inbox-tab' style={{backgroundColor:'blue'}} onClick={()=>{setTabColor('blue');setShowContacts(true);setShowMyChat(false);setShowPromos(false);setShowNotification(false)}}>Contacts</button>
+          <button  className='inbox-tab' style={{backgroundColor:'purple'}}  onClick={()=>{setTabColor('purple');setShowContacts(false);setShowMyChat(true);setShowPromos(false);setShowNotification(false)}}>MyChats</button>
+          <button  className='inbox-tab' style={{backgroundColor:'pink'}}  onClick={()=>{setTabColor('pink');setShowContacts(false);setShowMyChat(false);setShowPromos(true);setShowNotification(false)}}>Promos</button>
+          <button  className='inbox-tab' style={{backgroundColor:'green',width:'30px'}}  onClick={()=>{setTabColor('green');setShowContacts(false);setShowMyChat(false);setShowPromos(false);setShowNotification(true)}}><AiOutlineBell /></button>
          
-          {chatData.length>0?chatData.map((e,index)=>(
+         {showContacts?<div style={{display:'flex',justifyContent:'center',alignItems:'center',color:'whitesmoke'}}>No Contacts yet</div>:null}
+         {showMyChat?<div>{chatData.length>0?chatData.map((e,index)=>(
               <div key={index}
               className="messageBox" onClick={()=>{props.openPrivateChatfromInbox({chatname:e.chatFrom,imgSrc:`${BaseURL}/profile-pictures/${e.chat.profilePic}`})}}>
                  
@@ -96,7 +102,10 @@ export default function InboxMessage(props) {
                          <div className='message eclippse'> {e.chat.message}</div>
               </div>
               
-          )):""}
+          )):""}</div>:null}
+          {showNotification?<div style={{display:'flex',justifyContent:'center',alignItems:'center',color:'whitesmoke'}}>No Notifications</div>:null}
+          {showPromos?<div style={{display:'flex',justifyContent:'center',alignItems:'center',color:'whitesmoke'}}>No Promotion Available</div>:null}
+          
         </div>
     )
 }
