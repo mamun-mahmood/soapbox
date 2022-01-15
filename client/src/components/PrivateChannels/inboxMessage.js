@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect,useState } from 'react'
 import moment from 'moment'
 import socket, { startSocket } from "../../socketChat";
+import {AiOutlineBell} from 'react-icons/ai'
 export default function InboxMessage(props) {
 
     const username=props.username
@@ -77,7 +78,7 @@ export default function InboxMessage(props) {
           <button className='inbox-tab' style={{backgroundColor:'blue'}} onClick={()=>{setTabColor('blue')}}>Contacts</button>
           <button  className='inbox-tab' style={{backgroundColor:'purple'}}  onClick={()=>{setTabColor('purple')}}>MyChats</button>
           <button  className='inbox-tab' style={{backgroundColor:'pink'}}  onClick={()=>{setTabColor('pink')}}>Promos</button>
-          <button  className='inbox-tab' style={{backgroundColor:'green'}}  onClick={()=>{setTabColor('green')}}>Notifications</button>
+          <button  className='inbox-tab' style={{backgroundColor:'green',width:'30px'}}  onClick={()=>{setTabColor('green')}}><AiOutlineBell /></button>
          
           {chatData.length>0?chatData.map((e,index)=>(
               <div key={index}

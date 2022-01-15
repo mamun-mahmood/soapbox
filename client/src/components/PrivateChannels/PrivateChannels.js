@@ -55,6 +55,7 @@ import rules from "../../assets/rules.png";
 import videolive from "../../assets/videoLive.png";
 import marketplaceicon from "../../assets/marketplace.png";
 import messagesicon from "../../assets/messages.png";
+import chathive from "../../assets/chathive.png";
 import sendIcon from "../../assets/send.png";
 import videochat from "../../assets/videochat.png";
 import imagechat from "../../assets/imagechat.png";
@@ -2845,7 +2846,7 @@ const openPrivateChatfromInbox=(e)=>{
                   </span>
 
                   <span>
-                    <SoapboxTooltip title={"MESSAGES"} placement="bottom" privateTooltip={true}>
+                    <SoapboxTooltip title={"CHATHIVE"} placement="bottom" privateTooltip={true}>
                       <img src={messagesicon} width="30px" onClick={() => {
                         if (!privateChatList) {
                           setPrivateChatList(!privateChatList)
@@ -4113,7 +4114,8 @@ const openPrivateChatfromInbox=(e)=>{
                   {privateChatList
                     ? <div className="privateChatListBox" id="privateChatList">
                       <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',width:'100%'}} >
-                        <h5 style={{
+                   
+                      <h5 style={{
                           textAlign: 'center',
                           fontSize: '0.93rem',
                           fontWeight: '600',
@@ -4124,7 +4126,12 @@ const openPrivateChatfromInbox=(e)=>{
                           backgroundColor: "whitesmoke"
                         }}
                         >
-                            ChatHive
+                            <img
+                      
+                      src={chathive}
+                      className="chativelogo"
+                    />
+                    ChatHive
                         </h5>
                         <button className="closebtn" onClick={() => {
                           if (!privateChatList) {
@@ -5771,7 +5778,7 @@ e.pollData.pollC = e.pollData.pollC
 
                   {/* MESSAGES tab */}
                   <span>
-                    <SoapboxTooltip title={"MESSAGES"} placement="bottom" privateTooltip={true}>
+                    <SoapboxTooltip title={"CHATHIVE"} placement="bottom" privateTooltip={true}>
                       <img
                         width="30px"
                         src={messagesicon}
@@ -7039,6 +7046,7 @@ e.pollData.pollC = e.pollData.pollC
 {privateChatList
                     ? <div className="privateChatListBox" id="privateChatList">
                       <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',width:'100%'}} >
+                      
                         <h5 style={{
                           textAlign: 'center',
                           fontSize: '0.93rem',
@@ -7050,7 +7058,12 @@ e.pollData.pollC = e.pollData.pollC
                           backgroundColor: "whitesmoke"
                         }}
                         >
-                            ChatHive
+                            <img
+                      
+                      src={chathive}
+                      className="chativelogo"
+                    />
+                      ChatHive
                         </h5>
                         <button className="closebtn" onClick={() => {
                           if (!privateChatList) {

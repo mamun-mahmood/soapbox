@@ -857,13 +857,13 @@ overflow-wrap: break-word;
 
 .closebtn{
   padding: 5px;
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   background-color: red;
   color: whitesmoke;
   border: none;
-  margin: 0.5rem 0;
-  font-size: 20px;
+ 
+  font-size: 18px;
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -1217,8 +1217,13 @@ overflow-y: auto;
  color: whitesmoke;
   border: none;
   border-radius:15px 50px 30px;
- 
+   font-size: 12px;
+   width: 80px;
+   margin: 3px;
 
+}
+.chativelogo{
+  width: 30px;
 }
 
 .inbox-tab:hover{
