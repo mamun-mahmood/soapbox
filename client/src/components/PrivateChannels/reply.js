@@ -42,7 +42,8 @@ function ReplyModal(props) {
     profilePic:props.data.user.profilePic,
     reply:replyInput,
     timestamp:timestamp,
-    parentChat:props.data.chatData
+    parentChat:props.data.chatData,
+    replyCount:allReply.length
 
   })
   })

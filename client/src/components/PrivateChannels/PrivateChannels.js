@@ -247,16 +247,23 @@ const sendReplyToChat=(data)=>{
   let expiryTime="";
   let isSticker=false;
   let message=data.reply;
+  let replyCount=data.replyCount;
   let isReply=true;
   // setChatData((e) => [
   //   ...e,
   //   data.parentChat,
   // ]);
-let parentChat=data.parentChat;
+ let parentChat=data.parentChat;
+ 
+  setChatData(chatData.filter(item=>item.parentChat!==parentChat))
+  
+
+
   setChatData((e) => [
     ...e,
-    { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker,isReply,parentChat },
+    { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker,isReply,parentChat,replyCount},
   ]);
+
 
 
    
@@ -277,8 +284,12 @@ let parentChat=data.parentChat;
         isEmoji: false,
         timestamp: timestamp,
         isReply:true,
-        parentChat:parentChat
+        parentChat:parentChat,
+        parentThreadId:parentChat.threadId,
+        replyCount
       });
+
+   
 
   setTimeout(() => {
     if (document.querySelector(".chatarea")) {
@@ -736,8 +747,8 @@ const openPrivateChatfromInbox=(e)=>{
             isSticker = i.chat.isSticker,
             threadId=i.chat.threadId,
             isReply=i.chat.isReply,
-            parentChat=i.chat.parentChat
-
+            parentChat=i.chat.parentChat,
+            replyCount=i.chat.replyCount
 
           if (isPoll) {
             let pollData = JSON.parse(message)
@@ -780,7 +791,7 @@ const openPrivateChatfromInbox=(e)=>{
           
             setChatData((e) => [
               ...e,
-              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker,isReply,parentChat },
+              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker,isReply,parentChat,replyCount},
             ]);
           }
           else {
@@ -4702,7 +4713,7 @@ e.pollData.pollC = e.pollData.pollC
                               name: userFullName,
                               profilePic: userProfilePic,
                             }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null}
-                          <div className="reply-box"></div> */}
+                          <div className="reply-box"></div> */} ghfgh
                         
                         </div>
                           <div className="ProfileBox"    onClick={() => {
@@ -4920,13 +4931,14 @@ e.pollData.pollC = e.pollData.pollC
                           ) : null}
 
                           {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                          {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                          {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
                             className="reply-button" 
                             onClick={()=>{
-                              setReplyData({chatData:e,user:{
+                              setReplyData({chatData:e.parentChat,user:{
                               name: userFullName,
                               profilePic: userProfilePic,
-                            }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null} */}
+                            }});setShowReply(!showReply)}}
+                            >{e.replyCount?e.replyCount+' more':0} Replies</button> : null}
                           {/* <div className="reply-box"></div> */}
                         </div>
                        :
@@ -7857,13 +7869,14 @@ e.pollData.pollC = e.pollData.pollC
                           ) : null}
 
                           {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                          {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                          {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
                             className="reply-button" 
                             onClick={()=>{
-                              setReplyData({chatData:e,user:{
+                              setReplyData({chatData:e.parentChat,user:{
                               name: userFullName,
                               profilePic: userProfilePic,
-                            }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null} */}
+                            }});setShowReply(!showReply)}}
+                            >{e.replyCount?e.replyCount+' more':0} Replies</button> : null}
                           {/* <div className="reply-box"></div> */}
                         </div>
                        :
