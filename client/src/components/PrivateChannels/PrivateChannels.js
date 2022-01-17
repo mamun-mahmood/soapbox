@@ -2856,9 +2856,7 @@ const openPrivateChatfromInbox=(e)=>{
                     </SoapboxTooltip>
                   </span>
 
-                  <span>
-                    <SoapboxTooltip title={"CHATHIVE"} placement="bottom" privateTooltip={true}>
-                      <img src={messagesicon} width="30px" onClick={() => {
+                  <span  onClick={() => {
                         if (!privateChatList) {
                           setPrivateChatList(!privateChatList)
 
@@ -2887,8 +2885,13 @@ const openPrivateChatfromInbox=(e)=>{
                             setPrivateChatList(false)
                           }, 200);
                         }
-                      }} />
+                      }}>
+                    <SoapboxTooltip title={"CHATHIVE"} placement="bottom" privateTooltip={true}>
+                      <img src={messagesicon} width="30px" 
+                      />
+                        
                     </SoapboxTooltip>
+                    <span style={{ fontSize: "14px",marginLeft:'-6px' }}>CHATHIVE</span>
                   </span>
 
                   <span onClick={() => setInviteBox(true)}>
@@ -4164,7 +4167,7 @@ const openPrivateChatfromInbox=(e)=>{
                           }
                         }}>X</button>
                       </div>
-                      <InboxMessage socket={socket} username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
+                      <InboxMessage socket={socket} actualUsername={userInformation.username} username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
                     </div>
                     : null
                   }
@@ -5789,12 +5792,7 @@ e.pollData.pollC = e.pollData.pollC
                   </span>
 
                   {/* MESSAGES tab */}
-                  <span>
-                    <SoapboxTooltip title={"CHATHIVE"} placement="bottom" privateTooltip={true}>
-                      <img
-                        width="30px"
-                        src={messagesicon}
-                        onClick={() => {
+                  <span  onClick={() => {
                           if (!privateChatList) {
                             setPrivateChatList(!privateChatList)
 
@@ -5812,8 +5810,15 @@ e.pollData.pollC = e.pollData.pollC
                               setPrivateChatList(false)
                             }, 200);
                           }
-                        }} />
+                        }}>
+                    <SoapboxTooltip title={"CHATHIVE"} placement="bottom" privateTooltip={true}>
+                      <img
+                        width="30px"
+                        src={messagesicon}
+                        />
+                          
                     </SoapboxTooltip>
+                    <span style={{ fontSize: "14px",marginLeft:'-6px'  }}>CHATHIVE</span>
                   </span>
 
                   {/* Invite tab */}
@@ -7097,7 +7102,7 @@ e.pollData.pollC = e.pollData.pollC
                           }
                         }}>X</button>
                       </div>
-                      <InboxMessage socket={socket} username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
+                      <InboxMessage socket={socket} actualUsername={userInformation.username} username={userFullName}  openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
                     </div>
                     : null
                   }

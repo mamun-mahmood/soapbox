@@ -6,8 +6,10 @@ import {AiOutlineBell} from 'react-icons/ai'
 import { Contacts } from '@material-ui/icons';
 export default function InboxMessage(props) {
 
-    const username=props.username
+    const username=props.username;
+    const actualUsername=props.actualUsername
     const [chatData,setChatData] = useState([]);
+    const [contacts,setContacts] = useState([]);
     const [tabColor,setTabColor] = useState("purple");
     const [showNotification,setShowNotification] = useState(false)
     const [showContacts,setShowContacts] = useState(false)
@@ -43,9 +45,24 @@ export default function InboxMessage(props) {
            to:username
        }).then((res)=>{
 
-          setChatData(res.data)
-       })
+        setChatData(res.data)
+       });
+
+
     }, [username])
+
+    useEffect(() => {
+      axios.get(`${BaseURL}/user/follows/${actualUsername}`).then((res)=>{
+         res.data.forEach(e=>{
+           axios.get(`${BaseURL}/user/${e.username}`).then(response=>{
+setContacts(old=>[...old,response.data])
+           })
+         })
+         
+      });
+
+      
+   }, [username])
 
 
     useEffect(()=>{ socket.on("receive-private-chat-soapbox", (data) => {
@@ -85,7 +102,24 @@ export default function InboxMessage(props) {
           <button  className='inbox-tab' style={{backgroundColor:'pink'}}  onClick={()=>{setTabColor('pink');setShowContacts(false);setShowMyChat(false);setShowPromos(true);setShowNotification(false)}}>Promos</button>
           <button  className='inbox-tab' style={{backgroundColor:'green',width:'30px'}}  onClick={()=>{setTabColor('green');setShowContacts(false);setShowMyChat(false);setShowPromos(false);setShowNotification(true)}}><AiOutlineBell /></button>
          
-         {showContacts?<div style={{display:'flex',justifyContent:'center',alignItems:'center',color:'whitesmoke'}}>No Contacts yet</div>:null}
+         {showContacts?
+         <div>{contacts.length>0?contacts.map((e,index)=>(
+          <div key={index}
+          className="messageBox" onClick={()=>{props.openPrivateChatfromInbox({chatname:e[0].name,imgSrc:`${BaseURL}/profile-pictures/${e[0].profilePic}`})}}>
+             
+              <div className="ProfileBox"   
+                     >
+                        <img
+                          className="chat-profile"
+                          src={`${BaseURL}/profile-pictures/${e[0].profilePic}`}
+                        />
+                        <p>{e[0].name}</p>
+                        {/* <p className="timestamp"> {moment(e.createdAt).fromNow()}</p> */}
+                      </div>
+                     <div className='message'> {e[0].email}</div>
+          </div>
+          
+      )):""}</div>:null}
          {showMyChat?<div>{chatData.length>0?chatData.map((e,index)=>(
               <div key={index}
               className="messageBox" onClick={()=>{props.openPrivateChatfromInbox({chatname:e.chatFrom,imgSrc:`${BaseURL}/profile-pictures/${e.chat.profilePic}`})}}>
