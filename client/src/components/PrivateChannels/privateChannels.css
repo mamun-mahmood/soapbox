@@ -1240,3 +1240,20 @@ overflow-y: auto;
   font-size: 14px;
  
 }
+
+.notify-num{
+
+ width: 20px;
+ height: 20px;
+  color: red !important;
+  font-weight: bold;
+  border-radius: 50px;
+  margin-left: -25px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ background-color: white;
+font-size: 12px;
+cursor: pointer;
+
+}

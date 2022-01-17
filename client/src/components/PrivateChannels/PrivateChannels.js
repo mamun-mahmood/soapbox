@@ -111,7 +111,7 @@ const PrivateChannels = () => {
   const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0);
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [stickerPicker, setStickerPicker] = useState(false);
-
+ const [chatUnview,setChatUnview] = useState(0)
   const [emojiPickerPrivate, setEmojiPickerPrivate] = useState(false);
   const [AllMyEvents, setAllMyEvents] = useState([])
   const [showAllMyEvents, setShowAllMyEvents] = useState(false)
@@ -213,7 +213,7 @@ const PrivateChannels = () => {
 
     className: "link-content",
   });
-
+  
   const verifyExpiration = async (data) => {
     var resultTimeExp;
     let threadId = data.threadId
@@ -542,10 +542,24 @@ const openPrivateChatfromInbox=(e)=>{
       })
   }
 
+const myTotalUnviewChats=(username)=>{
+  axios.post(`${BaseURL}/upload/myTotalUnviewChats`,{
+    chatTo:username
+  }).then(res=>{
+    setChatUnview(res.data.length)
+    })
+}
 
-  // useEffect(() => {
-  //  getAllEvents(username)
-  // }, [username])
+const resetChatView=(username)=>{
+  setChatUnview(0)
+  axios.post(`${BaseURL}/upload/resetChatView`,{
+    chatTo:username
+  }).then((res)=>{console.log('success')})
+  .catch(err=>console.log(err))
+}
+  useEffect(() => {
+   myTotalUnviewChats(userFullName)
+  }, [userFullName])
 
   useEffect(() => {
     socket.on("user-joined", (name) => {
@@ -2857,6 +2871,7 @@ const openPrivateChatfromInbox=(e)=>{
                   </span>
 
                   <span  onClick={() => {
+                     resetChatView(userFullName)
                         if (!privateChatList) {
                           setPrivateChatList(!privateChatList)
 
@@ -2891,9 +2906,41 @@ const openPrivateChatfromInbox=(e)=>{
                       />
                         
                     </SoapboxTooltip>
-                    <span style={{ fontSize: "14px",marginLeft:'-6px' }}>CHATHIVE</span>
+                    <span style={{ fontSize: "14px",marginLeft:'-6px' }}>CHATHIVE </span>
+                   
                   </span>
+                  {chatUnview!==0?<div className="notify-num"  onClick={() => {
+                   
+                    resetChatView(userFullName)
+                        if (!privateChatList) {
+                          setPrivateChatList(!privateChatList)
 
+                          setTimeout(() => {
+                            if (
+                              document.getElementById(
+                                "privateChatList"
+                              )
+                            ) {
+                              document.getElementById(
+                                "privateChatList"
+                              ).style.transition = "1sec";
+                              document.getElementById(
+                                "privateChatList"
+                              ).style.right = "0.8rem";
+                            }
+                          }, 1);
+                        } else {
+                          document.getElementById(
+                            "privateChatList"
+                          ).style.transition = "1sec";
+                          document.getElementById(
+                            "privateChatList"
+                          ).style.right = "-100vw";
+                          setTimeout(() => {
+                            setPrivateChatList(false)
+                          }, 200);
+                        }
+                      }}>{chatUnview}</div>:null}
                   <span onClick={() => setInviteBox(true)}>
                     <SoapboxTooltip title={"Invite"} placement="bottom" privateTooltip={true}>
                       <img src={inviteicon} width="30px" />
@@ -3809,6 +3856,11 @@ const openPrivateChatfromInbox=(e)=>{
                         </InfiniteScroll>
                       </div>
                     ) : null}
+
+
+{marketPlaceArea ? (
+                <FortisMarketplaceArea />
+              ) : null}
 
                   {privateChat ? (
                     <div className="privateChat-club" id="privatechatslide">
@@ -5633,6 +5685,7 @@ e.pollData.pollC = e.pollData.pollC
                         onClick={() => {
                           if (privateChat == false) {
                             setClubFloor(!clubFloor);
+                           
                             setMarketPlaceArea(false);
                           } else {
                             toast.success("Please close Private chat to view feeds");
@@ -5793,6 +5846,7 @@ e.pollData.pollC = e.pollData.pollC
 
                   {/* MESSAGES tab */}
                   <span  onClick={() => {
+                     resetChatView(userFullName)
                           if (!privateChatList) {
                             setPrivateChatList(!privateChatList)
 
@@ -5819,8 +5873,40 @@ e.pollData.pollC = e.pollData.pollC
                           
                     </SoapboxTooltip>
                     <span style={{ fontSize: "14px",marginLeft:'-6px'  }}>CHATHIVE</span>
+                   
                   </span>
+                  {chatUnview!==0?<div className="notify-num" onClick={() => {
+                   
+                   resetChatView(userFullName)
+                       if (!privateChatList) {
+                         setPrivateChatList(!privateChatList)
 
+                         setTimeout(() => {
+                           if (
+                             document.getElementById(
+                               "privateChatList"
+                             )
+                           ) {
+                             document.getElementById(
+                               "privateChatList"
+                             ).style.transition = "1sec";
+                             document.getElementById(
+                               "privateChatList"
+                             ).style.right = "0.8rem";
+                           }
+                         }, 1);
+                       } else {
+                         document.getElementById(
+                           "privateChatList"
+                         ).style.transition = "1sec";
+                         document.getElementById(
+                           "privateChatList"
+                         ).style.right = "-100vw";
+                         setTimeout(() => {
+                           setPrivateChatList(false)
+                         }, 200);
+                       }
+                     }}>{chatUnview}</div>:null}
                   {/* Invite tab */}
                   <span onClick={() => setInviteBox(true)}>
                     <SoapboxTooltip title={"Invite"} placement="bottom" privateTooltip={true}>
@@ -5957,9 +6043,7 @@ e.pollData.pollC = e.pollData.pollC
                 {/* <FiSearch className="search-channel-content" /> */}
               </div>
 
-              {marketPlaceArea ? (
-                <FortisMarketplaceArea />
-              ) : null}
+            
 
               {inviteBox ? (
                 <MyVerticallyCenteredModal
@@ -6621,6 +6705,10 @@ e.pollData.pollC = e.pollData.pollC
                     </div>
                   ) : null}
 
+{marketPlaceArea ? (
+                <FortisMarketplaceArea />
+              ) : null}
+
                 {privateChat ? (
                   <div className="privateChat-club" id="privatechatslide">
                     <div
@@ -6910,13 +6998,13 @@ e.pollData.pollC = e.pollData.pollC
                             ) : null}
 
                             {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                            {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                            {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
                               className="reply-button" 
                               onClick={()=>{
                                 setReplyData({chatData:e,user:{
                                 name: userFullName,
                                 profilePic: userProfilePic,
-                              }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null}
+                              }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null} */}
                             <div className="reply-box"></div>
                           </div>
                         ))
