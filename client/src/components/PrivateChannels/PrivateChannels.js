@@ -622,10 +622,10 @@ const resetChatView=(username)=>{
       }
     });
     socket.on("receive-private-chat-soapbox", (data) => {
- 
+
          if(data.to == userFullName){
          
-          setChatUnview(1)
+          setChatUnview(chatUnview+1)
          }
       if (data.to == userFullName && data.from == privateChatPerson ? privateChatPerson.name : userInformation.username) {
         
@@ -659,7 +659,7 @@ const resetChatView=(username)=>{
         append(name, `${name} left the chat`);
       }
     });
-  }, []);
+  }, [userFullName]);
 
   useEffect(() => {
     const getUserData = async () => {
