@@ -622,9 +622,13 @@ const resetChatView=(username)=>{
       }
     });
     socket.on("receive-private-chat-soapbox", (data) => {
+ 
+         if(data.to == userFullName){
          
+          setChatUnview(1)
+         }
       if (data.to == userFullName && data.from == privateChatPerson ? privateChatPerson.name : userInformation.username) {
-
+        
         if (data.isEmoji) {
           appendPrivate(
             data.name,
