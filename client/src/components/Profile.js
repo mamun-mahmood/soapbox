@@ -25,6 +25,7 @@ import {
   AiOutlineReddit,
   AiOutlineMedium,
 } from "react-icons/ai";
+import chathive from "../assets/chathive.png";
 import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from "./HootOutside/HootOutside";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -203,6 +204,14 @@ const Profile = ({
 
                 <button className="btn-edit-profile">
                   <Link to={`/edit/profile/${username}`}>Edit Profile</Link>
+                </button>
+                <button className="btn-edit-profile" >
+                <Link to={`/chathive/${username}`}> <img
+                      
+                      src={chathive}
+                      className="chativelogo"
+                    />ChatHive</Link>
+                 
                 </button>
 
                 <ReactTooltip />
@@ -755,6 +764,7 @@ const Profile = ({
             title={iframeBox.title} width="100%" height="100%"></iframe>
         </div>
         : null}
+        
     </div>
   );
 };

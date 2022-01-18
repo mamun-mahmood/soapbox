@@ -627,7 +627,7 @@ const resetChatView=(username)=>{
          
           setChatUnview(chatUnview+1)
          }
-      if (data.to == userFullName && data.from == privateChatPerson ? privateChatPerson.name : userInformation.username) {
+      if ((data.to == userFullName) &&( data.from == privateChatPerson ? privateChatPerson.name : userInformation.username)) {
         
         if (data.isEmoji) {
           appendPrivate(
@@ -2874,7 +2874,8 @@ const resetChatView=(username)=>{
                     </SoapboxTooltip>
                   </span>
 
-                  <span  onClick={() => {
+                  <span 
+                   onClick={() => {
                      resetChatView(userFullName)
                         if (!privateChatList) {
                           setPrivateChatList(!privateChatList)

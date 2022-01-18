@@ -1,0 +1,170 @@
+import axios from 'axios'
+import React, { useEffect,useState,Fragment } from 'react'
+import moment from 'moment'
+import socket, { startSocket } from "../../socketChat";
+import {AiOutlineBell} from 'react-icons/ai'
+import { Contacts } from '@material-ui/icons';
+import { useParams } from 'react-router-dom';
+import SideBar from '../../components/SideBar/SideBar'
+import NavBar from '../../components/NavBar/NavBar'
+export default function InboxMessagePublic(props) {
+
+    const { actualUsername } = useParams();
+  
+    const [chatData,setChatData] = useState([]);
+    const [contacts,setContacts] = useState([]);
+    const [username,setUsername] = useState('')
+    const [tabColor,setTabColor] = useState("purple");
+    const [showNotification,setShowNotification] = useState(false)
+    const [showContacts,setShowContacts] = useState(false)
+    const [showPromos,setShowPromos] = useState(false)
+    const [showMyChat,setShowMyChat] = useState(true)
+  const BaseURL = process.env.REACT_APP_API_URL;
+  const appendPrivate = (
+    chatFrom,
+    message,
+    position,
+    imgSrc,
+    isEmoji,
+    isVideo,
+    isImage
+  ) => {
+    let chat={message:message,profilePic:imgSrc}
+   
+  
+
+    setChatData((e) => [
+    ...e,
+      { chatFrom, chat, position, imgSrc, isEmoji, isVideo, isImage },
+    ]);
+
+    console.log(chatData.map(e=>e))  
+  
+  
+  };
+ 
+
+  useEffect(()=>{
+    axios
+    .get(`${BaseURL}/user/${actualUsername}`)
+    .then(res=> setUsername(res.data[0].name))
+    .catch(err=>console.log(err))
+  },[])
+
+    useEffect(() => {
+       axios.post(`${BaseURL}/upload/getChatDataPrivateinbox`,{
+           to:username
+       }).then((res)=>{
+
+        setChatData(res.data)
+       });
+
+
+    }, [username])
+
+    useEffect(() => {
+      axios.get(`${BaseURL}/user/follows/${actualUsername}`).then((res)=>{
+         res.data.forEach(e=>{
+           axios.get(`${BaseURL}/user/${e.username}`).then(response=>{
+setContacts(old=>[...old,response.data])
+           })
+         })
+         
+      });
+
+      
+   }, [])
+
+
+    useEffect(()=>{ socket.on("receive-private-chat-soapbox", (data) => {
+    
+  
+      if (data.to == username) {
+  
+        if (data.isEmoji) {
+          appendPrivate(
+            data.name,
+            `${data.message}`,
+            "left",
+            `${BaseURL}/profile-pictures/${data.profilePic}`,
+            data.isEmoji
+          );
+        } else {
+          appendPrivate(
+            data.name,
+            data.message,
+            "left",
+            data.profilePic,
+            data.isEmoji,
+            data.isVideo,
+            data.isImage,
+            data.timeStamp
+          );
+        
+         
+        }
+      }
+  
+    })},[])
+    return (
+
+
+        <Fragment >
+        <NavBar />
+        <div className="main-body" onContextMenu={(e) => e.preventDefault()} onDrag={(e) => e.preventDefault()}>
+            <SideBar />
+        <div style={{marginTop:'70px',minWidth:'60%',minHeight:'90vh',maxHeight:'90vh',overflowY:'auto',backgroundColor:tabColor,height:'100%',padding:'1rem'}}>
+          <button className='inbox-tab' style={{backgroundColor:'blue',width:'25%'}} onClick={()=>{setTabColor('blue');setShowContacts(true);setShowMyChat(false);setShowPromos(false);setShowNotification(false)}}>Contacts</button>
+          <button  className='inbox-tab' style={{backgroundColor:'purple',width:'25%'}}  onClick={()=>{setTabColor('purple');setShowContacts(false);setShowMyChat(true);setShowPromos(false);setShowNotification(false)}}>MyChats</button>
+          <button  className='inbox-tab' style={{backgroundColor:'pink',width:'25%'}}  onClick={()=>{setTabColor('pink');setShowContacts(false);setShowMyChat(false);setShowPromos(true);setShowNotification(false)}}>Promos</button>
+          <button  className='inbox-tab' style={{backgroundColor:'green',width:'30px'}}  onClick={()=>{setTabColor('green');setShowContacts(false);setShowMyChat(false);setShowPromos(false);setShowNotification(true)}}><AiOutlineBell /></button>
+         
+         {showContacts?
+         <div>{contacts.length>0?contacts.map((e,index)=>(
+          <div key={index}
+          className="messageBox" 
+        //   onClick={()=>{props.openPrivateChatfromInbox({chatname:e[0].name,imgSrc:`${BaseURL}/profile-pictures/${e[0].profilePic}`})}}
+          
+          >
+             
+              <div className="ProfileBox"   
+                     >
+                        <img
+                          className="chat-profile"
+                          src={`${BaseURL}/profile-pictures/${e[0].profilePic}`}
+                        />
+                        <p>{e[0].name}</p>
+                        {/* <p className="timestamp"> {moment(e.createdAt).fromNow()}</p> */}
+                      </div>
+                     <div className='message'> {e[0].email}</div>
+          </div>
+          
+      )):""}</div>:null}
+         {showMyChat?<div>{chatData.length>0?chatData.map((e,index)=>(
+              <div key={index}
+              className="messageBox" 
+            //   onClick={()=>{props.openPrivateChatfromInbox({chatname:e.chatFrom,imgSrc:`${BaseURL}/profile-pictures/${e.chat.profilePic}`})}}
+              
+              >
+                 
+                  <div className="ProfileBox"   
+                         >
+                            <img
+                              className="chat-profile"
+                              src={`${BaseURL}/profile-pictures/${e.chat.profilePic}`}
+                            />
+                            <p>{e.chatFrom}</p>
+                            <p className="timestamp"> {moment(e.createdAt).fromNow()}</p>
+                          </div>
+                         <div className='message eclippse'> {e.chat.message}</div>
+              </div>
+              
+          )):""}</div>:null}
+          {showNotification?<div style={{display:'flex',justifyContent:'center',alignItems:'center',color:'whitesmoke'}}>No Notifications</div>:null}
+          {showPromos?<div style={{display:'flex',justifyContent:'center',alignItems:'center',color:'whitesmoke'}}>No Promotion Available</div>:null}
+          
+        </div>
+        </div>
+        </Fragment>
+    )
+}

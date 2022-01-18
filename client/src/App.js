@@ -43,6 +43,7 @@ import RequestPrivateClubPage from './pages/RequestPrivateClubPage';
 
 import CreateHootBoxMobile from './pages/CreateHootBoxMobile';
 import SoapboxClubs from './pages/SoapboxClubs';
+import InboxMessagePublic from './components/PrivateChannels/inboxMessagePublic';
 
 function App() {
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
@@ -147,6 +148,10 @@ function App() {
         <Route path="/edit/profile/:username">
           <ProtectedRoute page={EditProfilePage} />
         </Route>
+        <Route path="/chathive/:actualUsername">
+          <ProtectedRoute page={InboxMessagePublic} />
+        </Route>
+        
 
         <Route path="/profile/:username">
           <ProtectedRoute page={ProfilePage} />
