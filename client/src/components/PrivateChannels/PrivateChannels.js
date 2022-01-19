@@ -412,6 +412,7 @@ const openPrivateChatfromInbox=(e)=>{
     isVideo,
     isImage
   ) => {
+    
     setChatDataPrivate((e) => [
       ...e,
       { chatname, message, position, imgSrc, isEmoji, isVideo, isImage },
