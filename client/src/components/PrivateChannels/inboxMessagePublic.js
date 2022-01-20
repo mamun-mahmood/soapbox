@@ -19,6 +19,7 @@ import Picker from "emoji-picker-react";
 import Linkify from "react-linkify";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
+import inviteicon from "../../assets/inviteicon.png";
 export default function InboxMessagePublic(props) {
   const stickersImages = ["https://soapboxapi.megahoot.net/stickers/sticker1.png",
   "https://soapboxapi.megahoot.net/stickers/sticker2.png",
@@ -630,11 +631,15 @@ setContacts(old=>[...old,response.data])
                   </div>
             </div>:
                <div style={{marginTop:'70px',minWidth:'60%',minHeight:'90vh',maxHeight:'90vh',overflowY:'auto',backgroundColor:tabColor,height:'100%',padding:'1rem'}}>
-          <button className='inbox-tab' style={{backgroundColor:'blue',width:'25%'}} onClick={()=>{setTabColor('blue');setShowContacts(true);setShowMyChat(false);setShowPromos(false);setShowNotification(false)}}>Contacts</button>
-          <button  className='inbox-tab' style={{backgroundColor:'purple',width:'25%'}}  onClick={()=>{setTabColor('purple');setShowContacts(false);setShowMyChat(true);setShowPromos(false);setShowNotification(false)}}>MyChats</button>
-          <button  className='inbox-tab' style={{backgroundColor:'pink',width:'25%'}}  onClick={()=>{setTabColor('pink');setShowContacts(false);setShowMyChat(false);setShowPromos(true);setShowNotification(false)}}>Promos</button>
+          <button className='inbox-tab' style={{backgroundColor:'blue',width:'23%'}} onClick={()=>{setTabColor('blue');setShowContacts(true);setShowMyChat(false);setShowPromos(false);setShowNotification(false)}}>Contacts</button>
+          <button  className='inbox-tab' style={{backgroundColor:'purple',width:'23%'}}  onClick={()=>{setTabColor('purple');setShowContacts(false);setShowMyChat(true);setShowPromos(false);setShowNotification(false)}}>MyChats</button>
+          <button  className='inbox-tab' style={{backgroundColor:'pink',width:'23%'}}  onClick={()=>{setTabColor('pink');setShowContacts(false);setShowMyChat(false);setShowPromos(true);setShowNotification(false)}}>Promos</button>
           <button  className='inbox-tab' style={{backgroundColor:'green',width:'30px'}}  onClick={()=>{setTabColor('green');setShowContacts(false);setShowMyChat(false);setShowPromos(false);setShowNotification(true)}}><AiOutlineBell /></button>
-         
+          <span  onClick={() => props.setInviteBox(true)}>
+                    <SoapboxTooltip title={"Invite"} placement="bottom" privateTooltip={true}>
+                      <img src={inviteicon} width="30px" />
+                    </SoapboxTooltip>
+                  </span>
          {showContacts?
          <div>{contacts.length>0?contacts.map((e,index)=>(
           <div key={index}

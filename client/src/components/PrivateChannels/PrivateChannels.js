@@ -148,6 +148,8 @@ const PrivateChannels = () => {
   const [subscribedMembers, setSubscribedMembers] = useState([]);
   const [clubRequestsData, setClubRequestsData] = useState([])
   const [inviteBox, setInviteBox] = useState(false);
+  const [inviteBoxChat, setInviteBoxChat] = useState(false);
+  
   const [scheduleBox, setScheduleBox] = useState(false);
   const [likes, setLikes] = useState(0);
   const [views, setViews] = useState(0);
@@ -166,6 +168,9 @@ const PrivateChannels = () => {
   const [file, setFile] = useState([]);
   const [src, setSrc] = useState(null);
   const [mimeType, setMimeType] = useState("");
+  const [filePrivate, setFilePrivate] = useState([]);
+  const [srcPrivate, setSrcPrivate] = useState(null);
+  const [mimeTypePrivate, setMimeTypePrivate] = useState("");
   const [currentInvoice, setCurrentInvoice] = useState("");
   const [marketPlaceArea, setMarketPlaceArea] = useState(false);
   const [showReply,setShowReply]= useState(false);
@@ -1098,6 +1103,23 @@ const resetChatView=(username)=>{
       messageContainer.scrollTop = messageContainer.scrollHeight;
     }, 500);
   };
+  const handleFilePrivate = (event) => {
+    const file = event.target.files[0];
+    setFilePrivate(file);
+    file && setMimeTypePrivate(file.type);
+    setSrcPrivate(URL.createObjectURL(file));
+    // setMessageInboxValue(file.name);
+    setTimeout(() => {
+      if(document.querySelector(".privateChat-club")){
+      var messageContainer = document.querySelector(".privateChat-club");
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+    }, 500);
+
+
+      
+   
+  };
 
   const addMembershipInDb = (
     username,
@@ -1255,6 +1277,122 @@ const resetChatView=(username)=>{
     };
 
     uploadData();
+  };
+
+  const uploadPrivate = (file, mimeType) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const uploadDataPrivate = async () => {
+      await axios
+        .all([axios.post(`${BaseURL}/upload/uploadMedia`, formData)])
+        .then(
+          axios.spread((res1, res2) => {
+            if (res1) {
+              if (mimeType.substr(0, 5) == ("video" || "audio")) {
+                // appendPrivate(
+                //   userFullName,
+                //   `${BaseURL}/storageChat/${res1.data}`,
+                //   "left",
+                //   `${BaseURL}/profile-pictures/${userProfilePic}`,
+                //   false,
+                //   true,
+                //   false
+                // );
+                // socket.emit("send", {
+                //   name: userFullName,
+                //   message: `${BaseURL}/storageChat/${res1.data}`,
+                //   profilePic: userProfilePic,
+                //   isEmoji: false,
+                //   isVideo: true,
+                //   isImage: false,
+                // });
+                const message = `${BaseURL}/storageChat/${res1.data}`;
+                let today = new Date();
+            let threadId = uuidv4()
+                let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+                let emojiValidator = isEmoji(message);
+          
+                appendPrivate(
+                  userFullName,
+                  `${message}`,
+                  "right",
+                  `${BaseURL}/profile-pictures/${userProfilePic}`,
+                  emojiValidator,
+                  true,
+                );
+                // socket.emit('send',message);
+                socket.emit("private-message-soapbox", {
+                  threadId:threadId,
+                  to: privateChatPerson.name,
+                  from: userFullName,
+                  isClub: 0,
+                  isPrivate: 1,
+                  isCommunity: 0,
+                  name: userFullName,
+                  message: message,
+                  profilePic: userProfilePic,
+                  isEmoji: isEmoji(message),
+                  timestamp: timestamp,
+                  isVideo: true,
+                });
+              } else {
+                // append(
+                //   userFullName,
+                //   `${BaseURL}/storageChat/${res1.data}`,
+                //   "left",
+                //   `${BaseURL}/profile-pictures/${userProfilePic}`,
+                //   false,
+                //   false,
+                //   true
+                // );
+                // socket.emit("send", {
+                //   name: userFullName,
+                //   message: `${BaseURL}/storageChat/${res1.data}`,
+                //   profilePic: userProfilePic,
+                //   isEmoji: false,
+                //   isVideo: false,
+                //   isImage: true,
+                // });
+
+                const message = `${BaseURL}/storageChat/${res1.data}`;
+                let today = new Date();
+            let threadId = uuidv4()
+                let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+                let emojiValidator = isEmoji(message);
+          
+                appendPrivate(
+                  userFullName,
+                  `${message}`,
+                  "right",
+                  `${BaseURL}/profile-pictures/${userProfilePic}`,
+                  emojiValidator,
+                  false,
+                  true
+                );
+                // socket.emit('send',message);
+                socket.emit("private-message-soapbox", {
+                  threadId:threadId,
+                  to: privateChatPerson.name,
+                  from: userFullName,
+                  isClub: 0,
+                  isPrivate: 1,
+                  isCommunity: 0,
+                  name: userFullName,
+                  message: message,
+                  profilePic: userProfilePic,
+                  isEmoji: isEmoji(message),
+                  timestamp: timestamp,
+                  isVideo: false,
+                  isImage:true
+                });
+              }
+            }
+          })
+        );
+    };
+
+    uploadDataPrivate();
   };
 
   const createBreakoff = () => {
@@ -3065,6 +3203,19 @@ const resetChatView=(username)=>{
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
                   username={userInformation.username}
                   show={inviteBox}
+                  mailText={"You Have Been Invited to a Soapbox Club"}
+                  onHide={() => setInviteBox(false)}
+                />
+                : null}
+                 {inviteBoxChat
+                ? <MyVerticallyCenteredModal
+                  title={"Invitation"}
+                  closeModal={() => setInviteBoxChat(false)}
+                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+                  username={userInformation.username}
+                  show={inviteBoxChat}
+                  mailText={"You Have Been Invited to a Soapbox Chat"}
                   onHide={() => setInviteBox(false)}
                 />
                 : null}
@@ -3978,7 +4129,7 @@ const resetChatView=(username)=>{
                                   src={e.imgSrc ? e.imgSrc : null}
                                 />
                                 <p>{e.chatname}</p>
-                                <p className="timestamp"> {e.timestamp}</p>
+                               {(!e.isVideo && !e.isImage)?<p className="timestamp"> {e.timestamp}</p>:null} 
                               </div>
                               <Linkify
                                 componentDecorator={(
@@ -4006,7 +4157,7 @@ const resetChatView=(username)=>{
                                     : null}
                                 </div>
                               </Linkify>
-
+                           
                               {e.isVideo ? (
                                 <video
                                   onDragStart={(e) => e.preventDefault()}
@@ -4045,6 +4196,70 @@ const resetChatView=(username)=>{
                           ))
                           : null}
 
+   {srcPrivate && mimeTypePrivate.substr(0, 5) == "image" ? (
+                        <div className="messageBox">
+                          <img
+                            src={srcPrivate}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                          />
+                          <button
+                            onClick={() => {
+                              uploadPrivate(filePrivate, filePrivate.type);
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
+
+                      {srcPrivate && mimeTypePrivate.substr(0, 5) == "video" ? (
+                        <div className="messageBox">
+                          <video
+                            src={srcPrivate}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                            className="messageBox"
+                          />
+                          <button
+                            onClick={() => {
+                              uploadPrivate(filePrivate, filePrivate.type);
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
                         {emojiPickerPrivate && (
                           <ClickAwayListener
                             onClickAway={() => {
@@ -4101,8 +4316,8 @@ const resetChatView=(username)=>{
                             id="post-video"
                             name="video"
                             accept="video/*"
-                            onChange={handleFile}
-                            disabled={true}
+                            onChange={handleFilePrivate}
+                            disabled={false}
                             hidden
                           />
 
@@ -4120,9 +4335,9 @@ const resetChatView=(username)=>{
                             id="post-image"
                             name="image"
                             accept="image/*"
-                            onChange={handleFile}
+                            onChange={handleFilePrivate}
                             hidden
-                            disabled={true}
+                            disabled={false}
                           />
 
                           <SoapboxTooltip title={"Share File"} placement="top">
@@ -4225,7 +4440,7 @@ const resetChatView=(username)=>{
                           }
                         }}>X</button>
                       </div>
-                      <InboxMessage socket={socket} actualUsername={userInformation.username} username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
+                      <InboxMessage setInviteBox={()=>{setInviteBoxChat(true)}} socket={socket} actualUsername={userInformation.username} username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
                     </div>
                     : null
                   }
@@ -5243,6 +5458,71 @@ e.pollData.pollC = e.pollData.pollC
                           </div>
                         ))
                         : null}
+                        
+                      {src && mimeType.substr(0, 5) == "image" ? (
+                        <div className="messageBox">
+                          <img
+                            src={src}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                          />
+                          <button
+                            onClick={() => {
+                              upload(file, file.type);
+                              setFile([]);
+                              setSrc(null);
+                              setMimeType("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFile([]);
+                              setSrc(null);
+                              setMimeType("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
+
+                      {src && mimeType.substr(0, 5) == "video" ? (
+                        <div className="messageBox">
+                          <video
+                            src={src}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                            className="messageBox"
+                          />
+                          <button
+                            onClick={() => {
+                              upload(file, file.type);
+                              setFile([]);
+                              setSrc(null);
+                              setMimeType("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFile([]);
+                              setSrc(null);
+                              setMimeType("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
                       </div>
 
                       {emojiPicker && (
@@ -5314,70 +5594,6 @@ e.pollData.pollC = e.pollData.pollC
                       }
 
 
-                      {src && mimeType.substr(0, 5) == "image" ? (
-                        <div className="messageBox">
-                          <img
-                            src={src}
-                            style={{
-                              width: "200px",
-                              height: "auto",
-                              marginTop: "-10px",
-                            }}
-                          />
-                          <button
-                            onClick={() => {
-                              upload(file, file.type);
-                              setFile([]);
-                              setSrc(null);
-                              setMimeType("");
-                            }}
-                          >
-                            Confirm
-                          </button>
-                          <button
-                            onClick={() => {
-                              setFile([]);
-                              setSrc(null);
-                              setMimeType("");
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : null}
-
-                      {src && mimeType.substr(0, 5) == "video" ? (
-                        <div className="messageBox">
-                          <video
-                            src={src}
-                            style={{
-                              width: "200px",
-                              height: "auto",
-                              marginTop: "-10px",
-                            }}
-                            className="messageBox"
-                          />
-                          <button
-                            onClick={() => {
-                              upload(file, file.type);
-                              setFile([]);
-                              setSrc(null);
-                              setMimeType("");
-                            }}
-                          >
-                            Confirm
-                          </button>
-                          <button
-                            onClick={() => {
-                              setFile([]);
-                              setSrc(null);
-                              setMimeType("");
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : null}
 
                       {/* ----------------------------- newly redesigned chat area ------------------------- */}
                       <div className="send">
@@ -6059,9 +6275,22 @@ e.pollData.pollC = e.pollData.pollC
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
                   username={userInformation.username}
                   show={inviteBox}
+                  mailText={"You Have Been Invited to a Soapbox Club"}
                   onHide={() => setInviteBox(false)}
                 />
               ) : null}
+               {inviteBoxChat
+                ? <MyVerticallyCenteredModal
+                  title={"Invitation"}
+                  closeModal={() => setInviteBoxChat(false)}
+                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
+                  username={userInformation.username}
+                  show={inviteBoxChat}
+                  mailText={"You Have Been Invited to a Soapbox Chat"}
+                  onHide={() => setInviteBox(false)}
+                />
+                : null}
 
               {scheduleBox
                 ? <MyVerticallyCenteredScheduler
@@ -6830,7 +7059,7 @@ e.pollData.pollC = e.pollData.pollC
                                 src={e.imgSrc ? e.imgSrc : null}
                               />
                               <p>{e.chatname}</p>
-                              <p className="timestamp"> {e.timestamp}</p>
+                              {(!e.isVideo && !e.isImage)?<p className="timestamp"> {e.timestamp}</p>:null}
                             </div>
                             <Linkify
                               componentDecorator={(
@@ -6856,6 +7085,8 @@ e.pollData.pollC = e.pollData.pollC
                                 {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent ? e.message : null}
                               </div>
                             </Linkify>
+                            
+                    
                             {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
                               <Form onSubmit={(e) => e.preventDefault()}>
 
@@ -7015,7 +7246,70 @@ e.pollData.pollC = e.pollData.pollC
                           </div>
                         ))
                         : null}
+  {srcPrivate && mimeTypePrivate.substr(0, 5) == "image" ? (
+                        <div className="messageBox">
+                          <img
+                            src={srcPrivate}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                          />
+                          <button
+                            onClick={() => {
+                              uploadPrivate(filePrivate, filePrivate.type);
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
 
+                      {srcPrivate && mimeTypePrivate.substr(0, 5) == "video" ? (
+                        <div className="messageBox">
+                          <video
+                            src={srcPrivate}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                            className="messageBox"
+                          />
+                          <button
+                            onClick={() => {
+                              uploadPrivate(filePrivate, filePrivate.type);
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
                       {emojiPickerPrivate && (
                         <ClickAwayListener
                           onClickAway={() => {
@@ -7072,9 +7366,9 @@ e.pollData.pollC = e.pollData.pollC
                           id="post-video"
                           name="video"
                           accept="video/*"
-                          onChange={handleFile}
+                          onChange={handleFilePrivate}
                           hidden
-                          disabled={true}
+                          disabled={false}
                         />
 
                         <label htmlFor="post-image">
@@ -7091,9 +7385,9 @@ e.pollData.pollC = e.pollData.pollC
                           id="post-image"
                           name="image"
                           accept="image/*"
-                          onChange={handleFile}
+                          onChange={handleFilePrivate}
                           hidden
-                          disabled={true}
+                          disabled={false}
                         />
 
                         <SoapboxTooltip title={"Share File"} placement="top">
@@ -7196,7 +7490,7 @@ e.pollData.pollC = e.pollData.pollC
                           }
                         }}>X</button>
                       </div>
-                      <InboxMessage socket={socket} actualUsername={userInformation.username} username={userFullName}  openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
+                      <InboxMessage setInviteBox={()=>{setInviteBoxChat(true)}} socket={socket} actualUsername={userInformation.username} username={userFullName}  openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
                     </div>
                     : null
                   }
@@ -8219,6 +8513,75 @@ e.pollData.pollC = e.pollData.pollC
                           </div>
                         ))
                         : null}
+
+{src && mimeType.substr(0, 5) == "image" ? (
+                      <div className="messageBox">
+                        <img
+                          src={src}
+                          style={{
+                            width: "200px",
+                            height: "auto",
+                            marginTop: "-10px",
+                          }}
+                        />
+                        <button
+                          onClick={() => {
+                            upload(file, file.type);
+                            setFile([]);
+                            setSrc(null);
+                            setMimeType("");
+                          }}
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          onClick={() => {
+                            setFile([]);
+                            setSrc(null);
+                            setMimeType("");
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )
+                      : null
+                    }
+
+                    {src && mimeType.substr(0, 5) == "video" ? (
+                      <div className="messageBox">
+                        <video
+                          src={src}
+                          style={{
+                            width: "200px",
+                            height: "auto",
+                            marginTop: "-10px",
+                          }}
+                          className="messageBox"
+                        />
+                        <button
+                          onClick={() => {
+                            upload(file, file.type);
+                            setFile([]);
+                            setSrc(null);
+                            setMimeType("");
+                          }}
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          onClick={() => {
+                            setFile([]);
+                            setSrc(null);
+                            setMimeType("");
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )
+                      : null
+                    }
                     </div>
 
                     {emojiPicker && (
@@ -8290,74 +8653,7 @@ e.pollData.pollC = e.pollData.pollC
                     </div> : null
                     }
 
-                    {src && mimeType.substr(0, 5) == "image" ? (
-                      <div className="messageBox">
-                        <img
-                          src={src}
-                          style={{
-                            width: "200px",
-                            height: "auto",
-                            marginTop: "-10px",
-                          }}
-                        />
-                        <button
-                          onClick={() => {
-                            upload(file, file.type);
-                            setFile([]);
-                            setSrc(null);
-                            setMimeType("");
-                          }}
-                        >
-                          Confirm
-                        </button>
-                        <button
-                          onClick={() => {
-                            setFile([]);
-                            setSrc(null);
-                            setMimeType("");
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    )
-                      : null
-                    }
-
-                    {src && mimeType.substr(0, 5) == "video" ? (
-                      <div className="messageBox">
-                        <video
-                          src={src}
-                          style={{
-                            width: "200px",
-                            height: "auto",
-                            marginTop: "-10px",
-                          }}
-                          className="messageBox"
-                        />
-                        <button
-                          onClick={() => {
-                            upload(file, file.type);
-                            setFile([]);
-                            setSrc(null);
-                            setMimeType("");
-                          }}
-                        >
-                          Confirm
-                        </button>
-                        <button
-                          onClick={() => {
-                            setFile([]);
-                            setSrc(null);
-                            setMimeType("");
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    )
-                      : null
-                    }
+                   
 
                     {/* ----------------------------- newly redesigned chat area ------------------------- */}
                     <div className="send">

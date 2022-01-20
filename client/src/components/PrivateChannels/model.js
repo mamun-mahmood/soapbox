@@ -15,6 +15,7 @@ function MyVerticallyCenteredModal(props) {
     const clubname = props.clubname
     const username = props.username
     const clublink = props.clublink
+    const mailText=props.mailText
     const BaseURL = process.env.REACT_APP_API_URL;
     const handleKeyDown = (e) => {
         if (['Enter', 'Tab', 'Spacebar', ','].includes(e.key)) {
@@ -66,8 +67,8 @@ function MyVerticallyCenteredModal(props) {
         await axios.post(`${BaseURL}/nodemailer/inviteHandlerClub`, {
             body: JSON.stringify({
                 To: Email,
-                subject: "You Have Been Invited to a Soapbox Club",
-                text: "You Have Been Invited to a Soapbox Club",
+                subject: mailText,
+                text: mailText,
                 clublink: clublink,
                 username: username,
                 clubname: clubname

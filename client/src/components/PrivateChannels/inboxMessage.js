@@ -4,6 +4,8 @@ import moment from 'moment'
 import socket, { startSocket } from "../../socketChat";
 import {AiOutlineBell} from 'react-icons/ai'
 import { Contacts } from '@material-ui/icons';
+import inviteicon from "../../assets/inviteicon.png";
+import { SoapboxTooltip } from "../SoapboxTooltip";
 export default function InboxMessage(props) {
 
     const username=props.username;
@@ -101,7 +103,11 @@ setContacts(old=>[...old,response.data])
           <button  className='inbox-tab' style={{backgroundColor:'purple'}}  onClick={()=>{setTabColor('purple');setShowContacts(false);setShowMyChat(true);setShowPromos(false);setShowNotification(false)}}>MyChats</button>
           <button  className='inbox-tab' style={{backgroundColor:'pink'}}  onClick={()=>{setTabColor('pink');setShowContacts(false);setShowMyChat(false);setShowPromos(true);setShowNotification(false)}}>Promos</button>
           <button  className='inbox-tab' style={{backgroundColor:'green',width:'30px'}}  onClick={()=>{setTabColor('green');setShowContacts(false);setShowMyChat(false);setShowPromos(false);setShowNotification(true)}}><AiOutlineBell /></button>
-         
+          <span  onClick={() => props.setInviteBox(true)}>
+                    <SoapboxTooltip title={"Invite"} placement="bottom" privateTooltip={true}>
+                      <img src={inviteicon} width="30px" />
+                    </SoapboxTooltip>
+                  </span>
          {showContacts?
          <div>{contacts.length>0?contacts.map((e,index)=>(
           <div key={index}

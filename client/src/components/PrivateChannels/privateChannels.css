@@ -720,7 +720,7 @@ overflow-wrap: break-word;
 }
 
 .send {
-  position: absolute;
+  position: sticky;
   bottom: 0rem;
   left: 0;
   width: 100%;
@@ -1218,7 +1218,7 @@ overflow-y: auto;
   border: none;
   border-radius:15px 50px 30px;
    font-size: 12px;
-   width: 80px;
+   width: 23%;
    margin: 3px;
 
 }
