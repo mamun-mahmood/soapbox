@@ -77,7 +77,7 @@ setContacts(old=>[...old,response.data])
             data.name,
             `${data.message}`,
             "left",
-            `${BaseURL}/profile-pictures/${data.profilePic}`,
+            data.profilePic,
             data.isEmoji
           );
         } else {
@@ -139,7 +139,10 @@ setContacts(old=>[...old,response.data])
                             <p>{e.chatFrom}</p>
                             <p className="timestamp"> {moment(e.createdAt).fromNow()}</p>
                           </div>
-                         <div className='message eclippse'> {e.chat.message}</div>
+                          {e.chat.isImage ||e.isImage?<img style={{marginLeft:'37px',marginTop:'-15px'}} src={e.chat.message} width="40px" />:null}
+                          {e.chat.isVideo || e.isVideo?<video style={{marginLeft:'37px',marginTop:'-15px'}} src={e.chat.message} width="40px" />:null}
+                        {(!e.chat.isImage &&!e.isImage&&!e.isVideo && !e.chat.isVideo)?<div className='message eclippse'> {e.chat.message}</div>:null} 
+                        
               </div>
               
           )):""}</div>:null}

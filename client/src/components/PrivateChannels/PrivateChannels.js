@@ -491,7 +491,7 @@ const openPrivateChatfromInbox=(e)=>{
     }
   };
 
-  const messagesubmitPrivate = (e) => {
+  const messagesubmitPrivate = (e,privateChatPerson,userProfilePic,userFullName) => {
 
     e.preventDefault();
     if (messageInboxValuePrivate) {
@@ -627,37 +627,7 @@ const resetChatView=(username)=>{
         );
       }
     });
-    socket.on("receive-private-chat-soapbox", (data) => {
-
-         if(data.to == userFullName){
-         
-          setChatUnview(chatUnview+1)
-         }
-      if ((data.to == userFullName) &&( data.from == privateChatPerson ? privateChatPerson.name : userInformation.username)) {
-        
-        if (data.isEmoji) {
-          appendPrivate(
-            data.name,
-            `${data.message}`,
-            "left",
-            `${BaseURL}/profile-pictures/${data.profilePic}`,
-            data.isEmoji
-          );
-        } else {
-          appendPrivate(
-            data.name,
-            `${data.message}`,
-            "left",
-            `${BaseURL}/profile-pictures/${data.profilePic}`,
-            data.isEmoji,
-            data.isVideo,
-            data.isImage,
-            data.timeStamp
-          );
-        }
-      }
-
-    });
+ 
 
     socket.on("left", (name) => {
 
@@ -667,6 +637,49 @@ const resetChatView=(username)=>{
     });
   }, [userFullName]);
 
+
+  useEffect(()=>{
+    let FullName=userFullName
+    let privateChat=privateChatPerson
+    socket.on("receive-private-chat-soapbox", (data) => {
+
+      if(data.to === FullName){
+      
+       setChatUnview(chatUnview+1)
+      }
+      if(data.to === FullName){
+     
+        if(privateChat&&(data.from === privateChat.name)){
+         if (data.isEmoji) {
+           appendPrivate(
+             data.name,
+             `${data.message}`,
+             "left",
+             `${BaseURL}/profile-pictures/${data.profilePic}`,
+             data.isEmoji
+           );
+         } else {
+           appendPrivate(
+             data.name,
+             `${data.message}`,
+             "left",
+             `${BaseURL}/profile-pictures/${data.profilePic}`,
+             data.isEmoji,
+             data.isVideo,
+             data.isImage,
+             data.timeStamp
+           );
+         }
+   //          if (userFullName&&privateChatPerson&&(data.to == userFullName)&&(data.from == privateChatPerson.name)) {
+     
+    
+   // }
+        }
+      }
+ 
+
+ });
+  },[userFullName,privateChatPerson])
   useEffect(() => {
     const getUserData = async () => {
       await axios.get(`${BaseURL}/user/${username}`).then((response) => {
@@ -4300,7 +4313,7 @@ const resetChatView=(username)=>{
                           action="#"
                           id="send-container"
                           style={{ marginLeft: privateChat ? "5px" : "5px" }}
-                          onSubmit={(e) => messagesubmitPrivate(e)}
+                          onSubmit={(e) => messagesubmitPrivate(e,privateChatPerson,userProfilePic,userFullName)}
                         >
                           <label htmlFor="post-video">
                             <SoapboxTooltip title={"Share Video"} placement="top">
@@ -7350,7 +7363,7 @@ e.pollData.pollC = e.pollData.pollC
                         action="#"
                         id="send-container"
                         style={{ marginLeft: privateChat ? "5px" : "5px" }}
-                        onSubmit={(e) => messagesubmitPrivate(e)}
+                        onSubmit={(e) => messagesubmitPrivate(e,privateChatPerson,userProfilePic,userFullName)}
                       >
                         <label htmlFor="post-video">
                           <SoapboxTooltip title={"Share Video"} placement="top">
