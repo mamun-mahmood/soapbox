@@ -4126,10 +4126,7 @@ const resetChatView=(username)=>{
                           ? chatDataPrivate.map((e) => (
                             <div
                               className="messageBox"
-                              style={{
-                                maxWidth:
-                                  e.isVideo || e.isImage ? "200px" : "100%",
-                              }}
+                            
                             
                             >
                               <div className="ProfileBox"   onClick={() => {
@@ -4156,7 +4153,7 @@ const resetChatView=(username)=>{
                                   src={e.imgSrc ? e.imgSrc : null}
                                 />
                                 <p>{e.chatname}</p>
-                               {(!e.isVideo && !e.isImage)?<p className="timestamp"> {e.timestamp}</p>:null} 
+                                <p className="timestamp"> {e.timestamp}</p>
                               </div>
                               <Linkify
                                 componentDecorator={(
@@ -4855,16 +4852,7 @@ const resetChatView=(username)=>{
                           e.isReply?   
                           <div
                           className="messageBox"
-                          style={{
-                            maxWidth:
-                              e.isVideo || e.isImage ? "200px" : "100%",
-                            // width: "max-content",
-                            // maxWidth: "fit-content",
-                            // marginLeft: "auto",
-                            // position: "relative",
-                            // left: "3rem",
-                            // marginRight: "3.5rem"
-                          }}
+                         
                        
                         >
                              <div
@@ -5305,17 +5293,7 @@ e.pollData.pollC = e.pollData.pollC
                        :
                           <div
                             className="messageBox"
-                            style={{
-                              maxWidth:
-                                e.isVideo || e.isImage ? "200px" : "100%",
-                              // width: "max-content",
-                              // maxWidth: "fit-content",
-                              // marginLeft: "auto",
-                              // position: "relative",
-                              // left: "3rem",
-                              // marginRight: "3.5rem"
-                            }}
-                         
+                           
                           >
                             <div className="ProfileBox"    onClick={() => {
                               if (e.chatname !== userFullName && !e.isPoll) {
@@ -7134,10 +7112,7 @@ e.pollData.pollC = e.pollData.pollC
                         ? chatDataPrivate.map((e) => (
                           <div
                             className="messageBox"
-                            style={{
-                              maxWidth:
-                                e.isVideo || e.isImage ? "200px" : "100%",
-                            }}
+                           
 
                           >
                             <div className="ProfileBox">
@@ -7146,7 +7121,7 @@ e.pollData.pollC = e.pollData.pollC
                                 src={e.imgSrc ? e.imgSrc : null}
                               />
                               <p>{e.chatname}</p>
-                              {(!e.isVideo && !e.isImage)?<p className="timestamp"> {e.timestamp}</p>:null}
+                             <p className="timestamp"> {e.timestamp}</p>
                             </div>
                             <Linkify
                               componentDecorator={(
@@ -7969,23 +7944,13 @@ e.pollData.pollC = e.pollData.pollC
                           e.isReply?   
                           <div
                           className="messageBox"
-                          style={{
-                            maxWidth:
-                              e.isVideo || e.isImage ? "200px" : "100%",
-                            // width: "max-content",
-                            // maxWidth: "fit-content",
-                            // marginLeft: "auto",
-                            // position: "relative",
-                            // left: "3rem",
-                            // marginRight: "3.5rem"
-                          }}
+                         
                        
                         >
                              <div
                           className="messageBox"
                           style={{
-                            maxWidth:
-                              e.parentChat.isVideo || e.parentChat.isImage ? "200px" : "100%",
+                           
                               backgroundColor:'#D3D3D3',
                               margin:'0px',
                               marginBottom:'8px'
@@ -8419,16 +8384,7 @@ e.pollData.pollC = e.pollData.pollC
                        :
                           <div
                             className="messageBox"
-                            style={{
-                              maxWidth:
-                                e.isVideo || e.isImage ? "200px" : "100%",
-                              // width: "max-content",
-                              // maxWidth: "fit-content",
-                              // marginLeft: "auto",
-                              // position: "relative",
-                              // left: "3rem",
-                              // marginRight: "3.5rem"
-                            }}
+                           
                          
                           >
                             <div className="ProfileBox"    onClick={() => {
