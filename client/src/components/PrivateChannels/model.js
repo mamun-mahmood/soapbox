@@ -15,6 +15,7 @@ function MyVerticallyCenteredModal(props) {
     const clubname = props.clubname
     const username = props.username
     const clublink = props.clublink
+    const inviteRoute=props.inviteRoute
     const mailText=props.mailText
     const BaseURL = process.env.REACT_APP_API_URL;
     const handleKeyDown = (e) => {
@@ -64,7 +65,7 @@ function MyVerticallyCenteredModal(props) {
 
 
     const sendEmail = async (Email) => {
-        await axios.post(`${BaseURL}/nodemailer/inviteHandlerClub`, {
+        await axios.post(`${BaseURL}/nodemailer/${inviteRoute}`, {
             body: JSON.stringify({
                 To: Email,
                 subject: mailText,

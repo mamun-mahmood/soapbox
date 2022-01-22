@@ -111,6 +111,8 @@ const PrivateChannels = () => {
   const [verifiedAutographPrice, setVerifiedAutographPrice] = useState(0);
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [stickerPicker, setStickerPicker] = useState(false);
+  const [stickerPickerPrivate, setStickerPickerPrivate] = useState(false);
+  
  const [chatUnview,setChatUnview] = useState(0)
   const [emojiPickerPrivate, setEmojiPickerPrivate] = useState(false);
   const [AllMyEvents, setAllMyEvents] = useState([])
@@ -414,13 +416,15 @@ const openPrivateChatfromInbox=(e)=>{
     position,
     imgSrc,
     isEmoji,
+    timestamp,
     isVideo,
-    isImage
+    isImage,
+    isSticker
   ) => {
     
     setChatDataPrivate((e) => [
       ...e,
-      { chatname, message, position, imgSrc, isEmoji, isVideo, isImage },
+      { chatname, message, position, imgSrc, isEmoji,timestamp, isVideo, isImage ,isSticker},
     ]);
 
     
@@ -506,7 +510,8 @@ const openPrivateChatfromInbox=(e)=>{
         `${message}`,
         "right",
         `${BaseURL}/profile-pictures/${userProfilePic}`,
-        emojiValidator
+        emojiValidator,
+        timestamp
       );
       // socket.emit('send',message);
       socket.emit("private-message-soapbox", {
@@ -656,7 +661,8 @@ const resetChatView=(username)=>{
              `${data.message}`,
              "left",
              `${BaseURL}/profile-pictures/${data.profilePic}`,
-             data.isEmoji
+             data.isEmoji,
+             data.timestamp
            );
          } else {
            appendPrivate(
@@ -665,9 +671,11 @@ const resetChatView=(username)=>{
              "left",
              `${BaseURL}/profile-pictures/${data.profilePic}`,
              data.isEmoji,
+             data.timestamp,
              data.isVideo,
              data.isImage,
-             data.timeStamp
+             data.isSticker,
+             data.timeStamp,
            );
          }
    //          if (userFullName&&privateChatPerson&&(data.to == userFullName)&&(data.from == privateChatPerson.name)) {
@@ -887,10 +895,11 @@ const resetChatView=(username)=>{
             isEmoji = i.chat.isEmoji,
             isVideo = i.chat.isVideo,
             isImage = i.chat.isImage,
-            timestamp = i.chat.timestamp
+            timestamp = i.chat.timestamp,
+            isSticker=i.chat.isSticker
           setChatDataPrivate((e) => [
             ...e,
-            { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, timestamp },
+            { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, timestamp,isSticker },
           ]);
         });
         setTimeout(() => {
@@ -1332,6 +1341,7 @@ const resetChatView=(username)=>{
                   "right",
                   `${BaseURL}/profile-pictures/${userProfilePic}`,
                   emojiValidator,
+                  timestamp,
                   true,
                 );
                 // socket.emit('send',message);
@@ -1380,6 +1390,7 @@ const resetChatView=(username)=>{
                   "right",
                   `${BaseURL}/profile-pictures/${userProfilePic}`,
                   emojiValidator,
+                  timestamp,
                   false,
                   true
                 );
@@ -3214,8 +3225,9 @@ const resetChatView=(username)=>{
                   closeModal={() => setInviteBox(false)}
                   clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
-                  username={userInformation.username}
+                  username={userFullName}
                   show={inviteBox}
+                  inviteRoute="inviteHandlerClub"
                   mailText={"You Have Been Invited to a Soapbox Club"}
                   onHide={() => setInviteBox(false)}
                 />
@@ -3225,10 +3237,12 @@ const resetChatView=(username)=>{
                   title={"Invitation"}
                   closeModal={() => setInviteBoxChat(false)}
                   clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
-                  clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
-                  username={userInformation.username}
+                  clublink={`https://megahoot.net/profile/${username}`}
+
+                  username={userFullName}
                   show={inviteBoxChat}
-                  mailText={"You Have Been Invited to a Soapbox Chat"}
+                  inviteRoute="inviteHandlerChat"
+                  mailText={"You've Been Invited to a MegaHoot Soapbox Private Chat"}
                   onHide={() => setInviteBox(false)}
                 />
                 : null}
@@ -4305,6 +4319,64 @@ const resetChatView=(username)=>{
                             </div>
                           </ClickAwayListener>
                         )}
+
+{stickerPickerPrivate ? <div style={{
+                       position: "sticky",
+                       bottom: "0px",
+                        bottom: "3rem",
+                        left: "0.5rem",
+                        backgroundColor: '#652C90',
+                        borderRadius: '5px',
+                        padding: '8px',
+                        zIndex: "1111", display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', flexWrap: 'wrap'
+                      }}>
+                        {stickersImages.map((image) => <img src={image}
+                          onClick={() => {
+                            let today = new Date();
+                            let message=image;
+                            let threadId = uuidv4()
+                                let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+                              
+                            appendPrivate(
+                              userFullName,
+                              `${image}`,
+                              "left",
+                              `${BaseURL}/profile-pictures/${userProfilePic}`,
+                              false,
+                              timestamp,
+                              false,
+                              true,true
+                            );
+                            // socket.emit("send", {
+                            //   name: userFullName,
+                            //   message: `${image}`,
+                            //   profilePic: userProfilePic,
+                            //   isEmoji: false,
+                            //   isVideo: false,
+                            //   isImage: true,
+                            //   isSticker: true
+                            // });
+                           
+                            socket.emit("private-message-soapbox", {
+                              threadId:threadId,
+                              to: privateChatPerson.name,
+                              from: userFullName,
+                              isClub: 0,
+                              isPrivate: 1,
+                              isCommunity: 0,
+                              name: userFullName,
+                              message: message,
+                              profilePic: userProfilePic,
+                              isEmoji: false,
+                              isSticker:true,
+                              isImage:true,
+                              timestamp: timestamp
+                            });
+                            setStickerPickerPrivate(false)
+                          }}
+                          style={{ width: '70px', minWidth: '70px', minHeight: '70px', margin: '5px', cursor: 'pointer', backgroundColor: 'whitesmoke', padding: '5px' }} />)}
+                      </div> : null
+                      }
                       </div>
 
                       <div className="send-private" >
@@ -4365,7 +4437,7 @@ const resetChatView=(username)=>{
                               src={stickerIcon}
                               style={{ width: '25px', padding: '3px', borderRadius: '15px', margin: "5px", cursor: "pointer", backgroundColor: '#8249A0' }}
                               onClick={() => {
-                                setStickerPicker(!stickerPicker);
+                                setStickerPickerPrivate(!stickerPickerPrivate);
                               }}
                             />
                           </SoapboxTooltip>
@@ -6286,8 +6358,9 @@ e.pollData.pollC = e.pollData.pollC
                   closeModal={() => setInviteBox(false)}
                   clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
-                  username={userInformation.username}
+                  username={userFullName}
                   show={inviteBox}
+                  inviteRoute="inviteHandlerClub"
                   mailText={"You Have Been Invited to a Soapbox Club"}
                   onHide={() => setInviteBox(false)}
                 />
@@ -6297,10 +6370,11 @@ e.pollData.pollC = e.pollData.pollC
                   title={"Invitation"}
                   closeModal={() => setInviteBoxChat(false)}
                   clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
-                  clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
-                  username={userInformation.username}
+                  clublink={`https://megahoot.net/profile/${username}`}
+                  username={userFullName}
                   show={inviteBoxChat}
-                  mailText={"You Have Been Invited to a Soapbox Chat"}
+                  inviteRoute="inviteHandlerChat"
+                  mailText={"You've Been Invited to a MegaHoot Soapbox Private Chat"}
                   onHide={() => setInviteBox(false)}
                 />
                 : null}
@@ -7355,6 +7429,63 @@ e.pollData.pollC = e.pollData.pollC
                           </div>
                         </ClickAwayListener>
                       )}
+
+{stickerPickerPrivate ? <div style={{
+                         position: "sticky",
+                         bottom: "0px",
+                        left: "0.5rem",
+                        backgroundColor: '#652C90',
+                        borderRadius: '5px',
+                        padding: '8px',
+                        zIndex: "1111", display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', flexWrap: 'wrap'
+                      }}>
+                        {stickersImages.map((image) => <img src={image}
+                          onClick={() => {
+                            let today = new Date();
+                            let message=image;
+                            let threadId = uuidv4()
+                                let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+                              
+                            appendPrivate(
+                              userFullName,
+                              `${image}`,
+                              "left",
+                              `${BaseURL}/profile-pictures/${userProfilePic}`,
+                              false,
+                              timestamp,
+                              false,
+                             true,true
+                            );
+                            // socket.emit("send", {
+                            //   name: userFullName,
+                            //   message: `${image}`,
+                            //   profilePic: userProfilePic,
+                            //   isEmoji: false,
+                            //   isVideo: false,
+                            //   isImage: true,
+                            //   isSticker: true
+                            // });
+                          
+                            socket.emit("private-message-soapbox", {
+                              threadId:threadId,
+                              to: privateChatPerson.name,
+                              from: userFullName,
+                              isClub: 0,
+                              isPrivate: 1,
+                              isCommunity: 0,
+                              name: userFullName,
+                              message: message,
+                              profilePic: userProfilePic,
+                              isEmoji: false,
+                              isSticker:true,
+                              isImage:true,
+                              timestamp: timestamp
+                            });
+                            setStickerPickerPrivate(false)
+                          }}
+                          style={{ width: '70px', minWidth: '70px', minHeight: '70px', margin: '5px', cursor: 'pointer', backgroundColor: 'whitesmoke', padding: '5px' }} />)}
+                      </div> : null
+                      }
                     </div>
 
                     <div className="send-private">
@@ -7415,7 +7546,7 @@ e.pollData.pollC = e.pollData.pollC
                             src={stickerIcon}
                             style={{ width: '25px', padding: '3px', borderRadius: '15px', margin: "5px", cursor: "pointer", backgroundColor: '#8249A0' }}
                             onClick={() => {
-                              setStickerPicker(!stickerPicker);
+                              setStickerPickerPrivate(!stickerPickerPrivate);
                             }}
                           />
                         </SoapboxTooltip>
