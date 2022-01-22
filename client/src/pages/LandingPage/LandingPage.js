@@ -10,7 +10,7 @@ import { MyStream } from '../../context/MyStreamContext';
 const LoginComp = Loadable({
     loader: () => import('../../components/LoginComp' /* webpackChunkName: "LoginComp" */),
     loading() {
-        return <FormLoading />
+        return <FormLoading  />
     }
 })
 const SignupComp = Loadable({
@@ -19,6 +19,8 @@ const SignupComp = Loadable({
         return <FormLoading />
     }
 })
+
+
 
 const LandingPage = () => {
     const [toggle, setToggle] = useState(true);

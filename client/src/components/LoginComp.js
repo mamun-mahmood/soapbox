@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Form } from 'react-bootstrap'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import BeatLoader from "react-spinners/BeatLoader";
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 const LoginComp = () => {
     const history = useHistory();
     const [saveLoading, setSaveLoading] = useState(false);
-
+    const { username } = useParams();
     const BaseURL = process.env.REACT_APP_API_URL;
     const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
     const facebookAppId = process.env.REACT_APP_FACEBOOK_APP_ID;
@@ -23,6 +23,15 @@ const LoginComp = () => {
         }
     })
 
+    const addFollower = async ({userName,loggedInUsername}) => {
+
+        axios.post(`${BaseURL}/user/followedBy`, {
+            username: userName,
+            loggedInUsername:loggedInUsername
+        })
+
+    
+    }
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
@@ -45,7 +54,14 @@ const LoginComp = () => {
                     localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
                     setTimeout(() => {
                         // history.push("/home");
-                        history.push(`/profile/${response.data.username}`);
+if(username){
+    addFollower({userName:username,loggedInUsername: response.data.username})
+   window.location.href=`/profile/${username}`
+
+}else{
+    window.location.href=`/profile/${response.data.username}`;
+}
+                        
                     }, 200);
                 }
 

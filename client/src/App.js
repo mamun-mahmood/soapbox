@@ -154,7 +154,12 @@ function App() {
         
 
         <Route path="/profile/:username">
-          <ProtectedRoute page={ProfilePage} />
+
+        {userInformation
+            ? <ProtectedRoute page={ProfilePage} />
+            : <LandingPage  />
+          }
+        
         </Route>
 
         <Route path="/request-private-club/:username">
