@@ -20,6 +20,7 @@ import Linkify from "react-linkify";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 import inviteicon from "../../assets/inviteicon.png";
+import ClickAwayListener from "react-click-away-listener";
 export default function InboxMessagePublic(props) {
   const stickersImages = [
     "https://soapboxapi.megahoot.net/stickers/sticker1.png",
@@ -49,9 +50,13 @@ export default function InboxMessagePublic(props) {
   const [showPromos, setShowPromos] = useState(false);
   const [showMyChat, setShowMyChat] = useState(true);
   const [privateChat, setPrivateChat] = useState(false);
+  const [filePrivate, setFilePrivate] = useState([]);
+  const [srcPrivate, setSrcPrivate] = useState(null);
+  const [mimeTypePrivate, setMimeTypePrivate] = useState("");
   const [messageInboxValuePrivate, setMessageInboxValuePrivate] = useState("");
   const [privateChatPerson, setPrivateChatPerson] = useState([]);
   const [stickerPicker, setStickerPicker] = useState(false);
+  const [emojiPickerPrivate,setEmojiPickerPrivate]= useState(false)
   const BaseURL = process.env.REACT_APP_API_URL;
  const [windowWidth,setWindowWidth] = useState(window.innerWidth)
 
@@ -120,6 +125,7 @@ export default function InboxMessagePublic(props) {
     position,
     imgSrc,
     isEmoji,
+    timestamp,
     isVideo,
     isImage,
     isSticker
@@ -132,6 +138,7 @@ export default function InboxMessagePublic(props) {
         position,
         imgSrc,
         isEmoji,
+        timestamp,
         isVideo,
         isImage,
         isSticker,
@@ -169,7 +176,8 @@ export default function InboxMessagePublic(props) {
         `${message}`,
         "right",
         `${BaseURL}/profile-pictures/${userProfilePic}`,
-        emojiValidator
+        emojiValidator,
+        timestamp
       );
       // socket.emit('send',message);
       socket.emit("private-message-soapbox", {
@@ -207,6 +215,144 @@ export default function InboxMessagePublic(props) {
         setChatData(res.data);
       });
   }, [username]);
+
+  const handleFilePrivate = (event) => {
+    const file = event.target.files[0];
+    setFilePrivate(file);
+    file && setMimeTypePrivate(file.type);
+    setSrcPrivate(URL.createObjectURL(file));
+    // setMessageInboxValue(file.name);
+    setTimeout(() => {
+      if(document.querySelector(".privateChat-club")){
+      var messageContainer = document.querySelector(".privateChat-club");
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+    }, 500);
+
+
+      
+   
+  };
+
+  const uploadPrivate = (file, mimeType) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const uploadDataPrivate = async () => {
+      await axios
+        .all([axios.post(`${BaseURL}/upload/uploadMedia`, formData)])
+        .then(
+          axios.spread((res1, res2) => {
+            if (res1) {
+              if (mimeType.substr(0, 5) == ("video" || "audio")) {
+                // appendPrivate(
+                //   userFullName,
+                //   `${BaseURL}/storageChat/${res1.data}`,
+                //   "left",
+                //   `${BaseURL}/profile-pictures/${userProfilePic}`,
+                //   false,
+                //   true,
+                //   false
+                // );
+                // socket.emit("send", {
+                //   name: userFullName,
+                //   message: `${BaseURL}/storageChat/${res1.data}`,
+                //   profilePic: userProfilePic,
+                //   isEmoji: false,
+                //   isVideo: true,
+                //   isImage: false,
+                // });
+                const message = `${BaseURL}/storageChat/${res1.data}`;
+                let today = new Date();
+            let threadId = uuidv4()
+                let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+                let emojiValidator = isEmoji(message);
+          
+                appendPrivate(
+                  username,
+                  `${message}`,
+                  "right",
+                  `${BaseURL}/profile-pictures/${userProfilePic}`,
+                  emojiValidator,
+                  timestamp,
+                  true,
+                  false,
+                  false
+                );
+                // socket.emit('send',message);
+                socket.emit("private-message-soapbox", {
+                  threadId:threadId,
+                  to: privateChatPerson.name,
+                  from: username,
+                  isClub: 0,
+                  isPrivate: 1,
+                  isCommunity: 0,
+                  name: username,
+                  message: message,
+                  profilePic: userProfilePic,
+                  isEmoji: isEmoji(message),
+                  timestamp: timestamp,
+                  isVideo: true,
+                });
+              } else {
+                // append(
+                //   userFullName,
+                //   `${BaseURL}/storageChat/${res1.data}`,
+                //   "left",
+                //   `${BaseURL}/profile-pictures/${userProfilePic}`,
+                //   false,
+                //   false,
+                //   true
+                // );
+                // socket.emit("send", {
+                //   name: userFullName,
+                //   message: `${BaseURL}/storageChat/${res1.data}`,
+                //   profilePic: userProfilePic,
+                //   isEmoji: false,
+                //   isVideo: false,
+                //   isImage: true,
+                // });
+
+                const message = `${BaseURL}/storageChat/${res1.data}`;
+                let today = new Date();
+            let threadId = uuidv4()
+                let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+                let emojiValidator = isEmoji(message);
+          
+                appendPrivate(
+                  username,
+                  `${message}`,
+                  "right",
+                  `${BaseURL}/profile-pictures/${userProfilePic}`,
+                  emojiValidator,
+                  timestamp,
+                  false,
+                  true
+                );
+                // socket.emit('send',message);
+                socket.emit("private-message-soapbox", {
+                  threadId:threadId,
+                  to: privateChatPerson.name,
+                  from: username,
+                  isClub: 0,
+                  isPrivate: 1,
+                  isCommunity: 0,
+                  name: username,
+                  message: message,
+                  profilePic: userProfilePic,
+                  isEmoji: isEmoji(message),
+                  timestamp: timestamp,
+                  isVideo: false,
+                  isImage:true
+                });
+              }
+            }
+          })
+        );
+    };
+
+    uploadDataPrivate();
+  };
 
   useEffect(() => {
     axios.get(`${BaseURL}/user/follows/${actualUsername}`).then((res) => {
@@ -272,9 +418,10 @@ export default function InboxMessagePublic(props) {
             "left",
             `${BaseURL}/profile-pictures/${data.profilePic}`,
             data.isEmoji,
+            data.timestamp,
             data.isVideo,
             data.isImage,
-            data.timeStamp
+            
           );
         }
       }
@@ -312,6 +459,12 @@ export default function InboxMessagePublic(props) {
               borderRadius:'8px',
               marginRight:'15px',
               minWidth:'300px'
+            }}
+            onDragStart={(e) => e.preventDefault()}
+            onmousedown={(event) => {
+              event.preventDefault
+                ? event.preventDefault()
+                : (event.returnValue = false);
             }}
           >
             <button
@@ -415,6 +568,14 @@ export default function InboxMessagePublic(props) {
                             chatname: e.chatFrom,
                             imgSrc: `${BaseURL}/profile-pictures/${e.chat.profilePic}`,
                           });
+                          
+                        }}
+
+                        onDragStart={(e) => e.preventDefault()}
+                        onmousedown={(event) => {
+                          event.preventDefault
+                            ? event.preventDefault()
+                            : (event.returnValue = false);
                         }}
                       >
                         <div className="ProfileBox">
@@ -428,10 +589,13 @@ export default function InboxMessagePublic(props) {
                             {moment(e.createdAt).fromNow()}
                           </p>
                         </div>
-                        <div className="message eclippse">
+                        {/* <div className="message eclippse">
                           {" "}
                           {e.chat.message}
-                        </div>
+                        </div> */}
+                        {e.chat.isImage ||e.isImage?<img style={{marginLeft:'37px',marginTop:'-15px',width:'18px'}} src={e.chat.message}  />:null}
+                          {e.chat.isVideo || e.isVideo?<video style={{marginLeft:'37px',marginTop:'-15px',width:'18px'}} src={e.chat.message} />:null}
+                          {(!e.chat.isImage &&!e.isImage&&!e.isVideo && !e.chat.isVideo)?<div className='message eclippse'> {e.chat.message}</div>:null} 
                       </div>
                     ))
                   : ""}
@@ -637,7 +801,7 @@ export default function InboxMessagePublic(props) {
                       ))
                     : null}
 
-                  {/* {emojiPickerPrivate && (
+                  {emojiPickerPrivate && (
                         <ClickAwayListener
                           onClickAway={() => {
                             setEmojiPickerPrivate(false);
@@ -660,7 +824,7 @@ export default function InboxMessagePublic(props) {
                                 // });
                               }}
                               pickerStyle={{
-                                position: "absolute",
+                                position: "sticky",
                                 bottom: "0px",
                                 left: "0.2rem",
                                 zIndex: "1111",
@@ -668,7 +832,7 @@ export default function InboxMessagePublic(props) {
                             />
                           </div>
                         </ClickAwayListener>
-                      )} */}
+                      )}
                   {stickerPicker ? (
                     <div
                       style={{
@@ -724,6 +888,71 @@ export default function InboxMessagePublic(props) {
                       ))}
                     </div>
                   ) : null}
+
+{srcPrivate && mimeTypePrivate.substr(0, 5) == "image" ? (
+                        <div className="messageBox">
+                          <img
+                            src={srcPrivate}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                          />
+                          <button
+                            onClick={() => {
+                              uploadPrivate(filePrivate, filePrivate.type);
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
+
+                      {srcPrivate && mimeTypePrivate.substr(0, 5) == "video" ? (
+                        <div className="messageBox">
+                          <video
+                            src={srcPrivate}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                            className="messageBox"
+                          />
+                          <button
+                            onClick={() => {
+                              uploadPrivate(filePrivate, filePrivate.type);
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
                 </div>
 
                 <div className="send-private">
@@ -748,9 +977,9 @@ export default function InboxMessagePublic(props) {
                       id="post-video"
                       name="video"
                       accept="video/*"
-                      // onChange={handleFile}
+                       onChange={handleFilePrivate}
                       hidden
-                      disabled={true}
+                      disabled={false}
                     />
 
                     <label htmlFor="post-image">
@@ -767,9 +996,9 @@ export default function InboxMessagePublic(props) {
                       id="post-image"
                       name="image"
                       accept="image/*"
-                      // onChange={handleFile}
+                       onChange={handleFilePrivate}
                       hidden
-                      disabled={true}
+                      disabled={false}
                     />
 
                     <SoapboxTooltip title={"Share File"} placement="top">
@@ -800,9 +1029,9 @@ export default function InboxMessagePublic(props) {
                       <img
                         src={emojiIcon}
                         style={{ margin: "5px", cursor: "pointer" }}
-                        // onClick={() => {
-                        //   setEmojiPickerPrivate(!emojiPickerPrivate);
-                        // }}
+                         onClick={() => {
+                           setEmojiPickerPrivate(!emojiPickerPrivate);
+                         }}
                         width="27px"
                       />
                     </SoapboxTooltip>

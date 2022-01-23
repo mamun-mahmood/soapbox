@@ -98,7 +98,13 @@ setContacts(old=>[...old,response.data])
   
     })},[])
     return (
-        <div style={{maxHeight:'80vh',overflowY:'auto',backgroundColor:tabColor,height:'100%'}}>
+        <div style={{maxHeight:'80vh',overflowY:'auto',backgroundColor:tabColor,height:'100%'}}   
+        onDragStart={(e) => e.preventDefault()}
+        onmousedown={(event) => {
+          event.preventDefault
+            ? event.preventDefault()
+            : (event.returnValue = false);
+        }} >
           <button className='inbox-tab' style={{backgroundColor:'blue'}} onClick={()=>{setTabColor('blue');setShowContacts(true);setShowMyChat(false);setShowPromos(false);setShowNotification(false)}}>Contacts</button>
           <button  className='inbox-tab' style={{backgroundColor:'purple'}}  onClick={()=>{setTabColor('purple');setShowContacts(false);setShowMyChat(true);setShowPromos(false);setShowNotification(false)}}>MyChats</button>
           <button  className='inbox-tab' style={{backgroundColor:'pink'}}  onClick={()=>{setTabColor('pink');setShowContacts(false);setShowMyChat(false);setShowPromos(true);setShowNotification(false)}}>Promos</button>
@@ -139,8 +145,8 @@ setContacts(old=>[...old,response.data])
                             <p>{e.chatFrom}</p>
                             <p className="timestamp"> {moment(e.createdAt).fromNow()}</p>
                           </div>
-                          {e.chat.isImage ||e.isImage?<img style={{marginLeft:'37px',marginTop:'-15px'}} src={e.chat.message} width="40px" />:null}
-                          {e.chat.isVideo || e.isVideo?<video style={{marginLeft:'37px',marginTop:'-15px'}} src={e.chat.message} width="40px" />:null}
+                          {e.chat.isImage ||e.isImage?<img style={{marginLeft:'37px',marginTop:'-15px',width:'18px'}} src={e.chat.message}  />:null}
+                          {e.chat.isVideo || e.isVideo?<video style={{marginLeft:'37px',marginTop:'-15px',width:'18px'}} src={e.chat.message}  />:null}
                         {(!e.chat.isImage &&!e.isImage&&!e.isVideo && !e.chat.isVideo)?<div className='message eclippse'> {e.chat.message}</div>:null} 
                         
               </div>
