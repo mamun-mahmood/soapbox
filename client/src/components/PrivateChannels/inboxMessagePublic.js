@@ -854,24 +854,35 @@ export default function InboxMessagePublic(props) {
                         <img
                           src={image}
                           onClick={() => {
+                            let today = new Date();
+                            let threadId = uuidv4();
+                            let timestamp =
+                              today.toLocaleTimeString() + " " + today.toLocaleDateString();
                             appendPrivate(
                               username,
                               `${image}`,
                               "left",
                               `${BaseURL}/profile-pictures/${userProfilePic}`,
                               false,
+                              timestamp,
                               false,
                               true,
                               true
                             );
-                            socket.emit("send", {
+                            socket.emit("private-message-soapbox", {
+                              threadId:threadId,
+                              to: privateChatPerson.name,
+                              from: username,
+                              isClub: 0,
+                              isPrivate: 1,
+                              isCommunity: 0,
                               name: username,
-                              message: `${image}`,
+                              message: image,
                               profilePic: userProfilePic,
                               isEmoji: false,
-                              isVideo: false,
-                              isImage: true,
-                              isSticker: true,
+                              isSticker:true,
+                              isImage:true,
+                              timestamp: timestamp
                             });
                             setStickerPicker(false);
                           }}
