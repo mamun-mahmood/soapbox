@@ -1082,7 +1082,7 @@ export default function InboxMessagePublic(props) {
                       value={messageInboxValuePrivate}
                       autoComplete="off"
                       id="messageInp"
-                      style={{ width: privateChat ? window.innerWidth>=600?"230px":"155px" : "230px" }}
+                      style={{ width:window.innerWidth>=600?"230px":"155px"}}
                       onChange={(e) => {
                         setMessageInboxValuePrivate(e.target.value);
                       }}
