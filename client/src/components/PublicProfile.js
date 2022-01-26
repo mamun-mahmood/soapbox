@@ -14,6 +14,7 @@ import HootOutside from './HootOutside/HootOutside';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScrollLoader from './Feed/InfiniteScrollLoader';
 // import toast from 'react-hot-toast';
+import chathive from "../assets/chathive.png";
 import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { v4 as uuidv4 } from 'uuid';
@@ -215,7 +216,7 @@ const PublicProfile = ({
                                         }
                                     </div>
                                 </div>
-
+                             
                                 <div className="user-name-page" style={{fontSize:'14px'}}>@{username}</div>
 
                                 <div className="user-follow">
@@ -261,7 +262,15 @@ const PublicProfile = ({
                                         </button>
                                     }
                                 </div>
-
+                              
+                                <button className="btn-edit-profile" >
+                <Link to={{pathname:`/chathive/${userInformation.username}/livechat/${name}`,profilePic:{profilePicPath}}}  > <img
+                      
+                      src={chathive}
+                      className="chativelogo"
+                    />ChatHive</Link>
+                 
+                </button>
                                 {privateChannel ?
                                     <button className="public-btn-add-private-c">
                                         <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>

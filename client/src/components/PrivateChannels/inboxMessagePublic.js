@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, Fragment } from "react";
 import moment from "moment";
 import socket, { startSocket } from "../../socketChat";
+import MyVerticallyCenteredModal from "./model";
 import { AiOutlineBell } from "react-icons/ai";
 import { Contacts } from "@material-ui/icons";
 import { useParams } from "react-router-dom";
@@ -21,6 +22,7 @@ import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 import inviteicon from "../../assets/inviteicon.png";
 import ClickAwayListener from "react-click-away-listener";
+import { useLocation } from 'react-router-dom'
 export default function InboxMessagePublic(props) {
   const stickersImages = [
     "https://soapboxapi.megahoot.net/stickers/sticker1.png",
@@ -38,7 +40,9 @@ export default function InboxMessagePublic(props) {
     "https://soapboxapi.megahoot.net/stickers/sticker13.png",
     "https://soapboxapi.megahoot.net/stickers/sticker14.png",
   ];
-  const { actualUsername } = useParams();
+  const [inviteBox, setInviteBox] = useState(false);
+  const { actualUsername,livechat,livechatname } = useParams();
+
   const [chatDataPrivate, setChatDataPrivate] = useState([]);
   const [userProfilePic, setUserProfilePic] = useState("");
   const [chatData, setChatData] = useState([]);
@@ -59,9 +63,11 @@ export default function InboxMessagePublic(props) {
   const [emojiPickerPrivate,setEmojiPickerPrivate]= useState(false)
   const BaseURL = process.env.REACT_APP_API_URL;
  const [windowWidth,setWindowWidth] = useState(window.innerWidth)
-
+ const location = useLocation()
  useEffect(()=>{setWindowWidth(window.innerWidth)},[window.innerWidth])
+
   const getChatDataPrivate = (a, b) => {
+   
     setChatDataPrivate([]);
     axios
       .post(`${BaseURL}/upload/getChatDataPrivate`, {
@@ -103,6 +109,16 @@ export default function InboxMessagePublic(props) {
         }, 1000);
       });
   };
+  useEffect(()=>{
+    if(livechat=="livechat"){
+       getChatDataPrivate(livechatname, username);
+    setPrivateChatPerson({
+      name:livechatname,
+      profilePic:location.profilePic.profilePicPath,
+    });
+    }
+   
+   },[livechat,username])
   const openPrivateChat = (e) => {
     getChatDataPrivate(e.chatname, username);
     setPrivateChatPerson({
@@ -200,6 +216,7 @@ export default function InboxMessagePublic(props) {
     axios
       .get(`${BaseURL}/user/${actualUsername}`)
       .then((res) => {
+        console.log(res.data,actualUsername,livechat,livechatname,"res")
         setUsername(res.data[0].name);
         setUserProfilePic(res.data[0].profilePic);
       })
@@ -426,7 +443,7 @@ export default function InboxMessagePublic(props) {
         }
       }
     });
-  }, []);
+  }, [username]);
   return (
     <Fragment>
       <NavBar />
@@ -445,7 +462,7 @@ export default function InboxMessagePublic(props) {
           }}
         >
         
-{windowWidth>=600?<div
+{livechat!=='livechat' && windowWidth>=600?<div
             style={{
               marginTop: "75px",
               flex: "0.45",
@@ -519,7 +536,7 @@ export default function InboxMessagePublic(props) {
             >
               <AiOutlineBell />
             </button>
-            <span onClick={() => props.setInviteBox(true)}>
+            <span onClick={() => setInviteBox(true)}>
               <SoapboxTooltip
                 title={"Invite"}
                 placement="bottom"
@@ -626,14 +643,26 @@ export default function InboxMessagePublic(props) {
               </div>
             ) : null}
           </div>:null}
-          
-          {privateChat ? (
-            <div style={{ flex: "0.3", position: "relative" }}>
+          {inviteBox? <MyVerticallyCenteredModal
+                  title={"Invitation"}
+                  closeModal={() => setInviteBox(false)}
+                  clubname={username}
+                  clublink={`https://megahoot.net/profile/${actualUsername}`}
+
+                  username={username}
+                  show={inviteBox}
+                  inviteRoute="inviteHandlerChat"
+                  mailText={"You've Been Invited to a MegaHoot Soapbox Private Chat"}
+                  onHide={() => setInviteBox(false)}
+                />:null}
+
+        
+          {livechat=='livechat'?   <div style={{ flex: "0.3", position: "relative" }}>
               <button onClick={() => setPrivateChat(false)}>Close</button>
               <div
                 className="privateChat-club"
                 id="privatechatslide"
-                style={{ position: "absolute", top: "70px", height: "82vh" }}
+                style={{ position: "absolute", top: "70px", height: "82vh" ,right:'0px',left:'0px'}}
               >
                 <div
                   className="live-header"
@@ -1053,7 +1082,461 @@ export default function InboxMessagePublic(props) {
                       value={messageInboxValuePrivate}
                       autoComplete="off"
                       id="messageInp"
-                      style={{ width: privateChat ? "230px" : "230px" }}
+                      style={{ width: privateChat ? window.innerWidth>=600?"230px":"155px" : "230px" }}
+                      onChange={(e) => {
+                        setMessageInboxValuePrivate(e.target.value);
+                      }}
+                    />
+
+                    <button
+                      type="submit"
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        background: "none",
+                        marginLeft: "5px",
+                      }}
+                    >
+                      <SoapboxTooltip title={"Send Message"} placement="top">
+                        <img src={sendIcon} width="27px" />
+                      </SoapboxTooltip>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>:null}
+          { livechat!=='livechat' &&privateChat  ? (
+            <div style={{ flex: "0.3", position: "relative" }}>
+              <button onClick={() => setPrivateChat(false)}>Close</button>
+              <div
+                className="privateChat-club"
+                id="privatechatslide"
+              
+                style={{position: "absolute", top: "70px", height: "82vh",width:window.innerWidth>=600?"60vw":"90vw !important",
+                minWidth:window.innerWidth>=600?"450px":"90vw !important"}}
+              >
+                <div
+                  className="live-header"
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    position: "absolute",
+                    backgroundColor: "#8149a06c",
+                    color: "white",
+                    borderRadius: "3px",
+                    paddingLeft: "5px",
+                    paddingRight: "5px",
+
+                    top: "73px",
+                    width:window.innerWidth>=600?"":"90vw !important",
+                    minWidth:window.innerWidth>=600?"450px":"90vw !important"
+                  }}
+                >
+                  <span
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {privateChatPerson && privateChatPerson.profilePic ? (
+                      <img
+                        src={privateChatPerson.profilePic}
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          borderRadius: "15px",
+                        }}
+                      />
+                    ) : null}
+
+                    <p
+                      style={{
+                        fontWeight: "400",
+                        fontSize: "0.93rem",
+                        marginTop: "12px",
+                      }}
+                    >
+                      {privateChatPerson.name}
+                    </p>
+                  </span>
+
+                  <span style={{ display: "flex", alignItems: "center" }}>
+                    Private Chat
+                    <FaWindowClose
+                      className="icon-text"
+                      onClick={() => {
+                        document.getElementById(
+                          "privatechatslide"
+                        ).style.transition = "2sec";
+                        document.getElementById(
+                          "privatechatslide"
+                        ).style.right = "-100vw";
+
+                        setTimeout(() => {
+                          setPrivateChat(false);
+                          // setClubFloor(true);
+                          // setShowChatRoom(true)
+                        }, 200);
+                      }}
+                    />
+                  </span>
+                </div>
+                <div
+                  className="chatarea"
+                  style={{
+                    marginTop: "0px",
+                    zIndex: "-1",
+                  }}
+                >
+                  {chatDataPrivate.length
+                    ? chatDataPrivate.map((e) => (
+                        <div
+                          className="messageBox"
+                         
+                        >
+                          <div className="ProfileBox">
+                            <img
+                              className="chat-profile"
+                              src={e.imgSrc ? e.imgSrc : null}
+                            />
+                            <p>{e.chatname}</p>
+                            <p className="timestamp"> {e.timestamp}</p>
+                          </div>
+                          <Linkify
+                            componentDecorator={(
+                              decoratedHref,
+                              decoratedText,
+                              key
+                            ) => (
+                              <a target="blank" href={decoratedHref} key={key}>
+                                {decoratedText}
+                              </a>
+                            )}
+                          >
+                            {" "}
+                            <div
+                              className={
+                                e.isEmoji ? "message-emoji" : "message"
+                              }
+                            >
+                              {!e.isVideo &&
+                              !e.isImage &&
+                              !e.isPoll &&
+                              !e.isEvent
+                                ? e.message
+                                : null}
+                            </div>
+                          </Linkify>
+
+                          {e.isVideo ? (
+                            <video
+                              onDragStart={(e) => e.preventDefault()}
+                              onmousedown={(event) => {
+                                event.preventDefault
+                                  ? event.preventDefault()
+                                  : (event.returnValue = false);
+                              }}
+                              style={{
+                                maxWidth: "200px",
+                                marginTop: "20px",
+                                borderRadius: "5px",
+                              }}
+                              controls={true}
+                              src={e.message}
+                            ></video>
+                          ) : null}
+                          {e.isImage ? (
+                            <img
+                              src={e.message}
+                              onDragStart={(e) => e.preventDefault()}
+                              onmousedown={(event) => {
+                                event.preventDefault
+                                  ? event.preventDefault()
+                                  : (event.returnValue = false);
+                              }}
+                              style={{
+                                maxWidth: e.isSticker ? "60px" : "200px",
+                                marginTop: "20px",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          ) : null}
+
+                          {e.isPoll ? (
+                            <p
+                              style={{ fontSize: "12px" }}
+                            >{`Voting Ends in ${e.expiryTime}`}</p>
+                          ) : null}
+                          {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                              className="reply-button" 
+                              onClick={()=>{
+                                setReplyData({chatData:e,user:{
+                                name: userFullName,
+                                profilePic: userProfilePic,
+                              }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null} */}
+                          <div className="reply-box"></div>
+                        </div>
+                      ))
+                    : null}
+
+                  {emojiPickerPrivate && (
+                        <ClickAwayListener
+                          onClickAway={() => {
+                            setEmojiPickerPrivate(false);
+                          }}
+                        >
+                          <div>
+                            <Picker
+                              native
+                              onEmojiClick={(event, emojiObject) => {
+                                setMessageInboxValuePrivate(
+                                  messageInboxValuePrivate + emojiObject.emoji
+                                );
+                                // append(userFullName,`${emojiObject.emoji}`, 'right', `${BaseURL}/profile-pictures/${userProfilePic}`, true)
+                                //  // socket.emit('send',message);
+                                // socket.emit('send', {
+                                //     name: userFullName,
+                                //     message: emojiObject.emoji,
+                                //     profilePic: userProfilePic,
+                                //     isEmoji: true
+                                // });
+                              }}
+                              pickerStyle={{
+                                position: "sticky",
+                                bottom: "0px",
+                                left: "0.2rem",
+                                zIndex: "1111",
+                              }}
+                            />
+                          </div>
+                        </ClickAwayListener>
+                      )}
+                  {stickerPicker ? (
+                    <div
+                      style={{
+                        position: "sticky",
+                        bottom: "0px",
+                        left: "0.5rem",
+                        backgroundColor: "#652C90",
+                        borderRadius: "5px",
+                        padding: "8px",
+                        zIndex: "1111",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      {stickersImages.map((image) => (
+                        <img
+                          src={image}
+                          onClick={() => {
+                            let today = new Date();
+                            let threadId = uuidv4();
+                            let timestamp =
+                              today.toLocaleTimeString() + " " + today.toLocaleDateString();
+                            appendPrivate(
+                              username,
+                              `${image}`,
+                              "left",
+                              `${BaseURL}/profile-pictures/${userProfilePic}`,
+                              false,
+                              timestamp,
+                              false,
+                              true,
+                              true
+                            );
+                            socket.emit("private-message-soapbox", {
+                              threadId:threadId,
+                              to: privateChatPerson.name,
+                              from: username,
+                              isClub: 0,
+                              isPrivate: 1,
+                              isCommunity: 0,
+                              name: username,
+                              message: image,
+                              profilePic: userProfilePic,
+                              isEmoji: false,
+                              isSticker:true,
+                              isImage:true,
+                              timestamp: timestamp
+                            });
+                            setStickerPicker(false);
+                          }}
+                          style={{
+                            width: "70px",
+                            minWidth: "70px",
+                            minHeight: "70px",
+                            margin: "5px",
+                            cursor: "pointer",
+                            backgroundColor: "whitesmoke",
+                            padding: "5px",
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ) : null}
+
+{srcPrivate && mimeTypePrivate.substr(0, 5) == "image" ? (
+                        <div className="messageBox">
+                          <img
+                            src={srcPrivate}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                          />
+                          <button
+                            onClick={() => {
+                              uploadPrivate(filePrivate, filePrivate.type);
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
+
+                      {srcPrivate && mimeTypePrivate.substr(0, 5) == "video" ? (
+                        <div className="messageBox">
+                          <video
+                            src={srcPrivate}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                            className="messageBox"
+                          />
+                          <button
+                            onClick={() => {
+                              uploadPrivate(filePrivate, filePrivate.type);
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFilePrivate([]);
+                              setSrcPrivate(null);
+                              setMimeTypePrivate("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
+                </div>
+
+                <div className="send-private">
+                  <ReactTooltip />
+                  <form
+                    action="#"
+                    id="send-container"
+                    style={{ marginLeft: privateChat ? "5px" : "5px" }}
+                    onSubmit={(e) => messagesubmitPrivate(e)}
+                  >
+                    <label htmlFor="post-video">
+                      <SoapboxTooltip title={"Share Video"} placement="top">
+                        <img
+                          src={videochat}
+                          style={{ margin: "5px", cursor: "pointer" }}
+                          width="27px"
+                        />
+                      </SoapboxTooltip>
+                    </label>
+                    <input
+                      type="file"
+                      id="post-video"
+                      name="video"
+                      accept="video/*"
+                       onChange={handleFilePrivate}
+                      hidden
+                      disabled={false}
+                    />
+
+                    <label htmlFor="post-image">
+                      <SoapboxTooltip title={"Share Photos"} placement="top">
+                        <img
+                          src={imagechat}
+                          style={{ margin: "5px", cursor: "pointer" }}
+                          width="27px"
+                        />
+                      </SoapboxTooltip>
+                    </label>
+                    <input
+                      type="file"
+                      id="post-image"
+                      name="image"
+                      accept="image/*"
+                       onChange={handleFilePrivate}
+                      hidden
+                      disabled={false}
+                    />
+
+                    <SoapboxTooltip title={"Share File"} placement="top">
+                      <img
+                        src={filechat}
+                        style={{ margin: "5px", cursor: "pointer" }}
+                        width="27px"
+                      />
+                    </SoapboxTooltip>
+                    <SoapboxTooltip title={"Stickers"} placement="top">
+                      <img
+                        src={stickerIcon}
+                        style={{
+                          width: "25px",
+                          padding: "3px",
+                          borderRadius: "15px",
+                          margin: "5px",
+                          cursor: "pointer",
+                          backgroundColor: "#8249A0",
+                        }}
+                        onClick={() => {
+                          setStickerPicker(!stickerPicker);
+                        }}
+                      />
+                    </SoapboxTooltip>
+
+                    <SoapboxTooltip title={"Emoji"} placement="top">
+                      <img
+                        src={emojiIcon}
+                        style={{ margin: "5px", cursor: "pointer" }}
+                         onClick={() => {
+                           setEmojiPickerPrivate(!emojiPickerPrivate);
+                         }}
+                        width="27px"
+                      />
+                    </SoapboxTooltip>
+
+                    <input
+                      type="text"
+                      name="messageInp"
+                      value={messageInboxValuePrivate}
+                      autoComplete="off"
+                      id="messageInp"
+                     
+                      style={{ width: privateChat ? window.innerWidth>=600?"230px":"155px" : "230px" }}
                       onChange={(e) => {
                         setMessageInboxValuePrivate(e.target.value);
                       }}
@@ -1076,7 +1559,7 @@ export default function InboxMessagePublic(props) {
                 </div>
               </div>
             </div>
-          ) : windowWidth>=600?null:  <div
+          ) :windowWidth>=600?null:livechat!=='livechat'?<div
           style={{
             marginTop: "75px",
             flex: "0.45",
@@ -1144,7 +1627,7 @@ export default function InboxMessagePublic(props) {
           >
             <AiOutlineBell />
           </button>
-          <span onClick={() => props.setInviteBox(true)}>
+          <span onClick={() =>setInviteBox(true)}>
             <SoapboxTooltip
               title={"Invite"}
               placement="bottom"
@@ -1206,10 +1689,13 @@ export default function InboxMessagePublic(props) {
                           {moment(e.createdAt).fromNow()}
                         </p>
                       </div>
-                      <div className="message eclippse">
+                      {/* <div className="message eclippse">
                         {" "}
                         {e.chat.message}
-                      </div>
+                      </div> */}
+                      {e.chat.isImage ||e.isImage?<img style={{marginLeft:'37px',marginTop:'-15px',width:'18px'}} src={e.chat.message}  />:null}
+                          {e.chat.isVideo || e.isVideo?<video style={{marginLeft:'37px',marginTop:'-15px',width:'18px'}} src={e.chat.message}  />:null}
+                        {(!e.chat.isImage &&!e.isImage&&!e.isVideo && !e.chat.isVideo)?<div className='message eclippse'> {e.chat.message}</div>:null} 
                     </div>
                   ))
                 : ""}
@@ -1239,7 +1725,7 @@ export default function InboxMessagePublic(props) {
               No Promotion Available
             </div>
           ) : null}
-        </div>}
+        </div>:null}
         </div>
       </div>
     </Fragment>

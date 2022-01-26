@@ -1257,3 +1257,64 @@ font-size: 12px;
 cursor: pointer;
 
 }
+
+
+@media  (max-width: 600px) {
+  .privateChat-club {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 105px;
+
+    min-width: 100vw;
+    max-width: 450px;
+    width:100vw;
+    background-color: #D6D2EB;
+    transition: 1s;
+    border: 2px solid #e1b8f8be;
+  
+    padding-top: 0px;
+  
+    height: 78vh;
+    min-height: 75vh;
+    overflow-y: auto;
+    border-radius: 10px;
+    z-index: 50;
+  }
+  
+  .privateChat-club .chatarea{
+  margin-top: 20px !important;
+  padding: 33px;
+  
+  }
+  
+  .privateChat-club .live-header{
+    position: fixed !important;
+    min-width: 100vw;
+    max-width: 450px;
+    width:100vw;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    background-color: #8149a0da;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  
+  }
+  #send-container {
+    /* display: block; */
+    /* margin: auto; */
+    /* text-align: center; */
+  
+    /*  */
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    /* position: fixed; */
+    /* bottom: 5px; */
+  
+    background-color: #EDEDFF;
+    padding: 0.3rem;
+  }
+}

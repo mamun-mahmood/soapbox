@@ -148,7 +148,7 @@ function App() {
         <Route path="/edit/profile/:username">
           <ProtectedRoute page={EditProfilePage} />
         </Route>
-        <Route path="/chathive/:actualUsername">
+        <Route path="/chathive/:actualUsername/:livechat?/:livechatname?">
           <ProtectedRoute page={InboxMessagePublic} />
         </Route>
         

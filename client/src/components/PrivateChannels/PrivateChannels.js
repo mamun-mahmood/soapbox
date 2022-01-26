@@ -326,7 +326,8 @@ const openPrivateChatfromInbox=(e)=>{
   //     profilePic: userProfilePic,
   //   });
 
-  setTimeout(() => {
+  if(window.innerWidth>=600){
+ setTimeout(() => {
     if (
       document.getElementById(
         "privatechatslide"
@@ -340,6 +341,37 @@ const openPrivateChatfromInbox=(e)=>{
       ).style.right = "500px";
     }
   }, 1);
+  }else{
+    setTimeout(() => {
+      if (
+        document.getElementById(
+          "privatechatslide"
+        )
+      ) {
+        document.getElementById(
+          "privatechatslide"
+        ).style.transition = "1sec";
+        document.getElementById(
+          "privatechatslide"
+        ).style.right = "0px";
+        document.getElementById(
+          "privatechatslide"
+        ).style.left = "0px";
+        document.getElementById(
+          "privatechatslide"
+        ).style.zIndex = 999999;
+
+
+        document.getElementById(
+          "privatechatslide"
+        ).style.width="90vw !important",
+        document.getElementById(
+          "privatechatslide"
+        ).style.minWidth="90vw !important"
+      }
+    }, 1);
+  }
+ 
 }
 
   const append = (
@@ -4047,7 +4079,9 @@ const resetChatView=(username)=>{
               ) : null}
 
                   {privateChat ? (
-                    <div className="privateChat-club" id="privatechatslide">
+                    <div className="privateChat-club" id="privatechatslide" 
+                    style={{width:window.innerWidth>=600?"60vw":"90vw !important",
+                    minWidth:window.innerWidth>=600?"450px":"90vw !important"}}>
                       <div
                         className="live-header"
                         style={{
@@ -4061,6 +4095,9 @@ const resetChatView=(username)=>{
                           maxWidth: "440px",
                           paddingLeft: "5px",
                           paddingRight: "5px",
+                          width:window.innerWidth>=600?"":"90vw !important",
+                          minWidth:window.innerWidth>=600?"450px":"90vw !important"
+                         
                         }}
                       >
                         <span
@@ -4456,7 +4493,7 @@ const resetChatView=(username)=>{
                             value={messageInboxValuePrivate}
                             autoComplete="off"
                             id="messageInp"
-                            style={{ width: privateChat ? "230px" : "230px" }}
+                            style={{ width: privateChat ? window.innerWidth>=600?"230px":"155px" : "230px" }}
                             onChange={(e) => {
                               setMessageInboxValuePrivate(e.target.value);
                             }}
@@ -4542,8 +4579,8 @@ const resetChatView=(username)=>{
                         border: "2px solid #D9D2FA",
                         overflowX: "hidden",
                         maxHeight: '80vh',
-                        flex: clubFloor ? "0.5" : "1",
-                        maxWidth:clubFloor ? "500px" : "60vw"
+                        flex: clubFloor ? window.innerWidth>=600?"0.5":"1" : "1",
+                        maxWidth:clubFloor ? "500px" : window.innerWidth>=600?"60vw":"100%"
                       }}
                     >
                       <div
@@ -7010,7 +7047,9 @@ e.pollData.pollC = e.pollData.pollC
               ) : null}
 
                 {privateChat ? (
-                  <div className="privateChat-club" id="privatechatslide">
+                  <div className="privateChat-club" id="privatechatslide"
+                  style={{width:window.innerWidth>=600?"60vw":"90vw !important",
+                  minWidth:window.innerWidth>=600?"450px":"90vw !important"}}>
                     <div
                       className="live-header"
                       style={{
@@ -7024,6 +7063,8 @@ e.pollData.pollC = e.pollData.pollC
                         maxWidth: "440px",
                         paddingLeft: "5px",
                         paddingRight: "5px",
+                        width:window.innerWidth>=600?"":"90vw !important",
+                  minWidth:window.innerWidth>=600?"450px":"90vw !important"
                       }}
                     >
                       <span
@@ -7543,7 +7584,7 @@ e.pollData.pollC = e.pollData.pollC
                           value={messageInboxValuePrivate}
                           autoComplete="off"
                           id="messageInp"
-                          style={{ width: privateChat ? "230px" : "230px" }}
+                          style={{ width: privateChat ? window.innerWidth>=600?"230px":"155px" : "230px" }}
                           onChange={(e) => {
                             setMessageInboxValuePrivate(e.target.value);
                           }}
@@ -7629,8 +7670,8 @@ e.pollData.pollC = e.pollData.pollC
                       border: "2px solid #D9D2FA",
                       overflowX: "hidden",
                       maxHeight: '80vh',
-                      flex: clubFloor ? "0.5" : "1",
-                      maxWidth:clubFloor ? "500px" : "60vw"
+                      flex: clubFloor ? window.innerWidth>=600?"0.5":"1" : "1",
+                      maxWidth:clubFloor ? "500px" : window.innerWidth>=600?"60vw":"100%"
                     }}
                   >
                     <div
