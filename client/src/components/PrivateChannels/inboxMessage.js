@@ -41,7 +41,16 @@ export default function InboxMessage(props) {
   
   };
  
+      useEffect(()=>{
+       for(let i=0;i<chatData.length;i++){
+   let data= chatData.find(e=>e.chatFrom==chatData[i].chatFrom && chatData.indexOf(e)!==chatData.indexOf(chatData[i]))
 
+  if(data){
+     setChatData(chatData.filter(e=>e!==data).reverse())   
+  }
+  }
+
+      },[chatData])
     useEffect(() => {
        axios.post(`${BaseURL}/upload/getChatDataPrivateinbox`,{
            to:username
