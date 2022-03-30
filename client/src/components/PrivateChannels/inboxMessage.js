@@ -137,7 +137,7 @@ setContacts(old=>[...old,response.data])
                         <p>{e[0].name}</p>
                         {/* <p className="timestamp"> {moment(e.createdAt).fromNow()}</p> */}
                       </div>
-                     <div className='message'> {e[0].email}</div>
+                     {/* <div className='message'> {e[0].email}</div> */}
           </div>
           
       )):""}</div>:null}
