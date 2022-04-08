@@ -23,7 +23,8 @@ export default function Admin() {
       email: user.email,
       verified: user.verified,
       followers: user.followers,
-      communityClub: user.communityClub
+      communityClub: user.communityClub,
+     privateChannel: user.privateChannel
     }).then(() => {
       alert(`Updated details of ${user.username}`)
       setShowEdit(!showEdit)
@@ -51,7 +52,8 @@ export default function Admin() {
                 followers: user.followers,
                 verify: user.verified,
                 email: e.target.value,
-                communityClub: user.communityClub
+                communityClub: user.communityClub,
+                privateChannel:user.privateChannel
               })
             }}
           />
@@ -66,7 +68,8 @@ export default function Admin() {
                 followers: e.target.value,
                 verified: user.verified,
                 email: user.email,
-                communityClub: user.communityClub
+                communityClub: user.communityClub,
+                privateChannel:user.privateChannel
               })
             }}
           />
@@ -81,7 +84,8 @@ export default function Admin() {
                 followers: user.followers,
                 verified: e.target.value,
                 email: user.email,
-                communityClub: user.communityClub
+                communityClub: user.communityClub,
+                privateChannel:user.privateChannel
               })
             }}
           />
@@ -96,7 +100,8 @@ export default function Admin() {
                 followers: user.followers,
                 verified: user.verified,
                 email: user.email,
-                communityClub: user.communityClub
+                communityClub: user.communityClub,
+                privateChannel:user.privateChannel
               })
             }}
           />
@@ -110,7 +115,23 @@ export default function Admin() {
                 followers: user.followers,
                 verified: user.verified,
                 email: user.email,
-                communityClub: e.target.value
+                communityClub: e.target.value,
+                privateChannel:user.privateChannel
+              })
+            }}
+          />
+           <label>Private Club</label>
+          <input
+            placeholder="Private Club"
+            value={user.privateChannel}
+            onChange={(e) => {
+              setUser({
+                username: user.username,
+                followers: user.followers,
+                verified: user.verified,
+                email: user.email,
+                communityClub: user.communityClub,
+                privateChannel:e.target.value
               })
             }}
           />
