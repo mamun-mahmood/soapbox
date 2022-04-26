@@ -226,7 +226,7 @@ const RequestPrivateClubPage = () => {
 
 
                         <Button variant="primary" type="submit" >
-                            Submit Request
+                            Create Club
                         </Button>
                     </Form>
                 </div>}
