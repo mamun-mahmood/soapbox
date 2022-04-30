@@ -210,7 +210,7 @@ const Profile = ({
                       
                       src={chathive}
                       className="chativelogo"
-                    />ChatHive</Link>
+                    /></Link>
                  
                 </button>
 

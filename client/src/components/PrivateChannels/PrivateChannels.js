@@ -54,7 +54,7 @@ import inviteicon from "../../assets/inviteicon.png";
 import rules from "../../assets/rules.png";
 import videolive from "../../assets/videoLive.png";
 import marketplaceicon from "../../assets/marketplace.png";
-import messagesicon from "../../assets/messages.png";
+import messagesicon from "../../assets/chathivew.png";
 import chathive from "../../assets/chathive.png";
 import sendIcon from "../../assets/send.png";
 import videochat from "../../assets/videochat.png";
@@ -3102,11 +3102,11 @@ const resetChatView=(username)=>{
                         }
                       }}>
                     <SoapboxTooltip title={"CHATHIVE"} placement="bottom" privateTooltip={true}>
-                      <img src={messagesicon} width="30px" 
+                      <img src={messagesicon} width="70px" 
                       />
                         
                     </SoapboxTooltip>
-                    <span style={{ fontSize: "14px",marginLeft:'-6px' }}>CHATHIVE </span>
+                  
                    
                   </span>
                   {chatUnview!==0?<div className="notify-num"  onClick={() => {
@@ -4536,8 +4536,9 @@ const resetChatView=(username)=>{
                       
                       src={chathive}
                       className="chativelogo"
+                      width={"70px"}
                     />
-                    ChatHive
+            
                         </h5>
                         <button className="closebtn" onClick={() => {
                           if (!privateChatList) {
@@ -6189,12 +6190,12 @@ e.pollData.pollC = e.pollData.pollC
                         }}>
                     <SoapboxTooltip title={"CHATHIVE"} placement="bottom" privateTooltip={true}>
                       <img
-                        width="30px"
+                        width="70px"
                         src={messagesicon}
                         />
                           
                     </SoapboxTooltip>
-                    <span style={{ fontSize: "14px",marginLeft:'-6px'  }}>CHATHIVE</span>
+                
                    
                   </span>
                   {chatUnview!==0?<div className="notify-num" onClick={() => {
@@ -7624,11 +7625,11 @@ e.pollData.pollC = e.pollData.pollC
                         }}
                         >
                             <img
-                      
+                      width={'70px'}
                       src={chathive}
                       className="chativelogo"
                     />
-                      ChatHive
+                       
                         </h5>
                         <button className="closebtn" onClick={() => {
                           if (!privateChatList) {
