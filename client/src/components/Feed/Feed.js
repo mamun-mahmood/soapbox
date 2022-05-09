@@ -53,6 +53,7 @@ const Feed = () => {
           endMessage={<EndMsg />}
         >
           {uploads.map((upload) => {
+            console.log(upload);
             return (
               <div key={upload.id}>
                 <Post
@@ -73,6 +74,8 @@ const Feed = () => {
                   edited={upload.edited}
                   editedTimeStamp={upload.editedTimeStamp}
                   fontFamilyStyle={upload.fontFamilyStyle || "Arial"}
+                  fontColor={upload.fontColor || "black"}
+                  fontStyleSize={`${upload.fontStyleSize}px` || "18px"}
                 />
               </div>
             );

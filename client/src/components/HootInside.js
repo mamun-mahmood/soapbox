@@ -67,6 +67,8 @@ const HootInside = ({
   editedTimeStamp,
   privateProtected,
   fontFamilyStyle,
+  fontColor,
+  fontStyleSize,
 }) => {
   const BaseURL = process.env.REACT_APP_API_URL; // API url
   const hostURL = "https://www.megahoot.net"; // main website
@@ -2447,6 +2449,8 @@ const HootInside = ({
                   username={username}
                   isReadMore={isReadMore}
                   fontFamilyStyle={fontFamilyStyle}
+                  fontColor={fontColor}
+                  fontStyleSize={fontStyleSize}
                 />
                 {/* {" "}<span className="hoot-comment" dangerouslySetInnerHTML={{
                                     __html: DOMPurify.sanitize((

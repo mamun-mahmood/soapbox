@@ -1,7 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CaptionComp = ({ caption, username, isReadMore, fontFamilyStyle }) => {
+const CaptionComp = ({
+  caption,
+  username,
+  isReadMore,
+  fontFamilyStyle,
+  fontColor,
+  fontStyleSize,
+}) => {
   const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
 
   return (
@@ -13,6 +20,9 @@ const CaptionComp = ({ caption, username, isReadMore, fontFamilyStyle }) => {
   )
     .split(" ")
     .map((item, index) => {
+      console.log(
+        `for the caption: ${item} the font style is : ${fontFamilyStyle}`
+      );
       if (item.startsWith("@")) {
         return (
           <span key={index} className="hoot-comment">
@@ -52,7 +62,11 @@ const CaptionComp = ({ caption, username, isReadMore, fontFamilyStyle }) => {
         <span
           key={index}
           className="hoot-comment"
-          style={{ fontFamily: `${fontFamilyStyle}` }}
+          style={{
+            fontFamily: `${fontFamilyStyle}`,
+            fontSize: `${fontStyleSize}`,
+            color: `${fontColor}`,
+          }}
         >
           {item}{" "}
         </span>
