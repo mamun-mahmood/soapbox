@@ -75,7 +75,9 @@ const Feed = () => {
                   editedTimeStamp={upload.editedTimeStamp}
                   fontFamilyStyle={upload.fontFamilyStyle || "Arial"}
                   fontColor={upload.fontColor || "black"}
-                  fontStyleSize={`${upload.fontStyleSize}px` || "18px"}
+                  fontStyleSize={`${
+                    upload.fontStyleSize ? upload.fontStyleSize : "22"
+                  }px`}
                 />
               </div>
             );

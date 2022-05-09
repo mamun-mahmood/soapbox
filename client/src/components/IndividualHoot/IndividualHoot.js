@@ -90,7 +90,9 @@ const IndividualHoot = () => {
                   editedTimeStamp={hoot.editedTimeStamp}
                   fontFamilyStyle={hoot.fontFamilyStyle || "Arial"}
                   fontColor={hoot.fontColor || "black"}
-                  fontStyleSize={`${hoot.fontStyleSize}px` || "22px"}
+                  fontStyleSize={`${
+                    hoot.fontStyleSize ? hoot.fontStyleSize : "22"
+                  }px`}
                 />
 
                 <Helmet>

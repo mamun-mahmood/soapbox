@@ -20,9 +20,6 @@ const CaptionComp = ({
   )
     .split(" ")
     .map((item, index) => {
-      console.log(
-        `for the caption: ${item} the font style is : ${fontFamilyStyle}`
-      );
       if (item.startsWith("@")) {
         return (
           <span key={index} className="hoot-comment">
