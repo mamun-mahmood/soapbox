@@ -52,7 +52,7 @@ import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
 
 const CreateHootBoxMobile = () => {
-  const [currentFontFamily, setCurrentFontFamily] = useState("Arial");
+  const [currentFontFamily, setCurrentFontFamily] = useState({color:"black",fontSize:'20px',fontFamily:"Arial"});
   const fontFamilyRef = useRef();
   const [caption, setCaption] = useState("");
   const [file, setFile] = useState([]);
@@ -93,6 +93,7 @@ const CreateHootBoxMobile = () => {
   const stocksFound = caption.split(" ").filter((v) => v.startsWith("$"));
 
   const upload = (event) => {
+    let styles=JSON.stringify(currentFontFamily)
     event.preventDefault();
     setSaveLoading(true);
     const formData = new FormData();
@@ -107,7 +108,7 @@ const CreateHootBoxMobile = () => {
     formData.append("onDemandMedia", onDemandMedia ? 1 : 0);
     formData.append("file", file);
     formData.append("audioPoster", audioPoster);
-    formData.append("fontFamilyStyle", currentFontFamily);
+    formData.append("fontFamilyStyle", styles);
 
     const uploadData = async () => {
       await axios
@@ -610,10 +611,11 @@ const CreateHootBoxMobile = () => {
     setAudioPoster([]);
   };
 
+ 
   const changeFontFamily = () => {
-    setCurrentFontFamily(fontFamilyRef.current.value);
+    
+    setCurrentFontFamily({...currentFontFamily,fontFamily:fontFamilyRef.current.value});
   };
-
   return (
     <div className="hoot-box-mobile">
       <NavBar />
@@ -903,7 +905,7 @@ const CreateHootBoxMobile = () => {
               style={{ width: "35px" }}
             >
               <option value="none" selected hidden disabled>
-                𝓯
+                F
               </option>
               <option
                 value="Roboto Condensed"
@@ -944,6 +946,17 @@ const CreateHootBoxMobile = () => {
                 Choose this style
               </option>
             </select>
+            <SoapboxTooltip title="Font Size" placement="right">
+<select style={{borderRadius:'15px',width:'40px',height:'20px',border:'none',fontSize:'13px'}} onChange={(e)=>{setCurrentFontFamily({...currentFontFamily,fontSize:e.target.value})}}>
+  <option>{currentFontFamily.fontSize}</option>
+  {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,35,40,45,50,55,60,70,80,100].map(e=><option value={`${e}px`}>{e}</option>)}
+  
+</select>
+</SoapboxTooltip>
+<SoapboxTooltip title="Font Color" placement="right">
+   <input type="color" style={{borderRadius:'15px',width:'40px',height:'20px',border:'none'}} value={currentFontFamily.color} onChange={(e)=>setCurrentFontFamily({...currentFontFamily,color:e.target.value})} />
+
+</SoapboxTooltip>
           </div>
 
           <div
@@ -1108,9 +1121,7 @@ const CreateHootBoxMobile = () => {
               maxLength="300"
               className="textarea-style-private tsp-responsive added-textarea-style"
               placeholder="Share Your World. Hoot Hoot! (optional)"
-              style={{
-                fontFamily: `${currentFontFamily} `,
-              }}
+              style={currentFontFamily}
               value={caption}
               onChange={(event) => {
                 const value = event.target.value;
