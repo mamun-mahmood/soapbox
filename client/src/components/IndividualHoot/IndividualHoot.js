@@ -60,7 +60,7 @@ id=atob(id);
 
                         hashtagsFound = hoot.caption.split(' ').filter(v => v.startsWith('#'));
                         iHootId = hoot.id;
-
+                      const styles=hoot.fontFamilyStyle &&hoot.fontFamilyStyle.length>1?JSON.parse(hoot.fontFamilyStyle):{color:"black"}
                         // url for individual hoot for main soapbox website
                         const shareMediaPath = `${BaseURL}/images/${hoot.image}`;
 
@@ -83,6 +83,7 @@ id=atob(id);
                                     timeStamp={hoot.timeStamp}
                                     edited={hoot.edited}
                                     editedTimeStamp={hoot.editedTimeStamp}
+                                    fontFamilyStyle={styles}
                                 />
 
                                 <Helmet>

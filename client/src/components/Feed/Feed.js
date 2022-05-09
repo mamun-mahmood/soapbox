@@ -72,7 +72,7 @@ const Feed = () => {
                   timeStamp={upload.timeStamp}
                   edited={upload.edited}
                   editedTimeStamp={upload.editedTimeStamp}
-                  fontFamilyStyle={upload.fontFamilyStyle || "Arial"}
+                  fontFamilyStyle={upload.fontFamilyStyle }
                 />
               </div>
             );

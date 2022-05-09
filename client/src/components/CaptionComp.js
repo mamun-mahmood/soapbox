@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 
 const CaptionComp = ({ caption, username, isReadMore, fontFamilyStyle }) => {
   const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
+ const styles=fontFamilyStyle?fontFamilyStyle:{color:"black"}
+ 
+
 
   return (
     caption.length > 300
@@ -52,7 +55,7 @@ const CaptionComp = ({ caption, username, isReadMore, fontFamilyStyle }) => {
         <span
           key={index}
           className="hoot-comment"
-          style={{ fontFamily: `${fontFamilyStyle}` }}
+          style={styles}
         >
           {item}{" "}
         </span>
