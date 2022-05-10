@@ -810,7 +810,7 @@ const CreatePrivateHoot = (props) => {
               ) : null}
 
               {mimeType === "" && !showLinkPreview && !link && (
-                <p>Upload Preview</p>
+                <p>Media Preview</p>
               )}
 
               {mimeType !== "" && (
@@ -1192,7 +1192,7 @@ const CreatePrivateHoot = (props) => {
               autoFocus
               maxLength="2200"
               className="textarea-style-private tsp-responsive added-textarea-style"
-              placeholder="Share Your World. Hoot Hoot! (optional)"
+              placeholder="Share Your World. Hoot Hoot! "
               style={{
                 fontFamily: `${currentFontFamily} `,
                 color: `${currentFontColor}`,
