@@ -1,199 +1,219 @@
-import React, { Fragment, useEffect, useState, useCallback, useContext } from 'react'
-import axios from 'axios'
-import SideBarOption from './SideBarOption'
-import { BsLightning } from 'react-icons/bs'
-import { Link, NavLink, useHistory } from 'react-router-dom'
-import { FiHome, FiHash, FiSearch, FiShield, FiKey } from 'react-icons/fi'
-import { RiFileList3Line, RiAccountPinCircleFill, RiShieldFlashLine, RiChatPrivateFill, RiGroup2Fill, RiGroup2Line, RiChatPrivateLine } from 'react-icons/ri'
-import { IoCloseOutline } from 'react-icons/io5'
-import { BiMessageDetail, BiUser, BiDollar, BiWallet, BiAddToQueue } from 'react-icons/bi'
-import './sidebar.css';
-import RandomSuggestedFollows from './RandomSuggestedFollows'
-import RamdomSuggestedHoots from './RandomSuggestedHoots'
-import { MyLists } from '../../context/MyListContext'
-import RandomCommunitySuggestion from './RandomCommunitySuggestion'
-import { AiTwotoneLock } from 'react-icons/ai'
-import communityclub from '../../assets/homeicon.png'
-import following from '../../assets/following.png'
-import requestprivateclub from '../../assets/requestprivateclub.png'
-import privateclub from '../../assets/privateclub.png'
-import homeicon from '../../assets/communityclub.png'
-import explore from '../../assets/explore.png'
-import XMGWALLET from '../../assets/XMGWALLETL.png'
-import profile from '../../assets/profile.png'
-import allhoots from '../../assets/allhoots.png'
+import React, {
+  Fragment,
+  useEffect,
+  useState,
+  useCallback,
+  useContext,
+} from "react";
+import axios from "axios";
+import SideBarOption from "./SideBarOption";
+import { BsLightning } from "react-icons/bs";
+import { Link, NavLink, useHistory } from "react-router-dom";
+import { FiHome, FiHash, FiSearch, FiShield, FiKey } from "react-icons/fi";
+import {
+  RiFileList3Line,
+  RiAccountPinCircleFill,
+  RiShieldFlashLine,
+  RiChatPrivateFill,
+  RiGroup2Fill,
+  RiGroup2Line,
+  RiChatPrivateLine,
+} from "react-icons/ri";
+import { IoCloseOutline } from "react-icons/io5";
+import {
+  BiMessageDetail,
+  BiUser,
+  BiDollar,
+  BiWallet,
+  BiAddToQueue,
+} from "react-icons/bi";
+import "./sidebar.css";
+import RandomSuggestedFollows from "./RandomSuggestedFollows";
+import RamdomSuggestedHoots from "./RandomSuggestedHoots";
+import { MyLists } from "../../context/MyListContext";
+import RandomCommunitySuggestion from "./RandomCommunitySuggestion";
+import { AiTwotoneLock } from "react-icons/ai";
+import communityclub from "../../assets/homeicon.png";
+import following from "../../assets/following.png";
+import requestprivateclub from "../../assets/requestprivateclub.png";
+import privateclub from "../../assets/privateclub.png";
+import homeicon from "../../assets/communityclub.png";
+import explore from "../../assets/explore.png";
+import XMGWALLET from "../../assets/XMGWALLETL.png";
+import profile from "../../assets/profile.png";
+import chathive from "../../assets/chathive.png";
+import allhoots from "../../assets/allhoots.png";
 const SideBar = () => {
-    // const [mainActive, setMainActive] = useState("active");
-    // const [hashtags, setHashtags] = useState([]);
-    // const [stocks, setStocks] = useState([]);
-    // const [allUploads, setAllUploads] = useState([]);
-    // const [myListActive, setMyListActive] = useState("");
-    // const [searchHashtagTerm, setSearchHashtagTerm] = useState("");
-    // const [searchStockTerm, setSearchStockTerm] = useState("");
-    // const history = useHistory()
+  // const [mainActive, setMainActive] = useState("active");
+  // const [hashtags, setHashtags] = useState([]);
+  // const [stocks, setStocks] = useState([]);
+  // const [allUploads, setAllUploads] = useState([]);
+  // const [myListActive, setMyListActive] = useState("");
+  // const [searchHashtagTerm, setSearchHashtagTerm] = useState("");
+  // const [searchStockTerm, setSearchStockTerm] = useState("");
+  // const history = useHistory()
 
-    const history = useHistory();
-    const { myList, setMyList } = useContext(MyLists);
+  const history = useHistory();
+  const { myList, setMyList } = useContext(MyLists);
 
-    // useEffect(() => {
-    //     if (myList === true) {
-    //         // if (window.location.pathname !== '/mylist') {
-    //         //     setMyList(false);
-    //         // } else {
-    //         setTimeout(() => {
-    //             history.push('/mylist');
-    //         }, 200);
-    //         // }
-    //     }
+  // useEffect(() => {
+  //     if (myList === true) {
+  //         // if (window.location.pathname !== '/mylist') {
+  //         //     setMyList(false);
+  //         // } else {
+  //         setTimeout(() => {
+  //             history.push('/mylist');
+  //         }, 200);
+  //         // }
+  //     }
 
-    //     if (myList === false) {
-    //         if (window.location.pathname === '/mylist') {
-    //             setTimeout(() => {
-    //                 history.push('/');
-    //             }, 200);
-    //         } else {
-    //             setTimeout(() => {
-    //                 history.push(window.location.pathname);
-    //             }, 200);
-    //         }
-    //     }
-    // }, [myList])
+  //     if (myList === false) {
+  //         if (window.location.pathname === '/mylist') {
+  //             setTimeout(() => {
+  //                 history.push('/');
+  //             }, 200);
+  //         } else {
+  //             setTimeout(() => {
+  //                 history.push(window.location.pathname);
+  //             }, 200);
+  //         }
+  //     }
+  // }, [myList])
 
-    // if (myList) {
-    //     setTimeout(() => {
-    //         history.push('/mylist');
-    //     }, 250);
-    // }
-    // else {
-    //     setTimeout(() => {
-    //         history.push('/');
-    //     }, 250);
-    // }
+  // if (myList) {
+  //     setTimeout(() => {
+  //         history.push('/mylist');
+  //     }, 250);
+  // }
+  // else {
+  //     setTimeout(() => {
+  //         history.push('/');
+  //     }, 250);
+  // }
 
+  // const BaseURL = process.env.REACT_APP_API_URL;
 
-    // const BaseURL = process.env.REACT_APP_API_URL;
+  // useEffect(() => {
+  //     const getAllUploadData = async () => {
+  //         await axios.get(`${BaseURL}/upload`).then((response) => {
+  //             setAllUploads(response.data);
+  //         })
+  //     }
+  //     getAllUploadData();
+  // }, [])
 
-    // useEffect(() => {
-    //     const getAllUploadData = async () => {
-    //         await axios.get(`${BaseURL}/upload`).then((response) => {
-    //             setAllUploads(response.data);
-    //         })
-    //     }
-    //     getAllUploadData();
-    // }, [])
+  // Hashtags
+  // useEffect(() => {
+  //     const getHashtagsData = async () => {
+  //         await axios.get(`${BaseURL}/hashtags`)
+  //             .then((response) => {
+  //                 setHashtags((response.data).reverse());
+  //             });
+  //     }
 
-    // Hashtags
-    // useEffect(() => {
-    //     const getHashtagsData = async () => {
-    //         await axios.get(`${BaseURL}/hashtags`)
-    //             .then((response) => {
-    //                 setHashtags((response.data).reverse());
-    //             });
-    //     }
+  //     try {
+  //         getHashtagsData();
+  //     } catch (error) {
+  //         console.log(error);
+  //     }
+  // }, [])
 
-    //     try {
-    //         getHashtagsData();
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }, [])
+  // const defaultHashtags = [
+  //     "#funny",
+  //     "#nft",
+  //     "#wallstreet",
+  //     "#realestate",
+  //     "#fitness",
+  //     "#fashion",
+  //     "#beauty"
+  // ]
 
-    // const defaultHashtags = [
-    //     "#funny",
-    //     "#nft",
-    //     "#wallstreet",
-    //     "#realestate",
-    //     "#fitness",
-    //     "#fashion",
-    //     "#beauty"
-    // ]
+  // const updateTotalHashtagViews = useCallback((hashtag, totalViews) => {
+  //     axios.put(`${BaseURL}/hashtags`, {
+  //         hashtag: hashtag,
+  //         totalViews: totalViews
+  //     })
+  // }, [])
 
-    // const updateTotalHashtagViews = useCallback((hashtag, totalViews) => {
-    //     axios.put(`${BaseURL}/hashtags`, {
-    //         hashtag: hashtag,
-    //         totalViews: totalViews
-    //     })
-    // }, [])
+  // hashtags.map((hashtag) => {
+  //     var totalViews = 0;
+  //     allUploads.map((upload) => {
+  //         (upload.caption).includes(hashtag.hashtag)
+  //             ?
+  //             (totalViews += upload.views, updateTotalHashtagViews(hashtag.hashtag, totalViews))
+  //             : null
+  //     })
+  // })
 
-    // hashtags.map((hashtag) => {
-    //     var totalViews = 0;
-    //     allUploads.map((upload) => {
-    //         (upload.caption).includes(hashtag.hashtag)
-    //             ?
-    //             (totalViews += upload.views, updateTotalHashtagViews(hashtag.hashtag, totalViews))
-    //             : null
-    //     })
-    // })
+  // // sorted array by views - trending first
+  // const byHashtagViews = hashtags.slice(0);
+  // byHashtagViews.sort(function (a, b) {
+  //     return a.totalViews - b.totalViews;
+  // });
 
-    // // sorted array by views - trending first
-    // const byHashtagViews = hashtags.slice(0);
-    // byHashtagViews.sort(function (a, b) {
-    //     return a.totalViews - b.totalViews;
-    // });
+  // Stocks
+  // useEffect(() => {
+  //     const getStocksData = async () => {
+  //         await axios.get(`${BaseURL}/stocks`)
+  //             .then((response) => {
+  //                 setStocks((response.data).reverse());
+  //             });
+  //     }
 
-    // Stocks
-    // useEffect(() => {
-    //     const getStocksData = async () => {
-    //         await axios.get(`${BaseURL}/stocks`)
-    //             .then((response) => {
-    //                 setStocks((response.data).reverse());
-    //             });
-    //     }
+  //     try {
+  //         getStocksData();
+  //     } catch (error) {
+  //         console.log(error);
+  //     }
+  // }, [])
 
-    //     try {
-    //         getStocksData();
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }, [])
+  // const defaultStocks = [
+  //     "$AAPL",
+  //     "$FB",
+  //     "$AMZN",
+  //     "$IBM",
+  //     "$BTC",
+  //     "$ETH",
+  //     "$PLTR",
+  //     "$GM",
+  //     "$F",
+  //     "$TSLA"
+  // ]
 
-    // const defaultStocks = [
-    //     "$AAPL",
-    //     "$FB",
-    //     "$AMZN",
-    //     "$IBM",
-    //     "$BTC",
-    //     "$ETH",
-    //     "$PLTR",
-    //     "$GM",
-    //     "$F",
-    //     "$TSLA"
-    // ]
+  // const updateTotalStockViews = useCallback((stock, totalViews) => {
+  //     axios.put(`${BaseURL}/stocks`, {
+  //         stock: stock,
+  //         totalViews: totalViews
+  //     })
+  // }, [])
 
-    // const updateTotalStockViews = useCallback((stock, totalViews) => {
-    //     axios.put(`${BaseURL}/stocks`, {
-    //         stock: stock,
-    //         totalViews: totalViews
-    //     })
-    // }, [])
+  // stocks.map((stock) => {
+  //     var totalViews = 0;
+  //     allUploads.map((upload) => {
+  //         (upload.caption).includes(stock.stock)
+  //             ?
+  //             (totalViews += upload.views, updateTotalStockViews(stock.stock, totalViews))
+  //             : null
+  //     })
+  // })
 
-    // stocks.map((stock) => {
-    //     var totalViews = 0;
-    //     allUploads.map((upload) => {
-    //         (upload.caption).includes(stock.stock)
-    //             ?
-    //             (totalViews += upload.views, updateTotalStockViews(stock.stock, totalViews))
-    //             : null
-    //     })
-    // })
+  // // sorted array by views - trending first
+  // const byStockViews = stocks.slice(0);
+  // byStockViews.sort(function (a, b) {
+  //     return a.totalViews - b.totalViews;
+  // });
 
-    // // sorted array by views - trending first
-    // const byStockViews = stocks.slice(0);
-    // byStockViews.sort(function (a, b) {
-    //     return a.totalViews - b.totalViews;
-    // });
+  var username = "";
+  const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
+  if (userInfo) {
+    username = userInfo.username;
+  }
 
-    var username = "";
-    const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
-    if (userInfo) {
-        username = userInfo.username;
-    }
-
-    return (
-        <div className="sidebar start">
-            <ui style={{ position: "fixed" }}>
-                <div className="scrollable">
-                    {/* <li>
+  return (
+    <div className="sidebar start">
+      <ui style={{ position: "fixed" }}>
+        <div className="scrollable">
+          {/* <li>
                         <input
                             type="checkbox"
                             name="gender-toggle"
@@ -218,24 +238,22 @@ const SideBar = () => {
                         </label>
                     </li> */}
 
-                    <SideBarOption
-                        option="All Hoots"
-                        // link="/home"
-                        link="/All-Hoots"
-                        Icon={allhoots}
-                    />
+          <SideBarOption
+            option="All Hoots"
+            // link="/home"
+            link="/All-Hoots"
+            Icon={allhoots}
+          />
 
-                    {userInfo
-                        ?
-                        <SideBarOption
-                            option="Following"
-                            link={`/${username}/mylist`}
-                            Icon={following}
-                        />
-                        : null
-                    }
+          {userInfo ? (
+            <SideBarOption
+              option="Following"
+              link={`/${username}/mylist`}
+              Icon={following}
+            />
+          ) : null}
 
-                    {/* <SideBarOption
+          {/* <SideBarOption
                         option="Private Clubs"
                         Icon={privateclub}
                     />
@@ -245,62 +263,72 @@ const SideBar = () => {
                         Icon={communityclub}
                     /> */}
 
-                    <SideBarOption
-                        option="Soapbox Clubs"
-                        Icon={privateclub}
-                        link="/soapboxclubs"
-                    />
+          <SideBarOption
+            option="Soapbox Clubs"
+            Icon={privateclub}
+            link="/soapboxclubs"
+          />
 
-                    {userInfo
-                        ? <SideBarOption
-                            option="Request Private Club"
-                            Icon={requestprivateclub}
-                            link={`/request-private-club/${username}`}
-                        />
-                        : null}
+          {userInfo ? (
+            <SideBarOption
+              option="Request Private Club"
+              Icon={requestprivateclub}
+              link={`/request-private-club/${username}`}
+            />
+          ) : null}
 
-                    {userInfo
-                        ? <SideBarOption
-                            option="Profile"
-                            link={`/profile/${username}`}
-                            Icon={profile}
-                        />
-                        : null}
+          {userInfo ? (
+            <SideBarOption
+              option="Profile"
+              link={`/profile/${username}`}
+              Icon={profile}
+            />
+          ) : null}
 
-                    {/* <SideBarOption
+          {/* <SideBarOption
                         option="XMG Wallet"
                         Icon={XMGWALLET}
                     // link={`/private/Club/${username}`}
                     /> */}
 
-                    <SideBarOption
-                        option="Explore"
-                        link="/explore"
-                        Icon={explore}
-                    />
+          <SideBarOption option="Explore" link="/explore" Icon={explore} />
+          {userInfo && (
+            <div className="btn-login-home-page">
+            <button
+            onClick={() => {
+              history.push(`/chathive/${username}`);
+            }}
+            >  <img src={chathive} className="chativelogo" />
+            </button>
+            </div>
+          )}
 
-                    {/* <SideBarOption
+          {/* <SideBarOption
                             option="Login"
                             link="/login"
                             Icon={FiKey}
                         /> */}
 
-                    {!userInfo
-                        ? <div className="btn-login-home-page">
-                            <button onClick={() => { history.push("/login") }}>
-                                Login
-                            </button>
-                        </div>
-                        : null}
+          {!userInfo ? (
+            <div className="btn-login-home-page">
+              <button
+                onClick={() => {
+                  history.push("/login");
+                }}
+              >
+                Login
+              </button>
+            </div>
+          ) : null}
 
-                    {/* <SideBarOption
+          {/* <SideBarOption
                         option="Hashtags"
                         Icon={FiHash}
                         link=""
                         looks={"looks"}
                     /> */}
 
-                    {/* <li>
+          {/* <li>
                         <div className="search-on-sidebar">
                             <input
                                 value={searchHashtagTerm}
@@ -316,11 +344,11 @@ const SideBar = () => {
                         </div>
                     </li> */}
 
-                    {/* <li>
+          {/* <li>
                         <hr className="my-2" />
                     </li> */}
 
-                    {/* <li>
+          {/* <li>
                         <div className="hashtags">
                             {searchHashtagTerm
                                 ? hashtags.filter((hashtag) => {
@@ -349,14 +377,14 @@ const SideBar = () => {
                         </div>
                     </li> */}
 
-                    {/* <SideBarOption
+          {/* <SideBarOption
                         option="Stocks"
                         Icon={BiDollar}
                         link=""
                         looks={"looks"}
                     /> */}
 
-                    {/* <li>
+          {/* <li>
                         <div className="search-on-sidebar">
                             <input
                                 value={searchStockTerm}
@@ -373,11 +401,11 @@ const SideBar = () => {
                         </div>
                     </li> */}
 
-                    {/* <li>
+          {/* <li>
                         <hr className="my-2" />
                     </li> */}
 
-                    {/* <li>
+          {/* <li>
                         <div className="hashtags">
                             {searchStockTerm
                                 ? stocks.filter((stock) => {
@@ -416,62 +444,71 @@ const SideBar = () => {
                         </div>
                     </li> */}
 
-                    {/* suggested Follows  */}
+          {/* suggested Follows  */}
 
+          <div style={{ paddingLeft: "1rem" }}>
+            <li>
+              <small style={{ marginLeft: "-0.5rem" }} className="info">
+                Discover People & Clubs
+              </small>{" "}
+            </li>
+            <RandomSuggestedFollows />
+          </div>
+          <div style={{ paddingLeft: "1rem" }}>
+            <li>
+              <small style={{ marginLeft: "-0.5rem" }} className="info">
+                Discover Community Clubs
+              </small>{" "}
+            </li>
+            <RandomCommunitySuggestion />
+          </div>
 
-                    <div style={{ paddingLeft: "1rem" }}>
-                        <li>
-                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Discover People & Clubs</small>{" "}
-                        </li>
-                        <RandomSuggestedFollows />
-                    </div>
-                    <div style={{ paddingLeft: "1rem" }}>
-                        <li>
-                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Discover Community Clubs</small>{" "}
-                        </li>
-                        <RandomCommunitySuggestion />
-                    </div>
+          {/* suggested Hoots  */}
+          <div style={{ paddingLeft: "1rem" }}>
+            <li>
+              <small style={{ marginLeft: "-0.5rem" }} className="info">
+                Discover Hoots
+              </small>{" "}
+            </li>
+            <RamdomSuggestedHoots />
+          </div>
 
-                    {/* suggested Hoots  */}
-                    <div style={{ paddingLeft: "1rem" }}>
-                        <li>
-                            <small style={{ marginLeft: "-0.5rem" }} className="info" >Discover Hoots</small>{" "}
-                        </li>
-                        <RamdomSuggestedHoots />
-                    </div>
+          <li>
+            <NavLink
+              style={{ padding: "0.1rem 0.5rem" }}
+              activeClassName={
+                "Private Messages" === "Home" ? null : "sidebar-option-active"
+              }
+              to="/private-messages"
+            >
+              <span>Private Messages</span>
+            </NavLink>
+          </li>
 
-                    <li>
-                        <NavLink
-                            style={{ padding: "0.1rem 0.5rem" }}
-                            activeClassName={"Private Messages" === "Home" ? null : "sidebar-option-active"}
-                            to="/private-messages"
-                        >
-                            <span>Private Messages</span>
-                        </NavLink>
-                    </li>
+          <li>
+            <a
+              style={{ padding: "0.1rem 0.5rem" }}
+              activeClassName="sidebar-option-active"
+              href="https://www.verohive.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Video Meetings</span>
+            </a>
+          </li>
+          <li>
+            <a
+              style={{ padding: "0.1rem 0.5rem" }}
+              activeClassName="sidebar-option-active"
+              href="https://fortisab.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>FortisAB Marketplace</span>
+            </a>
+          </li>
 
-                    <li>
-                        <a
-                            style={{ padding: "0.1rem 0.5rem" }}
-                            activeClassName="sidebar-option-active"
-                            href="https://www.verohive.com/"
-                            target="_blank" rel="noopener noreferrer"
-                        >
-                            <span>Video Meetings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            style={{ padding: "0.1rem 0.5rem" }}
-                            activeClassName="sidebar-option-active"
-                            href="https://fortisab.com/"
-                            target="_blank" rel="noopener noreferrer"
-                        >
-                            <span>FortisAB Marketplace</span>
-                        </a>
-                    </li>
-
-                    {/* <li>
+          {/* <li>
                         <a
                             style={{ padding: "0.1rem 0.5rem" }}
                             activeClassName="sidebar-option-active"
@@ -482,59 +519,62 @@ const SideBar = () => {
                         </a>
                     </li> */}
 
-                    <li>
-                        <a
-                            style={{ padding: "0.1rem 0.5rem" }}
-                            activeClassName="sidebar-option-active"
-                            href="https://megahootvault.com/"
-                            target="_blank" rel="noopener noreferrer"
-                        >
-                            <span>Crypto Index</span>
-                        </a>
-                    </li>
+          <li>
+            <a
+              style={{ padding: "0.1rem 0.5rem" }}
+              activeClassName="sidebar-option-active"
+              href="https://megahootvault.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Crypto Index</span>
+            </a>
+          </li>
 
-                    <li>
-                        <hr className="my-2" />
-                    </li>
+          <li>
+            <hr className="my-2" />
+          </li>
 
-                    <div style={{ paddingLeft: "0.5rem" }}>
-                        <li>
-                            <small className="info cursor-pointer" >About</small>{" "}
-                            <small className="info cursor-pointer">Contact</small>
-                        </li>
+          <div style={{ paddingLeft: "0.5rem" }}>
+            <li>
+              <small className="info cursor-pointer">About</small>{" "}
+              <small className="info cursor-pointer">Contact</small>
+            </li>
 
-                        <div className="megahoot-com">
-                            <small className="info cursor-pointer">
-                                <Link to="/privacy-policy">
-                                    Privacy Policy
-                                </Link>
-                            </small>
-                        </div>
+            <div className="megahoot-com">
+              <small className="info cursor-pointer">
+                <Link to="/privacy-policy">Privacy Policy</Link>
+              </small>
+            </div>
 
-                        <div className="megahoot-com">
-                            <small className="info cursor-pointer">
-                                <Link to="/TOS">
-                                    Terms Of Service
-                                </Link>
-                            </small>
-                        </div>
+            <div className="megahoot-com">
+              <small className="info cursor-pointer">
+                <Link to="/TOS">Terms Of Service</Link>
+              </small>
+            </div>
 
-                        <div className="megahoot-com">
-                            <small className="info cursor-pointer">
-                                <a href="https://www.megahoot.com/" target="_blank" rel="noopener noreferrer">
-                                    MegaHoot Technologies, Inc
-                                </a>
-                            </small>
-                        </div>
+            <div className="megahoot-com">
+              <small className="info cursor-pointer">
+                <a
+                  href="https://www.megahoot.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  MegaHoot Technologies, Inc
+                </a>
+              </small>
+            </div>
 
-                        <li>
-                            <small className="info" style={{ paddingBottom: "1rem" }}>&copy; 2021 MegaHoot Technologies, Inc</small>
-                        </li>
-                    </div>
-                </div>
-            </ui>
+            <li>
+              <small className="info" style={{ paddingBottom: "1rem" }}>
+                &copy; 2021 MegaHoot Technologies, Inc
+              </small>
+            </li>
+          </div>
         </div>
-    )
-}
+      </ui>
+    </div>
+  );
+};
 
-export default SideBar
+export default SideBar;

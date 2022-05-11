@@ -1,49 +1,52 @@
-import React, { useState, useEffect, Fragment } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect, Fragment } from "react";
+import axios from "axios";
 import { Helmet } from "react-helmet";
-import Post from '../../components/Post'
-import { useParams, useHistory } from 'react-router-dom'
-import './individualHoot.css'
-import '../../components/Feed/feed.css'
+import Post from "../../components/Post";
+import { useParams, useHistory } from "react-router-dom";
+import "./individualHoot.css";
+import "../../components/Feed/feed.css";
 
-import Loadable from 'react-loadable';
-import Loading from '../Loading/Loading';
-import EndHootMsg from './EndHootMsg';
-import { v4 as uuidv4 } from 'uuid';
+import Loadable from "react-loadable";
+import Loading from "../Loading/Loading";
+import EndHootMsg from "./EndHootMsg";
+import { v4 as uuidv4 } from "uuid";
 
 const BrowseMoreHoots = Loadable({
-    loader: () => import('./BrowseMoreHoots' /* webpackChunkName: "BrowseMoreHoots" */),
-    loading() {
-        return <Loading />
-    }
-})
+  loader: () =>
+    import("./BrowseMoreHoots" /* webpackChunkName: "BrowseMoreHoots" */),
+  loading() {
+    return <Loading />;
+  },
+});
 
 const IndividualHoot = () => {
-    var { id } = useParams();
-id=atob(id);
+  var { id } = useParams();
+  id = atob(id);
 
-    const [hoot, setHoot] = useState([]);
-    const BaseURL = process.env.REACT_APP_API_URL;
-    const history = useHistory();
-
-    useEffect(() => {
-        // here id is hootId
-       
-        const getHootById = async () => {
-          
-            await axios.get(`${BaseURL}/hoot/public/${id}`)
-                .then((response) => {
-                    if (response.data[0] && response.data[0].private == 1) {
-                        history.push(`/${uuidv4()}/private/Club/${response.data[0].authorUsername}/${uuidv4()}`);
-                    } else {
-                        setHoot(response.data);
-                    }
-                });
-        }
-        getHootById();
-        window.scrollTo(0, 0);
-    }, [id])
-
+  const [hoot, setHoot] = useState([]);
+  const BaseURL = process.env.REACT_APP_API_URL;
+  const history = useHistory();
+  const getHootById = async () => {
+    await axios.get(`${BaseURL}/hoot/public/${id}`)
+    .then((response) => {
+      if (response.data[0] && response.data[0].private == 1) {
+        history.push(
+          `/${uuidv4()}/private/Club/${
+            response.data[0].authorUsername
+          }/${uuidv4()}`
+        );
+      } else {
+        setHoot(response.data);
+      }
+      
+    
+  })
+}
+  useEffect(() => {
+    // here id is hootId
+    getHootById();
+    window.scrollTo(0, 0);
+  }, [id])
     var hashtagsFound = [];
     var iHootId = "";
 

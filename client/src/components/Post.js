@@ -22,6 +22,8 @@ const Post = ({
   editedTimeStamp,
   privateProtected,
   fontFamilyStyle,
+  fontColor,
+  fontStyleSize,
 }) => {
   const [userInformation, setUserInformation] = useState([]);
   const BaseURL = process.env.REACT_APP_API_URL;
@@ -65,6 +67,8 @@ const Post = ({
               editedTimeStamp={editedTimeStamp}
               privateProtected={privateProtected}
               fontFamilyStyle={fontFamilyStyle}
+              fontColor={fontColor}
+              fontStyleSize={fontStyleSize}
             />
           </div>
         );
