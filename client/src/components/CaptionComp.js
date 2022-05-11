@@ -1,11 +1,35 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const CaptionComp = ({ caption, username, isReadMore, fontFamilyStyle }) => {
+const CaptionComp = ({
+  caption,
+  username,
+  isReadMore,
+  fontFamilyStyle,
+  fontColor,
+  fontStyleSize,
+  hootId,
+  views,
+  likes
+}) => {
   const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
  const styles=fontFamilyStyle?fontFamilyStyle:{color:"black"}
- 
+ const BaseURL = process.env.REACT_APP_API_URL;
+ const random = (min = 10, max = 50) => {
+  let num = Math.random() * (max - min) + min;
 
+  return Math.round(num);
+};
+useEffect(()=>{
+  axios.put(
+    `${BaseURL}/upload/views/external-player`,
+    {
+      views: views + random(50, 400),
+      id: hootId,
+    }
+  );
+},[])
 
   return (
     caption.length > 300

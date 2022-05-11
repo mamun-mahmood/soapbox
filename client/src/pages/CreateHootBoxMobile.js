@@ -52,8 +52,16 @@ import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
 
 const CreateHootBoxMobile = () => {
+<<<<<<< HEAD
   const [currentFontFamily, setCurrentFontFamily] = useState({color:"black",fontSize:'20px',fontFamily:"Arial"});
+=======
+  const [currentFontFamily, setCurrentFontFamily] = useState("Arial");
+  const [currentFontColor, setCurrentFontColor] = useState("black");
+  const [currentFontSize, setCurrentFontSize] = useState("22");
+>>>>>>> fontFamilyStyle
   const fontFamilyRef = useRef();
+  const fontColorRef = useRef();
+  const fontSizeRef = useRef();
   const [caption, setCaption] = useState("");
   const [file, setFile] = useState([]);
   const [audioPoster, setAudioPoster] = useState([]);
@@ -108,9 +116,16 @@ const CreateHootBoxMobile = () => {
     formData.append("onDemandMedia", onDemandMedia ? 1 : 0);
     formData.append("file", file);
     formData.append("audioPoster", audioPoster);
+<<<<<<< HEAD
     formData.append("fontFamilyStyle", styles);
+=======
+    formData.append("fontFamilyStyle", currentFontFamily);
+    formData.append("fontColor", currentFontColor);
+    formData.append("fontStyleSize", currentFontSize);
+>>>>>>> fontFamilyStyle
 
     const uploadData = async () => {
+      console.log("Base url is : ", BaseURL);
       await axios
         .all([
           axios.post(`${BaseURL}/upload/create`, formData),
@@ -616,6 +631,17 @@ const CreateHootBoxMobile = () => {
     
     setCurrentFontFamily({...currentFontFamily,fontFamily:fontFamilyRef.current.value});
   };
+<<<<<<< HEAD
+=======
+
+  const fontSizeHandler = () => {
+    setCurrentFontSize(fontSizeRef.current.value);
+  };
+  const fontColorHandler = () => {
+    setCurrentFontColor(fontColorRef.current.value);
+  };
+
+>>>>>>> fontFamilyStyle
   return (
     <div className="hoot-box-mobile">
       <NavBar />
@@ -711,7 +737,7 @@ const CreateHootBoxMobile = () => {
               ) : null}
 
               {mimeType === "" && !showLinkPreview && !link && (
-                <p>Upload Preview</p>
+                <p>Media Preview</p>
               )}
 
               {mimeType !== "" && (
@@ -946,6 +972,7 @@ const CreateHootBoxMobile = () => {
                 Choose this style
               </option>
             </select>
+<<<<<<< HEAD
             <SoapboxTooltip title="Font Size" placement="right">
 <select style={{borderRadius:'15px',width:'40px',height:'20px',border:'none',fontSize:'13px'}} onChange={(e)=>{setCurrentFontFamily({...currentFontFamily,fontSize:e.target.value})}}>
   <option>{currentFontFamily.fontSize}</option>
@@ -957,6 +984,26 @@ const CreateHootBoxMobile = () => {
    <input type="color" style={{borderRadius:'15px',width:'40px',height:'20px',border:'none'}} value={currentFontFamily.color} onChange={(e)=>setCurrentFontFamily({...currentFontFamily,color:e.target.value})} />
 
 </SoapboxTooltip>
+=======
+
+            <input
+              style={{ width: "35px" }}
+              type="color"
+              value={currentFontColor}
+              name="fontColor"
+              ref={fontColorRef}
+              onChange={fontColorHandler}
+            />
+
+            <input
+              style={{ width: "35px" }}
+              value={currentFontSize}
+              type="number"
+              name="fontStyleSize"
+              ref={fontSizeRef}
+              onChange={fontSizeHandler}
+            />
+>>>>>>> fontFamilyStyle
           </div>
 
           <div
@@ -1120,8 +1167,17 @@ const CreateHootBoxMobile = () => {
               autoFocus
               maxLength="300"
               className="textarea-style-private tsp-responsive added-textarea-style"
+<<<<<<< HEAD
               placeholder="Share Your World. Hoot Hoot! (optional)"
               style={currentFontFamily}
+=======
+              placeholder="Share Your World. Hoot Hoot!"
+              style={{
+                fontFamily: `${currentFontFamily} `,
+                color: `${currentFontColor}`,
+                fontSize: `${currentFontSize}px`,
+              }}
+>>>>>>> fontFamilyStyle
               value={caption}
               onChange={(event) => {
                 const value = event.target.value;

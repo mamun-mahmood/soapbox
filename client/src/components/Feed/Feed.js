@@ -53,6 +53,7 @@ const Feed = () => {
           endMessage={<EndMsg />}
         >
           {uploads.map((upload) => {
+            console.log(upload);
             return (
               <div key={upload.id}>
                 <Post

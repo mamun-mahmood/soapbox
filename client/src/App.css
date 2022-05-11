@@ -871,7 +871,7 @@ hr {
   width: 100%;
   max-width: 473px;
   max-height: 251.4px;
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
   min-width: 473px;
 }
 
@@ -2452,33 +2452,28 @@ padding: 6rem 1rem;
     margin: 1rem 0rem 0rem -5.5rem;
   }
 }
-
 @media only screen and (min-width: 1300px) {
   .home {
     margin: 1rem 0;
   }
 }
-
 @media only screen and (max-width: 1156px) {
   .home {
     margin: 1rem 0rem 0rem -6rem;
   }
 }
-
 @media only screen and (max-width: 1024px) {
   .home {
     margin: 1rem 18rem 0rem -3rem;
     padding-left: 3rem;
   }
 }
-
 @media only screen and (max-width: 960px) {
   .home {
     margin: 1rem 20rem 0rem 1.5rem;
     padding: 0.5rem 0.5rem;
   }
 }
-
 @media only screen and (max-width: 800px) {
   .home {
     margin: 1rem 0;

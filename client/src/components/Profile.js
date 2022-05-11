@@ -85,9 +85,9 @@ const Profile = ({
           .then((response) => {
             setMyUploads(response.data.results);
           }),
-          axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
-            setAllUploads(response.data);
-          }))
+        axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
+          setAllUploads(response.data);
+        }))
       ];
       setLoading(false);
     };
@@ -149,12 +149,13 @@ const Profile = ({
   };
   const createPrivateClubRequest = (privateC) => {
     if (!privateC) {
-      history.push(`/request-private-club/${username}`)
+      history.push(`/request-private-club/${username}`);
     } else {
-      toast.error('You Can not request for another Private Club if you already have one!')
+      toast.error(
+        "You Can not request for another Private Club if you already have one!"
+      );
     }
-
-  }
+  };
 
   return (
     <div className="profile-page-main">
@@ -205,13 +206,11 @@ const Profile = ({
                 <button className="btn-edit-profile">
                   <Link to={`/edit/profile/${username}`}>Edit Profile</Link>
                 </button>
-                <button className="btn-edit-profile" >
-                <Link to={`/chathive/${username}`}> <img
-                      
-                      src={chathive}
-                      className="chativelogo"
-                    /></Link>
-                 
+                <button className="btn-edit-profile">
+                  <Link to={`/chathive/${username}`}>
+                    {" "}
+                    <img src={chathive} className="chativelogo" />
+                  </Link>
                 </button>
 
                 <ReactTooltip />
@@ -228,7 +227,9 @@ const Profile = ({
                 ) : (
                   <button
                     className="btn-add-private-c"
-                    onClick={() => { createPrivateClubRequest(privateC) }}
+                    onClick={() => {
+                      createPrivateClubRequest(privateC);
+                    }}
                   >
                     Request Private Club
                   </button>
@@ -254,9 +255,7 @@ const Profile = ({
                   </span>{" "}
                 </div>
               </div>
-
               {bio && <div className="user-desc">{bio}</div>}
-
               {website && (
                 <a
                   href={
@@ -271,7 +270,6 @@ const Profile = ({
                   {website.includes("https://") ? website.slice(8) : website}
                 </a>
               )}
-
               <div className="social-profile-icon-links">
                 {twitter && (
                   <a
@@ -404,49 +402,61 @@ const Profile = ({
                   </a>
                 )}
               </div>
-              <div className="live-header" style={{
-                backgroundColor: "rgb(130 73 160 / 52%)",
-                color: "white",
-                borderRadius: "3px",
-                width: '100%',
-                fontWeight: 'bold'
-              }}>Member Tools</div>
-              <div className="social-profile-icon-links" style={{ marginLeft: '35px', width: '90%' }}>
+              <div
+                className="live-header"
+                style={{
+                  backgroundColor: "rgb(130 73 160 / 52%)",
+                  color: "white",
+                  borderRadius: "3px",
+                  width: "100%",
+                  fontWeight: "bold",
+                }}
+              >
+                Member Tools
+              </div>
+              <div
+                className="social-profile-icon-links"
+                style={{ marginLeft: "35px", width: "90%" }}
+              >
                 <button
                   className="btn-add-private-c"
-                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
-
+                  style={{
+                    minWidth: "165px",
+                    maxWidth: "166px !important",
+                    margin: "0px",
+                  }}
                 >
                   My Memberships
                 </button>
                 <button
                   className="btn-add-private-c"
-                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
+                  style={{
+                    minWidth: "165px",
+                    maxWidth: "166px !important",
+                    margin: "0px",
+                  }}
                   onClick={() => {
                     if (showIframe) {
-                      document.getElementById(
-                        "slideIFMP"
-                      ).style.transition = "2sec";
-                      document.getElementById(
-                        "slideIFMP"
-                      ).style.left = "200vw";
+                      document.getElementById("slideIFMP").style.transition =
+                        "2sec";
+                      document.getElementById("slideIFMP").style.left = "200vw";
 
                       setTimeout(() => {
                         setShowIframe(false);
                       }, 500);
                     } else {
-                      setIframeBox({ src: 'https://www.verohive.net', title: 'VeroHive' })
-                      setShowIframe(true)
+                      setIframeBox({
+                        src: "https://www.verohive.net",
+                        title: "VeroHive",
+                      });
+                      setShowIframe(true);
                       setTimeout(() => {
-                        if (
-                          document.getElementById("slideIFMP")
-                        ) {
+                        if (document.getElementById("slideIFMP")) {
                           document.getElementById(
                             "slideIFMP"
                           ).style.transition = "1sec";
-                          document.getElementById(
-                            "slideIFMP"
-                          ).style.left = "30%";
+                          document.getElementById("slideIFMP").style.left =
+                            "30%";
                         }
                       }, 1);
                     }
@@ -456,32 +466,33 @@ const Profile = ({
                 </button>
                 <button
                   className="btn-add-private-c"
-                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
+                  style={{
+                    minWidth: "165px",
+                    maxWidth: "166px !important",
+                    margin: "0px",
+                  }}
                   onClick={() => {
                     if (showIframe) {
-                      document.getElementById(
-                        "slideIFMP"
-                      ).style.transition = "2sec";
-                      document.getElementById(
-                        "slideIFMP"
-                      ).style.left = "200vw";
+                      document.getElementById("slideIFMP").style.transition =
+                        "2sec";
+                      document.getElementById("slideIFMP").style.left = "200vw";
 
                       setTimeout(() => {
                         setShowIframe(false);
                       }, 500);
                     } else {
-                      setIframeBox({ src: 'https://www.documega.com/enterprise-solutions/documega/', title: 'DocuMega' })
-                      setShowIframe(true)
+                      setIframeBox({
+                        src: "https://www.documega.com/enterprise-solutions/documega/",
+                        title: "DocuMega",
+                      });
+                      setShowIframe(true);
                       setTimeout(() => {
-                        if (
-                          document.getElementById("slideIFMP")
-                        ) {
+                        if (document.getElementById("slideIFMP")) {
                           document.getElementById(
                             "slideIFMP"
                           ).style.transition = "1sec";
-                          document.getElementById(
-                            "slideIFMP"
-                          ).style.left = "30%";
+                          document.getElementById("slideIFMP").style.left =
+                            "30%";
                         }
                       }, 1);
                     }
@@ -489,43 +500,53 @@ const Profile = ({
                 >
                   eDocuments
                 </button>
-              </div>      <div className="live-header" style={{
-                backgroundColor: "rgb(130 73 160 / 52%)",
-                color: "white",
-                borderRadius: "3px",
-                width: '100%',
-                fontWeight: 'bold'
-              }}>Crypto Tools</div>
-              <div className="social-profile-icon-links" style={{ marginLeft: '35px', width: '90%' }}>
+              </div>{" "}
+              <div
+                className="live-header"
+                style={{
+                  backgroundColor: "rgb(130 73 160 / 52%)",
+                  color: "white",
+                  borderRadius: "3px",
+                  width: "100%",
+                  fontWeight: "bold",
+                }}
+              >
+                Crypto Tools
+              </div>
+              <div
+                className="social-profile-icon-links"
+                style={{ marginLeft: "35px", width: "90%" }}
+              >
                 <button
                   className="btn-add-private-c"
-                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
+                  style={{
+                    minWidth: "165px",
+                    maxWidth: "166px !important",
+                    margin: "0px",
+                  }}
                   onClick={() => {
                     if (showIframe) {
-                      document.getElementById(
-                        "slideIFMP"
-                      ).style.transition = "2sec";
-                      document.getElementById(
-                        "slideIFMP"
-                      ).style.left = "200vw";
+                      document.getElementById("slideIFMP").style.transition =
+                        "2sec";
+                      document.getElementById("slideIFMP").style.left = "200vw";
 
                       setTimeout(() => {
                         setShowIframe(false);
                       }, 500);
                     } else {
-                      setIframeBox({ src: 'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/', title: 'XMG Wallet' })
+                      setIframeBox({
+                        src: "https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/",
+                        title: "XMG Wallet",
+                      });
 
-                      setShowIframe(true)
+                      setShowIframe(true);
                       setTimeout(() => {
-                        if (
-                          document.getElementById("slideIFMP")
-                        ) {
+                        if (document.getElementById("slideIFMP")) {
                           document.getElementById(
                             "slideIFMP"
                           ).style.transition = "1sec";
-                          document.getElementById(
-                            "slideIFMP"
-                          ).style.left = "30%";
+                          document.getElementById("slideIFMP").style.left =
+                            "30%";
                         }
                       }, 1);
                     }
@@ -535,34 +556,34 @@ const Profile = ({
                 </button>
                 <button
                   className="btn-add-private-c"
-                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
+                  style={{
+                    minWidth: "165px",
+                    maxWidth: "166px !important",
+                    margin: "0px",
+                  }}
                   onClick={() => {
                     if (showIframe) {
-                      document.getElementById(
-                        "slideIFMP"
-                      ).style.transition = "2sec";
-                      document.getElementById(
-                        "slideIFMP"
-                      ).style.left = "200vw";
+                      document.getElementById("slideIFMP").style.transition =
+                        "2sec";
+                      document.getElementById("slideIFMP").style.left = "200vw";
 
                       setTimeout(() => {
                         setShowIframe(false);
                       }, 500);
                     } else {
-                      setIframeBox({ src: 'https://www.megahoot.com/vault/megahoot-vault/', title: 'MegaHoot Vault' })
+                      setIframeBox({
+                        src: "https://www.megahoot.com/vault/megahoot-vault/",
+                        title: "MegaHoot Vault",
+                      });
 
-
-                      setShowIframe(true)
+                      setShowIframe(true);
                       setTimeout(() => {
-                        if (
-                          document.getElementById("slideIFMP")
-                        ) {
+                        if (document.getElementById("slideIFMP")) {
                           document.getElementById(
                             "slideIFMP"
                           ).style.transition = "1sec";
-                          document.getElementById(
-                            "slideIFMP"
-                          ).style.left = "30%";
+                          document.getElementById("slideIFMP").style.left =
+                            "30%";
                         }
                       }, 1);
                     }
@@ -572,33 +593,34 @@ const Profile = ({
                 </button>
                 <button
                   className="btn-add-private-c"
-                  style={{ minWidth: "165px", maxWidth: "166px !important", margin: '0px' }}
+                  style={{
+                    minWidth: "165px",
+                    maxWidth: "166px !important",
+                    margin: "0px",
+                  }}
                   onClick={() => {
                     if (showIframe) {
-                      document.getElementById(
-                        "slideIFMP"
-                      ).style.transition = "2sec";
-                      document.getElementById(
-                        "slideIFMP"
-                      ).style.left = "200vw";
+                      document.getElementById("slideIFMP").style.transition =
+                        "2sec";
+                      document.getElementById("slideIFMP").style.left = "200vw";
 
                       setTimeout(() => {
                         setShowIframe(false);
                       }, 500);
                     } else {
-                      setIframeBox({ src: 'https://www.megahootvault.com/', title: 'Crypto Index' })
+                      setIframeBox({
+                        src: "https://www.megahootvault.com/",
+                        title: "Crypto Index",
+                      });
 
-                      setShowIframe(true)
+                      setShowIframe(true);
                       setTimeout(() => {
-                        if (
-                          document.getElementById("slideIFMP")
-                        ) {
+                        if (document.getElementById("slideIFMP")) {
                           document.getElementById(
                             "slideIFMP"
                           ).style.transition = "1sec";
-                          document.getElementById(
-                            "slideIFMP"
-                          ).style.left = "30%";
+                          document.getElementById("slideIFMP").style.left =
+                            "30%";
                         }
                       }, 1);
                     }
@@ -638,6 +660,7 @@ const Profile = ({
               >
                 <div className="hoot-profile-layout">
                   {myUploads.map((upload) => {
+                    console.log(upload);
                     return (
                       <div key={upload.id}>
                         {!upload.mimeType ? (
@@ -659,11 +682,11 @@ const Profile = ({
                             >
                               {(ReactPlayer.canPlay(upload.link) &&
                                 upload.link.endsWith(".mp4")) ||
-                                upload.link.endsWith(".mkv") ||
-                                upload.link.endsWith(".mov") ||
-                                upload.link.endsWith(".ogv") ||
-                                upload.link.endsWith(".webm") ||
-                                upload.link.endsWith(".mpg") ? (
+                              upload.link.endsWith(".mkv") ||
+                              upload.link.endsWith(".mov") ||
+                              upload.link.endsWith(".ogv") ||
+                              upload.link.endsWith(".webm") ||
+                              upload.link.endsWith(".mpg") ? (
                                 <div className="vdo-container">
                                   <video
                                     muted
@@ -732,6 +755,9 @@ const Profile = ({
                             hootImgId={upload.image}
                             audioPoster={upload.audioPoster}
                             profilePicPath={profilePicPath}
+                            fontFamilyStyle={upload.fontFamilyStyle}
+                            fontColor={upload.fontColor}
+                            fontStyleSize={upload.fontStyleSize}
                           />
                         )}
                       </div>
@@ -743,28 +769,33 @@ const Profile = ({
           </div>
         </div>
       )}
-      {showIframe ?
+      {showIframe ? (
         <div id="slideIFMP">
           <div className="header-iframe">
             {/* <div>{iframeBox.title}</div> */}
             <button
               onClick={() => {
-                document.getElementById("slideIFMP").style.transition =
-                  "2sec";
-                document.getElementById("slideIFMP").style.left =
-                  "200vw";
+                document.getElementById("slideIFMP").style.transition = "2sec";
+                document.getElementById("slideIFMP").style.left = "200vw";
 
                 setTimeout(() => {
                   setShowIframe(false);
                 }, 500);
               }}
-
-              className="close-button-iframe">X</button></div>
-          <iframe src={iframeBox.src} allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
-            title={iframeBox.title} width="100%" height="100%"></iframe>
+              className="close-button-iframe"
+            >
+              X
+            </button>
+          </div>
+          <iframe
+            src={iframeBox.src}
+            allow={`camera ${iframeBox.src}; microphone ${iframeBox.src}`}
+            title={iframeBox.title}
+            width="100%"
+            height="100%"
+          ></iframe>
         </div>
-        : null}
-        
+      ) : null}
     </div>
   );
 };

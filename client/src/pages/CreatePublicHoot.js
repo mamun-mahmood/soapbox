@@ -54,6 +54,8 @@ import hooticon from "../assets/hooticon.png";
 const CreatePrivateHoot = (props) => {
   const [currentFontFamily, setCurrentFontFamily] = useState({color:"black",fontSize:'20px',fontFamily:"Arial"});
   const fontFamilyRef = useRef();
+  const fontColorRef = useRef();
+  const fontSizeRef = useRef();
   const [caption, setCaption] = useState("");
   const [file, setFile] = useState([]);
   const [audioPoster, setAudioPoster] = useState([]);
@@ -617,6 +619,14 @@ const CreatePrivateHoot = (props) => {
     setCurrentFontFamily({...currentFontFamily,fontFamily:fontFamilyRef.current.value});
   };
 
+  // const fontSizeHandler = () => {
+  //   setCurrentFontSize(fontSizeRef.current.value);
+  // };
+
+  // const fontColorHandler = () => {
+  //   setCurrentFontColor(fontColorRef.current.value);
+  // };
+
   return (
     <Fragment>
       {/* <NavBar /> */}
@@ -726,7 +736,7 @@ const CreatePrivateHoot = (props) => {
               ) : null}
 
               {mimeType === "" && !showLinkPreview && !link && (
-                <p>Upload Preview</p>
+                <p>Media Preview</p>
               )}
 
               {mimeType !== "" && (
@@ -1174,7 +1184,7 @@ const CreatePrivateHoot = (props) => {
               autoFocus
               maxLength="300"
               className="textarea-style-private tsp-responsive added-textarea-style"
-              placeholder="Share Your World. Hoot Hoot! (optional)"
+              placeholder="Share Your World. Hoot Hoot!"
               style={currentFontFamily}
               value={caption}
               onChange={(event) => {
