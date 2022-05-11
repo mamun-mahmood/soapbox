@@ -1,0 +1,27 @@
+.Carousel-section {
+    .carousel.carousel-slider{
+        padding: 40px 0px 30px 0px;
+    }
+    .slider-wrapper.axis-horizontal {
+        li.slide {
+            .card a h2{
+                min-height: 62px;
+            }
+        }
+        .slider {
+            .slide{
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}
+.glow.hot-deal {
+    padding:0px 0px 20px 0px;
+}
+.Marketplace {
+    margin-bottom: 50px;
+}
+.marketplace-title {
+    padding-bottom: 33px;
+}
