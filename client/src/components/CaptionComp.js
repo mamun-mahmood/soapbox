@@ -11,25 +11,26 @@ const CaptionComp = ({
   fontStyleSize,
   hootId,
   views,
-  likes
+  likes,
 }) => {
   const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
- const styles=fontFamilyStyle?fontFamilyStyle:{color:"black"}
- const BaseURL = process.env.REACT_APP_API_URL;
- const random = (min = 10, max = 50) => {
-  let num = Math.random() * (max - min) + min;
+  const styles = {
+    fontFamily: fontFamilyStyle,
+    color: fontColor,
+    fontSize: fontStyleSize,
+  };
+  const BaseURL = process.env.REACT_APP_API_URL;
+  const random = (min = 10, max = 50) => {
+    let num = Math.random() * (max - min) + min;
 
-  return Math.round(num);
-};
-useEffect(()=>{
-  axios.put(
-    `${BaseURL}/upload/views/external-player`,
-    {
+    return Math.round(num);
+  };
+  useEffect(() => {
+    axios.put(`${BaseURL}/upload/views/external-player`, {
       views: views + random(50, 400),
       id: hootId,
-    }
-  );
-},[])
+    });
+  }, []);
 
   return (
     caption.length > 300
@@ -76,11 +77,7 @@ useEffect(()=>{
       }
 
       return (
-        <span
-          key={index}
-          className="hoot-comment"
-          style={styles}
-        >
+        <span key={index} className="hoot-comment" style={{ ...styles }}>
           {item}{" "}
         </span>
       );
