@@ -735,7 +735,7 @@ const Profile = ({
                                 )
                               )}
                             </div>
-                            <FiPlayCircle
+                            {/* <FiPlayCircle
                               className="GIF-overlay"
                               style={{ borderRadius: "50%" }}
                               onClick={() => {
@@ -745,7 +745,25 @@ const Profile = ({
                                   )}/${uuidv4()}`
                                 );
                               }}
-                            />
+                            /> */}
+                            <div
+                              style={{
+                                width: "80%",
+                                position: "absolute",
+                                bottom: "10rem",
+                                left: " 2rem",
+                                zIndex: "44",
+                                fontFamily: upload.fontFamilyStyle.includes(
+                                  "fontFamilyStyle"
+                                )
+                                  ? upload.fontFamilyStyle.fontFamily
+                                  : upload.fontFamilyStyle || "Arial",
+                              }}
+                            >
+                              {upload.caption.length > 30
+                                ? upload.caption.slice(0, 25) + "..."
+                                : upload.caption}
+                            </div>
                           </div>
                         ) : (
                           <HootOutside
