@@ -660,7 +660,10 @@ const Profile = ({
               >
                 <div className="hoot-profile-layout">
                   {myUploads.map((upload) => {
-                    console.log(upload);
+                    
+                  
+                    let fontFamilyStyle=upload.fontFamilyStyle?JSON.parse(upload.fontFamilyStyle):{color:'black',fontFamily:'Arial'}
+                  
                     return (
                       <div key={upload.id}>
                         {!upload.mimeType ? (
@@ -669,7 +672,8 @@ const Profile = ({
                               className="hoot-img-vertical-profile"
                               style={{
                                 animation: "none",
-                                backgroundColor: "#d9d1f8",
+                                backgroundColor: upload.fontFamilyStyle?fontFamilyStyle.color:"#d9d1f8",
+                                opacity:upload.fontFamilyStyle?0.2:1
                               }}
                               onContextMenu={(e) => e.preventDefault()}
                               onClick={() => {
@@ -735,7 +739,7 @@ const Profile = ({
                                 )
                               )}
                             </div>
-                            {/* <FiPlayCircle
+                            {upload.link? <FiPlayCircle
                               className="GIF-overlay"
                               style={{ borderRadius: "50%" }}
                               onClick={() => {
@@ -745,25 +749,26 @@ const Profile = ({
                                   )}/${uuidv4()}`
                                 );
                               }}
-                            /> */}
-                            <div
+                            />:<div
                               style={{
                                 width: "80%",
                                 position: "absolute",
                                 bottom: "10rem",
                                 left: " 2rem",
                                 zIndex: "44",
-                                fontFamily: upload.fontFamilyStyle.includes(
-                                  "fontFamilyStyle"
-                                )
-                                  ? upload.fontFamilyStyle.fontFamily
-                                  : upload.fontFamilyStyle || "Arial",
+                                color:fontFamilyStyle.color,
+                                fontFamily:fontFamilyStyle.fontFamily,
+                               
+                             
                               }}
                             >
+                             
                               {upload.caption.length > 30
                                 ? upload.caption.slice(0, 25) + "..."
                                 : upload.caption}
-                            </div>
+                            </div>}
+                           
+                            
                           </div>
                         ) : (
                           <HootOutside
