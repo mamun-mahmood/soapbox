@@ -660,10 +660,22 @@ const Profile = ({
               >
                 <div className="hoot-profile-layout">
                   {myUploads.map((upload) => {
-                    
-                  
-                    let fontFamilyStyle=upload.fontFamilyStyle?JSON.parse(upload.fontFamilyStyle):{color:'black',fontFamily:'Arial'}
-                  
+                    var fontFamilyStyle;
+                    if (
+                      upload.fontFamilyStyle.includes("fontFamily") ||
+                      upload.fontFamilyStyle.includes("fontColor") ||
+                      upload.fontFamilyStyle.includes("fontSize")
+                    ) {
+                      fontFamilyStyle = JSON.parse(upload.fontFamilyStyle);
+                      var fontFamily = fontFamilyStyle.fontFamily || "Arial";
+                      var fontStyleSize = fontFamilyStyle.fontSize || "20px";
+                      var fontColor = fontFamilyStyle.color || "black";
+                    } else {
+                      var fontFamily = upload.fontFamilyStyle || "Arial";
+                      var fontStyleSize = "20px";
+                      var fontColor = "black";
+                    }
+
                     return (
                       <div key={upload.id}>
                         {!upload.mimeType ? (
@@ -672,8 +684,8 @@ const Profile = ({
                               className="hoot-img-vertical-profile"
                               style={{
                                 animation: "none",
-                                backgroundColor: upload.fontFamilyStyle?fontFamilyStyle.color:"#d9d1f8",
-                                opacity:upload.fontFamilyStyle?0.2:1
+                                backgroundColor: fontColor || "#d9d1f8",
+                                opacity: upload.fontFamilyStyle ? 0.2 : 1,
                               }}
                               onContextMenu={(e) => e.preventDefault()}
                               onClick={() => {
@@ -739,36 +751,35 @@ const Profile = ({
                                 )
                               )}
                             </div>
-                            {upload.link? <FiPlayCircle
-                              className="GIF-overlay"
-                              style={{ borderRadius: "50%" }}
-                              onClick={() => {
-                                history.push(
-                                  `/${username}/hoot/${btoa(
-                                    upload.id
-                                  )}/${uuidv4()}`
-                                );
-                              }}
-                            />:<div
-                              style={{
-                                width: "80%",
-                                position: "absolute",
-                                bottom: "10rem",
-                                left: " 2rem",
-                                zIndex: "44",
-                                color:fontFamilyStyle.color,
-                                fontFamily:fontFamilyStyle.fontFamily,
-                               
-                             
-                              }}
-                            >
-                             
-                              {upload.caption.length > 30
-                                ? upload.caption.slice(0, 25) + "..."
-                                : upload.caption}
-                            </div>}
-                           
-                            
+                            {upload.link ? (
+                              <FiPlayCircle
+                                className="GIF-overlay"
+                                style={{ borderRadius: "50%" }}
+                                onClick={() => {
+                                  history.push(
+                                    `/${username}/hoot/${btoa(
+                                      upload.id
+                                    )}/${uuidv4()}`
+                                  );
+                                }}
+                              />
+                            ) : (
+                              <div
+                                style={{
+                                  width: "80%",
+                                  position: "absolute",
+                                  bottom: "10rem",
+                                  left: " 1.5rem",
+                                  zIndex: "44",
+                                  color: fontColor,
+                                  fontFamily: fontFamily,
+                                }}
+                              >
+                                {upload.caption.length > 60
+                                  ? upload.caption.slice(0, 60) + "..."
+                                  : upload.caption}
+                              </div>
+                            )}
                           </div>
                         ) : (
                           <HootOutside
