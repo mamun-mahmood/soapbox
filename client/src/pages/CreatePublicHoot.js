@@ -52,7 +52,11 @@ import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
 
 const CreatePrivateHoot = (props) => {
-  const [currentFontFamily, setCurrentFontFamily] = useState({color:"black",fontSize:'20px',fontFamily:"Arial"});
+  const [currentFontFamily, setCurrentFontFamily] = useState({
+    color: "black",
+    fontSize: "20px",
+    fontFamily: "Arial",
+  });
   const fontFamilyRef = useRef();
   const fontColorRef = useRef();
   const fontSizeRef = useRef();
@@ -95,7 +99,7 @@ const CreatePrivateHoot = (props) => {
   const stocksFound = caption.split(" ").filter((v) => v.startsWith("$"));
 
   const upload = (event) => {
-    let styles=JSON.stringify(currentFontFamily)
+    let styles = JSON.stringify(currentFontFamily);
     event.preventDefault();
     setSaveLoading(true);
     const formData = new FormData();
@@ -615,8 +619,10 @@ const CreatePrivateHoot = (props) => {
   };
 
   const changeFontFamily = () => {
-    
-    setCurrentFontFamily({...currentFontFamily,fontFamily:fontFamilyRef.current.value});
+    setCurrentFontFamily({
+      ...currentFontFamily,
+      fontFamily: fontFamilyRef.current.value,
+    });
   };
 
   // const fontSizeHandler = () => {
@@ -949,69 +955,105 @@ const CreatePrivateHoot = (props) => {
               />
             </SoapboxTooltip>
             <SoapboxTooltip title="Font style" placement="right">
-            <select
-              name="fontFamilySelect"
-              ref={fontFamilyRef}
-              onChange={changeFontFamily}
-              style={{ width: "32px" }}
-            >
-              <option value="none" selected hidden disabled  style={{fontWeight:'bold'}}>
-                F
-              </option>
-              <option
-                value="Roboto Condensed"
-                style={{ fontFamily: "Roboto Condensed" }}
+              <select
+                name="fontFamilySelect"
+                ref={fontFamilyRef}
+                onChange={changeFontFamily}
+                style={{ width: "32px" }}
               >
-                Choose this style
-              </option>
-              <option
-                value="'Water Brush', cursive"
-                style={{ fontFamily: "'Water Brush', cursive" }}
-              >
-                Choose this style
-              </option>
-              <option
-                value="'Tapestry', cursive"
-                style={{ fontFamily: "'Tapestry', cursive" }}
-              >
-                Choose this style
-              </option>
-              <option
-                value="'Oleo Script Swash Caps', cursive"
+                <option
+                  value="none"
+                  selected
+                  hidden
+                  disabled
+                  style={{ fontWeight: "bold" }}
+                >
+                  F
+                </option>
+                <option
+                  value="Roboto Condensed"
+                  style={{ fontFamily: "Roboto Condensed" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Water Brush', cursive"
+                  style={{ fontFamily: "'Water Brush', cursive" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Tapestry', cursive"
+                  style={{ fontFamily: "'Tapestry', cursive" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Oleo Script Swash Caps', cursive"
+                  style={{
+                    fontFamily: "'Oleo Script Swash Caps', cursive",
+                  }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Indie Flower', cursive"
+                  style={{ fontFamily: "'Indie Flower', cursive" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Bangers', cursive"
+                  style={{ fontFamily: "'Bangers', cursive" }}
+                >
+                  Choose this style
+                </option>
+              </select>
+            </SoapboxTooltip>
+
+            <SoapboxTooltip title="Font Size" placement="right">
+              <select
                 style={{
-                  fontFamily: "'Oleo Script Swash Caps', cursive",
+                  borderRadius: "15px",
+                  width: "40px",
+                  height: "20px",
+                  border: "none",
+                  fontSize: "13px",
+                }}
+                onChange={(e) => {
+                  setCurrentFontFamily({
+                    ...currentFontFamily,
+                    fontSize: e.target.value,
+                  });
                 }}
               >
-                Choose this style
-              </option>
-              <option
-                value="'Indie Flower', cursive"
-                style={{ fontFamily: "'Indie Flower', cursive" }}
-              >
-                Choose this style
-              </option>
-              <option
-                value="'Bangers', cursive"
-                style={{ fontFamily: "'Bangers', cursive" }}
-              >
-                Choose this style
-              </option>
-            </select>
-</SoapboxTooltip>
-
-<SoapboxTooltip title="Font Size" placement="right">
-<select style={{borderRadius:'15px',width:'40px',height:'20px',border:'none',fontSize:'13px'}} onChange={(e)=>{setCurrentFontFamily({...currentFontFamily,fontSize:e.target.value})}}>
-  <option>{currentFontFamily.fontSize}</option>
-  {[10,11,12,13,14,15,16,17,18,19,20,25,30,35,40].map(e=><option value={`${e}px`}>{e}</option>)}
-  
-</select>
-</SoapboxTooltip>
-<SoapboxTooltip title="Font Color" placement="right">
-   <input type="color" style={{borderRadius:'15px',width:'40px',height:'20px',border:'none'}} value={currentFontFamily.color} onChange={(e)=>setCurrentFontFamily({...currentFontFamily,color:e.target.value})} />
-
-</SoapboxTooltip>
-
-                     </div>
+                <option>{currentFontFamily.fontSize}</option>
+                {[
+                  10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, 35, 40,
+                ].map((e) => (
+                  <option value={`${e}px`}>{e}</option>
+                ))}
+              </select>
+            </SoapboxTooltip>
+            <SoapboxTooltip title="Font Color" placement="right">
+              <input
+                type="color"
+                style={{
+                  borderRadius: "15px",
+                  width: "40px",
+                  height: "20px",
+                  border: "none",
+                }}
+                value={currentFontFamily.color}
+                onChange={(e) =>
+                  setCurrentFontFamily({
+                    ...currentFontFamily,
+                    color: e.target.value,
+                  })
+                }
+              />
+            </SoapboxTooltip>
+          </div>
 
           <div
             className="btn-post my-2 tbn-responsive"

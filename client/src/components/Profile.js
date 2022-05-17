@@ -685,7 +685,7 @@ const Profile = ({
                               style={{
                                 animation: "none",
                                 backgroundColor: fontColor || "#d9d1f8",
-                                opacity: upload.fontFamilyStyle ? 0.2 : 1,
+                                opacity: 0.2,
                               }}
                               onContextMenu={(e) => e.preventDefault()}
                               onClick={() => {

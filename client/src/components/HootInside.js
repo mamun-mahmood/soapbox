@@ -572,9 +572,10 @@ const HootInside = ({
                       >
                         {userInfo ? (
                           userInfo.username === username ? (
-                            <button className="btn-hoot-follow">
-                              Following
-                            </button>
+                            // <button className="btn-hoot-follow">
+                            //   Following1
+                            // </button>
+                            ""
                           ) : userFollowers.length === 0 ? (
                             <button
                               className="btn-hoot-follow"
@@ -680,7 +681,8 @@ const HootInside = ({
                   {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
                   {userInfo ? (
                     userInfo.username === username ? (
-                      <button className="btn-hoot-follow">Following</button>
+                      // <button className="btn-hoot-follow">Following2</button>
+                      ""
                     ) : userFollowers.length === 0 ? (
                       <button className="btn-hoot-follow" onClick={addFollower}>
                         {followed ? "Following" : "Follow"}
@@ -1817,9 +1819,10 @@ const HootInside = ({
                       >
                         {userInfo ? (
                           userInfo.username === username ? (
-                            <button className="btn-hoot-follow">
-                              Following
-                            </button>
+                            // <button className="btn-hoot-follow">
+                            //   Following3
+                            // </button>
+                            ""
                           ) : userFollowers.length === 0 ? (
                             <button
                               className="btn-hoot-follow"
@@ -1938,7 +1941,8 @@ const HootInside = ({
                   {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
                   {userInfo ? (
                     userInfo.username === username ? (
-                      <button className="btn-hoot-follow">Following</button>
+                      // <button className="btn-hoot-follow">Following4</button>
+                      ""
                     ) : userFollowers.length === 0 ? (
                       <button className="btn-hoot-follow" onClick={addFollower}>
                         {followed ? "Following" : "Follow"}

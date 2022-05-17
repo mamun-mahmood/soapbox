@@ -52,7 +52,11 @@ import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
 
 const CreateHootBoxMobile = () => {
-  const [currentFontFamily, setCurrentFontFamily] = useState({color:"black",fontSize:'20px',fontFamily:"Arial"});
+  const [currentFontFamily, setCurrentFontFamily] = useState({
+    color: "black",
+    fontSize: "20px",
+    fontFamily: "Arial",
+  });
   const fontFamilyRef = useRef();
   const fontColorRef = useRef();
   const fontSizeRef = useRef();
@@ -95,7 +99,7 @@ const CreateHootBoxMobile = () => {
   const stocksFound = caption.split(" ").filter((v) => v.startsWith("$"));
 
   const upload = (event) => {
-    let styles=JSON.stringify(currentFontFamily)
+    let styles = JSON.stringify(currentFontFamily);
     event.preventDefault();
     setSaveLoading(true);
     const formData = new FormData();
@@ -614,10 +618,11 @@ const CreateHootBoxMobile = () => {
     setAudioPoster([]);
   };
 
- 
   const changeFontFamily = () => {
-    
-    setCurrentFontFamily({...currentFontFamily,fontFamily:fontFamilyRef.current.value});
+    setCurrentFontFamily({
+      ...currentFontFamily,
+      fontFamily: fontFamilyRef.current.value,
+    });
   };
   return (
     <div className="hoot-box-mobile">
@@ -950,16 +955,47 @@ const CreateHootBoxMobile = () => {
               </option>
             </select>
             <SoapboxTooltip title="Font Size" placement="right">
-<select style={{borderRadius:'15px',width:'40px',height:'20px',border:'none',fontSize:'13px'}} onChange={(e)=>{setCurrentFontFamily({...currentFontFamily,fontSize:e.target.value})}}>
-  <option>{currentFontFamily.fontSize}</option>
-  {[10,11,12,13,14,15,16,17,18,19,20,25,30,35,40].map(e=><option value={`${e}px`}>{e}</option>)}
-  
-</select>
-</SoapboxTooltip>
-<SoapboxTooltip title="Font Color" placement="right">
-   <input type="color" style={{borderRadius:'15px',width:'40px',height:'20px',border:'none'}} value={currentFontFamily.color} onChange={(e)=>setCurrentFontFamily({...currentFontFamily,color:e.target.value})} />
-
-</SoapboxTooltip>
+              <select
+                style={{
+                  borderRadius: "15px",
+                  width: "40px",
+                  height: "20px",
+                  border: "none",
+                  fontSize: "13px",
+                }}
+                onChange={(e) => {
+                  setCurrentFontFamily({
+                    ...currentFontFamily,
+                    fontSize: e.target.value,
+                  });
+                }}
+              >
+                <option>{currentFontFamily.fontSize}</option>
+                {[
+                  10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, 35, 40,
+                ].map((e) => (
+                  <option value={`${e}px`}>{e}</option>
+                ))}
+              </select>
+            </SoapboxTooltip>
+            <SoapboxTooltip title="Font Color" placement="right">
+              <input
+                type="color"
+                style={{
+                  borderRadius: "15px",
+                  width: "40px",
+                  height: "20px",
+                  border: "none",
+                }}
+                value={currentFontFamily.color}
+                onChange={(e) =>
+                  setCurrentFontFamily({
+                    ...currentFontFamily,
+                    color: e.target.value,
+                  })
+                }
+              />
+            </SoapboxTooltip>
           </div>
 
           <div
