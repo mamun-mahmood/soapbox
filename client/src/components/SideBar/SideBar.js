@@ -294,12 +294,14 @@ const SideBar = () => {
           <SideBarOption option="Explore" link="/explore" Icon={explore} />
           {userInfo && (
             <div className="btn-login-home-page">
-            <button
-            onClick={() => {
-              history.push(`/chathive/${username}`);
-            }}
-            >  <img src={chathive} className="chativelogo" />
-            </button>
+              <button
+                onClick={() => {
+                  history.push(`/chathive/${username}`);
+                }}
+              >
+                {" "}
+                <img src={chathive} className="chativelogo" />
+              </button>
             </div>
           )}
 
