@@ -43,6 +43,10 @@ const Post = ({
       {userInformation.map((user) => {
         return (
           <div key={user.id}>
+            {console.log(
+              "I am loaded  by individual hoot for the post : ",
+              user
+            )}
             <HootInside
               name={user.name}
               profilePic={user.profilePic}

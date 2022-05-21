@@ -38,6 +38,7 @@ import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
 import ShowModalForIframes from "./showModalForIframes";
 import MyVerticallyCenteredModal from "./PrivateChannels/model";
+import { LinkPreview } from "@dhaiwat10/react-link-preview";
 
 const Profile = ({
   verified,
@@ -766,6 +767,7 @@ const Profile = ({
                             ) : (
                               <div
                                 style={{
+                                  overflow: "hidden",
                                   width: "80%",
                                   position: "absolute",
                                   bottom: "10rem",

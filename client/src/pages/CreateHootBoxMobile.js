@@ -50,6 +50,7 @@ import videoupload from "../assets/videoupload.png";
 import emojiupload from "../assets/emoji.png";
 import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
+import { LinkPreview } from "@dhaiwat10/react-link-preview";
 
 const CreateHootBoxMobile = () => {
   const [currentFontFamily, setCurrentFontFamily] = useState({
@@ -75,6 +76,8 @@ const CreateHootBoxMobile = () => {
   // const [links, setLinks] = useState([{ link: "" }]);
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [onDemandMedia, setOnDemandMedia] = useState(false);
+  var urlRegex = /(https?:\/\/[^ ]*)/;
+  const [linkUrl, setLinkUrl] = useState("");
 
   const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -624,6 +627,16 @@ const CreateHootBoxMobile = () => {
       fontFamily: fontFamilyRef.current.value,
     });
   };
+
+  const textChangeHandler = (event) => {
+    const value = event.target.value;
+    setCaption(value);
+    try {
+      setLinkUrl(value.match(urlRegex)[1]);
+    } catch (err) {
+      console.log("No link could be extracted");
+    }
+  };
   return (
     <div className="hoot-box-mobile">
       <NavBar />
@@ -696,63 +709,81 @@ const CreateHootBoxMobile = () => {
               )}
             </div>
           ) : (
-            <div className="media-preview-private mpp-responsive">
-              {!showLinkPreview ? (
-                link ? (
-                  <div
-                    style={{
-                      padding: "0rem 0.5rem 1rem 0.5rem",
-                      wordBreak: "break-all",
-                      marginTop: "-0.5rem",
-                    }}
-                  >
-                    <a
-                      href={link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-content"
+            <div style={{ marginBottom: "2px" }}>
+              <div className="media-preview-private mpp-responsive">
+                {!showLinkPreview ? (
+                  link ? (
+                    <div
+                      style={{
+                        padding: "0rem 0.5rem 1rem 0.5rem",
+                        wordBreak: "break-all",
+                        marginTop: "-0.5rem",
+                      }}
                     >
-                      {link}
-                    </a>
-                  </div>
-                ) : null
-              ) : null}
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-content"
+                      >
+                        {link}
+                      </a>
+                    </div>
+                  ) : null
+                ) : null}
 
-              {mimeType === "" && !showLinkPreview && !link && (
-                <p>Media Preview</p>
-              )}
+                {mimeType === "" && !showLinkPreview && !link && (
+                  <p>Media Preview</p>
+                )}
 
-              {mimeType !== "" && (
-                <IoCloseOutline
-                  className="close-preview"
-                  onClick={closePreview}
-                />
-              )}
+                {mimeType !== "" && (
+                  <IoCloseOutline
+                    className="close-preview"
+                    onClick={closePreview}
+                  />
+                )}
 
-              {mimeType.match(/image/gi) == "image" && (
-                <img src={src} alt="soapbox-img" className="hoot-img" />
-              )}
+                {mimeType.match(/image/gi) == "image" && (
+                  <img src={src} alt="soapbox-img" className="hoot-img" />
+                )}
 
-              {mimeType.match(/video/gi) == "video" && (
-                <video width="400" className="hoot-img" controls>
-                  <source src={src} />
-                  Your browser does not support HTML video.
-                </video>
-              )}
+                {mimeType.match(/video/gi) == "video" && (
+                  <video width="400" className="hoot-img" controls>
+                    <source src={src} />
+                    Your browser does not support HTML video.
+                  </video>
+                )}
 
-              {mimeType.match(/audio/gi) == "audio" && (
-                <video
-                  poster={
-                    audioPoster.length !== 0
-                      ? URL.createObjectURL(audioPoster)
-                      : profilePicPath
-                  }
-                  className="hoot-vdo-private"
-                  controls
+                {mimeType.match(/audio/gi) == "audio" && (
+                  <video
+                    poster={
+                      audioPoster.length !== 0
+                        ? URL.createObjectURL(audioPoster)
+                        : profilePicPath
+                    }
+                    className="hoot-vdo-private"
+                    controls
+                  >
+                    <source src={src} />
+                    Your browser does not support the audio element.
+                  </video>
+                )}
+              </div>
+              {linkUrl.length > 0 && (
+                <div
+                  style={{
+                    width: "100%",
+                    height: "110px",
+                    marginTop: "2px",
+                    marginBottom: "5px",
+                  }}
                 >
-                  <source src={src} />
-                  Your browser does not support the audio element.
-                </video>
+                  <LinkPreview
+                    url={linkUrl}
+                    width="100%"
+                    height="110px"
+                  ></LinkPreview>
+                </div>
               )}
             </div>
           )}
@@ -1162,10 +1193,7 @@ const CreateHootBoxMobile = () => {
               placeholder="Share Your World. Hoot Hoot!"
               style={currentFontFamily}
               value={caption}
-              onChange={(event) => {
-                const value = event.target.value;
-                setCaption(value);
-              }}
+              onChange={textChangeHandler}
             ></textarea>
 
             <div className="caption-count-private ccp-responsive">

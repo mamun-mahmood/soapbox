@@ -50,6 +50,7 @@ import videoupload from "../assets/videoupload.png";
 import emojiupload from "../assets/emoji.png";
 import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
+import { LinkPreview } from "@dhaiwat10/react-link-preview";
 
 const CreatePrivateHoot = (props) => {
   const [currentFontFamily, setCurrentFontFamily] = useState({
@@ -75,6 +76,8 @@ const CreatePrivateHoot = (props) => {
   // const [links, setLinks] = useState([{ link: "" }]);
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [onDemandMedia, setOnDemandMedia] = useState(false);
+  var urlRegex = /(https?:\/\/[^ ]*)/;
+  const [linkUrl, setLinkUrl] = useState("");
 
   const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -115,40 +118,41 @@ const CreatePrivateHoot = (props) => {
     formData.append("file", file);
     formData.append("audioPoster", audioPoster);
     formData.append("fontFamilyStyle", styles);
+    console.log("at the upload caption is : ", caption);
 
-    const uploadData = async () => {
-      await axios
-        .all([
-          axios.post(`${BaseURL}/upload/create`, formData),
-          hashtagsFound.map((hashtag) => {
-            axios.post(`${BaseURL}/hashtags`, {
-              hashtag: hashtag.replace(/[,.]/g, ""),
-            });
-          }),
-          stocksFound.map((stock) => {
-            axios.post(`${BaseURL}/stocks`, {
-              stock: stock.replace(/[,.]/g, ""),
-            });
-          }),
-        ])
-        .then(
-          axios.spread((res1, res2) => {
-            if (res1) {
-              props.closeHoot();
-              setTimeout(() => {
-                history.push("/All-Hoots");
-              }, 500);
-            }
-          })
-        );
-    };
+    // const uploadData = async () => {
+    //   await axios
+    //     .all([
+    //       axios.post(`${BaseURL}/upload/create`, formData),
+    //       hashtagsFound.map((hashtag) => {
+    //         axios.post(`${BaseURL}/hashtags`, {
+    //           hashtag: hashtag.replace(/[,.]/g, ""),
+    //         });
+    //       }),
+    //       stocksFound.map((stock) => {
+    //         axios.post(`${BaseURL}/stocks`, {
+    //           stock: stock.replace(/[,.]/g, ""),
+    //         });
+    //       }),
+    //     ])
+    //     .then(
+    //       axios.spread((res1, res2) => {
+    //         if (res1) {
+    //           props.closeHoot();
+    //           setTimeout(() => {
+    //             history.push("/All-Hoots");
+    //           }, 500);
+    //         }
+    //       })
+    //     );
+    // };
 
-    const uploadDataToast = uploadData();
-    toast.promise(uploadDataToast, {
-      pending: "Sending Hoot...",
-      success: "Hoot Successful",
-      error: "Please try again",
-    });
+    // const uploadDataToast = uploadData();
+    // toast.promise(uploadDataToast, {
+    //   pending: "Sending Hoot...",
+    //   success: "Hoot Successful",
+    //   error: "Please try again",
+    // });
   };
 
   const handleFile = (event) => {
@@ -633,6 +637,16 @@ const CreatePrivateHoot = (props) => {
   //   setCurrentFontColor(fontColorRef.current.value);
   // };
 
+  const textChangeHandler = (event) => {
+    const value = event.target.value;
+    setCaption(value);
+    try {
+      setLinkUrl(value.match(urlRegex)[1]);
+    } catch (err) {
+      console.log("No link could be extracted");
+    }
+  };
+
   return (
     <Fragment>
       {/* <NavBar /> */}
@@ -719,63 +733,81 @@ const CreatePrivateHoot = (props) => {
               )}
             </div>
           ) : (
-            <div className="media-preview-private mpp-responsive">
-              {!showLinkPreview ? (
-                link ? (
-                  <div
-                    style={{
-                      padding: "0rem 0.5rem 1rem 0.5rem",
-                      wordBreak: "break-all",
-                      marginTop: "-0.5rem",
-                    }}
-                  >
-                    <a
-                      href={link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-content"
+            <div style={{ marginBottom: "2px" }}>
+              <div className="media-preview-private mpp-responsive">
+                {!showLinkPreview ? (
+                  link ? (
+                    <div
+                      style={{
+                        padding: "0rem 0.5rem 1rem 0.5rem",
+                        wordBreak: "break-all",
+                        marginTop: "-0.5rem",
+                      }}
                     >
-                      {link}
-                    </a>
-                  </div>
-                ) : null
-              ) : null}
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-content"
+                      >
+                        {link}
+                      </a>
+                    </div>
+                  ) : null
+                ) : null}
 
-              {mimeType === "" && !showLinkPreview && !link && (
-                <p>Media Preview</p>
-              )}
+                {mimeType === "" && !showLinkPreview && !link && (
+                  <p>Media Preview</p>
+                )}
 
-              {mimeType !== "" && (
-                <IoCloseOutline
-                  className="close-preview"
-                  onClick={closePreview}
-                />
-              )}
+                {mimeType !== "" && (
+                  <IoCloseOutline
+                    className="close-preview"
+                    onClick={closePreview}
+                  />
+                )}
 
-              {mimeType.match(/image/gi) == "image" && (
-                <img src={src} alt="soapbox-img" className="hoot-img" />
-              )}
+                {mimeType.match(/image/gi) == "image" && (
+                  <img src={src} alt="soapbox-img" className="hoot-img" />
+                )}
 
-              {mimeType.match(/video/gi) == "video" && (
-                <video width="400" className="hoot-img" controls>
-                  <source src={src} />
-                  Your browser does not support HTML video.
-                </video>
-              )}
+                {mimeType.match(/video/gi) == "video" && (
+                  <video width="400" className="hoot-img" controls>
+                    <source src={src} />
+                    Your browser does not support HTML video.
+                  </video>
+                )}
 
-              {mimeType.match(/audio/gi) == "audio" && (
-                <video
-                  poster={
-                    audioPoster.length !== 0
-                      ? URL.createObjectURL(audioPoster)
-                      : profilePicPath
-                  }
-                  className="hoot-vdo-private"
-                  controls
+                {mimeType.match(/audio/gi) == "audio" && (
+                  <video
+                    poster={
+                      audioPoster.length !== 0
+                        ? URL.createObjectURL(audioPoster)
+                        : profilePicPath
+                    }
+                    className="hoot-vdo-private"
+                    controls
+                  >
+                    <source src={src} />
+                    Your browser does not support the audio element.
+                  </video>
+                )}
+              </div>
+              {linkUrl.length > 0 && (
+                <div
+                  style={{
+                    width: "100%",
+                    height: "110px",
+                    marginTop: "2px",
+                    marginBottom: "5px",
+                  }}
                 >
-                  <source src={src} />
-                  Your browser does not support the audio element.
-                </video>
+                  <LinkPreview
+                    url={linkUrl}
+                    width="100%"
+                    height="110px"
+                  ></LinkPreview>
+                </div>
               )}
             </div>
           )}
@@ -1229,10 +1261,7 @@ const CreatePrivateHoot = (props) => {
               placeholder="Share Your World. Hoot Hoot!"
               style={currentFontFamily}
               value={caption}
-              onChange={(event) => {
-                const value = event.target.value;
-                setCaption(value);
-              }}
+              onChange={textChangeHandler}
             ></textarea>
 
             {/* <h6 className={caption.length > 2120 && "text-danger"}>
