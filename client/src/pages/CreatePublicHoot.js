@@ -118,41 +118,40 @@ const CreatePrivateHoot = (props) => {
     formData.append("file", file);
     formData.append("audioPoster", audioPoster);
     formData.append("fontFamilyStyle", styles);
-    console.log("at the upload caption is : ", caption);
 
-    // const uploadData = async () => {
-    //   await axios
-    //     .all([
-    //       axios.post(`${BaseURL}/upload/create`, formData),
-    //       hashtagsFound.map((hashtag) => {
-    //         axios.post(`${BaseURL}/hashtags`, {
-    //           hashtag: hashtag.replace(/[,.]/g, ""),
-    //         });
-    //       }),
-    //       stocksFound.map((stock) => {
-    //         axios.post(`${BaseURL}/stocks`, {
-    //           stock: stock.replace(/[,.]/g, ""),
-    //         });
-    //       }),
-    //     ])
-    //     .then(
-    //       axios.spread((res1, res2) => {
-    //         if (res1) {
-    //           props.closeHoot();
-    //           setTimeout(() => {
-    //             history.push("/All-Hoots");
-    //           }, 500);
-    //         }
-    //       })
-    //     );
-    // };
+    const uploadData = async () => {
+      await axios
+        .all([
+          axios.post(`${BaseURL}/upload/create`, formData),
+          hashtagsFound.map((hashtag) => {
+            axios.post(`${BaseURL}/hashtags`, {
+              hashtag: hashtag.replace(/[,.]/g, ""),
+            });
+          }),
+          stocksFound.map((stock) => {
+            axios.post(`${BaseURL}/stocks`, {
+              stock: stock.replace(/[,.]/g, ""),
+            });
+          }),
+        ])
+        .then(
+          axios.spread((res1, res2) => {
+            if (res1) {
+              props.closeHoot();
+              setTimeout(() => {
+                history.push("/All-Hoots");
+              }, 500);
+            }
+          })
+        );
+    };
 
-    // const uploadDataToast = uploadData();
-    // toast.promise(uploadDataToast, {
-    //   pending: "Sending Hoot...",
-    //   success: "Hoot Successful",
-    //   error: "Please try again",
-    // });
+    const uploadDataToast = uploadData();
+    toast.promise(uploadDataToast, {
+      pending: "Sending Hoot...",
+      success: "Hoot Successful",
+      error: "Please try again",
+    });
   };
 
   const handleFile = (event) => {
