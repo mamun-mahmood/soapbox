@@ -51,6 +51,7 @@ import emojiupload from "../assets/emoji.png";
 import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
 import { LinkPreview } from "@dhaiwat10/react-link-preview";
+import MediaProfile from "../components/HootOutside/MediaProfile";
 
 const CreatePrivateHoot = (props) => {
   const [currentFontFamily, setCurrentFontFamily] = useState({
@@ -801,11 +802,12 @@ const CreatePrivateHoot = (props) => {
                     marginBottom: "5px",
                   }}
                 >
-                  <LinkPreview
+                  <MediaProfile url={linkUrl} />
+                  {/* <LinkPreview
                     url={linkUrl}
                     width="100%"
                     height="110px"
-                  ></LinkPreview>
+                  ></LinkPreview> */}
                 </div>
               )}
             </div>

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { MdGif, MdMusicNote } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
+import { LinkPreview } from "@dhaiwat10/react-link-preview";
 const MediaProfile = ({
   mimeType,
   filePath,
@@ -11,6 +12,7 @@ const MediaProfile = ({
   username,
   hootId,
   profilePicPath,
+  url,
 }) => {
   const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -33,34 +35,39 @@ const MediaProfile = ({
 
   return (
     <div className="media-center">
-      {mimeType && mimeType.match(/image/gi) == "image" && (
-        <LazyLoad offset={0} className="img-container">
-          <img
-            ref={ref}
-            src={filePath}
-            alt="soapbox-img"
-            className={isVertical}
-            onContextMenu={(e) => e.preventDefault()}
-            onClick={() => {
-              history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`);
-            }}
-            onLoad={(e) => {
-              imgRef();
-            }}
-            onDragStart={(e) => e.preventDefault()}
-          />
-          {mimeType.includes("image/gif") && (
-            <MdGif
-              className="GIF-overlay"
+      {url ? (
+        <LinkPreview url={url} width="100%" height="110px"></LinkPreview>
+      ) : (
+        mimeType &&
+        mimeType.match(/image/gi) == "image" && (
+          <LazyLoad offset={0} className="img-container">
+            <img
+              ref={ref}
+              src={filePath}
+              alt="soapbox-img"
+              className={isVertical}
+              onContextMenu={(e) => e.preventDefault()}
               onClick={() => {
                 history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`);
               }}
+              onLoad={(e) => {
+                imgRef();
+              }}
+              onDragStart={(e) => e.preventDefault()}
             />
-          )}
-        </LazyLoad>
+            {mimeType.includes("image/gif") && (
+              <MdGif
+                className="GIF-overlay"
+                onClick={() => {
+                  history.push(`/${username}/hoot/${btoa(hootId)}/${uuidv4()}`);
+                }}
+              />
+            )}
+          </LazyLoad>
+        )
       )}
 
-      {mimeType.match(/video/gi) == "video" && (
+      {mimeType && mimeType.match(/video/gi) == "video" && (
         <LazyLoad offset={0} className="vdo-container">
           <video
             loop
@@ -91,7 +98,7 @@ const MediaProfile = ({
         </LazyLoad>
       )}
 
-      {mimeType.match(/audio/gi) == "audio" && (
+      {mimeType && mimeType.match(/audio/gi) == "audio" && (
         <LazyLoad offset={0} className="vdo-container">
           <video
             className="hoot-vdo-profile"
