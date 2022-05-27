@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../ForgotPassword/forgotPassword.css";
 import axios from "axios";
-import SBlogo from "../../assets/soapbox.png";
+import SBlogo from "../../assets/Soapbox.png";
 import { Link, useParams, useLocation, useHistory } from "react-router-dom";
 
 const ResetPassword = () => {

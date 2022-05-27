@@ -695,7 +695,7 @@ const Profile = ({
                               style={{
                                 animation: "none",
                                 backgroundColor: fontColor || "#d9d1f8",
-                                opacity: 0.2,
+                                opacity:upload.link? 1:0.2,
                               }}
                               onContextMenu={(e) => e.preventDefault()}
                               onClick={() => {
@@ -784,8 +784,8 @@ const Profile = ({
                                   zIndex: "44",
                                   color: fontColor,
                                   fontFamily: fontFamily,
-                                  background: "#CAD5E2",
-                                  height: linkUrl.length > 0 ? "15rem" : "4rem",
+                          
+                                 
                                 }}
                               >
                                 {linkUrl.length > 0 ? (
