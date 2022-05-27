@@ -39,6 +39,7 @@ import ReactPlayer from "react-player";
 import ShowModalForIframes from "./showModalForIframes";
 import MyVerticallyCenteredModal from "./PrivateChannels/model";
 import { LinkPreview } from "@dhaiwat10/react-link-preview";
+import MediaProfile from "./HootOutside/MediaProfile";
 
 const Profile = ({
   verified,
@@ -72,6 +73,7 @@ const Profile = ({
   const [showIframe, setShowIframe] = useState(false);
   const [iframeBox, setIframeBox] = useState(null);
   const LIMIT = 9;
+  const urlRegex = /(https?:\/\/[^ ]*)/;
 
   const BaseURL = process.env.REACT_APP_API_URL;
   const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
@@ -661,6 +663,13 @@ const Profile = ({
               >
                 <div className="hoot-profile-layout">
                   {myUploads.map((upload) => {
+                    var linkUrl = "";
+                    try {
+                      var value = upload.caption;
+                      linkUrl = value.match(urlRegex)[1];
+                    } catch (err) {
+                      console.log("No link could be extracted");
+                    }
                     var fontFamilyStyle;
                     if (
                       upload.fontFamilyStyle.includes("fontFamily") ||
@@ -770,16 +779,22 @@ const Profile = ({
                                   overflow: "hidden",
                                   width: "80%",
                                   position: "absolute",
-                                  bottom: "10rem",
+                                  bottom: linkUrl ? "2rem" : "10rem",
                                   left: " 1.5rem",
                                   zIndex: "44",
                                   color: fontColor,
                                   fontFamily: fontFamily,
+                                  background: "#CAD5E2",
+                                  height: linkUrl.length > 0 ? "15rem" : "4rem",
                                 }}
                               >
-                                {upload.caption.length > 60
-                                  ? upload.caption.slice(0, 60) + "..."
-                                  : upload.caption}
+                                {linkUrl.length > 0 ? (
+                                  <MediaProfile url={linkUrl} />
+                                ) : upload.caption.length > 60 ? (
+                                  upload.caption.slice(0, 60) + "..."
+                                ) : (
+                                  upload.caption
+                                )}
                               </div>
                             )}
                           </div>
