@@ -73,11 +73,6 @@ const HootInside = ({
   const BaseURL = process.env.REACT_APP_API_URL; // API url
   const hostURL = "https://www.megahoot.net"; // main website
   const filePath = `${BaseURL}/images/${hootImgId}`; // media url from server
-  const shareBaseUrl = `${hostURL}/${username}/hoot/${btoa(
-    hootId
-  )}/${uuidv4()}`; // url for individual hoot for main soapbox website
-  // encoded share url for individual hoot to be shared on other social media
-  const shareUrl = encodeURIComponent(shareBaseUrl);
   // const shareCaption = encodeURIComponent(`${caption.length > 10 ? caption.substring(0, 70) : caption} @${username}`);
   const shareCaption = encodeURIComponent(`${caption}`);
   const shareHashtags = encodeURIComponent("");
@@ -92,6 +87,13 @@ const HootInside = ({
   const linkedInShare = `https://www.linkedin.com/shareArticle?url=${shareUrl}&title=${shareCaption}`;
   const tumblrShare = `https://www.tumblr.com/share/link?url=${shareUrl}&tags=${shareHashtags}&description=${shareCaption}`;
 
+  const [shareBaseUrl, setShareBaseUrl] = useState(
+    `https://api.shrtco.de/v2/shorten?url=${hostURL}/${username}/hoot/${btoa(
+      hootId
+    )}/${uuidv4()}`
+  ); // url for individual hoot for main soapbox website
+  // encoded share url for individual hoot to be shared on other social media
+  const [shareUrl, setShareUrl] = useState(encodeURIComponent(shareBaseUrl));
   const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -234,6 +236,25 @@ const HootInside = ({
     });
   }, []);
 
+  const setShortUrl = async () => {
+    setIsShareModalOpen(true);
+    await axios
+      .get(
+        `https://api.shrtco.de/v2/shorten?url=${hostURL}/${username}/hoot/${btoa(
+          hootId
+        )}/${uuidv4()}`
+      )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Setting the data : ", data);
+        setShareBaseUrl(data.result.full_short_link);
+        setShareUrl(encodeURIComponent(shareBaseUrl));
+      })
+      .catch((err) => {
+        console.log("Failed in the query");
+      });
+  };
+
   const openDeleteModal = () => {
     setIsDeleteModalOpen(true);
     setIsMoreModalOpen(false);
@@ -300,12 +321,22 @@ const HootInside = ({
   };
 
   const copyLinkToClipboard = () => {
-    navigator.clipboard.writeText(shareBaseUrl);
-    setTimeout(() => {
-      setIsMoreModalOpen(false);
-      setIsShareModalOpen(false);
-    }, 100);
-    toast.success("Link to hoot copied to clipboard");
+    fetch(`https://api.shrtco.de/v2/shorten?url=${shareBaseUrl}`)
+      .then((response) => response.json())
+      .then((data) => {
+        navigator.clipboard.writeText(data.result.full_short_link);
+        setTimeout(() => {
+          setIsMoreModalOpen(false);
+          setIsShareModalOpen(false);
+        }, 100);
+        toast.success("Link to hoot copied to clipboard");
+      });
+    // navigator.clipboard.writeText(shareBaseUrl);
+    // setTimeout(() => {
+    //   setIsMoreModalOpen(false);
+    //   setIsShareModalOpen(false);
+    // }, 100);
+    // toast.success("Link to hoot copied to clipboard");
   };
 
   const copyTextToClipboard = () => {
@@ -1478,7 +1509,7 @@ const HootInside = ({
 
                   <div className="share">
                     <FiShare2
-                      onMouseEnter={() => setIsShareModalOpen(true)}
+                      onMouseEnter={() => setShortUrl()}
                       onClick={() => setIsShareModalOpen(!isShareModalOpen)}
                       className="cursor-pointer"
                     />
@@ -2826,7 +2857,7 @@ const HootInside = ({
                 {privateHoot !== 1 ? (
                   <div className="share">
                     <FiShare2
-                      onMouseEnter={() => setIsShareModalOpen(true)}
+                      onMouseEnter={() => setShortUrl()}
                       onClick={() => setIsShareModalOpen(!isShareModalOpen)}
                       className="cursor-pointer"
                     />
