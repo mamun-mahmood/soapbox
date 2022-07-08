@@ -38,6 +38,8 @@ import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
 import ShowModalForIframes from "./showModalForIframes";
 import MyVerticallyCenteredModal from "./PrivateChannels/model";
+import { LinkPreview } from "@dhaiwat10/react-link-preview";
+import MediaProfile from "./HootOutside/MediaProfile";
 
 const Profile = ({
   verified,
@@ -71,6 +73,7 @@ const Profile = ({
   const [showIframe, setShowIframe] = useState(false);
   const [iframeBox, setIframeBox] = useState(null);
   const LIMIT = 9;
+  const urlRegex = /(https?:\/\/[^ ]*)/;
 
   const BaseURL = process.env.REACT_APP_API_URL;
   const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
@@ -660,7 +663,29 @@ const Profile = ({
               >
                 <div className="hoot-profile-layout">
                   {myUploads.map((upload) => {
-                    console.log(upload);
+                    var linkUrl = "";
+                    try {
+                      var value = upload.caption;
+                      linkUrl = value.match(urlRegex)[1];
+                    } catch (err) {
+                      console.log("No link could be extracted");
+                    }
+                    var fontFamilyStyle;
+                    if (
+                      upload.fontFamilyStyle.includes("fontFamily") ||
+                      upload.fontFamilyStyle.includes("fontColor") ||
+                      upload.fontFamilyStyle.includes("fontSize")
+                    ) {
+                      fontFamilyStyle = JSON.parse(upload.fontFamilyStyle);
+                      var fontFamily = fontFamilyStyle.fontFamily || "Arial";
+                      var fontStyleSize = fontFamilyStyle.fontSize || "20px";
+                      var fontColor = fontFamilyStyle.color || "black";
+                    } else {
+                      var fontFamily = upload.fontFamilyStyle || "Arial";
+                      var fontStyleSize = "20px";
+                      var fontColor = "black";
+                    }
+
                     return (
                       <div key={upload.id}>
                         {!upload.mimeType ? (
@@ -669,7 +694,8 @@ const Profile = ({
                               className="hoot-img-vertical-profile"
                               style={{
                                 animation: "none",
-                                backgroundColor: "#d9d1f8",
+                                backgroundColor: fontColor || "#d9d1f8",
+                                opacity:upload.link? 1:0.2,
                               }}
                               onContextMenu={(e) => e.preventDefault()}
                               onClick={() => {
@@ -735,17 +761,42 @@ const Profile = ({
                                 )
                               )}
                             </div>
-                            <FiPlayCircle
-                              className="GIF-overlay"
-                              style={{ borderRadius: "50%" }}
-                              onClick={() => {
-                                history.push(
-                                  `/${username}/hoot/${btoa(
-                                    upload.id
-                                  )}/${uuidv4()}`
-                                );
-                              }}
-                            />
+                            {upload.link ? (
+                              <FiPlayCircle
+                                className="GIF-overlay"
+                                style={{ borderRadius: "50%" }}
+                                onClick={() => {
+                                  history.push(
+                                    `/${username}/hoot/${btoa(
+                                      upload.id
+                                    )}/${uuidv4()}`
+                                  );
+                                }}
+                              />
+                            ) : (
+                              <div
+                                style={{
+                                  overflow: "hidden",
+                                  width: "80%",
+                                  position: "absolute",
+                                  bottom: linkUrl ? "2rem" : "10rem",
+                                  left: " 1.5rem",
+                                  zIndex: "44",
+                                  color: fontColor,
+                                  fontFamily: fontFamily,
+                          
+                                 
+                                }}
+                              >
+                                {linkUrl.length > 0 ? (
+                                  <MediaProfile url={linkUrl} />
+                                ) : upload.caption.length > 60 ? (
+                                  upload.caption.slice(0, 60) + "..."
+                                ) : (
+                                  upload.caption
+                                )}
+                              </div>
+                            )}
                           </div>
                         ) : (
                           <HootOutside

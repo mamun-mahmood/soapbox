@@ -54,8 +54,20 @@ const Feed = () => {
         >
           {uploads.map((upload) => {
             console.log(upload);
+            var fontFamilyStyle;
+            if (upload.fontFamilyStyle.includes("fontFamily")) {
+              fontFamilyStyle = JSON.parse(upload.fontFamilyStyle);
+              var fontFamily = fontFamilyStyle.fontFamily || "Arial";
+              var fontStyleSize = fontFamilyStyle.fontSize || "20px";
+              var fontColor = fontFamilyStyle.color || "black";
+            } else {
+              var fontFamily = upload.fontFamilyStyle || "Arial";
+              var fontStyleSize = "20px";
+              var fontColor = "black";
+            }
             return (
               <div key={upload.id}>
+                {console.log(upload)}
                 <Post
                   hootId={upload.id}
                   username={upload.authorUsername}
@@ -73,7 +85,9 @@ const Feed = () => {
                   timeStamp={upload.timeStamp}
                   edited={upload.edited}
                   editedTimeStamp={upload.editedTimeStamp}
-                  fontFamilyStyle={upload.fontFamilyStyle }
+                  fontFamilyStyle={fontFamily}
+                  fontColor={fontColor}
+                  fontStyleSize={fontStyleSize}
                 />
               </div>
             );

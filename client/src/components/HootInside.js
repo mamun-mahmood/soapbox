@@ -40,6 +40,7 @@ import "./IndividualHoot/individualHoot.css";
 import Expire from "./Expire";
 import ReactPlayer from "react-player";
 import CaptionComp from "./CaptionComp";
+import { LinkPreview } from "@dhaiwat10/react-link-preview";
 
 const HootInside = ({
   userId,
@@ -142,6 +143,13 @@ const HootInside = ({
   const hashtagsFound = caption.split(" ").filter((v) => v.startsWith("#"));
   const stocksFound = caption.split(" ").filter((v) => v.startsWith("$"));
   const usernamesFound = caption.split(" ").filter((v) => v.startsWith("@"));
+  var urlRegex = /(https?:\/\/[^ ]*)/;
+  var linkUrl = "";
+  try {
+    linkUrl = caption.match(urlRegex)[1];
+  } catch (err) {
+    console.log(err);
+  }
 
   // const linkData = link
   // link && console.log("linkData", linkData);
@@ -567,7 +575,9 @@ const HootInside = ({
                         </div>
                       ) : null}
                     </div>
-                    <div className="at-name">@{username}</div>
+                    <div className="at-name" style={{ fontSize: "0.9rem" }}>
+                      @{username}
+                    </div>
                   </div>
                 </div>
 
@@ -603,9 +613,10 @@ const HootInside = ({
                       >
                         {userInfo ? (
                           userInfo.username === username ? (
-                            <button className="btn-hoot-follow">
-                              Following
-                            </button>
+                            // <button className="btn-hoot-follow">
+                            //   Following1
+                            // </button>
+                            ""
                           ) : userFollowers.length === 0 ? (
                             <button
                               className="btn-hoot-follow"
@@ -685,7 +696,12 @@ const HootInside = ({
                             </div>
                           ) : null}
                         </div>
-                        <div className="hover-at-name">@{username}</div>
+                        <div
+                          className="hover-at-name"
+                          style={{ fontSize: "0.9rem" }}
+                        >
+                          @{username}
+                        </div>
                       </div>
                       <div className="user-hoot-count">
                         <div>
@@ -711,7 +727,8 @@ const HootInside = ({
                   {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
                   {userInfo ? (
                     userInfo.username === username ? (
-                      <button className="btn-hoot-follow">Following</button>
+                      // <button className="btn-hoot-follow">Following2</button>
+                      ""
                     ) : userFollowers.length === 0 ? (
                       <button className="btn-hoot-follow" onClick={addFollower}>
                         {followed ? "Following" : "Follow"}
@@ -919,7 +936,10 @@ const HootInside = ({
                           {/* edit username  */}
                           <h5>
                             You are editing hoot as
-                            <span className="user-edit">
+                            <span
+                              className="user-edit"
+                              style={{ fontSize: "1rem" }}
+                            >
                               {" "}
                               @
                               <Link to={profilePath} className="name-comment">
@@ -1808,7 +1828,9 @@ const HootInside = ({
                         </div>
                       ) : null}
                     </div>
-                    <div className="at-name">@{username}</div>
+                    <div className="at-name" style={{ fontSize: "0.9rem" }}>
+                      @{username}
+                    </div>
                   </div>
                 </div>
               ) : null}
@@ -1848,9 +1870,10 @@ const HootInside = ({
                       >
                         {userInfo ? (
                           userInfo.username === username ? (
-                            <button className="btn-hoot-follow">
-                              Following
-                            </button>
+                            // <button className="btn-hoot-follow">
+                            //   Following3
+                            // </button>
+                            ""
                           ) : userFollowers.length === 0 ? (
                             <button
                               className="btn-hoot-follow"
@@ -1931,7 +1954,12 @@ const HootInside = ({
                           </div>
                         ) : null}
                       </div>
-                      <div className="hover-at-name">@{username}</div>
+                      <div
+                        className="hover-at-name"
+                        style={{ fontSize: "0.9rem" }}
+                      >
+                        @{username}
+                      </div>
                       {/* {verified === 1
                                                 ?
                                                 <small className="verified-account">Verified account</small>
@@ -1969,7 +1997,8 @@ const HootInside = ({
                   {/* <button className="btn-hoot-follow" onClick={followAction}>Follow</button> */}
                   {userInfo ? (
                     userInfo.username === username ? (
-                      <button className="btn-hoot-follow">Following</button>
+                      // <button className="btn-hoot-follow">Following4</button>
+                      ""
                     ) : userFollowers.length === 0 ? (
                       <button className="btn-hoot-follow" onClick={addFollower}>
                         {followed ? "Following" : "Follow"}
@@ -2170,7 +2199,10 @@ const HootInside = ({
                         {/* edit username  */}
                         <h5>
                           You are editing hoot as
-                          <span className="user-edit">
+                          <span
+                            className="user-edit"
+                            style={{ fontSize: "1rem" }}
+                          >
                             {" "}
                             @
                             <Link to={profilePath} className="name-comment">
@@ -2539,6 +2571,9 @@ const HootInside = ({
                       </Fragment>
                     ))}
                 </span>
+                {linkUrl.length > 0 && (
+                  <LinkPreview url={linkUrl} width="100%"></LinkPreview>
+                )}
                 <br />{" "}
                 {!ReactPlayer.canPlay(link) && (
                   <span className="hoot-link">

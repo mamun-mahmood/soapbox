@@ -50,9 +50,15 @@ import videoupload from "../assets/videoupload.png";
 import emojiupload from "../assets/emoji.png";
 import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
+import { LinkPreview } from "@dhaiwat10/react-link-preview";
+import MediaProfile from "../components/HootOutside/MediaProfile";
 
 const CreateHootBoxMobile = () => {
-  const [currentFontFamily, setCurrentFontFamily] = useState({color:"black",fontSize:'20px',fontFamily:"Arial"});
+  const [currentFontFamily, setCurrentFontFamily] = useState({
+    color: "black",
+    fontSize: "20px",
+    fontFamily: "Arial",
+  });
   const fontFamilyRef = useRef();
   const fontColorRef = useRef();
   const fontSizeRef = useRef();
@@ -71,6 +77,8 @@ const CreateHootBoxMobile = () => {
   // const [links, setLinks] = useState([{ link: "" }]);
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [onDemandMedia, setOnDemandMedia] = useState(false);
+  var urlRegex = /(https?:\/\/[^ ]*)/;
+  const [linkUrl, setLinkUrl] = useState("");
 
   const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -95,7 +103,7 @@ const CreateHootBoxMobile = () => {
   const stocksFound = caption.split(" ").filter((v) => v.startsWith("$"));
 
   const upload = (event) => {
-    let styles=JSON.stringify(currentFontFamily)
+    let styles = JSON.stringify(currentFontFamily);
     event.preventDefault();
     setSaveLoading(true);
     const formData = new FormData();
@@ -614,10 +622,21 @@ const CreateHootBoxMobile = () => {
     setAudioPoster([]);
   };
 
- 
   const changeFontFamily = () => {
-    
-    setCurrentFontFamily({...currentFontFamily,fontFamily:fontFamilyRef.current.value});
+    setCurrentFontFamily({
+      ...currentFontFamily,
+      fontFamily: fontFamilyRef.current.value,
+    });
+  };
+
+  const textChangeHandler = (event) => {
+    const value = event.target.value;
+    setCaption(value);
+    try {
+      setLinkUrl(value.match(urlRegex)[1]);
+    } catch (err) {
+      console.log("No link could be extracted");
+    }
   };
   return (
     <div className="hoot-box-mobile">
@@ -691,63 +710,82 @@ const CreateHootBoxMobile = () => {
               )}
             </div>
           ) : (
-            <div className="media-preview-private mpp-responsive">
-              {!showLinkPreview ? (
-                link ? (
-                  <div
-                    style={{
-                      padding: "0rem 0.5rem 1rem 0.5rem",
-                      wordBreak: "break-all",
-                      marginTop: "-0.5rem",
-                    }}
-                  >
-                    <a
-                      href={link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-content"
+            <div style={{ marginBottom: "2px" }}>
+              <div className="media-preview-private mpp-responsive">
+                {!showLinkPreview ? (
+                  link ? (
+                    <div
+                      style={{
+                        padding: "0rem 0.5rem 1rem 0.5rem",
+                        wordBreak: "break-all",
+                        marginTop: "-0.5rem",
+                      }}
                     >
-                      {link}
-                    </a>
-                  </div>
-                ) : null
-              ) : null}
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-content"
+                      >
+                        {link}
+                      </a>
+                    </div>
+                  ) : null
+                ) : null}
 
-              {mimeType === "" && !showLinkPreview && !link && (
-                <p>Media Preview</p>
-              )}
+                {mimeType === "" && !showLinkPreview && !link && (
+                  <p>Media Preview</p>
+                )}
 
-              {mimeType !== "" && (
-                <IoCloseOutline
-                  className="close-preview"
-                  onClick={closePreview}
-                />
-              )}
+                {mimeType !== "" && (
+                  <IoCloseOutline
+                    className="close-preview"
+                    onClick={closePreview}
+                  />
+                )}
 
-              {mimeType.match(/image/gi) == "image" && (
-                <img src={src} alt="soapbox-img" className="hoot-img" />
-              )}
+                {mimeType.match(/image/gi) == "image" && (
+                  <img src={src} alt="soapbox-img" className="hoot-img" />
+                )}
 
-              {mimeType.match(/video/gi) == "video" && (
-                <video width="400" className="hoot-img" controls>
-                  <source src={src} />
-                  Your browser does not support HTML video.
-                </video>
-              )}
+                {mimeType.match(/video/gi) == "video" && (
+                  <video width="400" className="hoot-img" controls>
+                    <source src={src} />
+                    Your browser does not support HTML video.
+                  </video>
+                )}
 
-              {mimeType.match(/audio/gi) == "audio" && (
-                <video
-                  poster={
-                    audioPoster.length !== 0
-                      ? URL.createObjectURL(audioPoster)
-                      : profilePicPath
-                  }
-                  className="hoot-vdo-private"
-                  controls
+                {mimeType.match(/audio/gi) == "audio" && (
+                  <video
+                    poster={
+                      audioPoster.length !== 0
+                        ? URL.createObjectURL(audioPoster)
+                        : profilePicPath
+                    }
+                    className="hoot-vdo-private"
+                    controls
+                  >
+                    <source src={src} />
+                    Your browser does not support the audio element.
+                  </video>
+                )}
+              </div>
+              {linkUrl.length > 0 && (
+                <div
+                  style={{
+                    width: "100%",
+                    height: "110px",
+                    marginTop: "2px",
+                    marginBottom: "5px",
+                  }}
                 >
-                  <source src={src} />
-                  Your browser does not support the audio element.
-                </video>
+                  <MediaProfile url={linkUrl} />
+                  {/* <LinkPreview
+                    url={linkUrl}
+                    width="100%"
+                    height="110px"
+                  ></LinkPreview> */}
+                </div>
               )}
             </div>
           )}
@@ -950,16 +988,47 @@ const CreateHootBoxMobile = () => {
               </option>
             </select>
             <SoapboxTooltip title="Font Size" placement="right">
-<select style={{borderRadius:'15px',width:'40px',height:'20px',border:'none',fontSize:'13px'}} onChange={(e)=>{setCurrentFontFamily({...currentFontFamily,fontSize:e.target.value})}}>
-  <option>{currentFontFamily.fontSize}</option>
-  {[10,11,12,13,14,15,16,17,18,19,20,25,30,35,40].map(e=><option value={`${e}px`}>{e}</option>)}
-  
-</select>
-</SoapboxTooltip>
-<SoapboxTooltip title="Font Color" placement="right">
-   <input type="color" style={{borderRadius:'15px',width:'40px',height:'20px',border:'none'}} value={currentFontFamily.color} onChange={(e)=>setCurrentFontFamily({...currentFontFamily,color:e.target.value})} />
-
-</SoapboxTooltip>
+              <select
+                style={{
+                  borderRadius: "15px",
+                  width: "40px",
+                  height: "20px",
+                  border: "none",
+                  fontSize: "13px",
+                }}
+                onChange={(e) => {
+                  setCurrentFontFamily({
+                    ...currentFontFamily,
+                    fontSize: e.target.value,
+                  });
+                }}
+              >
+                <option>{currentFontFamily.fontSize}</option>
+                {[
+                  10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, 35, 40,
+                ].map((e) => (
+                  <option value={`${e}px`}>{e}</option>
+                ))}
+              </select>
+            </SoapboxTooltip>
+            <SoapboxTooltip title="Font Color" placement="right">
+              <input
+                type="color"
+                style={{
+                  borderRadius: "15px",
+                  width: "40px",
+                  height: "20px",
+                  border: "none",
+                }}
+                value={currentFontFamily.color}
+                onChange={(e) =>
+                  setCurrentFontFamily({
+                    ...currentFontFamily,
+                    color: e.target.value,
+                  })
+                }
+              />
+            </SoapboxTooltip>
           </div>
 
           <div
@@ -1126,10 +1195,7 @@ const CreateHootBoxMobile = () => {
               placeholder="Share Your World. Hoot Hoot!"
               style={currentFontFamily}
               value={caption}
-              onChange={(event) => {
-                const value = event.target.value;
-                setCaption(value);
-              }}
+              onChange={textChangeHandler}
             ></textarea>
 
             <div className="caption-count-private ccp-responsive">
