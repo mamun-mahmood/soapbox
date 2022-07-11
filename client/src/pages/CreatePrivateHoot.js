@@ -50,9 +50,14 @@ import videoupload from "../assets/videoupload.png";
 import emojiupload from "../assets/emoji.png";
 import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
+import MediaProfile from "../components/HootOutside/MediaProfile";
 
 const CreatePrivateHoot = (props) => {
-  const [currentFontFamily, setCurrentFontFamily] = useState("Arial");
+  const [currentFontFamily, setCurrentFontFamily] = useState({
+    color: "black",
+    fontSize: "20px",
+    fontFamily: "Arial",
+  });
   const [currentFontColor, setCurrentFontColor] = useState("black");
   const [currentFontSize, setCurrentFontSize] = useState("22");
   const fontFamilyRef = useRef();
@@ -73,6 +78,8 @@ const CreatePrivateHoot = (props) => {
   // const [links, setLinks] = useState([{ link: "" }]);
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [onDemandMedia, setOnDemandMedia] = useState(false);
+  const [linkUrl, setLinkUrl] = useState("");
+  var urlRegex = /(https?:\/\/[^ ]*)/;
 
   const BaseURL = process.env.REACT_APP_API_URL;
 
@@ -97,6 +104,7 @@ const CreatePrivateHoot = (props) => {
   const stocksFound = caption.split(" ").filter((v) => v.startsWith("$"));
 
   const upload = (event) => {
+    let styles = JSON.stringify(currentFontFamily);
     event.preventDefault();
     setSaveLoading(true);
     const formData = new FormData();
@@ -111,9 +119,7 @@ const CreatePrivateHoot = (props) => {
     formData.append("onDemandMedia", onDemandMedia ? 1 : 0);
     formData.append("file", file);
     formData.append("audioPoster", audioPoster);
-    formData.append("fontFamilyStyle", fontFamilyRef.current.value);
-    formData.append("fontColor", currentFontColor);
-    formData.append("fontStyleSize", currentFontSize);
+    formData.append("fontFamilyStyle", styles);
 
     const uploadData = async () => {
       await axios
@@ -624,7 +630,10 @@ const CreatePrivateHoot = (props) => {
   };
 
   const changeFontFamily = () => {
-    setCurrentFontFamily(fontFamilyRef.current.value);
+    setCurrentFontFamily({
+      ...currentFontFamily,
+      fontFamily: fontFamilyRef.current.value,
+    });
   };
 
   const fontSizeHandler = () => {
@@ -633,6 +642,16 @@ const CreatePrivateHoot = (props) => {
 
   const fontColorHandler = () => {
     setCurrentFontColor(fontColorRef.current.value);
+  };
+
+  const textChangeHandler = (event) => {
+    const value = event.target.value;
+    setCaption(value);
+    try {
+      setLinkUrl(value.match(urlRegex)[1]);
+    } catch (err) {
+      console.log("No link could be extracted");
+    }
   };
 
   return (
@@ -719,131 +738,74 @@ const CreatePrivateHoot = (props) => {
                   style={{ display: status === "recording" ? "" : "none" }}
                 />
               )}
-              <select
-                name="fontFamilySelect"
-                ref={fontFamilyRef}
-                onChange={changeFontFamily}
-                style={{ width: "35px" }}
-              >
-                <option value="none" selected hidden disabled>
-                  𝓯
-                </option>
-                <option
-                  value="Roboto Condensed"
-                  style={{ fontFamily: "Roboto Condensed" }}
-                >
-                  Choose this style
-                </option>
-                <option
-                  value="'Water Brush', cursive"
-                  style={{ fontFamily: "'Water Brush', cursive" }}
-                >
-                  Choose this style
-                </option>
-                <option
-                  value="'Tapestry', cursive"
-                  style={{ fontFamily: "'Tapestry', cursive" }}
-                >
-                  Choose this style
-                </option>
-                <option
-                  value="'Oleo Script Swash Caps', cursive"
-                  style={{
-                    fontFamily: "'Oleo Script Swash Caps', cursive",
-                  }}
-                >
-                  Choose this style
-                </option>
-                <option
-                  value="'Indie Flower', cursive"
-                  style={{ fontFamily: "'Indie Flower', cursive" }}
-                >
-                  Choose this style
-                </option>
-                <option
-                  value="'Bangers', cursive"
-                  style={{ fontFamily: "'Bangers', cursive" }}
-                >
-                  Choose this style
-                </option>
-              </select>
-
-              <input
-                style={{ width: "35px" }}
-                type="color"
-                value={currentFontColor}
-                name="fontColor"
-                ref={fontColorRef}
-                onChange={fontColorHandler}
-              />
-
-              <input
-                style={{ width: "35px" }}
-                value={currentFontSize}
-                type="number"
-                name="fontStyleSize"
-                ref={fontSizeRef}
-                onChange={fontSizeHandler}
-              />
             </div>
           ) : (
-            <div className="media-preview-private mpp-responsive">
-              {!showLinkPreview ? (
-                link ? (
-                  <div
-                    style={{
-                      padding: "0rem 0.5rem 1rem 0.5rem",
-                      wordBreak: "break-all",
-                      marginTop: "-0.5rem",
-                    }}
-                  >
-                    <a
-                      href={link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-content"
+            <div>
+              <div className="media-preview-private mpp-responsive">
+                {!showLinkPreview ? (
+                  link ? (
+                    <div
+                      style={{
+                        padding: "0rem 0.5rem 1rem 0.5rem",
+                        wordBreak: "break-all",
+                        marginTop: "-0.5rem",
+                      }}
                     >
-                      {link}
-                    </a>
-                  </div>
-                ) : null
-              ) : null}
-
-              {mimeType === "" && !showLinkPreview && !link && (
-                <p>Media Preview</p>
-              )}
-
-              {mimeType !== "" && (
-                <IoCloseOutline
-                  className="close-preview"
-                  onClick={closePreview}
-                />
-              )}
-
-              {mimeType.match(/image/gi) == "image" && (
-                <img src={src} alt="soapbox-img" className="hoot-img" />
-              )}
-
-              {mimeType.match(/video/gi) == "video" && (
-                <video width="400" className="hoot-img" controls>
-                  <source src={src} />
-                  Your browser does not support HTML video.
-                </video>
-              )}
-
-              {mimeType.match(/audio/gi) == "audio" && (
-                <video
-                  poster={
-                    audioPoster.length !== 0
-                      ? URL.createObjectURL(audioPoster)
-                      : profilePicPath
-                  }
-                  className="hoot-vdo-private"
-                  controls
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-content"
+                      >
+                        {link}
+                      </a>
+                    </div>
+                  ) : null
+                ) : null}
+                {mimeType === "" && !showLinkPreview && !link && (
+                  <p>Media Preview</p>
+                )}
+                {mimeType !== "" && (
+                  <IoCloseOutline
+                    className="close-preview"
+                    onClick={closePreview}
+                  />
+                )}
+                {mimeType.match(/image/gi) == "image" && (
+                  <img src={src} alt="soapbox-img" className="hoot-img" />
+                )}
+                {mimeType.match(/video/gi) == "video" && (
+                  <video width="400" className="hoot-img" controls>
+                    <source src={src} />
+                    Your browser does not support HTML video.
+                  </video>
+                )}
+                {mimeType.match(/audio/gi) == "audio" && (
+                  <video
+                    poster={
+                      audioPoster.length !== 0
+                        ? URL.createObjectURL(audioPoster)
+                        : profilePicPath
+                    }
+                    className="hoot-vdo-private"
+                    controls
+                  >
+                    <source src={src} />
+                    Your browser does not support the audio element.
+                  </video>
+                )}
+              </div>
+              {linkUrl.length > 0 && (
+                <div
+                  style={{
+                    width: "100%",
+                    height: "110px",
+                    marginTop: "2px",
+                    marginBottom: "5px",
+                  }}
                 >
-                  <source src={src} />
-                  Your browser does not support the audio element.
-                </video>
+                  <MediaProfile url={linkUrl} />
+                </div>
               )}
             </div>
           )}
@@ -1022,6 +984,99 @@ const CreatePrivateHoot = (props) => {
                   width="35px"
                 />
               </SoapboxTooltip>
+
+              <select
+                name="fontFamilySelect"
+                ref={fontFamilyRef}
+                onChange={changeFontFamily}
+                style={{ width: "35px" }}
+              >
+                <option value="none" selected hidden disabled>
+                  𝓯
+                </option>
+                <option
+                  value="Roboto Condensed"
+                  style={{ fontFamily: "Roboto Condensed" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Water Brush', cursive"
+                  style={{ fontFamily: "'Water Brush', cursive" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Tapestry', cursive"
+                  style={{ fontFamily: "'Tapestry', cursive" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Oleo Script Swash Caps', cursive"
+                  style={{
+                    fontFamily: "'Oleo Script Swash Caps', cursive",
+                  }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Indie Flower', cursive"
+                  style={{ fontFamily: "'Indie Flower', cursive" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Bangers', cursive"
+                  style={{ fontFamily: "'Bangers', cursive" }}
+                >
+                  Choose this style
+                </option>
+              </select>
+
+              <SoapboxTooltip title="Font Color" placement="right">
+                <input
+                  type="color"
+                  style={{
+                    borderRadius: "15px",
+                    width: "40px",
+                    height: "20px",
+                    border: "none",
+                  }}
+                  value={currentFontFamily.color}
+                  onChange={(e) =>
+                    setCurrentFontFamily({
+                      ...currentFontFamily,
+                      color: e.target.value,
+                    })
+                  }
+                />
+              </SoapboxTooltip>
+
+              <SoapboxTooltip title="Font Size" placement="right">
+                <select
+                  style={{
+                    borderRadius: "15px",
+                    width: "40px",
+                    height: "20px",
+                    border: "none",
+                    fontSize: "13px",
+                  }}
+                  onChange={(e) => {
+                    setCurrentFontFamily({
+                      ...currentFontFamily,
+                      fontSize: `${e.target.value}px`,
+                    });
+                  }}
+                >
+                  <option>{currentFontFamily.fontSize}</option>
+                  {[
+                    10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, 35, 40,
+                  ].map((e) => (
+                    <option value={`${e}px`}>{e}</option>
+                  ))}
+                </select>
+              </SoapboxTooltip>
             </div>
           ) : null}
 
@@ -1193,16 +1248,9 @@ const CreatePrivateHoot = (props) => {
               maxLength="2200"
               className="textarea-style-private tsp-responsive added-textarea-style"
               placeholder="Share Your World. Hoot Hoot! "
-              style={{
-                fontFamily: `${currentFontFamily} `,
-                color: `${currentFontColor}`,
-                fontSize: `${currentFontSize}px`,
-              }}
+              style={currentFontFamily}
               value={caption}
-              onChange={(event) => {
-                const value = event.target.value;
-                setCaption(value);
-              }}
+              onChange={textChangeHandler}
             ></textarea>
 
             {/* <h6 className={caption.length > 2120 && "text-danger"}>

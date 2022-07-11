@@ -53,7 +53,6 @@ const Feed = () => {
           endMessage={<EndMsg />}
         >
           {uploads.map((upload) => {
-            console.log(upload);
             var fontFamilyStyle;
             if (upload.fontFamilyStyle.includes("fontFamily")) {
               fontFamilyStyle = JSON.parse(upload.fontFamilyStyle);

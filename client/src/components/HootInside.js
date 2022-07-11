@@ -88,13 +88,18 @@ const HootInside = ({
   const linkedInShare = `https://www.linkedin.com/shareArticle?url=${shareUrl}&title=${shareCaption}`;
   const tumblrShare = `https://www.tumblr.com/share/link?url=${shareUrl}&tags=${shareHashtags}&description=${shareCaption}`;
 
-  const [shareBaseUrl, setShareBaseUrl] = useState(
-    `https://api.shrtco.de/v2/shorten?url=${hostURL}/${username}/hoot/${btoa(
-      hootId
-    )}/${uuidv4()}`
-  ); // url for individual hoot for main soapbox website
+  // const [shareBaseUrl, setShareBaseUrl] = useState(
+  //   `${hostURL}/${username}/hoot/${btoa(
+  //     hootId
+  //   )}/${uuidv4()}`
+  // );
+  // const [shareUrl, setShareUrl] = useState(encodeURIComponent(shareBaseUrl));
+  const shareBaseUrl = `${hostURL}/${username}/hoot/${btoa(
+    hootId
+  )}/${uuidv4()}`;
+  const shareUrl = encodeURIComponent(shareBaseUrl);
+  // url for individual hoot for main soapbox website
   // encoded share url for individual hoot to be shared on other social media
-  const [shareUrl, setShareUrl] = useState(encodeURIComponent(shareBaseUrl));
   const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -148,7 +153,7 @@ const HootInside = ({
   try {
     linkUrl = caption.match(urlRegex)[1];
   } catch (err) {
-    console.log(err);
+    console.log("No link in the post");
   }
 
   // const linkData = link
@@ -246,21 +251,22 @@ const HootInside = ({
 
   const setShortUrl = async () => {
     setIsShareModalOpen(true);
-    await axios
-      .get(
-        `https://api.shrtco.de/v2/shorten?url=${hostURL}/${username}/hoot/${btoa(
-          hootId
-        )}/${uuidv4()}`
-      )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Setting the data : ", data);
-        setShareBaseUrl(data.result.full_short_link);
-        setShareUrl(encodeURIComponent(shareBaseUrl));
-      })
-      .catch((err) => {
-        console.log("Failed in the query");
-      });
+    console.log("Hello");
+    // await axios
+    //   .get(
+    //     `https://api.shrtco.de/v2/shorten?url=${hostURL}/${username}/hoot/${btoa(
+    //       hootId
+    //     )}/${uuidv4()}`
+    //   )
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log("Setting the data : ", data);
+    //     setShareBaseUrl(data.result.full_short_link);
+    //     setShareUrl(encodeURIComponent(shareBaseUrl));
+    //   })
+    //   .catch((err) => {
+    //     console.log("Failed in the query");
+    //   });
   };
 
   const openDeleteModal = () => {
@@ -329,22 +335,24 @@ const HootInside = ({
   };
 
   const copyLinkToClipboard = () => {
-    fetch(`https://api.shrtco.de/v2/shorten?url=${shareBaseUrl}`)
-      .then((response) => response.json())
-      .then((data) => {
-        navigator.clipboard.writeText(data.result.full_short_link);
-        setTimeout(() => {
-          setIsMoreModalOpen(false);
-          setIsShareModalOpen(false);
-        }, 100);
-        toast.success("Link to hoot copied to clipboard");
-      });
-    // navigator.clipboard.writeText(shareBaseUrl);
-    // setTimeout(() => {
-    //   setIsMoreModalOpen(false);
-    //   setIsShareModalOpen(false);
-    // }, 100);
-    // toast.success("Link to hoot copied to clipboard");
+    // fetch(
+    //   `https://api.shrtco.de/v2/shorten?url=https://api.shrtco.de/v2/shorten?url=${shareBaseUrl}`
+    // )
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     navigator.clipboard.writeText(data.result.full_short_link);
+    //     setTimeout(() => {
+    //       setIsMoreModalOpen(false);
+    //       setIsShareModalOpen(false);
+    //     }, 100);
+    //     toast.success("Link to hoot copied to clipboard");
+    //   });
+    navigator.clipboard.writeText(shareBaseUrl);
+    setTimeout(() => {
+      setIsMoreModalOpen(false);
+      setIsShareModalOpen(false);
+    }, 100);
+    toast.success("Link to hoot copied to clipboard");
   };
 
   const copyTextToClipboard = () => {

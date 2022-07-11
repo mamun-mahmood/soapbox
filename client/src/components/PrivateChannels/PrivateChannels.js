@@ -6,14 +6,15 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
 import { FaRegTrashAlt, FaTumblr, FaWindowClose } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
-import { RiCalendarEventLine, RiLiveLine, RiBookmark3Fill, RiBookmark3Line } from "react-icons/ri"
-import { BsPlusCircleFill, BsTrash } from 'react-icons/bs'
-import { IoCloseCircle } from 'react-icons/io5'
 import {
-  FiTwitter,
-  FiSearch,
-  FiPlayCircle,
-} from "react-icons/fi";
+  RiCalendarEventLine,
+  RiLiveLine,
+  RiBookmark3Fill,
+  RiBookmark3Line,
+} from "react-icons/ri";
+import { BsPlusCircleFill, BsTrash } from "react-icons/bs";
+import { IoCloseCircle } from "react-icons/io5";
+import { FiTwitter, FiSearch, FiPlayCircle } from "react-icons/fi";
 import socket, { startSocket } from "../../socketChat";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Picker from "emoji-picker-react";
@@ -66,12 +67,12 @@ import { loadStripe } from "@stripe/stripe-js";
 import MyVerticallyCenteredModal from "./model";
 import { SoapboxTooltip } from "../SoapboxTooltip";
 import SoapboxPrivateClubRules from "./SoapboxPrivateClubRules";
-import Media from 'react-media';
+import Media from "react-media";
 import NavBar from "../NavBar/NavBar";
 import MyVerticallyCenteredScheduler from "./scheduler";
-import ReplyModal from './reply';
+import ReplyModal from "./reply";
 import { Share } from "@material-ui/icons";
-import stickerIcon from '../../assets/stickerIcon.png'
+import stickerIcon from "../../assets/stickerIcon.png";
 import FortisSignIn from "../FortisIntegration/FortisSignIn";
 import FortisMarketplaceArea from "../FortisIntegration/FortisMarketplaceArea";
 import InboxMessage from "./inboxMessage";
@@ -87,12 +88,12 @@ const PrivateChannels = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userId, setUserId] = useState("");
   const [chatData, setChatData] = useState([]);
-  const [FormEditPoll, setFormEditPoll] = useState(true)
+  const [FormEditPoll, setFormEditPoll] = useState(true);
   const [chatDataPrivate, setChatDataPrivate] = useState([]);
   const [showIframe, setShowIframe] = useState(false);
   const [iframeBox, setIframeBox] = useState(null);
   const [uploads, setUploads] = useState([]);
-  const [clubName, setClubName] = useState('')
+  const [clubName, setClubName] = useState("");
   const [onDemandUploads, setOnDemandUploads] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setpage] = useState(2);
@@ -112,11 +113,11 @@ const PrivateChannels = () => {
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [stickerPicker, setStickerPicker] = useState(false);
   const [stickerPickerPrivate, setStickerPickerPrivate] = useState(false);
-  
- const [chatUnview,setChatUnview] = useState(0)
+
+  const [chatUnview, setChatUnview] = useState(0);
   const [emojiPickerPrivate, setEmojiPickerPrivate] = useState(false);
-  const [AllMyEvents, setAllMyEvents] = useState([])
-  const [showAllMyEvents, setShowAllMyEvents] = useState(false)
+  const [AllMyEvents, setAllMyEvents] = useState([]);
+  const [showAllMyEvents, setShowAllMyEvents] = useState(false);
 
   const [showFeed, setShowFeed] = useState(true);
   const [clubFloor, setClubFloor] = useState(true);
@@ -148,10 +149,10 @@ const PrivateChannels = () => {
   const history = useHistory();
   const [userInfo, setUserInfo] = useState([]);
   const [subscribedMembers, setSubscribedMembers] = useState([]);
-  const [clubRequestsData, setClubRequestsData] = useState([])
+  const [clubRequestsData, setClubRequestsData] = useState([]);
   const [inviteBox, setInviteBox] = useState(false);
   const [inviteBoxChat, setInviteBoxChat] = useState(false);
-  
+
   const [scheduleBox, setScheduleBox] = useState(false);
   const [likes, setLikes] = useState(0);
   const [views, setViews] = useState(0);
@@ -160,13 +161,23 @@ const PrivateChannels = () => {
   const [messageInboxValuePrivate, setMessageInboxValuePrivate] = useState("");
   const [messageInboxValue, setMessageInboxValue] = useState("");
   const [breakOffInput, setBreakOffInput] = useState("");
-  const [showPollForm, setShowPollForm] = useState(false)
-  const [pollFormData, setPollFormData] = useState({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA: 90, pollB: 50, pollC: 60 })
-  const [pollFormDataQ, setPollFormDataQ] = useState("")
-  const [pollFormExpiry, setPollFormExpiry] = useState("24")
-  const [pollFormDataOA, setPollFormDataOA] = useState("")
-  const [pollFormDataOB, setPollFormDataOB] = useState("")
-  const [pollFormDataOC, setPollFormDataOC] = useState("")
+  const [showPollForm, setShowPollForm] = useState(false);
+  const [pollFormData, setPollFormData] = useState({
+    Question: "",
+    OptionA: "",
+    OptionB: "",
+    OptionC: "",
+    createdBy: "",
+    threadId: "",
+    pollA: 90,
+    pollB: 50,
+    pollC: 60,
+  });
+  const [pollFormDataQ, setPollFormDataQ] = useState("");
+  const [pollFormExpiry, setPollFormExpiry] = useState("24");
+  const [pollFormDataOA, setPollFormDataOA] = useState("");
+  const [pollFormDataOB, setPollFormDataOB] = useState("");
+  const [pollFormDataOC, setPollFormDataOC] = useState("");
   const [file, setFile] = useState([]);
   const [src, setSrc] = useState(null);
   const [mimeType, setMimeType] = useState("");
@@ -175,12 +186,13 @@ const PrivateChannels = () => {
   const [mimeTypePrivate, setMimeTypePrivate] = useState("");
   const [currentInvoice, setCurrentInvoice] = useState("");
   const [marketPlaceArea, setMarketPlaceArea] = useState(false);
-  const [showReply,setShowReply]= useState(false);
-  const [replyData,setReplyData] = useState([]);
+  const [showReply, setShowReply] = useState(false);
+  const [replyData, setReplyData] = useState([]);
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
   const form = document.getElementById("send-container");
   const messageInput = document.getElementById("messageInp");
-  const stickersImages = ["https://soapboxapi.megahoot.net/stickers/sticker1.png",
+  const stickersImages = [
+    "https://soapboxapi.megahoot.net/stickers/sticker1.png",
     "https://soapboxapi.megahoot.net/stickers/sticker2.png",
     "https://soapboxapi.megahoot.net/stickers/sticker3.png",
     "https://soapboxapi.megahoot.net/stickers/sticker4.png",
@@ -194,7 +206,7 @@ const PrivateChannels = () => {
     "https://soapboxapi.megahoot.net/stickers/sticker12.png",
     "https://soapboxapi.megahoot.net/stickers/sticker13.png",
     "https://soapboxapi.megahoot.net/stickers/sticker14.png",
-  ]
+  ];
   var totalViews = 0;
   var totalLikes = 0;
 
@@ -220,159 +232,137 @@ const PrivateChannels = () => {
 
     className: "link-content",
   });
-  
+
   const verifyExpiration = async (data) => {
     var resultTimeExp;
-    let threadId = data.threadId
-    axios.post(`${BaseURL}/upload/verifyExpiration`, {
-      threadId: threadId,
-      username: userInformation.username
-    })
-      .then((res) => {
-        console.log("success")
-        resultTimeExp = res.data
-
-      }).then(() => {
-        if (resultTimeExp) {
-          return (resultTimeExp)
-        }
-
+    let threadId = data.threadId;
+    axios
+      .post(`${BaseURL}/upload/verifyExpiration`, {
+        threadId: threadId,
+        username: userInformation.username,
       })
-
-  };
-const sendReplyToChat=(data)=>{
-  let chatname=data.chatname;
-  let pollData = "";
-  let position="left";
-  let imgSrc= `${BaseURL}/profile-pictures/${data.profilePic}` ;
-  let isEmoji=false;
-  let timestamp=data.timestamp;
-  let isImage=false;
-  let isVideo=false;
-  let isPoll=false;
-  let isEvent=false;
-  let expiryTime="";
-  let isSticker=false;
-  let message=data.reply;
-  let replyCount=data.replyCount;
-  let isReply=true;
-  // setChatData((e) => [
-  //   ...e,
-  //   data.parentChat,
-  // ]);
- let parentChat=data.parentChat;
- 
-  setChatData(chatData.filter(item=>item.parentChat!==parentChat))
-  
-
-
-  setChatData((e) => [
-    ...e,
-    { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker,isReply,parentChat,replyCount},
-  ]);
-
-
-
-   
-      let threadId = uuidv4()
-    
-      // socket.emit('send',message);
-      let isCommunity = userInfo[0].communityClub
-      let isClub = userInfo[0].communityClub == 1 ? 0 : 1
-
-  socket.emit("send", {
-        threadId:threadId,
-        name: userFullName,
-        isClub: isClub,
-        isPrivate: 0,
-        isCommunity: isCommunity,
-        message: message,
-        profilePic: userProfilePic,
-        isEmoji: false,
-        timestamp: timestamp,
-        isReply:true,
-        parentChat:parentChat,
-        parentThreadId:parentChat.threadId,
-        replyCount
+      .then((res) => {
+        console.log("success");
+        resultTimeExp = res.data;
+      })
+      .then(() => {
+        if (resultTimeExp) {
+          return resultTimeExp;
+        }
       });
+  };
+  const sendReplyToChat = (data) => {
+    let chatname = data.chatname;
+    let pollData = "";
+    let position = "left";
+    let imgSrc = `${BaseURL}/profile-pictures/${data.profilePic}`;
+    let isEmoji = false;
+    let timestamp = data.timestamp;
+    let isImage = false;
+    let isVideo = false;
+    let isPoll = false;
+    let isEvent = false;
+    let expiryTime = "";
+    let isSticker = false;
+    let message = data.reply;
+    let replyCount = data.replyCount;
+    let isReply = true;
+    // setChatData((e) => [
+    //   ...e,
+    //   data.parentChat,
+    // ]);
+    let parentChat = data.parentChat;
 
-   
+    setChatData(chatData.filter((item) => item.parentChat !== parentChat));
 
-  setTimeout(() => {
-    if (document.querySelector(".chatarea")) {
-      var messageContainer = document.querySelector(".chatarea");
+    setChatData((e) => [
+      ...e,
+      {
+        chatname,
+        message,
+        position,
+        imgSrc,
+        isEmoji,
+        isVideo,
+        isImage,
+        isPoll,
+        timestamp,
+        isSticker,
+        isReply,
+        parentChat,
+        replyCount,
+      },
+    ]);
 
-      messageContainer.scrollTop = messageContainer.scrollHeight;
-    }
-  }, 2000);
+    let threadId = uuidv4();
 
+    // socket.emit('send',message);
+    let isCommunity = userInfo[0].communityClub;
+    let isClub = userInfo[0].communityClub == 1 ? 0 : 1;
 
+    socket.emit("send", {
+      threadId: threadId,
+      name: userFullName,
+      isClub: isClub,
+      isPrivate: 0,
+      isCommunity: isCommunity,
+      message: message,
+      profilePic: userProfilePic,
+      isEmoji: false,
+      timestamp: timestamp,
+      isReply: true,
+      parentChat: parentChat,
+      parentThreadId: parentChat.threadId,
+      replyCount,
+    });
 
-}
-
-
-const openPrivateChatfromInbox=(e)=>{
-  setPrivateChatPerson({
-    name: e.chatname,
-    profilePic: e.imgSrc,
-  });
-  setPrivateChat(true);
-  setClubFloor(false);
-  setShowChatRoom(false);
-  // socket.emit("room", userInfo[0].username+userInformation.username);
-  getChatDataPrivate(e.chatname, userFullName)
-  // socket.emit("new-user-joined", {
-  //     name: userFullName,
-  //     profilePic: userProfilePic,
-  //   });
-
-  if(window.innerWidth>=600){
- setTimeout(() => {
-    if (
-      document.getElementById(
-        "privatechatslide"
-      )
-    ) {
-      document.getElementById(
-        "privatechatslide"
-      ).style.transition = "1sec";
-      document.getElementById(
-        "privatechatslide"
-      ).style.right = "500px";
-    }
-  }, 1);
-  }else{
     setTimeout(() => {
-      if (
-        document.getElementById(
-          "privatechatslide"
-        )
-      ) {
-        document.getElementById(
-          "privatechatslide"
-        ).style.transition = "1sec";
-        document.getElementById(
-          "privatechatslide"
-        ).style.right = "0px";
-        document.getElementById(
-          "privatechatslide"
-        ).style.left = "0px";
-        document.getElementById(
-          "privatechatslide"
-        ).style.zIndex = 999999;
+      if (document.querySelector(".chatarea")) {
+        var messageContainer = document.querySelector(".chatarea");
 
-
-        document.getElementById(
-          "privatechatslide"
-        ).style.width="90vw !important",
-        document.getElementById(
-          "privatechatslide"
-        ).style.minWidth="90vw !important"
+        messageContainer.scrollTop = messageContainer.scrollHeight;
       }
-    }, 1);
-  }
- 
-}
+    }, 2000);
+  };
+
+  const openPrivateChatfromInbox = (e) => {
+    setPrivateChatPerson({
+      name: e.chatname,
+      profilePic: e.imgSrc,
+    });
+    setPrivateChat(true);
+    setClubFloor(false);
+    setShowChatRoom(false);
+    // socket.emit("room", userInfo[0].username+userInformation.username);
+    getChatDataPrivate(e.chatname, userFullName);
+    // socket.emit("new-user-joined", {
+    //     name: userFullName,
+    //     profilePic: userProfilePic,
+    //   });
+
+    if (window.innerWidth >= 600) {
+      setTimeout(() => {
+        if (document.getElementById("privatechatslide")) {
+          document.getElementById("privatechatslide").style.transition = "1sec";
+          document.getElementById("privatechatslide").style.right = "500px";
+        }
+      }, 1);
+    } else {
+      setTimeout(() => {
+        if (document.getElementById("privatechatslide")) {
+          document.getElementById("privatechatslide").style.transition = "1sec";
+          document.getElementById("privatechatslide").style.right = "0px";
+          document.getElementById("privatechatslide").style.left = "0px";
+          document.getElementById("privatechatslide").style.zIndex = 999999;
+
+          (document.getElementById("privatechatslide").style.width =
+            "90vw !important"),
+            (document.getElementById("privatechatslide").style.minWidth =
+              "90vw !important");
+        }
+      }, 1);
+    }
+  };
 
   const append = (
     chatname,
@@ -390,7 +380,7 @@ const openPrivateChatfromInbox=(e)=>{
     parentChat
   ) => {
     if (isPoll) {
-      let pollData = JSON.parse(message)
+      let pollData = JSON.parse(message);
 
       // let expiryTime= verifyExpiration(pollData)
 
@@ -399,45 +389,88 @@ const openPrivateChatfromInbox=(e)=>{
       //     { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp,expiryTime },
       //   ]);
 
-
       let expiryTime;
-      axios.post(`${BaseURL}/upload/verifyExpiration`, {
-        threadId: pollData.threadId,
-        username: userInformation.username
-      }).then((res) => {
-        expiryTime = res.data.expiryTime
-        pollData.isVoted = res.data.isVoted
+      axios
+        .post(`${BaseURL}/upload/verifyExpiration`, {
+          threadId: pollData.threadId,
+          username: userInformation.username,
+        })
+        .then((res) => {
+          expiryTime = res.data.expiryTime;
+          pollData.isVoted = res.data.isVoted;
 
-        setChatData((e) => [
-          ...e,
-          { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime, isSticker },
-
-        ]);
-      })
-
-
-
+          setChatData((e) => [
+            ...e,
+            {
+              chatname,
+              pollData,
+              position,
+              imgSrc,
+              isEmoji,
+              isVideo,
+              isImage,
+              isPoll,
+              timestamp,
+              isEvent,
+              expiryTime,
+              isSticker,
+            },
+          ]);
+        });
     } else if (isEvent) {
-      let event = JSON.parse(message)
+      let event = JSON.parse(message);
 
       setChatData((e) => [
         ...e,
-        { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, isSticker },
+        {
+          chatname,
+          event,
+          position,
+          imgSrc,
+          isEmoji,
+          isVideo,
+          isImage,
+          isPoll,
+          timestamp,
+          isEvent,
+          isSticker,
+        },
       ]);
-    }else if(isReply){
+    } else if (isReply) {
       setChatData((e) => [
         ...e,
-        { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker,isReply,parentChat },
+        {
+          chatname,
+          message,
+          position,
+          imgSrc,
+          isEmoji,
+          isVideo,
+          isImage,
+          isPoll,
+          timestamp,
+          isSticker,
+          isReply,
+          parentChat,
+        },
+      ]);
+    } else {
+      setChatData((e) => [
+        ...e,
+        {
+          chatname,
+          message,
+          position,
+          imgSrc,
+          isEmoji,
+          isVideo,
+          isImage,
+          isPoll,
+          timestamp,
+          isSticker,
+        },
       ]);
     }
-    else {
-      setChatData((e) => [
-        ...e,
-        { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker },
-      ]);
-    }
-
-
 
     var messageContainer = document.querySelector(".chatarea");
     messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -453,18 +486,25 @@ const openPrivateChatfromInbox=(e)=>{
     isImage,
     isSticker
   ) => {
-    
     setChatDataPrivate((e) => [
       ...e,
-      { chatname, message, position, imgSrc, isEmoji,timestamp, isVideo, isImage ,isSticker},
+      {
+        chatname,
+        message,
+        position,
+        imgSrc,
+        isEmoji,
+        timestamp,
+        isVideo,
+        isImage,
+        isSticker,
+      },
     ]);
 
-    
-    if(document.querySelector(".privateChat-club")){
+    if (document.querySelector(".privateChat-club")) {
       var messageContainer = document.querySelector(".privateChat-club");
       messageContainer.scrollTop = messageContainer.scrollHeight;
     }
-   
   };
   function isEmoji(str) {
     var ranges = [
@@ -479,41 +519,41 @@ const openPrivateChatfromInbox=(e)=>{
   }
 
   const getVotingPercentage = (num, num1, num2) => {
-
     var total = num + num1 + num2;
     if (total == 0) {
-      total = 1
+      total = 1;
     }
-    var numPercentage = Math.floor((num / total)) * 100
+    var numPercentage = Math.floor(num / total) * 100;
 
     return Math.floor((num / total) * 100);
-
-
-  }
-
-
+  };
 
   const messagesubmit = (e) => {
     e.preventDefault();
     if (messageInboxValue) {
       let today = new Date();
 
-      let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+      let timestamp =
+        today.toLocaleTimeString() + " " + today.toLocaleDateString();
       const message = messageInboxValue;
       let emojiValidator = isEmoji(message);
-      let threadId = uuidv4()
+      let threadId = uuidv4();
       append(
         userFullName,
         `${message}`,
         "right",
         `${BaseURL}/profile-pictures/${userProfilePic}`,
-        emojiValidator, "", "", "", timestamp
+        emojiValidator,
+        "",
+        "",
+        "",
+        timestamp
       );
       // socket.emit('send',message);
-      let isCommunity = userInfo[0].communityClub
-      let isClub = userInfo[0].communityClub == 1 ? 0 : 1
+      let isCommunity = userInfo[0].communityClub;
+      let isClub = userInfo[0].communityClub == 1 ? 0 : 1;
       socket.emit("send", {
-        threadId:threadId,
+        threadId: threadId,
         name: userFullName,
         isClub: isClub,
         isPrivate: 0,
@@ -521,20 +561,25 @@ const openPrivateChatfromInbox=(e)=>{
         message: message,
         profilePic: userProfilePic,
         isEmoji: isEmoji(message),
-        timestamp: timestamp
+        timestamp: timestamp,
       });
       setMessageInboxValue("");
     }
   };
 
-  const messagesubmitPrivate = (e,privateChatPerson,userProfilePic,userFullName) => {
-
+  const messagesubmitPrivate = (
+    e,
+    privateChatPerson,
+    userProfilePic,
+    userFullName
+  ) => {
     e.preventDefault();
     if (messageInboxValuePrivate) {
       const message = messageInboxValuePrivate;
       let today = new Date();
-  let threadId = uuidv4()
-      let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+      let threadId = uuidv4();
+      let timestamp =
+        today.toLocaleTimeString() + " " + today.toLocaleDateString();
       let emojiValidator = isEmoji(message);
 
       appendPrivate(
@@ -547,7 +592,7 @@ const openPrivateChatfromInbox=(e)=>{
       );
       // socket.emit('send',message);
       socket.emit("private-message-soapbox", {
-        threadId:threadId,
+        threadId: threadId,
         to: privateChatPerson.name,
         from: userFullName,
         isClub: 0,
@@ -557,52 +602,58 @@ const openPrivateChatfromInbox=(e)=>{
         message: message,
         profilePic: userProfilePic,
         isEmoji: isEmoji(message),
-        timestamp: timestamp
+        timestamp: timestamp,
       });
       setMessageInboxValuePrivate("");
     }
   };
 
   const getAllEvents = (username) => {
-    axios.post(`${BaseURL}/upload/getMyEvents`, {
-      username: username
-    })
-      .then(res => {
-        setAllMyEvents(res.data)
-        setShowAllMyEvents(true)
+    axios
+      .post(`${BaseURL}/upload/getMyEvents`, {
+        username: username,
+      })
+      .then((res) => {
+        setAllMyEvents(res.data);
+        setShowAllMyEvents(true);
 
         setTimeout(() => {
           if (document.getElementById("slideE")) {
             // document.getElementById("slideE").style.transition = "1sec";
             // document.getElementById("slideE").style.right = "250px";
-
             // document.getElementById("slideE").style.transition = "2sec";
             // document.getElementById("slideE").style.left = "50%";
             // document.getElementById("slideE").style.top = "50%";
             // document.getElementById("slideE").style.transform = "translate(-50%, -50%)";
           }
         }, 0);
+      });
+  };
+
+  const myTotalUnviewChats = (username) => {
+    axios
+      .post(`${BaseURL}/upload/myTotalUnviewChats`, {
+        chatTo: username,
       })
-  }
+      .then((res) => {
+        setChatUnview(res.data.length);
+      });
+  };
 
-const myTotalUnviewChats=(username)=>{
-  axios.post(`${BaseURL}/upload/myTotalUnviewChats`,{
-    chatTo:username
-  }).then(res=>{
-    setChatUnview(res.data.length)
-    })
-}
-
-const resetChatView=(username)=>{
-  setChatUnview(0)
-  axios.post(`${BaseURL}/upload/resetChatView`,{
-    chatTo:username
-  }).then((res)=>{console.log('success')})
-  .catch(err=>console.log(err))
-}
+  const resetChatView = (username) => {
+    setChatUnview(0);
+    axios
+      .post(`${BaseURL}/upload/resetChatView`, {
+        chatTo: username,
+      })
+      .then((res) => {
+        console.log("success");
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
-   myTotalUnviewChats(userFullName)
-  }, [userFullName])
+    myTotalUnviewChats(userFullName);
+  }, [userFullName]);
 
   useEffect(() => {
     socket.on("user-joined", (name) => {
@@ -613,8 +664,6 @@ const resetChatView=(username)=>{
         `${BaseURL}/profile-pictures/${name.profilePic}`
       );
     });
-
-
 
     socket.on("receive", (data) => {
       console.log("data");
@@ -628,10 +677,9 @@ const resetChatView=(username)=>{
           "",
           "",
           "",
-          data.timestamp,
-
+          data.timestamp
         );
-      }else if(data.isReply){
+      } else if (data.isReply) {
         append(
           data.name,
           `${data.message}`,
@@ -646,8 +694,6 @@ const resetChatView=(username)=>{
           "",
           data.isReply,
           data.parentChat
-
-
         );
       } else {
         append(
@@ -664,67 +710,62 @@ const resetChatView=(username)=>{
         );
       }
     });
- 
 
     socket.on("left", (name) => {
-
       if (userFullName && userFullName !== name) {
         append(name, `${name} left the chat`);
       }
     });
   }, [userFullName]);
 
-
-  useEffect(()=>{
-    let FullName=userFullName
-    let privateChat=privateChatPerson
+  useEffect(() => {
+    let FullName = userFullName;
+    let privateChat = privateChatPerson;
     socket.on("receive-private-chat-soapbox", (data) => {
-
-      if(data.to === FullName){
-      
-       setChatUnview(chatUnview+1)
+      if (data.to === FullName) {
+        setChatUnview(chatUnview + 1);
       }
-      if(data.to === FullName){
-     
-        if(privateChat&&(data.from === privateChat.name)){
-         if (data.isEmoji) {
-           appendPrivate(
-             data.name,
-             `${data.message}`,
-             "left",
-             `${BaseURL}/profile-pictures/${data.profilePic}`,
-             data.isEmoji,
-             data.timestamp
-           );
-         } else {
-           appendPrivate(
-             data.name,
-             `${data.message}`,
-             "left",
-             `${BaseURL}/profile-pictures/${data.profilePic}`,
-             data.isEmoji,
-             data.timestamp,
-             data.isVideo,
-             data.isImage,
-             data.isSticker,
-             data.timeStamp,
-           );
-         }
-   //          if (userFullName&&privateChatPerson&&(data.to == userFullName)&&(data.from == privateChatPerson.name)) {
-     
-    
-   // }
+      if (data.to === FullName) {
+        if (privateChat && data.from === privateChat.name) {
+          if (data.isEmoji) {
+            appendPrivate(
+              data.name,
+              `${data.message}`,
+              "left",
+              `${BaseURL}/profile-pictures/${data.profilePic}`,
+              data.isEmoji,
+              data.timestamp
+            );
+          } else {
+            appendPrivate(
+              data.name,
+              `${data.message}`,
+              "left",
+              `${BaseURL}/profile-pictures/${data.profilePic}`,
+              data.isEmoji,
+              data.timestamp,
+              data.isVideo,
+              data.isImage,
+              data.isSticker,
+              data.timeStamp
+            );
+          }
+          //          if (userFullName&&privateChatPerson&&(data.to == userFullName)&&(data.from == privateChatPerson.name)) {
+
+          // }
         }
       }
- 
-
- });
-  },[userFullName,privateChatPerson])
+    });
+  }, [userFullName, privateChatPerson]);
   useEffect(() => {
     const getUserData = async () => {
       await axios.get(`${BaseURL}/user/${username}`).then((response) => {
         setUserInfo(response.data);
-        setClubName(response.data[0].isCommunity == 1 ? response.data[0].username : `${response.data[0].username}'s Private'`)
+        setClubName(
+          response.data[0].isCommunity == 1
+            ? response.data[0].username
+            : `${response.data[0].username}'s Private'`
+        );
         console.log("dky");
         axios.get(`${BaseURL}/upload/user/${username}`).then((response) => {
           response.data.map((user) => {
@@ -794,13 +835,12 @@ const resetChatView=(username)=>{
   }, []);
 
   const updatePollData = (e) => {
-
-    let threadId = e.pollData.threadId
+    let threadId = e.pollData.threadId;
     // axios.post(`${BaseURL}/upload/updatePollData`,{
     //   threadId:threadId,
     //   message:e.pollData
     // })
-  }
+  };
 
   const getChatData = (username) => {
     axios
@@ -822,75 +862,117 @@ const resetChatView=(username)=>{
             timestamp = i.chat.timestamp,
             isEvent = i.chat.isEvent,
             isSticker = i.chat.isSticker,
-            threadId=i.chat.threadId,
-            isReply=i.chat.isReply,
-            parentChat=i.chat.parentChat,
-            replyCount=i.chat.replyCount
+            threadId = i.chat.threadId,
+            isReply = i.chat.isReply,
+            parentChat = i.chat.parentChat,
+            replyCount = i.chat.replyCount;
 
           if (isPoll) {
-            let pollData = JSON.parse(message)
+            let pollData = JSON.parse(message);
             let expiryTime;
-            axios.post(`${BaseURL}/upload/verifyExpiration`, {
-              threadId: pollData.threadId,
-              username: userInformation.username
-            }).then((res) => {
-              expiryTime = res.data.expiryTime
-              pollData.isVoted = res.data.isVoted
+            axios
+              .post(`${BaseURL}/upload/verifyExpiration`, {
+                threadId: pollData.threadId,
+                username: userInformation.username,
+              })
+              .then((res) => {
+                expiryTime = res.data.expiryTime;
+                pollData.isVoted = res.data.isVoted;
 
-              setChatData((e) => [
-                ...e,
-                { chatname, pollData, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, expiryTime, isSticker,threadId },
+                setChatData((e) => [
+                  ...e,
+                  {
+                    chatname,
+                    pollData,
+                    position,
+                    imgSrc,
+                    isEmoji,
+                    isVideo,
+                    isImage,
+                    isPoll,
+                    timestamp,
+                    isEvent,
+                    expiryTime,
+                    isSticker,
+                    threadId,
+                  },
+                ]);
+              })
+              .finally(() => {
+                setTimeout(() => {
+                  if (document.querySelector(".chatarea")) {
+                    var messageContainer = document.querySelector(".chatarea");
 
-              ]);
-            }).finally(() => {
-              setTimeout(() => {
-                if (document.querySelector(".chatarea")) {
-                  var messageContainer = document.querySelector(".chatarea");
-
-                  messageContainer.scrollTop = messageContainer.scrollHeight;
-                }
-              }, 3000);
-            })
-
-
-
-
+                    messageContainer.scrollTop = messageContainer.scrollHeight;
+                  }
+                }, 3000);
+              });
           } else if (isEvent) {
-            let event = JSON.parse(message)
+            let event = JSON.parse(message);
 
             setChatData((e) => [
               ...e,
-              { chatname, event, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, isSticker ,threadId},
-
+              {
+                chatname,
+                event,
+                position,
+                imgSrc,
+                isEmoji,
+                isVideo,
+                isImage,
+                isPoll,
+                timestamp,
+                isEvent,
+                isSticker,
+                threadId,
+              },
             ]);
-
-          }else if(isReply){
-          
+          } else if (isReply) {
             setChatData((e) => [
               ...e,
-              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isSticker,isReply,parentChat,replyCount},
+              {
+                chatname,
+                message,
+                position,
+                imgSrc,
+                isEmoji,
+                isVideo,
+                isImage,
+                isPoll,
+                timestamp,
+                isSticker,
+                isReply,
+                parentChat,
+                replyCount,
+              },
+            ]);
+          } else {
+            setChatData((e) => [
+              ...e,
+              {
+                chatname,
+                message,
+                position,
+                imgSrc,
+                isEmoji,
+                isVideo,
+                isImage,
+                isPoll,
+                timestamp,
+                isEvent,
+                isSticker,
+                threadId,
+              },
             ]);
           }
-          else {
-            setChatData((e) => [
-              ...e,
-              { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, isPoll, timestamp, isEvent, isSticker,threadId },
-            ]);
-
-          }
-
 
           if (document.querySelector(".chatarea")) {
             let messageContainer = document.querySelector(".chatarea");
             messageContainer.scrollTop = messageContainer.scrollHeight;
           }
-
         });
-
-
-
-
-      }).finally(() => {
+      })
+      .finally(() => {
         setTimeout(() => {
           if (document.querySelector(".chatarea")) {
             var messageContainer = document.querySelector(".chatarea");
@@ -898,27 +980,24 @@ const resetChatView=(username)=>{
             messageContainer.scrollTop = messageContainer.scrollHeight;
           }
         }, 3000);
-      })
+      });
   };
 
   useEffect(() => {
     if (document.querySelector(".chatarea")) {
       var messageContainer = document.querySelector(".chatarea");
       messageContainer.scrollTop = messageContainer.scrollHeight;
-
     }
-
-  }, [chatData])
+  }, [chatData]);
 
   const getChatDataPrivate = (a, b) => {
     setChatDataPrivate([]);
     axios
       .post(`${BaseURL}/upload/getChatDataPrivate`, {
         to: a,
-        from: b
+        from: b,
       })
       .then((res) => {
-
         res.data.forEach((i) => {
           let chatname = i.chat.name,
             message = i.chat.message,
@@ -928,10 +1007,20 @@ const resetChatView=(username)=>{
             isVideo = i.chat.isVideo,
             isImage = i.chat.isImage,
             timestamp = i.chat.timestamp,
-            isSticker=i.chat.isSticker
+            isSticker = i.chat.isSticker;
           setChatDataPrivate((e) => [
             ...e,
-            { chatname, message, position, imgSrc, isEmoji, isVideo, isImage, timestamp,isSticker },
+            {
+              chatname,
+              message,
+              position,
+              imgSrc,
+              isEmoji,
+              isVideo,
+              isImage,
+              timestamp,
+              isSticker,
+            },
           ]);
         });
         setTimeout(() => {
@@ -941,7 +1030,6 @@ const resetChatView=(username)=>{
             messageContainer.scrollTop = messageContainer.scrollHeight;
           }
         }, 1000);
-
       });
   };
 
@@ -972,7 +1060,7 @@ const resetChatView=(username)=>{
     getAllUploadData();
   }, []);
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
   const getAllOnDemandMedia = async (media) => {
     setMedia(media);
@@ -1090,31 +1178,37 @@ const resetChatView=(username)=>{
   };
 
   const deletePrivateChatAll = (roomname) => {
-
-    if (window.confirm("Are you Sure,you want to delete all chats Permanently?")) {
-      axios.post(`${BaseURL}/upload/deleteChatAll`, {
-        roomname: roomname
-      }).then((res) => {
-        setChatData([])
-        toast.success(res.data.message)
-
-      }).catch(err => console.log(err))
+    if (
+      window.confirm("Are you Sure,you want to delete all chats Permanently?")
+    ) {
+      axios
+        .post(`${BaseURL}/upload/deleteChatAll`, {
+          roomname: roomname,
+        })
+        .then((res) => {
+          setChatData([]);
+          toast.success(res.data.message);
+        })
+        .catch((err) => console.log(err));
     }
-  }
+  };
 
   const deletePrivateChatDuo = (a, b) => {
-
-    if (window.confirm("Are you Sure,you want to delete all chats Permanently?")) {
-      axios.post(`${BaseURL}/upload/deleteChatDuo`, {
-        from: a,
-        to: b
-      }).then((res) => {
-        setChatDataPrivate([])
-        toast.success(res.data.message)
-
-      }).catch(err => console.log(err))
+    if (
+      window.confirm("Are you Sure,you want to delete all chats Permanently?")
+    ) {
+      axios
+        .post(`${BaseURL}/upload/deleteChatDuo`, {
+          from: a,
+          to: b,
+        })
+        .then((res) => {
+          setChatDataPrivate([]);
+          toast.success(res.data.message);
+        })
+        .catch((err) => console.log(err));
     }
-  }
+  };
 
   const callRequestUser = () => {
     setCallRequest(!callRequest);
@@ -1164,15 +1258,11 @@ const resetChatView=(username)=>{
     setSrcPrivate(URL.createObjectURL(file));
     // setMessageInboxValue(file.name);
     setTimeout(() => {
-      if(document.querySelector(".privateChat-club")){
-      var messageContainer = document.querySelector(".privateChat-club");
-      messageContainer.scrollTop = messageContainer.scrollHeight;
-    }
+      if (document.querySelector(".privateChat-club")) {
+        var messageContainer = document.querySelector(".privateChat-club");
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+      }
     }, 500);
-
-
-      
-   
   };
 
   const addMembershipInDb = (
@@ -1363,10 +1453,11 @@ const resetChatView=(username)=>{
                 // });
                 const message = `${BaseURL}/storageChat/${res1.data}`;
                 let today = new Date();
-            let threadId = uuidv4()
-                let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+                let threadId = uuidv4();
+                let timestamp =
+                  today.toLocaleTimeString() + " " + today.toLocaleDateString();
                 let emojiValidator = isEmoji(message);
-          
+
                 appendPrivate(
                   userFullName,
                   `${message}`,
@@ -1374,11 +1465,11 @@ const resetChatView=(username)=>{
                   `${BaseURL}/profile-pictures/${userProfilePic}`,
                   emojiValidator,
                   timestamp,
-                  true,
+                  true
                 );
                 // socket.emit('send',message);
                 socket.emit("private-message-soapbox", {
-                  threadId:threadId,
+                  threadId: threadId,
                   to: privateChatPerson.name,
                   from: userFullName,
                   isClub: 0,
@@ -1412,10 +1503,11 @@ const resetChatView=(username)=>{
 
                 const message = `${BaseURL}/storageChat/${res1.data}`;
                 let today = new Date();
-            let threadId = uuidv4()
-                let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+                let threadId = uuidv4();
+                let timestamp =
+                  today.toLocaleTimeString() + " " + today.toLocaleDateString();
                 let emojiValidator = isEmoji(message);
-          
+
                 appendPrivate(
                   userFullName,
                   `${message}`,
@@ -1428,7 +1520,7 @@ const resetChatView=(username)=>{
                 );
                 // socket.emit('send',message);
                 socket.emit("private-message-soapbox", {
-                  threadId:threadId,
+                  threadId: threadId,
                   to: privateChatPerson.name,
                   from: userFullName,
                   isClub: 0,
@@ -1440,7 +1532,7 @@ const resetChatView=(username)=>{
                   isEmoji: isEmoji(message),
                   timestamp: timestamp,
                   isVideo: false,
-                  isImage:true
+                  isImage: true,
                 });
               }
             }
@@ -1452,20 +1544,19 @@ const resetChatView=(username)=>{
   };
 
   const createBreakoff = () => {
-
-    axios.post(`${BaseURL}/Upload/createBreakOff`, {
-      mainClub: username,
-      topic: breakOffInput,
-      createdBy: userInformation.username
-    })
+    axios
+      .post(`${BaseURL}/Upload/createBreakOff`, {
+        mainClub: username,
+        topic: breakOffInput,
+        createdBy: userInformation.username,
+      })
       .then((res) => {
         if (res.data.status == 0) {
-          toast.success(res.data.message)
+          toast.success(res.data.message);
         } else {
           toast.success(res.data.message);
-          setBreakOffInput('');
-          document.getElementById("showBreakoffFormId").style.transition =
-            "2s";
+          setBreakOffInput("");
+          document.getElementById("showBreakoffFormId").style.transition = "2s";
           document.getElementById("showBreakoffFormId").style.right = "-100vw";
 
           setTimeout(() => {
@@ -1474,14 +1565,13 @@ const resetChatView=(username)=>{
         }
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
   const handlePollFormSubmission = (user) => {
     if (pollFormDataQ && (pollFormDataOA || pollFormDataOB || pollFormDataOC)) {
-
-      let threadId = uuidv4()
+      let threadId = uuidv4();
       setPollFormData({
         Question: pollFormDataQ,
         OptionA: pollFormDataOA,
@@ -1492,30 +1582,34 @@ const resetChatView=(username)=>{
         threadId: threadId,
         pollA: 0,
         pollB: 0,
-        pollC: 0
-      })
-      setFormEditPoll(!FormEditPoll)
+        pollC: 0,
+      });
+      setFormEditPoll(!FormEditPoll);
     }
-  }
+  };
 
   const uploadPollResponse = (e) => {
-
-    axios.post(`${BaseURL}/upload/uploadPollResponse`, {
-      threadId: e.pollData.threadId,
-      pollA: e.pollData.pollA,
-      pollB: e.pollData.pollB,
-      pollC: e.pollData.pollC,
-      username: userInformation.username
-    }).then(() => { console.log("done") })
-  }
+    axios
+      .post(`${BaseURL}/upload/uploadPollResponse`, {
+        threadId: e.pollData.threadId,
+        pollA: e.pollData.pollA,
+        pollB: e.pollData.pollB,
+        pollC: e.pollData.pollC,
+        username: userInformation.username,
+      })
+      .then(() => {
+        console.log("done");
+      });
+  };
 
   const sumitChatDataFromScheduler = (data) => {
-    sentEventMessageInChat(data)
-  }
+    sentEventMessageInChat(data);
+  };
   const sentEventMessageInChat = (data) => {
     let today = new Date();
 
-    let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
+    let timestamp =
+      today.toLocaleTimeString() + " " + today.toLocaleDateString();
     append(
       userFullName,
       `${JSON.stringify(data)}`,
@@ -1529,10 +1623,10 @@ const resetChatView=(username)=>{
       true
     );
 
-    let isCommunity = userInfo[0].communityClub
-    let isClub = userInfo[0].communityClub == 1 ? 0 : 1
+    let isCommunity = userInfo[0].communityClub;
+    let isClub = userInfo[0].communityClub == 1 ? 0 : 1;
     let Eventdata = JSON.stringify(data);
-    let threadId = uuidv4()
+    let threadId = uuidv4();
     socket.emit("send", {
       name: userFullName,
       isClub: isClub,
@@ -1548,13 +1642,14 @@ const resetChatView=(username)=>{
       isEvent: true,
       threadId: threadId,
     });
-  }
+  };
 
   const sentPollMessageInChat = (pollFormData) => {
     let today = new Date();
 
-    let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
-    setShowPollForm(false)
+    let timestamp =
+      today.toLocaleTimeString() + " " + today.toLocaleDateString();
+    setShowPollForm(false);
     append(
       userFullName,
       `${JSON.stringify(pollFormData)}`,
@@ -1567,9 +1662,9 @@ const resetChatView=(username)=>{
       timestamp
     );
 
-    let isCommunity = userInfo[0].communityClub
-    let isClub = userInfo[0].communityClub == 1 ? 0 : 1
-    let data = JSON.stringify(pollFormData)
+    let isCommunity = userInfo[0].communityClub;
+    let isClub = userInfo[0].communityClub == 1 ? 0 : 1;
+    let data = JSON.stringify(pollFormData);
     socket.emit("send", {
       name: userFullName,
       isClub: isClub,
@@ -1581,17 +1676,26 @@ const resetChatView=(username)=>{
       isVideo: "",
       isImage: "",
       isPoll: true,
-      timestamp: timestamp
+      timestamp: timestamp,
     });
-    toast.success('Created Poll Successfully!')
-    setFormEditPoll(true)
+    toast.success("Created Poll Successfully!");
+    setFormEditPoll(true);
     setPollFormDataQ("");
     setPollFormDataOA("");
     setPollFormDataOB("");
     setPollFormDataOC("");
-    setPollFormData({ Question: '', OptionA: '', OptionB: '', OptionC: '', createdBy: '', threadId: '', pollA: 0, pollB: 0, pollC: 0 })
-
-  }
+    setPollFormData({
+      Question: "",
+      OptionA: "",
+      OptionB: "",
+      OptionC: "",
+      createdBy: "",
+      threadId: "",
+      pollA: 0,
+      pollB: 0,
+      pollC: 0,
+    });
+  };
 
   const getAllSubscribedMembers = () => {
     axios
@@ -1620,44 +1724,56 @@ const resetChatView=(username)=>{
   }, []);
 
   const deleteClubRequest = (user) => {
-    axios.post(`${BaseURL}/upload/removeRequest`, {
-      username: user.username
-    }).then(res => {
-      setClubRequestsData(clubRequestsData.filter((e) => e.username !== user.username))
-      toast.success("Deleted Request")
-    })
-  }
+    axios
+      .post(`${BaseURL}/upload/removeRequest`, {
+        username: user.username,
+      })
+      .then((res) => {
+        setClubRequestsData(
+          clubRequestsData.filter((e) => e.username !== user.username)
+        );
+        toast.success("Deleted Request");
+      });
+  };
 
   const deleteClubRequestAuto = (user) => {
-    axios.post(`${BaseURL}/upload/clearRequestList`, {
-      username: user.username
-    }).then(res => {
-      setClubRequestsData(clubRequestsData.filter((e) => e.username !== user.username))
-    })
-  }
+    axios
+      .post(`${BaseURL}/upload/clearRequestList`, {
+        username: user.username,
+      })
+      .then((res) => {
+        setClubRequestsData(
+          clubRequestsData.filter((e) => e.username !== user.username)
+        );
+      });
+  };
 
   const handleClubRequestApprove = (user) => {
-    axios.post(`${BaseURL}/upload/approveRequest`, {
-      username: user.username
-    }).then(res => {
-      if (res.data.status == 1) {
-        toast.success(res.data.message)
-        deleteClubRequestAuto(user)
-      }
-    })
-  }
+    axios
+      .post(`${BaseURL}/upload/approveRequest`, {
+        username: user.username,
+      })
+      .then((res) => {
+        if (res.data.status == 1) {
+          toast.success(res.data.message);
+          deleteClubRequestAuto(user);
+        }
+      });
+  };
 
   const getAllClubRequest = () => {
-    axios.post(`${BaseURL}/upload/getAllClubRequests`, {
-      username: username
-    }).then(res => {
-      setClubRequestsData(res.data)
-    })
-  }
+    axios
+      .post(`${BaseURL}/upload/getAllClubRequests`, {
+        username: username,
+      })
+      .then((res) => {
+        setClubRequestsData(res.data);
+      });
+  };
 
   useEffect(() => {
-    getAllClubRequest()
-  }, [username])
+    getAllClubRequest();
+  }, [username]);
   //    useEffect(() => {
 
   //     let clientSecret ="pi_3JytnwL1MA97pYvH1vTUJhgu_secret_b5a40SDcurxmKiyEdNsmiBRo0"
@@ -1690,7 +1806,7 @@ const resetChatView=(username)=>{
       setShowExtraFeatures(false);
       setClubFloor(false);
     }
-  }, [clubFloor])
+  }, [clubFloor]);
 
   return (
     <Fragment>
@@ -1701,24 +1817,29 @@ const resetChatView=(username)=>{
         header={"Soapbox Private Club"}
         showExtraFeatures={showExtraFeatures}
         setShowExtraFeatures={setShowExtraFeatures}
-        privateUserImage={`${BaseURL}/profile-pictures/${userInfo[0] && userInfo[0].profilePic}`}
+        privateUserImage={`${BaseURL}/profile-pictures/${
+          userInfo[0] && userInfo[0].profilePic
+        }`}
       />
 
-      <div className="private-channels" style={{ userSelect: "none", overflowX: "clip" }}>
-        <div className="channel-content" >
+      <div
+        className="private-channels"
+        style={{ userSelect: "none", overflowX: "clip" }}
+      >
+        <div className="channel-content">
           {/* Sidebar Drawer which includes Private User Profile and other Extra Features... */}
-          <div style={{ flex: '0.2' }}  >
+          <div style={{ flex: "0.2" }}>
             <Fragment key={userInfo[0] && userInfo[0].id}>
               <div className="channel-user-info">
-                {showExtraFeatures
-                  ? <ul
+                {showExtraFeatures ? (
+                  <ul
                     style={{
                       // position: "fixed",
-                      minWidth: '100% !important',
+                      minWidth: "100% !important",
                       alignSelf: "flex-start",
                       // maxHeight: '105vh',
-                      maxHeight: '93vh',
-                      overflowY: 'scroll',
+                      maxHeight: "93vh",
+                      overflowY: "scroll",
 
                       // OR this for full height ...
                       // height: "-webkit-fill-available",
@@ -1735,9 +1856,15 @@ const resetChatView=(username)=>{
                     </div>
 
                     {/* Club Profile with Badge*/}
-                    <div className="profile-pic" onDragStart={(e) => e.preventDefault()} style={{ position: "relative" }}>
+                    <div
+                      className="profile-pic"
+                      onDragStart={(e) => e.preventDefault()}
+                      style={{ position: "relative" }}
+                    >
                       <img
-                        src={`${BaseURL}/profile-pictures/${userInfo[0] && userInfo[0].profilePic}`}
+                        src={`${BaseURL}/profile-pictures/${
+                          userInfo[0] && userInfo[0].profilePic
+                        }`}
                         alt="profile"
                       />
                       <div
@@ -1777,7 +1904,7 @@ const resetChatView=(username)=>{
                               style={{
                                 padding: 0,
                                 fontSize: "1.2rem",
-                                marginBottom: "0.2rem"
+                                marginBottom: "0.2rem",
                               }}
                             >
                               <HiBadgeCheck
@@ -1797,7 +1924,7 @@ const resetChatView=(username)=>{
                             color: "#6B7280",
                             fontWeight: "600",
                             marginTop: "-0.3rem",
-                            marginBottom: "0.5rem"
+                            marginBottom: "0.5rem",
                           }}
                         >
                           @{userInfo[0] && userInfo[0].username}
@@ -1809,13 +1936,25 @@ const resetChatView=(username)=>{
                             {formatCount(likes) + formatSi(likes)}
                           </b>
 
-                          <span style={{ fontSize: "14px", color: "#4B5563", marginRight: "0.5rem" }}> Likes </span>
+                          <span
+                            style={{
+                              fontSize: "14px",
+                              color: "#4B5563",
+                              marginRight: "0.5rem",
+                            }}
+                          >
+                            {" "}
+                            Likes{" "}
+                          </span>
 
                           <b style={{ fontSize: "14px", color: "#334155" }}>
                             {formatCount(views) + formatSi(views)}
                           </b>
 
-                          <span style={{ fontSize: "1rem", color: "#4B5563" }}> Views</span>
+                          <span style={{ fontSize: "1rem", color: "#4B5563" }}>
+                            {" "}
+                            Views
+                          </span>
                         </div>
 
                         {/* user's bio */}
@@ -1832,15 +1971,18 @@ const resetChatView=(username)=>{
                         {userInfo[0] && userInfo[0].website && (
                           <a
                             href={
-                              !userInfo[0] && userInfo[0].website.includes("https://")
-                                ? "https://" + userInfo[0] && userInfo[0].website
+                              !userInfo[0] &&
+                              userInfo[0].website.includes("https://")
+                                ? "https://" + userInfo[0] &&
+                                  userInfo[0].website
                                 : userInfo[0] && userInfo[0].website
                             }
                             target="_blank"
                             rel="noopener noreferrer"
                             className="profile-website"
                           >
-                            {userInfo[0] && userInfo[0].website.includes("https://")
+                            {userInfo[0] &&
+                            userInfo[0].website.includes("https://")
                               ? userInfo[0] && userInfo[0].website.slice(8)
                               : userInfo[0] && userInfo[0].website}
                           </a>
@@ -1854,8 +1996,10 @@ const resetChatView=(username)=>{
                           {userInfo[0] && userInfo[0].twitter && (
                             <a
                               href={
-                                !userInfo[0] && userInfo[0].twitter.includes("https://")
-                                  ? "https://" + userInfo[0] && userInfo[0].twitter
+                                !userInfo[0] &&
+                                userInfo[0].twitter.includes("https://")
+                                  ? "https://" + userInfo[0] &&
+                                    userInfo[0].twitter
                                   : userInfo[0] && userInfo[0].twitter
                               }
                               target="_blank"
@@ -1868,8 +2012,10 @@ const resetChatView=(username)=>{
                           {userInfo[0] && userInfo[0].instagram && (
                             <a
                               href={
-                                !userInfo[0] && userInfo[0].instagram.includes("https://")
-                                  ? "https://" + userInfo[0] && userInfo[0].instagram
+                                !userInfo[0] &&
+                                userInfo[0].instagram.includes("https://")
+                                  ? "https://" + userInfo[0] &&
+                                    userInfo[0].instagram
                                   : userInfo[0] && userInfo[0].instagram
                               }
                               target="_blank"
@@ -1882,8 +2028,10 @@ const resetChatView=(username)=>{
                           {userInfo[0] && userInfo[0].linkedIn && (
                             <a
                               href={
-                                !userInfo[0] && userInfo[0].linkedIn.includes("https://")
-                                  ? "https://" + userInfo[0] && userInfo[0].linkedIn
+                                !userInfo[0] &&
+                                userInfo[0].linkedIn.includes("https://")
+                                  ? "https://" + userInfo[0] &&
+                                    userInfo[0].linkedIn
                                   : userInfo[0] && userInfo[0].linkedIn
                               }
                               target="_blank"
@@ -1896,8 +2044,10 @@ const resetChatView=(username)=>{
                           {userInfo[0] && userInfo[0].facebook && (
                             <a
                               href={
-                                !userInfo[0] && userInfo[0].facebook.includes("https://")
-                                  ? "https://" + userInfo[0] && userInfo[0].facebook
+                                !userInfo[0] &&
+                                userInfo[0].facebook.includes("https://")
+                                  ? "https://" + userInfo[0] &&
+                                    userInfo[0].facebook
                                   : userInfo[0] && userInfo[0].facebook
                               }
                               target="_blank"
@@ -1910,8 +2060,10 @@ const resetChatView=(username)=>{
                           {userInfo[0] && userInfo[0].tiktok && (
                             <a
                               href={
-                                !userInfo[0] && userInfo[0].tiktok.includes("https://")
-                                  ? "https://" + userInfo[0] && userInfo[0].tiktok
+                                !userInfo[0] &&
+                                userInfo[0].tiktok.includes("https://")
+                                  ? "https://" + userInfo[0] &&
+                                    userInfo[0].tiktok
                                   : userInfo[0] && userInfo[0].tiktok
                               }
                               target="_blank"
@@ -1924,8 +2076,10 @@ const resetChatView=(username)=>{
                           {userInfo[0] && userInfo[0].snapchat && (
                             <a
                               href={
-                                !userInfo[0] && userInfo[0].snapchat.includes("https://")
-                                  ? "https://" + userInfo[0] && userInfo[0].snapchat
+                                !userInfo[0] &&
+                                userInfo[0].snapchat.includes("https://")
+                                  ? "https://" + userInfo[0] &&
+                                    userInfo[0].snapchat
                                   : userInfo[0] && userInfo[0].snapchat
                               }
                               target="_blank"
@@ -1938,8 +2092,10 @@ const resetChatView=(username)=>{
                           {userInfo[0] && userInfo[0].reddit && (
                             <a
                               href={
-                                !userInfo[0] && userInfo[0].reddit.includes("https://")
-                                  ? "https://" + userInfo[0] && userInfo[0].reddit
+                                !userInfo[0] &&
+                                userInfo[0].reddit.includes("https://")
+                                  ? "https://" + userInfo[0] &&
+                                    userInfo[0].reddit
                                   : userInfo[0] && userInfo[0].reddit
                               }
                               target="_blank"
@@ -1952,8 +2108,10 @@ const resetChatView=(username)=>{
                           {userInfo[0] && userInfo[0].pinterest && (
                             <a
                               href={
-                                !userInfo[0] && userInfo[0].pinterest.includes("https://")
-                                  ? "https://" + userInfo[0] && userInfo[0].pinterest
+                                !userInfo[0] &&
+                                userInfo[0].pinterest.includes("https://")
+                                  ? "https://" + userInfo[0] &&
+                                    userInfo[0].pinterest
                                   : userInfo[0] && userInfo[0].pinterest
                               }
                               target="_blank"
@@ -1966,8 +2124,10 @@ const resetChatView=(username)=>{
                           {userInfo[0] && userInfo[0].medium && (
                             <a
                               href={
-                                !userInfo[0] && userInfo[0].medium.includes("https://")
-                                  ? "https://" + userInfo[0] && userInfo[0].medium
+                                !userInfo[0] &&
+                                userInfo[0].medium.includes("https://")
+                                  ? "https://" + userInfo[0] &&
+                                    userInfo[0].medium
                                   : userInfo[0] && userInfo[0].medium
                               }
                               target="_blank"
@@ -1980,8 +2140,10 @@ const resetChatView=(username)=>{
                           {userInfo[0] && userInfo[0].tumblr && (
                             <a
                               href={
-                                !userInfo[0] && userInfo[0].tumblr.includes("https://")
-                                  ? "https://" + userInfo[0] && userInfo[0].tumblr
+                                !userInfo[0] &&
+                                userInfo[0].tumblr.includes("https://")
+                                  ? "https://" + userInfo[0] &&
+                                    userInfo[0].tumblr
                                   : userInfo[0] && userInfo[0].tumblr
                               }
                               target="_blank"
@@ -2011,9 +2173,7 @@ const resetChatView=(username)=>{
                               {/* Club Tools buttons */}
                               <div className="control">
                                 {/* Marketplace button */}
-                                <button>
-                                  Marketplace
-                                </button>
+                                <button>Marketplace</button>
 
                                 {/* Get Membership/Membership button */}
                                 <button
@@ -2023,9 +2183,7 @@ const resetChatView=(username)=>{
                                       : subscribeUser();
                                   }}
                                 >
-                                  {subscribe
-                                    ? "Membership"
-                                    : "Get Membership"}
+                                  {subscribe ? "Membership" : "Get Membership"}
                                 </button>
                               </div>
                             </div>
@@ -2051,19 +2209,32 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.verohive.net', title: 'VeroHive' });
+                                      setIframeBox({
+                                        src: "https://www.verohive.net",
+                                        title: "VeroHive",
+                                      });
                                       setShowIframe(true);
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2077,19 +2248,32 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.documega.com/enterprise-solutions/documega/', title: 'DocuMega' });
+                                      setIframeBox({
+                                        src: "https://www.documega.com/enterprise-solutions/documega/",
+                                        title: "DocuMega",
+                                      });
                                       setShowIframe(true);
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2103,20 +2287,33 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahoot.com/vault/megahoot-vault/', title: 'MegaHoot Vault' });
+                                      setIframeBox({
+                                        src: "https://www.megahoot.com/vault/megahoot-vault/",
+                                        title: "MegaHoot Vault",
+                                      });
                                       setShowIframe(true);
 
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2128,7 +2325,9 @@ const resetChatView=(username)=>{
                                 {/* Scheduler button */}
                                 <button
                                   style={{ minWidth: "208px" }}
-                                  onClick={() => { setScheduleBox(!scheduleBox) }}
+                                  onClick={() => {
+                                    setScheduleBox(!scheduleBox);
+                                  }}
                                 >
                                   Scheduler
                                 </button>
@@ -2153,20 +2352,33 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 500);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/', title: 'XMG Wallet' });
+                                      setIframeBox({
+                                        src: "https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/",
+                                        title: "XMG Wallet",
+                                      });
                                       setShowIframe(true);
 
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2180,20 +2392,33 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://pecunovus.org/login/', title: 'Pecu Novus Wallet' });
+                                      setIframeBox({
+                                        src: "https://pecunovus.org/login/",
+                                        title: "Pecu Novus Wallet",
+                                      });
                                       setShowIframe(true);
 
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2207,19 +2432,32 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahootvault.com/', title: 'Crypto Index' });
+                                      setIframeBox({
+                                        src: "https://www.megahootvault.com/",
+                                        title: "Crypto Index",
+                                      });
                                       setShowIframe(true);
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2232,7 +2470,8 @@ const resetChatView=(username)=>{
                           ) : null}
 
                           {userInformation.username !== username &&
-                            userInfo[0] && userInfo[0].communityClub !== 1 ? (
+                          userInfo[0] &&
+                          userInfo[0].communityClub !== 1 ? (
                             <div
                               className="live-header"
                               style={{
@@ -2265,8 +2504,12 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showSubscribers) {
-                                      document.getElementById("slideM").style.transition = "2sec";
-                                      document.getElementById("slideM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideM"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowSubscribers(false);
@@ -2282,8 +2525,12 @@ const resetChatView=(username)=>{
 
                                       setTimeout(() => {
                                         if (document.getElementById("slideM")) {
-                                          document.getElementById("slideM").style.transition = "1sec";
-                                          document.getElementById("slideM").style.right = "calc(100vw/5)";
+                                          document.getElementById(
+                                            "slideM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideM"
+                                          ).style.right = "calc(100vw/5)";
                                         }
                                       }, 1);
                                     }
@@ -2351,19 +2598,32 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.verohive.net', title: 'VeroHive' });
+                                      setIframeBox({
+                                        src: "https://www.verohive.net",
+                                        title: "VeroHive",
+                                      });
                                       setShowIframe(true);
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2377,19 +2637,32 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.documega.com/enterprise-solutions/documega/', title: 'DocuMega' });
+                                      setIframeBox({
+                                        src: "https://www.documega.com/enterprise-solutions/documega/",
+                                        title: "DocuMega",
+                                      });
                                       setShowIframe(true);
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2403,19 +2676,32 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahoot.com/vault/megahoot-vault/', title: 'MegaHoot Vault' });
+                                      setIframeBox({
+                                        src: "https://www.megahoot.com/vault/megahoot-vault/",
+                                        title: "MegaHoot Vault",
+                                      });
                                       setShowIframe(true);
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2427,7 +2713,9 @@ const resetChatView=(username)=>{
                                 {/* Scheduler button */}
                                 <button
                                   style={{ minWidth: "208px" }}
-                                  onClick={() => { setScheduleBox(!scheduleBox) }}
+                                  onClick={() => {
+                                    setScheduleBox(!scheduleBox);
+                                  }}
                                 >
                                   Scheduler
                                 </button>
@@ -2451,22 +2739,35 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setClubFloor(true);
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/', title: 'XMG Wallet' });
+                                      setIframeBox({
+                                        src: "https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/",
+                                        title: "XMG Wallet",
+                                      });
                                       setShowIframe(true);
                                       setClubFloor(false);
 
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2480,22 +2781,35 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setClubFloor(true);
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://pecunovus.org/login/', title: 'Pecu Novus Wallet' });
+                                      setIframeBox({
+                                        src: "https://pecunovus.org/login/",
+                                        title: "Pecu Novus Wallet",
+                                      });
                                       setShowIframe(true);
                                       setClubFloor(false);
 
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2509,22 +2823,35 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showIframe) {
-                                      document.getElementById("slideIFM").style.transition = "2sec";
-                                      document.getElementById("slideIFM").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slideIFM"
+                                      ).style.right = "-100vw";
 
                                       setClubFloor(true);
                                       setTimeout(() => {
                                         setShowIframe(false);
                                       }, 1000);
                                     } else {
-                                      setIframeBox({ src: 'https://www.megahootvault.com/', title: 'Crypto Index' });
+                                      setIframeBox({
+                                        src: "https://www.megahootvault.com/",
+                                        title: "Crypto Index",
+                                      });
                                       setShowIframe(true);
                                       setClubFloor(false);
 
                                       setTimeout(() => {
-                                        if (document.getElementById("slideIFM")) {
-                                          document.getElementById("slideIFM").style.transition = "1sec";
-                                          document.getElementById("slideIFM").style.right = "-16px";
+                                        if (
+                                          document.getElementById("slideIFM")
+                                        ) {
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slideIFM"
+                                          ).style.right = "-16px";
                                         }
                                       }, 1);
                                     }
@@ -2557,7 +2884,9 @@ const resetChatView=(username)=>{
                                 {/* Schedule An Event button */}
                                 <button
                                   style={{ minWidth: "208px" }}
-                                  onClick={() => { setScheduleBox(!scheduleBox) }}
+                                  onClick={() => {
+                                    setScheduleBox(!scheduleBox);
+                                  }}
                                 >
                                   Schedule An Event
                                 </button>
@@ -2608,8 +2937,12 @@ const resetChatView=(username)=>{
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
                                     if (showPricingSetting) {
-                                      document.getElementById("slide").style.transition = "2sec";
-                                      document.getElementById("slide").style.right = "-100vw";
+                                      document.getElementById(
+                                        "slide"
+                                      ).style.transition = "2sec";
+                                      document.getElementById(
+                                        "slide"
+                                      ).style.right = "-100vw";
 
                                       setTimeout(() => {
                                         setShowPricingSetting(false);
@@ -2619,15 +2952,21 @@ const resetChatView=(username)=>{
                                       setShowRequest(false);
                                       setShowFeed(false);
                                       setShowSubscribers(false);
-                                      setShowPricingSetting(!showPricingSetting);
+                                      setShowPricingSetting(
+                                        !showPricingSetting
+                                      );
                                       setShowNotification(false);
                                       setShowChatRoom(true);
                                       setPrivateChat(false);
 
                                       setTimeout(() => {
                                         if (document.getElementById("slide")) {
-                                          document.getElementById("slide").style.transition = "1sec";
-                                          document.getElementById("slide").style.right = "calc(100vw/5)";
+                                          document.getElementById(
+                                            "slide"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "slide"
+                                          ).style.right = "calc(100vw/5)";
                                         }
                                       }, 1);
                                     }
@@ -2637,9 +2976,7 @@ const resetChatView=(username)=>{
                                 </button>
 
                                 {/* Podcasts button */}
-                                <button
-                                  style={{ minWidth: "208px" }}
-                                >
+                                <button style={{ minWidth: "208px" }}>
                                   Podcasts
                                 </button>
 
@@ -2737,14 +3074,19 @@ const resetChatView=(username)=>{
                             </div>
                           ) : (
                             <div>
-                              {userInfo[0] && userInfo[0].communityClub !== 1 ? (
+                              {userInfo[0] &&
+                              userInfo[0].communityClub !== 1 ? (
                                 <div className="control">
                                   {/* 1 on 1 call button */}
                                   <button
                                     onClick={() => {
                                       if (oneOnOnecall) {
-                                        document.getElementById("slideOOC").style.transition = "2sec";
-                                        document.getElementById("slideOOC").style.right = "-100vw";
+                                        document.getElementById(
+                                          "slideOOC"
+                                        ).style.transition = "2sec";
+                                        document.getElementById(
+                                          "slideOOC"
+                                        ).style.right = "-100vw";
 
                                         setTimeout(() => {
                                           setOneOnOneCall(false);
@@ -2758,9 +3100,15 @@ const resetChatView=(username)=>{
                                         setShowSubscribeButton(false);
 
                                         setTimeout(() => {
-                                          if (document.getElementById("slideOOC")) {
-                                            document.getElementById("slideOOC").style.transition = "1sec";
-                                            document.getElementById("slideOOC").style.right = "calc(100vw/5)";
+                                          if (
+                                            document.getElementById("slideOOC")
+                                          ) {
+                                            document.getElementById(
+                                              "slideOOC"
+                                            ).style.transition = "1sec";
+                                            document.getElementById(
+                                              "slideOOC"
+                                            ).style.right = "calc(100vw/5)";
                                           }
                                         }, 1);
                                       }
@@ -2773,8 +3121,12 @@ const resetChatView=(username)=>{
                                   <button
                                     onClick={() => {
                                       if (groupCall) {
-                                        document.getElementById("slidegC").style.transition = "2sec";
-                                        document.getElementById("slidegC").style.right = "-100vw";
+                                        document.getElementById(
+                                          "slidegC"
+                                        ).style.transition = "2sec";
+                                        document.getElementById(
+                                          "slidegC"
+                                        ).style.right = "-100vw";
 
                                         setTimeout(() => {
                                           setGroupCall(false);
@@ -2788,9 +3140,15 @@ const resetChatView=(username)=>{
                                         setShowSubscribeButton(false);
 
                                         setTimeout(() => {
-                                          if (document.getElementById("slidegC")) {
-                                            document.getElementById("slidegC").style.transition = "1sec";
-                                            document.getElementById("slidegC").style.right = "calc(100vw/5)";
+                                          if (
+                                            document.getElementById("slidegC")
+                                          ) {
+                                            document.getElementById(
+                                              "slidegC"
+                                            ).style.transition = "1sec";
+                                            document.getElementById(
+                                              "slidegC"
+                                            ).style.right = "calc(100vw/5)";
                                           }
                                         }, 1);
                                       }
@@ -2803,8 +3161,12 @@ const resetChatView=(username)=>{
                                   <button
                                     onClick={() => {
                                       if (requestMessage) {
-                                        document.getElementById("slideRM").style.transition = "2sec";
-                                        document.getElementById("slideRM").style.right = "-100vw";
+                                        document.getElementById(
+                                          "slideRM"
+                                        ).style.transition = "2sec";
+                                        document.getElementById(
+                                          "slideRM"
+                                        ).style.right = "-100vw";
 
                                         setTimeout(() => {
                                           setRequestMessage(false);
@@ -2818,9 +3180,15 @@ const resetChatView=(username)=>{
                                         setShowSubscribeButton(false);
 
                                         setTimeout(() => {
-                                          if (document.getElementById("slideRM")) {
-                                            document.getElementById("slideRM").style.transition = "1sec";
-                                            document.getElementById("slideRM").style.right = "250px";
+                                          if (
+                                            document.getElementById("slideRM")
+                                          ) {
+                                            document.getElementById(
+                                              "slideRM"
+                                            ).style.transition = "1sec";
+                                            document.getElementById(
+                                              "slideRM"
+                                            ).style.right = "250px";
                                           }
                                         }, 1);
                                       }
@@ -2833,8 +3201,12 @@ const resetChatView=(username)=>{
                                   <button
                                     onClick={() => {
                                       if (verifiedAutograph) {
-                                        document.getElementById("slideVA").style.transition = "2sec";
-                                        document.getElementById("slideVA").style.right = "-100vw";
+                                        document.getElementById(
+                                          "slideVA"
+                                        ).style.transition = "2sec";
+                                        document.getElementById(
+                                          "slideVA"
+                                        ).style.right = "-100vw";
 
                                         setTimeout(() => {
                                           setVerifiedAutograph(false);
@@ -2843,14 +3215,22 @@ const resetChatView=(username)=>{
                                         setOneOnOneCall(false);
                                         setGroupCall(false);
                                         setRequestMessage(false);
-                                        setVerifiedAutograph(!verifiedAutograph);
+                                        setVerifiedAutograph(
+                                          !verifiedAutograph
+                                        );
                                         setShowFeed(false);
                                         setShowSubscribeButton(false);
 
                                         setTimeout(() => {
-                                          if (document.getElementById("slideVA")) {
-                                            document.getElementById("slideVA").style.transition = "1sec";
-                                            document.getElementById("slideVA").style.right = "250px";
+                                          if (
+                                            document.getElementById("slideVA")
+                                          ) {
+                                            document.getElementById(
+                                              "slideVA"
+                                            ).style.transition = "1sec";
+                                            document.getElementById(
+                                              "slideVA"
+                                            ).style.right = "250px";
                                           }
                                         }, 1);
                                       }
@@ -2860,9 +3240,7 @@ const resetChatView=(username)=>{
                                   </button>
 
                                   {/* Marketplace button */}
-                                  <button>
-                                    Marketplace
-                                  </button>
+                                  <button>Marketplace</button>
 
                                   {/* Get Membership/Membership button */}
                                   <button
@@ -2971,7 +3349,10 @@ const resetChatView=(username)=>{
                         >
                           Live Events
                         </div>
-                        <div className="live-events" style={{ marginBottom: "10rem" }}>
+                        <div
+                          className="live-events"
+                          style={{ marginBottom: "10rem" }}
+                        >
                           <div className="live-cards">
                             <img src={live} alt="live" />
                             <button>Buy</button>
@@ -2988,15 +3369,14 @@ const resetChatView=(username)=>{
                       </div>
                     </div>
                   </ul>
-                  : null
-                }
+                ) : null}
               </div>
             </Fragment>
           </div>
 
           {/* non owner user */}
           {userInformation.username !== username ? (
-            <div className="channel-user-content" style={{ flex: '0.8' }} >
+            <div className="channel-user-content" style={{ flex: "0.8" }}>
               <div
                 onmousedown={(event) => {
                   event.preventDefault
@@ -3012,8 +3392,11 @@ const resetChatView=(username)=>{
                 }}
               >
                 <div className="tabs" style={{ margin: "0 0.5rem" }}>
-                  {subscribe ?
-                    <SoapboxTooltip title={clubFloor ? "Hide Feeds" : "Show Feeds"} placement="bottom">
+                  {subscribe ? (
+                    <SoapboxTooltip
+                      title={clubFloor ? "Hide Feeds" : "Show Feeds"}
+                      placement="bottom"
+                    >
                       <div>
                         <HiMenuAlt2
                           style={{
@@ -3021,25 +3404,28 @@ const resetChatView=(username)=>{
                             cursor: "pointer",
                             outline: "none",
                             fontSize: "1.4rem",
-                            marginTop: "0.2rem"
+                            marginTop: "0.2rem",
                           }}
                           onClick={() => {
                             if (privateChat == false) {
                               setClubFloor(!clubFloor);
                               setMarketPlaceArea(false);
                             } else {
-                              toast.success("Please close Private chat to view feeds");
+                              toast.success(
+                                "Please close Private chat to view feeds"
+                              );
                             }
                           }}
                         />
                       </div>
                     </SoapboxTooltip>
-                    : null}
+                  ) : null}
 
                   <span
                     style={{
                       backgroundColor: clubFloor ? "#8249A0" : "#A279BA",
                       borderRadius: "8px",
+                      fontSize: "14px",
                     }}
                     onClick={() => {
                       if (privateChat == false) {
@@ -3052,10 +3438,11 @@ const resetChatView=(username)=>{
                         setShowChatRoom(true);
                         setOnDemandMedia(false);
                       } else {
-                        toast.success("Please close Private chat to view feeds");
+                        toast.success(
+                          "Please close Private chat to view feeds"
+                        );
                       }
                     }}
-                    style={{ fontSize: "14px" }}
                   >
                     CLUB FLOOR
                   </span>
@@ -3064,63 +3451,61 @@ const resetChatView=(username)=>{
                   <span style={{ fontSize: "14px" }}>EVENTS</span>
 
                   <span>
-                    <SoapboxTooltip title={"MARKETPLACE"} placement="bottom" privateTooltip={true}>
+                    <SoapboxTooltip
+                      title={"MARKETPLACE"}
+                      placement="bottom"
+                      privateTooltip={true}
+                    >
                       <img src={marketplaceicon} width="30px" />
                     </SoapboxTooltip>
                   </span>
 
-                  <span 
-                   onClick={() => {
-                     resetChatView(userFullName)
-                        if (!privateChatList) {
-                          setPrivateChatList(!privateChatList)
+                  <span
+                    onClick={() => {
+                      resetChatView(userFullName);
+                      if (!privateChatList) {
+                        setPrivateChatList(!privateChatList);
 
-                          setTimeout(() => {
-                            if (
-                              document.getElementById(
-                                "privateChatList"
-                              )
-                            ) {
-                              document.getElementById(
-                                "privateChatList"
-                              ).style.transition = "1sec";
-                              document.getElementById(
-                                "privateChatList"
-                              ).style.right = "0.8rem";
-                            }
-                          }, 1);
-                        } else {
-                          document.getElementById(
-                            "privateChatList"
-                          ).style.transition = "1sec";
-                          document.getElementById(
-                            "privateChatList"
-                          ).style.right = "-100vw";
-                          setTimeout(() => {
-                            setPrivateChatList(false)
-                          }, 200);
-                        }
-                      }}>
-                    <SoapboxTooltip title={"CHATHIVE"} placement="bottom" privateTooltip={true}>
-                      <img src={messagesicon} width="70px" 
-                      />
-                        
+                        setTimeout(() => {
+                          if (document.getElementById("privateChatList")) {
+                            document.getElementById(
+                              "privateChatList"
+                            ).style.transition = "1sec";
+                            document.getElementById(
+                              "privateChatList"
+                            ).style.right = "0.8rem";
+                          }
+                        }, 1);
+                      } else {
+                        document.getElementById(
+                          "privateChatList"
+                        ).style.transition = "1sec";
+                        document.getElementById("privateChatList").style.right =
+                          "-100vw";
+                        setTimeout(() => {
+                          setPrivateChatList(false);
+                        }, 200);
+                      }
+                    }}
+                  >
+                    <SoapboxTooltip
+                      title={"CHATHIVE"}
+                      placement="bottom"
+                      privateTooltip={true}
+                    >
+                      <img src={messagesicon} width="70px" />
                     </SoapboxTooltip>
-                  
-                   
                   </span>
-                  {chatUnview!==0?<div className="notify-num"  onClick={() => {
-                   
-                    resetChatView(userFullName)
+                  {chatUnview !== 0 ? (
+                    <div
+                      className="notify-num"
+                      onClick={() => {
+                        resetChatView(userFullName);
                         if (!privateChatList) {
-                          setPrivateChatList(!privateChatList)
+                          setPrivateChatList(!privateChatList);
 
                           setTimeout(() => {
-                            if (
-                              document.getElementById(
-                                "privateChatList"
-                              )
-                            ) {
+                            if (document.getElementById("privateChatList")) {
                               document.getElementById(
                                 "privateChatList"
                               ).style.transition = "1sec";
@@ -3137,18 +3522,30 @@ const resetChatView=(username)=>{
                             "privateChatList"
                           ).style.right = "-100vw";
                           setTimeout(() => {
-                            setPrivateChatList(false)
+                            setPrivateChatList(false);
                           }, 200);
                         }
-                      }}>{chatUnview}</div>:null}
+                      }}
+                    >
+                      {chatUnview}
+                    </div>
+                  ) : null}
                   <span onClick={() => setInviteBox(true)}>
-                    <SoapboxTooltip title={"Invite"} placement="bottom" privateTooltip={true}>
+                    <SoapboxTooltip
+                      title={"Invite"}
+                      placement="bottom"
+                      privateTooltip={true}
+                    >
                       <img src={inviteicon} width="30px" />
                     </SoapboxTooltip>
                   </span>
 
                   <span>
-                    <SoapboxTooltip title={"Club Rules"} placement="bottom" privateTooltip={true}>
+                    <SoapboxTooltip
+                      title={"Club Rules"}
+                      placement="bottom"
+                      privateTooltip={true}
+                    >
                       <img
                         src={rules}
                         width="30px"
@@ -3189,21 +3586,31 @@ const resetChatView=(username)=>{
                     </SoapboxTooltip>
                   </span>
 
-                  <SoapboxTooltip title={"Create Breakoff Chat"} placement="bottom">
-                    <span style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      color: '#FFF',
-                      fontSize: "1.5rem"
-                    }}
+                  <SoapboxTooltip
+                    title={"Create Breakoff Chat"}
+                    placement="bottom"
+                  >
+                    <span
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        color: "#FFF",
+                        fontSize: "1.5rem",
+                      }}
                       onClick={() => {
                         if (userInfo[0].communityClub == 1) {
-                          if (subscribe || userInformation.username == username) {
+                          if (
+                            subscribe ||
+                            userInformation.username == username
+                          ) {
                             if (showBreakoffForm) {
-                              document.getElementById("showBreakoffFormId").style.transition =
-                                "2s";
-                              document.getElementById("showBreakoffFormId").style.right = "-100vw";
+                              document.getElementById(
+                                "showBreakoffFormId"
+                              ).style.transition = "2s";
+                              document.getElementById(
+                                "showBreakoffFormId"
+                              ).style.right = "-100vw";
 
                               setTimeout(() => {
                                 setShowBreakoffForm(false);
@@ -3212,17 +3619,25 @@ const resetChatView=(username)=>{
                               setShowBreakoffForm(true);
 
                               setTimeout(() => {
-                                if (document.getElementById("showBreakoffFormId")) {
-                                  document.getElementById("showBreakoffFormId").style.transition =
-                                    "1s";
-                                  document.getElementById("showBreakoffFormId").style.right =
-                                    "30%";
+                                if (
+                                  document.getElementById("showBreakoffFormId")
+                                ) {
+                                  document.getElementById(
+                                    "showBreakoffFormId"
+                                  ).style.transition = "1s";
+                                  document.getElementById(
+                                    "showBreakoffFormId"
+                                  ).style.right = "30%";
                                 }
                               }, 1);
                             }
-                          } else { toast.success('Members Only Access') }
+                          } else {
+                            toast.success("Members Only Access");
+                          }
                         } else {
-                          toast.success('BreakOff Chat can be accessible only in Community Clubs')
+                          toast.success(
+                            "BreakOff Chat can be accessible only in Community Clubs"
+                          );
                         }
                       }}
                     >
@@ -3242,7 +3657,6 @@ const resetChatView=(username)=>{
                       setShowChatRoom(!showChatRoom);
                       setOnDemandMedia(false);
                       socket.emit("room", userInfo[0].username);
-                     
                     }}
                     style={{ display: "none" }}
                   >
@@ -3251,11 +3665,15 @@ const resetChatView=(username)=>{
                 </div>
               </div>
 
-              {inviteBox
-                ? <MyVerticallyCenteredModal
+              {inviteBox ? (
+                <MyVerticallyCenteredModal
                   title={"Invitation"}
                   closeModal={() => setInviteBox(false)}
-                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clubname={
+                    userInfo[0].communityClub == 1
+                      ? username
+                      : `${userInfo[0].name}'s Private `
+                  }
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
                   username={userFullName}
                   show={inviteBox}
@@ -3263,61 +3681,100 @@ const resetChatView=(username)=>{
                   mailText={"You Have Been Invited to a Soapbox Club"}
                   onHide={() => setInviteBox(false)}
                 />
-                : null}
-                 {inviteBoxChat
-                ? <MyVerticallyCenteredModal
+              ) : null}
+              {inviteBoxChat ? (
+                <MyVerticallyCenteredModal
                   title={"Invitation"}
                   closeModal={() => setInviteBoxChat(false)}
-                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clubname={
+                    userInfo[0].communityClub == 1
+                      ? username
+                      : `${userInfo[0].name}'s Private `
+                  }
                   clublink={`https://megahoot.net/profile/${username}`}
-
                   username={userFullName}
                   show={inviteBoxChat}
                   inviteRoute="inviteHandlerChat"
-                  mailText={"You've Been Invited to a MegaHoot Soapbox Private Chat"}
+                  mailText={
+                    "You've Been Invited to a MegaHoot Soapbox Private Chat"
+                  }
                   onHide={() => setInviteBox(false)}
                 />
-                : null}
+              ) : null}
 
-              {scheduleBox
-                ? <MyVerticallyCenteredScheduler
+              {scheduleBox ? (
+                <MyVerticallyCenteredScheduler
                   title={"Schedule an event"}
                   closeModal={() => setScheduleBox(false)}
-                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clubname={
+                    userInfo[0].communityClub == 1
+                      ? username
+                      : `${userInfo[0].name}'s Private `
+                  }
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
                   username={userInformation.username}
                   fullName={userFullName}
-                  sumitChatData={(data) => { sumitChatDataFromScheduler(data) }}
+                  sumitChatData={(data) => {
+                    sumitChatDataFromScheduler(data);
+                  }}
                   show={scheduleBox}
                   onHide={() => setScheduleBox(false)}
-                /> : null}
+                />
+              ) : null}
 
-{showReply?<ReplyModal sendReplyToChat={(data)=>{sendReplyToChat(data)}} data={replyData} onHide={() => setShowReply(false)} show={showReply} />:null}
+              {showReply ? (
+                <ReplyModal
+                  sendReplyToChat={(data) => {
+                    sendReplyToChat(data);
+                  }}
+                  data={replyData}
+                  onHide={() => setShowReply(false)}
+                  show={showReply}
+                />
+              ) : null}
 
               {showClubRules ? (
                 <SoapboxPrivateClubRules setShowClubRules={setShowClubRules} />
               ) : null}
 
-              {showBreakoffForm
-                ? <div className="showBreakoffForm" id="showBreakoffFormId">
+              {showBreakoffForm ? (
+                <div className="showBreakoffForm" id="showBreakoffFormId">
                   <h5>Enter The Topic for BreakOff Chat</h5>
-                  <div style={{ padding: '33px', position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}> <input placeholder="Enter Topic" value={breakOffInput} onChange={(e) => {
-                    setBreakOffInput(e.target.value);
-                  }} />
-                    <button className="d-grid col-12 btn-main login-form-button" style={{ position: 'absolute', right: '0' }}
-                      onClick={() => {
-                        if (breakOffInput) { createBreakoff() } else {
-                          toast.success(
-                            "Please Enter Topic for Breakoff chat"
-                          );
-                        }
-
+                  <div
+                    style={{
+                      padding: "33px",
+                      position: "relative",
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {" "}
+                    <input
+                      placeholder="Enter Topic"
+                      value={breakOffInput}
+                      onChange={(e) => {
+                        setBreakOffInput(e.target.value);
                       }}
-                    >Create Now</button>
+                    />
+                    <button
+                      className="d-grid col-12 btn-main login-form-button"
+                      style={{ position: "absolute", right: "0" }}
+                      onClick={() => {
+                        if (breakOffInput) {
+                          createBreakoff();
+                        } else {
+                          toast.success("Please Enter Topic for Breakoff chat");
+                        }
+                      }}
+                    >
+                      Create Now
+                    </button>
                   </div>
-
                 </div>
-                : null}
+              ) : null}
 
               {oneOnOnecall ? (
                 <div className="slide-container">
@@ -3332,7 +3789,8 @@ const resetChatView=(username)=>{
                       padding: "1rem",
                       margin: "1rem",
                       borderRadius: "0.5rem",
-                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                     className="slideOOC-class"
                   >
@@ -3345,11 +3803,13 @@ const resetChatView=(username)=>{
                           position: "absolute",
                           right: "0px",
                           top: "0px",
-                          margin: "0.5rem"
+                          margin: "0.5rem",
                         }}
                         onClick={() => {
-                          document.getElementById("slideOOC").style.transition = "2sec";
-                          document.getElementById("slideOOC").style.right = "-100vw";
+                          document.getElementById("slideOOC").style.transition =
+                            "2sec";
+                          document.getElementById("slideOOC").style.right =
+                            "-100vw";
 
                           setTimeout(() => {
                             setShowSubscribeButton(false);
@@ -3366,17 +3826,17 @@ const resetChatView=(username)=>{
                         width="100%"
                         style={{
                           borderRadius: "0.5rem",
-                          boxShadow: "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px"
+                          boxShadow:
+                            "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px",
                         }}
                       />
-
                       <p
                         style={{
                           maxWidth: "390px",
                           lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify',
-                          marginTop: "0.5rem"
+                          textAlign: "justify",
+                          marginTop: "0.5rem",
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3387,13 +3847,12 @@ const resetChatView=(username)=>{
                         XMG Wallet at www.megahoot.org. If you do not have one
                         it's very simple to create your XMG Wallet.
                       </p>
-
                       <p
                         style={{
                           maxWidth: "390px",
                           lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify'
+                          textAlign: "justify",
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -3402,7 +3861,8 @@ const resetChatView=(username)=>{
                       </p>
                     </div>
 
-                    <Form style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
+                    <Form
+                      style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
                       className="login-form mx-auto p-4 pb-0"
                     >
                       <p
@@ -3437,9 +3897,9 @@ const resetChatView=(username)=>{
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
-                      width: '100%',
-                      overflowY: 'scroll',
-                      height: '100vh',
+                      width: "100%",
+                      overflowY: "scroll",
+                      height: "100vh",
                     }}
                   >
                     <span>
@@ -3453,8 +3913,10 @@ const resetChatView=(username)=>{
                           top: "0px",
                         }}
                         onClick={() => {
-                          document.getElementById("slideIFM").style.transition = "2sec";
-                          document.getElementById("slideIFM").style.right = "-100vw";
+                          document.getElementById("slideIFM").style.transition =
+                            "2sec";
+                          document.getElementById("slideIFM").style.right =
+                            "-100vw";
 
                           setClubFloor(true);
                           setTimeout(() => {
@@ -3470,8 +3932,7 @@ const resetChatView=(username)=>{
                       title={iframeBox.title}
                       width="100%"
                       height="100%"
-                    >
-                    </iframe>
+                    ></iframe>
                   </div>
                 </div>
               ) : null}
@@ -3489,7 +3950,8 @@ const resetChatView=(username)=>{
                       padding: "1rem",
                       margin: "1rem",
                       borderRadius: "0.5rem",
-                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                     className="slideSSB-class"
                   >
@@ -3502,11 +3964,13 @@ const resetChatView=(username)=>{
                           position: "absolute",
                           right: "0px",
                           top: "0px",
-                          margin: "0.5rem"
+                          margin: "0.5rem",
                         }}
                         onClick={() => {
-                          document.getElementById("slideSSB").style.transition = "2sec";
-                          document.getElementById("slideSSB").style.right = "-100vw";
+                          document.getElementById("slideSSB").style.transition =
+                            "2sec";
+                          document.getElementById("slideSSB").style.right =
+                            "-100vw";
 
                           setTimeout(() => {
                             setShowSubscribeButton(false);
@@ -3523,10 +3987,10 @@ const resetChatView=(username)=>{
                         style={{
                           borderRadius: "0.5rem",
                           maxWidth: "400px",
-                          boxShadow: "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px"
+                          boxShadow:
+                            "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px",
                         }}
                       />
-
                       {!subscribe ? (
                         <div>
                           <p
@@ -3534,8 +3998,8 @@ const resetChatView=(username)=>{
                               maxWidth: "390px",
                               lineHeight: "1.6rem",
                               fontSize: "smaller",
-                              textAlign: 'justify',
-                              marginTop: "0.5rem"
+                              textAlign: "justify",
+                              marginTop: "0.5rem",
                             }}
                           >
                             MegaHoot Soapbox recommends that members use the XMG
@@ -3553,7 +4017,7 @@ const resetChatView=(username)=>{
                               maxWidth: "390px",
                               lineHeight: "1.6rem",
                               fontSize: "smaller",
-                              textAlign: 'justify'
+                              textAlign: "justify",
                             }}
                           >
                             Alternatively we do give the option for members to
@@ -3565,7 +4029,11 @@ const resetChatView=(username)=>{
                     </div>
 
                     {!subscribe ? (
-                      <Form style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
+                      <Form
+                        style={{
+                          padding: "0.5rem 1rem !important",
+                          flex: "0.3",
+                        }}
                         className="login-form mx-auto p-4 pb-0"
                         onSubmit={(e) => e.preventDefault()}
                       >
@@ -3729,7 +4197,8 @@ const resetChatView=(username)=>{
                       padding: "1rem",
                       margin: "1rem",
                       borderRadius: "0.5rem",
-                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                     className="slidegC-class"
                   >
@@ -3742,11 +4211,13 @@ const resetChatView=(username)=>{
                           position: "absolute",
                           right: "0px",
                           top: "0px",
-                          margin: "0.5rem"
+                          margin: "0.5rem",
                         }}
                         onClick={() => {
-                          document.getElementById("slidegC").style.transition = "2sec";
-                          document.getElementById("slidegC").style.right = "-100vw";
+                          document.getElementById("slidegC").style.transition =
+                            "2sec";
+                          document.getElementById("slidegC").style.right =
+                            "-100vw";
 
                           setTimeout(() => {
                             setShowSubscribeButton(false);
@@ -3755,7 +4226,6 @@ const resetChatView=(username)=>{
                         }}
                       />
                     </span>
-
                     <div style={{ flex: "0.7" }}>
                       {" "}
                       <img
@@ -3763,17 +4233,17 @@ const resetChatView=(username)=>{
                         width="100%"
                         style={{
                           borderRadius: "0.5rem",
-                          boxShadow: "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px"
+                          boxShadow:
+                            "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px",
                         }}
                       />
-
                       <p
                         style={{
                           maxWidth: "390px",
                           lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify',
-                          marginTop: "0.5rem"
+                          textAlign: "justify",
+                          marginTop: "0.5rem",
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3784,13 +4254,12 @@ const resetChatView=(username)=>{
                         XMG Wallet at www.megahoot.org. If you do not have one
                         it's very simple to create your XMG Wallet.
                       </p>
-
                       <p
                         style={{
                           maxWidth: "390px",
                           lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify'
+                          textAlign: "justify",
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -3798,8 +4267,8 @@ const resetChatView=(username)=>{
                         partners Stripe for convenience.
                       </p>
                     </div>
-
-                    <Form style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
+                    <Form
+                      style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
                       className="login-form mx-auto p-4 pb-0"
                     >
                       <p
@@ -3835,7 +4304,8 @@ const resetChatView=(username)=>{
                       padding: "1rem",
                       margin: "1rem",
                       borderRadius: "0.5rem",
-                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                     className="slideRM-class"
                   >
@@ -3848,11 +4318,13 @@ const resetChatView=(username)=>{
                           position: "absolute",
                           right: "0px",
                           top: "0px",
-                          margin: "0.5rem"
+                          margin: "0.5rem",
                         }}
                         onClick={() => {
-                          document.getElementById("slideRM").style.transition = "2sec";
-                          document.getElementById("slideRM").style.right = "-100vw";
+                          document.getElementById("slideRM").style.transition =
+                            "2sec";
+                          document.getElementById("slideRM").style.right =
+                            "-100vw";
 
                           setTimeout(() => {
                             setShowSubscribeButton(false);
@@ -3868,7 +4340,8 @@ const resetChatView=(username)=>{
                         width="100%"
                         style={{
                           borderRadius: "0.5rem",
-                          boxShadow: "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px"
+                          boxShadow:
+                            "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px",
                         }}
                       />
 
@@ -3877,8 +4350,8 @@ const resetChatView=(username)=>{
                           maxWidth: "390px",
                           lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify',
-                          marginTop: "0.5rem"
+                          textAlign: "justify",
+                          marginTop: "0.5rem",
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3894,7 +4367,7 @@ const resetChatView=(username)=>{
                           maxWidth: "390px",
                           lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify'
+                          textAlign: "justify",
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -3903,7 +4376,8 @@ const resetChatView=(username)=>{
                       </p>
                     </div>
 
-                    <Form style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
+                    <Form
+                      style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
                       className="login-form mx-auto p-4 pb-0"
                     >
                       <p
@@ -3939,7 +4413,8 @@ const resetChatView=(username)=>{
                       padding: "1rem",
                       margin: "1rem",
                       borderRadius: "0.5rem",
-                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                     className="slideVA-class"
                   >
@@ -3952,11 +4427,13 @@ const resetChatView=(username)=>{
                           position: "absolute",
                           right: "0px",
                           top: "0px",
-                          margin: "0.5rem"
+                          margin: "0.5rem",
                         }}
                         onClick={() => {
-                          document.getElementById("slideVA").style.transition = "2sec";
-                          document.getElementById("slideVA").style.right = "-100vw";
+                          document.getElementById("slideVA").style.transition =
+                            "2sec";
+                          document.getElementById("slideVA").style.right =
+                            "-100vw";
 
                           setTimeout(() => {
                             setShowSubscribeButton(false);
@@ -3972,7 +4449,8 @@ const resetChatView=(username)=>{
                         width="100%"
                         style={{
                           borderRadius: "0.5rem",
-                          boxShadow: "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px"
+                          boxShadow:
+                            "rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px",
                         }}
                       />
 
@@ -3981,8 +4459,8 @@ const resetChatView=(username)=>{
                           maxWidth: "390px",
                           lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify',
-                          marginTop: "0.5rem"
+                          textAlign: "justify",
+                          marginTop: "0.5rem",
                         }}
                       >
                         MegaHoot Soapbox recommends that members use the XMG
@@ -3998,7 +4476,7 @@ const resetChatView=(username)=>{
                           maxWidth: "390px",
                           lineHeight: "1.6rem",
                           fontSize: "smaller",
-                          textAlign: 'justify'
+                          textAlign: "justify",
                         }}
                       >
                         Alternatively we do give the option for members to use
@@ -4007,7 +4485,8 @@ const resetChatView=(username)=>{
                       </p>
                     </div>
 
-                    <Form style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
+                    <Form
+                      style={{ padding: "0.5rem 1rem !important", flex: "0.3" }}
                       className="login-form mx-auto p-4 pb-0"
                     >
                       <h5
@@ -4039,49 +4518,78 @@ const resetChatView=(username)=>{
                 >
                   {clubFloor
                     ? uploads && (
-                      <div style={{ flex: "0.5" }}>
-                        <InfiniteScroll
-                          dataLength={uploads.length}
-                          next={fetchMoreHoots}
-                          hasMore={hasMore}
-                        >
-                          {uploads.map((upload) => {
-                            return (
-                              <div key={upload}>
-                                <Post
-                                  hootId={upload.id}
-                                  username={upload.authorUsername}
-                                  mimeType={upload.mimeType}
-                                  hootImgId={upload.image}
-                                  audioPoster={upload.audioPoster}
-                                  likes={upload.likes}
-                                  views={upload.views}
-                                  followers={upload.followers}
-                                  caption={upload.caption}
-                                  link={upload.link}
-                                  ephemeral={upload.ephemeral}
-                                  privateHoot={upload.private}
-                                  expiryDate={upload.expiryDate}
-                                  timeStamp={upload.timeStamp}
-                                  edited={upload.edited}
-                                  editedTimeStamp={upload.editedTimeStamp}
-                                />
-                              </div>
-                            );
-                          })}
-                        </InfiniteScroll>
-                      </div>
-                    ) : null}
+                        <div style={{ flex: "0.5" }}>
+                          <InfiniteScroll
+                            dataLength={uploads.length}
+                            next={fetchMoreHoots}
+                            hasMore={hasMore}
+                          >
+                            {uploads.map((upload) => {
+                              var fontFamilyStyle;
+                              if (
+                                upload.fontFamilyStyle.includes("fontFamily")
+                              ) {
+                                fontFamilyStyle = JSON.parse(
+                                  upload.fontFamilyStyle
+                                );
+                                var fontFamily =
+                                  fontFamilyStyle.fontFamily || "Arial";
+                                var fontStyleSize =
+                                  fontFamilyStyle.fontSize || "20px";
+                                var fontColor =
+                                  fontFamilyStyle.color || "black";
+                              } else {
+                                var fontFamily =
+                                  upload.fontFamilyStyle || "Arial";
+                                var fontStyleSize = "20px";
+                                var fontColor = "black";
+                              }
+                              return (
+                                <div key={upload}>
+                                  <Post
+                                    hootId={upload.id}
+                                    username={upload.authorUsername}
+                                    mimeType={upload.mimeType}
+                                    hootImgId={upload.image}
+                                    audioPoster={upload.audioPoster}
+                                    likes={upload.likes}
+                                    views={upload.views}
+                                    followers={upload.followers}
+                                    caption={upload.caption}
+                                    link={upload.link}
+                                    ephemeral={upload.ephemeral}
+                                    privateHoot={upload.private}
+                                    expiryDate={upload.expiryDate}
+                                    timeStamp={upload.timeStamp}
+                                    edited={upload.edited}
+                                    editedTimeStamp={upload.editedTimeStamp}
+                                    fontFamilyStyle={fontFamily}
+                                    fontColor={fontColor}
+                                    fontStyleSize={fontStyleSize}
+                                  />
+                                </div>
+                              );
+                            })}
+                          </InfiniteScroll>
+                        </div>
+                      )
+                    : null}
 
-
-{marketPlaceArea ? (
-                <FortisMarketplaceArea />
-              ) : null}
+                  {marketPlaceArea ? <FortisMarketplaceArea /> : null}
 
                   {privateChat ? (
-                    <div className="privateChat-club" id="privatechatslide" 
-                    style={{width:window.innerWidth>=600?"60vw":"90vw !important",
-                    minWidth:window.innerWidth>=600?"450px":"90vw !important"}}>
+                    <div
+                      className="privateChat-club"
+                      id="privatechatslide"
+                      style={{
+                        width:
+                          window.innerWidth >= 600 ? "60vw" : "90vw !important",
+                        minWidth:
+                          window.innerWidth >= 600
+                            ? "450px"
+                            : "90vw !important",
+                      }}
+                    >
                       <div
                         className="live-header"
                         style={{
@@ -4095,9 +4603,12 @@ const resetChatView=(username)=>{
                           maxWidth: "440px",
                           paddingLeft: "5px",
                           paddingRight: "5px",
-                          width:window.innerWidth>=600?"":"90vw !important",
-                          minWidth:window.innerWidth>=600?"450px":"90vw !important"
-                         
+                          width:
+                            window.innerWidth >= 600 ? "" : "90vw !important",
+                          minWidth:
+                            window.innerWidth >= 600
+                              ? "450px"
+                              : "90vw !important",
                         }}
                       >
                         <span
@@ -4108,8 +4619,7 @@ const resetChatView=(username)=>{
                             alignItems: "center",
                           }}
                         >
-                          {privateChatPerson &&
-                            privateChatPerson.profilePic ? (
+                          {privateChatPerson && privateChatPerson.profilePic ? (
                             <img
                               src={privateChatPerson.profilePic}
                               style={{
@@ -4145,7 +4655,7 @@ const resetChatView=(username)=>{
                               setTimeout(() => {
                                 setPrivateChat(false);
                                 setClubFloor(true);
-                                setShowChatRoom(true)
+                                setShowChatRoom(true);
                               }, 200);
                             }}
                           />
@@ -4161,166 +4671,167 @@ const resetChatView=(username)=>{
                       >
                         {chatDataPrivate.length
                           ? chatDataPrivate.map((e) => (
-                            <div
-                              className="messageBox"
-                            
-                            
-                            >
-                              <div className="ProfileBox"   onClick={() => {
-                                setPrivateChat(true);
-                                setClubFloor(false);
-
-                                setTimeout(() => {
-                                  if (
-                                    document.getElementById(
-                                      "privatechatslide"
-                                    )
-                                  ) {
-                                    document.getElementById(
-                                      "privatechatslide"
-                                    ).style.transition = "1sec";
-                                    document.getElementById(
-                                      "privatechatslide"
-                                    ).style.right = "30px";
-                                  }
-                                }, 1);
-                              }}>
-                                <img
-                                  className="chat-profile"
-                                  src={e.imgSrc ? e.imgSrc : null}
-                                />
-                                <p>{e.chatname}</p>
-                                <p className="timestamp"> {e.timestamp}</p>
-                              </div>
-                              <Linkify
-                                componentDecorator={(
-                                  decoratedHref,
-                                  decoratedText,
-                                  key
-                                ) => (
-                                  <a
-                                    target="blank"
-                                    href={decoratedHref}
-                                    key={key}
-                                  >
-                                    {decoratedText}
-                                  </a>
-                                )}
-                              >
-                                {" "}
+                              <div className="messageBox">
                                 <div
-                                  className={
-                                    e.isEmoji ? "message-emoji" : "message"
-                                  }
-                                >
-                                  {!e.isVideo && !e.isImage
-                                    ? e.message
-                                    : null}
-                                </div>
-                              </Linkify>
-                           
-                              {e.isVideo ? (
-                                <video
-                                  onDragStart={(e) => e.preventDefault()}
-                                  onmousedown={(event) => {
-                                    event.preventDefault
-                                      ? event.preventDefault()
-                                      : (event.returnValue = false);
-                                  }}
-                                  style={{
-                                    maxWidth: "200px",
-                                    marginTop: "20px",
-                                    borderRadius: "5px",
-                                  }}
-                                  controls={true}
-                                  src={e.message}
-                                ></video>
-                              ) : null}
+                                  className="ProfileBox"
+                                  onClick={() => {
+                                    setPrivateChat(true);
+                                    setClubFloor(false);
 
-                              {e.isImage ? (
-                                <img
-                                  src={e.message}
-                                  onDragStart={(e) => e.preventDefault()}
-                                  onmousedown={(event) => {
-                                    event.preventDefault
-                                      ? event.preventDefault()
-                                      : (event.returnValue = false);
+                                    setTimeout(() => {
+                                      if (
+                                        document.getElementById(
+                                          "privatechatslide"
+                                        )
+                                      ) {
+                                        document.getElementById(
+                                          "privatechatslide"
+                                        ).style.transition = "1sec";
+                                        document.getElementById(
+                                          "privatechatslide"
+                                        ).style.right = "30px";
+                                      }
+                                    }, 1);
                                   }}
-                                  style={{
-                                    maxWidth: e.isSticker ? "60px" : "200px",
-                                    marginTop: "20px",
-                                    borderRadius: "5px",
-                                  }}
-                                />
-                              ) : null}
-                            </div>
-                          ))
+                                >
+                                  <img
+                                    className="chat-profile"
+                                    src={e.imgSrc ? e.imgSrc : null}
+                                  />
+                                  <p>{e.chatname}</p>
+                                  <p className="timestamp"> {e.timestamp}</p>
+                                </div>
+                                <Linkify
+                                  componentDecorator={(
+                                    decoratedHref,
+                                    decoratedText,
+                                    key
+                                  ) => (
+                                    <a
+                                      target="blank"
+                                      href={decoratedHref}
+                                      key={key}
+                                    >
+                                      {decoratedText}
+                                    </a>
+                                  )}
+                                >
+                                  {" "}
+                                  <div
+                                    className={
+                                      e.isEmoji ? "message-emoji" : "message"
+                                    }
+                                  >
+                                    {!e.isVideo && !e.isImage
+                                      ? e.message
+                                      : null}
+                                  </div>
+                                </Linkify>
+
+                                {e.isVideo ? (
+                                  <video
+                                    onDragStart={(e) => e.preventDefault()}
+                                    onmousedown={(event) => {
+                                      event.preventDefault
+                                        ? event.preventDefault()
+                                        : (event.returnValue = false);
+                                    }}
+                                    style={{
+                                      maxWidth: "200px",
+                                      marginTop: "20px",
+                                      borderRadius: "5px",
+                                    }}
+                                    controls={true}
+                                    src={e.message}
+                                  ></video>
+                                ) : null}
+
+                                {e.isImage ? (
+                                  <img
+                                    src={e.message}
+                                    onDragStart={(e) => e.preventDefault()}
+                                    onmousedown={(event) => {
+                                      event.preventDefault
+                                        ? event.preventDefault()
+                                        : (event.returnValue = false);
+                                    }}
+                                    style={{
+                                      maxWidth: e.isSticker ? "60px" : "200px",
+                                      marginTop: "20px",
+                                      borderRadius: "5px",
+                                    }}
+                                  />
+                                ) : null}
+                              </div>
+                            ))
                           : null}
 
-   {srcPrivate && mimeTypePrivate.substr(0, 5) == "image" ? (
-                        <div className="messageBox">
-                          <img
-                            src={srcPrivate}
-                            style={{
-                              width: "200px",
-                              height: "auto",
-                              marginTop: "-10px",
-                            }}
-                          />
-                          <button
-                            onClick={() => {
-                              uploadPrivate(filePrivate, filePrivate.type);
-                              setFilePrivate([]);
-                              setSrcPrivate(null);
-                              setMimeTypePrivate("");
-                            }}
-                          >
-                            Confirm
-                          </button>
-                          <button
-                            onClick={() => {
-                              setFilePrivate([]);
-                              setSrcPrivate(null);
-                              setMimeTypePrivate("");
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : null}
+                        {srcPrivate &&
+                        mimeTypePrivate.substr(0, 5) == "image" ? (
+                          <div className="messageBox">
+                            <img
+                              src={srcPrivate}
+                              style={{
+                                width: "200px",
+                                height: "auto",
+                                marginTop: "-10px",
+                              }}
+                            />
+                            <button
+                              onClick={() => {
+                                uploadPrivate(filePrivate, filePrivate.type);
+                                setFilePrivate([]);
+                                setSrcPrivate(null);
+                                setMimeTypePrivate("");
+                              }}
+                            >
+                              Confirm
+                            </button>
+                            <button
+                              onClick={() => {
+                                setFilePrivate([]);
+                                setSrcPrivate(null);
+                                setMimeTypePrivate("");
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        ) : null}
 
-                      {srcPrivate && mimeTypePrivate.substr(0, 5) == "video" ? (
-                        <div className="messageBox">
-                          <video
-                            src={srcPrivate}
-                            style={{
-                              width: "200px",
-                              height: "auto",
-                              marginTop: "-10px",
-                            }}
-                            className="messageBox"
-                          />
-                          <button
-                            onClick={() => {
-                              uploadPrivate(filePrivate, filePrivate.type);
-                              setFilePrivate([]);
-                              setSrcPrivate(null);
-                              setMimeTypePrivate("");
-                            }}
-                          >
-                            Confirm
-                          </button>
-                          <button
-                            onClick={() => {
-                              setFilePrivate([]);
-                              setSrcPrivate(null);
-                              setMimeTypePrivate("");
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : null}
+                        {srcPrivate &&
+                        mimeTypePrivate.substr(0, 5) == "video" ? (
+                          <div className="messageBox">
+                            <video
+                              src={srcPrivate}
+                              style={{
+                                width: "200px",
+                                height: "auto",
+                                marginTop: "-10px",
+                              }}
+                              className="messageBox"
+                            />
+                            <button
+                              onClick={() => {
+                                uploadPrivate(filePrivate, filePrivate.type);
+                                setFilePrivate([]);
+                                setSrcPrivate(null);
+                                setMimeTypePrivate("");
+                              }}
+                            >
+                              Confirm
+                            </button>
+                            <button
+                              onClick={() => {
+                                setFilePrivate([]);
+                                setSrcPrivate(null);
+                                setMimeTypePrivate("");
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        ) : null}
                         {emojiPickerPrivate && (
                           <ClickAwayListener
                             onClickAway={() => {
@@ -4354,75 +4865,109 @@ const resetChatView=(username)=>{
                           </ClickAwayListener>
                         )}
 
-{stickerPickerPrivate ? <div style={{
-                       position: "sticky",
-                       bottom: "0px",
-                        bottom: "3rem",
-                        left: "0.5rem",
-                        backgroundColor: '#652C90',
-                        borderRadius: '5px',
-                        padding: '8px',
-                        zIndex: "1111", display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', flexWrap: 'wrap'
-                      }}>
-                        {stickersImages.map((image) => <img src={image}
-                          onClick={() => {
-                            let today = new Date();
-                            let message=image;
-                            let threadId = uuidv4()
-                                let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
-                              
-                            appendPrivate(
-                              userFullName,
-                              `${image}`,
-                              "left",
-                              `${BaseURL}/profile-pictures/${userProfilePic}`,
-                              false,
-                              timestamp,
-                              false,
-                              true,true
-                            );
-                            // socket.emit("send", {
-                            //   name: userFullName,
-                            //   message: `${image}`,
-                            //   profilePic: userProfilePic,
-                            //   isEmoji: false,
-                            //   isVideo: false,
-                            //   isImage: true,
-                            //   isSticker: true
-                            // });
-                           
-                            socket.emit("private-message-soapbox", {
-                              threadId:threadId,
-                              to: privateChatPerson.name,
-                              from: userFullName,
-                              isClub: 0,
-                              isPrivate: 1,
-                              isCommunity: 0,
-                              name: userFullName,
-                              message: message,
-                              profilePic: userProfilePic,
-                              isEmoji: false,
-                              isSticker:true,
-                              isImage:true,
-                              timestamp: timestamp
-                            });
-                            setStickerPickerPrivate(false)
-                          }}
-                          style={{ width: '70px', minWidth: '70px', minHeight: '70px', margin: '5px', cursor: 'pointer', backgroundColor: 'whitesmoke', padding: '5px' }} />)}
-                      </div> : null
-                      }
+                        {stickerPickerPrivate ? (
+                          <div
+                            style={{
+                              position: "sticky",
+                              bottom: "0px",
+                              bottom: "3rem",
+                              left: "0.5rem",
+                              backgroundColor: "#652C90",
+                              borderRadius: "5px",
+                              padding: "8px",
+                              zIndex: "1111",
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "space-evenly",
+                              alignItems: "center",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            {stickersImages.map((image) => (
+                              <img
+                                src={image}
+                                onClick={() => {
+                                  let today = new Date();
+                                  let message = image;
+                                  let threadId = uuidv4();
+                                  let timestamp =
+                                    today.toLocaleTimeString() +
+                                    " " +
+                                    today.toLocaleDateString();
+
+                                  appendPrivate(
+                                    userFullName,
+                                    `${image}`,
+                                    "left",
+                                    `${BaseURL}/profile-pictures/${userProfilePic}`,
+                                    false,
+                                    timestamp,
+                                    false,
+                                    true,
+                                    true
+                                  );
+                                  // socket.emit("send", {
+                                  //   name: userFullName,
+                                  //   message: `${image}`,
+                                  //   profilePic: userProfilePic,
+                                  //   isEmoji: false,
+                                  //   isVideo: false,
+                                  //   isImage: true,
+                                  //   isSticker: true
+                                  // });
+
+                                  socket.emit("private-message-soapbox", {
+                                    threadId: threadId,
+                                    to: privateChatPerson.name,
+                                    from: userFullName,
+                                    isClub: 0,
+                                    isPrivate: 1,
+                                    isCommunity: 0,
+                                    name: userFullName,
+                                    message: message,
+                                    profilePic: userProfilePic,
+                                    isEmoji: false,
+                                    isSticker: true,
+                                    isImage: true,
+                                    timestamp: timestamp,
+                                  });
+                                  setStickerPickerPrivate(false);
+                                }}
+                                style={{
+                                  width: "70px",
+                                  minWidth: "70px",
+                                  minHeight: "70px",
+                                  margin: "5px",
+                                  cursor: "pointer",
+                                  backgroundColor: "whitesmoke",
+                                  padding: "5px",
+                                }}
+                              />
+                            ))}
+                          </div>
+                        ) : null}
                       </div>
 
-                      <div className="send-private" >
+                      <div className="send-private">
                         <ReactTooltip />
                         <form
                           action="#"
                           id="send-container"
                           style={{ marginLeft: privateChat ? "5px" : "5px" }}
-                          onSubmit={(e) => messagesubmitPrivate(e,privateChatPerson,userProfilePic,userFullName)}
+                          onSubmit={(e) =>
+                            messagesubmitPrivate(
+                              e,
+                              privateChatPerson,
+                              userProfilePic,
+                              userFullName
+                            )
+                          }
                         >
                           <label htmlFor="post-video">
-                            <SoapboxTooltip title={"Share Video"} placement="top">
+                            <SoapboxTooltip
+                              title={"Share Video"}
+                              placement="top"
+                            >
                               <img
                                 src={videochat}
                                 style={{ margin: "5px", cursor: "pointer" }}
@@ -4441,7 +4986,10 @@ const resetChatView=(username)=>{
                           />
 
                           <label htmlFor="post-image">
-                            <SoapboxTooltip title={"Share Photos"} placement="top">
+                            <SoapboxTooltip
+                              title={"Share Photos"}
+                              placement="top"
+                            >
                               <img
                                 src={imagechat}
                                 style={{ margin: "5px", cursor: "pointer" }}
@@ -4469,7 +5017,14 @@ const resetChatView=(username)=>{
                           <SoapboxTooltip title={"Stickers"} placement="top">
                             <img
                               src={stickerIcon}
-                              style={{ width: '25px', padding: '3px', borderRadius: '15px', margin: "5px", cursor: "pointer", backgroundColor: '#8249A0' }}
+                              style={{
+                                width: "25px",
+                                padding: "3px",
+                                borderRadius: "15px",
+                                margin: "5px",
+                                cursor: "pointer",
+                                backgroundColor: "#8249A0",
+                              }}
                               onClick={() => {
                                 setStickerPickerPrivate(!stickerPickerPrivate);
                               }}
@@ -4493,7 +5048,13 @@ const resetChatView=(username)=>{
                             value={messageInboxValuePrivate}
                             autoComplete="off"
                             id="messageInp"
-                            style={{ width: privateChat ? window.innerWidth>=600?"230px":"155px" : "230px" }}
+                            style={{
+                              width: privateChat
+                                ? window.innerWidth >= 600
+                                  ? "230px"
+                                  : "155px"
+                                : "230px",
+                            }}
                             onChange={(e) => {
                               setMessageInboxValuePrivate(e.target.value);
                             }}
@@ -4508,7 +5069,10 @@ const resetChatView=(username)=>{
                               marginLeft: "5px",
                             }}
                           >
-                            <SoapboxTooltip title={"Send Message"} placement="top" >
+                            <SoapboxTooltip
+                              title={"Send Message"}
+                              placement="top"
+                            >
                               <img src={sendIcon} width="27px" />
                             </SoapboxTooltip>
                           </button>
@@ -4517,53 +5081,82 @@ const resetChatView=(username)=>{
                     </div>
                   ) : null}
 
-                  {privateChatList
-                    ? <div className="privateChatListBox" id="privateChatList">
-                      <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',width:'100%'}} >
-                   
-                      <h5 style={{
-                          textAlign: 'center',
-                          fontSize: '0.93rem',
-                          fontWeight: '600',
-                          margin: '0.5rem 0',
-                          borderRadius: '5px',
-                          padding: '0.5rem',
-                          width: '100%',
-                          backgroundColor: "whitesmoke"
+                  {privateChatList ? (
+                    <div className="privateChatListBox" id="privateChatList">
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          width: "100%",
                         }}
+                      >
+                        <h5
+                          style={{
+                            textAlign: "center",
+                            fontSize: "0.93rem",
+                            fontWeight: "600",
+                            margin: "0.5rem 0",
+                            borderRadius: "5px",
+                            padding: "0.5rem",
+                            width: "100%",
+                            backgroundColor: "whitesmoke",
+                          }}
                         >
-                            <img
-                      
-                      src={chathive}
-                      className="chativelogo"
-                      width={"70px"}
-                    />
-            
+                          <img
+                            src={chathive}
+                            className="chativelogo"
+                            width={"70px"}
+                          />
                         </h5>
-                        <button className="closebtn" onClick={() => {
-                          if (!privateChatList) {
-                            setPrivateChatList(!privateChatList)
-                          
-                            setTimeout(() => {
-                              if (document.getElementById("privateChatList")) {
-                                document.getElementById("privateChatList").style.transition = "1sec";
-                                document.getElementById("privateChatList").style.right = "0.8rem";
-                              }
-                            }, 1);
-                          } else {
-                            document.getElementById("privateChatList").style.transition = "1sec";
-                            document.getElementById("privateChatList").style.right = "-100vw";
+                        <button
+                          className="closebtn"
+                          onClick={() => {
+                            if (!privateChatList) {
+                              setPrivateChatList(!privateChatList);
 
-                            setTimeout(() => {
-                              setPrivateChatList(false)
-                            }, 200);
-                          }
-                        }}>X</button>
+                              setTimeout(() => {
+                                if (
+                                  document.getElementById("privateChatList")
+                                ) {
+                                  document.getElementById(
+                                    "privateChatList"
+                                  ).style.transition = "1sec";
+                                  document.getElementById(
+                                    "privateChatList"
+                                  ).style.right = "0.8rem";
+                                }
+                              }, 1);
+                            } else {
+                              document.getElementById(
+                                "privateChatList"
+                              ).style.transition = "1sec";
+                              document.getElementById(
+                                "privateChatList"
+                              ).style.right = "-100vw";
+
+                              setTimeout(() => {
+                                setPrivateChatList(false);
+                              }, 200);
+                            }
+                          }}
+                        >
+                          X
+                        </button>
                       </div>
-                      <InboxMessage setInviteBox={()=>{setInviteBoxChat(true)}} socket={socket} actualUsername={userInformation.username} username={userFullName} openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
+                      <InboxMessage
+                        setInviteBox={() => {
+                          setInviteBoxChat(true);
+                        }}
+                        socket={socket}
+                        actualUsername={userInformation.username}
+                        username={userFullName}
+                        openPrivateChatfromInbox={(e) => {
+                          openPrivateChatfromInbox(e);
+                        }}
+                      />
                     </div>
-                    : null
-                  }
+                  ) : null}
 
                   {/* ------------------- Chat Container newly style added here ------------------- */}
                   {showChatRoom ? (
@@ -4579,9 +5172,17 @@ const resetChatView=(username)=>{
                         backgroundColor: "#EDEDFF",
                         border: "2px solid #D9D2FA",
                         overflowX: "hidden",
-                        maxHeight: '80vh',
-                        flex: clubFloor ? window.innerWidth>=600?"0.5":"1" : "1",
-                        maxWidth:clubFloor ? "500px" : window.innerWidth>=600?"60vw":"100%"
+                        maxHeight: "80vh",
+                        flex: clubFloor
+                          ? window.innerWidth >= 600
+                            ? "0.5"
+                            : "1"
+                          : "1",
+                        maxWidth: clubFloor
+                          ? "500px"
+                          : window.innerWidth >= 600
+                          ? "60vw"
+                          : "100%",
                       }}
                     >
                       <div
@@ -4625,45 +5226,55 @@ const resetChatView=(username)=>{
                         <span>
                           {userInfo[0] && userInfo[0].name}'s Club Chat
                         </span>
-                        <div style={{
-                          display: 'flex', justifyContent: 'space-between',
-                          width: '88px', flexDirection: 'row'
-                        }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "88px",
+                            flexDirection: "row",
+                          }}
+                        >
                           <SoapboxTooltip title={"Invite"} placement="bottom">
-                            <span style={{
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              cursor: 'pointer',
-                              backgroundColor: '#dcd5fa',
-                              color: "#8249A0",
-                              width: '26px',
-                              height: '26px',
-                              borderRadius: '50%',
-                              // marginLeft: '15px',
-                              fontSize: '1rem'
-                            }}
+                            <span
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                backgroundColor: "#dcd5fa",
+                                color: "#8249A0",
+                                width: "26px",
+                                height: "26px",
+                                borderRadius: "50%",
+                                // marginLeft: '15px',
+                                fontSize: "1rem",
+                              }}
                               onClick={() => setInviteBox(true)}
                             >
                               <Share />
                             </span>
                           </SoapboxTooltip>
-                          <SoapboxTooltip title={"Schedule Event"} placement="top">
+                          <SoapboxTooltip
+                            title={"Schedule Event"}
+                            placement="top"
+                          >
                             <span
                               style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                cursor: 'pointer',
-                                backgroundColor: '#dcd5fa',
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                backgroundColor: "#dcd5fa",
                                 color: "#8249A0",
-                                width: '26px',
-                                height: '26px',
-                                borderRadius: '50%',
+                                width: "26px",
+                                height: "26px",
+                                borderRadius: "50%",
                                 // marginLeft: '15px',
-                                fontSize: '1.1rem'
+                                fontSize: "1.1rem",
                               }}
-                              onClick={() => { setScheduleBox(!scheduleBox) }}
+                              onClick={() => {
+                                setScheduleBox(!scheduleBox);
+                              }}
                             >
                               <RiCalendarEventLine />
                             </span>
@@ -4672,8 +5283,12 @@ const resetChatView=(username)=>{
                             <span
                               onClick={() => {
                                 if (showPollForm) {
-                                  document.getElementById("showPollFormId").style.transition = "2s";
-                                  document.getElementById("showPollFormId").style.left = "200vw";
+                                  document.getElementById(
+                                    "showPollFormId"
+                                  ).style.transition = "2s";
+                                  document.getElementById(
+                                    "showPollFormId"
+                                  ).style.left = "200vw";
 
                                   setTimeout(() => {
                                     setShowPollForm(false);
@@ -4682,85 +5297,107 @@ const resetChatView=(username)=>{
                                   setShowPollForm(true);
 
                                   setTimeout(() => {
-                                    if (document.getElementById("showPollFormId")) {
-                                      document.getElementById("showPollFormId").style.transition = "1s";
-                                      document.getElementById("showPollFormId").style.left = "70px";
+                                    if (
+                                      document.getElementById("showPollFormId")
+                                    ) {
+                                      document.getElementById(
+                                        "showPollFormId"
+                                      ).style.transition = "1s";
+                                      document.getElementById(
+                                        "showPollFormId"
+                                      ).style.left = "70px";
                                     }
                                   }, 1);
                                 }
                               }}
                               style={{
-                                // display: 'flex', 
+                                // display: 'flex',
                                 // justifyContent: 'center',
-                                // alignItems: 'center', 
-                                // cursor: 'pointer', 
-                                // backgroundColor: '#CF2128', 
-                                // width: '22px', 
-                                // height: '22px', 
-                                // borderRadius: '27px', 
+                                // alignItems: 'center',
+                                // cursor: 'pointer',
+                                // backgroundColor: '#CF2128',
+                                // width: '22px',
+                                // height: '22px',
+                                // borderRadius: '27px',
                                 // marginLeft: '15px',
                                 // fontSize: '18px'
 
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                cursor: 'pointer',
-                                backgroundColor: '#dcd5fa',
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                backgroundColor: "#dcd5fa",
                                 color: "#8249A0",
-                                width: '26px',
-                                height: '26px',
-                                borderRadius: '50%',
+                                width: "26px",
+                                height: "26px",
+                                borderRadius: "50%",
                                 // marginLeft: '15px',
-                                fontSize: '1.1rem'
+                                fontSize: "1.1rem",
                               }}
                             >
                               <RiBookmark3Line />
                             </span>
-                          </SoapboxTooltip></div>
+                          </SoapboxTooltip>
+                        </div>
                       </div>
 
-                      {showPollForm
-                        ? <div className="showPollForm" id="showPollFormId">
+                      {showPollForm ? (
+                        <div className="showPollForm" id="showPollFormId">
                           <div
                             style={{
-                              display: 'flex',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              backgroundColor: '#652C90'
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              backgroundColor: "#652C90",
                             }}
                           >
                             <h5>Create A Poll</h5>
-                            <FaWindowClose className="FaWindowClose" onClick={() => {
-                              if (showPollForm) {
-                                document.getElementById("showPollFormId").style.transition = "2s";
-                                document.getElementById("showPollFormId").style.left = "200vw";
+                            <FaWindowClose
+                              className="FaWindowClose"
+                              onClick={() => {
+                                if (showPollForm) {
+                                  document.getElementById(
+                                    "showPollFormId"
+                                  ).style.transition = "2s";
+                                  document.getElementById(
+                                    "showPollFormId"
+                                  ).style.left = "200vw";
 
-                                setTimeout(() => {
-                                  setShowPollForm(false);
-                                }, 1000);
-                              } else {
-                                setShowPollForm(true);
+                                  setTimeout(() => {
+                                    setShowPollForm(false);
+                                  }, 1000);
+                                } else {
+                                  setShowPollForm(true);
 
-                                setTimeout(() => {
-                                  if (document.getElementById("showPollFormId")) {
-                                    document.getElementById("showPollFormId").style.transition = "1s";
-                                    document.getElementById("showPollFormId").style.left = "70px";
-                                  }
-                                }, 1);
-                              }
-                            }} /></div>
-                          <div style={{
-                            padding: '33px',
-                            position: 'relative',
-                            width: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-evenly',
-                            paddingTop: '0px',
-                            paddingBottom: '0px'
-                          }}>
-
+                                  setTimeout(() => {
+                                    if (
+                                      document.getElementById("showPollFormId")
+                                    ) {
+                                      document.getElementById(
+                                        "showPollFormId"
+                                      ).style.transition = "1s";
+                                      document.getElementById(
+                                        "showPollFormId"
+                                      ).style.left = "70px";
+                                    }
+                                  }, 1);
+                                }
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              padding: "33px",
+                              position: "relative",
+                              width: "100%",
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "space-evenly",
+                              paddingTop: "0px",
+                              paddingBottom: "0px",
+                            }}
+                          >
                             {/* <input placeholder="Enter Question For Poll" value={breakOffInput}  onChange={(e) => {
                                 setBreakOffInput(e.target.value);
                               }}  />
@@ -4777,11 +5414,17 @@ const resetChatView=(username)=>{
                         <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',paddding:'5px',backgroundColor:'lightgray',borderRadius:'50px',alignItems:'center',width:'90%',margin:'5px'}}>  
                         <input type="checkbox" style={{flex:'0.2'}} /><p style={{flex:'0.8',margin:'0px'}}>July 5</p></div>
                      */}
-                            {FormEditPoll ?
+                            {FormEditPoll ? (
                               <Form onSubmit={(e) => e.preventDefault()}>
-                                <Form.Group className="mb-3" >
+                                <Form.Group className="mb-3">
                                   <Form.Label>Poll Expiry Duration</Form.Label>
-                                  <Form.Control as="select" onChange={(e) => setPollFormExpiry(e.target.value)} aria-label="Default select example">
+                                  <Form.Control
+                                    as="select"
+                                    onChange={(e) =>
+                                      setPollFormExpiry(e.target.value)
+                                    }
+                                    aria-label="Default select example"
+                                  >
                                     <option value="24">24 Hours</option>
                                     <option value="48">2 Days</option>
                                     <option value="72">3 Days</option>
@@ -4791,24 +5434,50 @@ const resetChatView=(username)=>{
                                     <option value="168">7 Days</option>
                                   </Form.Control>
                                 </Form.Group>
-                                <Form.Group className="mb-3" >
-                                  <Form.Label>Enter Question For Poll</Form.Label>
-                                  <Form.Control type="text" value={pollFormDataQ}
-                                    onChange={(e) => { setPollFormDataQ(e.target.value) }} placeholder="Enter Question For Poll" />
+                                <Form.Group className="mb-3">
+                                  <Form.Label>
+                                    Enter Question For Poll
+                                  </Form.Label>
+                                  <Form.Control
+                                    type="text"
+                                    value={pollFormDataQ}
+                                    onChange={(e) => {
+                                      setPollFormDataQ(e.target.value);
+                                    }}
+                                    placeholder="Enter Question For Poll"
+                                  />
                                 </Form.Group>
-                                <Form.Group className="mb-3" >
+                                <Form.Group className="mb-3">
                                   <Form.Label>Option A</Form.Label>
-                                  <Form.Control value={pollFormDataOA} onChange={(e) => { setPollFormDataOA(e.target.value) }} placeholder="Option A" />
+                                  <Form.Control
+                                    value={pollFormDataOA}
+                                    onChange={(e) => {
+                                      setPollFormDataOA(e.target.value);
+                                    }}
+                                    placeholder="Option A"
+                                  />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" >
+                                <Form.Group className="mb-3">
                                   <Form.Label>Option B</Form.Label>
-                                  <Form.Control value={pollFormDataOB} onChange={(e) => { setPollFormDataOB(e.target.value) }} placeholder="Option b" />
+                                  <Form.Control
+                                    value={pollFormDataOB}
+                                    onChange={(e) => {
+                                      setPollFormDataOB(e.target.value);
+                                    }}
+                                    placeholder="Option b"
+                                  />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" >
+                                <Form.Group className="mb-3">
                                   <Form.Label>Option C</Form.Label>
-                                  <Form.Control value={pollFormDataOC} onChange={(e) => { setPollFormDataOC(e.target.value) }} placeholder="Option c" />
+                                  <Form.Control
+                                    value={pollFormDataOC}
+                                    onChange={(e) => {
+                                      setPollFormDataOC(e.target.value);
+                                    }}
+                                    placeholder="Option c"
+                                  />
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
@@ -4816,41 +5485,82 @@ const resetChatView=(username)=>{
                                 {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
     Preview 
   </Button> */}
-                                <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={() => { handlePollFormSubmission(userFullName) }}>
+                                <Button
+                                  variant="primary"
+                                  type="submit"
+                                  style={{ marginLeft: "5px" }}
+                                  onClick={() => {
+                                    handlePollFormSubmission(userFullName);
+                                  }}
+                                >
                                   Save
                                 </Button>
                               </Form>
-                              : <Form onSubmit={(e) => e.preventDefault()}>
-                                <Form.Group className="mb-3" >
-                                  <Form.Label>{pollFormData.Question}</Form.Label>
-
+                            ) : (
+                              <Form onSubmit={(e) => e.preventDefault()}>
+                                <Form.Group className="mb-3">
+                                  <Form.Label>
+                                    {pollFormData.Question}
+                                  </Form.Label>
                                 </Form.Group>
-                                <Form.Group className="mb-3" >
-
-                                  <Form.Check type="checkbox" label={pollFormData.OptionA} />
-                                  <ProgressBar animated variant="success" now={pollFormData.pollA} />
+                                <Form.Group className="mb-3">
+                                  <Form.Check
+                                    type="checkbox"
+                                    label={pollFormData.OptionA}
+                                  />
+                                  <ProgressBar
+                                    animated
+                                    variant="success"
+                                    now={pollFormData.pollA}
+                                  />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" >
-                                  <Form.Check type="checkbox" label={pollFormData.OptionB} />
-                                  <ProgressBar animated variant="info" now={pollFormData.pollB} />
+                                <Form.Group className="mb-3">
+                                  <Form.Check
+                                    type="checkbox"
+                                    label={pollFormData.OptionB}
+                                  />
+                                  <ProgressBar
+                                    animated
+                                    variant="info"
+                                    now={pollFormData.pollB}
+                                  />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" >
-                                  <Form.Check type="checkbox" label={pollFormData.OptionC} />
-                                  <ProgressBar animated variant="warning" now={pollFormData.pollC} />
+                                <Form.Group className="mb-3">
+                                  <Form.Check
+                                    type="checkbox"
+                                    label={pollFormData.OptionC}
+                                  />
+                                  <ProgressBar
+                                    animated
+                                    variant="warning"
+                                    now={pollFormData.pollC}
+                                  />
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" onClick={() => { setFormEditPoll(!FormEditPoll) }} >
+                                <Button
+                                  variant="primary"
+                                  onClick={() => {
+                                    setFormEditPoll(!FormEditPoll);
+                                  }}
+                                >
                                   Edit
                                 </Button>
-                                <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={() => { sentPollMessageInChat(pollFormData) }}>
+                                <Button
+                                  variant="primary"
+                                  type="submit"
+                                  style={{ marginLeft: "5px" }}
+                                  onClick={() => {
+                                    sentPollMessageInChat(pollFormData);
+                                  }}
+                                >
                                   Submit
                                 </Button>
                               </Form>
-                            }
+                            )}
                             {/* <button className="d-grid col-12 btn-main login-form-button" 
                 onClick={()=>{
                   if(breakOffInput){createBreakoff()}else{
@@ -4863,7 +5573,7 @@ const resetChatView=(username)=>{
                 >Create Now</button> */}
                           </div>
                         </div>
-                        : null}
+                      ) : null}
 
                       <div>
                         <VideoChat
@@ -4885,745 +5595,1135 @@ const resetChatView=(username)=>{
                           overflow: "auto",
                         }}
                       >
-                      {chatData.length
-                        ? chatData.map((e) => (
-                          e.isReply?   
-                          <div
-                          className="messageBox"
-                         
-                       
-                        >
-                             <div
-                          className="messageBox"
-                          style={{
-                            maxWidth:
-                              e.parentChat.isVideo || e.parentChat.isImage ? "200px" : "100%",
-                              backgroundColor:'#D3D3D3',
-                              margin:'0px',
-                              marginBottom:'8px'
-                            // width: "max-content",
-                            // maxWidth: "fit-content",
-                            // marginLeft: "auto",
-                            // position: "relative",
-                            // left: "3rem",
-                            // marginRight: "3.5rem"
-                          }}
-                       
-                        >
-                          <div className="ProfileBox"   
-                         >
-                            <img
-                              className="chat-profile"
-                              src={e.parentChat.imgSrc ? e.parentChat.imgSrc : null}
-                            />
-                            <p>{e.parentChat.chatname}</p>
-                            {/* <p className="timestamp"> {e.parentChat.timestamp}</p> */}
-                          </div>
-                          <Linkify
-                            componentDecorator={(
-                              decoratedHref,
-                              decoratedText,
-                              key
-                            ) => (
-                              <a
-                                target="blank"
-                                href={decoratedHref}
-                                key={key}
-                              >
-                                {decoratedText}
-                              </a>
-                            )}
-                          >
-                            {" "}
-                            <div
-                              className={
-                                e.parentChat.isEmoji ? "message-emoji" : "message"
-                              }
-                            >
-                              {!e.parentChat.isVideo && !e.parentChat.isImage && !e.parentChat.isPoll && !e.parentChat.isEvent
-                                ? e.parentChat.message
-                                : null}
-                            </div>
-                          </Linkify>
-                          {e.parentChat.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
-                            <Form onSubmit={(e) => e.preventDefault()}>
+                        {chatData.length
+                          ? chatData.map((e) =>
+                              e.isReply ? (
+                                <div className="messageBox">
+                                  <div
+                                    className="messageBox"
+                                    style={{
+                                      maxWidth:
+                                        e.parentChat.isVideo ||
+                                        e.parentChat.isImage
+                                          ? "200px"
+                                          : "100%",
+                                      backgroundColor: "#D3D3D3",
+                                      margin: "0px",
+                                      marginBottom: "8px",
+                                      // width: "max-content",
+                                      // maxWidth: "fit-content",
+                                      // marginLeft: "auto",
+                                      // position: "relative",
+                                      // left: "3rem",
+                                      // marginRight: "3.5rem"
+                                    }}
+                                  >
+                                    <div className="ProfileBox">
+                                      <img
+                                        className="chat-profile"
+                                        src={
+                                          e.parentChat.imgSrc
+                                            ? e.parentChat.imgSrc
+                                            : null
+                                        }
+                                      />
+                                      <p>{e.parentChat.chatname}</p>
+                                      {/* <p className="timestamp"> {e.parentChat.timestamp}</p> */}
+                                    </div>
+                                    <Linkify
+                                      componentDecorator={(
+                                        decoratedHref,
+                                        decoratedText,
+                                        key
+                                      ) => (
+                                        <a
+                                          target="blank"
+                                          href={decoratedHref}
+                                          key={key}
+                                        >
+                                          {decoratedText}
+                                        </a>
+                                      )}
+                                    >
+                                      {" "}
+                                      <div
+                                        className={
+                                          e.parentChat.isEmoji
+                                            ? "message-emoji"
+                                            : "message"
+                                        }
+                                      >
+                                        {!e.parentChat.isVideo &&
+                                        !e.parentChat.isImage &&
+                                        !e.parentChat.isPoll &&
+                                        !e.parentChat.isEvent
+                                          ? e.parentChat.message
+                                          : null}
+                                      </div>
+                                    </Linkify>
+                                    {e.parentChat.isPoll ? (
+                                      <div
+                                        style={{ marginTop: "30px" }}
+                                        className="pollFormDiv"
+                                      >
+                                        <Form
+                                          onSubmit={(e) => e.preventDefault()}
+                                        >
+                                          <Form.Group className="mb-3">
+                                            <Form.Label>
+                                              {e.pollData.Question}
+                                            </Form.Label>
+                                          </Form.Group>
 
-                              <Form.Group className="mb-3" >
-                                <Form.Label>{e.pollData.Question}</Form.Label>
+                                          <Form.Group className="mb-3">
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                              }}
+                                            >
+                                              <Form.Check
+                                                type="radio"
+                                                name="radio"
+                                                label={e.pollData.OptionA}
+                                                onChange={() => {
+                                                  // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                  // chatData[chatData.indexOf(e)]
+                                                  e.pollData.pollA =
+                                                    e.pollData.pollA + 1;
+                                                  e.pollData.pollB =
+                                                    e.pollData.pollB;
+                                                  e.pollData.pollC =
+                                                    e.pollData.pollC;
 
-                              </Form.Group>
+                                                  // let messageContainer = document.querySelector(".chatarea");
 
-                              <Form.Group className="mb-3" >
+                                                  // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                  // setChatData(chatData.filter((chat) => chat !== e))
+                                                  // setChatData((chat) => [...chat, e])
+                                                  // updatePollData(e)
+                                                }}
+                                              />
+                                              <span className="votingPercentage">{`${getVotingPercentage(
+                                                e.pollData.pollA,
+                                                e.pollData.pollB,
+                                                e.pollData.pollC
+                                              )}%`}</span>
+                                            </div>
+                                            <ProgressBar
+                                              now={getVotingPercentage(
+                                                e.pollData.pollA,
+                                                e.pollData.pollB,
+                                                e.pollData.pollC
+                                              )}
+                                            />
+                                          </Form.Group>
 
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                 
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
-                                  onChange={() => {
+                                          <Form.Group className="mb-3">
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                              }}
+                                            >
+                                              <Form.Check
+                                                type="radio"
+                                                name="radio"
+                                                label={e.pollData.OptionB}
+                                                onChange={() => {
+                                                  // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                  // chatData[chatData.indexOf(e)]
+                                                  // e.pollData.pollB = 100
+                                                  // e.pollData.pollA = 0
+                                                  // e.pollData.pollC = 0
+                                                  e.pollData.pollA =
+                                                    e.pollData.pollA;
+                                                  e.pollData.pollB =
+                                                    e.pollData.pollB + 1;
+                                                  e.pollData.pollC =
+                                                    e.pollData.pollC;
 
-                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                    // chatData[chatData.indexOf(e)]
-                                    e.pollData.pollA = e.pollData.pollA + 1
-                                    e.pollData.pollB = e.pollData.pollB
-                                    e.pollData.pollC = e.pollData.pollC
+                                                  // let messageContainer = document.querySelector(".chatarea");
 
+                                                  // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                  // setChatData(chatData.filter((chat) => chat !== e))
+                                                  // setChatData((chat) => [...chat, e])
+                                                  // updatePollData(e)
+                                                }}
+                                              />
 
-                                    // let messageContainer = document.querySelector(".chatarea");
+                                              <span className="votingPercentage">{`${getVotingPercentage(
+                                                e.pollData.pollB,
+                                                e.pollData.pollA,
+                                                e.pollData.pollC
+                                              )}%`}</span>
+                                            </div>
 
-                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    // setChatData(chatData.filter((chat) => chat !== e))
-                                    // setChatData((chat) => [...chat, e])
-                                    // updatePollData(e)
-                                  }}
-                                />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                              </Form.Group>
+                                            <ProgressBar
+                                              now={getVotingPercentage(
+                                                e.pollData.pollB,
+                                                e.pollData.pollA,
+                                                e.pollData.pollC
+                                              )}
+                                            />
+                                          </Form.Group>
 
-                              <Form.Group className="mb-3" >
-                              
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                 
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+                                          <Form.Group className="mb-3">
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                              }}
+                                            >
+                                              <Form.Check
+                                                type="radio"
+                                                name="radio"
+                                                label={e.pollData.OptionC}
+                                                onChange={() => {
+                                                  // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                  // chatData[chatData.indexOf(e)]
 
-// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-// chatData[chatData.indexOf(e)]
-// e.pollData.pollB = 100
-// e.pollData.pollA = 0
-// e.pollData.pollC = 0
-e.pollData.pollA = e.pollData.pollA
-e.pollData.pollB = e.pollData.pollB + 1
-e.pollData.pollC = e.pollData.pollC
+                                                  // e.pollData.pollC = 100
+                                                  // e.pollData.pollA = 0
+                                                  // e.pollData.pollB = 0
 
+                                                  e.pollData.pollC =
+                                                    e.pollData.pollC + 1;
+                                                  e.pollData.pollA =
+                                                    e.pollData.pollA;
+                                                  e.pollData.pollB =
+                                                    e.pollData.pollB;
+                                                  // let messageContainer = document.querySelector(".chatarea");
 
-// let messageContainer = document.querySelector(".chatarea");
-
-// messageContainer.scrollTop = messageContainer.scrollHeight;
-// setChatData(chatData.filter((chat) => chat !== e))
-// setChatData((chat) => [...chat, e])
-// updatePollData(e)
-}} />
-                                 
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
-                     
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                     </Form.Group>
-
-                              <Form.Group className="mb-3" >
-                             
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
-                                  onChange={() => {
-
-                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                    // chatData[chatData.indexOf(e)]
-
-                                    // e.pollData.pollC = 100
-                                    // e.pollData.pollA = 0
-                                    // e.pollData.pollB = 0
-
-                                    e.pollData.pollC = e.pollData.pollC + 1
-                                    e.pollData.pollA = e.pollData.pollA
-                                    e.pollData.pollB = e.pollData.pollB
-                                    // let messageContainer = document.querySelector(".chatarea");
-
-                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    // setChatData(chatData.filter((chat) => chat !== e))
-                                    // setChatData((chat) => [...chat, e])
-                                    // updatePollData(e)
-                                  }}
-                                />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
-                                  <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                     </Form.Group>
-                              {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                                  // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                  // setChatData(chatData.filter((chat) => chat !== e))
+                                                  // setChatData((chat) => [...chat, e])
+                                                  // updatePollData(e)
+                                                }}
+                                              />
+                                              <span className="votingPercentage">{`${getVotingPercentage(
+                                                e.pollData.pollC,
+                                                e.pollData.pollA,
+                                                e.pollData.pollB
+                                              )}%`}</span>
+                                            </div>
+                                            <ProgressBar
+                                              now={getVotingPercentage(
+                                                e.pollData.pollC,
+                                                e.pollData.pollA,
+                                                e.pollData.pollB
+                                              )}
+                                            />
+                                          </Form.Group>
+                                          {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
   <Form.Check type="radio" name="radio" label="Check me out" />
 </Form.Group> */}
-                              <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
-                                let messageContainer = document.querySelector(".chatarea");
+                                          <Button
+                                            variant="primary"
+                                            type="submit"
+                                            disabled={e.pollData.isVoted}
+                                            id={e.pollData.threadId}
+                                            onClick={() => {
+                                              toast.success(
+                                                "Voted Successfully"
+                                              );
+                                              document.getElementById(
+                                                e.pollData.threadId
+                                              ).disabled = true;
+                                              uploadPollResponse(e);
+                                              let messageContainer =
+                                                document.querySelector(
+                                                  ".chatarea"
+                                                );
 
-                                messageContainer.scrollTop = messageContainer.scrollHeight;
-                                setChatData(chatData.filter((chat) => chat !== e))
-                                setChatData((chat) => [...chat, e])
-                                updatePollData(e)
-                              }}>
-                                Vote
-                              </Button>
-                            </Form>
-                          </div> : null}
-                          {e.parentChat.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
-                            <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
-                            <p>Event Title : {e.parentChat.event.eventTitle}</p>
-                            {e.event.eventDesc ? <p>Event Description : {e.parentChat.event.eventDesc}</p> : null}
-                            <p>Event Date : {e.parentChat.event.eventDate}</p>
-                            <p>Event Time : {e.parentChat.event.eventTime}</p>
-                          </div> : null}
-                          {e.parentChat.isVideo ? (
-                            <video
-                              onDragStart={(e) => e.preventDefault()}
-                              onmousedown={(event) => {
-                                event.preventDefault
-                                  ? event.preventDefault()
-                                  : (event.returnValue = false);
-                              }}
-                              style={{
-                                maxWidth: "200px",
-                                marginTop: "20px",
-                                borderRadius: "5px",
-                              }}
-                              controls={true}
-                              src={e.parentChat.message}
-                            ></video>
-                          ) : null}
-                          {e.parentChat.isImage ? (
-                            <img
-                              src={e.parentChat.message}
-                              onDragStart={(e) => e.preventDefault()}
-                              onmousedown={(event) => {
-                                event.preventDefault
-                                  ? event.preventDefault()
-                                  : (event.returnValue = false);
-                              }}
-                              style={{
-                                maxWidth: e.parentChat.isSticker ? "60px" : "200px",
-                                marginTop: "20px",
-                                borderRadius: "5px",
-                              }}
-                            />
-                          ) : null}
-
-                          {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                          {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                                              messageContainer.scrollTop =
+                                                messageContainer.scrollHeight;
+                                              setChatData(
+                                                chatData.filter(
+                                                  (chat) => chat !== e
+                                                )
+                                              );
+                                              setChatData((chat) => [
+                                                ...chat,
+                                                e,
+                                              ]);
+                                              updatePollData(e);
+                                            }}
+                                          >
+                                            Vote
+                                          </Button>
+                                        </Form>
+                                      </div>
+                                    ) : null}
+                                    {e.parentChat.isEvent ? (
+                                      <div
+                                        style={{ marginTop: "30px" }}
+                                        className="EventFormDiv"
+                                      >
+                                        <h5 style={{ fontSize: "15px" }}>
+                                          Event Created by {e.event.fullName}
+                                        </h5>
+                                        <p>
+                                          Event Title :{" "}
+                                          {e.parentChat.event.eventTitle}
+                                        </p>
+                                        {e.event.eventDesc ? (
+                                          <p>
+                                            Event Description :{" "}
+                                            {e.parentChat.event.eventDesc}
+                                          </p>
+                                        ) : null}
+                                        <p>
+                                          Event Date :{" "}
+                                          {e.parentChat.event.eventDate}
+                                        </p>
+                                        <p>
+                                          Event Time :{" "}
+                                          {e.parentChat.event.eventTime}
+                                        </p>
+                                      </div>
+                                    ) : null}
+                                    {e.parentChat.isVideo ? (
+                                      <video
+                                        onDragStart={(e) => e.preventDefault()}
+                                        onmousedown={(event) => {
+                                          event.preventDefault
+                                            ? event.preventDefault()
+                                            : (event.returnValue = false);
+                                        }}
+                                        style={{
+                                          maxWidth: "200px",
+                                          marginTop: "20px",
+                                          borderRadius: "5px",
+                                        }}
+                                        controls={true}
+                                        src={e.parentChat.message}
+                                      ></video>
+                                    ) : null}
+                                    {e.parentChat.isImage ? (
+                                      <img
+                                        src={e.parentChat.message}
+                                        onDragStart={(e) => e.preventDefault()}
+                                        onmousedown={(event) => {
+                                          event.preventDefault
+                                            ? event.preventDefault()
+                                            : (event.returnValue = false);
+                                        }}
+                                        style={{
+                                          maxWidth: e.parentChat.isSticker
+                                            ? "60px"
+                                            : "200px",
+                                          marginTop: "20px",
+                                          borderRadius: "5px",
+                                        }}
+                                      />
+                                    ) : null}
+                                    {e.isPoll ? (
+                                      <p
+                                        style={{ fontSize: "12px" }}
+                                      >{`Voting Ends in ${e.expiryTime}`}</p>
+                                    ) : null}
+                                    {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
                             className="reply-button" 
                             onClick={()=>{
                               setReplyData({chatData:e,user:{
                               name: userFullName,
                               profilePic: userProfilePic,
                             }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null}
-                          <div className="reply-box"></div> */} ghfgh
-                        
-                        </div>
-                          <div className="ProfileBox"    onClick={() => {
-                            if (e.chatname !== userFullName && !e.isPoll) {
-                              toast.success(
-                                `Opening Private Chat with ${e.chatname}`
-                              );
-                              setPrivateChatPerson({
-                                name: e.chatname,
-                                profilePic: e.imgSrc,
-                              });
-                              setPrivateChat(true);
-                              setClubFloor(false);
-                              // socket.emit("room", userInfo[0].username+userInformation.username);
-                              getChatDataPrivate(e.chatname, userFullName)
-                              // socket.emit("new-user-joined", {
-                              //     name: userFullName,
-                              //     profilePic: userProfilePic,
-                              //   });
+                          <div className="reply-box"></div> */}{" "}
+                                    ghfgh
+                                  </div>
+                                  <div
+                                    className="ProfileBox"
+                                    onClick={() => {
+                                      if (
+                                        e.chatname !== userFullName &&
+                                        !e.isPoll
+                                      ) {
+                                        toast.success(
+                                          `Opening Private Chat with ${e.chatname}`
+                                        );
+                                        setPrivateChatPerson({
+                                          name: e.chatname,
+                                          profilePic: e.imgSrc,
+                                        });
+                                        setPrivateChat(true);
+                                        setClubFloor(false);
+                                        // socket.emit("room", userInfo[0].username+userInformation.username);
+                                        getChatDataPrivate(
+                                          e.chatname,
+                                          userFullName
+                                        );
+                                        // socket.emit("new-user-joined", {
+                                        //     name: userFullName,
+                                        //     profilePic: userProfilePic,
+                                        //   });
 
-                              setTimeout(() => {
-                                if (
-                                  document.getElementById(
-                                    "privatechatslide"
-                                  )
-                                ) {
-                                  document.getElementById(
-                                    "privatechatslide"
-                                  ).style.transition = "1sec";
-                                  document.getElementById(
-                                    "privatechatslide"
-                                  ).style.right = "30px";
-                                }
-                              }, 1);
-                            }
-                          }}>
-                            <img
-                              className="chat-profile"
-                              src={e.imgSrc ? e.imgSrc : null}
-                            />
-                            <p>{e.chatname}</p>
-                            <p className="timestamp"> {e.timestamp}</p>
-                          </div>
-                          <Linkify
-                            componentDecorator={(
-                              decoratedHref,
-                              decoratedText,
-                              key
-                            ) => (
-                              <a
-                                target="blank"
-                                href={decoratedHref}
-                                key={key}
-                              >
-                                {decoratedText}
-                              </a>
-                            )}
-                          >
-                            {" "}
-                            <div
-                              className={
-                                e.isEmoji ? "message-emoji" : "message"
-                              }
-                            >
-                              {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent
-                                ? e.message
-                                : null}
-                            </div>
-                          </Linkify>
-                          {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
-                            <Form onSubmit={(e) => e.preventDefault()}>
+                                        setTimeout(() => {
+                                          if (
+                                            document.getElementById(
+                                              "privatechatslide"
+                                            )
+                                          ) {
+                                            document.getElementById(
+                                              "privatechatslide"
+                                            ).style.transition = "1sec";
+                                            document.getElementById(
+                                              "privatechatslide"
+                                            ).style.right = "30px";
+                                          }
+                                        }, 1);
+                                      }
+                                    }}
+                                  >
+                                    <img
+                                      className="chat-profile"
+                                      src={e.imgSrc ? e.imgSrc : null}
+                                    />
+                                    <p>{e.chatname}</p>
+                                    <p className="timestamp"> {e.timestamp}</p>
+                                  </div>
+                                  <Linkify
+                                    componentDecorator={(
+                                      decoratedHref,
+                                      decoratedText,
+                                      key
+                                    ) => (
+                                      <a
+                                        target="blank"
+                                        href={decoratedHref}
+                                        key={key}
+                                      >
+                                        {decoratedText}
+                                      </a>
+                                    )}
+                                  >
+                                    {" "}
+                                    <div
+                                      className={
+                                        e.isEmoji ? "message-emoji" : "message"
+                                      }
+                                    >
+                                      {!e.isVideo &&
+                                      !e.isImage &&
+                                      !e.isPoll &&
+                                      !e.isEvent
+                                        ? e.message
+                                        : null}
+                                    </div>
+                                  </Linkify>
+                                  {e.isPoll ? (
+                                    <div
+                                      style={{ marginTop: "30px" }}
+                                      className="pollFormDiv"
+                                    >
+                                      <Form
+                                        onSubmit={(e) => e.preventDefault()}
+                                      >
+                                        <Form.Group className="mb-3">
+                                          <Form.Label>
+                                            {e.pollData.Question}
+                                          </Form.Label>
+                                        </Form.Group>
 
-                              <Form.Group className="mb-3" >
-                                <Form.Label>{e.pollData.Question}</Form.Label>
+                                        <Form.Group className="mb-3">
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            <Form.Check
+                                              type="radio"
+                                              name="radio"
+                                              label={e.pollData.OptionA}
+                                              onChange={() => {
+                                                // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                // chatData[chatData.indexOf(e)]
+                                                e.pollData.pollA =
+                                                  e.pollData.pollA + 1;
+                                                e.pollData.pollB =
+                                                  e.pollData.pollB;
+                                                e.pollData.pollC =
+                                                  e.pollData.pollC;
 
-                              </Form.Group>
+                                                // let messageContainer = document.querySelector(".chatarea");
 
-                              <Form.Group className="mb-3" >
+                                                // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                // setChatData(chatData.filter((chat) => chat !== e))
+                                                // setChatData((chat) => [...chat, e])
+                                                // updatePollData(e)
+                                              }}
+                                            />
+                                            <span className="votingPercentage">{`${getVotingPercentage(
+                                              e.pollData.pollA,
+                                              e.pollData.pollB,
+                                              e.pollData.pollC
+                                            )}%`}</span>
+                                          </div>
+                                          <ProgressBar
+                                            now={getVotingPercentage(
+                                              e.pollData.pollA,
+                                              e.pollData.pollB,
+                                              e.pollData.pollC
+                                            )}
+                                          />
+                                        </Form.Group>
 
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                 
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
-                                  onChange={() => {
+                                        <Form.Group className="mb-3">
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            <Form.Check
+                                              type="radio"
+                                              name="radio"
+                                              label={e.pollData.OptionB}
+                                              onChange={() => {
+                                                // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                // chatData[chatData.indexOf(e)]
+                                                // e.pollData.pollB = 100
+                                                // e.pollData.pollA = 0
+                                                // e.pollData.pollC = 0
+                                                e.pollData.pollA =
+                                                  e.pollData.pollA;
+                                                e.pollData.pollB =
+                                                  e.pollData.pollB + 1;
+                                                e.pollData.pollC =
+                                                  e.pollData.pollC;
 
-                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                    // chatData[chatData.indexOf(e)]
-                                    e.pollData.pollA = e.pollData.pollA + 1
-                                    e.pollData.pollB = e.pollData.pollB
-                                    e.pollData.pollC = e.pollData.pollC
+                                                // let messageContainer = document.querySelector(".chatarea");
 
+                                                // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                // setChatData(chatData.filter((chat) => chat !== e))
+                                                // setChatData((chat) => [...chat, e])
+                                                // updatePollData(e)
+                                              }}
+                                            />
 
-                                    // let messageContainer = document.querySelector(".chatarea");
+                                            <span className="votingPercentage">{`${getVotingPercentage(
+                                              e.pollData.pollB,
+                                              e.pollData.pollA,
+                                              e.pollData.pollC
+                                            )}%`}</span>
+                                          </div>
 
-                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    // setChatData(chatData.filter((chat) => chat !== e))
-                                    // setChatData((chat) => [...chat, e])
-                                    // updatePollData(e)
-                                  }}
-                                />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                              </Form.Group>
+                                          <ProgressBar
+                                            now={getVotingPercentage(
+                                              e.pollData.pollB,
+                                              e.pollData.pollA,
+                                              e.pollData.pollC
+                                            )}
+                                          />
+                                        </Form.Group>
 
-                              <Form.Group className="mb-3" >
-                              
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                 
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+                                        <Form.Group className="mb-3">
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            <Form.Check
+                                              type="radio"
+                                              name="radio"
+                                              label={e.pollData.OptionC}
+                                              onChange={() => {
+                                                // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                // chatData[chatData.indexOf(e)]
 
-// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-// chatData[chatData.indexOf(e)]
-// e.pollData.pollB = 100
-// e.pollData.pollA = 0
-// e.pollData.pollC = 0
-e.pollData.pollA = e.pollData.pollA
-e.pollData.pollB = e.pollData.pollB + 1
-e.pollData.pollC = e.pollData.pollC
+                                                // e.pollData.pollC = 100
+                                                // e.pollData.pollA = 0
+                                                // e.pollData.pollB = 0
 
+                                                e.pollData.pollC =
+                                                  e.pollData.pollC + 1;
+                                                e.pollData.pollA =
+                                                  e.pollData.pollA;
+                                                e.pollData.pollB =
+                                                  e.pollData.pollB;
+                                                // let messageContainer = document.querySelector(".chatarea");
 
-// let messageContainer = document.querySelector(".chatarea");
-
-// messageContainer.scrollTop = messageContainer.scrollHeight;
-// setChatData(chatData.filter((chat) => chat !== e))
-// setChatData((chat) => [...chat, e])
-// updatePollData(e)
-}} />
-                                 
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
-                     
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                     </Form.Group>
-
-                              <Form.Group className="mb-3" >
-                             
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
-                                  onChange={() => {
-
-                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                    // chatData[chatData.indexOf(e)]
-
-                                    // e.pollData.pollC = 100
-                                    // e.pollData.pollA = 0
-                                    // e.pollData.pollB = 0
-
-                                    e.pollData.pollC = e.pollData.pollC + 1
-                                    e.pollData.pollA = e.pollData.pollA
-                                    e.pollData.pollB = e.pollData.pollB
-                                    // let messageContainer = document.querySelector(".chatarea");
-
-                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    // setChatData(chatData.filter((chat) => chat !== e))
-                                    // setChatData((chat) => [...chat, e])
-                                    // updatePollData(e)
-                                  }}
-                                />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
-                                  <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                     </Form.Group>
-                              {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                                // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                // setChatData(chatData.filter((chat) => chat !== e))
+                                                // setChatData((chat) => [...chat, e])
+                                                // updatePollData(e)
+                                              }}
+                                            />
+                                            <span className="votingPercentage">{`${getVotingPercentage(
+                                              e.pollData.pollC,
+                                              e.pollData.pollA,
+                                              e.pollData.pollB
+                                            )}%`}</span>
+                                          </div>
+                                          <ProgressBar
+                                            now={getVotingPercentage(
+                                              e.pollData.pollC,
+                                              e.pollData.pollA,
+                                              e.pollData.pollB
+                                            )}
+                                          />
+                                        </Form.Group>
+                                        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
   <Form.Check type="radio" name="radio" label="Check me out" />
 </Form.Group> */}
-                              <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
-                                let messageContainer = document.querySelector(".chatarea");
+                                        <Button
+                                          variant="primary"
+                                          type="submit"
+                                          disabled={e.pollData.isVoted}
+                                          id={e.pollData.threadId}
+                                          onClick={() => {
+                                            toast.success("Voted Successfully");
+                                            document.getElementById(
+                                              e.pollData.threadId
+                                            ).disabled = true;
+                                            uploadPollResponse(e);
+                                            let messageContainer =
+                                              document.querySelector(
+                                                ".chatarea"
+                                              );
 
-                                messageContainer.scrollTop = messageContainer.scrollHeight;
-                                setChatData(chatData.filter((chat) => chat !== e))
-                                setChatData((chat) => [...chat, e])
-                                updatePollData(e)
-                              }}>
-                                Vote
-                              </Button>
-                            </Form>
-                          </div> : null}
-                          {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
-                            <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
-                            <p>Event Title : {e.event.eventTitle}</p>
-                            {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
-                            <p>Event Date : {e.event.eventDate}</p>
-                            <p>Event Time : {e.event.eventTime}</p>
-                          </div> : null}
-                          {e.isVideo ? (
-                            <video
-                              onDragStart={(e) => e.preventDefault()}
-                              onmousedown={(event) => {
-                                event.preventDefault
-                                  ? event.preventDefault()
-                                  : (event.returnValue = false);
-                              }}
-                              style={{
-                                maxWidth: "200px",
-                                marginTop: "20px",
-                                borderRadius: "5px",
-                              }}
-                              controls={true}
-                              src={e.message}
-                            ></video>
-                          ) : null}
-                          {e.isImage ? (
-                            <img
-                              src={e.message}
-                              onDragStart={(e) => e.preventDefault()}
-                              onmousedown={(event) => {
-                                event.preventDefault
-                                  ? event.preventDefault()
-                                  : (event.returnValue = false);
-                              }}
-                              style={{
-                                maxWidth: e.isSticker ? "60px" : "200px",
-                                marginTop: "20px",
-                                borderRadius: "5px",
-                              }}
-                            />
-                          ) : null}
+                                            messageContainer.scrollTop =
+                                              messageContainer.scrollHeight;
+                                            setChatData(
+                                              chatData.filter(
+                                                (chat) => chat !== e
+                                              )
+                                            );
+                                            setChatData((chat) => [...chat, e]);
+                                            updatePollData(e);
+                                          }}
+                                        >
+                                          Vote
+                                        </Button>
+                                      </Form>
+                                    </div>
+                                  ) : null}
+                                  {e.isEvent ? (
+                                    <div
+                                      style={{ marginTop: "30px" }}
+                                      className="EventFormDiv"
+                                    >
+                                      <h5 style={{ fontSize: "15px" }}>
+                                        Event Created by {e.event.fullName}
+                                      </h5>
+                                      <p>Event Title : {e.event.eventTitle}</p>
+                                      {e.event.eventDesc ? (
+                                        <p>
+                                          Event Description :{" "}
+                                          {e.event.eventDesc}
+                                        </p>
+                                      ) : null}
+                                      <p>Event Date : {e.event.eventDate}</p>
+                                      <p>Event Time : {e.event.eventTime}</p>
+                                    </div>
+                                  ) : null}
+                                  {e.isVideo ? (
+                                    <video
+                                      onDragStart={(e) => e.preventDefault()}
+                                      onmousedown={(event) => {
+                                        event.preventDefault
+                                          ? event.preventDefault()
+                                          : (event.returnValue = false);
+                                      }}
+                                      style={{
+                                        maxWidth: "200px",
+                                        marginTop: "20px",
+                                        borderRadius: "5px",
+                                      }}
+                                      controls={true}
+                                      src={e.message}
+                                    ></video>
+                                  ) : null}
+                                  {e.isImage ? (
+                                    <img
+                                      src={e.message}
+                                      onDragStart={(e) => e.preventDefault()}
+                                      onmousedown={(event) => {
+                                        event.preventDefault
+                                          ? event.preventDefault()
+                                          : (event.returnValue = false);
+                                      }}
+                                      style={{
+                                        maxWidth: e.isSticker
+                                          ? "60px"
+                                          : "200px",
+                                        marginTop: "20px",
+                                        borderRadius: "5px",
+                                      }}
+                                    />
+                                  ) : null}
 
-                          {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                          {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
-                            className="reply-button" 
-                            onClick={()=>{
-                              setReplyData({chatData:e.parentChat,user:{
-                              name: userFullName,
-                              profilePic: userProfilePic,
-                            }});setShowReply(!showReply)}}
-                            >{e.replyCount?e.replyCount+' more':0} Replies</button> : null}
-                          {/* <div className="reply-box"></div> */}
-                        </div>
-                       :
-                          <div
-                            className="messageBox"
-                           
-                          >
-                            <div className="ProfileBox"    onClick={() => {
-                              if (e.chatname !== userFullName && !e.isPoll) {
-                                toast.success(
-                                  `Opening Private Chat with ${e.chatname}`
-                                );
-                                setPrivateChatPerson({
-                                  name: e.chatname,
-                                  profilePic: e.imgSrc,
-                                });
-                                setPrivateChat(true);
-                                setClubFloor(false);
-                                // socket.emit("room", userInfo[0].username+userInformation.username);
-                                getChatDataPrivate(e.chatname, userFullName)
-                                // socket.emit("new-user-joined", {
-                                //     name: userFullName,
-                                //     profilePic: userProfilePic,
-                                //   });
+                                  {e.isPoll ? (
+                                    <p
+                                      style={{ fontSize: "12px" }}
+                                    >{`Voting Ends in ${e.expiryTime}`}</p>
+                                  ) : null}
+                                  {e.message ||
+                                  e.isEmoji ||
+                                  e.isVideo ||
+                                  e.isImage ? (
+                                    <button
+                                      className="reply-button"
+                                      onClick={() => {
+                                        setReplyData({
+                                          chatData: e.parentChat,
+                                          user: {
+                                            name: userFullName,
+                                            profilePic: userProfilePic,
+                                          },
+                                        });
+                                        setShowReply(!showReply);
+                                      }}
+                                    >
+                                      {e.replyCount
+                                        ? e.replyCount + " more"
+                                        : 0}{" "}
+                                      Replies
+                                    </button>
+                                  ) : null}
+                                  {/* <div className="reply-box"></div> */}
+                                </div>
+                              ) : (
+                                <div className="messageBox">
+                                  <div
+                                    className="ProfileBox"
+                                    onClick={() => {
+                                      if (
+                                        e.chatname !== userFullName &&
+                                        !e.isPoll
+                                      ) {
+                                        toast.success(
+                                          `Opening Private Chat with ${e.chatname}`
+                                        );
+                                        setPrivateChatPerson({
+                                          name: e.chatname,
+                                          profilePic: e.imgSrc,
+                                        });
+                                        setPrivateChat(true);
+                                        setClubFloor(false);
+                                        // socket.emit("room", userInfo[0].username+userInformation.username);
+                                        getChatDataPrivate(
+                                          e.chatname,
+                                          userFullName
+                                        );
+                                        // socket.emit("new-user-joined", {
+                                        //     name: userFullName,
+                                        //     profilePic: userProfilePic,
+                                        //   });
 
-                                setTimeout(() => {
-                                  if (
-                                    document.getElementById(
-                                      "privatechatslide"
-                                    )
-                                  ) {
-                                    document.getElementById(
-                                      "privatechatslide"
-                                    ).style.transition = "1sec";
-                                    document.getElementById(
-                                      "privatechatslide"
-                                    ).style.right = "30px";
-                                  }
-                                }, 1);
-                              }
-                            }}>
-                              <img
-                                className="chat-profile"
-                                src={e.imgSrc ? e.imgSrc : null}
-                              />
-                              <p>{e.chatname}</p>
-                              <p className="timestamp"> {e.timestamp}</p>
-                            </div>
-                            <Linkify
-                              componentDecorator={(
-                                decoratedHref,
-                                decoratedText,
-                                key
-                              ) => (
-                                <a
-                                  target="blank"
-                                  href={decoratedHref}
-                                  key={key}
-                                >
-                                  {decoratedText}
-                                </a>
-                              )}
-                            >
-                              {" "}
-                              <div
-                                className={
-                                  e.isEmoji ? "message-emoji" : "message"
-                                }
-                              >
-                                {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent
-                                  ? e.message
-                                  : null}
-                              </div>
-                            </Linkify>
-                            {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
-                              <Form onSubmit={(e) => e.preventDefault()}>
-
-                                <Form.Group className="mb-3" >
-                                  <Form.Label>{e.pollData.Question}</Form.Label>
-
-                                </Form.Group>
-
-                                <Form.Group className="mb-3" >
-
-                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                   
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
-                                    onChange={() => {
-
-                                      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                      // chatData[chatData.indexOf(e)]
-                                      e.pollData.pollA = e.pollData.pollA + 1
-                                      e.pollData.pollB = e.pollData.pollB
-                                      e.pollData.pollC = e.pollData.pollC
-
-
-                                      // let messageContainer = document.querySelector(".chatarea");
-
-                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      // setChatData(chatData.filter((chat) => chat !== e))
-                                      // setChatData((chat) => [...chat, e])
-                                      // updatePollData(e)
+                                        setTimeout(() => {
+                                          if (
+                                            document.getElementById(
+                                              "privatechatslide"
+                                            )
+                                          ) {
+                                            document.getElementById(
+                                              "privatechatslide"
+                                            ).style.transition = "1sec";
+                                            document.getElementById(
+                                              "privatechatslide"
+                                            ).style.right = "30px";
+                                          }
+                                        }, 1);
+                                      }
                                     }}
-                                  />
-                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                                </Form.Group>
+                                  >
+                                    <img
+                                      className="chat-profile"
+                                      src={e.imgSrc ? e.imgSrc : null}
+                                    />
+                                    <p>{e.chatname}</p>
+                                    <p className="timestamp"> {e.timestamp}</p>
+                                  </div>
+                                  <Linkify
+                                    componentDecorator={(
+                                      decoratedHref,
+                                      decoratedText,
+                                      key
+                                    ) => (
+                                      <a
+                                        target="blank"
+                                        href={decoratedHref}
+                                        key={key}
+                                      >
+                                        {decoratedText}
+                                      </a>
+                                    )}
+                                  >
+                                    {" "}
+                                    <div
+                                      className={
+                                        e.isEmoji ? "message-emoji" : "message"
+                                      }
+                                    >
+                                      {!e.isVideo &&
+                                      !e.isImage &&
+                                      !e.isPoll &&
+                                      !e.isEvent
+                                        ? e.message
+                                        : null}
+                                    </div>
+                                  </Linkify>
+                                  {e.isPoll ? (
+                                    <div
+                                      style={{ marginTop: "30px" }}
+                                      className="pollFormDiv"
+                                    >
+                                      <Form
+                                        onSubmit={(e) => e.preventDefault()}
+                                      >
+                                        <Form.Group className="mb-3">
+                                          <Form.Label>
+                                            {e.pollData.Question}
+                                          </Form.Label>
+                                        </Form.Group>
 
-                                <Form.Group className="mb-3" >
-                                
-                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                   
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+                                        <Form.Group className="mb-3">
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            <Form.Check
+                                              type="radio"
+                                              name="radio"
+                                              label={e.pollData.OptionA}
+                                              onChange={() => {
+                                                // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                // chatData[chatData.indexOf(e)]
+                                                e.pollData.pollA =
+                                                  e.pollData.pollA + 1;
+                                                e.pollData.pollB =
+                                                  e.pollData.pollB;
+                                                e.pollData.pollC =
+                                                  e.pollData.pollC;
 
-// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-// chatData[chatData.indexOf(e)]
-// e.pollData.pollB = 100
-// e.pollData.pollA = 0
-// e.pollData.pollC = 0
-e.pollData.pollA = e.pollData.pollA
-e.pollData.pollB = e.pollData.pollB + 1
-e.pollData.pollC = e.pollData.pollC
+                                                // let messageContainer = document.querySelector(".chatarea");
 
+                                                // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                // setChatData(chatData.filter((chat) => chat !== e))
+                                                // setChatData((chat) => [...chat, e])
+                                                // updatePollData(e)
+                                              }}
+                                            />
+                                            <span className="votingPercentage">{`${getVotingPercentage(
+                                              e.pollData.pollA,
+                                              e.pollData.pollB,
+                                              e.pollData.pollC
+                                            )}%`}</span>
+                                          </div>
+                                          <ProgressBar
+                                            now={getVotingPercentage(
+                                              e.pollData.pollA,
+                                              e.pollData.pollB,
+                                              e.pollData.pollC
+                                            )}
+                                          />
+                                        </Form.Group>
 
-// let messageContainer = document.querySelector(".chatarea");
+                                        <Form.Group className="mb-3">
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            <Form.Check
+                                              type="radio"
+                                              name="radio"
+                                              label={e.pollData.OptionB}
+                                              onChange={() => {
+                                                // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                // chatData[chatData.indexOf(e)]
+                                                // e.pollData.pollB = 100
+                                                // e.pollData.pollA = 0
+                                                // e.pollData.pollC = 0
+                                                e.pollData.pollA =
+                                                  e.pollData.pollA;
+                                                e.pollData.pollB =
+                                                  e.pollData.pollB + 1;
+                                                e.pollData.pollC =
+                                                  e.pollData.pollC;
 
-// messageContainer.scrollTop = messageContainer.scrollHeight;
-// setChatData(chatData.filter((chat) => chat !== e))
-// setChatData((chat) => [...chat, e])
-// updatePollData(e)
-}} />
-                                   
-                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
-                       
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                       </Form.Group>
+                                                // let messageContainer = document.querySelector(".chatarea");
 
-                                <Form.Group className="mb-3" >
-                               
-                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
-                                    onChange={() => {
+                                                // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                // setChatData(chatData.filter((chat) => chat !== e))
+                                                // setChatData((chat) => [...chat, e])
+                                                // updatePollData(e)
+                                              }}
+                                            />
 
-                                      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                      // chatData[chatData.indexOf(e)]
+                                            <span className="votingPercentage">{`${getVotingPercentage(
+                                              e.pollData.pollB,
+                                              e.pollData.pollA,
+                                              e.pollData.pollC
+                                            )}%`}</span>
+                                          </div>
 
-                                      // e.pollData.pollC = 100
-                                      // e.pollData.pollA = 0
-                                      // e.pollData.pollB = 0
+                                          <ProgressBar
+                                            now={getVotingPercentage(
+                                              e.pollData.pollB,
+                                              e.pollData.pollA,
+                                              e.pollData.pollC
+                                            )}
+                                          />
+                                        </Form.Group>
 
-                                      e.pollData.pollC = e.pollData.pollC + 1
-                                      e.pollData.pollA = e.pollData.pollA
-                                      e.pollData.pollB = e.pollData.pollB
-                                      // let messageContainer = document.querySelector(".chatarea");
+                                        <Form.Group className="mb-3">
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            <Form.Check
+                                              type="radio"
+                                              name="radio"
+                                              label={e.pollData.OptionC}
+                                              onChange={() => {
+                                                // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                // chatData[chatData.indexOf(e)]
 
-                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      // setChatData(chatData.filter((chat) => chat !== e))
-                                      // setChatData((chat) => [...chat, e])
-                                      // updatePollData(e)
-                                    }}
-                                  />
-                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
-                                    <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                       </Form.Group>
-                                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                                // e.pollData.pollC = 100
+                                                // e.pollData.pollA = 0
+                                                // e.pollData.pollB = 0
+
+                                                e.pollData.pollC =
+                                                  e.pollData.pollC + 1;
+                                                e.pollData.pollA =
+                                                  e.pollData.pollA;
+                                                e.pollData.pollB =
+                                                  e.pollData.pollB;
+                                                // let messageContainer = document.querySelector(".chatarea");
+
+                                                // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                // setChatData(chatData.filter((chat) => chat !== e))
+                                                // setChatData((chat) => [...chat, e])
+                                                // updatePollData(e)
+                                              }}
+                                            />
+                                            <span className="votingPercentage">{`${getVotingPercentage(
+                                              e.pollData.pollC,
+                                              e.pollData.pollA,
+                                              e.pollData.pollB
+                                            )}%`}</span>
+                                          </div>
+                                          <ProgressBar
+                                            now={getVotingPercentage(
+                                              e.pollData.pollC,
+                                              e.pollData.pollA,
+                                              e.pollData.pollB
+                                            )}
+                                          />
+                                        </Form.Group>
+                                        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                  toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
-                                  let messageContainer = document.querySelector(".chatarea");
+                                        <Button
+                                          variant="primary"
+                                          type="submit"
+                                          disabled={e.pollData.isVoted}
+                                          id={e.pollData.threadId}
+                                          onClick={() => {
+                                            toast.success("Voted Successfully");
+                                            document.getElementById(
+                                              e.pollData.threadId
+                                            ).disabled = true;
+                                            uploadPollResponse(e);
+                                            let messageContainer =
+                                              document.querySelector(
+                                                ".chatarea"
+                                              );
 
-                                  messageContainer.scrollTop = messageContainer.scrollHeight;
-                                  setChatData(chatData.filter((chat) => chat !== e))
-                                  setChatData((chat) => [...chat, e])
-                                  updatePollData(e)
-                                }}>
-                                  Vote
-                                </Button>
-                              </Form>
-                            </div> : null}
-                            {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
-                              <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
-                              <p>Event Title : {e.event.eventTitle}</p>
-                              {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
-                              <p>Event Date : {e.event.eventDate}</p>
-                              <p>Event Time : {e.event.eventTime}</p>
-                            </div> : null}
-                            {e.isVideo ? (
-                              <video
-                                onDragStart={(e) => e.preventDefault()}
-                                onmousedown={(event) => {
-                                  event.preventDefault
-                                    ? event.preventDefault()
-                                    : (event.returnValue = false);
-                                }}
-                                style={{
-                                  maxWidth: "200px",
-                                  marginTop: "20px",
-                                  borderRadius: "5px",
-                                }}
-                                controls={true}
-                                src={e.message}
-                              ></video>
-                            ) : null}
-                            {e.isImage ? (
-                              <img
-                                src={e.message}
-                                onDragStart={(e) => e.preventDefault()}
-                                onmousedown={(event) => {
-                                  event.preventDefault
-                                    ? event.preventDefault()
-                                    : (event.returnValue = false);
-                                }}
-                                style={{
-                                  maxWidth: e.isSticker ? "60px" : "200px",
-                                  marginTop: "20px",
-                                  borderRadius: "5px",
-                                }}
-                              />
-                            ) : null}
+                                            messageContainer.scrollTop =
+                                              messageContainer.scrollHeight;
+                                            setChatData(
+                                              chatData.filter(
+                                                (chat) => chat !== e
+                                              )
+                                            );
+                                            setChatData((chat) => [...chat, e]);
+                                            updatePollData(e);
+                                          }}
+                                        >
+                                          Vote
+                                        </Button>
+                                      </Form>
+                                    </div>
+                                  ) : null}
+                                  {e.isEvent ? (
+                                    <div
+                                      style={{ marginTop: "30px" }}
+                                      className="EventFormDiv"
+                                    >
+                                      <h5 style={{ fontSize: "15px" }}>
+                                        Event Created by {e.event.fullName}
+                                      </h5>
+                                      <p>Event Title : {e.event.eventTitle}</p>
+                                      {e.event.eventDesc ? (
+                                        <p>
+                                          Event Description :{" "}
+                                          {e.event.eventDesc}
+                                        </p>
+                                      ) : null}
+                                      <p>Event Date : {e.event.eventDate}</p>
+                                      <p>Event Time : {e.event.eventTime}</p>
+                                    </div>
+                                  ) : null}
+                                  {e.isVideo ? (
+                                    <video
+                                      onDragStart={(e) => e.preventDefault()}
+                                      onmousedown={(event) => {
+                                        event.preventDefault
+                                          ? event.preventDefault()
+                                          : (event.returnValue = false);
+                                      }}
+                                      style={{
+                                        maxWidth: "200px",
+                                        marginTop: "20px",
+                                        borderRadius: "5px",
+                                      }}
+                                      controls={true}
+                                      src={e.message}
+                                    ></video>
+                                  ) : null}
+                                  {e.isImage ? (
+                                    <img
+                                      src={e.message}
+                                      onDragStart={(e) => e.preventDefault()}
+                                      onmousedown={(event) => {
+                                        event.preventDefault
+                                          ? event.preventDefault()
+                                          : (event.returnValue = false);
+                                      }}
+                                      style={{
+                                        maxWidth: e.isSticker
+                                          ? "60px"
+                                          : "200px",
+                                        marginTop: "20px",
+                                        borderRadius: "5px",
+                                      }}
+                                    />
+                                  ) : null}
 
-                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                            {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
-                              className="reply-button" 
-                              onClick={()=>{
-                                setReplyData({chatData:e,user:{
-                                name: userFullName,
-                                profilePic: userProfilePic,
-                              }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null}
-                            <div className="reply-box"></div>
+                                  {e.isPoll ? (
+                                    <p
+                                      style={{ fontSize: "12px" }}
+                                    >{`Voting Ends in ${e.expiryTime}`}</p>
+                                  ) : null}
+                                  {e.message ||
+                                  e.isEmoji ||
+                                  e.isVideo ||
+                                  e.isImage ? (
+                                    <button
+                                      className="reply-button"
+                                      onClick={() => {
+                                        setReplyData({
+                                          chatData: e,
+                                          user: {
+                                            name: userFullName,
+                                            profilePic: userProfilePic,
+                                          },
+                                        });
+                                        setShowReply(!showReply);
+                                      }}
+                                    >
+                                      {showReply ? "Reply" : "Reply"}
+                                    </button>
+                                  ) : null}
+                                  <div className="reply-box"></div>
+                                </div>
+                              )
+                            )
+                          : null}
+
+                        {src && mimeType.substr(0, 5) == "image" ? (
+                          <div className="messageBox">
+                            <img
+                              src={src}
+                              style={{
+                                width: "200px",
+                                height: "auto",
+                                marginTop: "-10px",
+                              }}
+                            />
+                            <button
+                              onClick={() => {
+                                upload(file, file.type);
+                                setFile([]);
+                                setSrc(null);
+                                setMimeType("");
+                              }}
+                            >
+                              Confirm
+                            </button>
+                            <button
+                              onClick={() => {
+                                setFile([]);
+                                setSrc(null);
+                                setMimeType("");
+                              }}
+                            >
+                              Cancel
+                            </button>
                           </div>
-                        ))
-                        : null}
-                        
-                      {src && mimeType.substr(0, 5) == "image" ? (
-                        <div className="messageBox">
-                          <img
-                            src={src}
-                            style={{
-                              width: "200px",
-                              height: "auto",
-                              marginTop: "-10px",
-                            }}
-                          />
-                          <button
-                            onClick={() => {
-                              upload(file, file.type);
-                              setFile([]);
-                              setSrc(null);
-                              setMimeType("");
-                            }}
-                          >
-                            Confirm
-                          </button>
-                          <button
-                            onClick={() => {
-                              setFile([]);
-                              setSrc(null);
-                              setMimeType("");
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : null}
+                        ) : null}
 
-                      {src && mimeType.substr(0, 5) == "video" ? (
-                        <div className="messageBox">
-                          <video
-                            src={src}
-                            style={{
-                              width: "200px",
-                              height: "auto",
-                              marginTop: "-10px",
-                            }}
-                            className="messageBox"
-                          />
-                          <button
-                            onClick={() => {
-                              upload(file, file.type);
-                              setFile([]);
-                              setSrc(null);
-                              setMimeType("");
-                            }}
-                          >
-                            Confirm
-                          </button>
-                          <button
-                            onClick={() => {
-                              setFile([]);
-                              setSrc(null);
-                              setMimeType("");
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : null}
+                        {src && mimeType.substr(0, 5) == "video" ? (
+                          <div className="messageBox">
+                            <video
+                              src={src}
+                              style={{
+                                width: "200px",
+                                height: "auto",
+                                marginTop: "-10px",
+                              }}
+                              className="messageBox"
+                            />
+                            <button
+                              onClick={() => {
+                                upload(file, file.type);
+                                setFile([]);
+                                setSrc(null);
+                                setMimeType("");
+                              }}
+                            >
+                              Confirm
+                            </button>
+                            <button
+                              onClick={() => {
+                                setFile([]);
+                                setSrc(null);
+                                setMimeType("");
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        ) : null}
                       </div>
 
                       {emojiPicker && (
@@ -5658,43 +6758,64 @@ e.pollData.pollC = e.pollData.pollC
                           </div>
                         </ClickAwayListener>
                       )}
-                      {stickerPicker ? <div style={{
-                        position: "absolute",
-                        bottom: "3rem",
-                        left: "0.5rem",
-                        backgroundColor: '#652C90',
-                        borderRadius: '5px',
-                        padding: '8px',
-                        zIndex: "1111", display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', flexWrap: 'wrap'
-                      }}>
-                        {stickersImages.map((image) => <img src={image}
-                          onClick={() => {
-
-                            append(
-                              userFullName,
-                              `${image}`,
-                              "left",
-                              `${BaseURL}/profile-pictures/${userProfilePic}`,
-                              false,
-                              false,
-                              true, "", "", "", true
-                            );
-                            socket.emit("send", {
-                              name: userFullName,
-                              message: `${image}`,
-                              profilePic: userProfilePic,
-                              isEmoji: false,
-                              isVideo: false,
-                              isImage: true,
-                              isSticker: true
-                            });
-                            setStickerPicker(false)
+                      {stickerPicker ? (
+                        <div
+                          style={{
+                            position: "absolute",
+                            bottom: "3rem",
+                            left: "0.5rem",
+                            backgroundColor: "#652C90",
+                            borderRadius: "5px",
+                            padding: "8px",
+                            zIndex: "1111",
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            alignItems: "center",
+                            flexWrap: "wrap",
                           }}
-                          style={{ width: '70px', minWidth: '70px', minHeight: '70px', margin: '5px', cursor: 'pointer', backgroundColor: 'whitesmoke', padding: '5px' }} />)}
-                      </div> : null
-                      }
-
-
+                        >
+                          {stickersImages.map((image) => (
+                            <img
+                              src={image}
+                              onClick={() => {
+                                append(
+                                  userFullName,
+                                  `${image}`,
+                                  "left",
+                                  `${BaseURL}/profile-pictures/${userProfilePic}`,
+                                  false,
+                                  false,
+                                  true,
+                                  "",
+                                  "",
+                                  "",
+                                  true
+                                );
+                                socket.emit("send", {
+                                  name: userFullName,
+                                  message: `${image}`,
+                                  profilePic: userProfilePic,
+                                  isEmoji: false,
+                                  isVideo: false,
+                                  isImage: true,
+                                  isSticker: true,
+                                });
+                                setStickerPicker(false);
+                              }}
+                              style={{
+                                width: "70px",
+                                minWidth: "70px",
+                                minHeight: "70px",
+                                margin: "5px",
+                                cursor: "pointer",
+                                backgroundColor: "whitesmoke",
+                                padding: "5px",
+                              }}
+                            />
+                          ))}
+                        </div>
+                      ) : null}
 
                       {/* ----------------------------- newly redesigned chat area ------------------------- */}
                       <div className="send">
@@ -5702,14 +6823,19 @@ e.pollData.pollC = e.pollData.pollC
                         <form
                           action="#"
                           id="send-container"
-                          style={{
-                            // marginLeft: clubFloor || privateChat ? "5px" : "50px",
-                          }}
+                          style={
+                            {
+                              // marginLeft: clubFloor || privateChat ? "5px" : "50px",
+                            }
+                          }
                           onSubmit={(e) => messagesubmit(e)}
                         >
                           <div className="in-chat-sharing-options">
                             <label htmlFor="post-video">
-                              <SoapboxTooltip title={"Share Video"} placement="top">
+                              <SoapboxTooltip
+                                title={"Share Video"}
+                                placement="top"
+                              >
                                 <img
                                   src={videochat}
                                   style={{ margin: "5px", cursor: "pointer" }}
@@ -5727,7 +6853,10 @@ e.pollData.pollC = e.pollData.pollC
                             />
 
                             <label htmlFor="post-image">
-                              <SoapboxTooltip title={"Share Photos"} placement="top">
+                              <SoapboxTooltip
+                                title={"Share Photos"}
+                                placement="top"
+                              >
                                 <img
                                   src={imagechat}
                                   style={{ margin: "5px", cursor: "pointer" }}
@@ -5744,7 +6873,10 @@ e.pollData.pollC = e.pollData.pollC
                               hidden
                             />
 
-                            <SoapboxTooltip title={"Share File"} placement="top">
+                            <SoapboxTooltip
+                              title={"Share File"}
+                              placement="top"
+                            >
                               <img
                                 src={filechat}
                                 style={{ margin: "5px", cursor: "pointer" }}
@@ -5754,7 +6886,14 @@ e.pollData.pollC = e.pollData.pollC
                             <SoapboxTooltip title={"Stickers"} placement="top">
                               <img
                                 src={stickerIcon}
-                                style={{ width: '25px', padding: '3px', borderRadius: '15px', margin: "5px", cursor: "pointer", backgroundColor: '#8249A0' }}
+                                style={{
+                                  width: "25px",
+                                  padding: "3px",
+                                  borderRadius: "15px",
+                                  margin: "5px",
+                                  cursor: "pointer",
+                                  backgroundColor: "#8249A0",
+                                }}
                                 onClick={() => {
                                   setStickerPicker(!stickerPicker);
                                 }}
@@ -5762,7 +6901,13 @@ e.pollData.pollC = e.pollData.pollC
                             </SoapboxTooltip>
                           </div>
 
-                          <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              width: "100%",
+                            }}
+                          >
                             <SoapboxTooltip title={"Emoji"} placement="top">
                               <img
                                 src={emojiIcon}
@@ -5780,9 +6925,11 @@ e.pollData.pollC = e.pollData.pollC
                               value={messageInboxValue}
                               autoComplete="off"
                               id="messageInp"
-                              style={{
-                                // width: clubFloor || privateChat ? "350px" : "600px",
-                              }}
+                              style={
+                                {
+                                  // width: clubFloor || privateChat ? "350px" : "600px",
+                                }
+                              }
                               onChange={(e) => {
                                 setMessageInboxValue(e.target.value);
                               }}
@@ -5797,7 +6944,10 @@ e.pollData.pollC = e.pollData.pollC
                                 marginLeft: "5px",
                               }}
                             >
-                              <SoapboxTooltip title={"Send Message"} placement="top">
+                              <SoapboxTooltip
+                                title={"Send Message"}
+                                placement="top"
+                              >
                                 <img src={sendIcon} width="27px" />
                               </SoapboxTooltip>
                             </button>
@@ -5879,11 +7029,11 @@ e.pollData.pollC = e.pollData.pollC
                                 >
                                   {(ReactPlayer.canPlay(hoot.link) &&
                                     hoot.link.endsWith(".mp4")) ||
-                                    hoot.link.endsWith(".mkv") ||
-                                    hoot.link.endsWith(".mov") ||
-                                    hoot.link.endsWith(".ogv") ||
-                                    hoot.link.endsWith(".webm") ||
-                                    hoot.link.endsWith(".mpg") ? (
+                                  hoot.link.endsWith(".mkv") ||
+                                  hoot.link.endsWith(".mov") ||
+                                  hoot.link.endsWith(".ogv") ||
+                                  hoot.link.endsWith(".webm") ||
+                                  hoot.link.endsWith(".mpg") ? (
                                     <div className="vdo-container">
                                       <video
                                         muted
@@ -5977,7 +7127,7 @@ e.pollData.pollC = e.pollData.pollC
 
           {/* owner user */}
           {userInformation.username == username ? (
-            <div className="channel-user-content" style={{ flex: '0.8' }} >
+            <div className="channel-user-content" style={{ flex: "0.8" }}>
               {/* Top tabs bar with options */}
               <div
                 onmousedown={(event) => {
@@ -5995,7 +7145,10 @@ e.pollData.pollC = e.pollData.pollC
               >
                 <div className="tabs" style={{ margin: "0 0.5rem" }}>
                   {/* Hamburger menu */}
-                  <SoapboxTooltip title={clubFloor ? "Hide Feeds" : "Show Feeds"} placement="bottom">
+                  <SoapboxTooltip
+                    title={clubFloor ? "Hide Feeds" : "Show Feeds"}
+                    placement="bottom"
+                  >
                     <div>
                       <HiMenuAlt2
                         style={{
@@ -6003,15 +7156,17 @@ e.pollData.pollC = e.pollData.pollC
                           cursor: "pointer",
                           outline: "none",
                           fontSize: "1.4rem",
-                          marginTop: "0.2rem"
+                          marginTop: "0.2rem",
                         }}
                         onClick={() => {
                           if (privateChat == false) {
                             setClubFloor(!clubFloor);
-                           
+
                             setMarketPlaceArea(false);
                           } else {
-                            toast.success("Please close Private chat to view feeds");
+                            toast.success(
+                              "Please close Private chat to view feeds"
+                            );
                           }
                         }}
                       />
@@ -6022,7 +7177,7 @@ e.pollData.pollC = e.pollData.pollC
                   <span
                     style={{
                       borderRadius: "8px",
-                      fontSize: "14px"
+                      fontSize: "14px",
                     }}
                     onClick={() => {
                       if (privateChat == false) {
@@ -6035,7 +7190,9 @@ e.pollData.pollC = e.pollData.pollC
                         setShowChatRoom(true);
                         setOnDemandMedia(false);
                       } else {
-                        toast.success("Please close Private chat to view feeds");
+                        toast.success(
+                          "Please close Private chat to view feeds"
+                        );
                       }
                     }}
                   >
@@ -6139,7 +7296,11 @@ e.pollData.pollC = e.pollData.pollC
 
                   {/* MARKETPLACE tab */}
                   <span>
-                    <SoapboxTooltip title={"MARKETPLACE"} placement="bottom" privateTooltip={true}>
+                    <SoapboxTooltip
+                      title={"MARKETPLACE"}
+                      placement="bottom"
+                      privateTooltip={true}
+                    >
                       <img
                         src={marketplaceicon}
                         width="30px"
@@ -6168,85 +7329,105 @@ e.pollData.pollC = e.pollData.pollC
                   </span>
 
                   {/* MESSAGES tab */}
-                  <span  onClick={() => {
-                     resetChatView(userFullName)
-                          if (!privateChatList) {
-                            setPrivateChatList(!privateChatList)
+                  <span
+                    onClick={() => {
+                      resetChatView(userFullName);
+                      if (!privateChatList) {
+                        setPrivateChatList(!privateChatList);
 
-                            setTimeout(() => {
-                              if (document.getElementById("privateChatList")) {
-                                document.getElementById("privateChatList").style.transition = "1sec";
-                                document.getElementById("privateChatList").style.right = "0.8rem";
-                              }
-                            }, 1);
-                          } else {
-                            document.getElementById("privateChatList").style.transition = "1sec";
-                            document.getElementById("privateChatList").style.right = "-100vw";
-
-                            setTimeout(() => {
-                              setPrivateChatList(false)
-                            }, 200);
+                        setTimeout(() => {
+                          if (document.getElementById("privateChatList")) {
+                            document.getElementById(
+                              "privateChatList"
+                            ).style.transition = "1sec";
+                            document.getElementById(
+                              "privateChatList"
+                            ).style.right = "0.8rem";
                           }
-                        }}>
-                    <SoapboxTooltip title={"CHATHIVE"} placement="bottom" privateTooltip={true}>
-                      <img
-                        width="70px"
-                        src={messagesicon}
-                        />
-                          
-                    </SoapboxTooltip>
-                
-                   
-                  </span>
-                  {chatUnview!==0?<div className="notify-num" onClick={() => {
-                   
-                   resetChatView(userFullName)
-                       if (!privateChatList) {
-                         setPrivateChatList(!privateChatList)
+                        }, 1);
+                      } else {
+                        document.getElementById(
+                          "privateChatList"
+                        ).style.transition = "1sec";
+                        document.getElementById("privateChatList").style.right =
+                          "-100vw";
 
-                         setTimeout(() => {
-                           if (
-                             document.getElementById(
-                               "privateChatList"
-                             )
-                           ) {
-                             document.getElementById(
-                               "privateChatList"
-                             ).style.transition = "1sec";
-                             document.getElementById(
-                               "privateChatList"
-                             ).style.right = "0.8rem";
-                           }
-                         }, 1);
-                       } else {
-                         document.getElementById(
-                           "privateChatList"
-                         ).style.transition = "1sec";
-                         document.getElementById(
-                           "privateChatList"
-                         ).style.right = "-100vw";
-                         setTimeout(() => {
-                           setPrivateChatList(false)
-                         }, 200);
-                       }
-                     }}>{chatUnview}</div>:null}
+                        setTimeout(() => {
+                          setPrivateChatList(false);
+                        }, 200);
+                      }
+                    }}
+                  >
+                    <SoapboxTooltip
+                      title={"CHATHIVE"}
+                      placement="bottom"
+                      privateTooltip={true}
+                    >
+                      <img width="70px" src={messagesicon} />
+                    </SoapboxTooltip>
+                  </span>
+                  {chatUnview !== 0 ? (
+                    <div
+                      className="notify-num"
+                      onClick={() => {
+                        resetChatView(userFullName);
+                        if (!privateChatList) {
+                          setPrivateChatList(!privateChatList);
+
+                          setTimeout(() => {
+                            if (document.getElementById("privateChatList")) {
+                              document.getElementById(
+                                "privateChatList"
+                              ).style.transition = "1sec";
+                              document.getElementById(
+                                "privateChatList"
+                              ).style.right = "0.8rem";
+                            }
+                          }, 1);
+                        } else {
+                          document.getElementById(
+                            "privateChatList"
+                          ).style.transition = "1sec";
+                          document.getElementById(
+                            "privateChatList"
+                          ).style.right = "-100vw";
+                          setTimeout(() => {
+                            setPrivateChatList(false);
+                          }, 200);
+                        }
+                      }}
+                    >
+                      {chatUnview}
+                    </div>
+                  ) : null}
                   {/* Invite tab */}
                   <span onClick={() => setInviteBox(true)}>
-                    <SoapboxTooltip title={"Invite"} placement="bottom" privateTooltip={true}>
+                    <SoapboxTooltip
+                      title={"Invite"}
+                      placement="bottom"
+                      privateTooltip={true}
+                    >
                       <img src={inviteicon} width="30px" />
                     </SoapboxTooltip>
                   </span>
 
                   {/* Club Rules tab */}
                   <span>
-                    <SoapboxTooltip title={"Club Rules"} placement="bottom" privateTooltip={true}>
+                    <SoapboxTooltip
+                      title={"Club Rules"}
+                      placement="bottom"
+                      privateTooltip={true}
+                    >
                       <img
                         src={rules}
                         width="30px"
                         onClick={() => {
                           if (showClubRules) {
-                            document.getElementById("slideCR").style.transition = "2sec";
-                            document.getElementById("slideCR").style.right = "-100vw";
+                            document.getElementById(
+                              "slideCR"
+                            ).style.transition = "2sec";
+                            document.getElementById("slideCR").style.right =
+                              "-100vw";
 
                             setTimeout(() => {
                               setShowClubRules(false);
@@ -6264,8 +7445,11 @@ e.pollData.pollC = e.pollData.pollC
 
                             setTimeout(() => {
                               if (document.getElementById("slideCR")) {
-                                document.getElementById("slideCR").style.transition = "1sec";
-                                document.getElementById("slideCR").style.right = "150px";
+                                document.getElementById(
+                                  "slideCR"
+                                ).style.transition = "1sec";
+                                document.getElementById("slideCR").style.right =
+                                  "150px";
                               }
                             }, 1);
                           }
@@ -6278,7 +7462,8 @@ e.pollData.pollC = e.pollData.pollC
                   <span
                     onClick={() => {
                       if (showCreateHoot) {
-                        document.getElementById("slideH").style.transition = "2sec";
+                        document.getElementById("slideH").style.transition =
+                          "2sec";
                         document.getElementById("slideH").style.left = "-100vw";
 
                         setTimeout(() => {
@@ -6296,37 +7481,56 @@ e.pollData.pollC = e.pollData.pollC
 
                         setTimeout(() => {
                           if (document.getElementById("slideH")) {
-                            document.getElementById("slideH").style.transition = "1sec";
+                            document.getElementById("slideH").style.transition =
+                              "1sec";
                             // document.getElementById("slideH").style.left = "150px";
 
-                            document.getElementById("slideH").style.left = "50%";
-                            document.getElementById("slideH").style.top = "14.5rem";
-                            document.getElementById("slideH").style.transform = "translate(-50%, -50%)";
+                            document.getElementById("slideH").style.left =
+                              "50%";
+                            document.getElementById("slideH").style.top =
+                              "14.5rem";
+                            document.getElementById("slideH").style.transform =
+                              "translate(-50%, -50%)";
                           }
                         }, 1);
                       }
                     }}
                   >
-                    <SoapboxTooltip title={"Create Private Hoot"} placement="bottom" privateTooltip={true}>
+                    <SoapboxTooltip
+                      title={"Create Private Hoot"}
+                      placement="bottom"
+                      privateTooltip={true}
+                    >
                       <img src={privatehooticon} width="30px" />
                     </SoapboxTooltip>
                   </span>
 
                   {/* Create Breakoff Chat tab */}
-                  <SoapboxTooltip title={"Create Breakoff Chat"} placement="bottom">
-                    <span style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      color: '#FFF',
-                      fontSize: "1.5rem"
-                    }}
+                  <SoapboxTooltip
+                    title={"Create Breakoff Chat"}
+                    placement="bottom"
+                  >
+                    <span
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        color: "#FFF",
+                        fontSize: "1.5rem",
+                      }}
                       onClick={() => {
                         if (userInfo[0].communityClub == 1) {
-                          if (subscribe || userInformation.username == username) {
+                          if (
+                            subscribe ||
+                            userInformation.username == username
+                          ) {
                             if (showBreakoffForm) {
-                              document.getElementById("showBreakoffFormId").style.transition = "2s";
-                              document.getElementById("showBreakoffFormId").style.right = "-100vw";
+                              document.getElementById(
+                                "showBreakoffFormId"
+                              ).style.transition = "2s";
+                              document.getElementById(
+                                "showBreakoffFormId"
+                              ).style.right = "-100vw";
 
                               setTimeout(() => {
                                 setShowBreakoffForm(false);
@@ -6335,17 +7539,25 @@ e.pollData.pollC = e.pollData.pollC
                               setShowBreakoffForm(true);
 
                               setTimeout(() => {
-                                if (document.getElementById("showBreakoffFormId")) {
-                                  document.getElementById("showBreakoffFormId").style.transition = "1s";
-                                  document.getElementById("showBreakoffFormId").style.right = "30%";
+                                if (
+                                  document.getElementById("showBreakoffFormId")
+                                ) {
+                                  document.getElementById(
+                                    "showBreakoffFormId"
+                                  ).style.transition = "1s";
+                                  document.getElementById(
+                                    "showBreakoffFormId"
+                                  ).style.right = "30%";
                                 }
                               }, 1);
                             }
                           } else {
-                            toast.success('Members Only Access');
+                            toast.success("Members Only Access");
                           }
                         } else {
-                          toast.success('BreakOff Chat can be accessible only in Community Clubs')
+                          toast.success(
+                            "BreakOff Chat can be accessible only in Community Clubs"
+                          );
                         }
                       }}
                     >
@@ -6366,13 +7578,15 @@ e.pollData.pollC = e.pollData.pollC
                 {/* <FiSearch className="search-channel-content" /> */}
               </div>
 
-            
-
               {inviteBox ? (
                 <MyVerticallyCenteredModal
                   title={"Invitation"}
                   closeModal={() => setInviteBox(false)}
-                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clubname={
+                    userInfo[0].communityClub == 1
+                      ? username
+                      : `${userInfo[0].name}'s Private `
+                  }
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
                   username={userFullName}
                   show={inviteBox}
@@ -6381,35 +7595,57 @@ e.pollData.pollC = e.pollData.pollC
                   onHide={() => setInviteBox(false)}
                 />
               ) : null}
-               {inviteBoxChat
-                ? <MyVerticallyCenteredModal
+              {inviteBoxChat ? (
+                <MyVerticallyCenteredModal
                   title={"Invitation"}
                   closeModal={() => setInviteBoxChat(false)}
-                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clubname={
+                    userInfo[0].communityClub == 1
+                      ? username
+                      : `${userInfo[0].name}'s Private `
+                  }
                   clublink={`https://megahoot.net/profile/${username}`}
                   username={userFullName}
                   show={inviteBoxChat}
                   inviteRoute="inviteHandlerChat"
-                  mailText={"You've Been Invited to a MegaHoot Soapbox Private Chat"}
+                  mailText={
+                    "You've Been Invited to a MegaHoot Soapbox Private Chat"
+                  }
                   onHide={() => setInviteBox(false)}
                 />
-                : null}
+              ) : null}
 
-              {scheduleBox
-                ? <MyVerticallyCenteredScheduler
+              {scheduleBox ? (
+                <MyVerticallyCenteredScheduler
                   title={"Schedule an event"}
                   closeModal={() => setScheduleBox(false)}
-                  clubname={userInfo[0].communityClub == 1 ? username : `${userInfo[0].name}'s Private `}
+                  clubname={
+                    userInfo[0].communityClub == 1
+                      ? username
+                      : `${userInfo[0].name}'s Private `
+                  }
                   clublink={`https://megahoot.net/${uuidv4()}/private/Club/${username}/${uuidv4()}`}
                   username={userInformation.username}
-                  sumitChatData={(data) => { sumitChatDataFromScheduler(data) }}
+                  sumitChatData={(data) => {
+                    sumitChatDataFromScheduler(data);
+                  }}
                   show={scheduleBox}
                   fullName={userFullName}
                   onHide={() => setScheduleBox(false)}
-                /> : null}
+                />
+              ) : null}
 
-                {showReply?<ReplyModal sendReplyToChat={(data)=>{sendReplyToChat(data)}} data={replyData} onHide={() => setShowReply(false)} show={showReply} />:null}
-  
+              {showReply ? (
+                <ReplyModal
+                  sendReplyToChat={(data) => {
+                    sendReplyToChat(data);
+                  }}
+                  data={replyData}
+                  onHide={() => setShowReply(false)}
+                  show={showReply}
+                />
+              ) : null}
+
               {showRequest ? (
                 <div className="slide-container">
                   <div
@@ -6424,7 +7660,8 @@ e.pollData.pollC = e.pollData.pollC
                       alignItems: "center",
                       backgroundColor: "#D6C8E1",
                       margin: "1rem",
-                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                     className="slideR-class"
                   >
@@ -6441,14 +7678,23 @@ e.pollData.pollC = e.pollData.pollC
                         padding: "0.5rem",
                       }}
                     >
-                      <h5 style={{ fontSize: "1.2rem", marginBottom: 0 }}>Club Requests </h5>
+                      <h5 style={{ fontSize: "1.2rem", marginBottom: 0 }}>
+                        Club Requests{" "}
+                      </h5>
                       <SoapboxTooltip title="Close" placement="left">
                         <span>
                           <IoCloseCircle
-                            style={{ cursor: "pointer", color: "#DCD5FA", fontSize: "1.7rem" }}
+                            style={{
+                              cursor: "pointer",
+                              color: "#DCD5FA",
+                              fontSize: "1.7rem",
+                            }}
                             onClick={() => {
-                              document.getElementById("slideR").style.transition = "2sec";
-                              document.getElementById("slideR").style.right = "-100vw";
+                              document.getElementById(
+                                "slideR"
+                              ).style.transition = "2sec";
+                              document.getElementById("slideR").style.right =
+                                "-100vw";
 
                               setTimeout(() => {
                                 setShowRequest(false);
@@ -6457,7 +7703,6 @@ e.pollData.pollC = e.pollData.pollC
                           />
                         </span>
                       </SoapboxTooltip>
-
                     </div>
                     {/* <p>No Requests</p> */}
                     {/* <h5>Club Request</h5> */}
@@ -6476,14 +7721,16 @@ e.pollData.pollC = e.pollData.pollC
                             minWidth: "250px",
                             padding: "1px",
                             margin: "8px",
-                            display: 'flex',
-                            flexDirection: 'row'
+                            display: "flex",
+                            flexDirection: "row",
                           }}
                         >
                           <SubscribedUser username={user.username} />
                           <button
                             className="Approve-request"
-                            onClick={() => { handleClubRequestApprove(user) }}
+                            onClick={() => {
+                              handleClubRequestApprove(user);
+                            }}
                           >
                             Approve
                           </button>
@@ -6515,7 +7762,8 @@ e.pollData.pollC = e.pollData.pollC
                       alignItems: "center",
                       backgroundColor: "#D6C8E1",
                       margin: "1rem",
-                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                     className="slide-class"
                   >
@@ -6532,14 +7780,23 @@ e.pollData.pollC = e.pollData.pollC
                         padding: "0.5rem",
                       }}
                     >
-                      <h5 style={{ fontSize: "1.2rem", marginBottom: 0 }}>Set Service Price </h5>
+                      <h5 style={{ fontSize: "1.2rem", marginBottom: 0 }}>
+                        Set Service Price{" "}
+                      </h5>
                       <SoapboxTooltip title="Close" placement="left">
                         <span>
                           <IoCloseCircle
-                            style={{ cursor: "pointer", color: "#DCD5FA", fontSize: "1.7rem" }}
+                            style={{
+                              cursor: "pointer",
+                              color: "#DCD5FA",
+                              fontSize: "1.7rem",
+                            }}
                             onClick={() => {
-                              document.getElementById("slide").style.transition = "2sec";
-                              document.getElementById("slide").style.right = "-100vw";
+                              document.getElementById(
+                                "slide"
+                              ).style.transition = "2sec";
+                              document.getElementById("slide").style.right =
+                                "-100vw";
 
                               setTimeout(() => {
                                 setShowPricingSetting(false);
@@ -6559,7 +7816,9 @@ e.pollData.pollC = e.pollData.pollC
                       }}
                     >
                       {" "}
-                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>1 on 1 call:{" "}</label>
+                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>
+                        1 on 1 call:{" "}
+                      </label>
                       <input
                         style={{
                           borderRadius: "8px",
@@ -6590,7 +7849,9 @@ e.pollData.pollC = e.pollData.pollC
                       }}
                     >
                       {" "}
-                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>Group call:{" "}</label>
+                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>
+                        Group call:{" "}
+                      </label>
                       <input
                         style={{
                           borderRadius: "8px",
@@ -6621,7 +7882,9 @@ e.pollData.pollC = e.pollData.pollC
                       }}
                     >
                       {" "}
-                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>Personal Message:{" "}</label>
+                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>
+                        Personal Message:{" "}
+                      </label>
                       <input
                         style={{
                           borderRadius: "8px",
@@ -6651,7 +7914,9 @@ e.pollData.pollC = e.pollData.pollC
                       }}
                     >
                       {" "}
-                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>Verified Autograph Price:{" "}</label>
+                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>
+                        Verified Autograph Price:{" "}
+                      </label>
                       <input
                         style={{
                           borderRadius: "8px",
@@ -6682,7 +7947,9 @@ e.pollData.pollC = e.pollData.pollC
                       }}
                     >
                       {" "}
-                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>Membership:{" "}</label>
+                      <label style={{ minWidth: "30vw", padding: "0.5rem" }}>
+                        Membership:{" "}
+                      </label>
                       <input
                         style={{
                           borderRadius: "8px",
@@ -6717,13 +7984,20 @@ e.pollData.pollC = e.pollData.pollC
                         Update Changes
                       </button>
                     </div>
-                    <p style={{ padding: "0.5rem", textAlign: "center !important" }}>Note: The minimum amount for service price is 5 XMG</p>
+                    <p
+                      style={{
+                        padding: "0.5rem",
+                        textAlign: "center !important",
+                      }}
+                    >
+                      Note: The minimum amount for service price is 5 XMG
+                    </p>
                   </div>{" "}
                 </div>
               ) : null}
 
-              {showAllMyEvents
-                ? <div className="slide-container">
+              {showAllMyEvents ? (
+                <div className="slide-container">
                   <div
                     id="slideE"
                     style={{
@@ -6749,7 +8023,6 @@ e.pollData.pollC = e.pollData.pollC
                         justifyContent: "space-between",
                         alignItems: "center",
                         color: "white",
-
                       }}
                     >
                       <h5>My Scheduled Events</h5>
@@ -6765,7 +8038,6 @@ e.pollData.pollC = e.pollData.pollC
                           }, 100);
                         }}
                       />
-
                     </div>
                     {/* <p>No Requests</p> */}
                     {/* <h5>Club Request</h5> */}
@@ -6784,15 +8056,24 @@ e.pollData.pollC = e.pollData.pollC
                             minWidth: "300px",
                             padding: "1px",
                             margin: "8px",
-                            display: 'flex',
-                            flexDirection: 'column'
+                            display: "flex",
+                            flexDirection: "column",
                           }}
                         >
-                          <p style={{ fontSize: '14px', marginLeft: '1rem' }}>Event Title: {event.eventTitle}</p>
-                          <p style={{ fontSize: '14px', marginLeft: '1rem' }}>Event Date : {event.eventDate}</p>
-                          <p style={{ fontSize: '14px', marginLeft: '1rem' }}>Event Time :{event.eventTime}</p>
-                          {event.eventDesc ? <p style={{ fontSize: '14px', marginLeft: '1rem' }}>Event Description :{event.eventDesc}</p>
-                            : null}
+                          <p style={{ fontSize: "14px", marginLeft: "1rem" }}>
+                            Event Title: {event.eventTitle}
+                          </p>
+                          <p style={{ fontSize: "14px", marginLeft: "1rem" }}>
+                            Event Date : {event.eventDate}
+                          </p>
+                          <p style={{ fontSize: "14px", marginLeft: "1rem" }}>
+                            Event Time :{event.eventTime}
+                          </p>
+                          {event.eventDesc ? (
+                            <p style={{ fontSize: "14px", marginLeft: "1rem" }}>
+                              Event Description :{event.eventDesc}
+                            </p>
+                          ) : null}
                           {/* <SubscribedUser username={user.username} /> */}
                           {/* <button
                             className="Approve-request"
@@ -6811,7 +8092,7 @@ e.pollData.pollC = e.pollData.pollC
                     </div>
                   </div>
                 </div>
-                : null}
+              ) : null}
 
               {showSubscribers ? (
                 <div className="slide-container">
@@ -6827,7 +8108,8 @@ e.pollData.pollC = e.pollData.pollC
                       alignItems: "center",
                       backgroundColor: "#D6C8E1",
                       margin: "1rem",
-                      boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                     className="slideM-class"
                   >
@@ -6844,15 +8126,24 @@ e.pollData.pollC = e.pollData.pollC
                         padding: "0.5rem",
                       }}
                     >
-                      <h5 style={{ fontSize: "1.2rem", marginBottom: 0 }}>Memberships </h5>
+                      <h5 style={{ fontSize: "1.2rem", marginBottom: 0 }}>
+                        Memberships{" "}
+                      </h5>
                       <SoapboxTooltip title="Close" placement="left">
                         <span>
                           <IoCloseCircle
                             // className="FaWindowClose"
-                            style={{ cursor: "pointer", color: "#DCD5FA", fontSize: "1.7rem" }}
+                            style={{
+                              cursor: "pointer",
+                              color: "#DCD5FA",
+                              fontSize: "1.7rem",
+                            }}
                             onClick={() => {
-                              document.getElementById("slideM").style.transition = "2sec";
-                              document.getElementById("slideM").style.right = "-100vw";
+                              document.getElementById(
+                                "slideM"
+                              ).style.transition = "2sec";
+                              document.getElementById("slideM").style.right =
+                                "-100vw";
 
                               setTimeout(() => {
                                 setShowSubscribers(false);
@@ -6890,7 +8181,7 @@ e.pollData.pollC = e.pollData.pollC
 
               {showCreateHoot ? (
                 <div className="slide-container">
-                  <div id="slideH" className='sH-responsive'>
+                  <div id="slideH" className="sH-responsive">
                     <CreatePrivateHoot
                       closeHoot={() => {
                         document.getElementById("slideH").style.transition =
@@ -6920,8 +8211,8 @@ e.pollData.pollC = e.pollData.pollC
                       backgroundColor: "#DCD5FA",
                       padding: "1rem",
                       margin: "1rem",
-                      width: '100%',
-                      height: '100vh',
+                      width: "100%",
+                      height: "100vh",
                     }}
                   >
                     <span>
@@ -6935,8 +8226,10 @@ e.pollData.pollC = e.pollData.pollC
                           top: "0px",
                         }}
                         onClick={() => {
-                          document.getElementById("slideIFM").style.transition = "2sec";
-                          document.getElementById("slideIFM").style.right = "-100vw";
+                          document.getElementById("slideIFM").style.transition =
+                            "2sec";
+                          document.getElementById("slideIFM").style.right =
+                            "-100vw";
 
                           setClubFloor(true);
                           setTimeout(() => {
@@ -6952,8 +8245,7 @@ e.pollData.pollC = e.pollData.pollC
                       title={iframeBox.title}
                       width="100%"
                       height="100%"
-                    >
-                    </iframe>
+                    ></iframe>
                   </div>
                 </div>
               ) : null}
@@ -6961,22 +8253,39 @@ e.pollData.pollC = e.pollData.pollC
               {showBreakoffForm ? (
                 <div className="showBreakoffForm" id="showBreakoffFormId">
                   <h5>Enter The Topic for BreakOff Chat</h5>
-                  <div style={{ padding: '33px', position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}> <input placeholder="Enter Topic" value={breakOffInput} onChange={(e) => {
-                    setBreakOffInput(e.target.value);
-                  }} />
-                    <button className="d-grid col-12 btn-main login-form-button" style={{ position: 'absolute', right: '0' }}
-                      onClick={() => {
-                        if (breakOffInput) { createBreakoff() } else {
-                          toast.success(
-                            "Please Enter Topic for Breakoff chat"
-                          );
-                        }
-
-
+                  <div
+                    style={{
+                      padding: "33px",
+                      position: "relative",
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {" "}
+                    <input
+                      placeholder="Enter Topic"
+                      value={breakOffInput}
+                      onChange={(e) => {
+                        setBreakOffInput(e.target.value);
                       }}
-                    >Create Now</button>
+                    />
+                    <button
+                      className="d-grid col-12 btn-main login-form-button"
+                      style={{ position: "absolute", right: "0" }}
+                      onClick={() => {
+                        if (breakOffInput) {
+                          createBreakoff();
+                        } else {
+                          toast.success("Please Enter Topic for Breakoff chat");
+                        }
+                      }}
+                    >
+                      Create Now
+                    </button>
                   </div>
-
                 </div>
               ) : null}
 
@@ -7009,48 +8318,73 @@ e.pollData.pollC = e.pollData.pollC
               >
                 {clubFloor
                   ? uploads && (
-                    <div style={{ flex: "0.5" }}>
-                      <InfiniteScroll
-                        dataLength={uploads.length}
-                        next={fetchMoreHoots}
-                        hasMore={hasMore}
-                      >
-                        {uploads.map((upload) => {
-                          return (
-                            <div key={upload}>
-                              <Post
-                                hootId={upload.id}
-                                username={upload.authorUsername}
-                                mimeType={upload.mimeType}
-                                hootImgId={upload.image}
-                                audioPoster={upload.audioPoster}
-                                likes={upload.likes}
-                                views={upload.views}
-                                followers={upload.followers}
-                                caption={upload.caption}
-                                link={upload.link}
-                                ephemeral={upload.ephemeral}
-                                privateHoot={upload.private}
-                                expiryDate={upload.expiryDate}
-                                timeStamp={upload.timeStamp}
-                                edited={upload.edited}
-                                editedTimeStamp={upload.editedTimeStamp}
-                              />
-                            </div>
-                          );
-                        })}
-                      </InfiniteScroll>
-                    </div>
-                  ) : null}
+                      <div style={{ flex: "0.5" }}>
+                        <InfiniteScroll
+                          dataLength={uploads.length}
+                          next={fetchMoreHoots}
+                          hasMore={hasMore}
+                        >
+                          {uploads.map((upload) => {
+                            var fontFamilyStyle;
+                            if (upload.fontFamilyStyle.includes("fontFamily")) {
+                              fontFamilyStyle = JSON.parse(
+                                upload.fontFamilyStyle
+                              );
+                              var fontFamily =
+                                fontFamilyStyle.fontFamily || "Arial";
+                              var fontStyleSize =
+                                fontFamilyStyle.fontSize || "20px";
+                              var fontColor = fontFamilyStyle.color || "black";
+                            } else {
+                              var fontFamily =
+                                upload.fontFamilyStyle || "Arial";
+                              var fontStyleSize = "20px";
+                              var fontColor = "black";
+                            }
+                            return (
+                              <div key={upload}>
+                                <Post
+                                  hootId={upload.id}
+                                  username={upload.authorUsername}
+                                  mimeType={upload.mimeType}
+                                  hootImgId={upload.image}
+                                  audioPoster={upload.audioPoster}
+                                  likes={upload.likes}
+                                  views={upload.views}
+                                  followers={upload.followers}
+                                  caption={upload.caption}
+                                  link={upload.link}
+                                  ephemeral={upload.ephemeral}
+                                  privateHoot={upload.private}
+                                  expiryDate={upload.expiryDate}
+                                  timeStamp={upload.timeStamp}
+                                  edited={upload.edited}
+                                  editedTimeStamp={upload.editedTimeStamp}
+                                  fontFamilyStyle={fontFamily}
+                                  fontColor={fontColor}
+                                  fontStyleSize={fontStyleSize}
+                                />
+                              </div>
+                            );
+                          })}
+                        </InfiniteScroll>
+                      </div>
+                    )
+                  : null}
 
-{marketPlaceArea ? (
-                <FortisMarketplaceArea />
-              ) : null}
+                {marketPlaceArea ? <FortisMarketplaceArea /> : null}
 
                 {privateChat ? (
-                  <div className="privateChat-club" id="privatechatslide"
-                  style={{width:window.innerWidth>=600?"60vw":"90vw !important",
-                  minWidth:window.innerWidth>=600?"450px":"90vw !important"}}>
+                  <div
+                    className="privateChat-club"
+                    id="privatechatslide"
+                    style={{
+                      width:
+                        window.innerWidth >= 600 ? "60vw" : "90vw !important",
+                      minWidth:
+                        window.innerWidth >= 600 ? "450px" : "90vw !important",
+                    }}
+                  >
                     <div
                       className="live-header"
                       style={{
@@ -7064,8 +8398,12 @@ e.pollData.pollC = e.pollData.pollC
                         maxWidth: "440px",
                         paddingLeft: "5px",
                         paddingRight: "5px",
-                        width:window.innerWidth>=600?"":"90vw !important",
-                  minWidth:window.innerWidth>=600?"450px":"90vw !important"
+                        width:
+                          window.innerWidth >= 600 ? "" : "90vw !important",
+                        minWidth:
+                          window.innerWidth >= 600
+                            ? "450px"
+                            : "90vw !important",
                       }}
                     >
                       <span
@@ -7085,9 +8423,7 @@ e.pollData.pollC = e.pollData.pollC
                               borderRadius: "15px",
                             }}
                           />
-                        )
-                          : null
-                        }
+                        ) : null}
 
                         <p
                           style={{
@@ -7100,29 +8436,36 @@ e.pollData.pollC = e.pollData.pollC
                         </p>
                       </span>
 
-                      <span style={{ display: 'flex', alignItems: 'center' }}>
-                        {userInfo[0].communityClub == 1
-                          ? null
-                          : <SoapboxTooltip title={"Delete Chat"} placement="bottom">
+                      <span style={{ display: "flex", alignItems: "center" }}>
+                        {userInfo[0].communityClub == 1 ? null : (
+                          <SoapboxTooltip
+                            title={"Delete Chat"}
+                            placement="bottom"
+                          >
                             <span
                               style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                cursor: 'pointer',
-                                backgroundColor: '#CF2128',
-                                width: '22px',
-                                height: '22px',
-                                borderRadius: '27px',
-                                marginRight: '15px',
-                                fontSize: '18px'
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                backgroundColor: "#CF2128",
+                                width: "22px",
+                                height: "22px",
+                                borderRadius: "27px",
+                                marginRight: "15px",
+                                fontSize: "18px",
                               }}
-                              onClick={() => { deletePrivateChatDuo(userInfo[0].name, privateChatPerson.name) }}
+                              onClick={() => {
+                                deletePrivateChatDuo(
+                                  userInfo[0].name,
+                                  privateChatPerson.name
+                                );
+                              }}
                             >
                               <BsTrash />
                             </span>
                           </SoapboxTooltip>
-                        }
+                        )}
                         Private Chat
                         <FaWindowClose
                           className="icon-text"
@@ -7137,7 +8480,7 @@ e.pollData.pollC = e.pollData.pollC
                             setTimeout(() => {
                               setPrivateChat(false);
                               setClubFloor(true);
-                              setShowChatRoom(true)
+                              setShowChatRoom(true);
                             }, 200);
                           }}
                         />
@@ -7152,205 +8495,297 @@ e.pollData.pollC = e.pollData.pollC
                     >
                       {chatDataPrivate.length
                         ? chatDataPrivate.map((e) => (
-                          <div
-                            className="messageBox"
-                           
-
-                          >
-                            <div className="ProfileBox">
-                              <img
-                                className="chat-profile"
-                                src={e.imgSrc ? e.imgSrc : null}
-                              />
-                              <p>{e.chatname}</p>
-                             <p className="timestamp"> {e.timestamp}</p>
-                            </div>
-                            <Linkify
-                              componentDecorator={(
-                                decoratedHref,
-                                decoratedText,
-                                key
-                              ) => (
-                                <a
-                                  target="blank"
-                                  href={decoratedHref}
-                                  key={key}
-                                >
-                                  {decoratedText}
-                                </a>
-                              )}
-                            >
-                              {" "}
-                              <div
-                                className={
-                                  e.isEmoji ? "message-emoji" : "message"
-                                }
-                              >
-                                {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent ? e.message : null}
+                            <div className="messageBox">
+                              <div className="ProfileBox">
+                                <img
+                                  className="chat-profile"
+                                  src={e.imgSrc ? e.imgSrc : null}
+                                />
+                                <p>{e.chatname}</p>
+                                <p className="timestamp"> {e.timestamp}</p>
                               </div>
-                            </Linkify>
-                            
-                    
-                            {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
-                              <Form onSubmit={(e) => e.preventDefault()}>
+                              <Linkify
+                                componentDecorator={(
+                                  decoratedHref,
+                                  decoratedText,
+                                  key
+                                ) => (
+                                  <a
+                                    target="blank"
+                                    href={decoratedHref}
+                                    key={key}
+                                  >
+                                    {decoratedText}
+                                  </a>
+                                )}
+                              >
+                                {" "}
+                                <div
+                                  className={
+                                    e.isEmoji ? "message-emoji" : "message"
+                                  }
+                                >
+                                  {!e.isVideo &&
+                                  !e.isImage &&
+                                  !e.isPoll &&
+                                  !e.isEvent
+                                    ? e.message
+                                    : null}
+                                </div>
+                              </Linkify>
 
-                                <Form.Group className="mb-3" >
-                                  <Form.Label>{e.pollData.Question}</Form.Label>
+                              {e.isPoll ? (
+                                <div
+                                  style={{ marginTop: "30px" }}
+                                  className="pollFormDiv"
+                                >
+                                  <Form onSubmit={(e) => e.preventDefault()}>
+                                    <Form.Group className="mb-3">
+                                      <Form.Label>
+                                        {e.pollData.Question}
+                                      </Form.Label>
+                                    </Form.Group>
 
-                                </Form.Group>
+                                    <Form.Group className="mb-3">
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          justifyContent: "space-between",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <Form.Check
+                                          type="radio"
+                                          name="radio"
+                                          label={e.pollData.OptionA}
+                                          onChange={() => {
+                                            // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                            // chatData[chatData.indexOf(e)]
+                                            e.pollData.pollA =
+                                              e.pollData.pollA + 1;
+                                            e.pollData.pollB = e.pollData.pollB;
+                                            e.pollData.pollC = e.pollData.pollC;
 
-                                <Form.Group className="mb-3" >
+                                            // let messageContainer = document.querySelector(".chatarea");
 
-                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                   
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
-                                    onChange={() => {
+                                            // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                            // setChatData(chatData.filter((chat) => chat !== e))
+                                            // setChatData((chat) => [...chat, e])
+                                            // updatePollData(e)
+                                          }}
+                                        />
+                                        <span className="votingPercentage">{`${getVotingPercentage(
+                                          e.pollData.pollA,
+                                          e.pollData.pollB,
+                                          e.pollData.pollC
+                                        )}%`}</span>
+                                      </div>
+                                      <ProgressBar
+                                        now={getVotingPercentage(
+                                          e.pollData.pollA,
+                                          e.pollData.pollB,
+                                          e.pollData.pollC
+                                        )}
+                                      />
+                                    </Form.Group>
 
-                                      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                      // chatData[chatData.indexOf(e)]
-                                      e.pollData.pollA = e.pollData.pollA + 1
-                                      e.pollData.pollB = e.pollData.pollB
-                                      e.pollData.pollC = e.pollData.pollC
+                                    <Form.Group className="mb-3">
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          justifyContent: "space-between",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <Form.Check
+                                          type="radio"
+                                          name="radio"
+                                          label={e.pollData.OptionB}
+                                          onChange={() => {
+                                            // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                            // chatData[chatData.indexOf(e)]
+                                            // e.pollData.pollB = 100
+                                            // e.pollData.pollA = 0
+                                            // e.pollData.pollC = 0
+                                            e.pollData.pollA = e.pollData.pollA;
+                                            e.pollData.pollB =
+                                              e.pollData.pollB + 1;
+                                            e.pollData.pollC = e.pollData.pollC;
 
+                                            // let messageContainer = document.querySelector(".chatarea");
 
-                                      // let messageContainer = document.querySelector(".chatarea");
+                                            // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                            // setChatData(chatData.filter((chat) => chat !== e))
+                                            // setChatData((chat) => [...chat, e])
+                                            // updatePollData(e)
+                                          }}
+                                        />
 
-                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      // setChatData(chatData.filter((chat) => chat !== e))
-                                      // setChatData((chat) => [...chat, e])
-                                      // updatePollData(e)
-                                    }}
-                                  />
-                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                                </Form.Group>
+                                        <span className="votingPercentage">{`${getVotingPercentage(
+                                          e.pollData.pollB,
+                                          e.pollData.pollA,
+                                          e.pollData.pollC
+                                        )}%`}</span>
+                                      </div>
 
-                                <Form.Group className="mb-3" >
-                                
-                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                   
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+                                      <ProgressBar
+                                        now={getVotingPercentage(
+                                          e.pollData.pollB,
+                                          e.pollData.pollA,
+                                          e.pollData.pollC
+                                        )}
+                                      />
+                                    </Form.Group>
 
-// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-// chatData[chatData.indexOf(e)]
-// e.pollData.pollB = 100
-// e.pollData.pollA = 0
-// e.pollData.pollC = 0
-e.pollData.pollA = e.pollData.pollA
-e.pollData.pollB = e.pollData.pollB + 1
-e.pollData.pollC = e.pollData.pollC
+                                    <Form.Group className="mb-3">
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          justifyContent: "space-between",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <Form.Check
+                                          type="radio"
+                                          name="radio"
+                                          label={e.pollData.OptionC}
+                                          onChange={() => {
+                                            // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                            // chatData[chatData.indexOf(e)]
 
+                                            // e.pollData.pollC = 100
+                                            // e.pollData.pollA = 0
+                                            // e.pollData.pollB = 0
 
-// let messageContainer = document.querySelector(".chatarea");
+                                            e.pollData.pollC =
+                                              e.pollData.pollC + 1;
+                                            e.pollData.pollA = e.pollData.pollA;
+                                            e.pollData.pollB = e.pollData.pollB;
+                                            // let messageContainer = document.querySelector(".chatarea");
 
-// messageContainer.scrollTop = messageContainer.scrollHeight;
-// setChatData(chatData.filter((chat) => chat !== e))
-// setChatData((chat) => [...chat, e])
-// updatePollData(e)
-}} />
-                                   
-                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
-                       
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                       </Form.Group>
-
-                                <Form.Group className="mb-3" >
-                               
-                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
-                                    onChange={() => {
-
-                                      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                      // chatData[chatData.indexOf(e)]
-
-                                      // e.pollData.pollC = 100
-                                      // e.pollData.pollA = 0
-                                      // e.pollData.pollB = 0
-
-                                      e.pollData.pollC = e.pollData.pollC + 1
-                                      e.pollData.pollA = e.pollData.pollA
-                                      e.pollData.pollB = e.pollData.pollB
-                                      // let messageContainer = document.querySelector(".chatarea");
-
-                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      // setChatData(chatData.filter((chat) => chat !== e))
-                                      // setChatData((chat) => [...chat, e])
-                                      // updatePollData(e)
-                                    }}
-                                  />
-                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
-                                    <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                       </Form.Group>
-                                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                            // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                            // setChatData(chatData.filter((chat) => chat !== e))
+                                            // setChatData((chat) => [...chat, e])
+                                            // updatePollData(e)
+                                          }}
+                                        />
+                                        <span className="votingPercentage">{`${getVotingPercentage(
+                                          e.pollData.pollC,
+                                          e.pollData.pollA,
+                                          e.pollData.pollB
+                                        )}%`}</span>
+                                      </div>
+                                      <ProgressBar
+                                        now={getVotingPercentage(
+                                          e.pollData.pollC,
+                                          e.pollData.pollA,
+                                          e.pollData.pollB
+                                        )}
+                                      />
+                                    </Form.Group>
+                                    {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                  toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
-                                  let messageContainer = document.querySelector(".chatarea");
+                                    <Button
+                                      variant="primary"
+                                      type="submit"
+                                      disabled={e.pollData.isVoted}
+                                      id={e.pollData.threadId}
+                                      onClick={() => {
+                                        toast.success("Voted Successfully");
+                                        document.getElementById(
+                                          e.pollData.threadId
+                                        ).disabled = true;
+                                        uploadPollResponse(e);
+                                        let messageContainer =
+                                          document.querySelector(".chatarea");
 
-                                  messageContainer.scrollTop = messageContainer.scrollHeight;
-                                  setChatData(chatData.filter((chat) => chat !== e))
-                                  setChatData((chat) => [...chat, e])
-                                  updatePollData(e)
-                                }}>
-                                  Vote
-                                </Button>
-                              </Form>
-                            </div> : null}
-                            {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
-                              <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
-                              <p>Event Title : {e.event.eventTitle}</p>
-                              {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
-                              <p>Event Date : {e.event.eventDate}</p>
-                              <p>Event Time : {e.event.eventTime}</p>
-                            </div> : null}
-                            {e.isVideo ? (
-                              <video
-                                onDragStart={(e) => e.preventDefault()}
-                                onmousedown={(event) => {
-                                  event.preventDefault
-                                    ? event.preventDefault()
-                                    : (event.returnValue = false);
-                                }}
-                                style={{
-                                  maxWidth: "200px",
-                                  marginTop: "20px",
-                                  borderRadius: "5px",
-                                }}
-                                controls={true}
-                                src={e.message}
-                              ></video>
-                            ) : null}
-                            {e.isImage ? (
-                              <img
-                                src={e.message}
-                                onDragStart={(e) => e.preventDefault()}
-                                onmousedown={(event) => {
-                                  event.preventDefault
-                                    ? event.preventDefault()
-                                    : (event.returnValue = false);
-                                }}
-                                style={{
-                                  maxWidth: e.isSticker ? "60px" : "200px",
-                                  marginTop: "20px",
-                                  borderRadius: "5px",
-                                }}
-                              />
-                            ) : null}
+                                        messageContainer.scrollTop =
+                                          messageContainer.scrollHeight;
+                                        setChatData(
+                                          chatData.filter((chat) => chat !== e)
+                                        );
+                                        setChatData((chat) => [...chat, e]);
+                                        updatePollData(e);
+                                      }}
+                                    >
+                                      Vote
+                                    </Button>
+                                  </Form>
+                                </div>
+                              ) : null}
+                              {e.isEvent ? (
+                                <div
+                                  style={{ marginTop: "30px" }}
+                                  className="EventFormDiv"
+                                >
+                                  <h5 style={{ fontSize: "15px" }}>
+                                    Event Created by {e.event.fullName}
+                                  </h5>
+                                  <p>Event Title : {e.event.eventTitle}</p>
+                                  {e.event.eventDesc ? (
+                                    <p>
+                                      Event Description : {e.event.eventDesc}
+                                    </p>
+                                  ) : null}
+                                  <p>Event Date : {e.event.eventDate}</p>
+                                  <p>Event Time : {e.event.eventTime}</p>
+                                </div>
+                              ) : null}
+                              {e.isVideo ? (
+                                <video
+                                  onDragStart={(e) => e.preventDefault()}
+                                  onmousedown={(event) => {
+                                    event.preventDefault
+                                      ? event.preventDefault()
+                                      : (event.returnValue = false);
+                                  }}
+                                  style={{
+                                    maxWidth: "200px",
+                                    marginTop: "20px",
+                                    borderRadius: "5px",
+                                  }}
+                                  controls={true}
+                                  src={e.message}
+                                ></video>
+                              ) : null}
+                              {e.isImage ? (
+                                <img
+                                  src={e.message}
+                                  onDragStart={(e) => e.preventDefault()}
+                                  onmousedown={(event) => {
+                                    event.preventDefault
+                                      ? event.preventDefault()
+                                      : (event.returnValue = false);
+                                  }}
+                                  style={{
+                                    maxWidth: e.isSticker ? "60px" : "200px",
+                                    marginTop: "20px",
+                                    borderRadius: "5px",
+                                  }}
+                                />
+                              ) : null}
 
-                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                            {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                              {e.isPoll ? (
+                                <p
+                                  style={{ fontSize: "12px" }}
+                                >{`Voting Ends in ${e.expiryTime}`}</p>
+                              ) : null}
+                              {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
                               className="reply-button" 
                               onClick={()=>{
                                 setReplyData({chatData:e,user:{
                                 name: userFullName,
                                 profilePic: userProfilePic,
                               }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null} */}
-                            <div className="reply-box"></div>
-                          </div>
-                        ))
+                              <div className="reply-box"></div>
+                            </div>
+                          ))
                         : null}
-  {srcPrivate && mimeTypePrivate.substr(0, 5) == "image" ? (
+                      {srcPrivate && mimeTypePrivate.substr(0, 5) == "image" ? (
                         <div className="messageBox">
                           <img
                             src={srcPrivate}
@@ -7447,62 +8882,86 @@ e.pollData.pollC = e.pollData.pollC
                         </ClickAwayListener>
                       )}
 
-{stickerPickerPrivate ? <div style={{
-                         position: "sticky",
-                         bottom: "0px",
-                        left: "0.5rem",
-                        backgroundColor: '#652C90',
-                        borderRadius: '5px',
-                        padding: '8px',
-                        zIndex: "1111", display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', flexWrap: 'wrap'
-                      }}>
-                        {stickersImages.map((image) => <img src={image}
-                          onClick={() => {
-                            let today = new Date();
-                            let message=image;
-                            let threadId = uuidv4()
-                                let timestamp = today.toLocaleTimeString() + " " + today.toLocaleDateString()
-                              
-                            appendPrivate(
-                              userFullName,
-                              `${image}`,
-                              "left",
-                              `${BaseURL}/profile-pictures/${userProfilePic}`,
-                              false,
-                              timestamp,
-                              false,
-                             true,true
-                            );
-                            // socket.emit("send", {
-                            //   name: userFullName,
-                            //   message: `${image}`,
-                            //   profilePic: userProfilePic,
-                            //   isEmoji: false,
-                            //   isVideo: false,
-                            //   isImage: true,
-                            //   isSticker: true
-                            // });
-                          
-                            socket.emit("private-message-soapbox", {
-                              threadId:threadId,
-                              to: privateChatPerson.name,
-                              from: userFullName,
-                              isClub: 0,
-                              isPrivate: 1,
-                              isCommunity: 0,
-                              name: userFullName,
-                              message: message,
-                              profilePic: userProfilePic,
-                              isEmoji: false,
-                              isSticker:true,
-                              isImage:true,
-                              timestamp: timestamp
-                            });
-                            setStickerPickerPrivate(false)
+                      {stickerPickerPrivate ? (
+                        <div
+                          style={{
+                            position: "sticky",
+                            bottom: "0px",
+                            left: "0.5rem",
+                            backgroundColor: "#652C90",
+                            borderRadius: "5px",
+                            padding: "8px",
+                            zIndex: "1111",
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            alignItems: "center",
+                            flexWrap: "wrap",
                           }}
-                          style={{ width: '70px', minWidth: '70px', minHeight: '70px', margin: '5px', cursor: 'pointer', backgroundColor: 'whitesmoke', padding: '5px' }} />)}
-                      </div> : null
-                      }
+                        >
+                          {stickersImages.map((image) => (
+                            <img
+                              src={image}
+                              onClick={() => {
+                                let today = new Date();
+                                let message = image;
+                                let threadId = uuidv4();
+                                let timestamp =
+                                  today.toLocaleTimeString() +
+                                  " " +
+                                  today.toLocaleDateString();
+
+                                appendPrivate(
+                                  userFullName,
+                                  `${image}`,
+                                  "left",
+                                  `${BaseURL}/profile-pictures/${userProfilePic}`,
+                                  false,
+                                  timestamp,
+                                  false,
+                                  true,
+                                  true
+                                );
+                                // socket.emit("send", {
+                                //   name: userFullName,
+                                //   message: `${image}`,
+                                //   profilePic: userProfilePic,
+                                //   isEmoji: false,
+                                //   isVideo: false,
+                                //   isImage: true,
+                                //   isSticker: true
+                                // });
+
+                                socket.emit("private-message-soapbox", {
+                                  threadId: threadId,
+                                  to: privateChatPerson.name,
+                                  from: userFullName,
+                                  isClub: 0,
+                                  isPrivate: 1,
+                                  isCommunity: 0,
+                                  name: userFullName,
+                                  message: message,
+                                  profilePic: userProfilePic,
+                                  isEmoji: false,
+                                  isSticker: true,
+                                  isImage: true,
+                                  timestamp: timestamp,
+                                });
+                                setStickerPickerPrivate(false);
+                              }}
+                              style={{
+                                width: "70px",
+                                minWidth: "70px",
+                                minHeight: "70px",
+                                margin: "5px",
+                                cursor: "pointer",
+                                backgroundColor: "whitesmoke",
+                                padding: "5px",
+                              }}
+                            />
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
 
                     <div className="send-private">
@@ -7511,7 +8970,14 @@ e.pollData.pollC = e.pollData.pollC
                         action="#"
                         id="send-container"
                         style={{ marginLeft: privateChat ? "5px" : "5px" }}
-                        onSubmit={(e) => messagesubmitPrivate(e,privateChatPerson,userProfilePic,userFullName)}
+                        onSubmit={(e) =>
+                          messagesubmitPrivate(
+                            e,
+                            privateChatPerson,
+                            userProfilePic,
+                            userFullName
+                          )
+                        }
                       >
                         <label htmlFor="post-video">
                           <SoapboxTooltip title={"Share Video"} placement="top">
@@ -7533,7 +8999,10 @@ e.pollData.pollC = e.pollData.pollC
                         />
 
                         <label htmlFor="post-image">
-                          <SoapboxTooltip title={"Share Photos"} placement="top">
+                          <SoapboxTooltip
+                            title={"Share Photos"}
+                            placement="top"
+                          >
                             <img
                               src={imagechat}
                               style={{ margin: "5px", cursor: "pointer" }}
@@ -7561,7 +9030,14 @@ e.pollData.pollC = e.pollData.pollC
                         <SoapboxTooltip title={"Stickers"} placement="top">
                           <img
                             src={stickerIcon}
-                            style={{ width: '25px', padding: '3px', borderRadius: '15px', margin: "5px", cursor: "pointer", backgroundColor: '#8249A0' }}
+                            style={{
+                              width: "25px",
+                              padding: "3px",
+                              borderRadius: "15px",
+                              margin: "5px",
+                              cursor: "pointer",
+                              backgroundColor: "#8249A0",
+                            }}
                             onClick={() => {
                               setStickerPickerPrivate(!stickerPickerPrivate);
                             }}
@@ -7585,7 +9061,13 @@ e.pollData.pollC = e.pollData.pollC
                           value={messageInboxValuePrivate}
                           autoComplete="off"
                           id="messageInp"
-                          style={{ width: privateChat ? window.innerWidth>=600?"230px":"155px" : "230px" }}
+                          style={{
+                            width: privateChat
+                              ? window.innerWidth >= 600
+                                ? "230px"
+                                : "155px"
+                              : "230px",
+                          }}
                           onChange={(e) => {
                             setMessageInboxValuePrivate(e.target.value);
                           }}
@@ -7600,7 +9082,10 @@ e.pollData.pollC = e.pollData.pollC
                             marginLeft: "5px",
                           }}
                         >
-                          <SoapboxTooltip title={"Send Message"} placement="top">
+                          <SoapboxTooltip
+                            title={"Send Message"}
+                            placement="top"
+                          >
                             <img src={sendIcon} width="27px" />
                           </SoapboxTooltip>
                         </button>
@@ -7609,52 +9094,80 @@ e.pollData.pollC = e.pollData.pollC
                   </div>
                 ) : null}
 
-{privateChatList
-                    ? <div className="privateChatListBox" id="privateChatList">
-                      <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',width:'100%'}} >
-                      
-                        <h5 style={{
-                          textAlign: 'center',
-                          fontSize: '0.93rem',
-                          fontWeight: '600',
-                          margin: '0.5rem 0',
-                          borderRadius: '5px',
-                          padding: '0.5rem',
-                          width: '100%',
-                          backgroundColor: "whitesmoke"
+                {privateChatList ? (
+                  <div className="privateChatListBox" id="privateChatList">
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <h5
+                        style={{
+                          textAlign: "center",
+                          fontSize: "0.93rem",
+                          fontWeight: "600",
+                          margin: "0.5rem 0",
+                          borderRadius: "5px",
+                          padding: "0.5rem",
+                          width: "100%",
+                          backgroundColor: "whitesmoke",
                         }}
-                        >
-                            <img
-                      width={'70px'}
-                      src={chathive}
-                      className="chativelogo"
-                    />
-                       
-                        </h5>
-                        <button className="closebtn" onClick={() => {
+                      >
+                        <img
+                          width={"70px"}
+                          src={chathive}
+                          className="chativelogo"
+                        />
+                      </h5>
+                      <button
+                        className="closebtn"
+                        onClick={() => {
                           if (!privateChatList) {
-                            setPrivateChatList(!privateChatList)
-                   
+                            setPrivateChatList(!privateChatList);
+
                             setTimeout(() => {
                               if (document.getElementById("privateChatList")) {
-                                document.getElementById("privateChatList").style.transition = "1sec";
-                                document.getElementById("privateChatList").style.right = "0.8rem";
+                                document.getElementById(
+                                  "privateChatList"
+                                ).style.transition = "1sec";
+                                document.getElementById(
+                                  "privateChatList"
+                                ).style.right = "0.8rem";
                               }
                             }, 1);
                           } else {
-                            document.getElementById("privateChatList").style.transition = "1sec";
-                            document.getElementById("privateChatList").style.right = "-100vw";
+                            document.getElementById(
+                              "privateChatList"
+                            ).style.transition = "1sec";
+                            document.getElementById(
+                              "privateChatList"
+                            ).style.right = "-100vw";
 
                             setTimeout(() => {
-                              setPrivateChatList(false)
+                              setPrivateChatList(false);
                             }, 200);
                           }
-                        }}>X</button>
-                      </div>
-                      <InboxMessage setInviteBox={()=>{setInviteBoxChat(true)}} socket={socket} actualUsername={userInformation.username} username={userFullName}  openPrivateChatfromInbox={(e)=>{openPrivateChatfromInbox(e)}} />
+                        }}
+                      >
+                        X
+                      </button>
                     </div>
-                    : null
-                  }
+                    <InboxMessage
+                      setInviteBox={() => {
+                        setInviteBoxChat(true);
+                      }}
+                      socket={socket}
+                      actualUsername={userInformation.username}
+                      username={userFullName}
+                      openPrivateChatfromInbox={(e) => {
+                        openPrivateChatfromInbox(e);
+                      }}
+                    />
+                  </div>
+                ) : null}
 
                 {/* ------------------- Chat Container newly style added here ------------------- */}
                 {showChatRoom ? (
@@ -7670,9 +9183,17 @@ e.pollData.pollC = e.pollData.pollC
                       backgroundColor: "#EDEDFF",
                       border: "2px solid #D9D2FA",
                       overflowX: "hidden",
-                      maxHeight: '80vh',
-                      flex: clubFloor ? window.innerWidth>=600?"0.5":"1" : "1",
-                      maxWidth:clubFloor ? "500px" : window.innerWidth>=600?"60vw":"100%"
+                      maxHeight: "80vh",
+                      flex: clubFloor
+                        ? window.innerWidth >= 600
+                          ? "0.5"
+                          : "1"
+                        : "1",
+                      maxWidth: clubFloor
+                        ? "500px"
+                        : window.innerWidth >= 600
+                        ? "60vw"
+                        : "100%",
                     }}
                   >
                     <div
@@ -7700,17 +9221,15 @@ e.pollData.pollC = e.pollData.pollC
                       }}
                     >
                       {" "}
-                      <span>
-                        {userInfo[0].name}'s Club Chat
-                      </span>
-
-                      <div style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: "0.5rem"
-                      }}
+                      <span>{userInfo[0].name}'s Club Chat</span>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          gap: "0.5rem",
+                        }}
                       >
                         {/* <img
                                 src={videolive}
@@ -7721,38 +9240,43 @@ e.pollData.pollC = e.pollData.pollC
                                 }}
                               /> */}
                         <SoapboxTooltip title={"Invite"} placement="bottom">
-                          <span style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            cursor: 'pointer',
-                            backgroundColor: '#dcd5fa',
-                            color: "#8249A0",
-                            width: '26px',
-                            height: '26px',
-                            borderRadius: '50%',
-                            // marginLeft: '15px',
-                            fontSize: '1rem'
-                          }}
+                          <span
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              cursor: "pointer",
+                              backgroundColor: "#dcd5fa",
+                              color: "#8249A0",
+                              width: "26px",
+                              height: "26px",
+                              borderRadius: "50%",
+                              // marginLeft: '15px',
+                              fontSize: "1rem",
+                            }}
                             onClick={() => setInviteBox(true)}
                           >
                             <Share />
                           </span>
                         </SoapboxTooltip>
-                        <SoapboxTooltip title={"Stream Live"} placement="bottom">
-                          <span style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            cursor: 'pointer',
-                            backgroundColor: '#dcd5fa',
-                            color: "#8249A0",
-                            width: '26px',
-                            height: '26px',
-                            borderRadius: '50%',
-                            // marginLeft: '15px',
-                            fontSize: '1.1rem'
-                          }}
+                        <SoapboxTooltip
+                          title={"Stream Live"}
+                          placement="bottom"
+                        >
+                          <span
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              cursor: "pointer",
+                              backgroundColor: "#dcd5fa",
+                              color: "#8249A0",
+                              width: "26px",
+                              height: "26px",
+                              borderRadius: "50%",
+                              // marginLeft: '15px',
+                              fontSize: "1.1rem",
+                            }}
                             onClick={() => {
                               setBroadcastStream(true);
                             }}
@@ -7760,44 +9284,62 @@ e.pollData.pollC = e.pollData.pollC
                             <RiLiveLine />
                           </span>
                         </SoapboxTooltip>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '58px', flexDirection: 'row' }}>
-                          <SoapboxTooltip title={"Schedule Event"} placement="top">
-                            <span style={{
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              cursor: 'pointer',
-                              backgroundColor: '#dcd5fa',
-                              color: "#8249A0",
-                              width: '26px',
-                              height: '26px',
-                              borderRadius: '50%',
-                              // marginLeft: '15px',
-                              fontSize: '1.1rem'
-                            }}
-                              onClick={() => { setScheduleBox(!scheduleBox) }}
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "58px",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <SoapboxTooltip
+                            title={"Schedule Event"}
+                            placement="top"
+                          >
+                            <span
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                backgroundColor: "#dcd5fa",
+                                color: "#8249A0",
+                                width: "26px",
+                                height: "26px",
+                                borderRadius: "50%",
+                                // marginLeft: '15px',
+                                fontSize: "1.1rem",
+                              }}
+                              onClick={() => {
+                                setScheduleBox(!scheduleBox);
+                              }}
                             >
                               <RiCalendarEventLine />
                             </span>
                           </SoapboxTooltip>
                           <SoapboxTooltip title={"Create Poll"} placement="top">
-                            <span style={{
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              cursor: 'pointer',
-                              backgroundColor: '#dcd5fa',
-                              color: "#8249A0",
-                              width: '26px',
-                              height: '26px',
-                              borderRadius: '50%',
-                              // marginLeft: '15px',
-                              fontSize: '1.1rem'
-                            }}
+                            <span
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                backgroundColor: "#dcd5fa",
+                                color: "#8249A0",
+                                width: "26px",
+                                height: "26px",
+                                borderRadius: "50%",
+                                // marginLeft: '15px',
+                                fontSize: "1.1rem",
+                              }}
                               onClick={() => {
                                 if (showPollForm) {
-                                  document.getElementById("showPollFormId").style.transition = "2s";
-                                  document.getElementById("showPollFormId").style.left = "200vw";
+                                  document.getElementById(
+                                    "showPollFormId"
+                                  ).style.transition = "2s";
+                                  document.getElementById(
+                                    "showPollFormId"
+                                  ).style.left = "200vw";
 
                                   setTimeout(() => {
                                     setShowPollForm(false);
@@ -7806,9 +9348,15 @@ e.pollData.pollC = e.pollData.pollC
                                   setShowPollForm(true);
 
                                   setTimeout(() => {
-                                    if (document.getElementById("showPollFormId")) {
-                                      document.getElementById("showPollFormId").style.transition = "1s";
-                                      document.getElementById("showPollFormId").style.left = "70px";
+                                    if (
+                                      document.getElementById("showPollFormId")
+                                    ) {
+                                      document.getElementById(
+                                        "showPollFormId"
+                                      ).style.transition = "1s";
+                                      document.getElementById(
+                                        "showPollFormId"
+                                      ).style.left = "70px";
                                     }
                                   }, 1);
                                 }
@@ -7816,80 +9364,108 @@ e.pollData.pollC = e.pollData.pollC
                             >
                               <RiBookmark3Line />
                             </span>
-                          </SoapboxTooltip></div>
+                          </SoapboxTooltip>
+                        </div>
 
-                        {userInfo[0].communityClub == 1
-                          ? null
-                          : <SoapboxTooltip title={"Delete Chat"} placement="bottom">
-                            <span style={{
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              cursor: 'pointer',
-                              backgroundColor: '#dcd5fa',
-                              color: "#8249A0",
-                              width: '26px',
-                              height: '26px',
-                              borderRadius: '50%',
-                              // marginLeft: '15px', 
-                              fontSize: '1.1rem'
-                            }}
-                              onClick={() => { deletePrivateChatAll(userInfo[0].username) }}
+                        {userInfo[0].communityClub == 1 ? null : (
+                          <SoapboxTooltip
+                            title={"Delete Chat"}
+                            placement="bottom"
+                          >
+                            <span
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                backgroundColor: "#dcd5fa",
+                                color: "#8249A0",
+                                width: "26px",
+                                height: "26px",
+                                borderRadius: "50%",
+                                // marginLeft: '15px',
+                                fontSize: "1.1rem",
+                              }}
+                              onClick={() => {
+                                deletePrivateChatAll(userInfo[0].username);
+                              }}
                             >
                               <FaRegTrashAlt />
                             </span>
-                          </SoapboxTooltip>}
+                          </SoapboxTooltip>
+                        )}
                       </div>
                     </div>
 
-                    {showPollForm
-                      ? <div className="showPollForm" id="showPollFormId">
-                        <div style={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          backgroundColor: '#652C90'
-                        }}
+                    {showPollForm ? (
+                      <div className="showPollForm" id="showPollFormId">
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            backgroundColor: "#652C90",
+                          }}
                         >
                           <h5>Create A Poll</h5>
-                          <FaWindowClose className="FaWindowClose" onClick={() => {
-                            if (showPollForm) {
-                              document.getElementById("showPollFormId").style.transition = "2s";
-                              document.getElementById("showPollFormId").style.left = "200vw";
+                          <FaWindowClose
+                            className="FaWindowClose"
+                            onClick={() => {
+                              if (showPollForm) {
+                                document.getElementById(
+                                  "showPollFormId"
+                                ).style.transition = "2s";
+                                document.getElementById(
+                                  "showPollFormId"
+                                ).style.left = "200vw";
 
-                              setTimeout(() => {
-                                setShowPollForm(false);
-                              }, 1000);
-                            } else {
-                              setShowPollForm(true);
+                                setTimeout(() => {
+                                  setShowPollForm(false);
+                                }, 1000);
+                              } else {
+                                setShowPollForm(true);
 
-                              setTimeout(() => {
-                                if (document.getElementById("showPollFormId")) {
-                                  document.getElementById("showPollFormId").style.transition = "1s";
-                                  document.getElementById("showPollFormId").style.left = "70px";
-                                }
-                              }, 1);
-                            }
-                          }} />
+                                setTimeout(() => {
+                                  if (
+                                    document.getElementById("showPollFormId")
+                                  ) {
+                                    document.getElementById(
+                                      "showPollFormId"
+                                    ).style.transition = "1s";
+                                    document.getElementById(
+                                      "showPollFormId"
+                                    ).style.left = "70px";
+                                  }
+                                }, 1);
+                              }
+                            }}
+                          />
                         </div>
 
-                        <div style={{
-                          padding: '33px',
-                          position: 'relative',
-                          width: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-evenly',
-                          paddingTop: '0px',
-                          paddingBottom: '0px'
-                        }}>
-
-                          {FormEditPoll ?
+                        <div
+                          style={{
+                            padding: "33px",
+                            position: "relative",
+                            width: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-evenly",
+                            paddingTop: "0px",
+                            paddingBottom: "0px",
+                          }}
+                        >
+                          {FormEditPoll ? (
                             <Form onSubmit={(e) => e.preventDefault()}>
-                              <Form.Group className="mb-3" >
+                              <Form.Group className="mb-3">
                                 <Form.Label>Poll Expiry Duration</Form.Label>
-                                <Form.Control as="select" onChange={(e) => setPollFormExpiry(e.target.value)} aria-label="Default select example">
+                                <Form.Control
+                                  as="select"
+                                  onChange={(e) =>
+                                    setPollFormExpiry(e.target.value)
+                                  }
+                                  aria-label="Default select example"
+                                >
                                   <option value="24">24 Hours</option>
                                   <option value="48">2 Days</option>
                                   <option value="72">3 Days</option>
@@ -7900,64 +9476,125 @@ e.pollData.pollC = e.pollData.pollC
                                 </Form.Control>
                               </Form.Group>
 
-                              <Form.Group className="mb-3" >
+                              <Form.Group className="mb-3">
                                 <Form.Label>Enter Question For Poll</Form.Label>
-                                <Form.Control type="text" value={pollFormDataQ}
-                                  onChange={(e) => { setPollFormDataQ(e.target.value) }} placeholder="Enter Question For Poll" />
+                                <Form.Control
+                                  type="text"
+                                  value={pollFormDataQ}
+                                  onChange={(e) => {
+                                    setPollFormDataQ(e.target.value);
+                                  }}
+                                  placeholder="Enter Question For Poll"
+                                />
                               </Form.Group>
-                              <Form.Group className="mb-3" >
+                              <Form.Group className="mb-3">
                                 <Form.Label>Option A</Form.Label>
-                                <Form.Control value={pollFormDataOA} onChange={(e) => { setPollFormDataOA(e.target.value) }} placeholder="Option A" />
+                                <Form.Control
+                                  value={pollFormDataOA}
+                                  onChange={(e) => {
+                                    setPollFormDataOA(e.target.value);
+                                  }}
+                                  placeholder="Option A"
+                                />
                               </Form.Group>
 
-                              <Form.Group className="mb-3" >
+                              <Form.Group className="mb-3">
                                 <Form.Label>Option B</Form.Label>
-                                <Form.Control value={pollFormDataOB} onChange={(e) => { setPollFormDataOB(e.target.value) }} placeholder="Option b" />
+                                <Form.Control
+                                  value={pollFormDataOB}
+                                  onChange={(e) => {
+                                    setPollFormDataOB(e.target.value);
+                                  }}
+                                  placeholder="Option b"
+                                />
                               </Form.Group>
 
-                              <Form.Group className="mb-3" >
+                              <Form.Group className="mb-3">
                                 <Form.Label>Option C</Form.Label>
-                                <Form.Control value={pollFormDataOC} onChange={(e) => { setPollFormDataOC(e.target.value) }} placeholder="Option c" />
+                                <Form.Control
+                                  value={pollFormDataOC}
+                                  onChange={(e) => {
+                                    setPollFormDataOC(e.target.value);
+                                  }}
+                                  placeholder="Option c"
+                                />
                               </Form.Group>
 
-                              <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={() => { handlePollFormSubmission(userFullName) }}>
+                              <Button
+                                variant="primary"
+                                type="submit"
+                                style={{ marginLeft: "5px" }}
+                                onClick={() => {
+                                  handlePollFormSubmission(userFullName);
+                                }}
+                              >
                                 Save
                               </Button>
                             </Form>
-                            : <Form onSubmit={(e) => e.preventDefault()}>
-                              <Form.Group className="mb-3" >
+                          ) : (
+                            <Form onSubmit={(e) => e.preventDefault()}>
+                              <Form.Group className="mb-3">
                                 <Form.Label>{pollFormData.Question}</Form.Label>
-
                               </Form.Group>
-                              <Form.Group className="mb-3" >
-
-                                <Form.Check type="checkbox" label={pollFormData.OptionA} />
-                                <ProgressBar animated variant="success" now={pollFormData.pollA} />
-                              </Form.Group>
-
-                              <Form.Group className="mb-3" >
-                                <Form.Check type="checkbox" label={pollFormData.OptionB} />
-                                <ProgressBar animated variant="info" now={pollFormData.pollB} />
-                              </Form.Group>
-
-                              <Form.Group className="mb-3" >
-                                <Form.Check type="checkbox" label={pollFormData.OptionC} />
-                                <ProgressBar animated variant="warning" now={pollFormData.pollC} />
+                              <Form.Group className="mb-3">
+                                <Form.Check
+                                  type="checkbox"
+                                  label={pollFormData.OptionA}
+                                />
+                                <ProgressBar
+                                  animated
+                                  variant="success"
+                                  now={pollFormData.pollA}
+                                />
                               </Form.Group>
 
-                              <Button variant="primary" onClick={() => { setFormEditPoll(!FormEditPoll) }} >
+                              <Form.Group className="mb-3">
+                                <Form.Check
+                                  type="checkbox"
+                                  label={pollFormData.OptionB}
+                                />
+                                <ProgressBar
+                                  animated
+                                  variant="info"
+                                  now={pollFormData.pollB}
+                                />
+                              </Form.Group>
+
+                              <Form.Group className="mb-3">
+                                <Form.Check
+                                  type="checkbox"
+                                  label={pollFormData.OptionC}
+                                />
+                                <ProgressBar
+                                  animated
+                                  variant="warning"
+                                  now={pollFormData.pollC}
+                                />
+                              </Form.Group>
+
+                              <Button
+                                variant="primary"
+                                onClick={() => {
+                                  setFormEditPoll(!FormEditPoll);
+                                }}
+                              >
                                 Edit
                               </Button>
-                              <Button variant="primary" type="submit" style={{ marginLeft: '5px' }} onClick={() => { sentPollMessageInChat(pollFormData) }}>
+                              <Button
+                                variant="primary"
+                                type="submit"
+                                style={{ marginLeft: "5px" }}
+                                onClick={() => {
+                                  sentPollMessageInChat(pollFormData);
+                                }}
+                              >
                                 Submit
                               </Button>
                             </Form>
-                          }
+                          )}
                         </div>
-
                       </div>
-                      : null
-                    }
+                    ) : null}
 
                     {broadcastStream ? (
                       <VideoChat
@@ -7968,9 +9605,7 @@ e.pollData.pollC = e.pollData.pollC
                         }}
                         host={username}
                       />
-                    )
-                      : null
-                    }
+                    ) : null}
 
                     <div
                       className="chatarea"
@@ -7982,213 +9617,331 @@ e.pollData.pollC = e.pollData.pollC
                       }}
                     >
                       {chatData.length
-                        ? chatData.map((e) => (
-                          e.isReply?   
-                          <div
-                          className="messageBox"
-                         
-                       
-                        >
-                             <div
-                          className="messageBox"
-                          style={{
-                           
-                              backgroundColor:'#D3D3D3',
-                              margin:'0px',
-                              marginBottom:'8px'
-                            // width: "max-content",
-                            // maxWidth: "fit-content",
-                            // marginLeft: "auto",
-                            // position: "relative",
-                            // left: "3rem",
-                            // marginRight: "3.5rem"
-                          }}
-                       
-                        >
-                          <div className="ProfileBox"   
-                         >
-                            <img
-                              className="chat-profile"
-                              src={e.parentChat.imgSrc ? e.parentChat.imgSrc : null}
-                            />
-                            <p>{e.parentChat.chatname}</p>
-                            {/* <p className="timestamp"> {e.parentChat.timestamp}</p> */}
-                          </div>
-                          <Linkify
-                            componentDecorator={(
-                              decoratedHref,
-                              decoratedText,
-                              key
-                            ) => (
-                              <a
-                                target="blank"
-                                href={decoratedHref}
-                                key={key}
-                              >
-                                {decoratedText}
-                              </a>
-                            )}
-                          >
-                            {" "}
-                            <div
-                              className={
-                                e.parentChat.isEmoji ? "message-emoji" : "message"
-                              }
-                            >
-                              {!e.parentChat.isVideo && !e.parentChat.isImage && !e.parentChat.isPoll && !e.parentChat.isEvent
-                                ? e.parentChat.message
-                                : null}
-                            </div>
-                          </Linkify>
-                          {e.parentChat.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
-                            <Form onSubmit={(e) => e.preventDefault()}>
-
-                              <Form.Group className="mb-3" >
-                                <Form.Label>{e.pollData.Question}</Form.Label>
-
-                              </Form.Group>
-
-                              <Form.Group className="mb-3" >
-
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                 
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
-                                  onChange={() => {
-
-                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                    // chatData[chatData.indexOf(e)]
-                                    e.pollData.pollA = e.pollData.pollA + 1
-                                    e.pollData.pollB = e.pollData.pollB
-                                    e.pollData.pollC = e.pollData.pollC
-
-
-                                    // let messageContainer = document.querySelector(".chatarea");
-
-                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    // setChatData(chatData.filter((chat) => chat !== e))
-                                    // setChatData((chat) => [...chat, e])
-                                    // updatePollData(e)
+                        ? chatData.map((e) =>
+                            e.isReply ? (
+                              <div className="messageBox">
+                                <div
+                                  className="messageBox"
+                                  style={{
+                                    backgroundColor: "#D3D3D3",
+                                    margin: "0px",
+                                    marginBottom: "8px",
+                                    // width: "max-content",
+                                    // maxWidth: "fit-content",
+                                    // marginLeft: "auto",
+                                    // position: "relative",
+                                    // left: "3rem",
+                                    // marginRight: "3.5rem"
                                   }}
-                                />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                              </Form.Group>
+                                >
+                                  <div className="ProfileBox">
+                                    <img
+                                      className="chat-profile"
+                                      src={
+                                        e.parentChat.imgSrc
+                                          ? e.parentChat.imgSrc
+                                          : null
+                                      }
+                                    />
+                                    <p>{e.parentChat.chatname}</p>
+                                    {/* <p className="timestamp"> {e.parentChat.timestamp}</p> */}
+                                  </div>
+                                  <Linkify
+                                    componentDecorator={(
+                                      decoratedHref,
+                                      decoratedText,
+                                      key
+                                    ) => (
+                                      <a
+                                        target="blank"
+                                        href={decoratedHref}
+                                        key={key}
+                                      >
+                                        {decoratedText}
+                                      </a>
+                                    )}
+                                  >
+                                    {" "}
+                                    <div
+                                      className={
+                                        e.parentChat.isEmoji
+                                          ? "message-emoji"
+                                          : "message"
+                                      }
+                                    >
+                                      {!e.parentChat.isVideo &&
+                                      !e.parentChat.isImage &&
+                                      !e.parentChat.isPoll &&
+                                      !e.parentChat.isEvent
+                                        ? e.parentChat.message
+                                        : null}
+                                    </div>
+                                  </Linkify>
+                                  {e.parentChat.isPoll ? (
+                                    <div
+                                      style={{ marginTop: "30px" }}
+                                      className="pollFormDiv"
+                                    >
+                                      <Form
+                                        onSubmit={(e) => e.preventDefault()}
+                                      >
+                                        <Form.Group className="mb-3">
+                                          <Form.Label>
+                                            {e.pollData.Question}
+                                          </Form.Label>
+                                        </Form.Group>
 
-                              <Form.Group className="mb-3" >
-                              
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                 
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+                                        <Form.Group className="mb-3">
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            <Form.Check
+                                              type="radio"
+                                              name="radio"
+                                              label={e.pollData.OptionA}
+                                              onChange={() => {
+                                                // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                // chatData[chatData.indexOf(e)]
+                                                e.pollData.pollA =
+                                                  e.pollData.pollA + 1;
+                                                e.pollData.pollB =
+                                                  e.pollData.pollB;
+                                                e.pollData.pollC =
+                                                  e.pollData.pollC;
 
-// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-// chatData[chatData.indexOf(e)]
-// e.pollData.pollB = 100
-// e.pollData.pollA = 0
-// e.pollData.pollC = 0
-e.pollData.pollA = e.pollData.pollA
-e.pollData.pollB = e.pollData.pollB + 1
-e.pollData.pollC = e.pollData.pollC
+                                                // let messageContainer = document.querySelector(".chatarea");
 
+                                                // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                // setChatData(chatData.filter((chat) => chat !== e))
+                                                // setChatData((chat) => [...chat, e])
+                                                // updatePollData(e)
+                                              }}
+                                            />
+                                            <span className="votingPercentage">{`${getVotingPercentage(
+                                              e.pollData.pollA,
+                                              e.pollData.pollB,
+                                              e.pollData.pollC
+                                            )}%`}</span>
+                                          </div>
+                                          <ProgressBar
+                                            now={getVotingPercentage(
+                                              e.pollData.pollA,
+                                              e.pollData.pollB,
+                                              e.pollData.pollC
+                                            )}
+                                          />
+                                        </Form.Group>
 
-// let messageContainer = document.querySelector(".chatarea");
+                                        <Form.Group className="mb-3">
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            <Form.Check
+                                              type="radio"
+                                              name="radio"
+                                              label={e.pollData.OptionB}
+                                              onChange={() => {
+                                                // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                // chatData[chatData.indexOf(e)]
+                                                // e.pollData.pollB = 100
+                                                // e.pollData.pollA = 0
+                                                // e.pollData.pollC = 0
+                                                e.pollData.pollA =
+                                                  e.pollData.pollA;
+                                                e.pollData.pollB =
+                                                  e.pollData.pollB + 1;
+                                                e.pollData.pollC =
+                                                  e.pollData.pollC;
 
-// messageContainer.scrollTop = messageContainer.scrollHeight;
-// setChatData(chatData.filter((chat) => chat !== e))
-// setChatData((chat) => [...chat, e])
-// updatePollData(e)
-}} />
-                                 
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
-                     
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                     </Form.Group>
+                                                // let messageContainer = document.querySelector(".chatarea");
 
-                              <Form.Group className="mb-3" >
-                             
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
-                                  onChange={() => {
+                                                // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                // setChatData(chatData.filter((chat) => chat !== e))
+                                                // setChatData((chat) => [...chat, e])
+                                                // updatePollData(e)
+                                              }}
+                                            />
 
-                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                    // chatData[chatData.indexOf(e)]
+                                            <span className="votingPercentage">{`${getVotingPercentage(
+                                              e.pollData.pollB,
+                                              e.pollData.pollA,
+                                              e.pollData.pollC
+                                            )}%`}</span>
+                                          </div>
 
-                                    // e.pollData.pollC = 100
-                                    // e.pollData.pollA = 0
-                                    // e.pollData.pollB = 0
+                                          <ProgressBar
+                                            now={getVotingPercentage(
+                                              e.pollData.pollB,
+                                              e.pollData.pollA,
+                                              e.pollData.pollC
+                                            )}
+                                          />
+                                        </Form.Group>
 
-                                    e.pollData.pollC = e.pollData.pollC + 1
-                                    e.pollData.pollA = e.pollData.pollA
-                                    e.pollData.pollB = e.pollData.pollB
-                                    // let messageContainer = document.querySelector(".chatarea");
+                                        <Form.Group className="mb-3">
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            <Form.Check
+                                              type="radio"
+                                              name="radio"
+                                              label={e.pollData.OptionC}
+                                              onChange={() => {
+                                                // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                                // chatData[chatData.indexOf(e)]
 
-                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    // setChatData(chatData.filter((chat) => chat !== e))
-                                    // setChatData((chat) => [...chat, e])
-                                    // updatePollData(e)
-                                  }}
-                                />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
-                                  <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                     </Form.Group>
-                              {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                                // e.pollData.pollC = 100
+                                                // e.pollData.pollA = 0
+                                                // e.pollData.pollB = 0
+
+                                                e.pollData.pollC =
+                                                  e.pollData.pollC + 1;
+                                                e.pollData.pollA =
+                                                  e.pollData.pollA;
+                                                e.pollData.pollB =
+                                                  e.pollData.pollB;
+                                                // let messageContainer = document.querySelector(".chatarea");
+
+                                                // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                                // setChatData(chatData.filter((chat) => chat !== e))
+                                                // setChatData((chat) => [...chat, e])
+                                                // updatePollData(e)
+                                              }}
+                                            />
+                                            <span className="votingPercentage">{`${getVotingPercentage(
+                                              e.pollData.pollC,
+                                              e.pollData.pollA,
+                                              e.pollData.pollB
+                                            )}%`}</span>
+                                          </div>
+                                          <ProgressBar
+                                            now={getVotingPercentage(
+                                              e.pollData.pollC,
+                                              e.pollData.pollA,
+                                              e.pollData.pollB
+                                            )}
+                                          />
+                                        </Form.Group>
+                                        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
   <Form.Check type="radio" name="radio" label="Check me out" />
 </Form.Group> */}
-                              <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
-                                let messageContainer = document.querySelector(".chatarea");
+                                        <Button
+                                          variant="primary"
+                                          type="submit"
+                                          disabled={e.pollData.isVoted}
+                                          id={e.pollData.threadId}
+                                          onClick={() => {
+                                            toast.success("Voted Successfully");
+                                            document.getElementById(
+                                              e.pollData.threadId
+                                            ).disabled = true;
+                                            uploadPollResponse(e);
+                                            let messageContainer =
+                                              document.querySelector(
+                                                ".chatarea"
+                                              );
 
-                                messageContainer.scrollTop = messageContainer.scrollHeight;
-                                setChatData(chatData.filter((chat) => chat !== e))
-                                setChatData((chat) => [...chat, e])
-                                updatePollData(e)
-                              }}>
-                                Vote
-                              </Button>
-                            </Form>
-                          </div> : null}
-                          {e.parentChat.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
-                            <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
-                            <p>Event Title : {e.parentChat.event.eventTitle}</p>
-                            {e.event.eventDesc ? <p>Event Description : {e.parentChat.event.eventDesc}</p> : null}
-                            <p>Event Date : {e.parentChat.event.eventDate}</p>
-                            <p>Event Time : {e.parentChat.event.eventTime}</p>
-                          </div> : null}
-                          {e.parentChat.isVideo ? (
-                            <video
-                              onDragStart={(e) => e.preventDefault()}
-                              onmousedown={(event) => {
-                                event.preventDefault
-                                  ? event.preventDefault()
-                                  : (event.returnValue = false);
-                              }}
-                              style={{
-                                maxWidth: "200px",
-                                marginTop: "20px",
-                                borderRadius: "5px",
-                              }}
-                              controls={true}
-                              src={e.parentChat.message}
-                            ></video>
-                          ) : null}
-                          {e.parentChat.isImage ? (
-                            <img
-                              src={e.parentChat.message}
-                              onDragStart={(e) => e.preventDefault()}
-                              onmousedown={(event) => {
-                                event.preventDefault
-                                  ? event.preventDefault()
-                                  : (event.returnValue = false);
-                              }}
-                              style={{
-                                maxWidth: e.parentChat.isSticker ? "60px" : "200px",
-                                marginTop: "20px",
-                                borderRadius: "5px",
-                              }}
-                            />
-                          ) : null}
+                                            messageContainer.scrollTop =
+                                              messageContainer.scrollHeight;
+                                            setChatData(
+                                              chatData.filter(
+                                                (chat) => chat !== e
+                                              )
+                                            );
+                                            setChatData((chat) => [...chat, e]);
+                                            updatePollData(e);
+                                          }}
+                                        >
+                                          Vote
+                                        </Button>
+                                      </Form>
+                                    </div>
+                                  ) : null}
+                                  {e.parentChat.isEvent ? (
+                                    <div
+                                      style={{ marginTop: "30px" }}
+                                      className="EventFormDiv"
+                                    >
+                                      <h5 style={{ fontSize: "15px" }}>
+                                        Event Created by {e.event.fullName}
+                                      </h5>
+                                      <p>
+                                        Event Title :{" "}
+                                        {e.parentChat.event.eventTitle}
+                                      </p>
+                                      {e.event.eventDesc ? (
+                                        <p>
+                                          Event Description :{" "}
+                                          {e.parentChat.event.eventDesc}
+                                        </p>
+                                      ) : null}
+                                      <p>
+                                        Event Date :{" "}
+                                        {e.parentChat.event.eventDate}
+                                      </p>
+                                      <p>
+                                        Event Time :{" "}
+                                        {e.parentChat.event.eventTime}
+                                      </p>
+                                    </div>
+                                  ) : null}
+                                  {e.parentChat.isVideo ? (
+                                    <video
+                                      onDragStart={(e) => e.preventDefault()}
+                                      onmousedown={(event) => {
+                                        event.preventDefault
+                                          ? event.preventDefault()
+                                          : (event.returnValue = false);
+                                      }}
+                                      style={{
+                                        maxWidth: "200px",
+                                        marginTop: "20px",
+                                        borderRadius: "5px",
+                                      }}
+                                      controls={true}
+                                      src={e.parentChat.message}
+                                    ></video>
+                                  ) : null}
+                                  {e.parentChat.isImage ? (
+                                    <img
+                                      src={e.parentChat.message}
+                                      onDragStart={(e) => e.preventDefault()}
+                                      onmousedown={(event) => {
+                                        event.preventDefault
+                                          ? event.preventDefault()
+                                          : (event.returnValue = false);
+                                      }}
+                                      style={{
+                                        maxWidth: e.parentChat.isSticker
+                                          ? "60px"
+                                          : "200px",
+                                        marginTop: "20px",
+                                        borderRadius: "5px",
+                                      }}
+                                    />
+                                  ) : null}
 
-                          {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                          {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
+                                  {e.isPoll ? (
+                                    <p
+                                      style={{ fontSize: "12px" }}
+                                    >{`Voting Ends in ${e.expiryTime}`}</p>
+                                  ) : null}
+                                  {/* {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
                             className="reply-button" 
                             onClick={()=>{
                               setReplyData({chatData:e,user:{
@@ -8196,534 +9949,776 @@ e.pollData.pollC = e.pollData.pollC
                               profilePic: userProfilePic,
                             }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null}
                           <div className="reply-box"></div> */}
-                        
-                        </div>
-                          <div className="ProfileBox"    onClick={() => {
-                            if (e.chatname !== userFullName && !e.isPoll) {
-                              toast.success(
-                                `Opening Private Chat with ${e.chatname}`
-                              );
-                              setPrivateChatPerson({
-                                name: e.chatname,
-                                profilePic: e.imgSrc,
-                              });
-                              setPrivateChat(true);
-                              setClubFloor(false);
-                              // socket.emit("room", userInfo[0].username+userInformation.username);
-                              getChatDataPrivate(e.chatname, userFullName)
-                              // socket.emit("new-user-joined", {
-                              //     name: userFullName,
-                              //     profilePic: userProfilePic,
-                              //   });
+                                </div>
+                                <div
+                                  className="ProfileBox"
+                                  onClick={() => {
+                                    if (
+                                      e.chatname !== userFullName &&
+                                      !e.isPoll
+                                    ) {
+                                      toast.success(
+                                        `Opening Private Chat with ${e.chatname}`
+                                      );
+                                      setPrivateChatPerson({
+                                        name: e.chatname,
+                                        profilePic: e.imgSrc,
+                                      });
+                                      setPrivateChat(true);
+                                      setClubFloor(false);
+                                      // socket.emit("room", userInfo[0].username+userInformation.username);
+                                      getChatDataPrivate(
+                                        e.chatname,
+                                        userFullName
+                                      );
+                                      // socket.emit("new-user-joined", {
+                                      //     name: userFullName,
+                                      //     profilePic: userProfilePic,
+                                      //   });
 
-                              setTimeout(() => {
-                                if (
-                                  document.getElementById(
-                                    "privatechatslide"
-                                  )
-                                ) {
-                                  document.getElementById(
-                                    "privatechatslide"
-                                  ).style.transition = "1sec";
-                                  document.getElementById(
-                                    "privatechatslide"
-                                  ).style.right = "30px";
-                                }
-                              }, 1);
-                            }
-                          }}>
-                            <img
-                              className="chat-profile"
-                              src={e.imgSrc ? e.imgSrc : null}
-                            />
-                            <p>{e.chatname}</p>
-                            <p className="timestamp"> {e.timestamp}</p>
-                          </div>
-                          <Linkify
-                            componentDecorator={(
-                              decoratedHref,
-                              decoratedText,
-                              key
-                            ) => (
-                              <a
-                                target="blank"
-                                href={decoratedHref}
-                                key={key}
-                              >
-                                {decoratedText}
-                              </a>
-                            )}
-                          >
-                            {" "}
-                            <div
-                              className={
-                                e.isEmoji ? "message-emoji" : "message"
-                              }
-                            >
-                              {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent
-                                ? e.message
-                                : null}
-                            </div>
-                          </Linkify>
-                          {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
-                            <Form onSubmit={(e) => e.preventDefault()}>
-
-                              <Form.Group className="mb-3" >
-                                <Form.Label>{e.pollData.Question}</Form.Label>
-
-                              </Form.Group>
-
-                              <Form.Group className="mb-3" >
-
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                 
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
-                                  onChange={() => {
-
-                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                    // chatData[chatData.indexOf(e)]
-                                    e.pollData.pollA = e.pollData.pollA + 1
-                                    e.pollData.pollB = e.pollData.pollB
-                                    e.pollData.pollC = e.pollData.pollC
-
-
-                                    // let messageContainer = document.querySelector(".chatarea");
-
-                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    // setChatData(chatData.filter((chat) => chat !== e))
-                                    // setChatData((chat) => [...chat, e])
-                                    // updatePollData(e)
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById(
+                                            "privatechatslide"
+                                          )
+                                        ) {
+                                          document.getElementById(
+                                            "privatechatslide"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "privatechatslide"
+                                          ).style.right = "30px";
+                                        }
+                                      }, 1);
+                                    }
                                   }}
-                                />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                              </Form.Group>
+                                >
+                                  <img
+                                    className="chat-profile"
+                                    src={e.imgSrc ? e.imgSrc : null}
+                                  />
+                                  <p>{e.chatname}</p>
+                                  <p className="timestamp"> {e.timestamp}</p>
+                                </div>
+                                <Linkify
+                                  componentDecorator={(
+                                    decoratedHref,
+                                    decoratedText,
+                                    key
+                                  ) => (
+                                    <a
+                                      target="blank"
+                                      href={decoratedHref}
+                                      key={key}
+                                    >
+                                      {decoratedText}
+                                    </a>
+                                  )}
+                                >
+                                  {" "}
+                                  <div
+                                    className={
+                                      e.isEmoji ? "message-emoji" : "message"
+                                    }
+                                  >
+                                    {!e.isVideo &&
+                                    !e.isImage &&
+                                    !e.isPoll &&
+                                    !e.isEvent
+                                      ? e.message
+                                      : null}
+                                  </div>
+                                </Linkify>
+                                {e.isPoll ? (
+                                  <div
+                                    style={{ marginTop: "30px" }}
+                                    className="pollFormDiv"
+                                  >
+                                    <Form onSubmit={(e) => e.preventDefault()}>
+                                      <Form.Group className="mb-3">
+                                        <Form.Label>
+                                          {e.pollData.Question}
+                                        </Form.Label>
+                                      </Form.Group>
 
-                              <Form.Group className="mb-3" >
-                              
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                 
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+                                      <Form.Group className="mb-3">
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <Form.Check
+                                            type="radio"
+                                            name="radio"
+                                            label={e.pollData.OptionA}
+                                            onChange={() => {
+                                              // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                              // chatData[chatData.indexOf(e)]
+                                              e.pollData.pollA =
+                                                e.pollData.pollA + 1;
+                                              e.pollData.pollB =
+                                                e.pollData.pollB;
+                                              e.pollData.pollC =
+                                                e.pollData.pollC;
 
-// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-// chatData[chatData.indexOf(e)]
-// e.pollData.pollB = 100
-// e.pollData.pollA = 0
-// e.pollData.pollC = 0
-e.pollData.pollA = e.pollData.pollA
-e.pollData.pollB = e.pollData.pollB + 1
-e.pollData.pollC = e.pollData.pollC
+                                              // let messageContainer = document.querySelector(".chatarea");
 
+                                              // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                              // setChatData(chatData.filter((chat) => chat !== e))
+                                              // setChatData((chat) => [...chat, e])
+                                              // updatePollData(e)
+                                            }}
+                                          />
+                                          <span className="votingPercentage">{`${getVotingPercentage(
+                                            e.pollData.pollA,
+                                            e.pollData.pollB,
+                                            e.pollData.pollC
+                                          )}%`}</span>
+                                        </div>
+                                        <ProgressBar
+                                          now={getVotingPercentage(
+                                            e.pollData.pollA,
+                                            e.pollData.pollB,
+                                            e.pollData.pollC
+                                          )}
+                                        />
+                                      </Form.Group>
 
-// let messageContainer = document.querySelector(".chatarea");
+                                      <Form.Group className="mb-3">
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <Form.Check
+                                            type="radio"
+                                            name="radio"
+                                            label={e.pollData.OptionB}
+                                            onChange={() => {
+                                              // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                              // chatData[chatData.indexOf(e)]
+                                              // e.pollData.pollB = 100
+                                              // e.pollData.pollA = 0
+                                              // e.pollData.pollC = 0
+                                              e.pollData.pollA =
+                                                e.pollData.pollA;
+                                              e.pollData.pollB =
+                                                e.pollData.pollB + 1;
+                                              e.pollData.pollC =
+                                                e.pollData.pollC;
 
-// messageContainer.scrollTop = messageContainer.scrollHeight;
-// setChatData(chatData.filter((chat) => chat !== e))
-// setChatData((chat) => [...chat, e])
-// updatePollData(e)
-}} />
-                                 
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
-                     
-                                  <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                     </Form.Group>
+                                              // let messageContainer = document.querySelector(".chatarea");
 
-                              <Form.Group className="mb-3" >
-                             
-                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
-                                  onChange={() => {
+                                              // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                              // setChatData(chatData.filter((chat) => chat !== e))
+                                              // setChatData((chat) => [...chat, e])
+                                              // updatePollData(e)
+                                            }}
+                                          />
 
-                                    // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                    // chatData[chatData.indexOf(e)]
+                                          <span className="votingPercentage">{`${getVotingPercentage(
+                                            e.pollData.pollB,
+                                            e.pollData.pollA,
+                                            e.pollData.pollC
+                                          )}%`}</span>
+                                        </div>
 
-                                    // e.pollData.pollC = 100
-                                    // e.pollData.pollA = 0
-                                    // e.pollData.pollB = 0
+                                        <ProgressBar
+                                          now={getVotingPercentage(
+                                            e.pollData.pollB,
+                                            e.pollData.pollA,
+                                            e.pollData.pollC
+                                          )}
+                                        />
+                                      </Form.Group>
 
-                                    e.pollData.pollC = e.pollData.pollC + 1
-                                    e.pollData.pollA = e.pollData.pollA
-                                    e.pollData.pollB = e.pollData.pollB
-                                    // let messageContainer = document.querySelector(".chatarea");
+                                      <Form.Group className="mb-3">
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <Form.Check
+                                            type="radio"
+                                            name="radio"
+                                            label={e.pollData.OptionC}
+                                            onChange={() => {
+                                              // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                              // chatData[chatData.indexOf(e)]
 
-                                    // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                    // setChatData(chatData.filter((chat) => chat !== e))
-                                    // setChatData((chat) => [...chat, e])
-                                    // updatePollData(e)
-                                  }}
-                                />
-                                  <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
-                                  <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                     </Form.Group>
-                              {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                              // e.pollData.pollC = 100
+                                              // e.pollData.pollA = 0
+                                              // e.pollData.pollB = 0
+
+                                              e.pollData.pollC =
+                                                e.pollData.pollC + 1;
+                                              e.pollData.pollA =
+                                                e.pollData.pollA;
+                                              e.pollData.pollB =
+                                                e.pollData.pollB;
+                                              // let messageContainer = document.querySelector(".chatarea");
+
+                                              // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                              // setChatData(chatData.filter((chat) => chat !== e))
+                                              // setChatData((chat) => [...chat, e])
+                                              // updatePollData(e)
+                                            }}
+                                          />
+                                          <span className="votingPercentage">{`${getVotingPercentage(
+                                            e.pollData.pollC,
+                                            e.pollData.pollA,
+                                            e.pollData.pollB
+                                          )}%`}</span>
+                                        </div>
+                                        <ProgressBar
+                                          now={getVotingPercentage(
+                                            e.pollData.pollC,
+                                            e.pollData.pollA,
+                                            e.pollData.pollB
+                                          )}
+                                        />
+                                      </Form.Group>
+                                      {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
   <Form.Check type="radio" name="radio" label="Check me out" />
 </Form.Group> */}
-                              <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
-                                let messageContainer = document.querySelector(".chatarea");
+                                      <Button
+                                        variant="primary"
+                                        type="submit"
+                                        disabled={e.pollData.isVoted}
+                                        id={e.pollData.threadId}
+                                        onClick={() => {
+                                          toast.success("Voted Successfully");
+                                          document.getElementById(
+                                            e.pollData.threadId
+                                          ).disabled = true;
+                                          uploadPollResponse(e);
+                                          let messageContainer =
+                                            document.querySelector(".chatarea");
 
-                                messageContainer.scrollTop = messageContainer.scrollHeight;
-                                setChatData(chatData.filter((chat) => chat !== e))
-                                setChatData((chat) => [...chat, e])
-                                updatePollData(e)
-                              }}>
-                                Vote
-                              </Button>
-                            </Form>
-                          </div> : null}
-                          {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
-                            <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
-                            <p>Event Title : {e.event.eventTitle}</p>
-                            {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
-                            <p>Event Date : {e.event.eventDate}</p>
-                            <p>Event Time : {e.event.eventTime}</p>
-                          </div> : null}
-                          {e.isVideo ? (
-                            <video
-                              onDragStart={(e) => e.preventDefault()}
-                              onmousedown={(event) => {
-                                event.preventDefault
-                                  ? event.preventDefault()
-                                  : (event.returnValue = false);
-                              }}
-                              style={{
-                                maxWidth: "200px",
-                                marginTop: "20px",
-                                borderRadius: "5px",
-                              }}
-                              controls={true}
-                              src={e.message}
-                            ></video>
-                          ) : null}
-                          {e.isImage ? (
-                            <img
-                              src={e.message}
-                              onDragStart={(e) => e.preventDefault()}
-                              onmousedown={(event) => {
-                                event.preventDefault
-                                  ? event.preventDefault()
-                                  : (event.returnValue = false);
-                              }}
-                              style={{
-                                maxWidth: e.isSticker ? "60px" : "200px",
-                                marginTop: "20px",
-                                borderRadius: "5px",
-                              }}
-                            />
-                          ) : null}
+                                          messageContainer.scrollTop =
+                                            messageContainer.scrollHeight;
+                                          setChatData(
+                                            chatData.filter(
+                                              (chat) => chat !== e
+                                            )
+                                          );
+                                          setChatData((chat) => [...chat, e]);
+                                          updatePollData(e);
+                                        }}
+                                      >
+                                        Vote
+                                      </Button>
+                                    </Form>
+                                  </div>
+                                ) : null}
+                                {e.isEvent ? (
+                                  <div
+                                    style={{ marginTop: "30px" }}
+                                    className="EventFormDiv"
+                                  >
+                                    <h5 style={{ fontSize: "15px" }}>
+                                      Event Created by {e.event.fullName}
+                                    </h5>
+                                    <p>Event Title : {e.event.eventTitle}</p>
+                                    {e.event.eventDesc ? (
+                                      <p>
+                                        Event Description : {e.event.eventDesc}
+                                      </p>
+                                    ) : null}
+                                    <p>Event Date : {e.event.eventDate}</p>
+                                    <p>Event Time : {e.event.eventTime}</p>
+                                  </div>
+                                ) : null}
+                                {e.isVideo ? (
+                                  <video
+                                    onDragStart={(e) => e.preventDefault()}
+                                    onmousedown={(event) => {
+                                      event.preventDefault
+                                        ? event.preventDefault()
+                                        : (event.returnValue = false);
+                                    }}
+                                    style={{
+                                      maxWidth: "200px",
+                                      marginTop: "20px",
+                                      borderRadius: "5px",
+                                    }}
+                                    controls={true}
+                                    src={e.message}
+                                  ></video>
+                                ) : null}
+                                {e.isImage ? (
+                                  <img
+                                    src={e.message}
+                                    onDragStart={(e) => e.preventDefault()}
+                                    onmousedown={(event) => {
+                                      event.preventDefault
+                                        ? event.preventDefault()
+                                        : (event.returnValue = false);
+                                    }}
+                                    style={{
+                                      maxWidth: e.isSticker ? "60px" : "200px",
+                                      marginTop: "20px",
+                                      borderRadius: "5px",
+                                    }}
+                                  />
+                                ) : null}
 
-                          {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                          {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
-                            className="reply-button" 
-                            onClick={()=>{
-                              setReplyData({chatData:e.parentChat,user:{
-                              name: userFullName,
-                              profilePic: userProfilePic,
-                            }});setShowReply(!showReply)}}
-                            >{e.replyCount?e.replyCount+' more':0} Replies</button> : null}
-                          {/* <div className="reply-box"></div> */}
-                        </div>
-                       :
-                          <div
-                            className="messageBox"
-                           
-                         
-                          >
-                            <div className="ProfileBox"    onClick={() => {
-                              if (e.chatname !== userFullName && !e.isPoll) {
-                                toast.success(
-                                  `Opening Private Chat with ${e.chatname}`
-                                );
-                                setPrivateChatPerson({
-                                  name: e.chatname,
-                                  profilePic: e.imgSrc,
-                                });
-                                setPrivateChat(true);
-                                setClubFloor(false);
-                                // socket.emit("room", userInfo[0].username+userInformation.username);
-                                getChatDataPrivate(e.chatname, userFullName)
-                                // socket.emit("new-user-joined", {
-                                //     name: userFullName,
-                                //     profilePic: userProfilePic,
-                                //   });
-
-                                setTimeout(() => {
-                                  if (
-                                    document.getElementById(
-                                      "privatechatslide"
-                                    )
-                                  ) {
-                                    document.getElementById(
-                                      "privatechatslide"
-                                    ).style.transition = "1sec";
-                                    document.getElementById(
-                                      "privatechatslide"
-                                    ).style.right = "30px";
-                                  }
-                                }, 1);
-                              }
-                            }}>
-                              <img
-                                className="chat-profile"
-                                src={e.imgSrc ? e.imgSrc : null}
-                              />
-                              <p>{e.chatname}</p>
-                              <p className="timestamp"> {e.timestamp}</p>
-                            </div>
-                            <Linkify
-                              componentDecorator={(
-                                decoratedHref,
-                                decoratedText,
-                                key
-                              ) => (
-                                <a
-                                  target="blank"
-                                  href={decoratedHref}
-                                  key={key}
-                                >
-                                  {decoratedText}
-                                </a>
-                              )}
-                            >
-                              {" "}
-                              <div
-                                className={
-                                  e.isEmoji ? "message-emoji" : "message"
-                                }
-                              >
-                                {!e.isVideo && !e.isImage && !e.isPoll && !e.isEvent
-                                  ? e.message
-                                  : null}
+                                {e.isPoll ? (
+                                  <p
+                                    style={{ fontSize: "12px" }}
+                                  >{`Voting Ends in ${e.expiryTime}`}</p>
+                                ) : null}
+                                {e.message ||
+                                e.isEmoji ||
+                                e.isVideo ||
+                                e.isImage ? (
+                                  <button
+                                    className="reply-button"
+                                    onClick={() => {
+                                      setReplyData({
+                                        chatData: e.parentChat,
+                                        user: {
+                                          name: userFullName,
+                                          profilePic: userProfilePic,
+                                        },
+                                      });
+                                      setShowReply(!showReply);
+                                    }}
+                                  >
+                                    {e.replyCount ? e.replyCount + " more" : 0}{" "}
+                                    Replies
+                                  </button>
+                                ) : null}
+                                {/* <div className="reply-box"></div> */}
                               </div>
-                            </Linkify>
-                            {e.isPoll ? <div style={{ marginTop: '30px' }} className="pollFormDiv">
-                              <Form onSubmit={(e) => e.preventDefault()}>
+                            ) : (
+                              <div className="messageBox">
+                                <div
+                                  className="ProfileBox"
+                                  onClick={() => {
+                                    if (
+                                      e.chatname !== userFullName &&
+                                      !e.isPoll
+                                    ) {
+                                      toast.success(
+                                        `Opening Private Chat with ${e.chatname}`
+                                      );
+                                      setPrivateChatPerson({
+                                        name: e.chatname,
+                                        profilePic: e.imgSrc,
+                                      });
+                                      setPrivateChat(true);
+                                      setClubFloor(false);
+                                      // socket.emit("room", userInfo[0].username+userInformation.username);
+                                      getChatDataPrivate(
+                                        e.chatname,
+                                        userFullName
+                                      );
+                                      // socket.emit("new-user-joined", {
+                                      //     name: userFullName,
+                                      //     profilePic: userProfilePic,
+                                      //   });
 
-                                <Form.Group className="mb-3" >
-                                  <Form.Label>{e.pollData.Question}</Form.Label>
-
-                                </Form.Group>
-
-                                <Form.Group className="mb-3" >
-
-                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                   
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionA}
-                                    onChange={() => {
-
-                                      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                      // chatData[chatData.indexOf(e)]
-                                      e.pollData.pollA = e.pollData.pollA + 1
-                                      e.pollData.pollB = e.pollData.pollB
-                                      e.pollData.pollC = e.pollData.pollC
-
-
-                                      // let messageContainer = document.querySelector(".chatarea");
-
-                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      // setChatData(chatData.filter((chat) => chat !== e))
-                                      // setChatData((chat) => [...chat, e])
-                                      // updatePollData(e)
-                                    }}
+                                      setTimeout(() => {
+                                        if (
+                                          document.getElementById(
+                                            "privatechatslide"
+                                          )
+                                        ) {
+                                          document.getElementById(
+                                            "privatechatslide"
+                                          ).style.transition = "1sec";
+                                          document.getElementById(
+                                            "privatechatslide"
+                                          ).style.right = "30px";
+                                        }
+                                      }, 1);
+                                    }
+                                  }}
+                                >
+                                  <img
+                                    className="chat-profile"
+                                    src={e.imgSrc ? e.imgSrc : null}
                                   />
-                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)}%`}</span></div>
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollA, e.pollData.pollB, e.pollData.pollC)} />
-                                </Form.Group>
+                                  <p>{e.chatname}</p>
+                                  <p className="timestamp"> {e.timestamp}</p>
+                                </div>
+                                <Linkify
+                                  componentDecorator={(
+                                    decoratedHref,
+                                    decoratedText,
+                                    key
+                                  ) => (
+                                    <a
+                                      target="blank"
+                                      href={decoratedHref}
+                                      key={key}
+                                    >
+                                      {decoratedText}
+                                    </a>
+                                  )}
+                                >
+                                  {" "}
+                                  <div
+                                    className={
+                                      e.isEmoji ? "message-emoji" : "message"
+                                    }
+                                  >
+                                    {!e.isVideo &&
+                                    !e.isImage &&
+                                    !e.isPoll &&
+                                    !e.isEvent
+                                      ? e.message
+                                      : null}
+                                  </div>
+                                </Linkify>
+                                {e.isPoll ? (
+                                  <div
+                                    style={{ marginTop: "30px" }}
+                                    className="pollFormDiv"
+                                  >
+                                    <Form onSubmit={(e) => e.preventDefault()}>
+                                      <Form.Group className="mb-3">
+                                        <Form.Label>
+                                          {e.pollData.Question}
+                                        </Form.Label>
+                                      </Form.Group>
 
-                                <Form.Group className="mb-3" >
-                                
-                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                   
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionB} onChange={() => {
+                                      <Form.Group className="mb-3">
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <Form.Check
+                                            type="radio"
+                                            name="radio"
+                                            label={e.pollData.OptionA}
+                                            onChange={() => {
+                                              // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                              // chatData[chatData.indexOf(e)]
+                                              e.pollData.pollA =
+                                                e.pollData.pollA + 1;
+                                              e.pollData.pollB =
+                                                e.pollData.pollB;
+                                              e.pollData.pollC =
+                                                e.pollData.pollC;
 
-// setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-// chatData[chatData.indexOf(e)]
-// e.pollData.pollB = 100
-// e.pollData.pollA = 0
-// e.pollData.pollC = 0
-e.pollData.pollA = e.pollData.pollA
-e.pollData.pollB = e.pollData.pollB + 1
-e.pollData.pollC = e.pollData.pollC
+                                              // let messageContainer = document.querySelector(".chatarea");
 
+                                              // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                              // setChatData(chatData.filter((chat) => chat !== e))
+                                              // setChatData((chat) => [...chat, e])
+                                              // updatePollData(e)
+                                            }}
+                                          />
+                                          <span className="votingPercentage">{`${getVotingPercentage(
+                                            e.pollData.pollA,
+                                            e.pollData.pollB,
+                                            e.pollData.pollC
+                                          )}%`}</span>
+                                        </div>
+                                        <ProgressBar
+                                          now={getVotingPercentage(
+                                            e.pollData.pollA,
+                                            e.pollData.pollB,
+                                            e.pollData.pollC
+                                          )}
+                                        />
+                                      </Form.Group>
 
-// let messageContainer = document.querySelector(".chatarea");
+                                      <Form.Group className="mb-3">
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <Form.Check
+                                            type="radio"
+                                            name="radio"
+                                            label={e.pollData.OptionB}
+                                            onChange={() => {
+                                              // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                              // chatData[chatData.indexOf(e)]
+                                              // e.pollData.pollB = 100
+                                              // e.pollData.pollA = 0
+                                              // e.pollData.pollC = 0
+                                              e.pollData.pollA =
+                                                e.pollData.pollA;
+                                              e.pollData.pollB =
+                                                e.pollData.pollB + 1;
+                                              e.pollData.pollC =
+                                                e.pollData.pollC;
 
-// messageContainer.scrollTop = messageContainer.scrollHeight;
-// setChatData(chatData.filter((chat) => chat !== e))
-// setChatData((chat) => [...chat, e])
-// updatePollData(e)
-}} />
-                                   
-                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)}%`}</span></div>
-                       
-                                    <ProgressBar now={getVotingPercentage(e.pollData.pollB, e.pollData.pollA, e.pollData.pollC)} />
-                       </Form.Group>
+                                              // let messageContainer = document.querySelector(".chatarea");
 
-                                <Form.Group className="mb-3" >
-                               
-                                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                  <Form.Check type="radio" name="radio" label={e.pollData.OptionC}
-                                    onChange={() => {
+                                              // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                              // setChatData(chatData.filter((chat) => chat !== e))
+                                              // setChatData((chat) => [...chat, e])
+                                              // updatePollData(e)
+                                            }}
+                                          />
 
-                                      // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
-                                      // chatData[chatData.indexOf(e)]
+                                          <span className="votingPercentage">{`${getVotingPercentage(
+                                            e.pollData.pollB,
+                                            e.pollData.pollA,
+                                            e.pollData.pollC
+                                          )}%`}</span>
+                                        </div>
 
-                                      // e.pollData.pollC = 100
-                                      // e.pollData.pollA = 0
-                                      // e.pollData.pollB = 0
+                                        <ProgressBar
+                                          now={getVotingPercentage(
+                                            e.pollData.pollB,
+                                            e.pollData.pollA,
+                                            e.pollData.pollC
+                                          )}
+                                        />
+                                      </Form.Group>
 
-                                      e.pollData.pollC = e.pollData.pollC + 1
-                                      e.pollData.pollA = e.pollData.pollA
-                                      e.pollData.pollB = e.pollData.pollB
-                                      // let messageContainer = document.querySelector(".chatarea");
+                                      <Form.Group className="mb-3">
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <Form.Check
+                                            type="radio"
+                                            name="radio"
+                                            label={e.pollData.OptionC}
+                                            onChange={() => {
+                                              // setChatData(chatData.filter((chat)=>e.pollData.threadId!==chat.pollData.threadId))
+                                              // chatData[chatData.indexOf(e)]
 
-                                      // messageContainer.scrollTop = messageContainer.scrollHeight;
-                                      // setChatData(chatData.filter((chat) => chat !== e))
-                                      // setChatData((chat) => [...chat, e])
-                                      // updatePollData(e)
-                                    }}
-                                  />
-                                    <span className="votingPercentage">{`${getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)}%`}</span></div>
-                                    <ProgressBar  now={getVotingPercentage(e.pollData.pollC, e.pollData.pollA, e.pollData.pollB)} />
-                       </Form.Group>
-                                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                              // e.pollData.pollC = 100
+                                              // e.pollData.pollA = 0
+                                              // e.pollData.pollB = 0
+
+                                              e.pollData.pollC =
+                                                e.pollData.pollC + 1;
+                                              e.pollData.pollA =
+                                                e.pollData.pollA;
+                                              e.pollData.pollB =
+                                                e.pollData.pollB;
+                                              // let messageContainer = document.querySelector(".chatarea");
+
+                                              // messageContainer.scrollTop = messageContainer.scrollHeight;
+                                              // setChatData(chatData.filter((chat) => chat !== e))
+                                              // setChatData((chat) => [...chat, e])
+                                              // updatePollData(e)
+                                            }}
+                                          />
+                                          <span className="votingPercentage">{`${getVotingPercentage(
+                                            e.pollData.pollC,
+                                            e.pollData.pollA,
+                                            e.pollData.pollB
+                                          )}%`}</span>
+                                        </div>
+                                        <ProgressBar
+                                          now={getVotingPercentage(
+                                            e.pollData.pollC,
+                                            e.pollData.pollA,
+                                            e.pollData.pollB
+                                          )}
+                                        />
+                                      </Form.Group>
+                                      {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="radio" name="radio" label="Check me out" />
   </Form.Group> */}
-                                <Button variant="primary" type="submit" disabled={e.pollData.isVoted} id={e.pollData.threadId} onClick={() => {
-                                  toast.success('Voted Successfully'); document.getElementById(e.pollData.threadId).disabled = true; uploadPollResponse(e);
-                                  let messageContainer = document.querySelector(".chatarea");
+                                      <Button
+                                        variant="primary"
+                                        type="submit"
+                                        disabled={e.pollData.isVoted}
+                                        id={e.pollData.threadId}
+                                        onClick={() => {
+                                          toast.success("Voted Successfully");
+                                          document.getElementById(
+                                            e.pollData.threadId
+                                          ).disabled = true;
+                                          uploadPollResponse(e);
+                                          let messageContainer =
+                                            document.querySelector(".chatarea");
 
-                                  messageContainer.scrollTop = messageContainer.scrollHeight;
-                                  setChatData(chatData.filter((chat) => chat !== e))
-                                  setChatData((chat) => [...chat, e])
-                                  updatePollData(e)
-                                }}>
-                                  Vote
-                                </Button>
-                              </Form>
-                            </div> : null}
-                            {e.isEvent ? <div style={{ marginTop: '30px' }} className="EventFormDiv">
-                              <h5 style={{ fontSize: '15px' }}>Event Created by {e.event.fullName}</h5>
-                              <p>Event Title : {e.event.eventTitle}</p>
-                              {e.event.eventDesc ? <p>Event Description : {e.event.eventDesc}</p> : null}
-                              <p>Event Date : {e.event.eventDate}</p>
-                              <p>Event Time : {e.event.eventTime}</p>
-                            </div> : null}
-                            {e.isVideo ? (
-                              <video
-                                onDragStart={(e) => e.preventDefault()}
-                                onmousedown={(event) => {
-                                  event.preventDefault
-                                    ? event.preventDefault()
-                                    : (event.returnValue = false);
-                                }}
-                                style={{
-                                  maxWidth: "200px",
-                                  marginTop: "20px",
-                                  borderRadius: "5px",
-                                }}
-                                controls={true}
-                                src={e.message}
-                              ></video>
-                            ) : null}
-                            {e.isImage ? (
-                              <img
-                                src={e.message}
-                                onDragStart={(e) => e.preventDefault()}
-                                onmousedown={(event) => {
-                                  event.preventDefault
-                                    ? event.preventDefault()
-                                    : (event.returnValue = false);
-                                }}
-                                style={{
-                                  maxWidth: e.isSticker ? "60px" : "200px",
-                                  marginTop: "20px",
-                                  borderRadius: "5px",
-                                }}
-                              />
-                            ) : null}
+                                          messageContainer.scrollTop =
+                                            messageContainer.scrollHeight;
+                                          setChatData(
+                                            chatData.filter(
+                                              (chat) => chat !== e
+                                            )
+                                          );
+                                          setChatData((chat) => [...chat, e]);
+                                          updatePollData(e);
+                                        }}
+                                      >
+                                        Vote
+                                      </Button>
+                                    </Form>
+                                  </div>
+                                ) : null}
+                                {e.isEvent ? (
+                                  <div
+                                    style={{ marginTop: "30px" }}
+                                    className="EventFormDiv"
+                                  >
+                                    <h5 style={{ fontSize: "15px" }}>
+                                      Event Created by {e.event.fullName}
+                                    </h5>
+                                    <p>Event Title : {e.event.eventTitle}</p>
+                                    {e.event.eventDesc ? (
+                                      <p>
+                                        Event Description : {e.event.eventDesc}
+                                      </p>
+                                    ) : null}
+                                    <p>Event Date : {e.event.eventDate}</p>
+                                    <p>Event Time : {e.event.eventTime}</p>
+                                  </div>
+                                ) : null}
+                                {e.isVideo ? (
+                                  <video
+                                    onDragStart={(e) => e.preventDefault()}
+                                    onmousedown={(event) => {
+                                      event.preventDefault
+                                        ? event.preventDefault()
+                                        : (event.returnValue = false);
+                                    }}
+                                    style={{
+                                      maxWidth: "200px",
+                                      marginTop: "20px",
+                                      borderRadius: "5px",
+                                    }}
+                                    controls={true}
+                                    src={e.message}
+                                  ></video>
+                                ) : null}
+                                {e.isImage ? (
+                                  <img
+                                    src={e.message}
+                                    onDragStart={(e) => e.preventDefault()}
+                                    onmousedown={(event) => {
+                                      event.preventDefault
+                                        ? event.preventDefault()
+                                        : (event.returnValue = false);
+                                    }}
+                                    style={{
+                                      maxWidth: e.isSticker ? "60px" : "200px",
+                                      marginTop: "20px",
+                                      borderRadius: "5px",
+                                    }}
+                                  />
+                                ) : null}
 
-                            {e.isPoll ? <p style={{ fontSize: '12px' }}>{`Voting Ends in ${e.expiryTime}`}</p> : null}
-                            {e.message || e.isEmoji || e.isVideo || e.isImage ? <button 
-                              className="reply-button" 
-                              onClick={()=>{
-                                setReplyData({chatData:e,user:{
-                                name: userFullName,
-                                profilePic: userProfilePic,
-                              }});setShowReply(!showReply)}}>{showReply?"Reply":"Reply"}</button> : null}
-                            <div className="reply-box"></div>
-                          </div>
-                        ))
+                                {e.isPoll ? (
+                                  <p
+                                    style={{ fontSize: "12px" }}
+                                  >{`Voting Ends in ${e.expiryTime}`}</p>
+                                ) : null}
+                                {e.message ||
+                                e.isEmoji ||
+                                e.isVideo ||
+                                e.isImage ? (
+                                  <button
+                                    className="reply-button"
+                                    onClick={() => {
+                                      setReplyData({
+                                        chatData: e,
+                                        user: {
+                                          name: userFullName,
+                                          profilePic: userProfilePic,
+                                        },
+                                      });
+                                      setShowReply(!showReply);
+                                    }}
+                                  >
+                                    {showReply ? "Reply" : "Reply"}
+                                  </button>
+                                ) : null}
+                                <div className="reply-box"></div>
+                              </div>
+                            )
+                          )
                         : null}
 
-{src && mimeType.substr(0, 5) == "image" ? (
-                      <div className="messageBox">
-                        <img
-                          src={src}
-                          style={{
-                            width: "200px",
-                            height: "auto",
-                            marginTop: "-10px",
-                          }}
-                        />
-                        <button
-                          onClick={() => {
-                            upload(file, file.type);
-                            setFile([]);
-                            setSrc(null);
-                            setMimeType("");
-                          }}
-                        >
-                          Confirm
-                        </button>
-                        <button
-                          onClick={() => {
-                            setFile([]);
-                            setSrc(null);
-                            setMimeType("");
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    )
-                      : null
-                    }
+                      {src && mimeType.substr(0, 5) == "image" ? (
+                        <div className="messageBox">
+                          <img
+                            src={src}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                          />
+                          <button
+                            onClick={() => {
+                              upload(file, file.type);
+                              setFile([]);
+                              setSrc(null);
+                              setMimeType("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFile([]);
+                              setSrc(null);
+                              setMimeType("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
 
-                    {src && mimeType.substr(0, 5) == "video" ? (
-                      <div className="messageBox">
-                        <video
-                          src={src}
-                          style={{
-                            width: "200px",
-                            height: "auto",
-                            marginTop: "-10px",
-                          }}
-                          className="messageBox"
-                        />
-                        <button
-                          onClick={() => {
-                            upload(file, file.type);
-                            setFile([]);
-                            setSrc(null);
-                            setMimeType("");
-                          }}
-                        >
-                          Confirm
-                        </button>
-                        <button
-                          onClick={() => {
-                            setFile([]);
-                            setSrc(null);
-                            setMimeType("");
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    )
-                      : null
-                    }
+                      {src && mimeType.substr(0, 5) == "video" ? (
+                        <div className="messageBox">
+                          <video
+                            src={src}
+                            style={{
+                              width: "200px",
+                              height: "auto",
+                              marginTop: "-10px",
+                            }}
+                            className="messageBox"
+                          />
+                          <button
+                            onClick={() => {
+                              upload(file, file.type);
+                              setFile([]);
+                              setSrc(null);
+                              setMimeType("");
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            onClick={() => {
+                              setFile([]);
+                              setSrc(null);
+                              setMimeType("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : null}
                     </div>
 
                     {emojiPicker && (
@@ -8759,43 +10754,64 @@ e.pollData.pollC = e.pollData.pollC
                       </ClickAwayListener>
                     )}
 
-                    {stickerPicker ? <div style={{
-                      position: "absolute",
-                      bottom: "3rem",
-                      left: "0.5rem",
-                      backgroundColor: '#652C90',
-                      borderRadius: '5px',
-                      padding: '8px',
-                      zIndex: "1111", display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', flexWrap: 'wrap'
-                    }}>
-                      {stickersImages.map((image) => <img src={image}
-                        onClick={() => {
-
-                          append(
-                            userFullName,
-                            `${image}`,
-                            "left",
-                            `${BaseURL}/profile-pictures/${userProfilePic}`,
-                            false,
-                            false,
-                            true, "", "", "", true
-                          );
-                          socket.emit("send", {
-                            name: userFullName,
-                            message: `${image}`,
-                            profilePic: userProfilePic,
-                            isEmoji: false,
-                            isVideo: false,
-                            isImage: true,
-                            isSticker: true
-                          });
-                          setStickerPicker(false)
+                    {stickerPicker ? (
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: "3rem",
+                          left: "0.5rem",
+                          backgroundColor: "#652C90",
+                          borderRadius: "5px",
+                          padding: "8px",
+                          zIndex: "1111",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          alignItems: "center",
+                          flexWrap: "wrap",
                         }}
-                        style={{ width: '70px', minWidth: '70px', minHeight: '70px', margin: '5px', cursor: 'pointer', backgroundColor: 'whitesmoke', padding: '5px' }} />)}
-                    </div> : null
-                    }
-
-                   
+                      >
+                        {stickersImages.map((image) => (
+                          <img
+                            src={image}
+                            onClick={() => {
+                              append(
+                                userFullName,
+                                `${image}`,
+                                "left",
+                                `${BaseURL}/profile-pictures/${userProfilePic}`,
+                                false,
+                                false,
+                                true,
+                                "",
+                                "",
+                                "",
+                                true
+                              );
+                              socket.emit("send", {
+                                name: userFullName,
+                                message: `${image}`,
+                                profilePic: userProfilePic,
+                                isEmoji: false,
+                                isVideo: false,
+                                isImage: true,
+                                isSticker: true,
+                              });
+                              setStickerPicker(false);
+                            }}
+                            style={{
+                              width: "70px",
+                              minWidth: "70px",
+                              minHeight: "70px",
+                              margin: "5px",
+                              cursor: "pointer",
+                              backgroundColor: "whitesmoke",
+                              padding: "5px",
+                            }}
+                          />
+                        ))}
+                      </div>
+                    ) : null}
 
                     {/* ----------------------------- newly redesigned chat area ------------------------- */}
                     <div className="send">
@@ -8803,14 +10819,19 @@ e.pollData.pollC = e.pollData.pollC
                       <form
                         action="#"
                         id="send-container"
-                        style={{
-                          // marginLeft: clubFloor || privateChat ? "5px" : "50px",
-                        }}
+                        style={
+                          {
+                            // marginLeft: clubFloor || privateChat ? "5px" : "50px",
+                          }
+                        }
                         onSubmit={(e) => messagesubmit(e)}
                       >
                         <div className="in-chat-sharing-options">
                           <label htmlFor="post-video">
-                            <SoapboxTooltip title={"Share Video"} placement="top">
+                            <SoapboxTooltip
+                              title={"Share Video"}
+                              placement="top"
+                            >
                               <img
                                 src={videochat}
                                 style={{ margin: "5px", cursor: "pointer" }}
@@ -8828,7 +10849,10 @@ e.pollData.pollC = e.pollData.pollC
                           />
 
                           <label htmlFor="post-image">
-                            <SoapboxTooltip title={"Share Photos"} placement="top">
+                            <SoapboxTooltip
+                              title={"Share Photos"}
+                              placement="top"
+                            >
                               <img
                                 src={imagechat}
                                 style={{ margin: "5px", cursor: "pointer" }}
@@ -8855,7 +10879,14 @@ e.pollData.pollC = e.pollData.pollC
                           <SoapboxTooltip title={"Stickers"} placement="top">
                             <img
                               src={stickerIcon}
-                              style={{ width: '25px', padding: '3px', borderRadius: '15px', margin: "5px", cursor: "pointer", backgroundColor: '#8249A0' }}
+                              style={{
+                                width: "25px",
+                                padding: "3px",
+                                borderRadius: "15px",
+                                margin: "5px",
+                                cursor: "pointer",
+                                backgroundColor: "#8249A0",
+                              }}
                               onClick={() => {
                                 setStickerPicker(!stickerPicker);
                               }}
@@ -8863,7 +10894,13 @@ e.pollData.pollC = e.pollData.pollC
                           </SoapboxTooltip>
                         </div>
 
-                        <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100%",
+                          }}
+                        >
                           <SoapboxTooltip title={"Emoji"} placement="top">
                             <img
                               src={emojiIcon}
@@ -8881,9 +10918,11 @@ e.pollData.pollC = e.pollData.pollC
                             value={messageInboxValue}
                             autoComplete="off"
                             id="messageInp"
-                            style={{
-                              // width: clubFloor || privateChat ? "350px" : "600px",
-                            }}
+                            style={
+                              {
+                                // width: clubFloor || privateChat ? "350px" : "600px",
+                              }
+                            }
                             onChange={(e) => {
                               setMessageInboxValue(e.target.value);
                             }}
@@ -8898,7 +10937,10 @@ e.pollData.pollC = e.pollData.pollC
                               marginLeft: "5px",
                             }}
                           >
-                            <SoapboxTooltip title={"Send Message"} placement="top">
+                            <SoapboxTooltip
+                              title={"Send Message"}
+                              placement="top"
+                            >
                               <img src={sendIcon} width="27px" />
                             </SoapboxTooltip>
                           </button>
@@ -8979,11 +11021,11 @@ e.pollData.pollC = e.pollData.pollC
                                 >
                                   {(ReactPlayer.canPlay(hoot.link) &&
                                     hoot.link.endsWith(".mp4")) ||
-                                    hoot.link.endsWith(".mkv") ||
-                                    hoot.link.endsWith(".mov") ||
-                                    hoot.link.endsWith(".ogv") ||
-                                    hoot.link.endsWith(".webm") ||
-                                    hoot.link.endsWith(".mpg") ? (
+                                  hoot.link.endsWith(".mkv") ||
+                                  hoot.link.endsWith(".mov") ||
+                                  hoot.link.endsWith(".ogv") ||
+                                  hoot.link.endsWith(".webm") ||
+                                  hoot.link.endsWith(".mpg") ? (
                                     <div className="vdo-container">
                                       <video
                                         muted
