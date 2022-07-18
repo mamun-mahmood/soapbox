@@ -2069,7 +2069,92 @@ const HootInside = ({
                     <BiDotsHorizontalRounded className="more-icon" />
                   </div>
                 </div>
-              ) : null}
+              ) : (
+                //created main div for user info and actions -> contains 2 divs :
+                // 1) User avatar and description
+                // 2) User delete option
+                <div style={{ width: "100%" }}>
+                  <div
+                    onMouseEnter={() => setHoverInfo(true)}
+                    onMouseLeave={() => setHoverInfo(false)}
+                    className="avatar_name"
+                    style={{
+                      display: "inline-block",
+                      width: "90%",
+                    }}
+                  >
+                    <Link to={path}>
+                      <div
+                        className="avatar-wraper"
+                        onDragStart={(e) => e.preventDefault()}
+                        style={{
+                          display: "inline-block",
+                        }}
+                      >
+                        <Avatar
+                          size={50}
+                          round={true}
+                          name={name ? name : username}
+                          src={profilePicPath}
+                          className={
+                            profilePic === null ? null : "skeleton-img"
+                          }
+                        />
+                      </div>
+
+                      {/* <img class="avatar" src={avatar} alt="avatar" /> */}
+                    </Link>
+
+                    <div
+                      className="div-username-name"
+                      style={{
+                        display: "inline-block",
+
+                        background: "red",
+                      }}
+                    >
+                      <div className="name-verification">
+                        <Link to={path}>
+                          <div className="name">{name ? name : username}</div>
+                        </Link>
+                        {verified === 1 ? (
+                          <div className="verification-badge">
+                            <HiBadgeCheck
+                              data-tip="Verified account"
+                              data-text-color="#8249A0"
+                              data-background-color="#D9D2FA"
+                            />
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="at-name" style={{ fontSize: "0.9rem" }}>
+                        @{username}
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="user-actions"
+                    style={{
+                      display: "inline-block",
+                      width: "10%",
+                    }}
+                  >
+                    <div
+                      className="more"
+                      style={{
+                        display: "flex",
+                        flexDirection: "row-reverse",
+                      }}
+                      onMouseEnter={() => setIsMoreModalOpen(true)}
+                      onMouseLeave={() => setIsMoreModalOpen(false)}
+                    >
+                      <span>
+                        <BiDotsHorizontalRounded className="more-icon" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* More Option Modal */}
               {isMoreModalOpen && (
@@ -2087,21 +2172,35 @@ const HootInside = ({
                       {userInfo ? (
                         username === userInfo.username ? (
                           <div className="more-options">
-                            <span
-                              onClick={() => {
-                                history.push(
-                                  `/${username}/hoot/${btoa(
-                                    hootId
-                                  )}/${uuidv4()}`
-                                );
-                              }}
-                            >
-                              Go to Hoot
-                            </span>
-                            <span onClick={shareVia}>Share to</span>
-                            <span onClick={copyLinkToClipboard}>Copy Link</span>
-                            <span onClick={copyTextToClipboard}>Copy Text</span>
-                            <span onClick={openEditModal}>Edit</span>
+                            {!privateHoot && (
+                              <span
+                                onClick={() => {
+                                  history.push(
+                                    `/${username}/hoot/${btoa(
+                                      hootId
+                                    )}/${uuidv4()}`
+                                  );
+                                }}
+                              >
+                                Go to Hoot
+                              </span>
+                            )}
+                            {!privateHoot && (
+                              <span onClick={shareVia}>Share to </span>
+                            )}
+                            {!privateHoot && (
+                              <span onClick={copyLinkToClipboard}>
+                                Copy Link
+                              </span>
+                            )}
+                            {!privateHoot && (
+                              <span onClick={copyTextToClipboard}>
+                                Copy Text
+                              </span>
+                            )}
+                            {!privateHoot && (
+                              <span onClick={openEditModal}>Edit</span>
+                            )}
                             <span onClick={openDeleteModal}> Delete</span>
                             {/* <span onClick={() => { setTimeout(() => { setIsMoreModalOpen(false) }, 500) }}>Report Hoot</span> */}
                           </div>
