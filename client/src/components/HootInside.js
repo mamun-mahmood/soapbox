@@ -2109,8 +2109,6 @@ const HootInside = ({
                       className="div-username-name"
                       style={{
                         display: "inline-block",
-
-                        background: "red",
                       }}
                     >
                       <div className="name-verification">
