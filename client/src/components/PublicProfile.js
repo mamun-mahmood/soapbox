@@ -628,10 +628,14 @@ const PublicProfile = ({
                                 {linkUrl.length > 0 ? (
                                   <MediaProfile url={linkUrl} />
                                 ) : (
-                                  <div>
-                                    {user.caption.length > 250
-                                      ? user.caption.slice(0, 250)
-                                      : user.caption}
+                                  <div
+                                    style={{
+                                      maxHeight: "250px",
+                                      wordWrap: "break-word",
+                                      overflow: "hidden",
+                                    }}
+                                  >
+                                    {user.caption}
                                   </div>
                                 )}
                               </div>

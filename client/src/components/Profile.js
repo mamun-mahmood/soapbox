@@ -805,10 +805,14 @@ const Profile = ({
                                 {linkUrl.length > 0 ? (
                                   <MediaProfile url={linkUrl} />
                                 ) : (
-                                  <div>
-                                    {upload.caption.length > 250
-                                      ? upload.caption.slice(0, 250)
-                                      : upload.caption}
+                                  <div
+                                    style={{
+                                      maxHeight: "250px",
+                                      wordWrap: "break-word",
+                                      overflow: "hidden",
+                                    }}
+                                  >
+                                    {upload.caption}
                                   </div>
                                 )}
                               </div>
