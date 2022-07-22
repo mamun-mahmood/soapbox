@@ -695,7 +695,7 @@ const Profile = ({
                               style={{
                                 animation: "none",
                                 backgroundColor: fontColor || "#d9d1f8",
-                                opacity:upload.link? 1:0.2,
+                                opacity: upload.link ? 1 : 0.2,
                               }}
                               onContextMenu={(e) => e.preventDefault()}
                               onClick={() => {
@@ -779,21 +779,37 @@ const Profile = ({
                                   overflow: "hidden",
                                   width: "80%",
                                   position: "absolute",
-                                  bottom: linkUrl ? "2rem" : "10rem",
+                                  bottom: linkUrl
+                                    ? "6rem"
+                                    : `${
+                                        upload.caption.length > 200
+                                          ? "1rem"
+                                          : upload.caption.length > 100
+                                          ? "3rem"
+                                          : "8rem"
+                                      }`,
                                   left: " 1.5rem",
                                   zIndex: "44",
                                   color: fontColor,
                                   fontFamily: fontFamily,
-                          
-                                 
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  history.push(
+                                    `/${username}/hoot/${btoa(
+                                      upload.id
+                                    )}/${uuidv4()}`
+                                  );
                                 }}
                               >
                                 {linkUrl.length > 0 ? (
                                   <MediaProfile url={linkUrl} />
-                                ) : upload.caption.length > 60 ? (
-                                  upload.caption.slice(0, 60) + "..."
                                 ) : (
-                                  upload.caption
+                                  <div>
+                                    {upload.caption.length > 250
+                                      ? upload.caption.slice(0, 250)
+                                      : upload.caption}
+                                  </div>
                                 )}
                               </div>
                             )}

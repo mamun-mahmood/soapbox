@@ -28,6 +28,7 @@ import { toast } from "react-toastify";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 import ReactPlayer from "react-player";
+import MediaProfile from "./HootOutside/MediaProfile";
 const PublicProfile = ({
   verified,
   privateChannel,
@@ -63,6 +64,7 @@ const PublicProfile = ({
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
   const BaseURL = process.env.REACT_APP_API_URL;
   const profilePicPath = `${BaseURL}/profile-pictures/${profilePic}`;
+  const urlRegex = /(https?:\/\/[^ ]*)/;
 
   const { username } = useParams();
 
@@ -485,6 +487,13 @@ const PublicProfile = ({
               >
                 <div className="hoot-profile-layout">
                   {users.map((user) => {
+                    var linkUrl = "";
+                    try {
+                      var value = user.caption;
+                      linkUrl = value.match(urlRegex)[1];
+                    } catch (err) {
+                      console.log("No link could be extracted");
+                    }
                     var fontFamilyStyle;
                     if (
                       user.fontFamilyStyle.includes("fontFamily") ||
@@ -590,18 +599,41 @@ const PublicProfile = ({
                             ) : (
                               <div
                                 style={{
+                                  overflow: "hidden",
                                   width: "80%",
                                   position: "absolute",
-                                  bottom: "10rem",
-                                  left: " 2rem",
+                                  bottom: linkUrl
+                                    ? "6rem"
+                                    : `${
+                                        user.caption.length > 200
+                                          ? "1rem"
+                                          : user.caption.length > 100
+                                          ? "3rem"
+                                          : "8rem"
+                                      }`,
+                                  left: " 1.5rem",
                                   zIndex: "44",
                                   color: fontColor,
                                   fontFamily: fontFamily,
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  history.push(
+                                    `/${username}/hoot/${btoa(
+                                      user.id
+                                    )}/${uuidv4()}`
+                                  );
                                 }}
                               >
-                                {user.caption.length > 60
-                                  ? user.caption.slice(0, 60) + "..."
-                                  : user.caption}
+                                {linkUrl.length > 0 ? (
+                                  <MediaProfile url={linkUrl} />
+                                ) : (
+                                  <div>
+                                    {user.caption.length > 250
+                                      ? user.caption.slice(0, 250)
+                                      : user.caption}
+                                  </div>
+                                )}
                               </div>
                             )}
                           </div>
