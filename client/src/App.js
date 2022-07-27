@@ -1,49 +1,53 @@
-import React from 'react'
-import PageNotFound from './pages/PageNotFound'
-import ProtectedRoute from './components/ProtectedRoute'
-import LandingPage from './pages/LandingPage/LandingPage'
+import React, { Suspense } from "react";
+import PageNotFound from "./pages/PageNotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LandingPage from "./pages/LandingPage/LandingPage";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
-} from 'react-router-dom';
-import "./App.css"
+  Redirect,
+} from "react-router-dom";
+import "./App.css";
 
-import Home from './pages/Home/Home'
-import HootPage from './pages/HootPage'
-import CreateHoot from './pages/CreateHoot'
-import ProfilePage from './pages/ProfilePage'
-import EditProfilePage from './pages/EditProfilePage'
-import PublicProfilePage from './pages/PublicProfilePage'
-import HashtagHootsPage from './pages/HashtagHootsPage';
-import StockHootsPage from './pages/StockHootsPage';
-import ExplorePage from './pages/ExplorePage';
-import PrivacyPage from './pages/PrivacyPage';
-import PrivateMessagesPage from './pages/PrivateMessagesPage';
-import TermsOfServicePage from './pages/TermsOfServicePage';
-import EmbedHootPage from './pages/EmbedHootPage';
-import PrivateChannelsPage from './pages/PrivateChannelsPage';
-import SoapboxHall from './components/VideoAudioCall/SoapboxHall'
-import Admin from './components/AdminPanel/Admin';
-import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
-import ResetPassword from './pages/ResetPassword/ResetPassword';
-import MyListPage from './pages/MyListPage';
-import recordMessage from './components/VideoAudioCall/recordMessage';
-import Reception from './components/VideoAudioCall/reception';
-import CreatePrivateHoot from './pages/CreatePrivateHoot'
+import Home from "./pages/Home/Home";
+import HootPage from "./pages/HootPage";
+import CreateHoot from "./pages/CreateHoot";
+import ProfilePage from "./pages/ProfilePage";
+import EditProfilePage from "./pages/EditProfilePage";
+import PublicProfilePage from "./pages/PublicProfilePage";
+import HashtagHootsPage from "./pages/HashtagHootsPage";
+import StockHootsPage from "./pages/StockHootsPage";
+// import ExplorePage from "./pages/ExplorePage";
+import PrivacyPage from "./pages/PrivacyPage";
+import PrivateMessagesPage from "./pages/PrivateMessagesPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
+import EmbedHootPage from "./pages/EmbedHootPage";
+import PrivateChannelsPage from "./pages/PrivateChannelsPage";
+import SoapboxHall from "./components/VideoAudioCall/SoapboxHall";
+import Admin from "./components/AdminPanel/Admin";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import MyListPage from "./pages/MyListPage";
+import recordMessage from "./components/VideoAudioCall/recordMessage";
+import Reception from "./components/VideoAudioCall/reception";
+import CreatePrivateHoot from "./pages/CreatePrivateHoot";
 
-import { ToastContainer, Zoom } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import CommentsPanel from './pages/CommentsPanel/CommentsPanel';
-import AudioHall from './components/VideoAudioCall/AudioHall';
-import ReceptionAudio from './components/VideoAudioCall/audioReception';
-import StripePage from './components/Stripe/StripePage';
-import RequestPrivateClubPage from './pages/RequestPrivateClubPage';
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CommentsPanel from "./pages/CommentsPanel/CommentsPanel";
+import AudioHall from "./components/VideoAudioCall/AudioHall";
+import ReceptionAudio from "./components/VideoAudioCall/audioReception";
+import StripePage from "./components/Stripe/StripePage";
+import RequestPrivateClubPage from "./pages/RequestPrivateClubPage";
 
-import CreateHootBoxMobile from './pages/CreateHootBoxMobile';
-import SoapboxClubs from './pages/SoapboxClubs';
-import InboxMessagePublic from './components/PrivateChannels/inboxMessagePublic';
+import CreateHootBoxMobile from "./pages/CreateHootBoxMobile";
+// import SoapboxClubs from "./pages/SoapboxClubs";
+import InboxMessagePublic from "./components/PrivateChannels/inboxMessagePublic";
+import Loading from "./components/Loading/Loading";
+
+const SoapboxClubs = React.lazy(() => import("./pages/SoapboxClubs"));
+const ExplorePage = React.lazy(() => import("./pages/ExplorePage"));
 
 function App() {
   const userInformation = JSON.parse(localStorage.getItem("loggedIn"));
@@ -73,10 +77,11 @@ function App() {
         {/* <Route path="/home"> */}
         <Route exact path="/">
           {/* <ProtectedRoute page={Home} /> */}
-          {userInformation
-            ? <Redirect to={`/profile/${userInformation.username}`} />
-            : <Home />
-          }
+          {userInformation ? (
+            <Redirect to={`/profile/${userInformation.username}`} />
+          ) : (
+            <Home />
+          )}
         </Route>
 
         <Route exact path="/All-Hoots">
@@ -85,7 +90,9 @@ function App() {
         </Route>
 
         <Route exact path="/soapboxclubs">
-          <SoapboxClubs />
+          <Suspense fallback={<Loading />}>
+            <SoapboxClubs />
+          </Suspense>
         </Route>
 
         <Route path="/:FakeData/SoapboxHall/:randomFakeKey?">
@@ -95,7 +102,6 @@ function App() {
         <Route path="/:FakeData/AudioHall/:randomFakeKey?">
           <ProtectedRoute page={AudioHall} />
         </Route>
-
 
         <Route path="/:FakeData/RecordMessage/:hallId?/:userName?/:randomFakeKey?">
           <ProtectedRoute page={recordMessage} />
@@ -151,15 +157,13 @@ function App() {
         <Route path="/chathive/:actualUsername/:livechat?/:livechatname?">
           <ProtectedRoute page={InboxMessagePublic} />
         </Route>
-        
 
         <Route path="/profile/:username">
-
-        {userInformation
-            ? <ProtectedRoute page={ProfilePage} />
-            : <LandingPage  />
-          }
-        
+          {userInformation ? (
+            <ProtectedRoute page={ProfilePage} />
+          ) : (
+            <LandingPage />
+          )}
         </Route>
 
         <Route path="/request-private-club/:username">
@@ -178,7 +182,9 @@ function App() {
 
         <Route path="/explore">
           {/* <ProtectedRoute page={ExplorePage} /> */}
-          <ExplorePage />
+          <Suspense fallback={<Loading />}>
+            <ExplorePage />
+          </Suspense>
         </Route>
 
         <Route path="/privacy-policy">
