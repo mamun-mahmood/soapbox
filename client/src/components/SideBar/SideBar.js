@@ -498,7 +498,7 @@ const SideBar = () => {
               <span>Video Meetings</span>
             </a>
           </li>
-          <li>
+          {/* <li>
             <a
               style={{ padding: "0.1rem 0.5rem" }}
               activeClassName="sidebar-option-active"
@@ -508,7 +508,7 @@ const SideBar = () => {
             >
               <span>FortisAB Marketplace</span>
             </a>
-          </li>
+          </li> */}
 
           {/* <li>
                         <a
