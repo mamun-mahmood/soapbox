@@ -74,8 +74,16 @@ const HootInside = ({
   const BaseURL = process.env.REACT_APP_API_URL; // API url
   const hostURL = "https://www.megahoot.net"; // main website
   const filePath = `${BaseURL}/images/${hootImgId}`; // media url from server
+  const shareBaseUrl = `${hostURL}/${username}/hoot/${btoa(
+    hootId
+  )}/${uuidv4()}`;
+  const shareUrl = encodeURIComponent(shareBaseUrl);
   // const shareCaption = encodeURIComponent(`${caption.length > 10 ? caption.substring(0, 70) : caption} @${username}`);
-  const shareCaption = encodeURIComponent(`${caption}`);
+  const [shareCaption, setShareCaption] = useState(
+    encodeURIComponent(`${caption}`)
+  );
+  const [previewUrl, setPreviewUrl] = useState("");
+  // const shareCaption = encodeURIComponent(`${caption}`);
   const shareHashtags = encodeURIComponent("");
   // const shareHashtags = encodeURIComponent("megahoot,soapbox");
   // const twitterShare = `http://twitter.com/share?text=${shareCaption}&url=${shareUrl}&hashtags=${shareHashtags}`;
@@ -94,10 +102,7 @@ const HootInside = ({
   //   )}/${uuidv4()}`
   // );
   // const [shareUrl, setShareUrl] = useState(encodeURIComponent(shareBaseUrl));
-  const shareBaseUrl = `${hostURL}/${username}/hoot/${btoa(
-    hootId
-  )}/${uuidv4()}`;
-  const shareUrl = encodeURIComponent(shareBaseUrl);
+
   // url for individual hoot for main soapbox website
   // encoded share url for individual hoot to be shared on other social media
   const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
@@ -148,13 +153,31 @@ const HootInside = ({
   const hashtagsFound = caption.split(" ").filter((v) => v.startsWith("#"));
   const stocksFound = caption.split(" ").filter((v) => v.startsWith("$"));
   const usernamesFound = caption.split(" ").filter((v) => v.startsWith("@"));
-  var urlRegex = /(https?:\/\/[^ ]*)/;
-  var linkUrl = "";
-  try {
-    linkUrl = caption.match(urlRegex)[1];
-  } catch (err) {
-    console.log("No link in the post");
-  }
+  const urlRegex = /(https?:\/\/[^ ]*)/;
+  // let previewUrl = "";
+  // try {
+  //   previewUrl = caption.match(urlRegex)[1];
+  // } catch (err) {
+  //   console.log("No link in the post");
+  // }
+
+  useEffect(() => {
+    try {
+      setPreviewUrl(caption.match(urlRegex)[1]);
+    } catch (err) {
+      // console.log("No link in the post");
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      let index = urlRegex.exec(caption).index;
+      let trimmedCaption = caption.slice(0, index);
+      setShareCaption(trimmedCaption);
+    } catch (error) {
+      // console.log("No caption url to be trimmed");
+    }
+  }, [caption]);
 
   // const linkData = link
   // link && console.log("linkData", linkData);
@@ -251,7 +274,6 @@ const HootInside = ({
 
   const setShortUrl = async () => {
     setIsShareModalOpen(true);
-    console.log("Hello");
     // await axios
     //   .get(
     //     `https://api.shrtco.de/v2/shorten?url=${hostURL}/${username}/hoot/${btoa(
@@ -2676,8 +2698,8 @@ const HootInside = ({
                       </Fragment>
                     ))}
                 </span>
-                {linkUrl.length > 0 && (
-                  <LinkPreview url={linkUrl} width="100%"></LinkPreview>
+                {previewUrl.length > 0 && (
+                  <LinkPreview url={previewUrl} width="100%"></LinkPreview>
                 )}
                 <br />{" "}
                 {!ReactPlayer.canPlay(link) && (
