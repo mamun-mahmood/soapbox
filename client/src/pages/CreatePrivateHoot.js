@@ -58,11 +58,12 @@ const CreatePrivateHoot = (props) => {
     fontSize: "20px",
     fontFamily: "Arial",
   });
-  const [currentFontColor, setCurrentFontColor] = useState("black");
-  const [currentFontSize, setCurrentFontSize] = useState("22");
+  // const [currentFontColor, setCurrentFontColor] = useState("black");
+  // const [currentFontSize, setCurrentFontSize] = useState("22");
   const fontFamilyRef = useRef();
   const fontColorRef = useRef();
   const fontSizeRef = useRef();
+  const [sensitiveChecked, setSensitiveChecked] = useState(false);
   const [caption, setCaption] = useState("");
   const [file, setFile] = useState([]);
   const [audioPoster, setAudioPoster] = useState([]);
@@ -120,6 +121,7 @@ const CreatePrivateHoot = (props) => {
     formData.append("file", file);
     formData.append("audioPoster", audioPoster);
     formData.append("fontFamilyStyle", styles);
+    formData.append("isSensitive", sensitiveChecked ? 1 : 0);
 
     const uploadData = async () => {
       await axios
@@ -217,6 +219,12 @@ const CreatePrivateHoot = (props) => {
 
   const makeEphemeral = () => {
     setEphemeralCheck(!ephemeralCheck);
+  };
+
+  const makeSensitive = () => {
+    setSensitiveChecked((prevState) => {
+      return !sensitiveChecked;
+    });
   };
 
   // const makePrivate = () => {
@@ -636,13 +644,13 @@ const CreatePrivateHoot = (props) => {
     });
   };
 
-  const fontSizeHandler = () => {
-    setCurrentFontSize(fontSizeRef.current.value);
-  };
+  // const fontSizeHandler = () => {
+  //   setCurrentFontSize(fontSizeRef.current.value);
+  // };
 
-  const fontColorHandler = () => {
-    setCurrentFontColor(fontColorRef.current.value);
-  };
+  // const fontColorHandler = () => {
+  //   setCurrentFontColor(fontColorRef.current.value);
+  // };
 
   const textChangeHandler = (event) => {
     const value = event.target.value;
@@ -1132,6 +1140,21 @@ const CreatePrivateHoot = (props) => {
               </div>
             </SoapboxTooltip>
 
+            <SoapboxTooltip
+              title="Enable if hoot content is sensitive"
+              placement="bottom"
+            >
+              <div className="ephemeral">
+                <input
+                  type="checkbox"
+                  className="ephemeral-toggle"
+                  checked={sensitiveChecked}
+                  onChange={makeSensitive}
+                />
+                <span> Sensitive </span>
+              </div>
+            </SoapboxTooltip>
+
             <SoapboxTooltip title="Hoot" placement="bottom">
               <img
                 src={hooticon}
@@ -1259,7 +1282,7 @@ const CreatePrivateHoot = (props) => {
                             </h6> */}
             <div className="caption-count-private ccp-responsive">
               <h6
-                className={caption.length > 2120 && "text-danger"}
+                className={caption.length > 2120 ? "text-danger" : ""}
                 style={{ color: "white" }}
               >
                 {" "}

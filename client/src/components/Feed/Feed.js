@@ -53,6 +53,10 @@ const Feed = () => {
           endMessage={<EndMsg />}
         >
           {uploads.map((upload) => {
+            let isSensitive = 0;
+            if (upload.isSensitive) {
+              isSensitive = upload.isSensitive;
+            }
             var fontFamilyStyle;
             if (upload.fontFamilyStyle.includes("fontFamily")) {
               fontFamilyStyle = JSON.parse(upload.fontFamilyStyle);
@@ -87,6 +91,7 @@ const Feed = () => {
                   fontFamilyStyle={fontFamily}
                   fontColor={fontColor}
                   fontStyleSize={fontStyleSize}
+                  sensitivity={isSensitive}
                 />
               </div>
             );

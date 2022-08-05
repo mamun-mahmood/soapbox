@@ -70,6 +70,8 @@ const HootInside = ({
   fontFamilyStyle,
   fontColor,
   fontStyleSize,
+  isSensitive,
+  setIsSensitive,
 }) => {
   const BaseURL = process.env.REACT_APP_API_URL; // API url
   const hostURL = "https://www.megahoot.net"; // main website
@@ -565,7 +567,6 @@ const HootInside = ({
       {ephemeral === 1 ? (
         <Expire expiryDate={expiryDate} hootImgId={hootImgId}>
           <div className="home">
-            this is home
             <div className="home-container" ref={homeRef} id="element-id">
               <ReactTooltip />
               <div className="post-heading">
@@ -1088,6 +1089,8 @@ const HootInside = ({
                                   audioPoster={audioPoster}
                                   editOpen={isEditModalOpen}
                                   profilePicPath={profilePicPath}
+                                  isSensitive={isSensitive}
+                                  setIsSensitive={setIsSensitive}
                                 />
                               )}
                             </div>
@@ -1495,6 +1498,8 @@ const HootInside = ({
                       views={views}
                       image={hootImgId}
                       profilePicPath={profilePicPath}
+                      isSensitive={isSensitive}
+                      setIsSensitive={setIsSensitive}
                     />
                   )}
                 </div>
@@ -2442,6 +2447,8 @@ const HootInside = ({
                                 audioPoster={audioPoster}
                                 editOpen={isEditModalOpen}
                                 profilePicPath={profilePicPath}
+                                isSensitive={isSensitive}
+                                setIsSensitive={setIsSensitive}
                               />
                             )}
                           </div>
@@ -2949,6 +2956,8 @@ const HootInside = ({
                       views={views}
                       image={hootImgId}
                       profilePicPath={profilePicPath}
+                      isSensitive={isSensitive}
+                      setIsSensitive={setIsSensitive}
                     />
                   ))}
               </div>

@@ -24,9 +24,11 @@ const Post = ({
   fontFamilyStyle,
   fontColor,
   fontStyleSize,
+  sensitivity,
 }) => {
   const [userInformation, setUserInformation] = useState([]);
   const BaseURL = process.env.REACT_APP_API_URL;
+  const [isSensitive, setIsSensitive] = useState(sensitivity);
 
   // getting user data
   useLayoutEffect(() => {
@@ -69,6 +71,8 @@ const Post = ({
               fontFamilyStyle={fontFamilyStyle}
               fontColor={fontColor}
               fontStyleSize={fontStyleSize}
+              isSensitive={isSensitive}
+              setIsSensitive={setIsSensitive}
             />
           </div>
         );

@@ -60,8 +60,9 @@ const CreatePrivateHoot = (props) => {
     fontFamily: "Arial",
   });
   const fontFamilyRef = useRef();
-  const fontColorRef = useRef();
-  const fontSizeRef = useRef();
+  const [sensitiveChecked, setSensitiveChecked] = useState(false);
+  // const fontColorRef = useRef();
+  // const fontSizeRef = useRef();
   const [caption, setCaption] = useState("");
   const [file, setFile] = useState([]);
   const [audioPoster, setAudioPoster] = useState([]);
@@ -119,6 +120,7 @@ const CreatePrivateHoot = (props) => {
     formData.append("file", file);
     formData.append("audioPoster", audioPoster);
     formData.append("fontFamilyStyle", styles);
+    formData.append("isSensitive", sensitiveChecked ? 1 : 0);
 
     const uploadData = async () => {
       await axios
@@ -210,6 +212,12 @@ const CreatePrivateHoot = (props) => {
 
   const makeEphemeral = () => {
     setEphemeralCheck(!ephemeralCheck);
+  };
+
+  const makeSensitive = () => {
+    setSensitiveChecked((prevState) => {
+      return !sensitiveChecked;
+    });
   };
 
   const makePrivate = () => {
@@ -1140,6 +1148,21 @@ const CreatePrivateHoot = (props) => {
                   onChange={makeEphemeral}
                 />
                 <span>Ephemeral </span>
+              </div>
+            </SoapboxTooltip>
+
+            <SoapboxTooltip
+              title="Enable if hoot content is sensitive"
+              placement="bottom"
+            >
+              <div className="ephemeral">
+                <input
+                  type="checkbox"
+                  className="ephemeral-toggle"
+                  checked={sensitiveChecked}
+                  onChange={makeSensitive}
+                />
+                <span> Sensitive </span>
               </div>
             </SoapboxTooltip>
 

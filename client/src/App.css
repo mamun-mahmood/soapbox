@@ -3030,3 +3030,26 @@ hr {
     min-width: auto;
   }
 }
+
+.sensitivity-blur {
+  background: #eeececcc;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-items: center;
+  /* height: 200px;
+  width: 200px; */
+  opacity: 0.85;
+  color: black;
+  position: absolute;
+  z-index: 45;
+}
+
+.sensitivity-button {
+  background-color: rgb(210, 204, 204);
+  opacity: 90%;
+  border-radius: 10%;
+  border: 2px solid black;
+  height: 40px;
+  width: 50px;
+}
