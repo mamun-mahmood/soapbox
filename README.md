@@ -50,7 +50,7 @@ Soapbox features have done solid till now,
 
 - [x] Made MegaHoot Soapbox fully Responsive to all screens
 
-- [x] Working Custom social shares
+- [x] Working Custom social shares.
 
 # Folder Structure
 
