@@ -2069,7 +2069,7 @@ setShowSubscribeButton(false)
                                                             <div
                                                                 className="hoot-img-vertical-profile"
                                                                 style={{ animation: "none", backgroundColor: "#d9d1f8" }}
-                                                                onContextMenu={(e) => e.preventDefault()}
+                                                                //onContextMenu={(e) => e.preventDefault()}
                                                                 onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
                                                             >
                                                                 {ReactPlayer.canPlay(hoot.link) &&
@@ -2696,7 +2696,7 @@ setTimeout(() => {
                                                             <div
                                                                 className="hoot-img-vertical-profile"
                                                                 style={{ animation: "none", backgroundColor: "#d9d1f8" }}
-                                                                onContextMenu={(e) => e.preventDefault()}
+                                                               // onContextMenu={(e) => e.preventDefault()}
                                                                 onClick={() => { history.push(`/${hoot.authorUsername}/hoot/${btoa(hoot.id)}`) }}
                                                             >
                                                                 {ReactPlayer.canPlay(hoot.link) &&

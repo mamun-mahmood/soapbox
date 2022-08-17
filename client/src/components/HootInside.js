@@ -987,7 +987,7 @@ const HootInside = ({
                                 margin: !mimeType && "0.5rem",
                                 marginLeft: !mimeType && "0",
                               }}
-                              onContextMenu={(e) => e.preventDefault()}
+                              //onContextMenu={(e) => e.preventDefault()}
                             >
                               {!mimeType ? (
                                 (ReactPlayer.canPlay(link) &&
@@ -1408,7 +1408,7 @@ const HootInside = ({
                     paddingRight: mimeType || "0.5rem",
                     marginRight: mimeType || "0.5rem",
                   }}
-                  onContextMenu={(e) => e.preventDefault()}
+                  //onContextMenu={(e) => e.preventDefault()}
                 >
                   {(ReactPlayer.canPlay(link) && link.endsWith(".mp4")) ||
                   link.endsWith(".mkv") ||
@@ -2351,7 +2351,7 @@ const HootInside = ({
                               margin: !mimeType && "0.5rem",
                               marginLeft: !mimeType && "0",
                             }}
-                            onContextMenu={(e) => e.preventDefault()}
+                            //onContextMenu={(e) => e.preventDefault()}
                           >
                             {!mimeType ? (
                               (ReactPlayer.canPlay(link) &&
@@ -2862,7 +2862,7 @@ const HootInside = ({
                   paddingRight: mimeType || "0.5rem",
                   marginRight: mimeType || "0.5rem",
                 }}
-                onContextMenu={(e) => e.preventDefault()}
+                //onContextMenu={(e) => e.preventDefault()}
               >
                 {(ReactPlayer.canPlay(link) && link.endsWith(".mp4")) ||
                 link.endsWith(".mkv") ||

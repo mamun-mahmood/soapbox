@@ -1327,7 +1327,7 @@ const CreatePrivateHoot = (props) => {
                     }}
                   >
                     <div className="link-modal">
-                      <h5>Insert link(s)</h5>
+                      <h5>Add your Youtube, Podcast and Media Links</h5>
 
                       <input
                         autoFocus

@@ -7018,7 +7018,7 @@ const PrivateChannels = () => {
                                     animation: "none",
                                     backgroundColor: "#d9d1f8",
                                   }}
-                                  onContextMenu={(e) => e.preventDefault()}
+                                  //onContextMenu={(e) => e.preventDefault()}
                                   onClick={() => {
                                     history.push(
                                       `/${hoot.authorUsername}/hoot/${btoa(
@@ -11010,7 +11010,7 @@ const PrivateChannels = () => {
                                     animation: "none",
                                     backgroundColor: "#d9d1f8",
                                   }}
-                                  onContextMenu={(e) => e.preventDefault()}
+                                  //onContextMenu={(e) => e.preventDefault()}
                                   onClick={() => {
                                     history.push(
                                       `/${hoot.authorUsername}/hoot/${btoa(
