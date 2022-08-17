@@ -70,7 +70,6 @@ const Feed = () => {
             }
             return (
               <div key={upload.id}>
-                {console.log(upload)}
                 <Post
                   hootId={upload.id}
                   username={upload.authorUsername}
