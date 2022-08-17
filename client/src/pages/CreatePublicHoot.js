@@ -651,6 +651,7 @@ const CreatePrivateHoot = (props) => {
     try {
       setLinkUrl(value.match(urlRegex)[1]);
     } catch (err) {
+      setLinkUrl("");
       console.log("No link could be extracted");
     }
   };

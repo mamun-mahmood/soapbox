@@ -4,7 +4,8 @@ import { useHistory } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { MdGif, MdMusicNote } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
-import { LinkPreview } from "@dhaiwat10/react-link-preview";
+import CustomHandler from "./CustomHandler";
+// import { LinkPreview } from "@dhaiwat10/react-link-preview";
 const MediaProfile = ({
   mimeType,
   filePath,
@@ -36,7 +37,21 @@ const MediaProfile = ({
   return (
     <div className="media-center">
       {url ? (
-        <LinkPreview url={url} width="100%" height="110px"></LinkPreview>
+        <a
+          href={url}
+          style={{ color: "black", textDecoration: "none", margin: "2px" }}
+        >
+          <div
+            style={{
+              height: "110px",
+              width: "100%",
+              background: "white",
+              overflow: "hidden",
+            }}
+          >
+            <CustomHandler url={url} />
+          </div>
+        </a>
       ) : (
         mimeType &&
         mimeType.match(/image/gi) == "image" && (
