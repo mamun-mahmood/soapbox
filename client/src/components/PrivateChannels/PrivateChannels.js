@@ -1808,6 +1808,13 @@ const PrivateChannels = () => {
     }
   }, [clubFloor]);
 
+  const scrollToTop = () => {
+    const divEl = document.getElementById("feed");
+    const firstCh = divEl.firstChild;
+    console.log(firstCh, "is the founded Element");
+    firstCh.firstChild.scroll({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <Fragment>
       {/* NavBar for Private Boapbox */}
@@ -2208,6 +2215,7 @@ const PrivateChannels = () => {
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
+                                    // scrollToTop();
                                     if (showIframe) {
                                       document.getElementById(
                                         "slideIFM"
@@ -2247,6 +2255,7 @@ const PrivateChannels = () => {
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
+                                    // scrollToTop();
                                     if (showIframe) {
                                       document.getElementById(
                                         "slideIFM"
@@ -2597,6 +2606,7 @@ const PrivateChannels = () => {
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
+                                    // scrollToTop();
                                     if (showIframe) {
                                       document.getElementById(
                                         "slideIFM"
@@ -4545,7 +4555,7 @@ const PrivateChannels = () => {
                                 var fontColor = "black";
                               }
                               return (
-                                <div key={upload}>
+                                <div key={upload.id}>
                                   <Post
                                     hootId={upload.id}
                                     username={upload.authorUsername}
@@ -7079,7 +7089,7 @@ const PrivateChannels = () => {
                                         <ReactPlayer
                                           url={hoot.link}
                                           className="react-player"
-                                          controls="true"
+                                          controls={true}
                                           width={hoot.mimeType ? "97%" : "100%"}
                                           height="100%"
                                           light={true}
@@ -8215,6 +8225,10 @@ const PrivateChannels = () => {
                       height: "100vh",
                     }}
                   >
+                    {/* {console.log(
+                      document.getElementById("feed").getBoundingClientRect()
+                        .top
+                    )} */}
                     <span>
                       <IoCloseCircle
                         style={{
@@ -8342,7 +8356,7 @@ const PrivateChannels = () => {
                               var fontColor = "black";
                             }
                             return (
-                              <div key={upload}>
+                              <div key={upload.id}>
                                 <Post
                                   hootId={upload.id}
                                   username={upload.authorUsername}
@@ -11071,7 +11085,7 @@ const PrivateChannels = () => {
                                         <ReactPlayer
                                           url={hoot.link}
                                           className="react-player"
-                                          controls="true"
+                                          controls={true}
                                           width={hoot.mimeType ? "97%" : "100%"}
                                           height="100%"
                                           light={true}
