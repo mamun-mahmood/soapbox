@@ -76,6 +76,11 @@ const IndividualHoot = () => {
               var fontColor = "black";
             }
 
+            let isSensitive = 0;
+            if (hoot.isSensitive) {
+              isSensitive = hoot.isSensitive;
+            }
+
             // url for individual hoot for main soapbox website
             const shareMediaPath = `${BaseURL}/images/${hoot.image}`;
 
@@ -101,6 +106,7 @@ const IndividualHoot = () => {
                   fontFamilyStyle={fontFamily}
                   fontStyleSize={fontStyleSize}
                   fontColor={fontColor}
+                  sensitivity={isSensitive}
                 />
 
                 <Helmet>
