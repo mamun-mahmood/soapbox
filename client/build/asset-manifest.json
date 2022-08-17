@@ -3,12 +3,14 @@
   "BrowseMoreHoots.js.map": "static/js/BrowseMoreHoots.173f7e07.chunk.js.map",
   "Explore.js": "static/js/Explore.59b89347.chunk.js",
   "Explore.js.map": "static/js/Explore.59b89347.chunk.js.map",
+
   "Feed.js": "static/js/Feed.d015e000.chunk.js",
   "Feed.js.map": "static/js/Feed.d015e000.chunk.js.map",
   "HashtagHootsPage.js": "static/js/HashtagHootsPage.cebda812.chunk.js",
   "HashtagHootsPage.js.map": "static/js/HashtagHootsPage.cebda812.chunk.js.map",
   "IndividualHoot.js": "static/js/IndividualHoot.35d9e940.chunk.js",
   "IndividualHoot.js.map": "static/js/IndividualHoot.35d9e940.chunk.js.map",
+
   "LoginComp.js": "static/js/LoginComp.714d98b7.chunk.js",
   "LoginComp.js.map": "static/js/LoginComp.714d98b7.chunk.js.map",
   "SignupComp.js": "static/js/SignupComp.b896b186.chunk.js",
@@ -19,6 +21,7 @@
   "StockHootsPage.js.map": "static/js/StockHootsPage.b06d145c.chunk.js.map",
   "main.css": "static/css/main.82de400e.css",
   "main.css.map": "static/css/main.82de400e.css.map",
+
   "main.js": "static/js/main.e77da6ee.js",
   "main.js.map": "static/js/main.e77da6ee.js.map",
   "static/js/5.3ad963e3.chunk.js": "static/js/5.3ad963e3.chunk.js",
