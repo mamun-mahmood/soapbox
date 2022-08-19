@@ -656,9 +656,43 @@ const CreatePrivateHoot = (props) => {
   };
 
   return (
-    <Fragment>
+    <div
+      style={{
+        position: "relative",
+        zIndex: "121",
+        top: "30px",
+      }}
+    >
       {/* <NavBar /> */}
+
       <div className="upload-post-private upp-responsive">
+        <div
+          style={{
+            // backgroundColor: "#652c90",
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "2px",
+          }}
+        >
+          <button
+            onClick={() => {
+              props.closeHoot();
+            }}
+            style={{
+              width: "30px",
+              height: "35px",
+              color: "white",
+              background: "red",
+              border: "solid black",
+              borderRadius: "10%",
+              padding: "3px",
+              fontWeight: "700",
+              marginRight: "5px",
+            }}
+          >
+            X
+          </button>
+        </div>
         {/* <div className="back-to-home">
                         <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
                             <FiArrowLeft className="left-arrow" />
@@ -667,7 +701,6 @@ const CreatePrivateHoot = (props) => {
                             Back
                         </span>
                     </div> */}
-
         {/* <div className="post-caption d-flex flex-wrap">
                         <div className="avatar-wraper">
                             <Avatar
@@ -680,7 +713,6 @@ const CreatePrivateHoot = (props) => {
                         </div>
                           <div className="name avatar_name">{userData.name}</div>
                     </div> */}
-
         <div className="record-on-create-hoot roch-responsive">
           {extraFeatures ? (
             <div className="extra-media-preview">
@@ -741,7 +773,7 @@ const CreatePrivateHoot = (props) => {
               )}
             </div>
           ) : (
-            <div style={{ marginBottom: "2px" }}>
+            <div>
               <div className="media-preview-private mpp-responsive">
                 {!showLinkPreview ? (
                   link ? (
@@ -811,11 +843,6 @@ const CreatePrivateHoot = (props) => {
                   }}
                 >
                   <MediaProfile url={linkUrl} />
-                  {/* <LinkPreview
-                    url={linkUrl}
-                    width="100%"
-                    height="110px"
-                  ></LinkPreview> */}
                 </div>
               )}
             </div>
@@ -1179,7 +1206,6 @@ const CreatePrivateHoot = (props) => {
             </SoapboxTooltip>
           </div>
         </div>
-
         {extraFeatures ? (
           <div className="extra-features-options">
             {/* photo re take */}
@@ -1275,7 +1301,6 @@ const CreatePrivateHoot = (props) => {
             )}
           </div>
         ) : null}
-
         <div className="post-caption d-flex flex-wrap">
           <div className="post-content">
             <textarea
@@ -1577,7 +1602,9 @@ const CreatePrivateHoot = (props) => {
               </small>
             ) : null}
           </div>
+          Here1
         </div>
+        here2
       </div>
 
       <Helmet>
@@ -1621,7 +1648,7 @@ const CreatePrivateHoot = (props) => {
           content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png"
         />
       </Helmet>
-    </Fragment>
+    </div>
   );
 };
 

@@ -649,750 +649,789 @@ const CreateHootBoxMobile = () => {
     <div className="hoot-box-mobile">
       <NavBar />
       <div
-        className="upload-post-private upp-responsive upp-mobile"
         style={{
-          margin: "0 auto",
-          marginTop: "4.2rem",
-          backgroundColor: "inherit !impotant",
-          boxShadow: "none !important",
+          position: "relative",
+          zIndex: "121",
+          top: "10px",
         }}
       >
-        <div className="record-on-create-hoot roch-responsive">
-          {extraFeatures ? (
-            <div className="extra-media-preview">
-              {/* for on demand photo  */}
-              <canvas
-                onContextMenu={(e) => e.preventDefault()}
-                className="hoot-extra-features"
-                ref={canvasRef}
-                style={{ display: hasPhoto ? "" : "none" }}
-              ></canvas>
-
-              {/* for on demand photo  */}
-              <div
-                onContextMenu={(e) => e.preventDefault()}
-                className="click-on-demand-photo"
-                style={{ display: hasPhoto ? "" : "none" }}
-              >
-                Clicked
-              </div>
-
-              {/* for on demand photo  */}
-              <video
-                ref={videoRef}
-                className="hoot-extra-features"
-                style={{ display: hasPhoto || liveVideo ? "none" : "" }}
-              ></video>
-
-              {/* for on demand video */}
-              <video
-                ref={liveVideo ? register : null}
-                id="hookVideo"
-                autoPlay
-                muted
-                playsInline
-                className="hoot-extra-features"
-                style={{
-                  display: liveVideo && recordedVideoUrl === null ? "" : "none",
-                }}
-              ></video>
-
-              {/* recorded vedio  */}
-              <video
-                src={recordedVideoUrl}
-                controls
-                className="hoot-extra-features"
-                style={{
-                  display: liveVideo && recordedVideoUrl !== null ? "" : "none",
-                }}
-              ></video>
-
-              {/* if stream is on */}
-              {liveStream && (
-                <IoRadioButtonOn
+        <div
+          className="upload-post-private upp-responsive upp-mobile"
+          style={{
+            margin: "0 auto",
+            marginTop: "4.2rem",
+            backgroundColor: "inherit !impotant",
+            boxShadow: "none !important",
+          }}
+        >
+          <div
+            style={{
+              // backgroundColor: "#652c90",
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "2px",
+            }}
+          >
+            <button
+              onClick={() => {
+                // props.closeHoot();
+                history.push("/All-Hoots");
+              }}
+              style={{
+                width: "30px",
+                height: "35px",
+                color: "white",
+                background: "red",
+                border: "solid black",
+                borderRadius: "10%",
+                padding: "3px",
+                fontWeight: "700",
+                marginRight: "5px",
+              }}
+            >
+              X
+            </button>
+          </div>
+          <div className="record-on-create-hoot roch-responsive">
+            {extraFeatures ? (
+              <div className="extra-media-preview">
+                {/* for on demand photo  */}
+                <canvas
                   onContextMenu={(e) => e.preventDefault()}
-                  className="live-on-demand-video"
-                  style={{ display: status === "recording" ? "" : "none" }}
-                />
-              )}
-            </div>
-          ) : (
-            <div style={{ marginBottom: "2px" }}>
-              <div className="media-preview-private mpp-responsive">
-                {!showLinkPreview ? (
-                  link ? (
-                    <div
-                      style={{
-                        padding: "0rem 0.5rem 1rem 0.5rem",
-                        wordBreak: "break-all",
-                        marginTop: "-0.5rem",
-                      }}
-                    >
-                      <a
-                        href={link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link-content"
-                      >
-                        {link}
-                      </a>
-                    </div>
-                  ) : null
-                ) : null}
+                  className="hoot-extra-features"
+                  ref={canvasRef}
+                  style={{ display: hasPhoto ? "" : "none" }}
+                ></canvas>
 
-                {mimeType === "" && !showLinkPreview && !link && (
-                  <p>Media Preview</p>
-                )}
+                {/* for on demand photo  */}
+                <div
+                  onContextMenu={(e) => e.preventDefault()}
+                  className="click-on-demand-photo"
+                  style={{ display: hasPhoto ? "" : "none" }}
+                >
+                  Clicked
+                </div>
 
-                {mimeType !== "" && (
-                  <IoCloseOutline
-                    className="close-preview"
-                    onClick={closePreview}
+                {/* for on demand photo  */}
+                <video
+                  ref={videoRef}
+                  className="hoot-extra-features"
+                  style={{ display: hasPhoto || liveVideo ? "none" : "" }}
+                ></video>
+
+                {/* for on demand video */}
+                <video
+                  ref={liveVideo ? register : null}
+                  id="hookVideo"
+                  autoPlay
+                  muted
+                  playsInline
+                  className="hoot-extra-features"
+                  style={{
+                    display:
+                      liveVideo && recordedVideoUrl === null ? "" : "none",
+                  }}
+                ></video>
+
+                {/* recorded vedio  */}
+                <video
+                  src={recordedVideoUrl}
+                  controls
+                  className="hoot-extra-features"
+                  style={{
+                    display:
+                      liveVideo && recordedVideoUrl !== null ? "" : "none",
+                  }}
+                ></video>
+
+                {/* if stream is on */}
+                {liveStream && (
+                  <IoRadioButtonOn
+                    onContextMenu={(e) => e.preventDefault()}
+                    className="live-on-demand-video"
+                    style={{ display: status === "recording" ? "" : "none" }}
                   />
                 )}
-
-                {mimeType.match(/image/gi) == "image" && (
-                  <img src={src} alt="soapbox-img" className="hoot-img" />
-                )}
-
-                {mimeType.match(/video/gi) == "video" && (
-                  <video width="400" className="hoot-img" controls>
-                    <source src={src} />
-                    Your browser does not support HTML video.
-                  </video>
-                )}
-
-                {mimeType.match(/audio/gi) == "audio" && (
-                  <video
-                    poster={
-                      audioPoster.length !== 0
-                        ? URL.createObjectURL(audioPoster)
-                        : profilePicPath
-                    }
-                    className="hoot-vdo-private"
-                    controls
-                  >
-                    <source src={src} />
-                    Your browser does not support the audio element.
-                  </video>
-                )}
               </div>
-              {linkUrl.length > 0 && (
-                <div
-                  style={{
-                    width: "100%",
-                    height: "110px",
-                    marginTop: "2px",
-                    marginBottom: "5px",
-                  }}
-                >
-                  <MediaProfile url={linkUrl} />
-                  {/* <LinkPreview
+            ) : (
+              <div style={{ marginBottom: "2px" }}>
+                <div className="media-preview-private mpp-responsive">
+                  {!showLinkPreview ? (
+                    link ? (
+                      <div
+                        style={{
+                          padding: "0rem 0.5rem 1rem 0.5rem",
+                          wordBreak: "break-all",
+                          marginTop: "-0.5rem",
+                        }}
+                      >
+                        <a
+                          href={link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="link-content"
+                        >
+                          {link}
+                        </a>
+                      </div>
+                    ) : null
+                  ) : null}
+
+                  {mimeType === "" && !showLinkPreview && !link && (
+                    <p>Media Preview</p>
+                  )}
+
+                  {mimeType !== "" && (
+                    <IoCloseOutline
+                      className="close-preview"
+                      onClick={closePreview}
+                    />
+                  )}
+
+                  {mimeType.match(/image/gi) == "image" && (
+                    <img src={src} alt="soapbox-img" className="hoot-img" />
+                  )}
+
+                  {mimeType.match(/video/gi) == "video" && (
+                    <video width="400" className="hoot-img" controls>
+                      <source src={src} />
+                      Your browser does not support HTML video.
+                    </video>
+                  )}
+
+                  {mimeType.match(/audio/gi) == "audio" && (
+                    <video
+                      poster={
+                        audioPoster.length !== 0
+                          ? URL.createObjectURL(audioPoster)
+                          : profilePicPath
+                      }
+                      className="hoot-vdo-private"
+                      controls
+                    >
+                      <source src={src} />
+                      Your browser does not support the audio element.
+                    </video>
+                  )}
+                </div>
+                {linkUrl.length > 0 && (
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "110px",
+                      marginTop: "2px",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    <MediaProfile url={linkUrl} />
+                    {/* <LinkPreview
                     url={linkUrl}
                     width="100%"
                     height="110px"
                   ></LinkPreview> */}
-                </div>
-              )}
-            </div>
-          )}
+                  </div>
+                )}
+              </div>
+            )}
 
-          <div className="extra-features ef-responsive">
-            {/* Capture Photo */}
-            <SoapboxTooltip title="Capture Photo" placement="right">
-              <img
-                title="Capture Photo"
-                className="emoji-hover"
-                src={imagerecord}
-                onClick={onDemandPhoto}
-                style={{ cursor: "pointer" }}
-                width="35px"
-              />
-            </SoapboxTooltip>
-
-            {/* Record Video */}
-            <SoapboxTooltip title="Record Video" placement="right">
-              <img
-                className="emoji-hover"
-                src={videorecord}
-                style={{ cursor: "pointer" }}
-                onClick={onDemandVideo}
-                width="35px"
-              />
-            </SoapboxTooltip>
-
-            {/* Record Audio */}
-            <SoapboxTooltip title="Record Audio" placement="right">
-              <img
-                className="emoji-hover"
-                src={audiorecord}
-                style={{ cursor: "pointer" }}
-                onClick={onDemandAudio}
-                width="35px"
-              />
-            </SoapboxTooltip>
-
-            {/* upload image */}
-            <label htmlFor="post-image" onClick={closeOnDemand}>
-              <SoapboxTooltip title="upload image" placement="right">
+            <div className="extra-features ef-responsive">
+              {/* Capture Photo */}
+              <SoapboxTooltip title="Capture Photo" placement="right">
                 <img
+                  title="Capture Photo"
                   className="emoji-hover"
-                  src={imageupload}
+                  src={imagerecord}
+                  onClick={onDemandPhoto}
                   style={{ cursor: "pointer" }}
                   width="35px"
                 />
               </SoapboxTooltip>
-            </label>
-            <input
-              type="file"
-              id="post-image"
-              name="photo"
-              accept="image/*"
-              onChange={handleFile}
-              hidden
-            />
 
-            {/* upload video */}
-            <label htmlFor="post-video" onClick={closeOnDemand}>
-              <SoapboxTooltip title="upload video" placement="right">
+              {/* Record Video */}
+              <SoapboxTooltip title="Record Video" placement="right">
                 <img
                   className="emoji-hover"
-                  src={videoupload}
+                  src={videorecord}
                   style={{ cursor: "pointer" }}
+                  onClick={onDemandVideo}
                   width="35px"
                 />
               </SoapboxTooltip>
-            </label>
-            <input
-              type="file"
-              name="video"
-              id="post-video"
-              accept="video/*"
-              onChange={handleFile}
-              hidden
-            />
 
-            {/* upload audio */}
-            <label htmlFor="post-audio" onClick={closeOnDemand}>
-              <SoapboxTooltip title="upload audio" placement="right">
+              {/* Record Audio */}
+              <SoapboxTooltip title="Record Audio" placement="right">
                 <img
                   className="emoji-hover"
-                  src={audioupload}
+                  src={audiorecord}
                   style={{ cursor: "pointer" }}
+                  onClick={onDemandAudio}
                   width="35px"
                 />
               </SoapboxTooltip>
-            </label>
-            <input
-              type="file"
-              name="audio"
-              id="post-audio"
-              accept="audio/*"
-              onChange={handleFile}
-              hidden
-            />
 
-            <div
-              className="emoji-hover"
-              onClick={() => {
-                setEmojiPicker(!emojiPicker);
-              }}
-            >
-              {/* Emoji icon*/}
-              <SoapboxTooltip title="Emoji" placement="right">
-                <img
-                  className="emoji-hover"
-                  src={emojiupload}
-                  style={{ cursor: "pointer" }}
-                  width="35px"
-                />
-              </SoapboxTooltip>
-            </div>
-
-            {/* Emoji component */}
-            {emojiPicker && (
-              <ClickAwayListener
-                onClickAway={() => {
-                  setEmojiPicker(false);
-                }}
-              >
-                <div>
-                  <Picker
-                    native
-                    onEmojiClick={(event, emojiObject) => {
-                      setCaption(caption + emojiObject.emoji);
-                    }}
-                    pickerStyle={{
-                      position: "absolute",
-                      top: "2.5rem",
-                      left: "0.2rem",
-                      zIndex: "1111",
-                    }}
+              {/* upload image */}
+              <label htmlFor="post-image" onClick={closeOnDemand}>
+                <SoapboxTooltip title="upload image" placement="right">
+                  <img
+                    className="emoji-hover"
+                    src={imageupload}
+                    style={{ cursor: "pointer" }}
+                    width="35px"
                   />
-                </div>
-              </ClickAwayListener>
-            )}
+                </SoapboxTooltip>
+              </label>
+              <input
+                type="file"
+                id="post-image"
+                name="photo"
+                accept="image/*"
+                onChange={handleFile}
+                hidden
+              />
 
-            {/* Insert Link */}
-            <SoapboxTooltip title="Insert Link" placement="right">
-              <img
+              {/* upload video */}
+              <label htmlFor="post-video" onClick={closeOnDemand}>
+                <SoapboxTooltip title="upload video" placement="right">
+                  <img
+                    className="emoji-hover"
+                    src={videoupload}
+                    style={{ cursor: "pointer" }}
+                    width="35px"
+                  />
+                </SoapboxTooltip>
+              </label>
+              <input
+                type="file"
+                name="video"
+                id="post-video"
+                accept="video/*"
+                onChange={handleFile}
+                hidden
+              />
+
+              {/* upload audio */}
+              <label htmlFor="post-audio" onClick={closeOnDemand}>
+                <SoapboxTooltip title="upload audio" placement="right">
+                  <img
+                    className="emoji-hover"
+                    src={audioupload}
+                    style={{ cursor: "pointer" }}
+                    width="35px"
+                  />
+                </SoapboxTooltip>
+              </label>
+              <input
+                type="file"
+                name="audio"
+                id="post-audio"
+                accept="audio/*"
+                onChange={handleFile}
+                hidden
+              />
+
+              <div
                 className="emoji-hover"
-                src={addlink}
-                style={{ cursor: "pointer" }}
                 onClick={() => {
-                  setLinkModalOpen(true);
-                }}
-                width="35px"
-              />
-            </SoapboxTooltip>
-
-            <select
-              name="fontFamilySelect"
-              ref={fontFamilyRef}
-              onChange={changeFontFamily}
-              style={{ width: "35px" }}
-            >
-              <option value="none" selected hidden disabled>
-                F
-              </option>
-              <option
-                value="Roboto Condensed"
-                style={{ fontFamily: "Roboto Condensed" }}
-              >
-                Choose this style
-              </option>
-              <option
-                value="'Water Brush', cursive"
-                style={{ fontFamily: "'Water Brush', cursive" }}
-              >
-                Choose this style
-              </option>
-              <option
-                value="'Tapestry', cursive"
-                style={{ fontFamily: "'Tapestry', cursive" }}
-              >
-                Choose this style
-              </option>
-              <option
-                value="'Oleo Script Swash Caps', cursive"
-                style={{
-                  fontFamily: "'Oleo Script Swash Caps', cursive",
+                  setEmojiPicker(!emojiPicker);
                 }}
               >
-                Choose this style
-              </option>
-              <option
-                value="'Indie Flower', cursive"
-                style={{ fontFamily: "'Indie Flower', cursive" }}
-              >
-                Choose this style
-              </option>
-              <option
-                value="'Bangers', cursive"
-                style={{ fontFamily: "'Bangers', cursive" }}
-              >
-                Choose this style
-              </option>
-            </select>
-            <SoapboxTooltip title="Font Size" placement="right">
-              <select
-                style={{
-                  borderRadius: "15px",
-                  width: "40px",
-                  height: "20px",
-                  border: "none",
-                  fontSize: "13px",
-                }}
-                onChange={(e) => {
-                  setCurrentFontFamily({
-                    ...currentFontFamily,
-                    fontSize: e.target.value,
-                  });
-                }}
-              >
-                <option>{currentFontFamily.fontSize}</option>
-                {[
-                  10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, 35, 40,
-                ].map((e) => (
-                  <option value={`${e}px`}>{e}</option>
-                ))}
-              </select>
-            </SoapboxTooltip>
-            <SoapboxTooltip title="Font Color" placement="right">
-              <input
-                type="color"
-                style={{
-                  borderRadius: "15px",
-                  width: "40px",
-                  height: "20px",
-                  border: "none",
-                }}
-                value={currentFontFamily.color}
-                onChange={(e) =>
-                  setCurrentFontFamily({
-                    ...currentFontFamily,
-                    color: e.target.value,
-                  })
-                }
-              />
-            </SoapboxTooltip>
-          </div>
-
-          <div
-            className="btn-post my-2 tbn-responsive"
-            style={{
-              backgroundColor: "whitesmoke",
-              display: "flex",
-              minWidth: 150,
-              flexDirection: "column",
-              justifyContent: "space-evenly",
-              borderRadius: "0.3rem",
-              paddingLeft: "5px",
-            }}
-          >
-            <div className="ephemeral">
-              <input
-                type="checkbox"
-                className="ephemeral-toggle"
-                checked={privateCheck}
-                onChange={() => {
-                  setPrivateCheck(!privateCheck);
-                }}
-                disabled={!userData.privateChannel}
-              />
-              <span>Private </span>
-              <small>
-                {userData.privateChannel === 0
-                  ? "(Requires Private Club, Please go to Profile and add Private Club)"
-                  : null}
-              </small>
-            </div>
-
-            <SoapboxTooltip
-              title="Hoot's lifetime will be 7 days"
-              placement="bottom"
-            >
-              <div className="ephemeral">
-                <input
-                  type="checkbox"
-                  className="ephemeral-toggle"
-                  checked={ephemeralCheck}
-                  onChange={makeEphemeral}
-                />
-                <span>Ephemeral </span>
+                {/* Emoji icon*/}
+                <SoapboxTooltip title="Emoji" placement="right">
+                  <img
+                    className="emoji-hover"
+                    src={emojiupload}
+                    style={{ cursor: "pointer" }}
+                    width="35px"
+                  />
+                </SoapboxTooltip>
               </div>
-            </SoapboxTooltip>
 
-            <SoapboxTooltip
-              title="Enable if hoot content is sensitive"
-              placement="bottom"
-            >
-              <div className="ephemeral">
-                <input
-                  type="checkbox"
-                  className="ephemeral-toggle"
-                  checked={sensitiveChecked}
-                  onChange={makeSensitive}
-                />
-                <span> Sensitive </span>
-              </div>
-            </SoapboxTooltip>
-
-            <SoapboxTooltip title="Hoot" placement="bottom">
-              <img
-                src={hooticon}
-                className="emoji-hover"
-                onClick={upload}
-                disabled={!ReactPlayer.canPlay(link) && file.length === 0}
-                style={{ cursor: "pointer", margin: "0 auto" }}
-                width="60px"
-                height="35px"
-              />
-            </SoapboxTooltip>
-          </div>
-        </div>
-
-        {extraFeatures ? (
-          <div className="extra-features-options">
-            {/* photo re take */}
-            {livePhoto && hasPhoto && (
-              <SoapboxTooltip title="Re take" placement="bottom">
-                <button onClick={reTakePhoto} className="extra-outer">
-                  <VscDebugRestart className="extra-fi" />
-                </button>
-              </SoapboxTooltip>
-            )}
-
-            {/* photo re take */}
-            {liveVideo && !showRecordBtn && (
-              <SoapboxTooltip title="Re take" placement="bottom">
-                <button onClick={reTakeVideo} className="extra-outer">
-                  <VscDebugRestart className="extra-fi" />
-                </button>
-              </SoapboxTooltip>
-            )}
-
-            {/* photo capture */}
-            {livePhoto && !hasPhoto && (
-              <SoapboxTooltip title="Capture" placement="bottom">
-                <button onClick={takePhoto} className="extra-outer">
-                  <IoRadioButtonOn className="extra-fi" />
-                </button>
-              </SoapboxTooltip>
-            )}
-
-            {/* start video recording */}
-            {liveVideo && showRecordBtn && (
-              <SoapboxTooltip title="Start Recording" placement="bottom">
-                <button onClick={onVideoRecordingStart} className="extra-outer">
-                  <IoRadioButtonOn className="extra-fi" />
-                </button>
-              </SoapboxTooltip>
-            )}
-
-            {/* stop video recording */}
-            {liveVideo && !showRecordBtn && !recordedVideoUrl && (
-              <SoapboxTooltip title="Stop Recording" placement="bottom">
-                <button
-                  onClick={stopRecording(onVideoRecordingStop)}
-                  className="extra-outer"
+              {/* Emoji component */}
+              {emojiPicker && (
+                <ClickAwayListener
+                  onClickAway={() => {
+                    setEmojiPicker(false);
+                  }}
                 >
-                  <FaStopCircle className="extra-fi" />
-                </button>
-              </SoapboxTooltip>
-            )}
-
-            {/* download photo */}
-            <a
-              download
-              ref={downloadRef}
-              style={{ display: hasPhoto ? "" : "none" }}
-            >
-              <SoapboxTooltip title="Download" placement="bottom">
-                <button className="extra-outer">
-                  <FiDownload className="extra-fi" />
-                </button>
-              </SoapboxTooltip>
-            </a>
-
-            {/* download video  */}
-            <a
-              download
-              ref={videoDownloadRef}
-              style={{ display: recordedVideoUrl !== null ? "" : "none" }}
-            >
-              <SoapboxTooltip title="Download" placement="bottom">
-                <button className="extra-outer">
-                  <FiDownload className="extra-fi" />
-                </button>
-              </SoapboxTooltip>
-            </a>
-
-            {/* close photo live stream */}
-            {livePhoto && (
-              <SoapboxTooltip title="Close" placement="bottom">
-                <button onClick={closePhoto} className="extra-outer">
-                  <IoMdCloseCircleOutline className="extra-fi" />
-                </button>
-              </SoapboxTooltip>
-            )}
-
-            {/* close video live stream */}
-            {liveVideo && (
-              <SoapboxTooltip title="Close" placement="bottom">
-                <button onClick={closeVideo} className="extra-outer">
-                  <IoMdCloseCircleOutline className="extra-fi" />
-                </button>
-              </SoapboxTooltip>
-            )}
-          </div>
-        ) : null}
-
-        <div className="post-caption d-flex flex-wrap">
-          <div className="post-content">
-            <textarea
-              autoFocus
-              maxLength="300"
-              className="textarea-style-private tsp-responsive added-textarea-style"
-              placeholder="Share Your World. Hoot Hoot!"
-              style={currentFontFamily}
-              value={caption}
-              onChange={textChangeHandler}
-            ></textarea>
-
-            <div className="caption-count-private ccp-responsive">
-              <h6
-                className={caption.length > 280 && "text-danger"}
-                style={{ marginBottom: 0, color: "white" }}
-              >
-                {" "}
-                {caption.length}/300
-              </h6>
-            </div>
-
-            <div className="d-flex justify-content-between m-1 btn-caption-top">
-              <form action="">
-                <div
-                  className="d-flex justify-content-end my-2 align-items-center"
-                  style={{ position: "relative" }}
-                >
-                  {/* Photo */}
-                </div>
-              </form>
-
-              {/* Link Modal */}
-              {linkModalOpen && (
-                <Fragment>
-                  <div className="modal-overlay"></div>
-                  <ClickAwayListener
-                    onClickAway={() => {
-                      setLinkModalOpen(false);
-                    }}
-                  >
-                    <div className="link-modal">
-                      <h5>Add your Youtube, Podcast and Media Links</h5>
-
-                      <input
-                        autoFocus
-                        type="text"
-                        value={link}
-                        onChange={(event) => {
-                          setLink(event.target.value);
-                        }}
-                      />
-
-                      <div className="btn-post mt-2 link-info">
-                        <button
-                          className="btn-insert-link"
-                          onClick={insertLink}
-                        >
-                          Insert
-                        </button>{" "}
-                      </div>
-                      <IoCloseOutline
-                        className="close-modal"
-                        onClick={() => setLinkModalOpen(false)}
-                      />
-                    </div>
-                  </ClickAwayListener>
-                </Fragment>
-              )}
-            </div>
-
-            {showLinkPreview ? (
-              link.endsWith(".mp4") ||
-              link.endsWith(".mkv") ||
-              link.endsWith(".mov") ||
-              link.endsWith(".ogv") ||
-              link.endsWith("webm") ||
-              link.endsWith(".mpg") ? (
-                <video
-                  muted
-                  controls
-                  disablePictureInPicture
-                  className="hoot-vdo-private"
-                  style={{ width: "none" }}
-                  controlsList="nodownload"
-                  onDragStart={(e) => e.preventDefault()}
-                >
-                  <source src={link} />
-                  Your browser does not support HTML video.
-                </video>
-              ) : link.endsWith(".mp3") ||
-                link.endsWith(".ogg") ||
-                link.endsWith(".wav") ||
-                link.endsWith(".flac") ||
-                link.endsWith(".aac") ||
-                link.endsWith(".alac") ||
-                link.endsWith(".dsd") ? (
-                <video
-                  muted
-                  controls
-                  poster={
-                    src
-                      ? src
-                      : `${BaseURL}/profile-pictures/${userData.profilePic}`
-                  }
-                  className="hoot-vdo-private"
-                  style={{ width: "auto" }}
-                  controlsList="nodownload"
-                  onDragStart={(e) => e.preventDefault()}
-                >
-                  <source src={link} />
-                  Your browser does not support HTML video.
-                </video>
-              ) : (
-                ReactPlayer.canPlay(link) && (
-                  <div className="player-wrapper-private">
-                    <ReactPlayer
-                      url={link}
-                      className="react-player"
-                      controls="true"
-                      width="473px"
-                      height="252px"
+                  <div>
+                    <Picker
+                      native
+                      onEmojiClick={(event, emojiObject) => {
+                        setCaption(caption + emojiObject.emoji);
+                      }}
+                      pickerStyle={{
+                        position: "absolute",
+                        top: "2.5rem",
+                        left: "0.2rem",
+                        zIndex: "1111",
+                      }}
                     />
                   </div>
-                )
-              )
-            ) : null}
+                </ClickAwayListener>
+              )}
 
-            {(showLinkPreview && link.endsWith(".mp3")) ||
-            link.endsWith(".ogg") ||
-            link.endsWith(".wav") ||
-            link.endsWith(".flac") ||
-            link.endsWith(".aac") ||
-            link.endsWith(".alac") ||
-            link.endsWith(".dsd") ? (
-              <small
-                style={{
-                  margin: "0 0.5rem",
-                  color: "#6B7280",
-                  display: "block",
-                  fontWeight: "500",
-                }}
-              >
-                (By Default <b>Profile Picture</b> will be taken as{" "}
-                <b>Audio Poster</b> and it can be changed by{" "}
-                <b>Selecting Photo</b>)
-              </small>
-            ) : null}
-
-            {file.length !== 0 && file.type.match(/audio/gi) == "audio" ? (
-              <Fragment>
-                <label
-                  htmlFor="change-audio-poster"
-                  className="change-audio-poster"
-                >
-                  Change Audio Poster
-                </label>
-                <input
-                  type="file"
-                  name="audio"
-                  id="change-audio-poster"
-                  accept="image/*"
-                  onChange={(event) => {
-                    const poster = event.target.files[0];
-                    setAudioPoster(poster);
+              {/* Insert Link */}
+              <SoapboxTooltip title="Insert Link" placement="right">
+                <img
+                  className="emoji-hover"
+                  src={addlink}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setLinkModalOpen(true);
                   }}
-                  hidden
+                  width="35px"
                 />
-              </Fragment>
-            ) : null}
+              </SoapboxTooltip>
 
-            {file.length !== 0 && file.type.match(/audio/gi) == "audio" ? (
-              <small
-                style={{
-                  margin: "0 0.5rem",
-                  color: "#6B7280",
-                  display: "block",
-                  fontWeight: "500",
-                }}
+              <select
+                name="fontFamilySelect"
+                ref={fontFamilyRef}
+                onChange={changeFontFamily}
+                style={{ width: "35px" }}
               >
-                (By Default <b>Profile Picture</b> will be taken as
-                <b>Audio Poster</b> and it can be changed by{" "}
-                <b>Selecting Audio Poster</b>)
-              </small>
-            ) : null}
+                <option value="none" selected hidden disabled>
+                  F
+                </option>
+                <option
+                  value="Roboto Condensed"
+                  style={{ fontFamily: "Roboto Condensed" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Water Brush', cursive"
+                  style={{ fontFamily: "'Water Brush', cursive" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Tapestry', cursive"
+                  style={{ fontFamily: "'Tapestry', cursive" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Oleo Script Swash Caps', cursive"
+                  style={{
+                    fontFamily: "'Oleo Script Swash Caps', cursive",
+                  }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Indie Flower', cursive"
+                  style={{ fontFamily: "'Indie Flower', cursive" }}
+                >
+                  Choose this style
+                </option>
+                <option
+                  value="'Bangers', cursive"
+                  style={{ fontFamily: "'Bangers', cursive" }}
+                >
+                  Choose this style
+                </option>
+              </select>
+              <SoapboxTooltip title="Font Size" placement="right">
+                <select
+                  style={{
+                    borderRadius: "15px",
+                    width: "40px",
+                    height: "20px",
+                    border: "none",
+                    fontSize: "13px",
+                  }}
+                  onChange={(e) => {
+                    setCurrentFontFamily({
+                      ...currentFontFamily,
+                      fontSize: e.target.value,
+                    });
+                  }}
+                >
+                  <option>{currentFontFamily.fontSize}</option>
+                  {[
+                    10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, 35, 40,
+                  ].map((e) => (
+                    <option value={`${e}px`}>{e}</option>
+                  ))}
+                </select>
+              </SoapboxTooltip>
+              <SoapboxTooltip title="Font Color" placement="right">
+                <input
+                  type="color"
+                  style={{
+                    borderRadius: "15px",
+                    width: "40px",
+                    height: "20px",
+                    border: "none",
+                  }}
+                  value={currentFontFamily.color}
+                  onChange={(e) =>
+                    setCurrentFontFamily({
+                      ...currentFontFamily,
+                      color: e.target.value,
+                    })
+                  }
+                />
+              </SoapboxTooltip>
+            </div>
+
+            <div
+              className="btn-post my-2 tbn-responsive"
+              style={{
+                backgroundColor: "whitesmoke",
+                display: "flex",
+                minWidth: 150,
+                flexDirection: "column",
+                justifyContent: "space-evenly",
+                borderRadius: "0.3rem",
+                paddingLeft: "5px",
+              }}
+            >
+              <div className="ephemeral">
+                <input
+                  type="checkbox"
+                  className="ephemeral-toggle"
+                  checked={privateCheck}
+                  onChange={() => {
+                    setPrivateCheck(!privateCheck);
+                  }}
+                  disabled={!userData.privateChannel}
+                />
+                <span>Private </span>
+                <small>
+                  {userData.privateChannel === 0
+                    ? "(Requires Private Club, Please go to Profile and add Private Club)"
+                    : null}
+                </small>
+              </div>
+
+              <SoapboxTooltip
+                title="Hoot's lifetime will be 7 days"
+                placement="bottom"
+              >
+                <div className="ephemeral">
+                  <input
+                    type="checkbox"
+                    className="ephemeral-toggle"
+                    checked={ephemeralCheck}
+                    onChange={makeEphemeral}
+                  />
+                  <span>Ephemeral </span>
+                </div>
+              </SoapboxTooltip>
+
+              <SoapboxTooltip
+                title="Enable if hoot content is sensitive"
+                placement="bottom"
+              >
+                <div className="ephemeral">
+                  <input
+                    type="checkbox"
+                    className="ephemeral-toggle"
+                    checked={sensitiveChecked}
+                    onChange={makeSensitive}
+                  />
+                  <span> Sensitive </span>
+                </div>
+              </SoapboxTooltip>
+
+              <SoapboxTooltip title="Hoot" placement="bottom">
+                <img
+                  src={hooticon}
+                  className="emoji-hover"
+                  onClick={upload}
+                  disabled={!ReactPlayer.canPlay(link) && file.length === 0}
+                  style={{ cursor: "pointer", margin: "0 auto" }}
+                  width="60px"
+                  height="35px"
+                />
+              </SoapboxTooltip>
+            </div>
+          </div>
+          {extraFeatures ? (
+            <div className="extra-features-options">
+              {/* photo re take */}
+              {livePhoto && hasPhoto && (
+                <SoapboxTooltip title="Re take" placement="bottom">
+                  <button onClick={reTakePhoto} className="extra-outer">
+                    <VscDebugRestart className="extra-fi" />
+                  </button>
+                </SoapboxTooltip>
+              )}
+
+              {/* photo re take */}
+              {liveVideo && !showRecordBtn && (
+                <SoapboxTooltip title="Re take" placement="bottom">
+                  <button onClick={reTakeVideo} className="extra-outer">
+                    <VscDebugRestart className="extra-fi" />
+                  </button>
+                </SoapboxTooltip>
+              )}
+
+              {/* photo capture */}
+              {livePhoto && !hasPhoto && (
+                <SoapboxTooltip title="Capture" placement="bottom">
+                  <button onClick={takePhoto} className="extra-outer">
+                    <IoRadioButtonOn className="extra-fi" />
+                  </button>
+                </SoapboxTooltip>
+              )}
+
+              {/* start video recording */}
+              {liveVideo && showRecordBtn && (
+                <SoapboxTooltip title="Start Recording" placement="bottom">
+                  <button
+                    onClick={onVideoRecordingStart}
+                    className="extra-outer"
+                  >
+                    <IoRadioButtonOn className="extra-fi" />
+                  </button>
+                </SoapboxTooltip>
+              )}
+
+              {/* stop video recording */}
+              {liveVideo && !showRecordBtn && !recordedVideoUrl && (
+                <SoapboxTooltip title="Stop Recording" placement="bottom">
+                  <button
+                    onClick={stopRecording(onVideoRecordingStop)}
+                    className="extra-outer"
+                  >
+                    <FaStopCircle className="extra-fi" />
+                  </button>
+                </SoapboxTooltip>
+              )}
+
+              {/* download photo */}
+              <a
+                download
+                ref={downloadRef}
+                style={{ display: hasPhoto ? "" : "none" }}
+              >
+                <SoapboxTooltip title="Download" placement="bottom">
+                  <button className="extra-outer">
+                    <FiDownload className="extra-fi" />
+                  </button>
+                </SoapboxTooltip>
+              </a>
+
+              {/* download video  */}
+              <a
+                download
+                ref={videoDownloadRef}
+                style={{ display: recordedVideoUrl !== null ? "" : "none" }}
+              >
+                <SoapboxTooltip title="Download" placement="bottom">
+                  <button className="extra-outer">
+                    <FiDownload className="extra-fi" />
+                  </button>
+                </SoapboxTooltip>
+              </a>
+
+              {/* close photo live stream */}
+              {livePhoto && (
+                <SoapboxTooltip title="Close" placement="bottom">
+                  <button onClick={closePhoto} className="extra-outer">
+                    <IoMdCloseCircleOutline className="extra-fi" />
+                  </button>
+                </SoapboxTooltip>
+              )}
+
+              {/* close video live stream */}
+              {liveVideo && (
+                <SoapboxTooltip title="Close" placement="bottom">
+                  <button onClick={closeVideo} className="extra-outer">
+                    <IoMdCloseCircleOutline className="extra-fi" />
+                  </button>
+                </SoapboxTooltip>
+              )}
+            </div>
+          ) : null}
+          <div className="post-caption d-flex flex-wrap">
+            <div className="post-content">
+              <textarea
+                autoFocus
+                maxLength="300"
+                className="textarea-style-private tsp-responsive added-textarea-style"
+                placeholder="Share Your World. Hoot Hoot!"
+                style={currentFontFamily}
+                value={caption}
+                onChange={textChangeHandler}
+              ></textarea>
+
+              <div className="caption-count-private ccp-responsive">
+                <h6
+                  className={caption.length > 280 && "text-danger"}
+                  style={{ marginBottom: 0, color: "white" }}
+                >
+                  {" "}
+                  {caption.length}/300
+                </h6>
+              </div>
+
+              <div className="d-flex justify-content-between m-1 btn-caption-top">
+                <form action="">
+                  <div
+                    className="d-flex justify-content-end my-2 align-items-center"
+                    style={{ position: "relative" }}
+                  >
+                    {/* Photo */}
+                  </div>
+                </form>
+
+                {/* Link Modal */}
+                {linkModalOpen && (
+                  <Fragment>
+                    <div className="modal-overlay"></div>
+                    <ClickAwayListener
+                      onClickAway={() => {
+                        setLinkModalOpen(false);
+                      }}
+                    >
+                      <div className="link-modal">
+                        <h5>Add your Youtube, Podcast and Media Links</h5>
+
+                        <input
+                          autoFocus
+                          type="text"
+                          value={link}
+                          onChange={(event) => {
+                            setLink(event.target.value);
+                          }}
+                        />
+
+                        <div className="btn-post mt-2 link-info">
+                          <button
+                            className="btn-insert-link"
+                            onClick={insertLink}
+                          >
+                            Insert
+                          </button>{" "}
+                        </div>
+                        <IoCloseOutline
+                          className="close-modal"
+                          onClick={() => setLinkModalOpen(false)}
+                        />
+                      </div>
+                    </ClickAwayListener>
+                  </Fragment>
+                )}
+              </div>
+
+              {showLinkPreview ? (
+                link.endsWith(".mp4") ||
+                link.endsWith(".mkv") ||
+                link.endsWith(".mov") ||
+                link.endsWith(".ogv") ||
+                link.endsWith("webm") ||
+                link.endsWith(".mpg") ? (
+                  <video
+                    muted
+                    controls
+                    disablePictureInPicture
+                    className="hoot-vdo-private"
+                    style={{ width: "none" }}
+                    controlsList="nodownload"
+                    onDragStart={(e) => e.preventDefault()}
+                  >
+                    <source src={link} />
+                    Your browser does not support HTML video.
+                  </video>
+                ) : link.endsWith(".mp3") ||
+                  link.endsWith(".ogg") ||
+                  link.endsWith(".wav") ||
+                  link.endsWith(".flac") ||
+                  link.endsWith(".aac") ||
+                  link.endsWith(".alac") ||
+                  link.endsWith(".dsd") ? (
+                  <video
+                    muted
+                    controls
+                    poster={
+                      src
+                        ? src
+                        : `${BaseURL}/profile-pictures/${userData.profilePic}`
+                    }
+                    className="hoot-vdo-private"
+                    style={{ width: "auto" }}
+                    controlsList="nodownload"
+                    onDragStart={(e) => e.preventDefault()}
+                  >
+                    <source src={link} />
+                    Your browser does not support HTML video.
+                  </video>
+                ) : (
+                  ReactPlayer.canPlay(link) && (
+                    <div className="player-wrapper-private">
+                      <ReactPlayer
+                        url={link}
+                        className="react-player"
+                        controls="true"
+                        width="473px"
+                        height="252px"
+                      />
+                    </div>
+                  )
+                )
+              ) : null}
+
+              {(showLinkPreview && link.endsWith(".mp3")) ||
+              link.endsWith(".ogg") ||
+              link.endsWith(".wav") ||
+              link.endsWith(".flac") ||
+              link.endsWith(".aac") ||
+              link.endsWith(".alac") ||
+              link.endsWith(".dsd") ? (
+                <small
+                  style={{
+                    margin: "0 0.5rem",
+                    color: "#6B7280",
+                    display: "block",
+                    fontWeight: "500",
+                  }}
+                >
+                  (By Default <b>Profile Picture</b> will be taken as{" "}
+                  <b>Audio Poster</b> and it can be changed by{" "}
+                  <b>Selecting Photo</b>)
+                </small>
+              ) : null}
+
+              {file.length !== 0 && file.type.match(/audio/gi) == "audio" ? (
+                <Fragment>
+                  <label
+                    htmlFor="change-audio-poster"
+                    className="change-audio-poster"
+                  >
+                    Change Audio Poster
+                  </label>
+                  <input
+                    type="file"
+                    name="audio"
+                    id="change-audio-poster"
+                    accept="image/*"
+                    onChange={(event) => {
+                      const poster = event.target.files[0];
+                      setAudioPoster(poster);
+                    }}
+                    hidden
+                  />
+                </Fragment>
+              ) : null}
+
+              {file.length !== 0 && file.type.match(/audio/gi) == "audio" ? (
+                <small
+                  style={{
+                    margin: "0 0.5rem",
+                    color: "#6B7280",
+                    display: "block",
+                    fontWeight: "500",
+                  }}
+                >
+                  (By Default <b>Profile Picture</b> will be taken as
+                  <b>Audio Poster</b> and it can be changed by{" "}
+                  <b>Selecting Audio Poster</b>)
+                </small>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>

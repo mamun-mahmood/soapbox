@@ -663,9 +663,42 @@ const CreatePrivateHoot = (props) => {
   };
 
   return (
-    <Fragment>
+    <div
+      style={{
+        position: "relative",
+        zIndex: "121",
+        top: "30px",
+      }}
+    >
       {/* <NavBar /> */}
       <div className="upload-post-private upp-responsive">
+        <div
+          style={{
+            // backgroundColor: "#652c90",
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "2px",
+          }}
+        >
+          <button
+            onClick={() => {
+              props.closeHoot();
+            }}
+            style={{
+              width: "30px",
+              height: "35px",
+              color: "white",
+              background: "red",
+              border: "solid black",
+              borderRadius: "10%",
+              padding: "3px",
+              fontWeight: "700",
+              marginRight: "5px",
+            }}
+          >
+            X
+          </button>
+        </div>
         {/* <div className="back-to-home">
                         <Link to={`/${uuidv4()}/private/Club/${username}/${uuidv4()}`}>
                             <FiArrowLeft className="left-arrow" />
@@ -817,7 +850,6 @@ const CreatePrivateHoot = (props) => {
               )}
             </div>
           )}
-
           {userData.privateChannel ? (
             <div className="extra-features ef-responsive">
               {/* Capture Photo */}
@@ -1263,7 +1295,6 @@ const CreatePrivateHoot = (props) => {
             )}
           </div>
         ) : null}
-
         <div className="post-caption d-flex flex-wrap">
           <div className="post-content">
             <textarea
@@ -1566,6 +1597,31 @@ const CreatePrivateHoot = (props) => {
             ) : null}
           </div>
         </div>
+        {/* <div
+          style={{
+            marginRight: "0px",
+            marginTop: "2px",
+          }}
+        >
+          <button
+            onClick={() => {
+              // setShowCreateHoot(false);
+            }}
+            style={{
+              width: "60px",
+              color: "white",
+              background: "red",
+              border: "solid black",
+              margin: "3px",
+              borderRadius: "10%",
+              marginLeft: "45%",
+              padding: "3px",
+              boxShadow: "0 0 1.5px 5px rgba(255, 255, 255, 0.5)",
+            }}
+          >
+            Close
+          </button>
+        </div> */}
       </div>
 
       <Helmet>
@@ -1612,7 +1668,7 @@ const CreatePrivateHoot = (props) => {
           content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png"
         />
       </Helmet>
-    </Fragment>
+    </div>
   );
 };
 

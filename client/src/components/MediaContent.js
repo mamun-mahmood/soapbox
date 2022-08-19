@@ -208,6 +208,9 @@ const MediaContent = ({
               <button
                 onClick={toggleSensitivity}
                 className="sensitivity-button"
+                style={
+                  isSensitive ? { visibility: "visible" } : { display: "none" }
+                }
               >
                 View
               </button>

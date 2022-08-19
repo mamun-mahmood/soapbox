@@ -7577,7 +7577,6 @@ const PrivateChannels = () => {
 
                 {/* <FiSearch className="search-channel-content" /> */}
               </div>
-
               {inviteBox ? (
                 <MyVerticallyCenteredModal
                   title={"Invitation"}
@@ -7614,7 +7613,6 @@ const PrivateChannels = () => {
                   onHide={() => setInviteBox(false)}
                 />
               ) : null}
-
               {scheduleBox ? (
                 <MyVerticallyCenteredScheduler
                   title={"Schedule an event"}
@@ -7634,7 +7632,6 @@ const PrivateChannels = () => {
                   onHide={() => setScheduleBox(false)}
                 />
               ) : null}
-
               {showReply ? (
                 <ReplyModal
                   sendReplyToChat={(data) => {
@@ -7645,7 +7642,6 @@ const PrivateChannels = () => {
                   show={showReply}
                 />
               ) : null}
-
               {showRequest ? (
                 <div className="slide-container">
                   <div
@@ -7747,7 +7743,6 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {showPricingSetting ? (
                 <div className="slide-container">
                   <div
@@ -7995,7 +7990,6 @@ const PrivateChannels = () => {
                   </div>{" "}
                 </div>
               ) : null}
-
               {showAllMyEvents ? (
                 <div className="slide-container">
                   <div
@@ -8093,7 +8087,6 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {showSubscribers ? (
                 <div className="slide-container">
                   <div
@@ -8178,7 +8171,7 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
+              
               {showCreateHoot ? (
                 <div className="slide-container">
                   <div id="slideH" className="sH-responsive">
@@ -8198,7 +8191,6 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {showIframe ? (
                 <div className="slide-container">
                   <div
@@ -8249,7 +8241,6 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {showBreakoffForm ? (
                 <div className="showBreakoffForm" id="showBreakoffFormId">
                   <h5>Enter The Topic for BreakOff Chat</h5>
@@ -8288,11 +8279,9 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {showClubRules ? (
                 <SoapboxPrivateClubRules setShowClubRules={setShowClubRules} />
               ) : null}
-
               {showNotification ? (
                 <div
                   style={{
@@ -8309,7 +8298,6 @@ const PrivateChannels = () => {
                   <p>No Notification</p>
                 </div>
               ) : null}
-
               {/* channel-media */}
               <div
                 className="channel-media"
@@ -10950,7 +10938,6 @@ const PrivateChannels = () => {
                   </div>
                 ) : null}
               </div>
-
               {onDemandMedia ? (
                 <div
                   className="channel-media"
