@@ -657,13 +657,7 @@ const CreatePrivateHoot = (props) => {
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        zIndex: "121",
-        top: "30px",
-      }}
-    >
+    <div className="hoot-create-container">
       {/* <NavBar /> */}
 
       <div className="upload-post-private upp-responsive">

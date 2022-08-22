@@ -275,12 +275,16 @@ const NavBar = ({
           >
             <CreatePublicHoot
               closeHoot={() => {
-                document.getElementById("slideH").style.transition = "1sec";
-                document.getElementById("slideH").style.right = "-200vw";
+                document.getElementById("slideH").style.transition = "2sec";
+                document.getElementById("slideH").style.transform =
+                  "translateX(-100%)";
+
+                document.getElementById("slideH").style.transform =
+                  "translateY(200%)";
 
                 setTimeout(() => {
                   setShowNavCreatePublicHoot(false);
-                  window.location.reload(false);
+                  // window.location.reload(false);
                 }, 1000);
               }}
             />

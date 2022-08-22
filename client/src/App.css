@@ -3053,3 +3053,9 @@ hr {
   height: 40px;
   width: 50px;
 }
+
+.hoot-create-container {
+  position: relative;
+  z-index: 121;
+  top: 30px;
+}

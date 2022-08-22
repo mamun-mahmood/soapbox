@@ -51,6 +51,7 @@ import emojiupload from "../assets/emoji.png";
 import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
 import MediaProfile from "../components/HootOutside/MediaProfile";
+import CSSTransition from "react-transition-group/CSSTransition";
 
 const CreatePrivateHoot = (props) => {
   const [currentFontFamily, setCurrentFontFamily] = useState({
@@ -661,15 +662,25 @@ const CreatePrivateHoot = (props) => {
       console.log("No link could be extracted");
     }
   };
+  const animationTiming = {
+    enter: 2000,
+    exit: 2000,
+  };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        zIndex: "121",
-        top: "30px",
-      }}
-    >
+    // <CSSTransition
+    //   mountOnEnter
+    //   unmountOnExit
+    //   in={props.show}
+    //   timeout={animationTiming}
+    //   classNames={{
+    //     enter: "hoot-open-enter",
+    //     enterActive: "hoot-open-active",
+    //     exit: "",
+    //     exitActive: "hoot-closed-active",
+    //   }}
+    // >
+    <div className="hoot-create-container">
       {/* <NavBar /> */}
       <div className="upload-post-private upp-responsive">
         <div
@@ -1669,6 +1680,7 @@ const CreatePrivateHoot = (props) => {
         />
       </Helmet>
     </div>
+    // </CSSTransition>
   );
 };
 
