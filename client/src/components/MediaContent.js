@@ -4,6 +4,7 @@ import LazyLoad from "react-lazyload";
 import faker from "faker";
 import { words, numbers } from "../Helpers/Constants";
 import BeatLoader from "react-spinners/BeatLoader";
+import eye from "../assets/eyes.png";
 
 const MediaContent = ({
   hootId,
@@ -199,22 +200,23 @@ const MediaContent = ({
             width: `${
               imgWidth > 100 ? (imgWidth > 300 ? 300 : imgWidth) : 180
             }px`,
-            margin: "2px",
+            padding: "2px",
           }}
         >
-          <div style={{ margin: "auto" }}>
-            This post may contain sensitive media. You still wish to continue?
-            <div style={{ alignContent: "center" }}>
-              <button
-                onClick={toggleSensitivity}
-                className="sensitivity-button"
-                style={
-                  isSensitive ? { visibility: "visible" } : { display: "none" }
-                }
-              >
-                View
-              </button>
+          {imgHeight > 180 && (
+            <div style={{ background: "white", marginTop: "10%" }}>
+              <img
+                src={eye}
+                alt="sensitive_eye"
+                style={{ height: "70px", width: "70px", marginLeft: "35%" }}
+              />
             </div>
+          )}
+          <div style={{ textAlign: "center" }}>
+            This post may contain sensitive media. You still wish to continue?
+          </div>
+          <div onClick={toggleSensitivity} className="sensitivity-button">
+            Proceed to view content
           </div>
         </div>
       )}
