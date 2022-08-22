@@ -836,7 +836,7 @@ overflow-wrap: break-word;
 #slideH {
   position: absolute;
   left: -100vw;
-
+  margin-top: 30px !important;
   transition: 1s;
   z-index: 20;
 }
