@@ -3056,6 +3056,6 @@ hr {
 
 .hoot-create-container {
   position: relative;
-  z-index: 121;
+  z-index: 9999;
   top: 30px;
 }

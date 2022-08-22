@@ -8179,11 +8179,7 @@ const PrivateChannels = () => {
                       closeHoot={() => {
                         document.getElementById("slideH").style.transition =
                           "2sec";
-                        document.getElementById("slideH").style.transform =
-                          "translateX(-100%)";
-
-                        document.getElementById("slideH").style.transform =
-                          "translateY(200%)";
+                        document.getElementById("slideH").style.left = "-200%";
 
                         setTimeout(() => {
                           setShowCreateHoot(false);
