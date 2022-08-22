@@ -25,7 +25,7 @@ import {
   AiOutlineReddit,
   AiOutlineMedium,
 } from "react-icons/ai";
-import chathive from "../assets/chathive.png";
+import chathive from "../assets/chathive.svg";
 import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from "./HootOutside/HootOutside";
 import InfiniteScroll from "react-infinite-scroll-component";

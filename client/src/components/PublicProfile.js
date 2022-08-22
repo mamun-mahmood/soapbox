@@ -23,7 +23,7 @@ import HootOutside from "./HootOutside/HootOutside";
 import InfiniteScroll from "react-infinite-scroll-component";
 import InfiniteScrollLoader from "./Feed/InfiniteScrollLoader";
 // import toast from 'react-hot-toast';
-import chathive from "../assets/chathive.png";
+import chathive from "../assets/chathive.svg";
 import { toast } from "react-toastify";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
