@@ -3032,26 +3032,32 @@ hr {
 }
 
 .sensitivity-blur {
-  background: #eeececcc;
-  display: flex;
-  text-align: center;
+  /* background-image: linear-gradient(rgba(72, 69, 69, 0), rgb(255, 255, 255)); */
+  background-color: rgb(0, 0, 0);
+  border-radius: 20px;
+  border: 1px solid white;
+  /* display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-items: center;
+  justify-content: space-between; */
   /* height: 200px;
   width: 200px; */
-  opacity: 0.85;
-  color: black;
+  color: white;
   position: absolute;
   z-index: 45;
 }
 
 .sensitivity-button {
-  background-color: rgb(210, 204, 204);
-  opacity: 90%;
-  border-radius: 10%;
-  border: 2px solid black;
-  height: 40px;
-  width: 50px;
+  border-top: 2px inset #c5c8cd;
+  font-size: medium;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  padding: 1.5px;
+  width: 90%;
+  margin-left: 4%;
+  color: white;
+  text-align: center;
 }
 
 .hoot-create-container {
