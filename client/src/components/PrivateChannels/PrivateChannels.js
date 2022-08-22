@@ -8171,7 +8171,7 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-              
+
               {showCreateHoot ? (
                 <div className="slide-container">
                   <div id="slideH" className="sH-responsive">
@@ -8179,14 +8179,18 @@ const PrivateChannels = () => {
                       closeHoot={() => {
                         document.getElementById("slideH").style.transition =
                           "2sec";
-                        document.getElementById("slideH").style.right =
-                          "-100vw";
+                        document.getElementById("slideH").style.transform =
+                          "translateX(-100%)";
+
+                        document.getElementById("slideH").style.transform =
+                          "translateY(200%)";
 
                         setTimeout(() => {
                           setShowCreateHoot(false);
-                          window.location.reload(false);
                         }, 1000);
                       }}
+                      show={showCreateHoot}
+                      // closeHoot={() => setShowCreateHoot(false)}
                     />
                   </div>
                 </div>
