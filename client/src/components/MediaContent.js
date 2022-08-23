@@ -213,10 +213,11 @@ const MediaContent = ({
             </div>
           )}
           <div style={{ textAlign: "center" }}>
-            This post may contain sensitive media. You still wish to continue?
+            This hoot may contain sensitive content. Do you still want to view
+            the content?
           </div>
           <div onClick={toggleSensitivity} className="sensitivity-button">
-            Proceed to view content
+            VIEW CONTENT
           </div>
         </div>
       )}
