@@ -76,6 +76,7 @@ import stickerIcon from "../../assets/stickerIcon.png";
 import FortisSignIn from "../FortisIntegration/FortisSignIn";
 import FortisMarketplaceArea from "../FortisIntegration/FortisMarketplaceArea";
 import InboxMessage from "./inboxMessage";
+import LandingPage from "./LandingPage";
 
 const stripe = loadStripe(
   "pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz"
@@ -3664,7 +3665,6 @@ const PrivateChannels = () => {
                   </span>
                 </div>
               </div>
-
               {inviteBox ? (
                 <MyVerticallyCenteredModal
                   title={"Invitation"}
@@ -3701,7 +3701,6 @@ const PrivateChannels = () => {
                   onHide={() => setInviteBox(false)}
                 />
               ) : null}
-
               {scheduleBox ? (
                 <MyVerticallyCenteredScheduler
                   title={"Schedule an event"}
@@ -3721,7 +3720,6 @@ const PrivateChannels = () => {
                   onHide={() => setScheduleBox(false)}
                 />
               ) : null}
-
               {showReply ? (
                 <ReplyModal
                   sendReplyToChat={(data) => {
@@ -3732,11 +3730,9 @@ const PrivateChannels = () => {
                   show={showReply}
                 />
               ) : null}
-
               {showClubRules ? (
                 <SoapboxPrivateClubRules setShowClubRules={setShowClubRules} />
               ) : null}
-
               {showBreakoffForm ? (
                 <div className="showBreakoffForm" id="showBreakoffFormId">
                   <h5>Enter The Topic for BreakOff Chat</h5>
@@ -3775,7 +3771,6 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {oneOnOnecall ? (
                 <div className="slide-container">
                   <div
@@ -3884,7 +3879,6 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {showIframe ? (
                 <div className="slide-container">
                   <div
@@ -3936,7 +3930,6 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {showSubscribeButton ? (
                 <div className="slide-container">
                   <div
@@ -4183,7 +4176,6 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {groupCall ? (
                 <div className="slide-container">
                   <div
@@ -4290,7 +4282,6 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {requestMessage ? (
                 <div className="slide-container">
                   <div
@@ -4399,7 +4390,6 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
-
               {verifiedAutograph ? (
                 <div className="slide-container">
                   <div
@@ -4508,6 +4498,8 @@ const PrivateChannels = () => {
                   </div>
                 </div>
               ) : null}
+
+              {!subscribe && <LandingPage userInfo={[...userInfo]} />}
 
               {/* channel-media */}
               {subscribe ? (
@@ -5080,7 +5072,6 @@ const PrivateChannels = () => {
                       </div>
                     </div>
                   ) : null}
-
                   {privateChatList ? (
                     <div className="privateChatListBox" id="privateChatList">
                       <div
@@ -5157,7 +5148,6 @@ const PrivateChannels = () => {
                       />
                     </div>
                   ) : null}
-
                   {/* ------------------- Chat Container newly style added here ------------------- */}
                   {showChatRoom ? (
                     <div
@@ -5480,11 +5470,11 @@ const PrivateChannels = () => {
                                   />
                                 </Form.Group>
                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
-  </Form.Group> */}
+                                  <Form.Check type="checkbox" label="Check me out" />
+                                </Form.Group> */}
                                 {/* <Button variant="primary" onClick={()=>{setFormEditPoll(!FormEditPoll)}} >
-    Preview 
-  </Button> */}
+                                  Preview 
+                                </Button> */}
                                 <Button
                                   variant="primary"
                                   type="submit"
@@ -6958,7 +6948,6 @@ const PrivateChannels = () => {
                   ) : null}
                 </div>
               ) : null}
-
               {onDemandMedia ? (
                 <div
                   className="channel-media"
@@ -9081,7 +9070,6 @@ const PrivateChannels = () => {
                     </div>
                   </div>
                 ) : null}
-
                 {privateChatList ? (
                   <div className="privateChatListBox" id="privateChatList">
                     <div
@@ -9156,7 +9144,6 @@ const PrivateChannels = () => {
                     />
                   </div>
                 ) : null}
-
                 {/* ------------------- Chat Container newly style added here ------------------- */}
                 {showChatRoom ? (
                   <div
