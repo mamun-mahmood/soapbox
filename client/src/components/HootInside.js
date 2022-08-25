@@ -41,6 +41,9 @@ import Expire from "./Expire";
 import ReactPlayer from "react-player";
 import CaptionComp from "./CaptionComp";
 import { LinkPreview } from "@dhaiwat10/react-link-preview";
+import RegularVerified from "../assets/RegularVerified.svg";
+import PremiumVerified from "../assets/PremiumVerified.svg";
+import CorporateVerified from "../assets/CorporateVerified.svg";
 
 const HootInside = ({
   userId,
@@ -72,6 +75,9 @@ const HootInside = ({
   fontStyleSize,
   isSensitive,
   setIsSensitive,
+  isPremium,
+  isCorporate,
+  isRegular,
 }) => {
   const BaseURL = process.env.REACT_APP_API_URL; // API url
   const hostURL = "https://www.megahoot.net"; // main website
@@ -598,11 +604,28 @@ const HootInside = ({
                       </Link>
                       {verified === 1 ? (
                         <div className="verification-badge">
-                          <HiBadgeCheck
-                            data-tip="Verified account"
-                            data-text-color="#8249A0"
-                            data-background-color="#D9D2FA"
-                          />
+                          {isPremium ? (
+                            <img
+                              src={PremiumVerified}
+                              height="18px"
+                              width="18px"
+                              alt="premium_verified"
+                            />
+                          ) : isCorporate ? (
+                            <img
+                              src={CorporateVerified}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : (
+                            <img
+                              src={RegularVerified}
+                              height="18px"
+                              width="18px"
+                              alt="regular_verified"
+                            />
+                          )}
                         </div>
                       ) : null}
                     </div>
@@ -719,11 +742,28 @@ const HootInside = ({
                           </Link>
                           {verified === 1 ? (
                             <div className="verification-badge">
-                              <HiBadgeCheck
-                                data-tip="Verified account"
-                                data-text-color="#8249A0"
-                                data-background-color="#D9D2FA"
-                              />
+                              {isPremium ? (
+                                <img
+                                  src={PremiumVerified}
+                                  height="18px"
+                                  width="18px"
+                                  alt="premium_verified"
+                                />
+                              ) : isCorporate ? (
+                                <img
+                                  src={CorporateVerified}
+                                  height="18px"
+                                  width="18px"
+                                  alt="corporate_verified"
+                                />
+                              ) : (
+                                <img
+                                  src={RegularVerified}
+                                  height="18px"
+                                  width="18px"
+                                  alt="regular_verified"
+                                />
+                              )}
                             </div>
                           ) : null}
                         </div>
@@ -1855,11 +1895,28 @@ const HootInside = ({
                       </Link>
                       {verified === 1 ? (
                         <div className="verification-badge">
-                          <HiBadgeCheck
-                            data-tip="Verified account"
-                            data-text-color="#8249A0"
-                            data-background-color="#D9D2FA"
-                          />
+                          {isPremium ? (
+                            <img
+                              src={PremiumVerified}
+                              height="18px"
+                              width="18px"
+                              alt="premium_verified"
+                            />
+                          ) : isCorporate ? (
+                            <img
+                              src={CorporateVerified}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : (
+                            <img
+                              src={RegularVerified}
+                              height="18px"
+                              width="18px"
+                              alt="regular_verified"
+                            />
+                          )}
                         </div>
                       ) : null}
                     </div>
@@ -1981,11 +2038,28 @@ const HootInside = ({
                         </Link>
                         {verified === 1 ? (
                           <div className="verification-badge">
-                            <HiBadgeCheck
-                              data-tip="Verified account"
-                              data-text-color="#8249A0"
-                              data-background-color="#D9D2FA"
-                            />
+                            {isPremium ? (
+                              <img
+                                src={PremiumVerified}
+                                height="18px"
+                                width="18px"
+                                alt="premium_verified"
+                              />
+                            ) : isCorporate ? (
+                              <img
+                                src={CorporateVerified}
+                                height="18px"
+                                width="18px"
+                                alt="corporate_verified"
+                              />
+                            ) : (
+                              <img
+                                src={RegularVerified}
+                                height="18px"
+                                width="18px"
+                                alt="regular_verified"
+                              />
+                            )}
                           </div>
                         ) : null}
                       </div>
@@ -2144,11 +2218,28 @@ const HootInside = ({
                         </Link>
                         {verified === 1 ? (
                           <div className="verification-badge">
-                            <HiBadgeCheck
-                              data-tip="Verified account"
-                              data-text-color="#8249A0"
-                              data-background-color="#D9D2FA"
-                            />
+                            {isPremium ? (
+                              <img
+                                src={PremiumVerified}
+                                height="18px"
+                                width="18px"
+                                alt="premium_verified"
+                              />
+                            ) : isCorporate ? (
+                              <img
+                                src={CorporateVerified}
+                                height="18px"
+                                width="18px"
+                                alt="corporate_verified"
+                              />
+                            ) : (
+                              <img
+                                src={RegularVerified}
+                                height="18px"
+                                width="18px"
+                                alt="regular_verified"
+                              />
+                            )}
                           </div>
                         ) : null}
                       </div>

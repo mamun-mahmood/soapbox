@@ -6,6 +6,9 @@ import { HiBadgeCheck } from "react-icons/hi";
 import { Link, useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
+import RegularVerified from "../../assets/RegularVerified.svg";
+import PremiumVerified from "../../assets/PremiumVerified.svg";
+import CorporateVerified from "../../assets/CorporateVerified.svg";
 
 const SuggestedFollow = ({ verifiedUser }) => {
   const [users, setUsers] = useState([]);
@@ -178,11 +181,33 @@ const SuggestedFollow = ({ verifiedUser }) => {
 
               {verifiedUser.verified === 1 ? (
                 <div className="verification-badge">
-                  <HiBadgeCheck
+                  {/* <HiBadgeCheck
                     data-tip="Verified account"
                     data-text-color="#8249A0"
                     data-background-color="#D9D2FA"
-                  />
+                  /> */}
+                  {verifiedUser.isPremium ? (
+                    <img
+                      src={PremiumVerified}
+                      height="18px"
+                      width="18px"
+                      alt="regular_verified"
+                    />
+                  ) : verifiedUser.isCorporate ? (
+                    <img
+                      src={CorporateVerified}
+                      height="18px"
+                      width="18px"
+                      alt="regular_verified"
+                    />
+                  ) : (
+                    <img
+                      src={RegularVerified}
+                      height="18px"
+                      width="18px"
+                      alt="regular_verified"
+                    />
+                  )}
                 </div>
               ) : null}
             </div>
@@ -281,11 +306,28 @@ const SuggestedFollow = ({ verifiedUser }) => {
                   </Link>
                   {verifiedUser.verified === 1 ? (
                     <div className="verification-badge">
-                      <HiBadgeCheck
-                        data-tip="Verified account"
-                        data-text-color="#8249A0"
-                        data-background-color="#D9D2FA"
-                      />
+                      {verifiedUser.isPremium ? (
+                        <img
+                          src={PremiumVerified}
+                          height="18px"
+                          width="18px"
+                          alt="regular_verified"
+                        />
+                      ) : verifiedUser.isCorporate ? (
+                        <img
+                          src={CorporateVerified}
+                          height="18px"
+                          width="18px"
+                          alt="regular_verified"
+                        />
+                      ) : (
+                        <img
+                          src={RegularVerified}
+                          height="18px"
+                          width="18px"
+                          alt="regular_verified"
+                        />
+                      )}
                     </div>
                   ) : null}
                 </div>

@@ -26,6 +26,9 @@ import {
   AiOutlineMedium,
 } from "react-icons/ai";
 import chathive from "../assets/chathive.png";
+import RegularVerified from "../assets/RegularVerified.svg";
+import PremiumVerified from "../assets/PremiumVerified.svg";
+import CorporateVerified from "../assets/CorporateVerified.svg";
 import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from "./HootOutside/HootOutside";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -60,6 +63,9 @@ const Profile = ({
   pinterest,
   medium,
   tumblr,
+  isRegular,
+  isPremium,
+  isCorporate,
 }) => {
   const { username } = useParams();
   const [myUploads, setMyUploads] = useState([]);
@@ -190,13 +196,30 @@ const Profile = ({
                 <div className="display-name">
                   <div className="profile-name-verification">
                     <h1 style={{ fontSize: "14px" }}>{name}</h1>
-                    {verified === 1 ? (
+                    {verified == 1 ? (
                       <div className="profile-verification-badge">
-                        <HiBadgeCheck
-                          data-tip="Verified account"
-                          data-text-color="#8249A0"
-                          data-background-color="#D9D2FA"
-                        />
+                        {isPremium ? (
+                          <img
+                            src={PremiumVerified}
+                            height="18px"
+                            width="18px"
+                            alt="regular_verified"
+                          />
+                        ) : isCorporate ? (
+                          <img
+                            src={CorporateVerified}
+                            height="18px"
+                            width="18px"
+                            alt="regular_verified"
+                          />
+                        ) : (
+                          <img
+                            src={RegularVerified}
+                            height="18px"
+                            width="18px"
+                            alt="regular_verified"
+                          />
+                        )}
                       </div>
                     ) : null}
                   </div>
