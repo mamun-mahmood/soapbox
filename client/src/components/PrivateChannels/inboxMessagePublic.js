@@ -449,7 +449,7 @@ export default function InboxMessagePublic(props) {
       <NavBar />
       <div
         className="main-body"
-        onContextMenu={(e) => e.preventDefault()}
+       // onContextMenu={(e) => e.preventDefault()}
         onDrag={(e) => e.preventDefault()}
       >
         <SideBar />

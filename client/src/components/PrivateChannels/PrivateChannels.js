@@ -55,8 +55,8 @@ import inviteicon from "../../assets/inviteicon.png";
 import rules from "../../assets/rules.png";
 import videolive from "../../assets/videoLive.png";
 import marketplaceicon from "../../assets/marketplace.png";
-import messagesicon from "../../assets/chathivew.png";
-import chathive from "../../assets/chathive.png";
+import messagesicon from "../../assets/chathivew.svg";
+import chathive from "../../assets/chathive.svg";
 import sendIcon from "../../assets/send.png";
 import videochat from "../../assets/videochat.png";
 import imagechat from "../../assets/imagechat.png";
@@ -1809,6 +1809,13 @@ const PrivateChannels = () => {
     }
   }, [clubFloor]);
 
+  const scrollToTop = () => {
+    const divEl = document.getElementById("feed");
+    const firstCh = divEl.firstChild;
+    console.log(firstCh, "is the founded Element");
+    firstCh.firstChild.scroll({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <Fragment>
       {/* NavBar for Private Boapbox */}
@@ -2209,6 +2216,7 @@ const PrivateChannels = () => {
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
+                                    // scrollToTop();
                                     if (showIframe) {
                                       document.getElementById(
                                         "slideIFM"
@@ -2248,6 +2256,7 @@ const PrivateChannels = () => {
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
+                                    // scrollToTop();
                                     if (showIframe) {
                                       document.getElementById(
                                         "slideIFM"
@@ -2598,6 +2607,7 @@ const PrivateChannels = () => {
                                 <button
                                   style={{ minWidth: "208px" }}
                                   onClick={() => {
+                                    // scrollToTop();
                                     if (showIframe) {
                                       document.getElementById(
                                         "slideIFM"
@@ -4537,7 +4547,7 @@ const PrivateChannels = () => {
                                 var fontColor = "black";
                               }
                               return (
-                                <div key={upload}>
+                                <div key={upload.id}>
                                   <Post
                                     hootId={upload.id}
                                     username={upload.authorUsername}
@@ -7007,7 +7017,7 @@ const PrivateChannels = () => {
                                     animation: "none",
                                     backgroundColor: "#d9d1f8",
                                   }}
-                                  onContextMenu={(e) => e.preventDefault()}
+                                  //onContextMenu={(e) => e.preventDefault()}
                                   onClick={() => {
                                     history.push(
                                       `/${hoot.authorUsername}/hoot/${btoa(
@@ -7068,7 +7078,7 @@ const PrivateChannels = () => {
                                         <ReactPlayer
                                           url={hoot.link}
                                           className="react-player"
-                                          controls="true"
+                                          controls={true}
                                           width={hoot.mimeType ? "97%" : "100%"}
                                           height="100%"
                                           light={true}
@@ -8196,6 +8206,10 @@ const PrivateChannels = () => {
                       height: "100vh",
                     }}
                   >
+                    {/* {console.log(
+                      document.getElementById("feed").getBoundingClientRect()
+                        .top
+                    )} */}
                     <span>
                       <IoCloseCircle
                         style={{
@@ -8319,7 +8333,7 @@ const PrivateChannels = () => {
                               var fontColor = "black";
                             }
                             return (
-                              <div key={upload}>
+                              <div key={upload.id}>
                                 <Post
                                   hootId={upload.id}
                                   username={upload.authorUsername}
@@ -10984,7 +10998,7 @@ const PrivateChannels = () => {
                                     animation: "none",
                                     backgroundColor: "#d9d1f8",
                                   }}
-                                  onContextMenu={(e) => e.preventDefault()}
+                                  //onContextMenu={(e) => e.preventDefault()}
                                   onClick={() => {
                                     history.push(
                                       `/${hoot.authorUsername}/hoot/${btoa(
@@ -11045,7 +11059,7 @@ const PrivateChannels = () => {
                                         <ReactPlayer
                                           url={hoot.link}
                                           className="react-player"
-                                          controls="true"
+                                          controls={true}
                                           width={hoot.mimeType ? "97%" : "100%"}
                                           height="100%"
                                           light={true}

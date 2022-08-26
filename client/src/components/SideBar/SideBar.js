@@ -41,7 +41,7 @@ import homeicon from "../../assets/communityclub.png";
 import explore from "../../assets/explore.png";
 import XMGWALLET from "../../assets/XMGWALLETL.png";
 import profile from "../../assets/profile.png";
-import chathive from "../../assets/chathive.png";
+import chathive from "../../assets/chathive.svg";
 import allhoots from "../../assets/allhoots.png";
 const SideBar = () => {
   // const [mainActive, setMainActive] = useState("active");

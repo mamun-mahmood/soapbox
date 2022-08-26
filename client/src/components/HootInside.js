@@ -11,6 +11,7 @@ import { formatCount, formatSi } from "../Helpers/formatNumbers";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
+import MediaProfile from "./HootOutside/MediaProfile";
 import {
   FiTwitter,
   FiShare2,
@@ -1027,7 +1028,7 @@ const HootInside = ({
                                 margin: !mimeType && "0.5rem",
                                 marginLeft: !mimeType && "0",
                               }}
-                              onContextMenu={(e) => e.preventDefault()}
+                              //onContextMenu={(e) => e.preventDefault()}
                             >
                               {!mimeType ? (
                                 (ReactPlayer.canPlay(link) &&
@@ -1099,7 +1100,7 @@ const HootInside = ({
                                       <ReactPlayer
                                         url={link}
                                         className="react-player"
-                                        controls="true"
+                                        controls={true}
                                         width={mimeType ? "97%" : "100%"}
                                         height="100%"
                                         onLoadStart={() => {
@@ -1448,7 +1449,7 @@ const HootInside = ({
                     paddingRight: mimeType || "0.5rem",
                     marginRight: mimeType || "0.5rem",
                   }}
-                  onContextMenu={(e) => e.preventDefault()}
+                  //onContextMenu={(e) => e.preventDefault()}
                 >
                   {(ReactPlayer.canPlay(link) && link.endsWith(".mp4")) ||
                   link.endsWith(".mkv") ||
@@ -1512,7 +1513,7 @@ const HootInside = ({
                         <ReactPlayer
                           url={link}
                           className="react-player"
-                          controls="true"
+                          controls={true}
                           width={mimeType ? "97%" : "100%"}
                           height="100%"
                           onLoadStart={() => {
@@ -2442,7 +2443,7 @@ const HootInside = ({
                               margin: !mimeType && "0.5rem",
                               marginLeft: !mimeType && "0",
                             }}
-                            onContextMenu={(e) => e.preventDefault()}
+                            //onContextMenu={(e) => e.preventDefault()}
                           >
                             {!mimeType ? (
                               (ReactPlayer.canPlay(link) &&
@@ -2514,7 +2515,7 @@ const HootInside = ({
                                     <ReactPlayer
                                       url={link}
                                       className="react-player"
-                                      controls="true"
+                                      controls={true}
                                       width={mimeType ? "97%" : "100%"}
                                       height="100%"
                                       onLoadStart={() => {
@@ -2797,7 +2798,7 @@ const HootInside = ({
                     ))}
                 </span>
                 {previewUrl.length > 0 && (
-                  <LinkPreview url={previewUrl} width="100%"></LinkPreview>
+                  <MediaProfile url={previewUrl}></MediaProfile>
                 )}
                 <br />{" "}
                 {!ReactPlayer.canPlay(link) && (
@@ -2953,7 +2954,7 @@ const HootInside = ({
                   paddingRight: mimeType || "0.5rem",
                   marginRight: mimeType || "0.5rem",
                 }}
-                onContextMenu={(e) => e.preventDefault()}
+                //onContextMenu={(e) => e.preventDefault()}
               >
                 {(ReactPlayer.canPlay(link) && link.endsWith(".mp4")) ||
                 link.endsWith(".mkv") ||
@@ -3017,7 +3018,7 @@ const HootInside = ({
                       <ReactPlayer
                         url={link}
                         className="react-player"
-                        controls="true"
+                        controls={true}
                         width={mimeType ? "97%" : "100%"}
                         height="100%"
                         onReady={() => {

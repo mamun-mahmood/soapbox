@@ -26,7 +26,9 @@ const PrivateChannelsPage = () => {
     }, [])
 
     return (
-        <div onContextMenu={(e) => e.preventDefault()}>
+        <div
+        //onContextMenu={(e) => e.preventDefault()}
+        >
             <PrivateChannels />
             <PrivateFloatingButton />
 

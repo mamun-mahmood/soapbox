@@ -25,6 +25,7 @@ import {
   AiOutlineReddit,
   AiOutlineMedium,
 } from "react-icons/ai";
+
 import chathive from "../assets/chathive.png";
 import RegularVerified from "../assets/RegularVerified.svg";
 import PremiumVerified from "../assets/PremiumVerified.svg";
@@ -720,7 +721,7 @@ const Profile = ({
                                 backgroundColor: fontColor || "#d9d1f8",
                                 opacity: upload.link ? 1 : 0.2,
                               }}
-                              onContextMenu={(e) => e.preventDefault()}
+                             // onContextMenu={(e) => e.preventDefault()}
                               onClick={() => {
                                 history.push(
                                   `/${username}/hoot/${btoa(

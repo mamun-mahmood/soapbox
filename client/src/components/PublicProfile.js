@@ -544,7 +544,7 @@ const PublicProfile = ({
                                 backgroundColor: fontColor || "#d9d1f8",
                                 opacity: 0.2,
                               }}
-                              onContextMenu={(e) => e.preventDefault()}
+                              //onContextMenu={(e) => e.preventDefault()}
                               onClick={() => {
                                 history.push(
                                   `/${username}/hoot/${btoa(
