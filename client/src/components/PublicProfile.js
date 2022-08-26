@@ -23,7 +23,10 @@ import HootOutside from "./HootOutside/HootOutside";
 import InfiniteScroll from "react-infinite-scroll-component";
 import InfiniteScrollLoader from "./Feed/InfiniteScrollLoader";
 // import toast from 'react-hot-toast';
-import chathive from "../assets/chathive.svg";
+import chathive from "../assets/chathive.png";
+import RegularVerified from "../assets/RegularVerified.svg";
+import PremiumVerified from "../assets/PremiumVerified.svg";
+import CorporateVerified from "../assets/CorporateVerified.svg";
 import { toast } from "react-toastify";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
@@ -48,7 +51,11 @@ const PublicProfile = ({
   pinterest,
   medium,
   tumblr,
+  isRegular,
+  isPremium,
+  isCorporate,
 }) => {
+  console.table(isRegular, isCorporate, isPremium);
   const [users, setUsers] = useState([]);
   const [allUserUploads, setAllUserUploads] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -223,11 +230,28 @@ const PublicProfile = ({
                     <h1 style={{ fontSize: "14px" }}>{name}</h1>
                     {verified === 1 ? (
                       <div className="profile-verification-badge">
-                        <HiBadgeCheck
-                          data-tip="Verified account"
-                          data-text-color="#8249A0"
-                          data-background-color="#D9D2FA"
-                        />
+                        {isPremium ? (
+                          <img
+                            src={PremiumVerified}
+                            height="18px"
+                            width="18px"
+                            alt="regular_verified"
+                          />
+                        ) : isCorporate ? (
+                          <img
+                            src={CorporateVerified}
+                            height="18px"
+                            width="18px"
+                            alt="regular_verified"
+                          />
+                        ) : (
+                          <img
+                            src={RegularVerified}
+                            height="18px"
+                            width="18px"
+                            alt="regular_verified"
+                          />
+                        )}
                       </div>
                     ) : null}
                   </div>

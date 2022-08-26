@@ -23,6 +23,7 @@ const LandingPage = ({ userInfo }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            wordBreak: "break-word",
           }}
         >
           <h4 style={{ textAlign: "center" }}>{ownerName}</h4>
