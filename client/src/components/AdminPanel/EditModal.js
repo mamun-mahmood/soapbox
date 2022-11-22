@@ -64,7 +64,7 @@ const EditModal = ({ setUser, user }) => {
       <button className="admin-btn" onClick={handleOpen}>
         Edit
       </button>
-      <Modal hideBackdrop open={open} onClose={handleClose}>
+      <Modal open={open} onClose={handleClose}>
         <div style={style}>
           <div className="edit-admin-panel">
             <h4>Update details of {user.username}</h4>
@@ -179,6 +179,13 @@ const EditModal = ({ setUser, user }) => {
               }}
             >
               Update
+            </button>
+            <button
+              className="admin-btn"
+              onClick={handleClose}
+              style={{ color: "red" }}
+            >
+              Cancel
             </button>
             <p>
               Note:Type <b>1</b> for Verified and <b>0</b> for not Verified

@@ -17,9 +17,9 @@ export default function UpdateBadge({badge, setBadge}) {
     setBadge(event.target.value);
   };
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
+    <Box sx={{ minWidth: 120, m: 3 }}>
         <InputLabel id="demo-simple-select-label">Change Badge</InputLabel>
+      <FormControl fullWidth>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
