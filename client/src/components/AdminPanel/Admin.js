@@ -18,21 +18,21 @@ export default function Admin() {
       .catch((err) => console.log(err));
   }, []);
 
-  const UpdateFollower = () => {
-    axios
-      .put(`${BaseURL}/user/updateUserByAdmin`, {
-        username: user.username,
-        email: user.email,
-        verified: user.verified,
-        followers: user.followers,
-        communityClub: user.communityClub,
-        privateChannel: user.privateChannel,
-      })
-      .then(() => {
-        alert(`Updated details of ${user.username}`);
-        setShowEdit((prev) => !prev);
-      });
-  };
+  // const UpdateFollower = () => {
+  //   axios
+  //     .put(`${BaseURL}/user/updateUserByAdmin`, {
+  //       username: user.username,
+  //       email: user.email,
+  //       verified: user.verified,
+  //       followers: user.followers,
+  //       communityClub: user.communityClub,
+  //       privateChannel: user.privateChannel,
+  //     })
+  //     .then(() => {
+  //       alert(`Updated details of ${user.username}`);
+  //       setShowEdit((prev) => !prev);
+  //     });
+  // };
 
   const topFunction = () => {
     document.body.scrollTop = 0;
