@@ -630,7 +630,7 @@ const HootInside = ({
                             />
                           ) : badge === "Purple" ? (
                             <img
-                              src={pruple}
+                              src={Purple}
                               height="18px"
                               width="18px"
                               alt="corporate_verified"
@@ -789,7 +789,7 @@ const HootInside = ({
                                />
                              ) : badge === "Purple" ? (
                                <img
-                                 src={pruple}
+                                 src={Purple}
                                  height="18px"
                                  width="18px"
                                  alt="corporate_verified"
@@ -1963,7 +1963,7 @@ const HootInside = ({
                            />
                          ) : badge === "Purple" ? (
                            <img
-                             src={pruple}
+                             src={Purple}
                              height="18px"
                              width="18px"
                              alt="corporate_verified"
@@ -2127,7 +2127,7 @@ const HootInside = ({
                             />
                           ) : badge === "Purple" ? (
                             <img
-                              src={pruple}
+                              src={Purple}
                               height="18px"
                               width="18px"
                               alt="corporate_verified"
@@ -2328,7 +2328,7 @@ const HootInside = ({
                              />
                            ) : badge === "Purple" ? (
                              <img
-                               src={pruple}
+                               src={Purple}
                                height="18px"
                                width="18px"
                                alt="corporate_verified"
