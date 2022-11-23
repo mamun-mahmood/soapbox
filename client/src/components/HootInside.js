@@ -45,7 +45,8 @@ import { LinkPreview } from "@dhaiwat10/react-link-preview";
 import RegularVerified from "../assets/RegularVerified.svg";
 import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
-
+import purple from "../assets/purple.svg";
+import gold from "../assets/gold.svg";
 const HootInside = ({
   userId,
   name,
@@ -629,7 +630,7 @@ const HootInside = ({
                             />
                           ) : badge === "Purple" ? (
                             <img
-                              src={pruple}
+                              src={purple}
                               height="18px"
                               width="18px"
                               alt="corporate_verified"
@@ -788,7 +789,7 @@ const HootInside = ({
                                />
                              ) : badge === "Purple" ? (
                                <img
-                                 src={pruple}
+                                 src={purple}
                                  height="18px"
                                  width="18px"
                                  alt="corporate_verified"
@@ -1962,7 +1963,7 @@ const HootInside = ({
                            />
                          ) : badge === "Purple" ? (
                            <img
-                             src={pruple}
+                             src={purple}
                              height="18px"
                              width="18px"
                              alt="corporate_verified"
@@ -2126,7 +2127,7 @@ const HootInside = ({
                             />
                           ) : badge === "Purple" ? (
                             <img
-                              src={pruple}
+                              src={purple}
                               height="18px"
                               width="18px"
                               alt="corporate_verified"
@@ -2327,7 +2328,7 @@ const HootInside = ({
                              />
                            ) : badge === "Purple" ? (
                              <img
-                               src={pruple}
+                               src={purple}
                                height="18px"
                                width="18px"
                                alt="corporate_verified"

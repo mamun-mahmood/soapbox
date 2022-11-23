@@ -27,6 +27,8 @@ import chathive from "../assets/chathive.png";
 import RegularVerified from "../assets/RegularVerified.svg";
 import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
+import Purple from "../assets/purple.svg";
+import Gold from "../assets/gold.svg";
 import { toast } from "react-toastify";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
@@ -254,14 +256,14 @@ const PublicProfile = ({
                           />
                         ) : badge === "Purple" ? (
                           <img
-                            src={pruple}
+                            src={Purple}
                             height="18px"
                             width="18px"
                             alt="corporate_verified"
                           />
                         ) : badge === "Gold" ? (
                           <img
-                            src={gold}
+                            src={Gold}
                             height="18px"
                             width="18px"
                             alt="corporate_verified"
