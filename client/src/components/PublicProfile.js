@@ -54,6 +54,7 @@ const PublicProfile = ({
   isRegular,
   isPremium,
   isCorporate,
+  badge
 }) => {
   console.table(isRegular, isCorporate, isPremium);
   const [users, setUsers] = useState([]);
@@ -230,19 +231,40 @@ const PublicProfile = ({
                     <h1 style={{ fontSize: "14px" }}>{name}</h1>
                     {verified === 1 ? (
                       <div className="profile-verification-badge">
-                        {isPremium ? (
+                        {badge === "Premium" ? (
                           <img
                             src={PremiumVerified}
                             height="18px"
                             width="18px"
-                            alt="regular_verified"
+                            alt="premium_verified"
                           />
-                        ) : isCorporate ? (
+                        ) : badge === "Corporate" ? (
                           <img
                             src={CorporateVerified}
                             height="18px"
                             width="18px"
-                            alt="regular_verified"
+                            alt="corporate_verified"
+                          />
+                        ) : badge === "Regular" ? (
+                          <img
+                            src={RegularVerified}
+                            height="18px"
+                            width="18px"
+                            alt="corporate_verified"
+                          />
+                        ) : badge === "Purple" ? (
+                          <img
+                            src={pruple}
+                            height="18px"
+                            width="18px"
+                            alt="corporate_verified"
+                          />
+                        ) : badge === "Gold" ? (
+                          <img
+                            src={gold}
+                            height="18px"
+                            width="18px"
+                            alt="corporate_verified"
                           />
                         ) : (
                           <img
