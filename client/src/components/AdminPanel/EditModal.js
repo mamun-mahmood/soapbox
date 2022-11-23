@@ -40,15 +40,21 @@ const EditModal = ({ setUser, user }) => {
     setOpen(false);
   };
   const [badge, setBadge] = useState(null);
+  const [verified, setVerified] = useState(user.verified);
+  const [email, setEmail] = useState(user.email);
+  const [username, setUsername] = useState(user.username);
+  const [followers, setFollowers] = useState(user.followers);
+  const [communityClub, setCommunityClub] = useState(user.communityClub);
+  const [privateChannel, setPrivateChannel] = useState(user.privateChannel);
   const UpdateFollower = () => {
     axios
       .put(`${BaseURL}/user/updateUserByAdmin`, {
-        username: user.username,
-        email: user.email,
-        verified: user.verified,
-        followers: user.followers,
-        communityClub: user.communityClub,
-        privateChannel: user.privateChannel,
+        username: username,
+        email: email,
+        verified: verified,
+        followers: followers,
+        communityClub: communityClub,
+        privateChannel: privateChannel,
         badge: badge,
       })
       .then(() => {
@@ -71,95 +77,43 @@ const EditModal = ({ setUser, user }) => {
             <label>Email</label>
             <input
               placeholder="email"
-              value={user.email}
-              onChange={(e) => {
-                setUser({
-                  username: user.username,
-                  followers: user.followers,
-                  verify: user.verified,
-                  email: e.target.value,
-                  communityClub: user.communityClub,
-                  privateChannel: user.privateChannel,
-                });
-              }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <label>followers</label>
             <input
               placeholder="followers"
-              value={user.followers}
-              onChange={(e) => {
-                setUser({
-                  username: user.username,
-                  followers: e.target.value,
-                  verified: user.verified,
-                  email: user.email,
-                  communityClub: user.communityClub,
-                  privateChannel: user.privateChannel,
-                });
-              }}
+              value={followers}
+              onChange={(e) => setFollowers(e.target.value)}
             />
 
             <label>Verify</label>
             <input
               placeholder="verify"
-              value={user.verified}
+              value={verified}
               onChange={(e) => {
-                setUser({
-                  username: user.username,
-                  followers: user.followers,
-                  verified: e.target.value,
-                  email: user.email,
-                  communityClub: user.communityClub,
-                  privateChannel: user.privateChannel,
-                });
+                setVerified(e.target.value);
               }}
             />
 
             <label>Username</label>
             <input
               placeholder="Username"
-              value={user.username}
-              onChange={(e) => {
-                setUser({
-                  username: e.target.value,
-                  followers: user.followers,
-                  verified: user.verified,
-                  email: user.email,
-                  communityClub: user.communityClub,
-                  privateChannel: user.privateChannel,
-                });
-              }}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <label>Community Club</label>
             <input
               placeholder="Community Club"
-              value={user.communityClub}
-              onChange={(e) => {
-                setUser({
-                  username: user.username,
-                  followers: user.followers,
-                  verified: user.verified,
-                  email: user.email,
-                  communityClub: e.target.value,
-                  privateChannel: user.privateChannel,
-                });
-              }}
+              value={communityClub}
+              onChange={(e) => setCommunityClub(e.target.value)}
             />
             <label>Private Club</label>
             <input
               placeholder="Private Club"
-              value={user.privateChannel}
-              onChange={(e) => {
-                setUser({
-                  username: user.username,
-                  followers: user.followers,
-                  verified: user.verified,
-                  email: user.email,
-                  communityClub: user.communityClub,
-                  privateChannel: e.target.value,
-                });
-              }}
+              value={privateChannel}
+              onChange={(e) => setPrivateChannel(e.target.value)}
             />
             <div>
               <p>
