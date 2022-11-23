@@ -13,7 +13,7 @@ export default function Admin() {
     axios
       .get(`${BaseURL}/user`, {})
       .then((response) => {
-        setUsers(response.data.splice(0,50));
+        setUsers(response.data));
       })
       .catch((err) => console.log(err));
   }, []);
