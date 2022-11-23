@@ -27,6 +27,8 @@ import chathive from "../assets/chathive.png";
 import RegularVerified from "../assets/RegularVerified.svg";
 import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
+import Purple from "../assets/purple.svg";
+import Gold from "../assets/gold.svg";
 import { toast } from "react-toastify";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
@@ -54,6 +56,7 @@ const PublicProfile = ({
   isRegular,
   isPremium,
   isCorporate,
+  badge
 }) => {
   console.table(isRegular, isCorporate, isPremium);
   const [users, setUsers] = useState([]);
@@ -230,19 +233,40 @@ const PublicProfile = ({
                     <h1 style={{ fontSize: "14px" }}>{name}</h1>
                     {verified === 1 ? (
                       <div className="profile-verification-badge">
-                        {isPremium ? (
+                        {badge === "Premium" ? (
                           <img
                             src={PremiumVerified}
                             height="18px"
                             width="18px"
-                            alt="regular_verified"
+                            alt="premium_verified"
                           />
-                        ) : isCorporate ? (
+                        ) : badge === "Corporate" ? (
                           <img
                             src={CorporateVerified}
                             height="18px"
                             width="18px"
-                            alt="regular_verified"
+                            alt="corporate_verified"
+                          />
+                        ) : badge === "Regular" ? (
+                          <img
+                            src={RegularVerified}
+                            height="18px"
+                            width="18px"
+                            alt="corporate_verified"
+                          />
+                        ) : badge === "Purple" ? (
+                          <img
+                            src={Purple}
+                            height="18px"
+                            width="18px"
+                            alt="corporate_verified"
+                          />
+                        ) : badge === "Gold" ? (
+                          <img
+                            src={Gold}
+                            height="18px"
+                            width="18px"
+                            alt="corporate_verified"
                           />
                         ) : (
                           <img

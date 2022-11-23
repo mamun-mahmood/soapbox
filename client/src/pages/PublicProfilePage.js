@@ -51,6 +51,7 @@ const PublicProfilePage = () => {
                 <PublicProfile
                   userId={user.id}
                   verified={user.verified}
+                  badge={user.badge}
                   isRegular={user.verified}
                   isCorporate={false || user ? user.isCorporate : false}
                   isPremium={false || user ? user.isPremium : false}

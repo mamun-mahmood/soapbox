@@ -49,6 +49,7 @@ const Post = ({
               name={user.name}
               profilePic={user.profilePic}
               verified={user.verified}
+              badge={user.badge}
               isPremium={false || user ? user.isPremium : false}
               isCorporate={false || user ? user.isCorporate : false}
               isReguar={user.verified}
