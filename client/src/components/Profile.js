@@ -26,7 +26,7 @@ import {
   AiOutlineMedium,
 } from "react-icons/ai";
 
-import chathive from "../assets/chathive.png";
+import chathive from "../assets/chathiveWText.svg";
 import Notable from "../assets/RegularVerified.svg";
 import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
@@ -257,7 +257,7 @@ const Profile = ({
                 <button className="btn-edit-profile">
                   <Link to={`/chathive/${username}`}>
                     {" "}
-                    <img src={chathive} className="chativelogo" />
+                    <img src={chathive} className="chativelogo" style={{width: "150px", height: "100%"}} />
                   </Link>
                 </button>
 

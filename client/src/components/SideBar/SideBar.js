@@ -300,7 +300,7 @@ const SideBar = () => {
                 }}
               >
                 {" "}
-                <img src={chathive} className="chativelogo" style={{width: "90%", marginTop: "-3%" }} />
+                <img src={chathive} className="chativelogo" />
               </button>
             </div>
           )}
