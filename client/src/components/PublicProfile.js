@@ -24,11 +24,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import InfiniteScrollLoader from "./Feed/InfiniteScrollLoader";
 // import toast from 'react-hot-toast';
 import chathive from "../assets/chathive.png";
-import RegularVerified from "../assets/RegularVerified.svg";
+import Notable from "../assets/RegularVerified.svg";
 import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
-import Purple from "../assets/purple.svg";
-import Gold from "../assets/gold.svg";
+import General from "../assets/purple.svg";
+import Media from "../assets/MediaVerified.svg";
 import { toast } from "react-toastify";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
@@ -243,30 +243,30 @@ const PublicProfile = ({
                             width="18px"
                             alt="corporate_verified"
                           />
-                        ) : badge === "Regular" ? (
+                        ) : badge === "Notable" ? (
                           <img
-                            src={RegularVerified}
+                            src={Notable}
                             height="18px"
                             width="18px"
                             alt="corporate_verified"
                           />
-                        ) : badge === "Purple" ? (
+                        ) : badge === "General" ? (
                           <img
-                            src={Purple}
+                            src={General}
                             height="18px"
                             width="18px"
                             alt="corporate_verified"
                           />
-                        ) : badge === "Gold" ? (
+                        ) : badge === "Media" ? (
                           <img
-                            src={Gold}
+                            src={Media}
                             height="18px"
                             width="18px"
                             alt="corporate_verified"
                           />
                         ) : (
                           <img
-                            src={RegularVerified}
+                            src={Notable}
                             height="18px"
                             width="18px"
                             alt="regular_verified"

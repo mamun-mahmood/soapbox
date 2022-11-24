@@ -8,9 +8,9 @@ import {
 } from "@material-ui/core";
 import * as React from "react";
 import CorporateVerified from "../../assets/CorporateVerified.svg";
-import RegularVerified from "../../assets/RegularVerified.svg";
-import purple from "../../assets/purple.svg";
-import gold from "../../assets/gold.svg";
+import Notable from "../../assets/RegularVerified.svg";
+import General from "../../assets/purple.svg";
+import Media from "../../assets/MediaVerified.svg";
 import PremiumVerified from "../../assets/PremiumVerified.svg";
 export default function UpdateBadge({badge, setBadge}) {
   const handleChange = (event) => {
@@ -32,21 +32,21 @@ export default function UpdateBadge({badge, setBadge}) {
             <Avatar sx={{ textAlign: "end" }} src={CorporateVerified} />
             Corporate
           </MenuItem>
-          <MenuItem value="Regular">
-            <Avatar sx={{ textAlign: "end" }} src={RegularVerified} />
-            Regular
+          <MenuItem value="Notable">
+            <Avatar sx={{ textAlign: "end" }} src={Notable} />
+            Notable
           </MenuItem>
-          <MenuItem value="Purple">
-            <Avatar sx={{ textAlign: "end" }} src={purple} />
-            Purple
+          <MenuItem value="General">
+            <Avatar sx={{ textAlign: "end" }} src={General} />
+            General
           </MenuItem>
           <MenuItem value="Premium">
             <Avatar sx={{ textAlign: "end" }} src={PremiumVerified} />
             Premium
           </MenuItem>
-          <MenuItem value="Gold">
-            <Avatar sx={{ textAlign: "end" }} src={gold} />
-            Gold
+          <MenuItem value="Media">
+            <Avatar sx={{ textAlign: "end" }} src={Media} />
+            Media
           </MenuItem>
         </Select>
       </FormControl>

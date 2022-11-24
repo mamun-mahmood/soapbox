@@ -6,11 +6,11 @@ import { HiBadgeCheck } from "react-icons/hi";
 import { Link, useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
-import RegularVerified from "../../assets/RegularVerified.svg";
+import Notable from "../../assets/RegularVerified.svg";
 import PremiumVerified from "../../assets/PremiumVerified.svg";
 import CorporateVerified from "../../assets/CorporateVerified.svg";
-import Purple from "../../assets/purple.svg";
-import Gold from "../../assets/gold.svg";
+import General from "../../assets/purple.svg";
+import Media from "../../assets/MediaVerified.svg";
 const SuggestedFollow = ({ verifiedUser }) => {
   const [users, setUsers] = useState([]);
   const [hoverInfo, setHoverInfo] = useState(false);
@@ -196,30 +196,30 @@ const SuggestedFollow = ({ verifiedUser }) => {
                       width="18px"
                       alt="corporate_verified"
                     />
-                  ) : verifiedUser.badge === "Regular" ? (
+                  ) : verifiedUser.badge === "Notable" ? (
                     <img
-                      src={RegularVerified}
+                      src={Notable}
                       height="18px"
                       width="18px"
                       alt="corporate_verified"
                     />
-                  ) : verifiedUser.badge === "Purple" ? (
+                  ) : verifiedUser.badge === "General" ? (
                     <img
-                      src={Purple}
+                      src={General}
                       height="18px"
                       width="18px"
                       alt="corporate_verified"
                     />
-                  ) : verifiedUser.badge === "Gold" ? (
+                  ) : verifiedUser.badge === "Media" ? (
                     <img
-                      src={Gold}
+                      src={Media}
                       height="18px"
                       width="18px"
                       alt="corporate_verified"
                     />
                   ) : (
                     <img
-                      src={RegularVerified}
+                      src={Notable}
                       height="18px"
                       width="18px"
                       alt="regular_verified"
@@ -337,30 +337,30 @@ const SuggestedFollow = ({ verifiedUser }) => {
                           width="18px"
                           alt="corporate_verified"
                         />
-                      ) : verifiedUser.badge === "Regular" ? (
+                      ) : verifiedUser.badge === "Notable" ? (
                         <img
-                          src={RegularVerified}
+                          src={Notable}
                           height="18px"
                           width="18px"
                           alt="corporate_verified"
                         />
-                      ) : verifiedUser.badge === "Purple" ? (
+                      ) : verifiedUser.badge === "General" ? (
                         <img
-                          src={Purple}
+                          src={General}
                           height="18px"
                           width="18px"
                           alt="corporate_verified"
                         />
-                      ) : verifiedUser.badge === "Gold" ? (
+                      ) : verifiedUser.badge === "Media" ? (
                         <img
-                          src={Gold}
+                          src={Media}
                           height="18px"
                           width="18px"
                           alt="corporate_verified"
                         />
                       ) : (
                         <img
-                          src={RegularVerified}
+                          src={Notable}
                           height="18px"
                           width="18px"
                           alt="regular_verified"

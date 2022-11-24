@@ -11,11 +11,6 @@ import {
 import axios from "axios";
 import "./admin.css";
 import UpdateBadge from "./UpdateBadge";
-import CorporateVerified from "../../assets/CorporateVerified.svg";
-import RegularVerified from "../../assets/RegularVerified.svg";
-import purple from "../../assets/purple.svg";
-import gold from "../../assets/gold.svg";
-import PremiumVerified from "../../assets/PremiumVerified.svg";
 const style = {
   position: "absolute",
   top: "50%",
@@ -39,7 +34,7 @@ const EditModal = ({ setUser, user }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const [badge, setBadge] = useState(null);
+  const [badge, setBadge] = useState(user.badge);
   const [verified, setVerified] = useState(user.verified);
   const [email, setEmail] = useState(user.email);
   const [username, setUsername] = useState(user.username);
@@ -119,7 +114,7 @@ const EditModal = ({ setUser, user }) => {
               <p>
                 Current Badge:{" "}
                 {user.verified === 1 ? (
-                  <span>{user.badge ? user.badge : "Regular"}</span>
+                  <span>{user.badge ? user.badge : "Notable"}</span>
                 ) : (
                   "Not Verified"
                 )}
