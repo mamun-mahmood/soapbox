@@ -323,19 +323,40 @@ const SuggestedFollow = ({ verifiedUser }) => {
                   </Link>
                   {verifiedUser.verified === 1 ? (
                     <div className="verification-badge">
-                      {verifiedUser.isPremium ? (
+                      {verifiedUser.badge === "Premium" ? (
                         <img
                           src={PremiumVerified}
                           height="18px"
                           width="18px"
-                          alt="regular_verified"
+                          alt="premium_verified"
                         />
-                      ) : verifiedUser.isCorporate ? (
+                      ) : verifiedUser.badge === "Corporate" ? (
                         <img
                           src={CorporateVerified}
                           height="18px"
                           width="18px"
-                          alt="regular_verified"
+                          alt="corporate_verified"
+                        />
+                      ) : verifiedUser.badge === "Regular" ? (
+                        <img
+                          src={RegularVerified}
+                          height="18px"
+                          width="18px"
+                          alt="corporate_verified"
+                        />
+                      ) : verifiedUser.badge === "Purple" ? (
+                        <img
+                          src={Purple}
+                          height="18px"
+                          width="18px"
+                          alt="corporate_verified"
+                        />
+                      ) : verifiedUser.badge === "Gold" ? (
+                        <img
+                          src={Gold}
+                          height="18px"
+                          width="18px"
+                          alt="corporate_verified"
                         />
                       ) : (
                         <img
