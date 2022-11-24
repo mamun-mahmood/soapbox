@@ -11,7 +11,7 @@ const FoundUsers = ({ user }) => {
       ? `/profile/${user.username}`
       : `/user/${user.username}`
     : `/user/${user.username}`;
-  console.log(user);
+  
   return (
     <Fragment>
       <div className="avatar_name">
