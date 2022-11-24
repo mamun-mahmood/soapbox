@@ -77,9 +77,6 @@ const HootInside = ({
   fontStyleSize,
   isSensitive,
   setIsSensitive,
-  isPremium,
-  isCorporate,
-  isRegular,
   badge,
 }) => {
   const BaseURL = process.env.REACT_APP_API_URL; // API url

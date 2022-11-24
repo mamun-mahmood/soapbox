@@ -30,6 +30,8 @@ import chathive from "../assets/chathive.png";
 import RegularVerified from "../assets/RegularVerified.svg";
 import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
+import Purple from "../assets/purple.svg";
+import Gold from "../assets/gold.svg";
 import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from "./HootOutside/HootOutside";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -64,9 +66,7 @@ const Profile = ({
   pinterest,
   medium,
   tumblr,
-  isRegular,
-  isPremium,
-  isCorporate,
+  badge
 }) => {
   const { username } = useParams();
   const [myUploads, setMyUploads] = useState([]);
@@ -199,28 +199,49 @@ const Profile = ({
                     <h1 style={{ fontSize: "14px" }}>{name}</h1>
                     {verified == 1 ? (
                       <div className="profile-verification-badge">
-                        {isPremium ? (
-                          <img
-                            src={PremiumVerified}
-                            height="18px"
-                            width="18px"
-                            alt="regular_verified"
-                          />
-                        ) : isCorporate ? (
-                          <img
-                            src={CorporateVerified}
-                            height="18px"
-                            width="18px"
-                            alt="regular_verified"
-                          />
-                        ) : (
-                          <img
-                            src={RegularVerified}
-                            height="18px"
-                            width="18px"
-                            alt="regular_verified"
-                          />
-                        )}
+                        {badge === "Premium" ? (
+                            <img
+                              src={PremiumVerified}
+                              height="18px"
+                              width="18px"
+                              alt="premium_verified"
+                            />
+                          ) : badge === "Corporate" ? (
+                            <img
+                              src={CorporateVerified}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "Regular" ? (
+                            <img
+                              src={RegularVerified}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "Purple" ? (
+                            <img
+                              src={Purple}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "Gold" ? (
+                            <img
+                              src={Gold}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : (
+                            <img
+                              src={RegularVerified}
+                              height="18px"
+                              width="18px"
+                              alt="regular_verified"
+                            />
+                          )}
                       </div>
                     ) : null}
                   </div>

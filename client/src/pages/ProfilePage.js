@@ -67,9 +67,7 @@ const ProfilePage = () => {
                 <Profile
                   userId={user.id}
                   verified={user.verified}
-                  isRegular={user.verified}
-                  isCorporate={false || user ? user.isCorporate : false}
-                  isPremium={false || user ? user.isPremium : false}
+                  badge={user.badge}
                   privateChannel={user.privateChannel}
                   followers={user.followers}
                   name={user.name}

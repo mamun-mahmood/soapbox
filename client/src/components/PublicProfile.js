@@ -53,12 +53,8 @@ const PublicProfile = ({
   pinterest,
   medium,
   tumblr,
-  isRegular,
-  isPremium,
-  isCorporate,
   badge
 }) => {
-  console.table(isRegular, isCorporate, isPremium);
   const [users, setUsers] = useState([]);
   const [allUserUploads, setAllUserUploads] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -105,7 +105,7 @@ function App() {
 
         <Route path="/:FakeData/RecordMessage/:hallId?/:userName?/:randomFakeKey?">
           <ProtectedRoute page={recordMessage} />
-        </Route>
+        </Route>  
 
         <Route path="/:FakeData/Reception/:hallId?/:randomFakeKey?">
           <ProtectedRoute page={Reception} />

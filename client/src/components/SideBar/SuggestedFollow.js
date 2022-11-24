@@ -9,7 +9,8 @@ import { formatCount, formatSi } from "../../Helpers/formatNumbers";
 import RegularVerified from "../../assets/RegularVerified.svg";
 import PremiumVerified from "../../assets/PremiumVerified.svg";
 import CorporateVerified from "../../assets/CorporateVerified.svg";
-
+import Purple from "../../assets/purple.svg";
+import Gold from "../../assets/gold.svg";
 const SuggestedFollow = ({ verifiedUser }) => {
   const [users, setUsers] = useState([]);
   const [hoverInfo, setHoverInfo] = useState(false);
@@ -181,24 +182,40 @@ const SuggestedFollow = ({ verifiedUser }) => {
 
               {verifiedUser.verified === 1 ? (
                 <div className="verification-badge">
-                  {/* <HiBadgeCheck
-                    data-tip="Verified account"
-                    data-text-color="#8249A0"
-                    data-background-color="#D9D2FA"
-                  /> */}
-                  {verifiedUser.isPremium ? (
+                  {verifiedUser.badge === "Premium" ? (
                     <img
                       src={PremiumVerified}
                       height="18px"
                       width="18px"
-                      alt="regular_verified"
+                      alt="premium_verified"
                     />
-                  ) : verifiedUser.isCorporate ? (
+                  ) : verifiedUser.badge === "Corporate" ? (
                     <img
                       src={CorporateVerified}
                       height="18px"
                       width="18px"
-                      alt="regular_verified"
+                      alt="corporate_verified"
+                    />
+                  ) : verifiedUser.badge === "Regular" ? (
+                    <img
+                      src={RegularVerified}
+                      height="18px"
+                      width="18px"
+                      alt="corporate_verified"
+                    />
+                  ) : verifiedUser.badge === "Purple" ? (
+                    <img
+                      src={Purple}
+                      height="18px"
+                      width="18px"
+                      alt="corporate_verified"
+                    />
+                  ) : verifiedUser.badge === "Gold" ? (
+                    <img
+                      src={Gold}
+                      height="18px"
+                      width="18px"
+                      alt="corporate_verified"
                     />
                   ) : (
                     <img
