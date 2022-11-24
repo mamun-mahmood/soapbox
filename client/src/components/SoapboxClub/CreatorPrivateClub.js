@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./soapboxClub.css";
 import Avatar from "react-avatar";
-import { HiBadgeCheck, HiMenuAlt2 } from "react-icons/hi";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import privateClubIcon from "../../assets/privateclub.png";
-import { SoapboxTooltip } from "../../components/SoapboxTooltip";
 import Notable from "../../assets/RegularVerified.svg";
 import PremiumVerified from "../../assets/PremiumVerified.svg";
 import CorporateVerified from "../../assets/CorporateVerified.svg";
@@ -23,22 +21,14 @@ const CreatorPrivateClub = ({ creator }) => {
   useEffect(() => {
     const getUserData = async () => {
       await axios
-        .get(`${BaseURL}/user/${creator.username}`)
-        .then((response) => {
-          setBadge(response.data.badge);
-        });
-    };
-    if (!badge) {
-      getUserData();
-    }
-  }, [creator.username]);
-
-  useEffect(() => {
-    const getUserData = async () => {
-      await axios
         .get(`${BaseURL}/upload/user/${creator.username}`)
         .then((res) => {
           setCreatorsData(res.data);
+        });
+      await axios
+        .get(`${BaseURL}/user/${creator.username}`)
+        .then((response) => {
+          setBadge(response.data[0].badge);
         });
     };
 

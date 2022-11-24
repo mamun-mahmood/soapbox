@@ -77,7 +77,11 @@ import FortisSignIn from "../FortisIntegration/FortisSignIn";
 import FortisMarketplaceArea from "../FortisIntegration/FortisMarketplaceArea";
 import InboxMessage from "./inboxMessage";
 import LandingPage from "./LandingPage";
-
+import Notable from "../../assets/RegularVerified.svg";
+import PremiumVerified from "../../assets/PremiumVerified.svg";
+import CorporateVerified from "../../assets/CorporateVerified.svg";
+import General from "../../assets/purple.svg";
+import MediaBadge from "../../assets/MediaVerified.svg";
 const stripe = loadStripe(
   "pk_test_51IoEG4L1MA97pYvHkAXQ9r7wBejIZ0ZLcrXozHKsGZe56aMR7FfB0LVp6jXuiw0FgUZVjNn6IkL3AFiu4nnd79rh009nQr6Lxz"
 );
@@ -1915,11 +1919,49 @@ const PrivateChannels = () => {
                                 marginBottom: "0.2rem",
                               }}
                             >
-                              <HiBadgeCheck
-                                data-tip="Verified account"
-                                data-text-color="#8249A0"
-                                data-background-color="#D9D2FA"
-                              />
+                              {userInfo[0].badge === "Premium" ? (
+                                <img
+                                  src={PremiumVerified}
+                                  height="18px"
+                                  width="18px"
+                                  alt="premium_verified"
+                                />
+                              ) : userInfo[0].badge === "Corporate" ? (
+                                <img
+                                  src={CorporateVerified}
+                                  height="18px"
+                                  width="18px"
+                                  alt="corporate_verified"
+                                />
+                              ) : userInfo[0].badge === "Notable" ? (
+                                <img
+                                  src={Notable}
+                                  height="18px"
+                                  width="18px"
+                                  alt="corporate_verified"
+                                />
+                              ) : userInfo[0].badge === "General" ? (
+                                <img
+                                  src={General}
+                                  height="18px"
+                                  width="18px"
+                                  alt="corporate_verified"
+                                />
+                              ) : userInfo[0].badge === "Media" ? (
+                                <img
+                                  src={MediaBadge}
+                                  height="18px"
+                                  width="18px"
+                                  alt="corporate_verified"
+                                />
+                              ) : (
+                                <img
+                                  src={Notable}
+                                  height="18px"
+                                  width="18px"
+                                  alt="regular_verified"
+                                />
+                              )}
                             </div>
                           ) : null}
                         </div>
