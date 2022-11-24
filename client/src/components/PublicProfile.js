@@ -23,7 +23,7 @@ import HootOutside from "./HootOutside/HootOutside";
 import InfiniteScroll from "react-infinite-scroll-component";
 import InfiniteScrollLoader from "./Feed/InfiniteScrollLoader";
 // import toast from 'react-hot-toast';
-import chathive from "../assets/chathive.png";
+import chathive from "../assets/chathiveWText.svg";
 import Notable from "../assets/RegularVerified.svg";
 import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
@@ -318,7 +318,7 @@ const PublicProfile = ({
                     }}
                   >
                     {" "}
-                    <img src={chathive} className="chativelogo" />
+                    <img src={chathive} className="chativelogo" style={{width: "150px", height: "100%"}} />
                     ChatHive
                   </Link>
                 </button>
