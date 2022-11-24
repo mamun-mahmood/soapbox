@@ -319,7 +319,6 @@ const PublicProfile = ({
                   >
                     {" "}
                     <img src={chathive} className="chativelogo" style={{width: "150px", height: "100%"}} />
-                    ChatHive
                   </Link>
                 </button>
                 {privateChannel ? (
