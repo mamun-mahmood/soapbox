@@ -282,20 +282,10 @@ const PublicProfile = ({
                 <div className="user-name-page" style={{ fontSize: "14px" }}>
                   @{username}
                 </div>
-                {verified === 1 && designation === "Official" ? (
+                {verified === 1 && designation === "Official" && (
                   <div
                     style={{ display: "flex", alignItems: "center" }}
                   >
-                    <img
-                      src={OfficialCheckMark}
-                      height="14px"
-                      width="14px"
-                      alt="premium_verified"
-                    />
-                    <small className="cpc-username">{"Official"}</small>
-                  </div>
-                ) : (
-                  <div style={{ display: "flex", alignItems: "center" }}>
                     <img
                       src={OfficialCheckMark}
                       height="14px"
