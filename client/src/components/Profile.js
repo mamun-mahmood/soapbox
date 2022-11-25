@@ -257,7 +257,7 @@ const Profile = ({
                 <button className="btn-edit-profile">
                   <Link to={`/chathive/${username}`}>
                     {" "}
-                    <img src={chathive} className="chativelogo"/>
+                    <img src={chathive} className="chativelogo" style={{width: "120px", marginTop: "-8%"}} />
                   </Link>
                 </button>
 

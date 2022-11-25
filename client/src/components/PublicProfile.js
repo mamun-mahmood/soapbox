@@ -318,7 +318,7 @@ const PublicProfile = ({
                     }}
                   >
                     {" "}
-                    <img src={chathive} className="chativelogo"/>
+                    <img src={chathive} className="chativelogo" style={{width: "120px", marginTop: "-8%"}} />
                   </Link>
                 </button>
                 {privateChannel ? (
