@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import "./admin.css";
 import UpdateBadge from "./UpdateBadge";
+import UpdateDesignation from "./UpdateDesignation";
 const style = {
   position: "absolute",
   top: "50%",
@@ -35,12 +36,16 @@ const EditModal = ({ setUser, user }) => {
     setOpen(false);
   };
   const [badge, setBadge] = useState(user.badge);
+  const [badgeUpdate, setBadgeUpdate] = useState(user.badge);
+  const [designation, setDesignation] = useState(user.designation);
+  const [designationUpdate, setDesignationUpdate] = useState(user.designation);
   const [verified, setVerified] = useState(user.verified);
   const [email, setEmail] = useState(user.email);
   const [username, setUsername] = useState(user.username);
   const [followers, setFollowers] = useState(user.followers);
   const [communityClub, setCommunityClub] = useState(user.communityClub);
   const [privateChannel, setPrivateChannel] = useState(user.privateChannel);
+  
   const UpdateFollower = () => {
     axios
       .put(`${BaseURL}/user/updateUserByAdmin`, {
@@ -51,14 +56,15 @@ const EditModal = ({ setUser, user }) => {
         communityClub: communityClub,
         privateChannel: privateChannel,
         badge: badge,
+        designation: designation,
+        badgeUpdateTime: badgeUpdate,
+        designationUpdateTime: designationUpdate,
       })
       .then(() => {
         alert(`Updated details of ${user.username}`);
         handleClose();
       });
   };
-
-  console.log(user);
   return (
     <React.Fragment>
       {/* <Button onClick={handleOpen}>Open Child Modal</Button> */}
@@ -120,7 +126,10 @@ const EditModal = ({ setUser, user }) => {
                 )}
               </p>
             </div>
-            <UpdateBadge setBadge={setBadge} badge={badge} />
+            <UpdateBadge setBadge={setBadge} badge={badge} setBadgeUpdate={setBadgeUpdate} />
+
+            <UpdateDesignation setDesignation={setDesignation} setDesignationUpdate={setDesignationUpdate} designation={designation} />
+
             <button
               className="admin-btn"
               onClick={() => {
@@ -132,7 +141,7 @@ const EditModal = ({ setUser, user }) => {
             <button
               className="admin-btn"
               onClick={handleClose}
-              style={{ color: "red" }}
+              style={{ color: "red", marginTop: "10px" }}
             >
               Cancel
             </button>

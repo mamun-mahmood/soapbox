@@ -12,13 +12,15 @@ import Notable from "../../assets/RegularVerified.svg";
 import General from "../../assets/purple.svg";
 import Media from "../../assets/MediaVerified.svg";
 import PremiumVerified from "../../assets/PremiumVerified.svg";
-export default function UpdateBadge({badge, setBadge}) {
+export default function UpdateBadge({ badge, setBadge, setBadgeUpdate }) {
   const handleChange = (event) => {
     setBadge(event.target.value);
+    const date = Date.now();
+    setBadgeUpdate(date);
   };
   return (
     <Box sx={{ minWidth: 120, m: 3 }}>
-        <InputLabel id="demo-simple-select-label">Change Badge</InputLabel>
+      <InputLabel id="demo-simple-select-label">Change Badge</InputLabel>
       <FormControl fullWidth>
         <Select
           labelId="demo-simple-select-label"
