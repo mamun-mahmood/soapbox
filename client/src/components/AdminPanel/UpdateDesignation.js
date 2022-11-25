@@ -7,7 +7,7 @@ import {
   Select,
 } from "@material-ui/core";
 import * as React from "react";
-import OfficialBadge from "../../assets/OfficalBadge.svg";
+import OfficialCheckMark from "../../assets/OfficialCheckMark.svg";
 
 export default function UpdateDesignation({ designation, setDesignation, setDesignationUpdate }) {
   const handleChange = (event) => {
@@ -28,7 +28,7 @@ export default function UpdateDesignation({ designation, setDesignation, setDesi
           sx={{ width: 200 }}
         >
           <MenuItem value="Official">
-            <Avatar sx={{ textAlign: "end" }} src={OfficialBadge} />
+            <Avatar sx={{ textAlign: "end" }} src={OfficialCheckMark} />
             Official
           </MenuItem>
         </Select>

@@ -47,6 +47,7 @@ import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
 import General from "../assets/purple.svg";
 import Media from "../assets/MediaVerified.svg";
+import OfficialCheckMark from "../assets/OfficialCheckMark.svg";
 const HootInside = ({
   userId,
   name,
@@ -78,6 +79,7 @@ const HootInside = ({
   isSensitive,
   setIsSensitive,
   badge,
+  designation,
 }) => {
   const BaseURL = process.env.REACT_APP_API_URL; // API url
   const hostURL = "https://www.megahoot.net"; // main website
@@ -653,6 +655,27 @@ const HootInside = ({
                     <div className="at-name" style={{ fontSize: "0.9rem" }}>
                       @{username}
                     </div>
+                    { verified === 1 && designation === "Official" ? (
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={OfficialCheckMark}
+                          height="14px"
+                          width="14px"
+                          alt="premium_verified"
+                        />
+                       <small className="cpc-username">{"Official"}</small>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center"  }}>
+                        <img
+                          src={OfficialCheckMark}
+                          height="14px"
+                          width="14px"
+                          alt="premium_verified"
+                        />
+                        <small className="cpc-username">{"Official"}</small>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -762,51 +785,51 @@ const HootInside = ({
                             <div className="name">{name}</div>
                           </Link>
                           {verified === 1 ? (
-                             <div className="verification-badge">
-                             {badge === "Premium" ? (
-                               <img
-                                 src={PremiumVerified}
-                                 height="18px"
-                                 width="18px"
-                                 alt="premium_verified"
-                               />
-                             ) : badge === "Corporate" ? (
-                               <img
-                                 src={CorporateVerified}
-                                 height="18px"
-                                 width="18px"
-                                 alt="corporate_verified"
-                               />
-                             ) : badge === "Notable" ? (
-                               <img
-                                 src={Notable}
-                                 height="18px"
-                                 width="18px"
-                                 alt="corporate_verified"
-                               />
-                             ) : badge === "General" ? (
-                               <img
-                                 src={General}
-                                 height="18px"
-                                 width="18px"
-                                 alt="corporate_verified"
-                               />
-                             ) : badge === "Media" ? (
-                               <img
-                                 src={Media}
-                                 height="18px"
-                                 width="18px"
-                                 alt="corporate_verified"
-                               />
-                             ) : (
-                               <img
-                                 src={Notable}
-                                 height="18px"
-                                 width="18px"
-                                 alt="regular_verified"
-                               />
-                             )}
-                           </div>
+                            <div className="verification-badge">
+                              {badge === "Premium" ? (
+                                <img
+                                  src={PremiumVerified}
+                                  height="18px"
+                                  width="18px"
+                                  alt="premium_verified"
+                                />
+                              ) : badge === "Corporate" ? (
+                                <img
+                                  src={CorporateVerified}
+                                  height="18px"
+                                  width="18px"
+                                  alt="corporate_verified"
+                                />
+                              ) : badge === "Notable" ? (
+                                <img
+                                  src={Notable}
+                                  height="18px"
+                                  width="18px"
+                                  alt="corporate_verified"
+                                />
+                              ) : badge === "General" ? (
+                                <img
+                                  src={General}
+                                  height="18px"
+                                  width="18px"
+                                  alt="corporate_verified"
+                                />
+                              ) : badge === "Media" ? (
+                                <img
+                                  src={Media}
+                                  height="18px"
+                                  width="18px"
+                                  alt="corporate_verified"
+                                />
+                              ) : (
+                                <img
+                                  src={Notable}
+                                  height="18px"
+                                  width="18px"
+                                  alt="regular_verified"
+                                />
+                              )}
+                            </div>
                           ) : null}
                         </div>
                         <div
@@ -1936,56 +1959,77 @@ const HootInside = ({
                         <div className="name">{name ? name : username}</div>
                       </Link>
                       {verified === 1 ? (
-                         <div className="verification-badge">
-                         {badge === "Premium" ? (
-                           <img
-                             src={PremiumVerified}
-                             height="18px"
-                             width="18px"
-                             alt="premium_verified"
-                           />
-                         ) : badge === "Corporate" ? (
-                           <img
-                             src={CorporateVerified}
-                             height="18px"
-                             width="18px"
-                             alt="corporate_verified"
-                           />
-                         ) : badge === "Notable" ? (
-                           <img
-                             src={Notable}
-                             height="18px"
-                             width="18px"
-                             alt="corporate_verified"
-                           />
-                         ) : badge === "General" ? (
-                           <img
-                             src={General}
-                             height="18px"
-                             width="18px"
-                             alt="corporate_verified"
-                           />
-                         ) : badge === "Media" ? (
-                           <img
-                             src={Media}
-                             height="18px"
-                             width="18px"
-                             alt="corporate_verified"
-                           />
-                         ) : (
-                           <img
-                             src={Notable}
-                             height="18px"
-                             width="18px"
-                             alt="regular_verified"
-                           />
-                         )}
-                       </div>
+                        <div className="verification-badge">
+                          {badge === "Premium" ? (
+                            <img
+                              src={PremiumVerified}
+                              height="18px"
+                              width="18px"
+                              alt="premium_verified"
+                            />
+                          ) : badge === "Corporate" ? (
+                            <img
+                              src={CorporateVerified}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "Notable" ? (
+                            <img
+                              src={Notable}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "General" ? (
+                            <img
+                              src={General}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "Media" ? (
+                            <img
+                              src={Media}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : (
+                            <img
+                              src={Notable}
+                              height="18px"
+                              width="18px"
+                              alt="regular_verified"
+                            />
+                          )}
+                        </div>
                       ) : null}
                     </div>
                     <div className="at-name" style={{ fontSize: "0.9rem" }}>
                       @{username}
                     </div>
+                    { verified === 1 && designation === "Official" ? (
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={OfficialCheckMark}
+                          height="14px"
+                          width="14px"
+                          alt="premium_verified"
+                        />
+                       <small className="cpc-username">{"Official"}</small>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center"  }}>
+                        <img
+                          src={OfficialCheckMark}
+                          height="14px"
+                          width="14px"
+                          alt="premium_verified"
+                        />
+                        <small className="cpc-username">{"Official"}</small>
+                      </div>
+                    )}
                   </div>
                 </div>
               ) : null}
@@ -2101,50 +2145,50 @@ const HootInside = ({
                         </Link>
                         {verified === 1 ? (
                           <div className="verification-badge">
-                          {badge === "Premium" ? (
-                            <img
-                              src={PremiumVerified}
-                              height="18px"
-                              width="18px"
-                              alt="premium_verified"
-                            />
-                          ) : badge === "Corporate" ? (
-                            <img
-                              src={CorporateVerified}
-                              height="18px"
-                              width="18px"
-                              alt="corporate_verified"
-                            />
-                          ) : badge === "Notable" ? (
-                            <img
-                              src={Notable}
-                              height="18px"
-                              width="18px"
-                              alt="corporate_verified"
-                            />
-                          ) : badge === "General" ? (
-                            <img
-                              src={General}
-                              height="18px"
-                              width="18px"
-                              alt="corporate_verified"
-                            />
-                          ) : badge === "Media" ? (
-                            <img
-                              src={Media}
-                              height="18px"
-                              width="18px"
-                              alt="corporate_verified"
-                            />
-                          ) : (
-                            <img
-                              src={Notable}
-                              height="18px"
-                              width="18px"
-                              alt="regular_verified"
-                            />
-                          )}
-                        </div>
+                            {badge === "Premium" ? (
+                              <img
+                                src={PremiumVerified}
+                                height="18px"
+                                width="18px"
+                                alt="premium_verified"
+                              />
+                            ) : badge === "Corporate" ? (
+                              <img
+                                src={CorporateVerified}
+                                height="18px"
+                                width="18px"
+                                alt="corporate_verified"
+                              />
+                            ) : badge === "Notable" ? (
+                              <img
+                                src={Notable}
+                                height="18px"
+                                width="18px"
+                                alt="corporate_verified"
+                              />
+                            ) : badge === "General" ? (
+                              <img
+                                src={General}
+                                height="18px"
+                                width="18px"
+                                alt="corporate_verified"
+                              />
+                            ) : badge === "Media" ? (
+                              <img
+                                src={Media}
+                                height="18px"
+                                width="18px"
+                                alt="corporate_verified"
+                              />
+                            ) : (
+                              <img
+                                src={Notable}
+                                height="18px"
+                                width="18px"
+                                alt="regular_verified"
+                              />
+                            )}
+                          </div>
                         ) : null}
                       </div>
                       <div
@@ -2153,6 +2197,27 @@ const HootInside = ({
                       >
                         @{username}
                       </div>
+                      { verified === 1 && designation === "Official" ? (
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={OfficialCheckMark}
+                          height="14px"
+                          width="14px"
+                          alt="premium_verified"
+                        />
+                       <small className="cpc-username">{"Official"}</small>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center"  }}>
+                        <img
+                          src={OfficialCheckMark}
+                          height="14px"
+                          width="14px"
+                          alt="premium_verified"
+                        />
+                        <small className="cpc-username">{"Official"}</small>
+                      </div>
+                    )}
                       {/* {verified === 1
                                                 ?
                                                 <small className="verified-account">Verified account</small>
@@ -2301,56 +2366,77 @@ const HootInside = ({
                           <div className="name">{name ? name : username}</div>
                         </Link>
                         {verified === 1 ? (
-                           <div className="verification-badge">
-                           {badge === "Premium" ? (
-                             <img
-                               src={PremiumVerified}
-                               height="18px"
-                               width="18px"
-                               alt="premium_verified"
-                             />
-                           ) : badge === "Corporate" ? (
-                             <img
-                               src={CorporateVerified}
-                               height="18px"
-                               width="18px"
-                               alt="corporate_verified"
-                             />
-                           ) : badge === "Notable" ? (
-                             <img
-                               src={Notable}
-                               height="18px"
-                               width="18px"
-                               alt="corporate_verified"
-                             />
-                           ) : badge === "General" ? (
-                             <img
-                               src={General}
-                               height="18px"
-                               width="18px"
-                               alt="corporate_verified"
-                             />
-                           ) : badge === "Media" ? (
-                             <img
-                               src={Media}
-                               height="18px"
-                               width="18px"
-                               alt="corporate_verified"
-                             />
-                           ) : (
-                             <img
-                               src={Notable}
-                               height="18px"
-                               width="18px"
-                               alt="regular_verified"
-                             />
-                           )}
-                         </div>
+                          <div className="verification-badge">
+                            {badge === "Premium" ? (
+                              <img
+                                src={PremiumVerified}
+                                height="18px"
+                                width="18px"
+                                alt="premium_verified"
+                              />
+                            ) : badge === "Corporate" ? (
+                              <img
+                                src={CorporateVerified}
+                                height="18px"
+                                width="18px"
+                                alt="corporate_verified"
+                              />
+                            ) : badge === "Notable" ? (
+                              <img
+                                src={Notable}
+                                height="18px"
+                                width="18px"
+                                alt="corporate_verified"
+                              />
+                            ) : badge === "General" ? (
+                              <img
+                                src={General}
+                                height="18px"
+                                width="18px"
+                                alt="corporate_verified"
+                              />
+                            ) : badge === "Media" ? (
+                              <img
+                                src={Media}
+                                height="18px"
+                                width="18px"
+                                alt="corporate_verified"
+                              />
+                            ) : (
+                              <img
+                                src={Notable}
+                                height="18px"
+                                width="18px"
+                                alt="regular_verified"
+                              />
+                            )}
+                          </div>
                         ) : null}
                       </div>
                       <div className="at-name" style={{ fontSize: "0.9rem" }}>
                         @{username}
                       </div>
+                      { verified === 1 && designation === "Official" ? (
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={OfficialCheckMark}
+                          height="14px"
+                          width="14px"
+                          alt="premium_verified"
+                        />
+                       <small className="cpc-username">{"Official"}</small>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center"  }}>
+                        <img
+                          src={OfficialCheckMark}
+                          height="14px"
+                          width="14px"
+                          alt="premium_verified"
+                        />
+                        <small className="cpc-username">{"Official"}</small>
+                      </div>
+                    )}
                     </div>
                   </div>
                   <div

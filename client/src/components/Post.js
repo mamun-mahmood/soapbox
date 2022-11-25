@@ -50,6 +50,7 @@ const Post = ({
               profilePic={user.profilePic}
               verified={user.verified}
               badge={user.badge}
+              designation={user.designation}
               hootId={hootId}
               bio={user.bio}
               username={username}

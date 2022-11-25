@@ -11,11 +11,14 @@ import PremiumVerified from "../../assets/PremiumVerified.svg";
 import CorporateVerified from "../../assets/CorporateVerified.svg";
 import General from "../../assets/purple.svg";
 import Media from "../../assets/MediaVerified.svg";
+import OfficialCheckMark from "../../assets/OfficialCheckMark.svg";
+
 const CreatorPrivateClub = ({ creator }) => {
   const [creatorsData, setCreatorsData] = useState([]);
   const BaseURL = process.env.REACT_APP_API_URL;
   const profilePicPath = `${BaseURL}/profile-pictures/${creator.profilePic}`;
   const [badge, setBadge] = useState(null);
+  const [designation, setDesignation] = useState(null);
   // getting all uploads(hoots) of
   // particuler user for counting all views and likes
   useEffect(() => {
@@ -29,6 +32,7 @@ const CreatorPrivateClub = ({ creator }) => {
         .get(`${BaseURL}/user/${creator.username}`)
         .then((response) => {
           setBadge(response.data[0].badge);
+          setDesignation(response.data[0].designation);
         });
     };
 
@@ -123,7 +127,27 @@ const CreatorPrivateClub = ({ creator }) => {
 
         {/* verifed creator username */}
         <div className="cpc-username">@{creator.username}</div>
-
+        {creator.verified === 1 && designation === "Official" ? (
+          <div>
+            <img
+              src={OfficialCheckMark}
+              height="14px"
+              width="14px"
+              alt="premium_verified"
+            />
+            <div className="cpc-username">{designation}</div>
+          </div>
+        ) : (
+          <div style={{ display: "flex" }}>
+            <img
+              src={OfficialCheckMark}
+              height="14px"
+              width="14px"
+              alt="premium_verified"
+            />
+            <div className="cpc-username">{"Official"}</div>
+          </div>
+        )}
         {/* <div className="cpc-line">
                     <div className="cpc-line-dash"></div>
                 </div> */}
