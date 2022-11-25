@@ -655,7 +655,7 @@ const HootInside = ({
                     <div className="at-name" style={{ fontSize: "0.9rem" }}>
                       @{username}
                     </div>
-                    { verified === 1 && designation === "Official" ? (
+                    { verified === 1 && designation === "Official" && (
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <img
                           src={OfficialCheckMark}
@@ -663,17 +663,7 @@ const HootInside = ({
                           width="14px"
                           alt="premium_verified"
                         />
-                       <small className="cpc-username">{"Official"}</small>
-                      </div>
-                    ) : (
-                      <div style={{ display: "flex", alignItems: "center"  }}>
-                        <img
-                          src={OfficialCheckMark}
-                          height="14px"
-                          width="14px"
-                          alt="premium_verified"
-                        />
-                        <small className="cpc-username">{"Official"}</small>
+                       <small className="cpc-username">{designation}</small>
                       </div>
                     )}
                   </div>
@@ -2009,7 +1999,7 @@ const HootInside = ({
                     <div className="at-name" style={{ fontSize: "0.9rem" }}>
                       @{username}
                     </div>
-                    { verified === 1 && designation === "Official" ? (
+                    { verified === 1 && designation === "Official" && (
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <img
                           src={OfficialCheckMark}
@@ -2017,17 +2007,7 @@ const HootInside = ({
                           width="14px"
                           alt="premium_verified"
                         />
-                       <small className="cpc-username">{"Official"}</small>
-                      </div>
-                    ) : (
-                      <div style={{ display: "flex", alignItems: "center"  }}>
-                        <img
-                          src={OfficialCheckMark}
-                          height="14px"
-                          width="14px"
-                          alt="premium_verified"
-                        />
-                        <small className="cpc-username">{"Official"}</small>
+                       <small className="cpc-username">{designation}</small>
                       </div>
                     )}
                   </div>
@@ -2197,7 +2177,7 @@ const HootInside = ({
                       >
                         @{username}
                       </div>
-                      { verified === 1 && designation === "Official" ? (
+                      { verified === 1 && designation === "Official" && (
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <img
                           src={OfficialCheckMark}
@@ -2205,17 +2185,7 @@ const HootInside = ({
                           width="14px"
                           alt="premium_verified"
                         />
-                       <small className="cpc-username">{"Official"}</small>
-                      </div>
-                    ) : (
-                      <div style={{ display: "flex", alignItems: "center"  }}>
-                        <img
-                          src={OfficialCheckMark}
-                          height="14px"
-                          width="14px"
-                          alt="premium_verified"
-                        />
-                        <small className="cpc-username">{"Official"}</small>
+                       <small className="cpc-username">{designation}</small>
                       </div>
                     )}
                       {/* {verified === 1
@@ -2416,7 +2386,7 @@ const HootInside = ({
                       <div className="at-name" style={{ fontSize: "0.9rem" }}>
                         @{username}
                       </div>
-                      { verified === 1 && designation === "Official" ? (
+                      { verified === 1 && designation === "Official" && (
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <img
                           src={OfficialCheckMark}
@@ -2424,17 +2394,7 @@ const HootInside = ({
                           width="14px"
                           alt="premium_verified"
                         />
-                       <small className="cpc-username">{"Official"}</small>
-                      </div>
-                    ) : (
-                      <div style={{ display: "flex", alignItems: "center"  }}>
-                        <img
-                          src={OfficialCheckMark}
-                          height="14px"
-                          width="14px"
-                          alt="premium_verified"
-                        />
-                        <small className="cpc-username">{"Official"}</small>
+                       <small className="cpc-username">{designation}</small>
                       </div>
                     )}
                     </div>

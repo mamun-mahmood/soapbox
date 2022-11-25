@@ -127,7 +127,7 @@ const CreatorPrivateClub = ({ creator }) => {
 
         {/* verifed creator username */}
         <div className="cpc-username">@{creator.username}</div>
-        {creator.verified === 1 && designation === "Official" ? (
+        {creator.verified === 1 && designation === "Official" && (
           <div>
             <img
               src={OfficialCheckMark}
@@ -137,17 +137,19 @@ const CreatorPrivateClub = ({ creator }) => {
             />
             <div className="cpc-username">{designation}</div>
           </div>
-        ) : (
-          <div style={{ display: "flex" }}>
-            <img
-              src={OfficialCheckMark}
-              height="14px"
-              width="14px"
-              alt="premium_verified"
-            />
-            <div className="cpc-username">{"Official"}</div>
-          </div>
-        )}
+        ) 
+        // : (
+        //   <div style={{ display: "flex" }}>
+        //     <img
+        //       src={OfficialCheckMark}
+        //       height="14px"
+        //       width="14px"
+        //       alt="premium_verified"
+        //     />
+        //     <div className="cpc-username">{designation}</div>
+        //   </div>
+        // )
+        }
         {/* <div className="cpc-line">
                     <div className="cpc-line-dash"></div>
                 </div> */}

@@ -29,6 +29,7 @@ import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
 import General from "../assets/purple.svg";
 import Media from "../assets/MediaVerified.svg";
+import OfficialCheckMark from "../assets/OfficialCheckMark.svg";
 import { toast } from "react-toastify";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
@@ -53,7 +54,8 @@ const PublicProfile = ({
   pinterest,
   medium,
   tumblr,
-  badge
+  badge,
+  designation,
 }) => {
   const [users, setUsers] = useState([]);
   const [allUserUploads, setAllUserUploads] = useState([]);
@@ -280,7 +282,29 @@ const PublicProfile = ({
                 <div className="user-name-page" style={{ fontSize: "14px" }}>
                   @{username}
                 </div>
-
+                {verified === 1 && designation === "Official" ? (
+                  <div
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <img
+                      src={OfficialCheckMark}
+                      height="14px"
+                      width="14px"
+                      alt="premium_verified"
+                    />
+                    <small className="cpc-username">{"Official"}</small>
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={OfficialCheckMark}
+                      height="14px"
+                      width="14px"
+                      alt="premium_verified"
+                    />
+                    <small className="cpc-username">{"Official"}</small>
+                  </div>
+                )}
                 <div className="user-follow">
                   {userInformation ? (
                     userFollowers.length === 0 ? (
@@ -318,7 +342,11 @@ const PublicProfile = ({
                     }}
                   >
                     {" "}
-                    <img src={chathive} className="chativelogo" style={{width: "120px", marginTop: "-8%"}} />
+                    <img
+                      src={chathive}
+                      className="chativelogo"
+                      style={{ width: "120px", marginTop: "-8%" }}
+                    />
                   </Link>
                 </button>
                 {privateChannel ? (
