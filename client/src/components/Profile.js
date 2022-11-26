@@ -253,14 +253,28 @@ const Profile = ({
                   @{username}
                 </div>
                 {designation && (
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
                     <img
                       src={OfficialCheckMark}
-                      height="14px"
-                      width="14px"
+                      height="18px"
+                      width="18px"
                       alt="premium_verified"
-                    />
-                    <small className="cpc-username">{designation}</small>
+                    />{" "}
+                    <smalll
+                      style={{
+                        color: "#848484",
+                        fontSize: "16px",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      {designation}
+                    </smalll>
                   </div>
                 )}
                 <button className="btn-edit-profile">
