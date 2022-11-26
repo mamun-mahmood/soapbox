@@ -3,7 +3,7 @@ import axios from "axios";
 import Avatar from "react-avatar";
 import { formatCount, formatSi } from "../Helpers/formatNumbers";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { HiBadgeCheck } from "react-icons/hi";
+import { HiBadgeCheck, HiOutlineBadgeCheck } from "react-icons/hi";
 import { FiPlayCircle, FiTwitter } from "react-icons/fi";
 import {
   RiFacebookCircleLine,
@@ -35,6 +35,7 @@ import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 import ReactPlayer from "react-player";
 import MediaProfile from "./HootOutside/MediaProfile";
+import { BiBadgeCheck } from "react-icons/bi";
 const PublicProfile = ({
   verified,
   privateChannel,
@@ -282,18 +283,24 @@ const PublicProfile = ({
                 <div className="user-name-page" style={{ fontSize: "14px" }}>
                   @{username}
                 </div>
-                {designation  && (
-                  <div
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <img
-                      src={OfficialCheckMark}
-                      height="14px"
-                      width="14px"
-                      alt="premium_verified"
-                    />
-                    <small className="cpc-username">{designation}</small>
-                  </div>
+                {designation && (
+                    <div style={{ display: "flex", alignItems: "center", marginLeft: "15px" }}>
+                      <img
+                        src={OfficialCheckMark}
+                        height="18px"
+                        width="18px"
+                        alt="premium_verified"
+                      />{" "}
+                      <smalll
+                        style={{
+                          color: "#848484",
+                          fontSize: "16px",
+                          marginLeft: "10px"
+                        }}
+                      >
+                        {designation}
+                      </smalll>
+                    </div>
                 )}
                 <div className="user-follow">
                   {userInformation ? (

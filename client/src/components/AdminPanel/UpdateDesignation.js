@@ -39,7 +39,7 @@ export default function UpdateDesignation({
           <MenuItem value="Adult Content">Adult Content</MenuItem>
           <MenuItem value="Parody Account">Parody Account</MenuItem>
           <MenuItem value="Official Corporate">Official Corporate</MenuItem>
-          <MenuItem value={null}>Remove</MenuItem>
+          <MenuItem value={null} style={{color: "red"}} >Remove</MenuItem>
           {/* <MenuItem value={customInput} > */}
           {/* <input
             placeholder="Enter custom designation..."

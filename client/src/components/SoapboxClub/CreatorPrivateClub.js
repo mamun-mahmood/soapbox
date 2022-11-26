@@ -135,7 +135,7 @@ const CreatorPrivateClub = ({ creator }) => {
               width="14px"
               alt="premium_verified"
             />
-            <div className="cpc-username">{designation}</div>
+            <smalll style={{color: "#848484"}}>{designation}</smalll>
           </div>
         ) 
         // : (

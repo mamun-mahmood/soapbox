@@ -11,6 +11,7 @@ import PremiumVerified from "../../assets/PremiumVerified.svg";
 import CorporateVerified from "../../assets/CorporateVerified.svg";
 import General from "../../assets/purple.svg";
 import Media from "../../assets/MediaVerified.svg";
+import Media from "../../assets/OfficialCheckMark.svg";
 const SuggestedFollow = ({ verifiedUser }) => {
   const [users, setUsers] = useState([]);
   const [hoverInfo, setHoverInfo] = useState(false);
@@ -231,6 +232,25 @@ const SuggestedFollow = ({ verifiedUser }) => {
             <div className="at-suggested-name" style={{ fontSize: "0.9rem" }}>
               @{verifiedUser.username}
             </div>
+            {verifiedUser.designation && (
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img
+                  src={OfficialCheckMark}
+                  height="18px"
+                  width="18px"
+                  alt="OfficialCheckMark"
+                />{" "}
+                <smalll
+                  style={{
+                    color: "#848484",
+                    fontSize: "16px",
+                    marginLeft: "5px",
+                  }}
+                >
+                  {verifiedUser.designation}
+                </smalll>
+              </div>
+            )}
           </div>
         </div>
 
