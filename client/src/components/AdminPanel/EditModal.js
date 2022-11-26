@@ -45,7 +45,7 @@ const EditModal = ({ setUser, user }) => {
   const [followers, setFollowers] = useState(user.followers);
   const [communityClub, setCommunityClub] = useState(user.communityClub);
   const [privateChannel, setPrivateChannel] = useState(user.privateChannel);
-  
+
   const UpdateFollower = () => {
     axios
       .put(`${BaseURL}/user/updateUserByAdmin`, {
@@ -60,9 +60,10 @@ const EditModal = ({ setUser, user }) => {
         badgeUpdateTime: badgeUpdate,
         designationUpdateTime: designationUpdate,
       })
-      .then(() => {
+      .then((res) => {
         alert(`Updated details of ${user.username}`);
         handleClose();
+        console.log(res.data);
       });
   };
   return (
@@ -126,10 +127,25 @@ const EditModal = ({ setUser, user }) => {
                 )}
               </p>
             </div>
-            <UpdateBadge setBadge={setBadge} badge={badge} setBadgeUpdate={setBadgeUpdate} />
+            <UpdateBadge
+              setBadge={setBadge}
+              badge={badge}
+              setBadgeUpdate={setBadgeUpdate}
+            />
 
-            <UpdateDesignation setDesignation={setDesignation} setDesignationUpdate={setDesignationUpdate} designation={designation} />
-
+            <div>
+              <p>
+                Account type:{" "}
+                <span>
+                  {user.designation ? user.designation : "Not assigned"}
+                </span>
+              </p>
+            </div>
+            <UpdateDesignation
+              setDesignation={setDesignation}
+              setDesignationUpdate={setDesignationUpdate}
+              designation={designation}
+            />
             <button
               className="admin-btn"
               onClick={() => {

@@ -9,12 +9,17 @@ import {
 import * as React from "react";
 import OfficialCheckMark from "../../assets/OfficialCheckMark.svg";
 
-export default function UpdateDesignation({ designation, setDesignation, setDesignationUpdate }) {
+export default function UpdateDesignation({
+  designation,
+  setDesignation,
+  setDesignationUpdate,
+}) {
   const handleChange = (event) => {
     setDesignation(event.target.value);
     const time = Date.now();
-    setDesignationUpdate(time)
+    setDesignationUpdate(time);
   };
+  // const [customInput, setCustomInput] = React.useState(designation);
   return (
     <Box sx={{ minWidth: 120, m: 3 }}>
       <InputLabel id="demo-simple-select-label">Change Designation</InputLabel>
@@ -27,10 +32,20 @@ export default function UpdateDesignation({ designation, setDesignation, setDesi
           onChange={handleChange}
           sx={{ width: 200 }}
         >
-          <MenuItem value="Official">
-            <Avatar sx={{ textAlign: "end" }} src={OfficialCheckMark} />
-            Official
-          </MenuItem>
+          {/* <Avatar sx={{ textAlign: "end" }} src={OfficialCheckMark} /> */}
+          <MenuItem value="Official Media">Official Media</MenuItem>
+          <MenuItem value="Official Club">Official Club</MenuItem>
+          <MenuItem value="Adult Content">Adult Content</MenuItem>
+          <MenuItem value="Parody Account">Parody Account</MenuItem>
+          <MenuItem value="Official Corporate">Official Corporate</MenuItem>
+          {/* <MenuItem value={customInput} > */}
+          {/* <input
+            placeholder="Enter custom designation..."
+            type="text"
+            value={designation}
+            onChange={(e) => setDesignation(e.target.value)}
+          /> */}
+          {/* </MenuItem> */}
         </Select>
       </FormControl>
     </Box>
