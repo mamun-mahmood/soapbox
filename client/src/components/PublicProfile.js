@@ -292,7 +292,7 @@ const PublicProfile = ({
                       width="14px"
                       alt="premium_verified"
                     />
-                    <small className="cpc-username">{"Official"}</small>
+                    <small className="cpc-username">{designation}</small>
                   </div>
                 )}
                 <div className="user-follow">

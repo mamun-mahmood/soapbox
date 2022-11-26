@@ -33,11 +33,13 @@ export default function UpdateDesignation({
           sx={{ width: 200 }}
         >
           {/* <Avatar sx={{ textAlign: "end" }} src={OfficialCheckMark} /> */}
+          <MenuItem value="Official">Official</MenuItem>
           <MenuItem value="Official Media">Official Media</MenuItem>
           <MenuItem value="Official Club">Official Club</MenuItem>
           <MenuItem value="Adult Content">Adult Content</MenuItem>
           <MenuItem value="Parody Account">Parody Account</MenuItem>
           <MenuItem value="Official Corporate">Official Corporate</MenuItem>
+          <MenuItem value={null}>Remove</MenuItem>
           {/* <MenuItem value={customInput} > */}
           {/* <input
             placeholder="Enter custom designation..."

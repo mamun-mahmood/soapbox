@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import {
-  Modal,
-} from "@material-ui/core";
+import { Box, Modal } from "@material-ui/core";
 import axios from "axios";
 import "./admin.css";
 import UpdateBadge from "./UpdateBadge";
 import UpdateDesignation from "./UpdateDesignation";
+import { AfterpayClearpayMessageElement } from "@stripe/react-stripe-js";
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  border: "2px solid #000",
   boxShadow: 24,
   pt: 2,
   px: 4,
@@ -24,8 +22,10 @@ const EditModal = ({ setUser, user }) => {
   const handleOpen = () => {
     setOpen(true);
   };
+  const [alertMsg, setAlerMsg] = useState(null);
   const handleClose = () => {
     setOpen(false);
+    setAlerMsg(null);
   };
   const [badge, setBadge] = useState(user.badge);
   const [badgeUpdate, setBadgeUpdate] = useState(user.badgeUpdateTime);
@@ -56,8 +56,8 @@ const EditModal = ({ setUser, user }) => {
       })
       .then((res) => {
         alert(res.data.message, "changedData: " + res.changedRows);
+        setAlerMsg(res.data.message);
         handleClose();
-        console.log(res.data);
       });
   };
   return (
@@ -66,99 +66,111 @@ const EditModal = ({ setUser, user }) => {
         Edit
       </button>
       <Modal open={open} onClose={handleClose}>
-        <div style={style}>
-          <div className="edit-admin-panel">
-            <h4>Update details of {user.username}</h4>
-            <label>Email</label>
-            <input
-              placeholder="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-
-            <label>followers</label>
-            <input
-              placeholder="followers"
-              value={followers}
-              onChange={(e) => setFollowers(e.target.value)}
-            />
-
-            <label>Verify</label>
-            <input
-              placeholder="verify"
-              value={verified}
-              onChange={(e) => {
-                setVerified(e.target.value);
-              }}
-            />
-
-            <label>Username</label>
-            <input
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <label>Community Club</label>
-            <input
-              placeholder="Community Club"
-              value={communityClub}
-              onChange={(e) => setCommunityClub(e.target.value)}
-            />
-            <label>Private Club</label>
-            <input
-              placeholder="Private Club"
-              value={privateChannel}
-              onChange={(e) => setPrivateChannel(e.target.value)}
-            />
-            <div>
-              <p>
-                Current Badge:{" "}
-                {user.verified === 1 ? (
-                  <span>{user.badge ? user.badge : "Notable"}</span>
-                ) : (
-                  "Not Verified"
-                )}
-              </p>
+        <Box style={style}>
+          <div className="container-fluid rounded bg-light p-5">
+            <h4 style={{ textAlign: "center" }}>
+              Update details of {user.username}
+            </h4>
+            <div className="row w-100">
+              <div className="col-sm-12 col-md-6 edit-admin-panel">
+                <p>Email: </p>
+                <input
+                  placeholder="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="col-sm-12 col-md-6 edit-admin-panel">
+                <p>Followers: </p>
+                <input
+                  placeholder="followers"
+                  value={followers}
+                  onChange={(e) => setFollowers(e.target.value)}
+                />
+              </div>
+              <div className="col-sm-12 col-md-6 edit-admin-panel">
+                <p>Username</p>
+                <input
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div className="col-sm-12 col-md-6 edit-admin-panel">
+                <p>Verify</p>
+                <input
+                  placeholder="verify"
+                  value={verified}
+                  onChange={(e) => {
+                    setVerified(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="col-sm-12 col-md-6 edit-admin-panel">
+                <p>Community Club: </p>
+                <input
+                  placeholder="Community Club"
+                  value={communityClub}
+                  onChange={(e) => setCommunityClub(e.target.value)}
+                />
+              </div>
+              <div className="col-sm-12 col-md-6 edit-admin-panel">
+                <p>Private Club: </p>
+                <input
+                  placeholder="Private Club"
+                  value={privateChannel}
+                  onChange={(e) => setPrivateChannel(e.target.value)}
+                />
+              </div>
+              <div className="col-sm-12 col-md-6 edit-admin-panel">
+                {/* <p>
+                  Current Badge:{" "}
+                  {user.verified === 1 ? (
+                    <span>{user.badge ? user.badge : "Notable"}</span>
+                  ) : (
+                    "Not Verified"
+                  )}
+                </p> */}
+                <UpdateBadge
+                  setBadge={setBadge}
+                  badge={badge}
+                  setBadgeUpdate={setBadgeUpdate}
+                />
+              </div>
+              <div className="col-sm-12 col-md-6 edit-admin-panel">
+                {/* <p>
+                  Account type:{" "}
+                  <span>
+                    {user.designation ? user.designation : "Not assigned"}
+                  </span>
+                </p> */}
+                <UpdateDesignation
+                  setDesignation={setDesignation}
+                  setDesignationUpdate={setDesignationUpdate}
+                  designation={designation}
+                />
+              </div>
+              <button
+                className="admin-btn"
+                onClick={handleClose}
+                style={{ color: "red", marginTop: "10px" }}
+              >
+                Cancel
+              </button>
+              <button
+                className="admin-btn"
+                onClick={() => {
+                  UpdateFollower();
+                }}
+              >
+                Update
+              </button>
             </div>
-            <UpdateBadge
-              setBadge={setBadge}
-              badge={badge}
-              setBadgeUpdate={setBadgeUpdate}
-            />
-
-            <div>
-              <p>
-                Account type:{" "}
-                <span>
-                  {user.designation ? user.designation : "Not assigned"}
-                </span>
-              </p>
-            </div>
-            <UpdateDesignation
-              setDesignation={setDesignation}
-              setDesignationUpdate={setDesignationUpdate}
-              designation={designation}
-            />
-            <button
-              className="admin-btn"
-              onClick={() => {
-                UpdateFollower();
-              }}
-            >
-              Update
-            </button>
-            <button
-              className="admin-btn"
-              onClick={handleClose}
-              style={{ color: "red", marginTop: "10px" }}
-            >
-              Cancel
-            </button>
-            <p>
+            <p style={{ textAlign: "center" }}>
               Note:Type <b>1</b> for Verified and <b>0</b> for not Verified
             </p>
           </div>
-        </div>
+        </Box>
       </Modal>
     </React.Fragment>
   );

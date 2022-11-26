@@ -260,7 +260,7 @@ const Profile = ({
                       width="14px"
                       alt="premium_verified"
                     />
-                    <small className="cpc-username">{"Official"}</small>
+                    <small className="cpc-username">{designation}</small>
                   </div>
                 )}
                 <button className="btn-edit-profile">
