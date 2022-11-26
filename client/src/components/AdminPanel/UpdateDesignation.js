@@ -33,7 +33,7 @@ export default function UpdateDesignation({
           sx={{ width: 200 }}
         >
           {/* <Avatar sx={{ textAlign: "end" }} src={OfficialCheckMark} /> */}
-          <MenuItem value="Official">Official Media</MenuItem>
+          <MenuItem value="Official Media">Official Media</MenuItem>
           <MenuItem value="Official Club">Official Club</MenuItem>
           <MenuItem value="Adult Content">Adult Content</MenuItem>
           <MenuItem value="Parody Account">Parody Account</MenuItem>
