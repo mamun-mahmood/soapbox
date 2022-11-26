@@ -32,6 +32,7 @@ import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
 import General from "../assets/purple.svg";
 import Media from "../assets/MediaVerified.svg";
+import OfficialCheckMark from "../assets/OfficialCheckMark.svg";
 import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from "./HootOutside/HootOutside";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -66,7 +67,8 @@ const Profile = ({
   pinterest,
   medium,
   tumblr,
-  badge
+  badge,
+  designation,
 }) => {
   const { username } = useParams();
   const [myUploads, setMyUploads] = useState([]);
@@ -200,48 +202,48 @@ const Profile = ({
                     {verified == 1 ? (
                       <div className="profile-verification-badge">
                         {badge === "Premium" ? (
-                            <img
-                              src={PremiumVerified}
-                              height="18px"
-                              width="18px"
-                              alt="premium_verified"
-                            />
-                          ) : badge === "Corporate" ? (
-                            <img
-                              src={CorporateVerified}
-                              height="18px"
-                              width="18px"
-                              alt="corporate_verified"
-                            />
-                          ) : badge === "Notable" ? (
-                            <img
-                              src={Notable}
-                              height="18px"
-                              width="18px"
-                              alt="corporate_verified"
-                            />
-                          ) : badge === "General" ? (
-                            <img
-                              src={General}
-                              height="18px"
-                              width="18px"
-                              alt="corporate_verified"
-                            />
-                          ) : badge === "Media" ? (
-                            <img
-                              src={Media}
-                              height="18px"
-                              width="18px"
-                              alt="corporate_verified"
-                            />
-                          ) : (
-                            <img
-                              src={Notable}
-                              height="18px"
-                              width="18px"
-                              alt="regular_verified"
-                            />
-                          )}
+                          <img
+                            src={PremiumVerified}
+                            height="18px"
+                            width="18px"
+                            alt="premium_verified"
+                          />
+                        ) : badge === "Corporate" ? (
+                          <img
+                            src={CorporateVerified}
+                            height="18px"
+                            width="18px"
+                            alt="corporate_verified"
+                          />
+                        ) : badge === "Notable" ? (
+                          <img
+                            src={Notable}
+                            height="18px"
+                            width="18px"
+                            alt="corporate_verified"
+                          />
+                        ) : badge === "General" ? (
+                          <img
+                            src={General}
+                            height="18px"
+                            width="18px"
+                            alt="corporate_verified"
+                          />
+                        ) : badge === "Media" ? (
+                          <img
+                            src={Media}
+                            height="18px"
+                            width="18px"
+                            alt="corporate_verified"
+                          />
+                        ) : (
+                          <img
+                            src={Notable}
+                            height="18px"
+                            width="18px"
+                            alt="regular_verified"
+                          />
+                        )}
                       </div>
                     ) : null}
                   </div>
@@ -250,14 +252,28 @@ const Profile = ({
                 <div className="user-name-page" style={{ fontSize: "14px" }}>
                   @{username}
                 </div>
-
+                {designation && (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={OfficialCheckMark}
+                      height="14px"
+                      width="14px"
+                      alt="premium_verified"
+                    />
+                    <small className="cpc-username">{"Official"}</small>
+                  </div>
+                )}
                 <button className="btn-edit-profile">
                   <Link to={`/edit/profile/${username}`}>Edit Profile</Link>
                 </button>
                 <button className="btn-edit-profile">
                   <Link to={`/chathive/${username}`}>
                     {" "}
-                    <img src={chathive} className="chativelogo" style={{width: "120px", marginTop: "-8%"}} />
+                    <img
+                      src={chathive}
+                      className="chativelogo"
+                      style={{ width: "120px", marginTop: "-8%" }}
+                    />
                   </Link>
                 </button>
 
@@ -742,7 +758,7 @@ const Profile = ({
                                 backgroundColor: fontColor || "#d9d1f8",
                                 opacity: upload.link ? 1 : 0.2,
                               }}
-                             // onContextMenu={(e) => e.preventDefault()}
+                              // onContextMenu={(e) => e.preventDefault()}
                               onClick={() => {
                                 history.push(
                                   `/${username}/hoot/${btoa(

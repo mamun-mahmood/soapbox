@@ -127,7 +127,7 @@ const CreatorPrivateClub = ({ creator }) => {
 
         {/* verifed creator username */}
         <div className="cpc-username">@{creator.username}</div>
-        {creator.verified === 1 && designation === "Official" && (
+        {designation && (
           <div>
             <img
               src={OfficialCheckMark}

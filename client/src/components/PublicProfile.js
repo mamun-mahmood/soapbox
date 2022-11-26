@@ -282,7 +282,7 @@ const PublicProfile = ({
                 <div className="user-name-page" style={{ fontSize: "14px" }}>
                   @{username}
                 </div>
-                {verified === 1 && designation === "Official" && (
+                {designation  && (
                   <div
                     style={{ display: "flex", alignItems: "center" }}
                   >

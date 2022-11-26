@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 import {
-  Avatar,
-  Box,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   Modal,
 } from "@material-ui/core";
 import axios from "axios";
@@ -36,9 +30,11 @@ const EditModal = ({ setUser, user }) => {
     setOpen(false);
   };
   const [badge, setBadge] = useState(user.badge);
-  const [badgeUpdate, setBadgeUpdate] = useState(user.badge);
+  const [badgeUpdate, setBadgeUpdate] = useState(user.badgeUpdateTime);
   const [designation, setDesignation] = useState(user.designation);
-  const [designationUpdate, setDesignationUpdate] = useState(user.designation);
+  const [designationUpdate, setDesignationUpdate] = useState(
+    user.designationUpdateTime
+  );
   const [verified, setVerified] = useState(user.verified);
   const [email, setEmail] = useState(user.email);
   const [username, setUsername] = useState(user.username);
@@ -61,7 +57,7 @@ const EditModal = ({ setUser, user }) => {
         designationUpdateTime: designationUpdate,
       })
       .then((res) => {
-        alert(`Updated details of ${user.username}`);
+        alert(res.data.message, "changedData: " + res.changedRows);
         handleClose();
         console.log(res.data);
       });

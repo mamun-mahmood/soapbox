@@ -68,6 +68,7 @@ const ProfilePage = () => {
                   userId={user.id}
                   verified={user.verified}
                   badge={user.badge}
+                  designation={user.designation}
                   privateChannel={user.privateChannel}
                   followers={user.followers}
                   name={user.name}
