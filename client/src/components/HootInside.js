@@ -502,7 +502,7 @@ const HootInside = ({
   //     }
   // }, []);
 
-  const iframe = `<iframe src=${embedHootLink} name="hootiFrame" scrolling="no" width="100%" height=600></iframe>`;
+  const iframe = `<iframe src="${embedHootLink}" name="hootiFrame" scrolling="no" width="100%" height=600></iframe>`;
 
   const copyIframe = () => {
     navigator.clipboard.writeText(iframe);
