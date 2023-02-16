@@ -17,7 +17,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
   const [hoverInfo, setHoverInfo] = useState(false);
   const [followed, setFollowed] = useState(false);
   const [followedAlready, setFollowedAlready] = useState(true);
-  const [userFollowers, setUserFollowers] = useState([]);
+  const [userFollowers, setUserFollowers] = useState(null);
   const [userData, setUserData] = useState([]);
 
   const history = useHistory();
@@ -26,7 +26,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
     await axios
       .get(`${BaseURL}/user/followers/${verifiedUser.username}`)
       .then((response) => {
-        setUserFollowers(response.data);
+        setUserFollowers(response && response.data);
       });
   };
 
@@ -115,7 +115,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
   };
 
   // converting array of object to normal array
-  const userFollowersArr = userFollowers.map((user) => {
+  const userFollowersArr = userFollowers && userFollowers.map((user) => {
     return user.followedBy;
   });
 
@@ -291,11 +291,11 @@ const SuggestedFollow = ({ verifiedUser }) => {
                 {userInfo ? (
                   userInfo.username === verifiedUser.username ? (
                     <button className="btn-hoot-follow">Following</button>
-                  ) : userFollowers.length === 0 ? (
+                  ) : userFollowers && userFollowers.length === 0 ? (
                     <button className="btn-hoot-follow" onClick={addFollower}>
                       {followed ? "Following" : "Follow"}
                     </button>
-                  ) : userFollowersArr.some((user) =>
+                  ) : userFollowers && userFollowersArr.some((user) =>
                       (userInfo && userInfo.username).includes(user)
                     ) ? (
                     <button
