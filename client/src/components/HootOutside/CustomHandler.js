@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LinkPreview from "@ashwamegh/react-link-preview";
+// import LinkPreview from "@ashwamegh/react-link-preview";
 import Loading from "../../assets/Loading-bar.gif";
 import axios from "axios";
 function CustomHandler({ url }) {
@@ -8,7 +8,7 @@ function CustomHandler({ url }) {
   useEffect(() => {
     const fetch = async () => {
       await axios.get(`http://localhost:3001/metadata?url=${url}`).then((res) => {
-        if (res.data.meta) {
+        if (res.data && res.data.og) {
           setPreview(res.data.og);
         } else setPreview({ title: "" });
       });
@@ -38,7 +38,7 @@ function CustomHandler({ url }) {
     >
       {preview.title ? <h2>{preview.title}</h2> : null}
       {preview.img ? (
-        <img height="30%" width="30%" src={preview.image} alt={preview.title} />
+        <img style={{width: "100%"}} src={preview.image} alt={preview.title} />
       ) : null}
       {preview.description ? <p> {preview.description} </p> : null}
     </div>
