@@ -7,7 +7,7 @@ function CustomHandler({ url }) {
   const [preview, setPreview] = useState(null);
   useEffect(() => {
     const fetch = async () => {
-      await axios.get(`http://localhost:3001/metadata?url=${url}`).then((res) => {
+      await axios.get(`${BaseURL}/metadata?url=${url}`).then((res) => {
         if (res.data && res.data.og) {
           setPreview(res.data.og);
         } else setPreview({ title: "" });
