@@ -109,7 +109,7 @@ const PublicProfile = ({
 
       axios.post(`${BaseURL}/user/followedBy`, {
         username: userName,
-        loggedInUsername: userInformation.username,
+        loggedInUsername: userInformation && userInformation.username,
       });
     }
 
@@ -128,7 +128,7 @@ const PublicProfile = ({
     if (userInformation) {
       axios.post(`${BaseURL}/user/followedBy/delete`, {
         username: userName,
-        loggedInUsername: userInformation.username,
+        loggedInUsername: userInformation && userInformation.username,
       });
     }
 
@@ -309,7 +309,7 @@ const PublicProfile = ({
                         {followed ? "Following" : "Follow"}
                       </button>
                     ) : userFollowersArr.some((user) =>
-                        (userInformation && userInformation.username).includes(
+                        (userInformation && userInformation && userInformation.username).includes(
                           user
                         )
                       ) ? (
@@ -334,7 +334,7 @@ const PublicProfile = ({
                 <button className="btn-edit-profile">
                   <Link
                     to={{
-                      pathname: `/chathive/${userInformation.username}/livechat/${name}`,
+                      pathname: `/chathive/${userInformation && userInformation.username}/livechat/${name}`,
                       profilePic: { profilePicPath },
                     }}
                   >

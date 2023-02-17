@@ -43,7 +43,7 @@ const MediaProfile = ({
         >
           <div
             style={{
-              height: "110px",
+              height: "200px",
               width: "100%",
               background: "white",
               overflow: "hidden",

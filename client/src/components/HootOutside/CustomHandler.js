@@ -7,11 +7,13 @@ function CustomHandler({ url }) {
   const [preview, setPreview] = useState(null);
   useEffect(() => {
     const fetch = async () => {
-      await axios.get(`${BaseURL}/metadata?url=${url}`).then((res) => {
-        if (res.data && res.data.og) {
-          setPreview(res.data.og);
-        } else setPreview({ title: "" });
-      });
+      await axios
+        .get(`http://localhost:3001/metadata?url=${url}`)
+        .then((res) => {
+          if (res.data && res.data.og) {
+            setPreview(res.data.og);
+          } else setPreview({ title: "" });
+        });
     };
     fetch();
   }, []);
@@ -19,7 +21,7 @@ function CustomHandler({ url }) {
     <div
       style={{
         width: "100%",
-        maxHeight: "110px",
+        maxHeight: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -31,16 +33,17 @@ function CustomHandler({ url }) {
     <div
       style={{
         width: "100%",
-        maxHeight: "110px",
-        background: "white",
+        // background: "white",
         padding: "1px",
       }}
     >
-      {preview.title ? <h2>{preview.title}</h2> : null}
-      {preview.img ? (
-        <img style={{width: "100%"}} src={preview.image} alt={preview.title} />
-      ) : null}
-      {preview.description ? <p> {preview.description} </p> : null}
+      <h2>{preview.title}</h2>
+      <img
+        style={{ width: "100%", height: "100%" }}
+        src={preview.image}
+        alt={preview.title}
+      />
+      <p> {preview.description} </p>
     </div>
   );
 }
