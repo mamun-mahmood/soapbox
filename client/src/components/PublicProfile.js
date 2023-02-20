@@ -3,7 +3,6 @@ import axios from "axios";
 import Avatar from "react-avatar";
 import { formatCount, formatSi } from "../Helpers/formatNumbers";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { HiBadgeCheck, HiOutlineBadgeCheck } from "react-icons/hi";
 import { FiPlayCircle, FiTwitter } from "react-icons/fi";
 import {
   RiFacebookCircleLine,
@@ -29,13 +28,19 @@ import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
 import General from "../assets/purple.svg";
 import Media from "../assets/MediaVerified.svg";
-import OfficialCheckMark from "../assets/OfficialCheckMark.svg";
 import { toast } from "react-toastify";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 import ReactPlayer from "react-player";
 import MediaProfile from "./HootOutside/MediaProfile";
-import { BiBadgeCheck } from "react-icons/bi";
+import OfficalSoapbox from "../assets/designation-icons/Official_Soapbox.svg";
+import ClubSoapbox from "../assets/designation-icons/Club_Soapbox.svg";
+import AdultSoapbox from "../assets/designation-icons/Adult_Soapbox.svg";
+import CorporateSoapbox from "../assets/designation-icons/Corporate_Soapbox.svg";
+import GovermentSoapbox from "../assets/designation-icons/Government_Soapbox.svg";
+import MediaSoapbox from "../assets/designation-icons/Media_Soapbox.svg";
+import ParodySoapbox from "../assets/designation-icons/Parody_Soapbox.svg";
+
 const PublicProfile = ({
   verified,
   privateChannel,
@@ -283,25 +288,198 @@ const PublicProfile = ({
                 <div className="user-name-page" style={{ fontSize: "14px" }}>
                   @{username}
                 </div>
-                {designation && (
-                    <div style={{ display: "flex", alignItems: "center", marginLeft: "15px" }}>
+                {designation && designation.includes("Official") ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
                       <img
-                        src={OfficialCheckMark}
+                        src={OfficalSoapbox}
                         height="18px"
                         width="18px"
-                        alt="premium_verified"
-                      />{" "}
-                      <smalll
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#6D6E71",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ) : designation.includes("Media") ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={MediaSoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#BCBEC0",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ) : designation.includes("Corporate") ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={CorporateSoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#BCBEC0",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ) : designation.includes("Adult") ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={AdultSoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#BCBEC0",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ) : (
+                  designation.includes("Goverment") ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginLeft: "15px",
+                      }}
+                    >
+                      <p>
+                        <img
+                          src={GovermentSoapbox}
+                          height="18px"
+                          width="18px"
+                          alt={designation}
+                        />
+                      </p>
+                      <p
                         style={{
-                          color: "#848484",
-                          fontSize: "16px",
-                          marginLeft: "10px"
+                          color: "#6D6E71",
+                          fontSize: "12px",
+                          marginLeft: "3px",
+                          marginTop: "4px",
                         }}
                       >
                         {designation}
-                      </smalll>
+                      </p>
                     </div>
-                )}
+                  )
+                : designation.includes("Club") ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={ClubSoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#6D6E71",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ): designation.includes("Parody") && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={ParodySoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#6D6E71",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ))}
                 <div className="user-follow">
                   {userInformation ? (
                     userFollowers.length === 0 ? (
@@ -309,9 +487,11 @@ const PublicProfile = ({
                         {followed ? "Following" : "Follow"}
                       </button>
                     ) : userFollowersArr.some((user) =>
-                        (userInformation && userInformation && userInformation.username).includes(
-                          user
-                        )
+                        (
+                          userInformation &&
+                          userInformation &&
+                          userInformation.username
+                        ).includes(user)
                       ) ? (
                       <button className="btn-follow" onClick={removeFollower}>
                         Following
@@ -334,7 +514,9 @@ const PublicProfile = ({
                 <button className="btn-edit-profile">
                   <Link
                     to={{
-                      pathname: `/chathive/${userInformation && userInformation.username}/livechat/${name}`,
+                      pathname: `/chathive/${
+                        userInformation && userInformation.username
+                      }/livechat/${name}`,
                       profilePic: { profilePicPath },
                     }}
                   >
