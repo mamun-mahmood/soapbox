@@ -315,7 +315,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ) : designation.includes("Media") ? (
+                ) : designation.includes("Official Media") ? (
                   <div
                     style={{
                       display: "flex",
@@ -342,7 +342,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ) : designation.includes("Corporate") ? (
+                ) : designation.includes("Official Corporate") ? (
                   <div
                     style={{
                       display: "flex",
@@ -369,7 +369,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ) : designation.includes("Adult") ? (
+                ) : designation.includes("Official Adult") ? (
                   <div
                     style={{
                       display: "flex",
@@ -397,7 +397,7 @@ const PublicProfile = ({
                     </p>
                   </div>
                 ) : (
-                  designation.includes("Goverment") ? (
+                  designation.includes("Official Goverment") ? (
                     <div
                       style={{
                         display: "flex",
@@ -425,7 +425,7 @@ const PublicProfile = ({
                       </p>
                     </div>
                   )
-                : designation.includes("Club") ? (
+                : designation.includes("Official Club") ? (
                   <div
                     style={{
                       display: "flex",
@@ -452,7 +452,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ): designation.includes("Parody") && (
+                ): designation.includes("Official Parody") && (
                   <div
                     style={{
                       display: "flex",
