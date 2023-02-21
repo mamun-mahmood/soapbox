@@ -47,7 +47,6 @@ import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
 import General from "../assets/purple.svg";
 import Media from "../assets/MediaVerified.svg";
-import OfficialCheckMark from "../assets/OfficialCheckMark.svg";
 import OfficalSoapbox from "../assets/designation-icons/Official_Soapbox.svg";
 import ClubSoapbox from "../assets/designation-icons/Club_Soapbox.svg";
 import AdultSoapbox from "../assets/designation-icons/Adult_Soapbox.svg";
