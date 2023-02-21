@@ -669,7 +669,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -696,7 +696,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -723,7 +723,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -750,7 +750,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -777,7 +777,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -804,7 +804,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -832,7 +832,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -2196,7 +2196,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -2223,7 +2223,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -2250,7 +2250,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -2277,7 +2277,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -2304,7 +2304,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -2331,7 +2331,7 @@ const HootInside = ({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: "15px",
+                          marginLeft: "5px",
                         }}
                       >
                         <p>
@@ -2359,7 +2359,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -2555,7 +2555,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -2582,7 +2582,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -2609,7 +2609,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -2636,7 +2636,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -2663,7 +2663,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -2690,7 +2690,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -2718,7 +2718,7 @@ const HootInside = ({
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              marginLeft: "15px",
+                              marginLeft: "5px",
                             }}
                           >
                             <p>
@@ -2945,7 +2945,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -2972,7 +2972,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -2999,7 +2999,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -3026,7 +3026,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -3053,7 +3053,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -3080,7 +3080,7 @@ const HootInside = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            marginLeft: "15px",
+                            marginLeft: "5px",
                           }}
                         >
                           <p>
@@ -3108,7 +3108,7 @@ const HootInside = ({
                             style={{
                               display: "flex",
                               alignItems: "center",
-                              marginLeft: "15px",
+                              marginLeft: "5px",
                             }}
                           >
                             <p>
