@@ -11,8 +11,13 @@ import PremiumVerified from "../../assets/PremiumVerified.svg";
 import CorporateVerified from "../../assets/CorporateVerified.svg";
 import General from "../../assets/purple.svg";
 import Media from "../../assets/MediaVerified.svg";
-import OfficialCheckMark from "../../assets/OfficialCheckMark.svg";
-
+import OfficalSoapbox from "../../assets/designation-icons/Official_Soapbox.svg";
+import ClubSoapbox from "../../assets/designation-icons/Club_Soapbox.svg";
+import AdultSoapbox from "../../assets/designation-icons/Adult_Soapbox.svg";
+import CorporateSoapbox from "../../assets/designation-icons/Corporate_Soapbox.svg";
+import GovermentSoapbox from "../../assets/designation-icons/Government_Soapbox.svg";
+import MediaSoapbox from "../../assets/designation-icons/Media_Soapbox.svg";
+import ParodySoapbox from "../../assets/designation-icons/Parody_Soapbox.svg";
 const CreatorPrivateClub = ({ creator }) => {
   const [creatorsData, setCreatorsData] = useState([]);
   const BaseURL = process.env.REACT_APP_API_URL;
@@ -127,32 +132,198 @@ const CreatorPrivateClub = ({ creator }) => {
 
         {/* verifed creator username */}
         <div className="cpc-username">@{creator.username}</div>
-        {designation && (
-          <div>
-            <img
-              src={OfficialCheckMark}
-              height="14px"
-              width="14px"
-              alt="premium_verified"
-            />
-            <smalll style={{color: "#848484"}}>{designation}</smalll>
+        {designation && designation === "Official" ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "15px",
+            }}
+          >
+            <p>
+              <img
+                src={OfficalSoapbox}
+                height="18px"
+                width="18px"
+                alt={designation}
+              />
+            </p>
+            <p
+              style={{
+                color: "#6D6E71",
+                fontSize: "12px",
+                marginLeft: "3px",
+                marginTop: "4px",
+              }}
+            >
+              {designation}
+            </p>
           </div>
-        ) 
-        // : (
-        //   <div style={{ display: "flex" }}>
-        //     <img
-        //       src={OfficialCheckMark}
-        //       height="14px"
-        //       width="14px"
-        //       alt="premium_verified"
-        //     />
-        //     <div className="cpc-username">{designation}</div>
-        //   </div>
-        // )
-        }
-        {/* <div className="cpc-line">
-                    <div className="cpc-line-dash"></div>
-                </div> */}
+        ) : designation && designation.includes("Media") ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "15px",
+            }}
+          >
+            <p>
+              <img
+                src={MediaSoapbox}
+                height="18px"
+                width="18px"
+                alt={designation}
+              />
+            </p>
+            <p
+              style={{
+                color: "#BCBEC0",
+                fontSize: "12px",
+                marginLeft: "3px",
+                marginTop: "4px",
+              }}
+            >
+              {designation}
+            </p>
+          </div>
+        ) : designation && designation.includes("Corporate") ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "15px",
+            }}
+          >
+            <p>
+              <img
+                src={CorporateSoapbox}
+                height="18px"
+                width="18px"
+                alt={designation}
+              />
+            </p>
+            <p
+              style={{
+                color: "#BCBEC0",
+                fontSize: "12px",
+                marginLeft: "3px",
+                marginTop: "4px",
+              }}
+            >
+              {designation}
+            </p>
+          </div>
+        ) : designation && designation.includes("Adult") ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "15px",
+            }}
+          >
+            <p>
+              <img
+                src={AdultSoapbox}
+                height="18px"
+                width="18px"
+                alt={designation}
+              />
+            </p>
+            <p
+              style={{
+                color: "#BCBEC0",
+                fontSize: "12px",
+                marginLeft: "3px",
+                marginTop: "4px",
+              }}
+            >
+              {designation}
+            </p>
+          </div>
+        ) : designation && designation.includes("Goverment") ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "15px",
+            }}
+          >
+            <p>
+              <img
+                src={GovermentSoapbox}
+                height="18px"
+                width="18px"
+                alt={designation}
+              />
+            </p>
+            <p
+              style={{
+                color: "#6D6E71",
+                fontSize: "12px",
+                marginLeft: "3px",
+                marginTop: "4px",
+              }}
+            >
+              {designation}
+            </p>
+          </div>
+        ) : designation && designation.includes("Club") ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "15px",
+            }}
+          >
+            <p>
+              <img
+                src={ClubSoapbox}
+                height="18px"
+                width="18px"
+                alt={designation}
+              />
+            </p>
+            <p
+              style={{
+                color: "#6D6E71",
+                fontSize: "12px",
+                marginLeft: "3px",
+                marginTop: "4px",
+              }}
+            >
+              {designation}
+            </p>
+          </div>
+        ) : (
+          designation && designation.includes("Parody") && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginLeft: "15px",
+              }}
+            >
+              <p>
+                <img
+                  src={ParodySoapbox}
+                  height="18px"
+                  width="18px"
+                  alt={designation}
+                />
+              </p>
+              <p
+                style={{
+                  color: "#6D6E71",
+                  fontSize: "12px",
+                  marginLeft: "3px",
+                  marginTop: "4px",
+                }}
+              >
+                {designation}
+              </p>
+            </div>
+          )
+        )}
 
         {/* user's likes and views */}
         <div className="cpc-stats">

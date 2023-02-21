@@ -1,8 +1,7 @@
 import axios from "axios";
-import React, { Fragment, useEffect, useEffectuseState, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { toast } from "react-toastify";
-import { HiBadgeCheck } from "react-icons/hi";
 import { Link, useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { formatCount, formatSi } from "../../Helpers/formatNumbers";
@@ -11,7 +10,6 @@ import PremiumVerified from "../../assets/PremiumVerified.svg";
 import CorporateVerified from "../../assets/CorporateVerified.svg";
 import General from "../../assets/purple.svg";
 import Media from "../../assets/MediaVerified.svg";
-import OfficialCheckMark from "../../assets/OfficialCheckMark.svg";
 import OfficalSoapbox from "../../assets/designation-icons/Official_Soapbox.svg";
 import ClubSoapbox from "../../assets/designation-icons/Club_Soapbox.svg";
 import AdultSoapbox from "../../assets/designation-icons/Adult_Soapbox.svg";
@@ -248,7 +246,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  marginLeft: "15px",
+                  marginLeft: "5px",
                 }}
               >
                 <p>
@@ -275,7 +273,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  marginLeft: "15px",
+                  marginLeft: "5px",
                 }}
               >
                 <p>
@@ -302,7 +300,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  marginLeft: "15px",
+                  marginLeft: "5px",
                 }}
               >
                 <p>
@@ -329,7 +327,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  marginLeft: "15px",
+                  marginLeft: "5px",
                 }}
               >
                 <p>
@@ -356,7 +354,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  marginLeft: "15px",
+                  marginLeft: "5px",
                 }}
               >
                 <p>
@@ -383,7 +381,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  marginLeft: "15px",
+                  marginLeft: "5px",
                 }}
               >
                 <p>
@@ -411,7 +409,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    marginLeft: "15px",
+                    marginLeft: "5px",
                   }}
                 >
                   <p>
@@ -583,7 +581,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      marginLeft: "15px",
+                      marginLeft: "5px",
                     }}
                   >
                     <p>
@@ -610,7 +608,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      marginLeft: "15px",
+                      marginLeft: "5px",
                     }}
                   >
                     <p>
@@ -637,7 +635,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      marginLeft: "15px",
+                      marginLeft: "5px",
                     }}
                   >
                     <p>
@@ -664,7 +662,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      marginLeft: "15px",
+                      marginLeft: "5px",
                     }}
                   >
                     <p>
@@ -691,7 +689,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      marginLeft: "15px",
+                      marginLeft: "5px",
                     }}
                   >
                     <p>
@@ -718,7 +716,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      marginLeft: "15px",
+                      marginLeft: "5px",
                     }}
                   >
                     <p>
@@ -746,7 +744,7 @@ const SuggestedFollow = ({ verifiedUser }) => {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        marginLeft: "15px",
+                        marginLeft: "5px",
                       }}
                     >
                       <p>
