@@ -288,7 +288,7 @@ const PublicProfile = ({
                 <div className="user-name-page" style={{ fontSize: "14px" }}>
                   @{username}
                 </div>
-                {designation && designation.includes("Official") ? (
+                {designation && designation === "Official" ? (
                   <div
                     style={{
                       display: "flex",
@@ -315,7 +315,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ) : designation.includes("Official Media") ? (
+                ) : designation.includes("Media") ? (
                   <div
                     style={{
                       display: "flex",
@@ -342,7 +342,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ) : designation.includes("Official Corporate") ? (
+                ) : designation.includes("Corporate") ? (
                   <div
                     style={{
                       display: "flex",
@@ -369,7 +369,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ) : designation.includes("Official Adult") ? (
+                ) : designation.includes("Adult") ? (
                   <div
                     style={{
                       display: "flex",
@@ -397,7 +397,7 @@ const PublicProfile = ({
                     </p>
                   </div>
                 ) : (
-                  designation.includes("Official Goverment") ? (
+                  designation.includes("Goverment") ? (
                     <div
                       style={{
                         display: "flex",
@@ -425,7 +425,7 @@ const PublicProfile = ({
                       </p>
                     </div>
                   )
-                : designation.includes("Official Club") ? (
+                : designation.includes("Club") ? (
                   <div
                     style={{
                       display: "flex",
@@ -452,7 +452,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ): designation.includes("Official Parody") && (
+                ): designation.includes("Parody") && (
                   <div
                     style={{
                       display: "flex",
