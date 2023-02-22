@@ -19,7 +19,6 @@ import NavBar from "../components/NavBar/NavBar";
 import Picker from "emoji-picker-react";
 import { toast } from "react-toastify";
 import { SoapboxTooltip } from "../components/SoapboxTooltip";
-import { LinkPreview } from "@dhaiwat10/react-link-preview";
 import ReactPlayer from "react-player";
 
 const CreateHoot = () => {

@@ -41,7 +41,6 @@ import "./IndividualHoot/individualHoot.css";
 import Expire from "./Expire";
 import ReactPlayer from "react-player";
 import CaptionComp from "./CaptionComp";
-import { LinkPreview } from "@dhaiwat10/react-link-preview";
 import Notable from "../assets/RegularVerified.svg";
 import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";

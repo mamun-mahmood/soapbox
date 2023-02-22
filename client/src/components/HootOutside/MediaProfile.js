@@ -5,7 +5,6 @@ import { FaPlay } from "react-icons/fa";
 import { MdGif, MdMusicNote } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
 import CustomHandler from "./CustomHandler";
-// import { LinkPreview } from "@dhaiwat10/react-link-preview";
 const MediaProfile = ({
   mimeType,
   filePath,

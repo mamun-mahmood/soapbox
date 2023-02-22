@@ -45,7 +45,6 @@ import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
 import ShowModalForIframes from "./showModalForIframes";
 import MyVerticallyCenteredModal from "./PrivateChannels/model";
-import { LinkPreview } from "@dhaiwat10/react-link-preview";
 import MediaProfile from "./HootOutside/MediaProfile";
 
 const Profile = ({

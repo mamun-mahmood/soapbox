@@ -315,7 +315,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ) : designation.includes("Media") ? (
+                ) : designation && designation.includes("Media") ? (
                   <div
                     style={{
                       display: "flex",
@@ -342,7 +342,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ) : designation.includes("Corporate") ? (
+                ) : designation && designation.includes("Corporate") ? (
                   <div
                     style={{
                       display: "flex",
@@ -369,7 +369,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ) : designation.includes("Adult") ? (
+                ) : designation && designation.includes("Adult") ? (
                   <div
                     style={{
                       display: "flex",
@@ -397,7 +397,7 @@ const PublicProfile = ({
                     </p>
                   </div>
                 ) : (
-                  designation.includes("Goverment") ? (
+                  designation && designation.includes("Goverment") ? (
                     <div
                       style={{
                         display: "flex",
@@ -425,7 +425,7 @@ const PublicProfile = ({
                       </p>
                     </div>
                   )
-                : designation.includes("Club") ? (
+                : designation && designation.includes("Club") ? (
                   <div
                     style={{
                       display: "flex",
@@ -452,7 +452,7 @@ const PublicProfile = ({
                       {designation}
                     </p>
                   </div>
-                ): designation.includes("Parody") && (
+                ): designation && designation.includes("Parody") && (
                   <div
                     style={{
                       display: "flex",

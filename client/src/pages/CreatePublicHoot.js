@@ -50,7 +50,6 @@ import videoupload from "../assets/videoupload.png";
 import emojiupload from "../assets/emoji.png";
 import addlink from "../assets/addlink.png";
 import hooticon from "../assets/hooticon.png";
-import { LinkPreview } from "@dhaiwat10/react-link-preview";
 import MediaProfile from "../components/HootOutside/MediaProfile";
 
 const CreatePrivateHoot = (props) => {

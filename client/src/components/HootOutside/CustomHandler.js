@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import LinkPreview from "@ashwamegh/react-link-preview";
 import Loading from "../../assets/Loading-bar.gif";
 import axios from "axios";
 function CustomHandler({ url }) {
