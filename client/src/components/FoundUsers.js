@@ -1,8 +1,19 @@
-import React, { Fragment } from "react";
+import axios from "axios";
+import React, { Fragment, useEffect, useState } from "react";
 import Avatar from "react-avatar";
-import { HiBadgeCheck } from "react-icons/hi";
 import { Link } from "react-router-dom";
-
+import Notable from "../assets/RegularVerified.svg";
+import PremiumVerified from "../assets/PremiumVerified.svg";
+import CorporateVerified from "../assets/CorporateVerified.svg";
+import General from "../assets/purple.svg";
+import Media from "../assets/MediaVerified.svg";
+// import OfficalSoapbox from "../assets/designation-icons/Official_Soapbox.svg";
+// import ClubSoapbox from "../assets/designation-icons/Club_Soapbox.svg";
+// import AdultSoapbox from "../assets/designation-icons/Adult_Soapbox.svg";
+// import CorporateSoapbox from "../assets/designation-icons/Corporate_Soapbox.svg";
+// import GovermentSoapbox from "../assets/designation-icons/Government_Soapbox.svg";
+// import MediaSoapbox from "../assets/designation-icons/Media_Soapbox.svg";
+// import ParodySoapbox from "../assets/designation-icons/Parody_Soapbox.svg";
 const FoundUsers = ({ user }) => {
   const BaseURL = process.env.REACT_APP_API_URL;
   const userInfo = JSON.parse(localStorage.getItem("loggedIn"));
@@ -11,7 +22,18 @@ const FoundUsers = ({ user }) => {
       ? `/profile/${user.username}`
       : `/user/${user.username}`
     : `/user/${user.username}`;
-  // console.log(user);
+  const [badge, setBadge] = useState(null);
+  const [designation, setDesignation] = useState(null);
+  useEffect(() => {
+    const getUserData = async () => {
+      await axios.get(`${BaseURL}/user/${user.username}`).then((response) => {
+        setBadge(response.data[0].badge);
+        setDesignation(response.data[0].designation);
+      });
+    };
+
+    getUserData();
+  }, []);
   return (
     <Fragment>
       <div className="avatar_name">
@@ -43,15 +65,53 @@ const FoundUsers = ({ user }) => {
               </div>
             </Link>
 
-            {user.verified === 1 ? (
-              <div className="verification-badge">
-                <HiBadgeCheck
-                  data-tip="Verified account"
-                  data-text-color="#8249A0"
-                  data-background-color="#D9D2FA"
-                />
+            {user.verified === 1 && (
+              <div className="profile-verification-badge">
+                {badge === "Premium" ? (
+                  <img
+                    src={PremiumVerified}
+                    height="18px"
+                    width="18px"
+                    alt="premium_verified"
+                  />
+                ) : badge === "Corporate" ? (
+                  <img
+                    src={CorporateVerified}
+                    height="18px"
+                    width="18px"
+                    alt="corporate_verified"
+                  />
+                ) : badge === "Notable" ? (
+                  <img
+                    src={Notable}
+                    height="18px"
+                    width="18px"
+                    alt="corporate_verified"
+                  />
+                ) : badge === "General" ? (
+                  <img
+                    src={General}
+                    height="18px"
+                    width="18px"
+                    alt="corporate_verified"
+                  />
+                ) : badge === "Media" ? (
+                  <img
+                    src={Media}
+                    height="18px"
+                    width="18px"
+                    alt="corporate_verified"
+                  />
+                ) : (
+                  <img
+                    src={Notable}
+                    height="18px"
+                    width="18px"
+                    alt="regular_verified"
+                  />
+                )}
               </div>
-            ) : null}
+            )}
           </div>
           <div className="at-suggested-name">@{user.username}</div>
         </div>
