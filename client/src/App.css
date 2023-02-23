@@ -915,7 +915,7 @@ hr {
 
 .hoot-img-horizontal {
   width: 100%;
-  max-height: 780px;
+  max-height: 400px;
   object-fit: scale-down;
   padding: 0.5rem;
   border-radius: 0.95rem;
