@@ -1,9 +1,6 @@
 import React, {
   useState,
   useEffect,
-  Fragment,
-  useContext,
-  useCallback,
 } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import axios from "axios";
@@ -18,7 +15,6 @@ import {
 } from "react-icons/ri";
 import { SiTiktok } from "react-icons/si";
 import { FaTumblr } from "react-icons/fa";
-import { BsExclude } from "react-icons/bs";
 import {
   AiOutlineInstagram,
   AiOutlineLinkedin,
@@ -32,7 +28,6 @@ import PremiumVerified from "../assets/PremiumVerified.svg";
 import CorporateVerified from "../assets/CorporateVerified.svg";
 import General from "../assets/purple.svg";
 import Media from "../assets/MediaVerified.svg";
-import OfficialCheckMark from "../assets/OfficialCheckMark.svg";
 import BeatLoader from "react-spinners/BeatLoader";
 import HootOutside from "./HootOutside/HootOutside";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -43,9 +38,14 @@ import { v4 as uuidv4 } from "uuid";
 
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
-import ShowModalForIframes from "./showModalForIframes";
-import MyVerticallyCenteredModal from "./PrivateChannels/model";
 import MediaProfile from "./HootOutside/MediaProfile";
+import OfficalSoapbox from "../assets/designation-icons/Official_Soapbox.svg";
+import ClubSoapbox from "../assets/designation-icons/Club_Soapbox.svg";
+import AdultSoapbox from "../assets/designation-icons/Adult_Soapbox.svg";
+import CorporateSoapbox from "../assets/designation-icons/Corporate_Soapbox.svg";
+import GovermentSoapbox from "../assets/designation-icons/Government_Soapbox.svg";
+import MediaSoapbox from "../assets/designation-icons/Media_Soapbox.svg";
+import ParodySoapbox from "../assets/designation-icons/Parody_Soapbox.svg";
 
 const Profile = ({
   verified,
@@ -251,7 +251,7 @@ const Profile = ({
                 <div className="user-name-page" style={{ fontSize: "14px" }}>
                   @{username}
                 </div>
-                {designation && (
+                {designation && designation === "Official" ? (
                   <div
                     style={{
                       display: "flex",
@@ -259,23 +259,190 @@ const Profile = ({
                       marginLeft: "15px",
                     }}
                   >
-                    <img
-                      src={OfficialCheckMark}
-                      height="18px"
-                      width="18px"
-                      alt="premium_verified"
-                    />{" "}
-                    <smalll
+                    <p>
+                      <img
+                        src={OfficalSoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
                       style={{
-                        color: "#848484",
-                        fontSize: "16px",
-                        marginLeft: "10px",
+                        color: "#6D6E71",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
                       }}
                     >
                       {designation}
-                    </smalll>
+                    </p>
                   </div>
-                )}
+                ) : designation && designation.includes("Media") ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={MediaSoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#BCBEC0",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ) : designation && designation.includes("Corporate") ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={CorporateSoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#BCBEC0",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ) : designation && designation.includes("Adult") ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={AdultSoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#BCBEC0",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ) : (
+                  designation && designation.includes("Goverment") ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginLeft: "15px",
+                      }}
+                    >
+                      <p>
+                        <img
+                          src={GovermentSoapbox}
+                          height="18px"
+                          width="18px"
+                          alt={designation}
+                        />
+                      </p>
+                      <p
+                        style={{
+                          color: "#6D6E71",
+                          fontSize: "12px",
+                          marginLeft: "3px",
+                          marginTop: "4px",
+                        }}
+                      >
+                        {designation}
+                      </p>
+                    </div>
+                  )
+                : designation && designation.includes("Club") ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={ClubSoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#6D6E71",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ): designation && designation.includes("Parody") && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={ParodySoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
+                      style={{
+                        color: "#6D6E71",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {designation}
+                    </p>
+                  </div>
+                ))}
                 <button className="btn-edit-profile">
                   <Link to={`/edit/profile/${username}`}>Edit Profile</Link>
                 </button>
@@ -612,44 +779,7 @@ const Profile = ({
                       }, 500);
                     } else {
                       setIframeBox({
-                        src: "https://www.megahoot.com/xmg-fintech-digital-payment-portal/xmg-fintech/",
-                        title: "XMG Wallet",
-                      });
-
-                      setShowIframe(true);
-                      setTimeout(() => {
-                        if (document.getElementById("slideIFMP")) {
-                          document.getElementById(
-                            "slideIFMP"
-                          ).style.transition = "1sec";
-                          document.getElementById("slideIFMP").style.left =
-                            "30%";
-                        }
-                      }, 1);
-                    }
-                  }}
-                >
-                  Buy XMG
-                </button>
-                <button
-                  className="btn-add-private-c"
-                  style={{
-                    minWidth: "165px",
-                    maxWidth: "166px !important",
-                    margin: "0px",
-                  }}
-                  onClick={() => {
-                    if (showIframe) {
-                      document.getElementById("slideIFMP").style.transition =
-                        "2sec";
-                      document.getElementById("slideIFMP").style.left = "200vw";
-
-                      setTimeout(() => {
-                        setShowIframe(false);
-                      }, 500);
-                    } else {
-                      setIframeBox({
-                        src: "https://www.megahoot.com/vault/megahoot-vault/",
+                        src: "https://hootdex.org/",
                         title: "MegaHoot Vault",
                       });
 
@@ -666,44 +796,7 @@ const Profile = ({
                     }
                   }}
                 >
-                  MegaHoot Vault
-                </button>
-                <button
-                  className="btn-add-private-c"
-                  style={{
-                    minWidth: "165px",
-                    maxWidth: "166px !important",
-                    margin: "0px",
-                  }}
-                  onClick={() => {
-                    if (showIframe) {
-                      document.getElementById("slideIFMP").style.transition =
-                        "2sec";
-                      document.getElementById("slideIFMP").style.left = "200vw";
-
-                      setTimeout(() => {
-                        setShowIframe(false);
-                      }, 500);
-                    } else {
-                      setIframeBox({
-                        src: "https://www.megahootvault.com/",
-                        title: "Crypto Index",
-                      });
-
-                      setShowIframe(true);
-                      setTimeout(() => {
-                        if (document.getElementById("slideIFMP")) {
-                          document.getElementById(
-                            "slideIFMP"
-                          ).style.transition = "1sec";
-                          document.getElementById("slideIFMP").style.left =
-                            "30%";
-                        }
-                      }, 1);
-                    }
-                  }}
-                >
-                  Crypto Index
+                  HootDex
                 </button>
               </div>
             </div>
