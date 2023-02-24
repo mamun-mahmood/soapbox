@@ -180,65 +180,90 @@ const SuggestedFollow = ({ verifiedUser }) => {
           </Link>
 
           <div className="div-suggested-username-name">
-            <div className="name-verification">
-              <Link to={path}>
-                <div className="name">
-                  {verifiedUser.name
-                    ? verifiedUser.name
-                    : verifiedUser.username}
-                </div>
-              </Link>
-
-              {verifiedUser.verified === 1 ? (
-                <div className="verification-badge">
-                  {verifiedUser.badge === "Premium" ? (
-                    <img
-                      src={PremiumVerified}
-                      height="18px"
-                      width="18px"
-                      alt="premium_verified"
-                    />
-                  ) : verifiedUser.badge === "Corporate" ? (
-                    <img
-                      src={CorporateVerified}
-                      height="18px"
-                      width="18px"
-                      alt="corporate_verified"
-                    />
-                  ) : verifiedUser.badge === "Notable" ? (
-                    <img
-                      src={Notable}
-                      height="18px"
-                      width="18px"
-                      alt="corporate_verified"
-                    />
-                  ) : verifiedUser.badge === "General" ? (
-                    <img
-                      src={General}
-                      height="18px"
-                      width="18px"
-                      alt="corporate_verified"
-                    />
-                  ) : verifiedUser.badge === "Media" ? (
-                    <img
-                      src={Media}
-                      height="18px"
-                      width="18px"
-                      alt="corporate_verified"
-                    />
-                  ) : (
-                    <img
-                      src={Notable}
-                      height="18px"
-                      width="18px"
-                      alt="regular_verified"
-                    />
-                  )}
-                </div>
-              ) : null}
-            </div>
-            <div className="at-suggested-name" style={{ fontSize: "0.9rem" }}>
-              @{verifiedUser.username}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                width: "100%",
+              }}
+            >
+              <p
+                style={{
+                  maxWidth: "calc(60%)",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="m-0 name"
+              >
+                {" "}
+                <Link to={path} className="name">
+                  {verifiedUser.name ? verifiedUser.name.trim() : verifiedUser.username.trim()}
+                </Link>
+              </p>
+              <p className="m-0 ml-1 mr-1 ">
+                {verifiedUser.verified === 1 ? (
+                  <Fragment>
+                    {verifiedUser.badge === "Premium" ? (
+                      <img
+                        src={PremiumVerified}
+                        height="18px"
+                        width="18px"
+                        alt="premium_verified"
+                      />
+                    ) : verifiedUser.badge === "Corporate" ? (
+                      <img
+                        src={CorporateVerified}
+                        height="18px"
+                        width="18px"
+                        alt="corporate_verified"
+                      />
+                    ) : verifiedUser.badge === "Notable" ? (
+                      <img
+                        src={Notable}
+                        height="18px"
+                        width="18px"
+                        alt="corporate_verified"
+                      />
+                    ) : verifiedUser.badge === "General" ? (
+                      <img
+                        src={General}
+                        height="18px"
+                        width="18px"
+                        alt="corporate_verified"
+                      />
+                    ) : verifiedUser.badge === "Media" ? (
+                      <img
+                        src={Media}
+                        height="18px"
+                        width="18px"
+                        alt="corporate_verified"
+                      />
+                    ) : (
+                      <img
+                        src={Notable}
+                        height="18px"
+                        width="18px"
+                        alt="regular_verified"
+                      />
+                    )}
+                  </Fragment>
+                ) : null}
+              </p>
+              <p
+                className="m-0"
+                style={{
+                  maxWidth: "calc(33%)",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {" "}
+                @{verifiedUser.username.trim()}
+              </p>
             </div>
             {verifiedUser.designation &&
             verifiedUser.designation === "Official" ? (
@@ -268,7 +293,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                   {verifiedUser.designation}
                 </p>
               </div>
-            ) : verifiedUser.designation && verifiedUser.designation.includes("Media") ? (
+            ) : verifiedUser.designation &&
+              verifiedUser.designation.includes("Media") ? (
               <div
                 style={{
                   display: "flex",
@@ -295,7 +321,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                   {verifiedUser.designation}
                 </p>
               </div>
-            ) : verifiedUser.designation && verifiedUser.designation.includes("Corporate") ? (
+            ) : verifiedUser.designation &&
+              verifiedUser.designation.includes("Corporate") ? (
               <div
                 style={{
                   display: "flex",
@@ -322,7 +349,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                   {verifiedUser.designation}
                 </p>
               </div>
-            ) : verifiedUser.designation && verifiedUser.designation.includes("Adult") ? (
+            ) : verifiedUser.designation &&
+              verifiedUser.designation.includes("Adult") ? (
               <div
                 style={{
                   display: "flex",
@@ -349,7 +377,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                   {verifiedUser.designation}
                 </p>
               </div>
-            ) : verifiedUser.designation && verifiedUser.designation.includes("Goverment") ? (
+            ) : verifiedUser.designation &&
+              verifiedUser.designation.includes("Goverment") ? (
               <div
                 style={{
                   display: "flex",
@@ -376,7 +405,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                   {verifiedUser.designation}
                 </p>
               </div>
-            ) : verifiedUser.designation && verifiedUser.designation.includes("Club") ? (
+            ) : verifiedUser.designation &&
+              verifiedUser.designation.includes("Club") ? (
               <div
                 style={{
                   display: "flex",
@@ -404,7 +434,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                 </p>
               </div>
             ) : (
-              verifiedUser.designation && verifiedUser.designation.includes("Parody") && (
+              verifiedUser.designation &&
+              verifiedUser.designation.includes("Parody") && (
                 <div
                   style={{
                     display: "flex",
@@ -520,61 +551,91 @@ const SuggestedFollow = ({ verifiedUser }) => {
 
             <div className="hoot-user-info">
               <div className="hoot-username">
-                <div className="name-verification">
-                  <Link to={path}>
-                    <div className="name">{verifiedUser.name}</div>
-                  </Link>
-                  {verifiedUser.verified === 1 ? (
-                    <div className="verification-badge">
-                      {verifiedUser.badge === "Premium" ? (
-                        <img
-                          src={PremiumVerified}
-                          height="18px"
-                          width="18px"
-                          alt="premium_verified"
-                        />
-                      ) : verifiedUser.badge === "Corporate" ? (
-                        <img
-                          src={CorporateVerified}
-                          height="18px"
-                          width="18px"
-                          alt="corporate_verified"
-                        />
-                      ) : verifiedUser.badge === "Notable" ? (
-                        <img
-                          src={Notable}
-                          height="18px"
-                          width="18px"
-                          alt="corporate_verified"
-                        />
-                      ) : verifiedUser.badge === "General" ? (
-                        <img
-                          src={General}
-                          height="18px"
-                          width="18px"
-                          alt="corporate_verified"
-                        />
-                      ) : verifiedUser.badge === "Media" ? (
-                        <img
-                          src={Media}
-                          height="18px"
-                          width="18px"
-                          alt="corporate_verified"
-                        />
-                      ) : (
-                        <img
-                          src={Notable}
-                          height="18px"
-                          width="18px"
-                          alt="regular_verified"
-                        />
-                      )}
-                    </div>
-                  ) : null}
-                </div>
-                <div className="hover-at-name" style={{ fontSize: "0.9rem" }}>
-                  @{verifiedUser.username}
-                </div>
+              <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                width: "100%",
+              }}
+            >
+              <p
+                style={{
+                  maxWidth: "calc(60%)",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="m-0 name"
+              >
+                {" "}
+                <Link to={path} className="name">
+                  {verifiedUser.name ? verifiedUser.name.trim() : verifiedUser.username.trim()}
+                </Link>
+              </p>
+              <p className="m-0 ml-1 mr-1 ">
+                {verifiedUser.verified === 1 ? (
+                  <Fragment>
+                    {verifiedUser.badge === "Premium" ? (
+                      <img
+                        src={PremiumVerified}
+                        height="18px"
+                        width="18px"
+                        alt="premium_verified"
+                      />
+                    ) : verifiedUser.badge === "Corporate" ? (
+                      <img
+                        src={CorporateVerified}
+                        height="18px"
+                        width="18px"
+                        alt="corporate_verified"
+                      />
+                    ) : verifiedUser.badge === "Notable" ? (
+                      <img
+                        src={Notable}
+                        height="18px"
+                        width="18px"
+                        alt="corporate_verified"
+                      />
+                    ) : verifiedUser.badge === "General" ? (
+                      <img
+                        src={General}
+                        height="18px"
+                        width="18px"
+                        alt="corporate_verified"
+                      />
+                    ) : verifiedUser.badge === "Media" ? (
+                      <img
+                        src={Media}
+                        height="18px"
+                        width="18px"
+                        alt="corporate_verified"
+                      />
+                    ) : (
+                      <img
+                        src={Notable}
+                        height="18px"
+                        width="18px"
+                        alt="regular_verified"
+                      />
+                    )}
+                  </Fragment>
+                ) : null}
+              </p>
+              <p
+                className="m-0"
+                style={{
+                  maxWidth: "calc(33%)",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {" "}
+                @{verifiedUser.username.trim()}
+              </p>
+            </div>
                 {verifiedUser.designation &&
                 verifiedUser.designation === "Official" ? (
                   <div
@@ -603,7 +664,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                       {verifiedUser.designation}
                     </p>
                   </div>
-                ) : verifiedUser.designation && verifiedUser.designation.includes("Media") ? (
+                ) : verifiedUser.designation &&
+                  verifiedUser.designation.includes("Media") ? (
                   <div
                     style={{
                       display: "flex",
@@ -630,7 +692,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                       {verifiedUser.designation}
                     </p>
                   </div>
-                ) : verifiedUser.designation && verifiedUser.designation.includes("Corporate") ? (
+                ) : verifiedUser.designation &&
+                  verifiedUser.designation.includes("Corporate") ? (
                   <div
                     style={{
                       display: "flex",
@@ -657,7 +720,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                       {verifiedUser.designation}
                     </p>
                   </div>
-                ) : verifiedUser.designation && verifiedUser.designation.includes("Adult") ? (
+                ) : verifiedUser.designation &&
+                  verifiedUser.designation.includes("Adult") ? (
                   <div
                     style={{
                       display: "flex",
@@ -684,7 +748,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                       {verifiedUser.designation}
                     </p>
                   </div>
-                ) : verifiedUser.designation && verifiedUser.designation.includes("Goverment") ? (
+                ) : verifiedUser.designation &&
+                  verifiedUser.designation.includes("Goverment") ? (
                   <div
                     style={{
                       display: "flex",
@@ -711,7 +776,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                       {verifiedUser.designation}
                     </p>
                   </div>
-                ) : verifiedUser.designation && verifiedUser.designation.includes("Club") ? (
+                ) : verifiedUser.designation &&
+                  verifiedUser.designation.includes("Club") ? (
                   <div
                     style={{
                       display: "flex",
@@ -739,7 +805,8 @@ const SuggestedFollow = ({ verifiedUser }) => {
                     </p>
                   </div>
                 ) : (
-                  verifiedUser.designation && verifiedUser.designation.includes("Parody") && (
+                  verifiedUser.designation &&
+                  verifiedUser.designation.includes("Parody") && (
                     <div
                       style={{
                         display: "flex",
