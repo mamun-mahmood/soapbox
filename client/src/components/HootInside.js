@@ -2107,7 +2107,7 @@ const HootInside = ({
         <div className="home">
           <div className="home-container">
             <ReactTooltip />
-            <div className="post-heading">
+            <div className="post-heading" >
               {privateHoot !== 1 ? (
                 <div
                   onMouseEnter={() => setHoverInfo(true)}
@@ -2132,13 +2132,32 @@ const HootInside = ({
                   </Link>
 
                   <div>
-                    <div className="div-username-name">
-                      <div className="name-verification">
-                        <Link to={path}>
-                          <div className="name">{name ? name : username}</div>
-                        </Link>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        width: "100%",
+                      }}
+                    >
+                      <p
+                        style={{
+                          maxWidth: "calc(60%)",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                        className="m-0 name"
+                      > <Link to={path} className="name" >
+                        {name ? name.trim() : username.trim()}
+                      </Link>
+                      </p>
+                      <p
+                        className="m-0 ml-1 mr-1 "
+                      >
                         {verified === 1 ? (
-                          <div className="verification-badge">
+                          <Fragment>
                             {badge === "Premium" ? (
                               <img
                                 src={PremiumVerified}
@@ -2182,13 +2201,23 @@ const HootInside = ({
                                 alt="regular_verified"
                               />
                             )}
-                          </div>
+                          </Fragment>
                         ) : null}
-                      </div>
-                      <div className="at-name" style={{ fontSize: "0.9rem" }}>
-                        @{username}
-                      </div>
+                      </p>
+                      <p
+                        className="m-0"
+                        style={{
+                          maxWidth: "calc(33%)",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {" "}
+                        @{username.trim()}
+                      </p>
                     </div>
+
                     {designation && designation === "Official" ? (
                       <div
                         style={{
@@ -2209,7 +2238,7 @@ const HootInside = ({
                           style={{
                             color: "#6D6E71",
                             fontSize: "12px",
-                            marginLeft: "3px",
+                            marginLeft: "3px !important",
                             marginTop: "4px",
                           }}
                         >
@@ -2236,7 +2265,7 @@ const HootInside = ({
                           style={{
                             color: "#BCBEC0",
                             fontSize: "12px",
-                            marginLeft: "3px",
+                            marginLeft: "3px !important",
                             marginTop: "4px",
                           }}
                         >
@@ -2263,7 +2292,7 @@ const HootInside = ({
                           style={{
                             color: "#BCBEC0",
                             fontSize: "12px",
-                            marginLeft: "3px",
+                            marginLeft: "3px !important",
                             marginTop: "4px",
                           }}
                         >
@@ -2290,7 +2319,7 @@ const HootInside = ({
                           style={{
                             color: "#BCBEC0",
                             fontSize: "12px",
-                            marginLeft: "3px",
+                            marginLeft: "3px !important",
                             marginTop: "4px",
                           }}
                         >
@@ -2317,7 +2346,7 @@ const HootInside = ({
                           style={{
                             color: "#6D6E71",
                             fontSize: "12px",
-                            marginLeft: "3px",
+                            marginLeft: "3px !important",
                             marginTop: "4px",
                           }}
                         >
@@ -2344,7 +2373,7 @@ const HootInside = ({
                           style={{
                             color: "#6D6E71",
                             fontSize: "12px",
-                            marginLeft: "3px",
+                            marginLeft: "3px !important",
                             marginTop: "4px",
                           }}
                         >
@@ -2352,7 +2381,8 @@ const HootInside = ({
                         </p>
                       </div>
                     ) : (
-                      designation && designation.includes("Parody") && (
+                      designation &&
+                      designation.includes("Parody") && (
                         <div
                           style={{
                             display: "flex",
@@ -2372,7 +2402,7 @@ const HootInside = ({
                             style={{
                               color: "#6D6E71",
                               fontSize: "12px",
-                              marginLeft: "3px",
+                              marginLeft: "3px !important",
                               marginTop: "4px",
                             }}
                           >
@@ -2490,12 +2520,32 @@ const HootInside = ({
 
                   <div className="hoot-user-info">
                     <div className="hoot-username">
-                      <div className="name-verification">
-                        <Link to={path}>
-                          <div className="name">{name}</div>
-                        </Link>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        width: "100%",
+                      }}
+                    >
+                      <p
+                        style={{
+                          maxWidth: "calc(60%)",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                        className="m-0 name"
+                      > <Link to={path} className="name" >
+                        {name ? name.trim() : username.trim()}
+                      </Link>
+                      </p>
+                      <p
+                        className="m-0 ml-1 mr-1 "
+                      >
                         {verified === 1 ? (
-                          <div className="verification-badge">
+                          <Fragment>
                             {badge === "Premium" ? (
                               <img
                                 src={PremiumVerified}
@@ -2539,15 +2589,22 @@ const HootInside = ({
                                 alt="regular_verified"
                               />
                             )}
-                          </div>
+                          </Fragment>
                         ) : null}
-                      </div>
-                      <div
-                        className="hover-at-name"
-                        style={{ fontSize: "0.9rem" }}
+                      </p>
+                      <p
+                        className="m-0"
+                        style={{
+                          maxWidth: "calc(33%)",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
                       >
-                        @{username}
-                      </div>
+                        {" "}
+                        @{username.trim()}
+                      </p>
+                    </div>
                       {designation && designation === "Official" ? (
                         <div
                           style={{
@@ -2780,28 +2837,28 @@ const HootInside = ({
                       // <button className="btn-hoot-follow">Following4</button>
                       ""
                     ) : userFollowers.length === 0 ? (
-                      <button className="btn-hoot-follow" onClick={addFollower}>
+                      <button className="btn-hoot-follow join-my-club-margin" onClick={addFollower}>
                         {followed ? "Following" : "Follow"}
                       </button>
                     ) : userFollowersArr.some((user) =>
                         (userInfo && userInfo.username).includes(user)
                       ) ? (
                       <button
-                        className="btn-hoot-follow"
+                        className="btn-hoot-follow join-my-club-margin"
                         onClick={followedAlready ? removeFollower : addFollower}
                       >
                         {followedAlready ? "Following" : "Follow"}
                       </button>
                     ) : (
                       <button
-                        className="btn-hoot-follow"
+                        className="btn-hoot-follow join-my-club-margin"
                         onClick={followed ? removeFollower : addFollower}
                       >
                         {followed ? "Following" : "Follow"}
                       </button>
                     )
                   ) : (
-                    <button className="btn-hoot-follow" onClick={followAction}>
+                    <button className="btn-hoot-follow join-my-club-margin" onClick={followAction}>
                       Follow
                     </button>
                   )}
