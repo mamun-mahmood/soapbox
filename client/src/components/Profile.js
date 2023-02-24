@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-} from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import Avatar from "react-avatar";
@@ -196,61 +193,79 @@ const Profile = ({
 
               <div className="user-info">
                 <div className="display-name">
-                  <div className="profile-name-verification">
-                    <h1 style={{ fontSize: "14px" }}>{name}</h1>
-                    {verified == 1 ? (
-                      <div className="profile-verification-badge">
-                        {badge === "Premium" ? (
-                          <img
-                            src={PremiumVerified}
-                            height="18px"
-                            width="18px"
-                            alt="premium_verified"
-                          />
-                        ) : badge === "Corporate" ? (
-                          <img
-                            src={CorporateVerified}
-                            height="18px"
-                            width="18px"
-                            alt="corporate_verified"
-                          />
-                        ) : badge === "Notable" ? (
-                          <img
-                            src={Notable}
-                            height="18px"
-                            width="18px"
-                            alt="corporate_verified"
-                          />
-                        ) : badge === "General" ? (
-                          <img
-                            src={General}
-                            height="18px"
-                            width="18px"
-                            alt="corporate_verified"
-                          />
-                        ) : badge === "Media" ? (
-                          <img
-                            src={Media}
-                            height="18px"
-                            width="18px"
-                            alt="corporate_verified"
-                          />
-                        ) : (
-                          <img
-                            src={Notable}
-                            height="18px"
-                            width="18px"
-                            alt="regular_verified"
-                          />
-                        )}
-                      </div>
-                    ) : null}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      width: "100%",
+                    }}
+                  >
+                    <p
+                      className="m-0 name"
+                    >
+                        {name ? name.trim() : username.trim()}
+                    </p>
+                    <p className="m-0 ml-1 mr-1 ">
+                      {verified === 1 ? (
+                        <Fragment>
+                          {badge === "Premium" ? (
+                            <img
+                              src={PremiumVerified}
+                              height="18px"
+                              width="18px"
+                              alt="premium_verified"
+                            />
+                          ) : badge === "Corporate" ? (
+                            <img
+                              src={CorporateVerified}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "Notable" ? (
+                            <img
+                              src={Notable}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "General" ? (
+                            <img
+                              src={General}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "Media" ? (
+                            <img
+                              src={Media}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : (
+                            <img
+                              src={Notable}
+                              height="18px"
+                              width="18px"
+                              alt="regular_verified"
+                            />
+                          )}
+                        </Fragment>
+                      ) : null}
+                    </p>
+                    <p
+                      className="m-0"
+                    >
+                      {" "}
+                      @{username.trim()}
+                    </p>
                   </div>
                 </div>
 
-                <div className="user-name-page" style={{ fontSize: "14px" }}>
-                  @{username}
-                </div>
                 {designation && designation === "Official" ? (
                   <div
                     style={{
@@ -359,36 +374,34 @@ const Profile = ({
                       {designation}
                     </p>
                   </div>
-                ) : (
-                  designation && designation.includes("Goverment") ? (
-                    <div
+                ) : designation && designation.includes("Goverment") ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <p>
+                      <img
+                        src={GovermentSoapbox}
+                        height="18px"
+                        width="18px"
+                        alt={designation}
+                      />
+                    </p>
+                    <p
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginLeft: "15px",
+                        color: "#6D6E71",
+                        fontSize: "12px",
+                        marginLeft: "3px",
+                        marginTop: "4px",
                       }}
                     >
-                      <p>
-                        <img
-                          src={GovermentSoapbox}
-                          height="18px"
-                          width="18px"
-                          alt={designation}
-                        />
-                      </p>
-                      <p
-                        style={{
-                          color: "#6D6E71",
-                          fontSize: "12px",
-                          marginLeft: "3px",
-                          marginTop: "4px",
-                        }}
-                      >
-                        {designation}
-                      </p>
-                    </div>
-                  )
-                : designation && designation.includes("Club") ? (
+                      {designation}
+                    </p>
+                  </div>
+                ) : designation && designation.includes("Club") ? (
                   <div
                     style={{
                       display: "flex",
@@ -415,34 +428,37 @@ const Profile = ({
                       {designation}
                     </p>
                   </div>
-                ): designation && designation.includes("Parody") && (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginLeft: "15px",
-                    }}
-                  >
-                    <p>
-                      <img
-                        src={ParodySoapbox}
-                        height="18px"
-                        width="18px"
-                        alt={designation}
-                      />
-                    </p>
-                    <p
+                ) : (
+                  designation &&
+                  designation.includes("Parody") && (
+                    <div
                       style={{
-                        color: "#6D6E71",
-                        fontSize: "12px",
-                        marginLeft: "3px",
-                        marginTop: "4px",
+                        display: "flex",
+                        alignItems: "center",
+                        marginLeft: "15px",
                       }}
                     >
-                      {designation}
-                    </p>
-                  </div>
-                ))}
+                      <p>
+                        <img
+                          src={ParodySoapbox}
+                          height="18px"
+                          width="18px"
+                          alt={designation}
+                        />
+                      </p>
+                      <p
+                        style={{
+                          color: "#6D6E71",
+                          fontSize: "12px",
+                          marginLeft: "3px",
+                          marginTop: "4px",
+                        }}
+                      >
+                        {designation}
+                      </p>
+                    </div>
+                  )
+                )}
                 <button className="btn-edit-profile">
                   <Link to={`/edit/profile/${username}`}>Edit Profile</Link>
                 </button>

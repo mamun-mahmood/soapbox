@@ -232,62 +232,88 @@ const PublicProfile = ({
               <ReactTooltip />
 
               <div className="user-info">
-                <div className="display-name">
-                  <div className="profile-name-verification">
-                    <h1 style={{ fontSize: "14px" }}>{name}</h1>
-                    {verified === 1 ? (
-                      <div className="profile-verification-badge">
-                        {badge === "Premium" ? (
-                          <img
-                            src={PremiumVerified}
-                            height="18px"
-                            width="18px"
-                            alt="premium_verified"
-                          />
-                        ) : badge === "Corporate" ? (
-                          <img
-                            src={CorporateVerified}
-                            height="18px"
-                            width="18px"
-                            alt="corporate_verified"
-                          />
-                        ) : badge === "Notable" ? (
-                          <img
-                            src={Notable}
-                            height="18px"
-                            width="18px"
-                            alt="corporate_verified"
-                          />
-                        ) : badge === "General" ? (
-                          <img
-                            src={General}
-                            height="18px"
-                            width="18px"
-                            alt="corporate_verified"
-                          />
-                        ) : badge === "Media" ? (
-                          <img
-                            src={Media}
-                            height="18px"
-                            width="18px"
-                            alt="corporate_verified"
-                          />
-                        ) : (
-                          <img
-                            src={Notable}
-                            height="18px"
-                            width="18px"
-                            alt="regular_verified"
-                          />
-                        )}
-                      </div>
-                    ) : null}
+              <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      width: "100%",
+                    }}
+                  >
+                    <p
+                      style={{
+                        maxWidth: "calc(60%)",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                      className="m-0 name"
+                    >
+                        {name ? name.trim() : username.trim()}
+                    </p>
+                    <p className="m-0 ml-1 mr-1 ">
+                      {verified === 1 ? (
+                        <Fragment>
+                          {badge === "Premium" ? (
+                            <img
+                              src={PremiumVerified}
+                              height="18px"
+                              width="18px"
+                              alt="premium_verified"
+                            />
+                          ) : badge === "Corporate" ? (
+                            <img
+                              src={CorporateVerified}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "Notable" ? (
+                            <img
+                              src={Notable}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "General" ? (
+                            <img
+                              src={General}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : badge === "Media" ? (
+                            <img
+                              src={Media}
+                              height="18px"
+                              width="18px"
+                              alt="corporate_verified"
+                            />
+                          ) : (
+                            <img
+                              src={Notable}
+                              height="18px"
+                              width="18px"
+                              alt="regular_verified"
+                            />
+                          )}
+                        </Fragment>
+                      ) : null}
+                    </p>
+                    <p
+                      className="m-0"
+                      style={{
+                        maxWidth: "calc(33%)",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {" "}
+                      @{username.trim()}
+                    </p>
                   </div>
-                </div>
-
-                <div className="user-name-page" style={{ fontSize: "14px" }}>
-                  @{username}
-                </div>
                 {designation && designation === "Official" ? (
                   <div
                     style={{
