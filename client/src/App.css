@@ -1862,6 +1862,8 @@ hr {
 
 .slide-container {
   position: relative;
+  top: 0px;
+  z-index: 9999;
 }
 #slideIFMP {
   position: absolute;
@@ -3063,5 +3065,5 @@ hr {
 .hoot-create-container {
   position: relative;
   z-index: 9999;
-  top: 30px;
+  top: 0px;
 }
