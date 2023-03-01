@@ -9,7 +9,7 @@ import axios from "axios";
 import { SoapboxTooltip } from "../SoapboxTooltip";
 import CreatePublicHoot from "../../pages/CreatePublicHoot";
 import { MyPublicHootBox } from "../../context/MyPublicHootBoxContext";
-
+import SoapboxLogo from "../../assets/Sopabox_logo2023_3.svg";
 const NavBar = ({
   width,
   header,
@@ -77,7 +77,7 @@ const NavBar = ({
         <div className="main-brand">
           <Link to="/All-Hoots" className="navbar-brand cursor-pointer">
             <img
-              src="/images/MegaHoot_Owl3_app.png"
+              src={SoapboxLogo}
               alt="Megahoot Soapbox"
               className="d-inline-block align-text-top"
               onClick={scrollToTop}
