@@ -1624,7 +1624,7 @@ const CreatePrivateHoot = (props) => {
         />
         <meta
           name="twitter:image"
-          content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png"
+          content="https://soapboxapi.megahoot.net/profile-pictures/Sopabox_logo2023_3.svg"
         />
 
         {/* OpenGraph tags */}
@@ -1639,7 +1639,7 @@ const CreatePrivateHoot = (props) => {
         />
         <meta
           property="og:image"
-          content="https://soapboxapi.megahoot.net/profile-pictures/MegaHoot_Owl3_app.png"
+          content="https://soapboxapi.megahoot.net/profile-pictures/Sopabox_logo2023_3.svg"
         />
       </Helmet>
     </div>
