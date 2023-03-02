@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './forgotPassword.css'
 import axios from 'axios'
-import SBlogo from '../../assets/Soapbox.png'
+import SBlogo from '../../assets/Sopabox_logo2023_3.svg'
 import { Link } from 'react-router-dom'
 
 const ForgotPassword = () => {
