@@ -54,13 +54,13 @@ const LandingPage = () => {
             <main className="landing-page">
                 <div className="landing-ls">
                     <span>
-                        MegaHoot Soapbox a Club Community For Everyone
+                    MegaHoot Soapbox, Next Generation for Social Connection
                     </span>
                     <div className="img-text">
                         <a href={locattion.pathname}>
                             <img
                                 onContextMenu={(e) => e.preventDefault()}
-                                src="./images/MegaHoot_Soapbox_LandingPage_600_2_web.png"
+                                src="./images/MegaHoot_Soapbox_LandingPage_Vertical_2023.jpg"
                                 alt="MegaHoot Soapbox"
                             />
                         </a>
