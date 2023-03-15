@@ -46,7 +46,7 @@
 }
 
 .brand img {
-    padding: 0.2rem 0.5rem 0.5rem 0.5rem;
+    padding: 5px;
     width: 55px;
     height: 55px;
     transition: 0.3s;

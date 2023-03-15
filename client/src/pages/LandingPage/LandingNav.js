@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { IoCloseOutline } from "react-icons/io5";
 import "./landingPage.css";
-import SoapboxLogo from "../../assets/Sopabox_logo2023_3.svg";
+import SoapboxLogo from "../../assets/SoapboxLogo_2023.svg";
 const LandingNav = () => {
   const locattion = useLocation();
   const [showLinks, setShowLinks] = useState(false);

@@ -9,7 +9,7 @@ import axios from "axios";
 import { SoapboxTooltip } from "../SoapboxTooltip";
 import CreatePublicHoot from "../../pages/CreatePublicHoot";
 import { MyPublicHootBox } from "../../context/MyPublicHootBoxContext";
-import SoapboxLogo from "../../assets/Sopabox_logo2023_3.svg";
+import SoapboxLogo from "../../assets/SoapboxLogo_2023.svg";
 const NavBar = ({
   width,
   header,
